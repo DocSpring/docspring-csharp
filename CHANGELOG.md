@@ -1,3 +1,7 @@
+### 1.1.0 [July 7, 2020]
+
+- Update to use latest API schema
+
 ### 1.13.0 [October 10, 2019]
 
 - Add permanent_download_url attribute to Submission model
@@ -8,8 +12,9 @@
 - Add parent folder ID param when creating a new template, so you can upload a template into a folder
 
 ### 1.11.0 [July 31, 2019]
-* Added Create Folder, List Folder, Move to Folder endpoints
-* **BREAKING CHANGE** Added parent_folder_id query parameter to "List Templates".
+
+- Added Create Folder, List Folder, Move to Folder endpoints
+- **BREAKING CHANGE** Added parent_folder_id query parameter to "List Templates".
 
 ### 1.10.0 [June 22, 2019]
 

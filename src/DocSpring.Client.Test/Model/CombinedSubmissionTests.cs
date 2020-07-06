@@ -99,6 +99,14 @@ namespace DocSpring.Client.Test
             // TODO unit test for the property 'SourcePdfs'
         }
         /// <summary>
+        /// Test the property 'PdfHash'
+        /// </summary>
+        [Test]
+        public void PdfHashTest()
+        {
+            // TODO unit test for the property 'PdfHash'
+        }
+        /// <summary>
         /// Test the property 'DownloadUrl'
         /// </summary>
         [Test]

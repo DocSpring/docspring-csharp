@@ -277,6 +277,11 @@ namespace DocSpring.Client.Test
               data: new {
                 title = "Test PDF",
                 description = "This PDF is great!"
+              },
+              fieldOverrides: new {
+                title = new {
+                  required = false
+                }
               }
             );
 

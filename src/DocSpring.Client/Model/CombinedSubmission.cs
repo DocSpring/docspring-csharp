@@ -68,17 +68,19 @@ namespace DocSpring.Client.Model
         /// <param name="expired">expired.</param>
         /// <param name="expiresAt">expiresAt.</param>
         /// <param name="sourcePdfs">sourcePdfs.</param>
+        /// <param name="pdfHash">pdfHash.</param>
         /// <param name="downloadUrl">downloadUrl.</param>
         /// <param name="submissionIds">submissionIds.</param>
         /// <param name="id">id.</param>
         /// <param name="state">state.</param>
         /// <param name="actions">actions.</param>
-        public CombinedSubmission(Object metadata = default(Object), bool? expired = default(bool?), string expiresAt = default(string), List<Object> sourcePdfs = default(List<Object>), string downloadUrl = default(string), List<string> submissionIds = default(List<string>), string id = default(string), StateEnum? state = default(StateEnum?), List<CombinedSubmissionAction> actions = default(List<CombinedSubmissionAction>))
+        public CombinedSubmission(Object metadata = default(Object), bool? expired = default(bool?), string expiresAt = default(string), List<Object> sourcePdfs = default(List<Object>), string pdfHash = default(string), string downloadUrl = default(string), List<string> submissionIds = default(List<string>), string id = default(string), StateEnum? state = default(StateEnum?), List<CombinedSubmissionAction> actions = default(List<CombinedSubmissionAction>))
         {
             this.Metadata = metadata;
             this.Expired = expired;
             this.ExpiresAt = expiresAt;
             this.SourcePdfs = sourcePdfs;
+            this.PdfHash = pdfHash;
             this.DownloadUrl = downloadUrl;
             this.SubmissionIds = submissionIds;
             this.Id = id;
@@ -109,6 +111,12 @@ namespace DocSpring.Client.Model
         /// </summary>
         [DataMember(Name="source_pdfs", EmitDefaultValue=false)]
         public List<Object> SourcePdfs { get; set; }
+
+        /// <summary>
+        /// Gets or Sets PdfHash
+        /// </summary>
+        [DataMember(Name="pdf_hash", EmitDefaultValue=false)]
+        public string PdfHash { get; set; }
 
         /// <summary>
         /// Gets or Sets DownloadUrl
@@ -147,6 +155,7 @@ namespace DocSpring.Client.Model
             sb.Append("  Expired: ").Append(Expired).Append("\n");
             sb.Append("  ExpiresAt: ").Append(ExpiresAt).Append("\n");
             sb.Append("  SourcePdfs: ").Append(SourcePdfs).Append("\n");
+            sb.Append("  PdfHash: ").Append(PdfHash).Append("\n");
             sb.Append("  DownloadUrl: ").Append(DownloadUrl).Append("\n");
             sb.Append("  SubmissionIds: ").Append(SubmissionIds).Append("\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
@@ -207,6 +216,11 @@ namespace DocSpring.Client.Model
                     this.SourcePdfs.SequenceEqual(input.SourcePdfs)
                 ) && 
                 (
+                    this.PdfHash == input.PdfHash ||
+                    (this.PdfHash != null &&
+                    this.PdfHash.Equals(input.PdfHash))
+                ) && 
+                (
                     this.DownloadUrl == input.DownloadUrl ||
                     (this.DownloadUrl != null &&
                     this.DownloadUrl.Equals(input.DownloadUrl))
@@ -250,6 +264,8 @@ namespace DocSpring.Client.Model
                     hashCode = hashCode * 59 + this.ExpiresAt.GetHashCode();
                 if (this.SourcePdfs != null)
                     hashCode = hashCode * 59 + this.SourcePdfs.GetHashCode();
+                if (this.PdfHash != null)
+                    hashCode = hashCode * 59 + this.PdfHash.GetHashCode();
                 if (this.DownloadUrl != null)
                     hashCode = hashCode * 59 + this.DownloadUrl.GetHashCode();
                 if (this.SubmissionIds != null)

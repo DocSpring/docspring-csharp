@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **Expired** | **bool?** |  | [optional] 
 **ExpiresAt** | **string** |  | [optional] 
 **SourcePdfs** | **List&lt;Object&gt;** |  | [optional] 
+**PdfHash** | **string** |  | [optional] 
 **DownloadUrl** | **string** |  | [optional] 
 **SubmissionIds** | **List&lt;string&gt;** |  | [optional] 
 **Id** | **string** |  | [optional] 

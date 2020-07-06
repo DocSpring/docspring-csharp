@@ -184,7 +184,9 @@ namespace DocSpring.Client.Model
         /// <param name="authUserIdHash">authUserIdHash.</param>
         /// <param name="authUsernameHash">authUsernameHash.</param>
         /// <param name="authPhoneNumberHash">authPhoneNumberHash.</param>
-        public SubmissionDataRequest(string id = default(string), string name = default(string), string email = default(string), int? order = default(int?), List<string> fields = default(List<string>), Object metadata = default(Object), StateEnum state = default(StateEnum), string viewedAt = default(string), string completedAt = default(string), AuthTypeEnum? authType = default(AuthTypeEnum?), AuthSecondFactorTypeEnum? authSecondFactorType = default(AuthSecondFactorTypeEnum?), string authProvider = default(string), string authSessionStartedAt = default(string), string authSessionIdHash = default(string), string authUserIdHash = default(string), string authUsernameHash = default(string), string authPhoneNumberHash = default(string))
+        /// <param name="ipAddress">ipAddress.</param>
+        /// <param name="userAgent">userAgent.</param>
+        public SubmissionDataRequest(string id = default(string), string name = default(string), string email = default(string), int? order = default(int?), List<string> fields = default(List<string>), Object metadata = default(Object), StateEnum state = default(StateEnum), string viewedAt = default(string), string completedAt = default(string), AuthTypeEnum? authType = default(AuthTypeEnum?), AuthSecondFactorTypeEnum? authSecondFactorType = default(AuthSecondFactorTypeEnum?), string authProvider = default(string), string authSessionStartedAt = default(string), string authSessionIdHash = default(string), string authUserIdHash = default(string), string authUsernameHash = default(string), string authPhoneNumberHash = default(string), string ipAddress = default(string), string userAgent = default(string))
         {
             // to ensure "id" is required (not null)
             if (id == null)
@@ -259,6 +261,8 @@ namespace DocSpring.Client.Model
             this.AuthUserIdHash = authUserIdHash;
             this.AuthUsernameHash = authUsernameHash;
             this.AuthPhoneNumberHash = authPhoneNumberHash;
+            this.IpAddress = ipAddress;
+            this.UserAgent = userAgent;
         }
         
         /// <summary>
@@ -349,6 +353,18 @@ namespace DocSpring.Client.Model
         public string AuthPhoneNumberHash { get; set; }
 
         /// <summary>
+        /// Gets or Sets IpAddress
+        /// </summary>
+        [DataMember(Name="ip_address", EmitDefaultValue=false)]
+        public string IpAddress { get; set; }
+
+        /// <summary>
+        /// Gets or Sets UserAgent
+        /// </summary>
+        [DataMember(Name="user_agent", EmitDefaultValue=false)]
+        public string UserAgent { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -373,6 +389,8 @@ namespace DocSpring.Client.Model
             sb.Append("  AuthUserIdHash: ").Append(AuthUserIdHash).Append("\n");
             sb.Append("  AuthUsernameHash: ").Append(AuthUsernameHash).Append("\n");
             sb.Append("  AuthPhoneNumberHash: ").Append(AuthPhoneNumberHash).Append("\n");
+            sb.Append("  IpAddress: ").Append(IpAddress).Append("\n");
+            sb.Append("  UserAgent: ").Append(UserAgent).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -491,6 +509,16 @@ namespace DocSpring.Client.Model
                     this.AuthPhoneNumberHash == input.AuthPhoneNumberHash ||
                     (this.AuthPhoneNumberHash != null &&
                     this.AuthPhoneNumberHash.Equals(input.AuthPhoneNumberHash))
+                ) && 
+                (
+                    this.IpAddress == input.IpAddress ||
+                    (this.IpAddress != null &&
+                    this.IpAddress.Equals(input.IpAddress))
+                ) && 
+                (
+                    this.UserAgent == input.UserAgent ||
+                    (this.UserAgent != null &&
+                    this.UserAgent.Equals(input.UserAgent))
                 );
         }
 
@@ -537,6 +565,10 @@ namespace DocSpring.Client.Model
                     hashCode = hashCode * 59 + this.AuthUsernameHash.GetHashCode();
                 if (this.AuthPhoneNumberHash != null)
                     hashCode = hashCode * 59 + this.AuthPhoneNumberHash.GetHashCode();
+                if (this.IpAddress != null)
+                    hashCode = hashCode * 59 + this.IpAddress.GetHashCode();
+                if (this.UserAgent != null)
+                    hashCode = hashCode * 59 + this.UserAgent.GetHashCode();
                 return hashCode;
             }
         }

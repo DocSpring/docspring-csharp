@@ -202,6 +202,22 @@ namespace DocSpring.Client.Test
         {
             // TODO unit test for the property 'AuthPhoneNumberHash'
         }
+        /// <summary>
+        /// Test the property 'IpAddress'
+        /// </summary>
+        [Test]
+        public void IpAddressTest()
+        {
+            // TODO unit test for the property 'IpAddress'
+        }
+        /// <summary>
+        /// Test the property 'UserAgent'
+        /// </summary>
+        [Test]
+        public void UserAgentTest()
+        {
+            // TODO unit test for the property 'UserAgent'
+        }
 
     }
 

@@ -107,6 +107,14 @@ namespace DocSpring.Client.Test
             // TODO unit test for the property 'Metadata'
         }
         /// <summary>
+        /// Test the property 'FieldOverrides'
+        /// </summary>
+        [Test]
+        public void FieldOverridesTest()
+        {
+            // TODO unit test for the property 'FieldOverrides'
+        }
+        /// <summary>
         /// Test the property 'DataRequests'
         /// </summary>
         [Test]

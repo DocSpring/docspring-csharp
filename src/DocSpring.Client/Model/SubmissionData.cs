@@ -43,8 +43,9 @@ namespace DocSpring.Client.Model
         /// <param name="html">html.</param>
         /// <param name="css">css.</param>
         /// <param name="metadata">metadata.</param>
+        /// <param name="fieldOverrides">fieldOverrides.</param>
         /// <param name="dataRequests">dataRequests.</param>
-        public SubmissionData(bool? test = default(bool?), Object data = default(Object), string html = default(string), string css = default(string), Object metadata = default(Object), List<CreateSubmissionDataRequestData> dataRequests = default(List<CreateSubmissionDataRequestData>))
+        public SubmissionData(bool? test = default(bool?), Object data = default(Object), string html = default(string), string css = default(string), Object metadata = default(Object), Object fieldOverrides = default(Object), List<CreateSubmissionDataRequestData> dataRequests = default(List<CreateSubmissionDataRequestData>))
         {
             // to ensure "data" is required (not null)
             if (data == null)
@@ -59,6 +60,7 @@ namespace DocSpring.Client.Model
             this.Html = html;
             this.Css = css;
             this.Metadata = metadata;
+            this.FieldOverrides = fieldOverrides;
             this.DataRequests = dataRequests;
         }
         
@@ -93,6 +95,12 @@ namespace DocSpring.Client.Model
         public Object Metadata { get; set; }
 
         /// <summary>
+        /// Gets or Sets FieldOverrides
+        /// </summary>
+        [DataMember(Name="field_overrides", EmitDefaultValue=false)]
+        public Object FieldOverrides { get; set; }
+
+        /// <summary>
         /// Gets or Sets DataRequests
         /// </summary>
         [DataMember(Name="data_requests", EmitDefaultValue=false)]
@@ -111,6 +119,7 @@ namespace DocSpring.Client.Model
             sb.Append("  Html: ").Append(Html).Append("\n");
             sb.Append("  Css: ").Append(Css).Append("\n");
             sb.Append("  Metadata: ").Append(Metadata).Append("\n");
+            sb.Append("  FieldOverrides: ").Append(FieldOverrides).Append("\n");
             sb.Append("  DataRequests: ").Append(DataRequests).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -172,6 +181,11 @@ namespace DocSpring.Client.Model
                     this.Metadata.Equals(input.Metadata))
                 ) && 
                 (
+                    this.FieldOverrides == input.FieldOverrides ||
+                    (this.FieldOverrides != null &&
+                    this.FieldOverrides.Equals(input.FieldOverrides))
+                ) && 
+                (
                     this.DataRequests == input.DataRequests ||
                     this.DataRequests != null &&
                     this.DataRequests.SequenceEqual(input.DataRequests)
@@ -197,6 +211,8 @@ namespace DocSpring.Client.Model
                     hashCode = hashCode * 59 + this.Css.GetHashCode();
                 if (this.Metadata != null)
                     hashCode = hashCode * 59 + this.Metadata.GetHashCode();
+                if (this.FieldOverrides != null)
+                    hashCode = hashCode * 59 + this.FieldOverrides.GetHashCode();
                 if (this.DataRequests != null)
                     hashCode = hashCode * 59 + this.DataRequests.GetHashCode();
                 return hashCode;
