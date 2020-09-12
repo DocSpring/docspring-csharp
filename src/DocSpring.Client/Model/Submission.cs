@@ -94,7 +94,13 @@ namespace DocSpring.Client.Model
             /// Enum Licenserevoked for value: license_revoked
             /// </summary>
             [EnumMember(Value = "license_revoked")]
-            Licenserevoked = 10
+            Licenserevoked = 10,
+
+            /// <summary>
+            /// Enum Accidental for value: accidental
+            /// </summary>
+            [EnumMember(Value = "accidental")]
+            Accidental = 11
 
         }
 

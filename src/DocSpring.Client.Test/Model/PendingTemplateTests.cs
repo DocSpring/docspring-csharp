@@ -107,6 +107,14 @@ namespace DocSpring.Client.Test
             // TODO unit test for the property 'AllowAdditionalProperties'
         }
         /// <summary>
+        /// Test the property 'Description'
+        /// </summary>
+        [Test]
+        public void DescriptionTest()
+        {
+            // TODO unit test for the property 'Description'
+        }
+        /// <summary>
         /// Test the property 'PublicSubmissions'
         /// </summary>
         [Test]

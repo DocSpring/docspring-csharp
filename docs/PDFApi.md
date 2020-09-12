@@ -11,8 +11,9 @@ Method | HTTP request | Description
 [**CreateCustomFileFromUpload**](PDFApi.md#createcustomfilefromupload) | **POST** /custom_files | Create a new custom file from a cached presign upload
 [**CreateDataRequestToken**](PDFApi.md#createdatarequesttoken) | **POST** /data_requests/{data_request_id}/tokens | Creates a new data request token for form authentication
 [**CreateFolder**](PDFApi.md#createfolder) | **POST** /folders/ | Create a folder
-[**CreateTemplate**](PDFApi.md#createtemplate) | **POST** /templates | Upload a new PDF template with a file upload
-[**CreateTemplateFromUpload**](PDFApi.md#createtemplatefromupload) | **POST** /templates?v&#x3D;2 | Create a new PDF template from a cached presign upload
+[**CreateHTMLTemplate**](PDFApi.md#createhtmltemplate) | **POST** /templates?desc&#x3D;html | Create a new HTML template
+[**CreatePDFTemplate**](PDFApi.md#createpdftemplate) | **POST** /templates | Create a new PDF template with a form POST file upload
+[**CreatePDFTemplateFromUpload**](PDFApi.md#createpdftemplatefromupload) | **POST** /templates?desc&#x3D;cached_upload | Create a new PDF template from a cached presign upload
 [**DeleteFolder**](PDFApi.md#deletefolder) | **DELETE** /folders/{folder_id} | Delete a folder
 [**ExpireCombinedSubmission**](PDFApi.md#expirecombinedsubmission) | **DELETE** /combined_submissions/{combined_submission_id} | Expire a combined submission
 [**ExpireSubmission**](PDFApi.md#expiresubmission) | **DELETE** /submissions/{submission_id} | Expire a PDF submission
@@ -31,6 +32,7 @@ Method | HTTP request | Description
 [**RenameFolder**](PDFApi.md#renamefolder) | **POST** /folders/{folder_id}/rename | Rename a folder
 [**TestAuthentication**](PDFApi.md#testauthentication) | **GET** /authentication | Test Authentication
 [**UpdateDataRequest**](PDFApi.md#updatedatarequest) | **PUT** /data_requests/{data_request_id} | Update a submission data request
+[**UpdateTemplate**](PDFApi.md#updatetemplate) | **PUT** /templates/{template_id} | Update a Template
 
 
 <a name="batchgeneratepdfv1"></a>
@@ -476,11 +478,11 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="createtemplate"></a>
-# **CreateTemplate**
-> PendingTemplate CreateTemplate (System.IO.Stream templateDocument, string templateName, string templateParentFolderId = null)
+<a name="createhtmltemplate"></a>
+# **CreateHTMLTemplate**
+> PendingTemplate CreateHTMLTemplate (CreateTemplateData1 createTemplateData1)
 
-Upload a new PDF template with a file upload
+Create a new HTML template
 
 ### Example
 ```csharp
@@ -492,7 +494,70 @@ using DocSpring.Client.Model;
 
 namespace Example
 {
-    public class CreateTemplateExample
+    public class CreateHTMLTemplateExample
+    {
+        public void main()
+        {
+            // Configure HTTP basic authorization: api_token_basic
+            Configuration.Default.Username = "YOUR_USERNAME";
+            Configuration.Default.Password = "YOUR_PASSWORD";
+
+            var apiInstance = new PDFApi();
+            var createTemplateData1 = new CreateTemplateData1(); // CreateTemplateData1 | 
+
+            try
+            {
+                // Create a new HTML template
+                PendingTemplate result = apiInstance.CreateHTMLTemplate(createTemplateData1);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling PDFApi.CreateHTMLTemplate: " + e.Message );
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **createTemplateData1** | [**CreateTemplateData1**](CreateTemplateData1.md)|  | 
+
+### Return type
+
+[**PendingTemplate**](PendingTemplate.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a name="createpdftemplate"></a>
+# **CreatePDFTemplate**
+> PendingTemplate CreatePDFTemplate (System.IO.Stream templateDocument, string templateName, string templateParentFolderId = null)
+
+Create a new PDF template with a form POST file upload
+
+### Example
+```csharp
+using System;
+using System.Diagnostics;
+using DocSpring.Client.Api;
+using DocSpring.Client.Client;
+using DocSpring.Client.Model;
+
+namespace Example
+{
+    public class CreatePDFTemplateExample
     {
         public void main()
         {
@@ -507,13 +572,13 @@ namespace Example
 
             try
             {
-                // Upload a new PDF template with a file upload
-                PendingTemplate result = apiInstance.CreateTemplate(templateDocument, templateName, templateParentFolderId);
+                // Create a new PDF template with a form POST file upload
+                PendingTemplate result = apiInstance.CreatePDFTemplate(templateDocument, templateName, templateParentFolderId);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling PDFApi.CreateTemplate: " + e.Message );
+                Debug.Print("Exception when calling PDFApi.CreatePDFTemplate: " + e.Message );
             }
         }
     }
@@ -543,9 +608,9 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a name="createtemplatefromupload"></a>
-# **CreateTemplateFromUpload**
-> PendingTemplate CreateTemplateFromUpload (CreateTemplateData createTemplateData)
+<a name="createpdftemplatefromupload"></a>
+# **CreatePDFTemplateFromUpload**
+> PendingTemplate CreatePDFTemplateFromUpload (CreateTemplateData createTemplateData)
 
 Create a new PDF template from a cached presign upload
 
@@ -559,7 +624,7 @@ using DocSpring.Client.Model;
 
 namespace Example
 {
-    public class CreateTemplateFromUploadExample
+    public class CreatePDFTemplateFromUploadExample
     {
         public void main()
         {
@@ -573,12 +638,12 @@ namespace Example
             try
             {
                 // Create a new PDF template from a cached presign upload
-                PendingTemplate result = apiInstance.CreateTemplateFromUpload(createTemplateData);
+                PendingTemplate result = apiInstance.CreatePDFTemplateFromUpload(createTemplateData);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling PDFApi.CreateTemplateFromUpload: " + e.Message );
+                Debug.Print("Exception when calling PDFApi.CreatePDFTemplateFromUpload: " + e.Message );
             }
         }
     }
@@ -1739,6 +1804,71 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**UpdateDataRequestResponse**](UpdateDataRequestResponse.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a name="updatetemplate"></a>
+# **UpdateTemplate**
+> UpdateTemplateResponse UpdateTemplate (string templateId, UpdateTemplateData updateTemplateData)
+
+Update a Template
+
+### Example
+```csharp
+using System;
+using System.Diagnostics;
+using DocSpring.Client.Api;
+using DocSpring.Client.Client;
+using DocSpring.Client.Model;
+
+namespace Example
+{
+    public class UpdateTemplateExample
+    {
+        public void main()
+        {
+            // Configure HTTP basic authorization: api_token_basic
+            Configuration.Default.Username = "YOUR_USERNAME";
+            Configuration.Default.Password = "YOUR_PASSWORD";
+
+            var apiInstance = new PDFApi();
+            var templateId = tpl_000000000000000003;  // string | 
+            var updateTemplateData = new UpdateTemplateData(); // UpdateTemplateData | 
+
+            try
+            {
+                // Update a Template
+                UpdateTemplateResponse result = apiInstance.UpdateTemplate(templateId, updateTemplateData);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling PDFApi.UpdateTemplate: " + e.Message );
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **templateId** | **string**|  | 
+ **updateTemplateData** | [**UpdateTemplateData**](UpdateTemplateData.md)|  | 
+
+### Return type
+
+[**UpdateTemplateResponse**](UpdateTemplateResponse.md)
 
 ### Authorization
 

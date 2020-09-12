@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **ParentFolderId** | **string** |  | [optional] 
 **ExpireAfter** | **decimal?** |  | [optional] 
 **AllowAdditionalProperties** | **bool?** |  | [optional] 
+**Description** | **string** |  | [optional] 
 **PublicSubmissions** | **bool?** |  | [optional] 
 **SlackWebhookUrl** | **string** |  | [optional] 
 **Path** | **string** |  | [optional] 

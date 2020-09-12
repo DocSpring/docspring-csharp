@@ -69,6 +69,7 @@ namespace DocSpring.Client.Model
         /// <param name="parentFolderId">parentFolderId.</param>
         /// <param name="expireAfter">expireAfter.</param>
         /// <param name="allowAdditionalProperties">allowAdditionalProperties.</param>
+        /// <param name="description">description.</param>
         /// <param name="publicSubmissions">publicSubmissions.</param>
         /// <param name="slackWebhookUrl">slackWebhookUrl.</param>
         /// <param name="path">path.</param>
@@ -82,13 +83,14 @@ namespace DocSpring.Client.Model
         /// <param name="pageDimensions">pageDimensions.</param>
         /// <param name="redirectUrl">redirectUrl.</param>
         /// <param name="documentUrl">documentUrl.</param>
-        public Template(ExpirationIntervalEnum? expirationInterval = default(ExpirationIntervalEnum?), string webhookUrl = default(string), string parentFolderId = default(string), decimal? expireAfter = default(decimal?), bool? allowAdditionalProperties = default(bool?), bool? publicSubmissions = default(bool?), string slackWebhookUrl = default(string), string path = default(string), bool? publicWebForm = default(bool?), bool? editableSubmissions = default(bool?), bool? expireSubmissions = default(bool?), string name = default(string), string permanentDocumentUrl = default(string), string templateType = default(string), string id = default(string), List<List<decimal?>> pageDimensions = default(List<List<decimal?>>), string redirectUrl = default(string), string documentUrl = default(string))
+        public Template(ExpirationIntervalEnum? expirationInterval = default(ExpirationIntervalEnum?), string webhookUrl = default(string), string parentFolderId = default(string), decimal? expireAfter = default(decimal?), bool? allowAdditionalProperties = default(bool?), string description = default(string), bool? publicSubmissions = default(bool?), string slackWebhookUrl = default(string), string path = default(string), bool? publicWebForm = default(bool?), bool? editableSubmissions = default(bool?), bool? expireSubmissions = default(bool?), string name = default(string), string permanentDocumentUrl = default(string), string templateType = default(string), string id = default(string), List<List<decimal?>> pageDimensions = default(List<List<decimal?>>), string redirectUrl = default(string), string documentUrl = default(string))
         {
             this.ExpirationInterval = expirationInterval;
             this.WebhookUrl = webhookUrl;
             this.ParentFolderId = parentFolderId;
             this.ExpireAfter = expireAfter;
             this.AllowAdditionalProperties = allowAdditionalProperties;
+            this.Description = description;
             this.PublicSubmissions = publicSubmissions;
             this.SlackWebhookUrl = slackWebhookUrl;
             this.Path = path;
@@ -128,6 +130,12 @@ namespace DocSpring.Client.Model
         /// </summary>
         [DataMember(Name="allow_additional_properties", EmitDefaultValue=false)]
         public bool? AllowAdditionalProperties { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Description
+        /// </summary>
+        [DataMember(Name="description", EmitDefaultValue=false)]
+        public string Description { get; set; }
 
         /// <summary>
         /// Gets or Sets PublicSubmissions
@@ -220,6 +228,7 @@ namespace DocSpring.Client.Model
             sb.Append("  ParentFolderId: ").Append(ParentFolderId).Append("\n");
             sb.Append("  ExpireAfter: ").Append(ExpireAfter).Append("\n");
             sb.Append("  AllowAdditionalProperties: ").Append(AllowAdditionalProperties).Append("\n");
+            sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  PublicSubmissions: ").Append(PublicSubmissions).Append("\n");
             sb.Append("  SlackWebhookUrl: ").Append(SlackWebhookUrl).Append("\n");
             sb.Append("  Path: ").Append(Path).Append("\n");
@@ -291,6 +300,11 @@ namespace DocSpring.Client.Model
                     this.AllowAdditionalProperties == input.AllowAdditionalProperties ||
                     (this.AllowAdditionalProperties != null &&
                     this.AllowAdditionalProperties.Equals(input.AllowAdditionalProperties))
+                ) && 
+                (
+                    this.Description == input.Description ||
+                    (this.Description != null &&
+                    this.Description.Equals(input.Description))
                 ) && 
                 (
                     this.PublicSubmissions == input.PublicSubmissions ||
@@ -378,6 +392,8 @@ namespace DocSpring.Client.Model
                     hashCode = hashCode * 59 + this.ExpireAfter.GetHashCode();
                 if (this.AllowAdditionalProperties != null)
                     hashCode = hashCode * 59 + this.AllowAdditionalProperties.GetHashCode();
+                if (this.Description != null)
+                    hashCode = hashCode * 59 + this.Description.GetHashCode();
                 if (this.PublicSubmissions != null)
                     hashCode = hashCode * 59 + this.PublicSubmissions.GetHashCode();
                 if (this.SlackWebhookUrl != null)

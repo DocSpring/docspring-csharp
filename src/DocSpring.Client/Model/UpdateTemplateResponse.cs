@@ -25,54 +25,52 @@ using OpenAPIDateConverter = DocSpring.Client.Client.OpenAPIDateConverter;
 namespace DocSpring.Client.Model
 {
     /// <summary>
-    /// Templatesv2TemplateDocument
+    /// UpdateTemplateResponse
     /// </summary>
     [DataContract]
-    public partial class Templatesv2TemplateDocument :  IEquatable<Templatesv2TemplateDocument>, IValidatableObject
+    public partial class UpdateTemplateResponse :  IEquatable<UpdateTemplateResponse>, IValidatableObject
     {
         /// <summary>
-        /// Defines Storage
+        /// Defines Status
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
-        public enum StorageEnum
+        public enum StatusEnum
         {
             /// <summary>
-            /// Enum Cache for value: cache
+            /// Enum Success for value: success
             /// </summary>
-            [EnumMember(Value = "cache")]
-            Cache = 1
+            [EnumMember(Value = "success")]
+            Success = 1,
+
+            /// <summary>
+            /// Enum Error for value: error
+            /// </summary>
+            [EnumMember(Value = "error")]
+            Error = 2
 
         }
 
         /// <summary>
-        /// Gets or Sets Storage
+        /// Gets or Sets Status
         /// </summary>
-        [DataMember(Name="storage", EmitDefaultValue=false)]
-        public StorageEnum? Storage { get; set; }
+        [DataMember(Name="status", EmitDefaultValue=false)]
+        public StatusEnum? Status { get; set; }
         /// <summary>
-        /// Initializes a new instance of the <see cref="Templatesv2TemplateDocument" /> class.
+        /// Initializes a new instance of the <see cref="UpdateTemplateResponse" /> class.
         /// </summary>
-        /// <param name="metadata">metadata.</param>
-        /// <param name="id">id.</param>
-        /// <param name="storage">storage.</param>
-        public Templatesv2TemplateDocument(Templatesv2TemplateDocumentMetadata metadata = default(Templatesv2TemplateDocumentMetadata), string id = default(string), StorageEnum? storage = default(StorageEnum?))
+        /// <param name="errors">errors.</param>
+        /// <param name="status">status.</param>
+        public UpdateTemplateResponse(List<string> errors = default(List<string>), StatusEnum? status = default(StatusEnum?))
         {
-            this.Metadata = metadata;
-            this.Id = id;
-            this.Storage = storage;
+            this.Errors = errors;
+            this.Status = status;
         }
         
         /// <summary>
-        /// Gets or Sets Metadata
+        /// Gets or Sets Errors
         /// </summary>
-        [DataMember(Name="metadata", EmitDefaultValue=false)]
-        public Templatesv2TemplateDocumentMetadata Metadata { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Id
-        /// </summary>
-        [DataMember(Name="id", EmitDefaultValue=false)]
-        public string Id { get; set; }
+        [DataMember(Name="errors", EmitDefaultValue=false)]
+        public List<string> Errors { get; set; }
 
 
         /// <summary>
@@ -82,10 +80,9 @@ namespace DocSpring.Client.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class Templatesv2TemplateDocument {\n");
-            sb.Append("  Metadata: ").Append(Metadata).Append("\n");
-            sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  Storage: ").Append(Storage).Append("\n");
+            sb.Append("class UpdateTemplateResponse {\n");
+            sb.Append("  Errors: ").Append(Errors).Append("\n");
+            sb.Append("  Status: ").Append(Status).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -106,34 +103,29 @@ namespace DocSpring.Client.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as Templatesv2TemplateDocument);
+            return this.Equals(input as UpdateTemplateResponse);
         }
 
         /// <summary>
-        /// Returns true if Templatesv2TemplateDocument instances are equal
+        /// Returns true if UpdateTemplateResponse instances are equal
         /// </summary>
-        /// <param name="input">Instance of Templatesv2TemplateDocument to be compared</param>
+        /// <param name="input">Instance of UpdateTemplateResponse to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Templatesv2TemplateDocument input)
+        public bool Equals(UpdateTemplateResponse input)
         {
             if (input == null)
                 return false;
 
             return 
                 (
-                    this.Metadata == input.Metadata ||
-                    (this.Metadata != null &&
-                    this.Metadata.Equals(input.Metadata))
+                    this.Errors == input.Errors ||
+                    this.Errors != null &&
+                    this.Errors.SequenceEqual(input.Errors)
                 ) && 
                 (
-                    this.Id == input.Id ||
-                    (this.Id != null &&
-                    this.Id.Equals(input.Id))
-                ) && 
-                (
-                    this.Storage == input.Storage ||
-                    (this.Storage != null &&
-                    this.Storage.Equals(input.Storage))
+                    this.Status == input.Status ||
+                    (this.Status != null &&
+                    this.Status.Equals(input.Status))
                 );
         }
 
@@ -146,12 +138,10 @@ namespace DocSpring.Client.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.Metadata != null)
-                    hashCode = hashCode * 59 + this.Metadata.GetHashCode();
-                if (this.Id != null)
-                    hashCode = hashCode * 59 + this.Id.GetHashCode();
-                if (this.Storage != null)
-                    hashCode = hashCode * 59 + this.Storage.GetHashCode();
+                if (this.Errors != null)
+                    hashCode = hashCode * 59 + this.Errors.GetHashCode();
+                if (this.Status != null)
+                    hashCode = hashCode * 59 + this.Status.GetHashCode();
                 return hashCode;
             }
         }

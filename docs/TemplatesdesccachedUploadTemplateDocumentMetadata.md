@@ -1,9 +1,11 @@
-# DocSpring.Client.Model.CreateTemplateData
+# DocSpring.Client.Model.TemplatesdesccachedUploadTemplateDocumentMetadata
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Template** | [**TemplatesdesccachedUploadTemplate**](TemplatesdesccachedUploadTemplate.md) |  | 
+**Filename** | **string** |  | [optional] 
+**Size** | **int?** |  | [optional] 
+**MimeType** | **string** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

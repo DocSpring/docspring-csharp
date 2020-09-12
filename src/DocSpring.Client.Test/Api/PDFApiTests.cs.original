@@ -150,28 +150,40 @@ namespace DocSpring.Client.Test
         }
         
         /// <summary>
-        /// Test CreateTemplate
+        /// Test CreateHTMLTemplate
         /// </summary>
         [Test]
-        public void CreateTemplateTest()
+        public void CreateHTMLTemplateTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //CreateTemplateData1 createTemplateData1 = null;
+            //var response = instance.CreateHTMLTemplate(createTemplateData1);
+            //Assert.IsInstanceOf<PendingTemplate> (response, "response is PendingTemplate");
+        }
+        
+        /// <summary>
+        /// Test CreatePDFTemplate
+        /// </summary>
+        [Test]
+        public void CreatePDFTemplateTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
             //System.IO.Stream templateDocument = null;
             //string templateName = null;
             //string templateParentFolderId = null;
-            //var response = instance.CreateTemplate(templateDocument, templateName, templateParentFolderId);
+            //var response = instance.CreatePDFTemplate(templateDocument, templateName, templateParentFolderId);
             //Assert.IsInstanceOf<PendingTemplate> (response, "response is PendingTemplate");
         }
         
         /// <summary>
-        /// Test CreateTemplateFromUpload
+        /// Test CreatePDFTemplateFromUpload
         /// </summary>
         [Test]
-        public void CreateTemplateFromUploadTest()
+        public void CreatePDFTemplateFromUploadTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
             //CreateTemplateData createTemplateData = null;
-            //var response = instance.CreateTemplateFromUpload(createTemplateData);
+            //var response = instance.CreatePDFTemplateFromUpload(createTemplateData);
             //Assert.IsInstanceOf<PendingTemplate> (response, "response is PendingTemplate");
         }
         
@@ -397,6 +409,19 @@ namespace DocSpring.Client.Test
             //UpdateSubmissionDataRequestData updateSubmissionDataRequestData = null;
             //var response = instance.UpdateDataRequest(dataRequestId, updateSubmissionDataRequestData);
             //Assert.IsInstanceOf<UpdateDataRequestResponse> (response, "response is UpdateDataRequestResponse");
+        }
+        
+        /// <summary>
+        /// Test UpdateTemplate
+        /// </summary>
+        [Test]
+        public void UpdateTemplateTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string templateId = null;
+            //UpdateTemplateData updateTemplateData = null;
+            //var response = instance.UpdateTemplate(templateId, updateTemplateData);
+            //Assert.IsInstanceOf<UpdateTemplateResponse> (response, "response is UpdateTemplateResponse");
         }
         
     }

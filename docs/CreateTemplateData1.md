@@ -1,4 +1,4 @@
-# DocSpring.Client.Model.CreateTemplateData
+# DocSpring.Client.Model.CreateTemplateData1
 ## Properties
 
 Name | Type | Description | Notes

@@ -25,54 +25,54 @@ using OpenAPIDateConverter = DocSpring.Client.Client.OpenAPIDateConverter;
 namespace DocSpring.Client.Model
 {
     /// <summary>
-    /// Templatesv2TemplateDocumentMetadata
+    /// TemplatesdesccachedUploadTemplateDocument
     /// </summary>
     [DataContract]
-    public partial class Templatesv2TemplateDocumentMetadata :  IEquatable<Templatesv2TemplateDocumentMetadata>, IValidatableObject
+    public partial class TemplatesdesccachedUploadTemplateDocument :  IEquatable<TemplatesdesccachedUploadTemplateDocument>, IValidatableObject
     {
         /// <summary>
-        /// Defines MimeType
+        /// Defines Storage
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
-        public enum MimeTypeEnum
+        public enum StorageEnum
         {
             /// <summary>
-            /// Enum ApplicationPdf for value: application/pdf
+            /// Enum Cache for value: cache
             /// </summary>
-            [EnumMember(Value = "application/pdf")]
-            ApplicationPdf = 1
+            [EnumMember(Value = "cache")]
+            Cache = 1
 
         }
 
         /// <summary>
-        /// Gets or Sets MimeType
+        /// Gets or Sets Storage
         /// </summary>
-        [DataMember(Name="mime_type", EmitDefaultValue=false)]
-        public MimeTypeEnum? MimeType { get; set; }
+        [DataMember(Name="storage", EmitDefaultValue=false)]
+        public StorageEnum? Storage { get; set; }
         /// <summary>
-        /// Initializes a new instance of the <see cref="Templatesv2TemplateDocumentMetadata" /> class.
+        /// Initializes a new instance of the <see cref="TemplatesdesccachedUploadTemplateDocument" /> class.
         /// </summary>
-        /// <param name="filename">filename.</param>
-        /// <param name="size">size.</param>
-        /// <param name="mimeType">mimeType.</param>
-        public Templatesv2TemplateDocumentMetadata(string filename = default(string), int? size = default(int?), MimeTypeEnum? mimeType = default(MimeTypeEnum?))
+        /// <param name="metadata">metadata.</param>
+        /// <param name="id">id.</param>
+        /// <param name="storage">storage.</param>
+        public TemplatesdesccachedUploadTemplateDocument(TemplatesdesccachedUploadTemplateDocumentMetadata metadata = default(TemplatesdesccachedUploadTemplateDocumentMetadata), string id = default(string), StorageEnum? storage = default(StorageEnum?))
         {
-            this.Filename = filename;
-            this.Size = size;
-            this.MimeType = mimeType;
+            this.Metadata = metadata;
+            this.Id = id;
+            this.Storage = storage;
         }
         
         /// <summary>
-        /// Gets or Sets Filename
+        /// Gets or Sets Metadata
         /// </summary>
-        [DataMember(Name="filename", EmitDefaultValue=false)]
-        public string Filename { get; set; }
+        [DataMember(Name="metadata", EmitDefaultValue=false)]
+        public TemplatesdesccachedUploadTemplateDocumentMetadata Metadata { get; set; }
 
         /// <summary>
-        /// Gets or Sets Size
+        /// Gets or Sets Id
         /// </summary>
-        [DataMember(Name="size", EmitDefaultValue=false)]
-        public int? Size { get; set; }
+        [DataMember(Name="id", EmitDefaultValue=false)]
+        public string Id { get; set; }
 
 
         /// <summary>
@@ -82,10 +82,10 @@ namespace DocSpring.Client.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class Templatesv2TemplateDocumentMetadata {\n");
-            sb.Append("  Filename: ").Append(Filename).Append("\n");
-            sb.Append("  Size: ").Append(Size).Append("\n");
-            sb.Append("  MimeType: ").Append(MimeType).Append("\n");
+            sb.Append("class TemplatesdesccachedUploadTemplateDocument {\n");
+            sb.Append("  Metadata: ").Append(Metadata).Append("\n");
+            sb.Append("  Id: ").Append(Id).Append("\n");
+            sb.Append("  Storage: ").Append(Storage).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -106,34 +106,34 @@ namespace DocSpring.Client.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as Templatesv2TemplateDocumentMetadata);
+            return this.Equals(input as TemplatesdesccachedUploadTemplateDocument);
         }
 
         /// <summary>
-        /// Returns true if Templatesv2TemplateDocumentMetadata instances are equal
+        /// Returns true if TemplatesdesccachedUploadTemplateDocument instances are equal
         /// </summary>
-        /// <param name="input">Instance of Templatesv2TemplateDocumentMetadata to be compared</param>
+        /// <param name="input">Instance of TemplatesdesccachedUploadTemplateDocument to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Templatesv2TemplateDocumentMetadata input)
+        public bool Equals(TemplatesdesccachedUploadTemplateDocument input)
         {
             if (input == null)
                 return false;
 
             return 
                 (
-                    this.Filename == input.Filename ||
-                    (this.Filename != null &&
-                    this.Filename.Equals(input.Filename))
+                    this.Metadata == input.Metadata ||
+                    (this.Metadata != null &&
+                    this.Metadata.Equals(input.Metadata))
                 ) && 
                 (
-                    this.Size == input.Size ||
-                    (this.Size != null &&
-                    this.Size.Equals(input.Size))
+                    this.Id == input.Id ||
+                    (this.Id != null &&
+                    this.Id.Equals(input.Id))
                 ) && 
                 (
-                    this.MimeType == input.MimeType ||
-                    (this.MimeType != null &&
-                    this.MimeType.Equals(input.MimeType))
+                    this.Storage == input.Storage ||
+                    (this.Storage != null &&
+                    this.Storage.Equals(input.Storage))
                 );
         }
 
@@ -146,12 +146,12 @@ namespace DocSpring.Client.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.Filename != null)
-                    hashCode = hashCode * 59 + this.Filename.GetHashCode();
-                if (this.Size != null)
-                    hashCode = hashCode * 59 + this.Size.GetHashCode();
-                if (this.MimeType != null)
-                    hashCode = hashCode * 59 + this.MimeType.GetHashCode();
+                if (this.Metadata != null)
+                    hashCode = hashCode * 59 + this.Metadata.GetHashCode();
+                if (this.Id != null)
+                    hashCode = hashCode * 59 + this.Id.GetHashCode();
+                if (this.Storage != null)
+                    hashCode = hashCode * 59 + this.Storage.GetHashCode();
                 return hashCode;
             }
         }
