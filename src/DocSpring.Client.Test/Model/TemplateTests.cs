@@ -203,6 +203,14 @@ namespace DocSpring.Client.Test
             // TODO unit test for the property 'PageDimensions'
         }
         /// <summary>
+        /// Test the property 'Locked'
+        /// </summary>
+        [Test]
+        public void LockedTest()
+        {
+            // TODO unit test for the property 'Locked'
+        }
+        /// <summary>
         /// Test the property 'RedirectUrl'
         /// </summary>
         [Test]

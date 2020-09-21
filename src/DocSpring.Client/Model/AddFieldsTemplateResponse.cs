@@ -25,54 +25,60 @@ using OpenAPIDateConverter = DocSpring.Client.Client.OpenAPIDateConverter;
 namespace DocSpring.Client.Model
 {
     /// <summary>
-    /// TemplatesdesccachedUploadTemplateDocumentMetadata
+    /// AddFieldsTemplateResponse
     /// </summary>
     [DataContract]
-    public partial class TemplatesdesccachedUploadTemplateDocumentMetadata :  IEquatable<TemplatesdesccachedUploadTemplateDocumentMetadata>, IValidatableObject
+    public partial class AddFieldsTemplateResponse :  IEquatable<AddFieldsTemplateResponse>, IValidatableObject
     {
         /// <summary>
-        /// Defines MimeType
+        /// Defines Status
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
-        public enum MimeTypeEnum
+        public enum StatusEnum
         {
             /// <summary>
-            /// Enum ApplicationPdf for value: application/pdf
+            /// Enum Success for value: success
             /// </summary>
-            [EnumMember(Value = "application/pdf")]
-            ApplicationPdf = 1
+            [EnumMember(Value = "success")]
+            Success = 1,
+
+            /// <summary>
+            /// Enum Error for value: error
+            /// </summary>
+            [EnumMember(Value = "error")]
+            Error = 2
 
         }
 
         /// <summary>
-        /// Gets or Sets MimeType
+        /// Gets or Sets Status
         /// </summary>
-        [DataMember(Name="mime_type", EmitDefaultValue=false)]
-        public MimeTypeEnum? MimeType { get; set; }
+        [DataMember(Name="status", EmitDefaultValue=false)]
+        public StatusEnum? Status { get; set; }
         /// <summary>
-        /// Initializes a new instance of the <see cref="TemplatesdesccachedUploadTemplateDocumentMetadata" /> class.
+        /// Initializes a new instance of the <see cref="AddFieldsTemplateResponse" /> class.
         /// </summary>
-        /// <param name="filename">filename.</param>
-        /// <param name="size">size.</param>
-        /// <param name="mimeType">mimeType.</param>
-        public TemplatesdesccachedUploadTemplateDocumentMetadata(string filename = default(string), int? size = default(int?), MimeTypeEnum? mimeType = default(MimeTypeEnum?))
+        /// <param name="newFieldIds">newFieldIds.</param>
+        /// <param name="errors">errors.</param>
+        /// <param name="status">status.</param>
+        public AddFieldsTemplateResponse(List<int?> newFieldIds = default(List<int?>), List<string> errors = default(List<string>), StatusEnum? status = default(StatusEnum?))
         {
-            this.Filename = filename;
-            this.Size = size;
-            this.MimeType = mimeType;
+            this.NewFieldIds = newFieldIds;
+            this.Errors = errors;
+            this.Status = status;
         }
         
         /// <summary>
-        /// Gets or Sets Filename
+        /// Gets or Sets NewFieldIds
         /// </summary>
-        [DataMember(Name="filename", EmitDefaultValue=false)]
-        public string Filename { get; set; }
+        [DataMember(Name="new_field_ids", EmitDefaultValue=false)]
+        public List<int?> NewFieldIds { get; set; }
 
         /// <summary>
-        /// Gets or Sets Size
+        /// Gets or Sets Errors
         /// </summary>
-        [DataMember(Name="size", EmitDefaultValue=false)]
-        public int? Size { get; set; }
+        [DataMember(Name="errors", EmitDefaultValue=false)]
+        public List<string> Errors { get; set; }
 
 
         /// <summary>
@@ -82,10 +88,10 @@ namespace DocSpring.Client.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class TemplatesdesccachedUploadTemplateDocumentMetadata {\n");
-            sb.Append("  Filename: ").Append(Filename).Append("\n");
-            sb.Append("  Size: ").Append(Size).Append("\n");
-            sb.Append("  MimeType: ").Append(MimeType).Append("\n");
+            sb.Append("class AddFieldsTemplateResponse {\n");
+            sb.Append("  NewFieldIds: ").Append(NewFieldIds).Append("\n");
+            sb.Append("  Errors: ").Append(Errors).Append("\n");
+            sb.Append("  Status: ").Append(Status).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -106,34 +112,34 @@ namespace DocSpring.Client.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as TemplatesdesccachedUploadTemplateDocumentMetadata);
+            return this.Equals(input as AddFieldsTemplateResponse);
         }
 
         /// <summary>
-        /// Returns true if TemplatesdesccachedUploadTemplateDocumentMetadata instances are equal
+        /// Returns true if AddFieldsTemplateResponse instances are equal
         /// </summary>
-        /// <param name="input">Instance of TemplatesdesccachedUploadTemplateDocumentMetadata to be compared</param>
+        /// <param name="input">Instance of AddFieldsTemplateResponse to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(TemplatesdesccachedUploadTemplateDocumentMetadata input)
+        public bool Equals(AddFieldsTemplateResponse input)
         {
             if (input == null)
                 return false;
 
             return 
                 (
-                    this.Filename == input.Filename ||
-                    (this.Filename != null &&
-                    this.Filename.Equals(input.Filename))
+                    this.NewFieldIds == input.NewFieldIds ||
+                    this.NewFieldIds != null &&
+                    this.NewFieldIds.SequenceEqual(input.NewFieldIds)
                 ) && 
                 (
-                    this.Size == input.Size ||
-                    (this.Size != null &&
-                    this.Size.Equals(input.Size))
+                    this.Errors == input.Errors ||
+                    this.Errors != null &&
+                    this.Errors.SequenceEqual(input.Errors)
                 ) && 
                 (
-                    this.MimeType == input.MimeType ||
-                    (this.MimeType != null &&
-                    this.MimeType.Equals(input.MimeType))
+                    this.Status == input.Status ||
+                    (this.Status != null &&
+                    this.Status.Equals(input.Status))
                 );
         }
 
@@ -146,12 +152,12 @@ namespace DocSpring.Client.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.Filename != null)
-                    hashCode = hashCode * 59 + this.Filename.GetHashCode();
-                if (this.Size != null)
-                    hashCode = hashCode * 59 + this.Size.GetHashCode();
-                if (this.MimeType != null)
-                    hashCode = hashCode * 59 + this.MimeType.GetHashCode();
+                if (this.NewFieldIds != null)
+                    hashCode = hashCode * 59 + this.NewFieldIds.GetHashCode();
+                if (this.Errors != null)
+                    hashCode = hashCode * 59 + this.Errors.GetHashCode();
+                if (this.Status != null)
+                    hashCode = hashCode * 59 + this.Status.GetHashCode();
                 return hashCode;
             }
         }

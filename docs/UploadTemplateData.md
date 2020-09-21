@@ -1,4 +1,4 @@
-# DocSpring.Client.Model.TemplatesdesccachedUploadTemplate
+# DocSpring.Client.Model.UploadTemplateData
 ## Properties
 
 Name | Type | Description | Notes
@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **Scss** | **string** |  | [optional] 
 **ExpireAfter** | **decimal?** |  | [optional] 
 **AllowAdditionalProperties** | **bool?** |  | [optional] 
-**Document** | [**TemplatesdesccachedUploadTemplateDocument**](TemplatesdesccachedUploadTemplateDocument.md) |  | [optional] 
+**Document** | [**UploadTemplateDataDocument**](UploadTemplateDataDocument.md) |  | [optional] 
 **Description** | **string** |  | [optional] 
 **PublicSubmissions** | **bool?** |  | [optional] 
 **SlackWebhookUrl** | **string** |  | [optional] 

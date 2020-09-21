@@ -65,6 +65,19 @@ namespace DocSpring.Client.Test
 
         
         /// <summary>
+        /// Test AddFieldsToTemplate
+        /// </summary>
+        [Test]
+        public void AddFieldsToTemplateTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string templateId = null;
+            //AddFieldsData addFieldsData = null;
+            //var response = instance.AddFieldsToTemplate(templateId, addFieldsData);
+            //Assert.IsInstanceOf<AddFieldsTemplateResponse> (response, "response is AddFieldsTemplateResponse");
+        }
+        
+        /// <summary>
         /// Test BatchGeneratePdfV1
         /// </summary>
         [Test]
@@ -156,8 +169,8 @@ namespace DocSpring.Client.Test
         public void CreateHTMLTemplateTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            //CreateTemplateData1 createTemplateData1 = null;
-            //var response = instance.CreateHTMLTemplate(createTemplateData1);
+            //CreateHtmlTemplateData createHtmlTemplateData = null;
+            //var response = instance.CreateHTMLTemplate(createHtmlTemplateData);
             //Assert.IsInstanceOf<PendingTemplate> (response, "response is PendingTemplate");
         }
         
@@ -182,8 +195,8 @@ namespace DocSpring.Client.Test
         public void CreatePDFTemplateFromUploadTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            //CreateTemplateData createTemplateData = null;
-            //var response = instance.CreatePDFTemplateFromUpload(createTemplateData);
+            //CreateTemplateFromUploadData createTemplateFromUploadData = null;
+            //var response = instance.CreatePDFTemplateFromUpload(createTemplateFromUploadData);
             //Assert.IsInstanceOf<PendingTemplate> (response, "response is PendingTemplate");
         }
         

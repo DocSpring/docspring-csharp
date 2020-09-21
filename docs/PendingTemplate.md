@@ -18,6 +18,7 @@ Name | Type | Description | Notes
 **Name** | **string** |  | [optional] 
 **TemplateType** | **string** |  | [optional] 
 **Id** | **string** |  | [optional] 
+**Locked** | **bool?** |  | [optional] 
 **RedirectUrl** | **string** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

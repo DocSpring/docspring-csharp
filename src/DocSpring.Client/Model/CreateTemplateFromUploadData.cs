@@ -25,26 +25,26 @@ using OpenAPIDateConverter = DocSpring.Client.Client.OpenAPIDateConverter;
 namespace DocSpring.Client.Model
 {
     /// <summary>
-    /// UpdateTemplateData
+    /// CreateTemplateFromUploadData
     /// </summary>
     [DataContract]
-    public partial class UpdateTemplateData :  IEquatable<UpdateTemplateData>, IValidatableObject
+    public partial class CreateTemplateFromUploadData :  IEquatable<CreateTemplateFromUploadData>, IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateTemplateData" /> class.
+        /// Initializes a new instance of the <see cref="CreateTemplateFromUploadData" /> class.
         /// </summary>
         [JsonConstructorAttribute]
-        protected UpdateTemplateData() { }
+        protected CreateTemplateFromUploadData() { }
         /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateTemplateData" /> class.
+        /// Initializes a new instance of the <see cref="CreateTemplateFromUploadData" /> class.
         /// </summary>
         /// <param name="template">template (required).</param>
-        public UpdateTemplateData(TemplateData template = default(TemplateData))
+        public CreateTemplateFromUploadData(UploadTemplateData template = default(UploadTemplateData))
         {
             // to ensure "template" is required (not null)
             if (template == null)
             {
-                throw new InvalidDataException("template is a required property for UpdateTemplateData and cannot be null");
+                throw new InvalidDataException("template is a required property for CreateTemplateFromUploadData and cannot be null");
             }
             else
             {
@@ -56,7 +56,7 @@ namespace DocSpring.Client.Model
         /// Gets or Sets Template
         /// </summary>
         [DataMember(Name="template", EmitDefaultValue=false)]
-        public TemplateData Template { get; set; }
+        public UploadTemplateData Template { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -65,7 +65,7 @@ namespace DocSpring.Client.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class UpdateTemplateData {\n");
+            sb.Append("class CreateTemplateFromUploadData {\n");
             sb.Append("  Template: ").Append(Template).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -87,15 +87,15 @@ namespace DocSpring.Client.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as UpdateTemplateData);
+            return this.Equals(input as CreateTemplateFromUploadData);
         }
 
         /// <summary>
-        /// Returns true if UpdateTemplateData instances are equal
+        /// Returns true if CreateTemplateFromUploadData instances are equal
         /// </summary>
-        /// <param name="input">Instance of UpdateTemplateData to be compared</param>
+        /// <param name="input">Instance of CreateTemplateFromUploadData to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(UpdateTemplateData input)
+        public bool Equals(CreateTemplateFromUploadData input)
         {
             if (input == null)
                 return false;

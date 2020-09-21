@@ -1,4 +1,4 @@
-# DocSpring.Client.Model.TemplatesdesccachedUploadTemplateDocumentMetadata
+# DocSpring.Client.Model.UploadTemplateDataDocumentMetadata
 ## Properties
 
 Name | Type | Description | Notes

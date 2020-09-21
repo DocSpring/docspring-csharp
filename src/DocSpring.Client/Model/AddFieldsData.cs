@@ -25,38 +25,38 @@ using OpenAPIDateConverter = DocSpring.Client.Client.OpenAPIDateConverter;
 namespace DocSpring.Client.Model
 {
     /// <summary>
-    /// CreateTemplateData1
+    /// AddFieldsData
     /// </summary>
     [DataContract]
-    public partial class CreateTemplateData1 :  IEquatable<CreateTemplateData1>, IValidatableObject
+    public partial class AddFieldsData :  IEquatable<AddFieldsData>, IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CreateTemplateData1" /> class.
+        /// Initializes a new instance of the <see cref="AddFieldsData" /> class.
         /// </summary>
         [JsonConstructorAttribute]
-        protected CreateTemplateData1() { }
+        protected AddFieldsData() { }
         /// <summary>
-        /// Initializes a new instance of the <see cref="CreateTemplateData1" /> class.
+        /// Initializes a new instance of the <see cref="AddFieldsData" /> class.
         /// </summary>
-        /// <param name="template">template (required).</param>
-        public CreateTemplateData1(TemplatesdesccachedUploadTemplate template = default(TemplatesdesccachedUploadTemplate))
+        /// <param name="fields">fields (required).</param>
+        public AddFieldsData(List<TemplatestemplateIdaddFieldsFields> fields = default(List<TemplatestemplateIdaddFieldsFields>))
         {
-            // to ensure "template" is required (not null)
-            if (template == null)
+            // to ensure "fields" is required (not null)
+            if (fields == null)
             {
-                throw new InvalidDataException("template is a required property for CreateTemplateData1 and cannot be null");
+                throw new InvalidDataException("fields is a required property for AddFieldsData and cannot be null");
             }
             else
             {
-                this.Template = template;
+                this.Fields = fields;
             }
         }
         
         /// <summary>
-        /// Gets or Sets Template
+        /// Gets or Sets Fields
         /// </summary>
-        [DataMember(Name="template", EmitDefaultValue=false)]
-        public TemplatesdesccachedUploadTemplate Template { get; set; }
+        [DataMember(Name="fields", EmitDefaultValue=false)]
+        public List<TemplatestemplateIdaddFieldsFields> Fields { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -65,8 +65,8 @@ namespace DocSpring.Client.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class CreateTemplateData1 {\n");
-            sb.Append("  Template: ").Append(Template).Append("\n");
+            sb.Append("class AddFieldsData {\n");
+            sb.Append("  Fields: ").Append(Fields).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -87,24 +87,24 @@ namespace DocSpring.Client.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as CreateTemplateData1);
+            return this.Equals(input as AddFieldsData);
         }
 
         /// <summary>
-        /// Returns true if CreateTemplateData1 instances are equal
+        /// Returns true if AddFieldsData instances are equal
         /// </summary>
-        /// <param name="input">Instance of CreateTemplateData1 to be compared</param>
+        /// <param name="input">Instance of AddFieldsData to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(CreateTemplateData1 input)
+        public bool Equals(AddFieldsData input)
         {
             if (input == null)
                 return false;
 
             return 
                 (
-                    this.Template == input.Template ||
-                    (this.Template != null &&
-                    this.Template.Equals(input.Template))
+                    this.Fields == input.Fields ||
+                    this.Fields != null &&
+                    this.Fields.SequenceEqual(input.Fields)
                 );
         }
 
@@ -117,8 +117,8 @@ namespace DocSpring.Client.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.Template != null)
-                    hashCode = hashCode * 59 + this.Template.GetHashCode();
+                if (this.Fields != null)
+                    hashCode = hashCode * 59 + this.Fields.GetHashCode();
                 return hashCode;
             }
         }

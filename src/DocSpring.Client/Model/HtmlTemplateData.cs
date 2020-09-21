@@ -25,10 +25,10 @@ using OpenAPIDateConverter = DocSpring.Client.Client.OpenAPIDateConverter;
 namespace DocSpring.Client.Model
 {
     /// <summary>
-    /// TemplatestemplateIdTemplate
+    /// HtmlTemplateData
     /// </summary>
     [DataContract]
-    public partial class TemplatestemplateIdTemplate :  IEquatable<TemplatestemplateIdTemplate>, IValidatableObject
+    public partial class HtmlTemplateData :  IEquatable<HtmlTemplateData>, IValidatableObject
     {
         /// <summary>
         /// Defines ExpirationInterval
@@ -62,7 +62,32 @@ namespace DocSpring.Client.Model
         [DataMember(Name="expiration_interval", EmitDefaultValue=false)]
         public ExpirationIntervalEnum? ExpirationInterval { get; set; }
         /// <summary>
-        /// Initializes a new instance of the <see cref="TemplatestemplateIdTemplate" /> class.
+        /// Defines TemplateType
+        /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum TemplateTypeEnum
+        {
+            /// <summary>
+            /// Enum Pdf for value: pdf
+            /// </summary>
+            [EnumMember(Value = "pdf")]
+            Pdf = 1,
+
+            /// <summary>
+            /// Enum Html for value: html
+            /// </summary>
+            [EnumMember(Value = "html")]
+            Html = 2
+
+        }
+
+        /// <summary>
+        /// Gets or Sets TemplateType
+        /// </summary>
+        [DataMember(Name="template_type", EmitDefaultValue=false)]
+        public TemplateTypeEnum? TemplateType { get; set; }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HtmlTemplateData" /> class.
         /// </summary>
         /// <param name="expirationInterval">expirationInterval.</param>
         /// <param name="webhookUrl">webhookUrl.</param>
@@ -79,8 +104,9 @@ namespace DocSpring.Client.Model
         /// <param name="name">name.</param>
         /// <param name="html">html.</param>
         /// <param name="footerHtml">footerHtml.</param>
+        /// <param name="templateType">templateType.</param>
         /// <param name="redirectUrl">redirectUrl.</param>
-        public TemplatestemplateIdTemplate(ExpirationIntervalEnum? expirationInterval = default(ExpirationIntervalEnum?), string webhookUrl = default(string), string scss = default(string), decimal? expireAfter = default(decimal?), bool? allowAdditionalProperties = default(bool?), string description = default(string), bool? publicSubmissions = default(bool?), string slackWebhookUrl = default(string), string headerHtml = default(string), bool? publicWebForm = default(bool?), bool? editableSubmissions = default(bool?), bool? expireSubmissions = default(bool?), string name = default(string), string html = default(string), string footerHtml = default(string), string redirectUrl = default(string))
+        public HtmlTemplateData(ExpirationIntervalEnum? expirationInterval = default(ExpirationIntervalEnum?), string webhookUrl = default(string), string scss = default(string), decimal? expireAfter = default(decimal?), bool? allowAdditionalProperties = default(bool?), string description = default(string), bool? publicSubmissions = default(bool?), string slackWebhookUrl = default(string), string headerHtml = default(string), bool? publicWebForm = default(bool?), bool? editableSubmissions = default(bool?), bool? expireSubmissions = default(bool?), string name = default(string), string html = default(string), string footerHtml = default(string), TemplateTypeEnum? templateType = default(TemplateTypeEnum?), string redirectUrl = default(string))
         {
             this.ExpirationInterval = expirationInterval;
             this.WebhookUrl = webhookUrl;
@@ -97,6 +123,7 @@ namespace DocSpring.Client.Model
             this.Name = name;
             this.Html = html;
             this.FooterHtml = footerHtml;
+            this.TemplateType = templateType;
             this.RedirectUrl = redirectUrl;
         }
         
@@ -185,6 +212,7 @@ namespace DocSpring.Client.Model
         [DataMember(Name="footer_html", EmitDefaultValue=false)]
         public string FooterHtml { get; set; }
 
+
         /// <summary>
         /// Gets or Sets RedirectUrl
         /// </summary>
@@ -198,7 +226,7 @@ namespace DocSpring.Client.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class TemplatestemplateIdTemplate {\n");
+            sb.Append("class HtmlTemplateData {\n");
             sb.Append("  ExpirationInterval: ").Append(ExpirationInterval).Append("\n");
             sb.Append("  WebhookUrl: ").Append(WebhookUrl).Append("\n");
             sb.Append("  Scss: ").Append(Scss).Append("\n");
@@ -214,6 +242,7 @@ namespace DocSpring.Client.Model
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Html: ").Append(Html).Append("\n");
             sb.Append("  FooterHtml: ").Append(FooterHtml).Append("\n");
+            sb.Append("  TemplateType: ").Append(TemplateType).Append("\n");
             sb.Append("  RedirectUrl: ").Append(RedirectUrl).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -235,15 +264,15 @@ namespace DocSpring.Client.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as TemplatestemplateIdTemplate);
+            return this.Equals(input as HtmlTemplateData);
         }
 
         /// <summary>
-        /// Returns true if TemplatestemplateIdTemplate instances are equal
+        /// Returns true if HtmlTemplateData instances are equal
         /// </summary>
-        /// <param name="input">Instance of TemplatestemplateIdTemplate to be compared</param>
+        /// <param name="input">Instance of HtmlTemplateData to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(TemplatestemplateIdTemplate input)
+        public bool Equals(HtmlTemplateData input)
         {
             if (input == null)
                 return false;
@@ -325,6 +354,11 @@ namespace DocSpring.Client.Model
                     this.FooterHtml.Equals(input.FooterHtml))
                 ) && 
                 (
+                    this.TemplateType == input.TemplateType ||
+                    (this.TemplateType != null &&
+                    this.TemplateType.Equals(input.TemplateType))
+                ) && 
+                (
                     this.RedirectUrl == input.RedirectUrl ||
                     (this.RedirectUrl != null &&
                     this.RedirectUrl.Equals(input.RedirectUrl))
@@ -370,6 +404,8 @@ namespace DocSpring.Client.Model
                     hashCode = hashCode * 59 + this.Html.GetHashCode();
                 if (this.FooterHtml != null)
                     hashCode = hashCode * 59 + this.FooterHtml.GetHashCode();
+                if (this.TemplateType != null)
+                    hashCode = hashCode * 59 + this.TemplateType.GetHashCode();
                 if (this.RedirectUrl != null)
                     hashCode = hashCode * 59 + this.RedirectUrl.GetHashCode();
                 return hashCode;

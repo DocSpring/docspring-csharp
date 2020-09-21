@@ -4,6 +4,7 @@ All URIs are relative to *https://api.docspring.com/api/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**AddFieldsToTemplate**](PDFApi.md#addfieldstotemplate) | **PUT** /templates/{template_id}/add_fields | Add new fields to a Template
 [**BatchGeneratePdfV1**](PDFApi.md#batchgeneratepdfv1) | **POST** /templates/{template_id}/submissions/batch | Generates multiple PDFs
 [**BatchGeneratePdfs**](PDFApi.md#batchgeneratepdfs) | **POST** /submissions/batches | Generates multiple PDFs
 [**CombinePdfs**](PDFApi.md#combinepdfs) | **POST** /combined_submissions?v&#x3D;2 | Merge submission PDFs, template PDFs, or custom files
@@ -34,6 +35,71 @@ Method | HTTP request | Description
 [**UpdateDataRequest**](PDFApi.md#updatedatarequest) | **PUT** /data_requests/{data_request_id} | Update a submission data request
 [**UpdateTemplate**](PDFApi.md#updatetemplate) | **PUT** /templates/{template_id} | Update a Template
 
+
+<a name="addfieldstotemplate"></a>
+# **AddFieldsToTemplate**
+> AddFieldsTemplateResponse AddFieldsToTemplate (string templateId, AddFieldsData addFieldsData)
+
+Add new fields to a Template
+
+### Example
+```csharp
+using System;
+using System.Diagnostics;
+using DocSpring.Client.Api;
+using DocSpring.Client.Client;
+using DocSpring.Client.Model;
+
+namespace Example
+{
+    public class AddFieldsToTemplateExample
+    {
+        public void main()
+        {
+            // Configure HTTP basic authorization: api_token_basic
+            Configuration.Default.Username = "YOUR_USERNAME";
+            Configuration.Default.Password = "YOUR_PASSWORD";
+
+            var apiInstance = new PDFApi();
+            var templateId = tpl_000000000000000002;  // string | 
+            var addFieldsData = new AddFieldsData(); // AddFieldsData | 
+
+            try
+            {
+                // Add new fields to a Template
+                AddFieldsTemplateResponse result = apiInstance.AddFieldsToTemplate(templateId, addFieldsData);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling PDFApi.AddFieldsToTemplate: " + e.Message );
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **templateId** | **string**|  | 
+ **addFieldsData** | [**AddFieldsData**](AddFieldsData.md)|  | 
+
+### Return type
+
+[**AddFieldsTemplateResponse**](AddFieldsTemplateResponse.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a name="batchgeneratepdfv1"></a>
 # **BatchGeneratePdfV1**
@@ -480,7 +546,7 @@ Name | Type | Description  | Notes
 
 <a name="createhtmltemplate"></a>
 # **CreateHTMLTemplate**
-> PendingTemplate CreateHTMLTemplate (CreateTemplateData1 createTemplateData1)
+> PendingTemplate CreateHTMLTemplate (CreateHtmlTemplateData createHtmlTemplateData)
 
 Create a new HTML template
 
@@ -503,12 +569,12 @@ namespace Example
             Configuration.Default.Password = "YOUR_PASSWORD";
 
             var apiInstance = new PDFApi();
-            var createTemplateData1 = new CreateTemplateData1(); // CreateTemplateData1 | 
+            var createHtmlTemplateData = new CreateHtmlTemplateData(); // CreateHtmlTemplateData | 
 
             try
             {
                 // Create a new HTML template
-                PendingTemplate result = apiInstance.CreateHTMLTemplate(createTemplateData1);
+                PendingTemplate result = apiInstance.CreateHTMLTemplate(createHtmlTemplateData);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -524,7 +590,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **createTemplateData1** | [**CreateTemplateData1**](CreateTemplateData1.md)|  | 
+ **createHtmlTemplateData** | [**CreateHtmlTemplateData**](CreateHtmlTemplateData.md)|  | 
 
 ### Return type
 
@@ -610,7 +676,7 @@ Name | Type | Description  | Notes
 
 <a name="createpdftemplatefromupload"></a>
 # **CreatePDFTemplateFromUpload**
-> PendingTemplate CreatePDFTemplateFromUpload (CreateTemplateData createTemplateData)
+> PendingTemplate CreatePDFTemplateFromUpload (CreateTemplateFromUploadData createTemplateFromUploadData)
 
 Create a new PDF template from a cached presign upload
 
@@ -633,12 +699,12 @@ namespace Example
             Configuration.Default.Password = "YOUR_PASSWORD";
 
             var apiInstance = new PDFApi();
-            var createTemplateData = new CreateTemplateData(); // CreateTemplateData | 
+            var createTemplateFromUploadData = new CreateTemplateFromUploadData(); // CreateTemplateFromUploadData | 
 
             try
             {
                 // Create a new PDF template from a cached presign upload
-                PendingTemplate result = apiInstance.CreatePDFTemplateFromUpload(createTemplateData);
+                PendingTemplate result = apiInstance.CreatePDFTemplateFromUpload(createTemplateFromUploadData);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -654,7 +720,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **createTemplateData** | [**CreateTemplateData**](CreateTemplateData.md)|  | 
+ **createTemplateFromUploadData** | [**CreateTemplateFromUploadData**](CreateTemplateFromUploadData.md)|  | 
 
 ### Return type
 

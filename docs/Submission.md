@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **ProcessedAt** | **string** |  | [optional] 
 **State** | **string** |  | 
 **Metadata** | **Object** |  | [optional] 
+**TruncatedText** | **Object** |  | [optional] 
 **PdfHash** | **string** |  | [optional] 
 **DownloadUrl** | **string** |  | [optional] 
 **PermanentDownloadUrl** | **string** |  | [optional] 

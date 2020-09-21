@@ -25,10 +25,10 @@ using OpenAPIDateConverter = DocSpring.Client.Client.OpenAPIDateConverter;
 namespace DocSpring.Client.Model
 {
     /// <summary>
-    /// TemplatesdesccachedUploadTemplate
+    /// UploadTemplateData
     /// </summary>
     [DataContract]
-    public partial class TemplatesdesccachedUploadTemplate :  IEquatable<TemplatesdesccachedUploadTemplate>, IValidatableObject
+    public partial class UploadTemplateData :  IEquatable<UploadTemplateData>, IValidatableObject
     {
         /// <summary>
         /// Defines ExpirationInterval
@@ -87,7 +87,7 @@ namespace DocSpring.Client.Model
         [DataMember(Name="template_type", EmitDefaultValue=false)]
         public TemplateTypeEnum? TemplateType { get; set; }
         /// <summary>
-        /// Initializes a new instance of the <see cref="TemplatesdesccachedUploadTemplate" /> class.
+        /// Initializes a new instance of the <see cref="UploadTemplateData" /> class.
         /// </summary>
         /// <param name="expirationInterval">expirationInterval.</param>
         /// <param name="webhookUrl">webhookUrl.</param>
@@ -107,7 +107,7 @@ namespace DocSpring.Client.Model
         /// <param name="footerHtml">footerHtml.</param>
         /// <param name="templateType">templateType.</param>
         /// <param name="redirectUrl">redirectUrl.</param>
-        public TemplatesdesccachedUploadTemplate(ExpirationIntervalEnum? expirationInterval = default(ExpirationIntervalEnum?), string webhookUrl = default(string), string scss = default(string), decimal? expireAfter = default(decimal?), bool? allowAdditionalProperties = default(bool?), TemplatesdesccachedUploadTemplateDocument document = default(TemplatesdesccachedUploadTemplateDocument), string description = default(string), bool? publicSubmissions = default(bool?), string slackWebhookUrl = default(string), string headerHtml = default(string), bool? publicWebForm = default(bool?), bool? editableSubmissions = default(bool?), bool? expireSubmissions = default(bool?), string name = default(string), string html = default(string), string footerHtml = default(string), TemplateTypeEnum? templateType = default(TemplateTypeEnum?), string redirectUrl = default(string))
+        public UploadTemplateData(ExpirationIntervalEnum? expirationInterval = default(ExpirationIntervalEnum?), string webhookUrl = default(string), string scss = default(string), decimal? expireAfter = default(decimal?), bool? allowAdditionalProperties = default(bool?), UploadTemplateDataDocument document = default(UploadTemplateDataDocument), string description = default(string), bool? publicSubmissions = default(bool?), string slackWebhookUrl = default(string), string headerHtml = default(string), bool? publicWebForm = default(bool?), bool? editableSubmissions = default(bool?), bool? expireSubmissions = default(bool?), string name = default(string), string html = default(string), string footerHtml = default(string), TemplateTypeEnum? templateType = default(TemplateTypeEnum?), string redirectUrl = default(string))
         {
             this.ExpirationInterval = expirationInterval;
             this.WebhookUrl = webhookUrl;
@@ -158,7 +158,7 @@ namespace DocSpring.Client.Model
         /// Gets or Sets Document
         /// </summary>
         [DataMember(Name="document", EmitDefaultValue=false)]
-        public TemplatesdesccachedUploadTemplateDocument Document { get; set; }
+        public UploadTemplateDataDocument Document { get; set; }
 
         /// <summary>
         /// Gets or Sets Description
@@ -234,7 +234,7 @@ namespace DocSpring.Client.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class TemplatesdesccachedUploadTemplate {\n");
+            sb.Append("class UploadTemplateData {\n");
             sb.Append("  ExpirationInterval: ").Append(ExpirationInterval).Append("\n");
             sb.Append("  WebhookUrl: ").Append(WebhookUrl).Append("\n");
             sb.Append("  Scss: ").Append(Scss).Append("\n");
@@ -273,15 +273,15 @@ namespace DocSpring.Client.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as TemplatesdesccachedUploadTemplate);
+            return this.Equals(input as UploadTemplateData);
         }
 
         /// <summary>
-        /// Returns true if TemplatesdesccachedUploadTemplate instances are equal
+        /// Returns true if UploadTemplateData instances are equal
         /// </summary>
-        /// <param name="input">Instance of TemplatesdesccachedUploadTemplate to be compared</param>
+        /// <param name="input">Instance of UploadTemplateData to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(TemplatesdesccachedUploadTemplate input)
+        public bool Equals(UploadTemplateData input)
         {
             if (input == null)
                 return false;

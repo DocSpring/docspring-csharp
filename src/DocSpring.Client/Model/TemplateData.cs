@@ -25,10 +25,10 @@ using OpenAPIDateConverter = DocSpring.Client.Client.OpenAPIDateConverter;
 namespace DocSpring.Client.Model
 {
     /// <summary>
-    /// PendingTemplate
+    /// TemplateData
     /// </summary>
     [DataContract]
-    public partial class PendingTemplate :  IEquatable<PendingTemplate>, IValidatableObject
+    public partial class TemplateData :  IEquatable<TemplateData>, IValidatableObject
     {
         /// <summary>
         /// Defines ExpirationInterval
@@ -62,43 +62,41 @@ namespace DocSpring.Client.Model
         [DataMember(Name="expiration_interval", EmitDefaultValue=false)]
         public ExpirationIntervalEnum? ExpirationInterval { get; set; }
         /// <summary>
-        /// Initializes a new instance of the <see cref="PendingTemplate" /> class.
+        /// Initializes a new instance of the <see cref="TemplateData" /> class.
         /// </summary>
         /// <param name="expirationInterval">expirationInterval.</param>
         /// <param name="webhookUrl">webhookUrl.</param>
-        /// <param name="parentFolderId">parentFolderId.</param>
+        /// <param name="scss">scss.</param>
         /// <param name="expireAfter">expireAfter.</param>
         /// <param name="allowAdditionalProperties">allowAdditionalProperties.</param>
         /// <param name="description">description.</param>
         /// <param name="publicSubmissions">publicSubmissions.</param>
         /// <param name="slackWebhookUrl">slackWebhookUrl.</param>
-        /// <param name="path">path.</param>
+        /// <param name="headerHtml">headerHtml.</param>
         /// <param name="publicWebForm">publicWebForm.</param>
         /// <param name="editableSubmissions">editableSubmissions.</param>
         /// <param name="expireSubmissions">expireSubmissions.</param>
         /// <param name="name">name.</param>
-        /// <param name="templateType">templateType.</param>
-        /// <param name="id">id.</param>
-        /// <param name="locked">locked.</param>
+        /// <param name="html">html.</param>
+        /// <param name="footerHtml">footerHtml.</param>
         /// <param name="redirectUrl">redirectUrl.</param>
-        public PendingTemplate(ExpirationIntervalEnum? expirationInterval = default(ExpirationIntervalEnum?), string webhookUrl = default(string), string parentFolderId = default(string), decimal? expireAfter = default(decimal?), bool? allowAdditionalProperties = default(bool?), string description = default(string), bool? publicSubmissions = default(bool?), string slackWebhookUrl = default(string), string path = default(string), bool? publicWebForm = default(bool?), bool? editableSubmissions = default(bool?), bool? expireSubmissions = default(bool?), string name = default(string), string templateType = default(string), string id = default(string), bool? locked = default(bool?), string redirectUrl = default(string))
+        public TemplateData(ExpirationIntervalEnum? expirationInterval = default(ExpirationIntervalEnum?), string webhookUrl = default(string), string scss = default(string), decimal? expireAfter = default(decimal?), bool? allowAdditionalProperties = default(bool?), string description = default(string), bool? publicSubmissions = default(bool?), string slackWebhookUrl = default(string), string headerHtml = default(string), bool? publicWebForm = default(bool?), bool? editableSubmissions = default(bool?), bool? expireSubmissions = default(bool?), string name = default(string), string html = default(string), string footerHtml = default(string), string redirectUrl = default(string))
         {
             this.ExpirationInterval = expirationInterval;
             this.WebhookUrl = webhookUrl;
-            this.ParentFolderId = parentFolderId;
+            this.Scss = scss;
             this.ExpireAfter = expireAfter;
             this.AllowAdditionalProperties = allowAdditionalProperties;
             this.Description = description;
             this.PublicSubmissions = publicSubmissions;
             this.SlackWebhookUrl = slackWebhookUrl;
-            this.Path = path;
+            this.HeaderHtml = headerHtml;
             this.PublicWebForm = publicWebForm;
             this.EditableSubmissions = editableSubmissions;
             this.ExpireSubmissions = expireSubmissions;
             this.Name = name;
-            this.TemplateType = templateType;
-            this.Id = id;
-            this.Locked = locked;
+            this.Html = html;
+            this.FooterHtml = footerHtml;
             this.RedirectUrl = redirectUrl;
         }
         
@@ -110,10 +108,10 @@ namespace DocSpring.Client.Model
         public string WebhookUrl { get; set; }
 
         /// <summary>
-        /// Gets or Sets ParentFolderId
+        /// Gets or Sets Scss
         /// </summary>
-        [DataMember(Name="parent_folder_id", EmitDefaultValue=false)]
-        public string ParentFolderId { get; set; }
+        [DataMember(Name="scss", EmitDefaultValue=false)]
+        public string Scss { get; set; }
 
         /// <summary>
         /// Gets or Sets ExpireAfter
@@ -146,10 +144,10 @@ namespace DocSpring.Client.Model
         public string SlackWebhookUrl { get; set; }
 
         /// <summary>
-        /// Gets or Sets Path
+        /// Gets or Sets HeaderHtml
         /// </summary>
-        [DataMember(Name="path", EmitDefaultValue=false)]
-        public string Path { get; set; }
+        [DataMember(Name="header_html", EmitDefaultValue=false)]
+        public string HeaderHtml { get; set; }
 
         /// <summary>
         /// Gets or Sets PublicWebForm
@@ -176,22 +174,16 @@ namespace DocSpring.Client.Model
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or Sets TemplateType
+        /// Gets or Sets Html
         /// </summary>
-        [DataMember(Name="template_type", EmitDefaultValue=false)]
-        public string TemplateType { get; set; }
+        [DataMember(Name="html", EmitDefaultValue=false)]
+        public string Html { get; set; }
 
         /// <summary>
-        /// Gets or Sets Id
+        /// Gets or Sets FooterHtml
         /// </summary>
-        [DataMember(Name="id", EmitDefaultValue=false)]
-        public string Id { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Locked
-        /// </summary>
-        [DataMember(Name="locked", EmitDefaultValue=false)]
-        public bool? Locked { get; set; }
+        [DataMember(Name="footer_html", EmitDefaultValue=false)]
+        public string FooterHtml { get; set; }
 
         /// <summary>
         /// Gets or Sets RedirectUrl
@@ -206,23 +198,22 @@ namespace DocSpring.Client.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class PendingTemplate {\n");
+            sb.Append("class TemplateData {\n");
             sb.Append("  ExpirationInterval: ").Append(ExpirationInterval).Append("\n");
             sb.Append("  WebhookUrl: ").Append(WebhookUrl).Append("\n");
-            sb.Append("  ParentFolderId: ").Append(ParentFolderId).Append("\n");
+            sb.Append("  Scss: ").Append(Scss).Append("\n");
             sb.Append("  ExpireAfter: ").Append(ExpireAfter).Append("\n");
             sb.Append("  AllowAdditionalProperties: ").Append(AllowAdditionalProperties).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  PublicSubmissions: ").Append(PublicSubmissions).Append("\n");
             sb.Append("  SlackWebhookUrl: ").Append(SlackWebhookUrl).Append("\n");
-            sb.Append("  Path: ").Append(Path).Append("\n");
+            sb.Append("  HeaderHtml: ").Append(HeaderHtml).Append("\n");
             sb.Append("  PublicWebForm: ").Append(PublicWebForm).Append("\n");
             sb.Append("  EditableSubmissions: ").Append(EditableSubmissions).Append("\n");
             sb.Append("  ExpireSubmissions: ").Append(ExpireSubmissions).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
-            sb.Append("  TemplateType: ").Append(TemplateType).Append("\n");
-            sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  Locked: ").Append(Locked).Append("\n");
+            sb.Append("  Html: ").Append(Html).Append("\n");
+            sb.Append("  FooterHtml: ").Append(FooterHtml).Append("\n");
             sb.Append("  RedirectUrl: ").Append(RedirectUrl).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -244,15 +235,15 @@ namespace DocSpring.Client.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as PendingTemplate);
+            return this.Equals(input as TemplateData);
         }
 
         /// <summary>
-        /// Returns true if PendingTemplate instances are equal
+        /// Returns true if TemplateData instances are equal
         /// </summary>
-        /// <param name="input">Instance of PendingTemplate to be compared</param>
+        /// <param name="input">Instance of TemplateData to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(PendingTemplate input)
+        public bool Equals(TemplateData input)
         {
             if (input == null)
                 return false;
@@ -269,9 +260,9 @@ namespace DocSpring.Client.Model
                     this.WebhookUrl.Equals(input.WebhookUrl))
                 ) && 
                 (
-                    this.ParentFolderId == input.ParentFolderId ||
-                    (this.ParentFolderId != null &&
-                    this.ParentFolderId.Equals(input.ParentFolderId))
+                    this.Scss == input.Scss ||
+                    (this.Scss != null &&
+                    this.Scss.Equals(input.Scss))
                 ) && 
                 (
                     this.ExpireAfter == input.ExpireAfter ||
@@ -299,9 +290,9 @@ namespace DocSpring.Client.Model
                     this.SlackWebhookUrl.Equals(input.SlackWebhookUrl))
                 ) && 
                 (
-                    this.Path == input.Path ||
-                    (this.Path != null &&
-                    this.Path.Equals(input.Path))
+                    this.HeaderHtml == input.HeaderHtml ||
+                    (this.HeaderHtml != null &&
+                    this.HeaderHtml.Equals(input.HeaderHtml))
                 ) && 
                 (
                     this.PublicWebForm == input.PublicWebForm ||
@@ -324,19 +315,14 @@ namespace DocSpring.Client.Model
                     this.Name.Equals(input.Name))
                 ) && 
                 (
-                    this.TemplateType == input.TemplateType ||
-                    (this.TemplateType != null &&
-                    this.TemplateType.Equals(input.TemplateType))
+                    this.Html == input.Html ||
+                    (this.Html != null &&
+                    this.Html.Equals(input.Html))
                 ) && 
                 (
-                    this.Id == input.Id ||
-                    (this.Id != null &&
-                    this.Id.Equals(input.Id))
-                ) && 
-                (
-                    this.Locked == input.Locked ||
-                    (this.Locked != null &&
-                    this.Locked.Equals(input.Locked))
+                    this.FooterHtml == input.FooterHtml ||
+                    (this.FooterHtml != null &&
+                    this.FooterHtml.Equals(input.FooterHtml))
                 ) && 
                 (
                     this.RedirectUrl == input.RedirectUrl ||
@@ -358,8 +344,8 @@ namespace DocSpring.Client.Model
                     hashCode = hashCode * 59 + this.ExpirationInterval.GetHashCode();
                 if (this.WebhookUrl != null)
                     hashCode = hashCode * 59 + this.WebhookUrl.GetHashCode();
-                if (this.ParentFolderId != null)
-                    hashCode = hashCode * 59 + this.ParentFolderId.GetHashCode();
+                if (this.Scss != null)
+                    hashCode = hashCode * 59 + this.Scss.GetHashCode();
                 if (this.ExpireAfter != null)
                     hashCode = hashCode * 59 + this.ExpireAfter.GetHashCode();
                 if (this.AllowAdditionalProperties != null)
@@ -370,8 +356,8 @@ namespace DocSpring.Client.Model
                     hashCode = hashCode * 59 + this.PublicSubmissions.GetHashCode();
                 if (this.SlackWebhookUrl != null)
                     hashCode = hashCode * 59 + this.SlackWebhookUrl.GetHashCode();
-                if (this.Path != null)
-                    hashCode = hashCode * 59 + this.Path.GetHashCode();
+                if (this.HeaderHtml != null)
+                    hashCode = hashCode * 59 + this.HeaderHtml.GetHashCode();
                 if (this.PublicWebForm != null)
                     hashCode = hashCode * 59 + this.PublicWebForm.GetHashCode();
                 if (this.EditableSubmissions != null)
@@ -380,12 +366,10 @@ namespace DocSpring.Client.Model
                     hashCode = hashCode * 59 + this.ExpireSubmissions.GetHashCode();
                 if (this.Name != null)
                     hashCode = hashCode * 59 + this.Name.GetHashCode();
-                if (this.TemplateType != null)
-                    hashCode = hashCode * 59 + this.TemplateType.GetHashCode();
-                if (this.Id != null)
-                    hashCode = hashCode * 59 + this.Id.GetHashCode();
-                if (this.Locked != null)
-                    hashCode = hashCode * 59 + this.Locked.GetHashCode();
+                if (this.Html != null)
+                    hashCode = hashCode * 59 + this.Html.GetHashCode();
+                if (this.FooterHtml != null)
+                    hashCode = hashCode * 59 + this.FooterHtml.GetHashCode();
                 if (this.RedirectUrl != null)
                     hashCode = hashCode * 59 + this.RedirectUrl.GetHashCode();
                 return hashCode;

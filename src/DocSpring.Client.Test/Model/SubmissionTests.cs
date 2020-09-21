@@ -139,6 +139,14 @@ namespace DocSpring.Client.Test
             // TODO unit test for the property 'Metadata'
         }
         /// <summary>
+        /// Test the property 'TruncatedText'
+        /// </summary>
+        [Test]
+        public void TruncatedTextTest()
+        {
+            // TODO unit test for the property 'TruncatedText'
+        }
+        /// <summary>
         /// Test the property 'PdfHash'
         /// </summary>
         [Test]

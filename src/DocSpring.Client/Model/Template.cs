@@ -81,9 +81,10 @@ namespace DocSpring.Client.Model
         /// <param name="templateType">templateType.</param>
         /// <param name="id">id.</param>
         /// <param name="pageDimensions">pageDimensions.</param>
+        /// <param name="locked">locked.</param>
         /// <param name="redirectUrl">redirectUrl.</param>
         /// <param name="documentUrl">documentUrl.</param>
-        public Template(ExpirationIntervalEnum? expirationInterval = default(ExpirationIntervalEnum?), string webhookUrl = default(string), string parentFolderId = default(string), decimal? expireAfter = default(decimal?), bool? allowAdditionalProperties = default(bool?), string description = default(string), bool? publicSubmissions = default(bool?), string slackWebhookUrl = default(string), string path = default(string), bool? publicWebForm = default(bool?), bool? editableSubmissions = default(bool?), bool? expireSubmissions = default(bool?), string name = default(string), string permanentDocumentUrl = default(string), string templateType = default(string), string id = default(string), List<List<decimal?>> pageDimensions = default(List<List<decimal?>>), string redirectUrl = default(string), string documentUrl = default(string))
+        public Template(ExpirationIntervalEnum? expirationInterval = default(ExpirationIntervalEnum?), string webhookUrl = default(string), string parentFolderId = default(string), decimal? expireAfter = default(decimal?), bool? allowAdditionalProperties = default(bool?), string description = default(string), bool? publicSubmissions = default(bool?), string slackWebhookUrl = default(string), string path = default(string), bool? publicWebForm = default(bool?), bool? editableSubmissions = default(bool?), bool? expireSubmissions = default(bool?), string name = default(string), string permanentDocumentUrl = default(string), string templateType = default(string), string id = default(string), List<List<decimal?>> pageDimensions = default(List<List<decimal?>>), bool? locked = default(bool?), string redirectUrl = default(string), string documentUrl = default(string))
         {
             this.ExpirationInterval = expirationInterval;
             this.WebhookUrl = webhookUrl;
@@ -102,6 +103,7 @@ namespace DocSpring.Client.Model
             this.TemplateType = templateType;
             this.Id = id;
             this.PageDimensions = pageDimensions;
+            this.Locked = locked;
             this.RedirectUrl = redirectUrl;
             this.DocumentUrl = documentUrl;
         }
@@ -204,6 +206,12 @@ namespace DocSpring.Client.Model
         public List<List<decimal?>> PageDimensions { get; set; }
 
         /// <summary>
+        /// Gets or Sets Locked
+        /// </summary>
+        [DataMember(Name="locked", EmitDefaultValue=false)]
+        public bool? Locked { get; set; }
+
+        /// <summary>
         /// Gets or Sets RedirectUrl
         /// </summary>
         [DataMember(Name="redirect_url", EmitDefaultValue=false)]
@@ -240,6 +248,7 @@ namespace DocSpring.Client.Model
             sb.Append("  TemplateType: ").Append(TemplateType).Append("\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  PageDimensions: ").Append(PageDimensions).Append("\n");
+            sb.Append("  Locked: ").Append(Locked).Append("\n");
             sb.Append("  RedirectUrl: ").Append(RedirectUrl).Append("\n");
             sb.Append("  DocumentUrl: ").Append(DocumentUrl).Append("\n");
             sb.Append("}\n");
@@ -362,6 +371,11 @@ namespace DocSpring.Client.Model
                     this.PageDimensions.SequenceEqual(input.PageDimensions)
                 ) && 
                 (
+                    this.Locked == input.Locked ||
+                    (this.Locked != null &&
+                    this.Locked.Equals(input.Locked))
+                ) && 
+                (
                     this.RedirectUrl == input.RedirectUrl ||
                     (this.RedirectUrl != null &&
                     this.RedirectUrl.Equals(input.RedirectUrl))
@@ -416,6 +430,8 @@ namespace DocSpring.Client.Model
                     hashCode = hashCode * 59 + this.Id.GetHashCode();
                 if (this.PageDimensions != null)
                     hashCode = hashCode * 59 + this.PageDimensions.GetHashCode();
+                if (this.Locked != null)
+                    hashCode = hashCode * 59 + this.Locked.GetHashCode();
                 if (this.RedirectUrl != null)
                     hashCode = hashCode * 59 + this.RedirectUrl.GetHashCode();
                 if (this.DocumentUrl != null)

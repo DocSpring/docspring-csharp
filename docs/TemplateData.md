@@ -1,4 +1,4 @@
-# DocSpring.Client.Model.TemplatestemplateIdTemplate
+# DocSpring.Client.Model.TemplateData
 ## Properties
 
 Name | Type | Description | Notes

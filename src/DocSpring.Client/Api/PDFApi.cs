@@ -25,6 +25,29 @@ namespace DocSpring.Client.Api
     {
         #region Synchronous Operations
         /// <summary>
+        /// Add new fields to a Template
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="addFieldsData"></param>
+        /// <returns>AddFieldsTemplateResponse</returns>
+        AddFieldsTemplateResponse AddFieldsToTemplate (string templateId, AddFieldsData addFieldsData);
+
+        /// <summary>
+        /// Add new fields to a Template
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="addFieldsData"></param>
+        /// <returns>ApiResponse of AddFieldsTemplateResponse</returns>
+        ApiResponse<AddFieldsTemplateResponse> AddFieldsToTemplateWithHttpInfo (string templateId, AddFieldsData addFieldsData);
+        /// <summary>
         /// Generates multiple PDFs
         /// </summary>
         /// <remarks>
@@ -180,9 +203,9 @@ namespace DocSpring.Client.Api
         /// 
         /// </remarks>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="createTemplateData1"></param>
+        /// <param name="createHtmlTemplateData"></param>
         /// <returns>PendingTemplate</returns>
-        PendingTemplate CreateHTMLTemplate (CreateTemplateData1 createTemplateData1);
+        PendingTemplate CreateHTMLTemplate (CreateHtmlTemplateData createHtmlTemplateData);
 
         /// <summary>
         /// Create a new HTML template
@@ -191,9 +214,9 @@ namespace DocSpring.Client.Api
         /// 
         /// </remarks>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="createTemplateData1"></param>
+        /// <param name="createHtmlTemplateData"></param>
         /// <returns>ApiResponse of PendingTemplate</returns>
-        ApiResponse<PendingTemplate> CreateHTMLTemplateWithHttpInfo (CreateTemplateData1 createTemplateData1);
+        ApiResponse<PendingTemplate> CreateHTMLTemplateWithHttpInfo (CreateHtmlTemplateData createHtmlTemplateData);
         /// <summary>
         /// Create a new PDF template with a form POST file upload
         /// </summary>
@@ -226,9 +249,9 @@ namespace DocSpring.Client.Api
         /// 
         /// </remarks>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="createTemplateData"></param>
+        /// <param name="createTemplateFromUploadData"></param>
         /// <returns>PendingTemplate</returns>
-        PendingTemplate CreatePDFTemplateFromUpload (CreateTemplateData createTemplateData);
+        PendingTemplate CreatePDFTemplateFromUpload (CreateTemplateFromUploadData createTemplateFromUploadData);
 
         /// <summary>
         /// Create a new PDF template from a cached presign upload
@@ -237,9 +260,9 @@ namespace DocSpring.Client.Api
         /// 
         /// </remarks>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="createTemplateData"></param>
+        /// <param name="createTemplateFromUploadData"></param>
         /// <returns>ApiResponse of PendingTemplate</returns>
-        ApiResponse<PendingTemplate> CreatePDFTemplateFromUploadWithHttpInfo (CreateTemplateData createTemplateData);
+        ApiResponse<PendingTemplate> CreatePDFTemplateFromUploadWithHttpInfo (CreateTemplateFromUploadData createTemplateFromUploadData);
         /// <summary>
         /// Delete a folder
         /// </summary>
@@ -660,6 +683,29 @@ namespace DocSpring.Client.Api
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
+        /// Add new fields to a Template
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="addFieldsData"></param>
+        /// <returns>Task of AddFieldsTemplateResponse</returns>
+        System.Threading.Tasks.Task<AddFieldsTemplateResponse> AddFieldsToTemplateAsync (string templateId, AddFieldsData addFieldsData);
+
+        /// <summary>
+        /// Add new fields to a Template
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="addFieldsData"></param>
+        /// <returns>Task of ApiResponse (AddFieldsTemplateResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AddFieldsTemplateResponse>> AddFieldsToTemplateAsyncWithHttpInfo (string templateId, AddFieldsData addFieldsData);
+        /// <summary>
         /// Generates multiple PDFs
         /// </summary>
         /// <remarks>
@@ -815,9 +861,9 @@ namespace DocSpring.Client.Api
         /// 
         /// </remarks>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="createTemplateData1"></param>
+        /// <param name="createHtmlTemplateData"></param>
         /// <returns>Task of PendingTemplate</returns>
-        System.Threading.Tasks.Task<PendingTemplate> CreateHTMLTemplateAsync (CreateTemplateData1 createTemplateData1);
+        System.Threading.Tasks.Task<PendingTemplate> CreateHTMLTemplateAsync (CreateHtmlTemplateData createHtmlTemplateData);
 
         /// <summary>
         /// Create a new HTML template
@@ -826,9 +872,9 @@ namespace DocSpring.Client.Api
         /// 
         /// </remarks>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="createTemplateData1"></param>
+        /// <param name="createHtmlTemplateData"></param>
         /// <returns>Task of ApiResponse (PendingTemplate)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PendingTemplate>> CreateHTMLTemplateAsyncWithHttpInfo (CreateTemplateData1 createTemplateData1);
+        System.Threading.Tasks.Task<ApiResponse<PendingTemplate>> CreateHTMLTemplateAsyncWithHttpInfo (CreateHtmlTemplateData createHtmlTemplateData);
         /// <summary>
         /// Create a new PDF template with a form POST file upload
         /// </summary>
@@ -861,9 +907,9 @@ namespace DocSpring.Client.Api
         /// 
         /// </remarks>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="createTemplateData"></param>
+        /// <param name="createTemplateFromUploadData"></param>
         /// <returns>Task of PendingTemplate</returns>
-        System.Threading.Tasks.Task<PendingTemplate> CreatePDFTemplateFromUploadAsync (CreateTemplateData createTemplateData);
+        System.Threading.Tasks.Task<PendingTemplate> CreatePDFTemplateFromUploadAsync (CreateTemplateFromUploadData createTemplateFromUploadData);
 
         /// <summary>
         /// Create a new PDF template from a cached presign upload
@@ -872,9 +918,9 @@ namespace DocSpring.Client.Api
         /// 
         /// </remarks>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="createTemplateData"></param>
+        /// <param name="createTemplateFromUploadData"></param>
         /// <returns>Task of ApiResponse (PendingTemplate)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PendingTemplate>> CreatePDFTemplateFromUploadAsyncWithHttpInfo (CreateTemplateData createTemplateData);
+        System.Threading.Tasks.Task<ApiResponse<PendingTemplate>> CreatePDFTemplateFromUploadAsyncWithHttpInfo (CreateTemplateFromUploadData createTemplateFromUploadData);
         /// <summary>
         /// Delete a folder
         /// </summary>
@@ -1390,6 +1436,179 @@ namespace DocSpring.Client.Api
         public void AddDefaultHeader(string key, string value)
         {
             this.Configuration.AddDefaultHeader(key, value);
+        }
+
+        /// <summary>
+        /// Add new fields to a Template 
+        /// </summary>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="addFieldsData"></param>
+        /// <returns>AddFieldsTemplateResponse</returns>
+        public AddFieldsTemplateResponse AddFieldsToTemplate (string templateId, AddFieldsData addFieldsData)
+        {
+             ApiResponse<AddFieldsTemplateResponse> localVarResponse = AddFieldsToTemplateWithHttpInfo(templateId, addFieldsData);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Add new fields to a Template 
+        /// </summary>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="addFieldsData"></param>
+        /// <returns>ApiResponse of AddFieldsTemplateResponse</returns>
+        public ApiResponse< AddFieldsTemplateResponse > AddFieldsToTemplateWithHttpInfo (string templateId, AddFieldsData addFieldsData)
+        {
+            // verify the required parameter 'templateId' is set
+            if (templateId == null)
+                throw new ApiException(400, "Missing required parameter 'templateId' when calling PDFApi->AddFieldsToTemplate");
+            // verify the required parameter 'addFieldsData' is set
+            if (addFieldsData == null)
+                throw new ApiException(400, "Missing required parameter 'addFieldsData' when calling PDFApi->AddFieldsToTemplate");
+
+            var localVarPath = "/templates/{template_id}/add_fields";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+                "application/json"
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (templateId != null) localVarPathParams.Add("template_id", this.Configuration.ApiClient.ParameterToString(templateId)); // path parameter
+            if (addFieldsData != null && addFieldsData.GetType() != typeof(byte[]))
+            {
+                localVarPostBody = this.Configuration.ApiClient.Serialize(addFieldsData); // http body (model) parameter
+            }
+            else
+            {
+                localVarPostBody = addFieldsData; // byte array
+            }
+
+            // authentication (api_token_basic) required
+            // http basic authentication required
+            if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
+            {
+                localVarHeaderParams["Authorization"] = "Basic " + ApiClient.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password);
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+                Method.PUT, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("AddFieldsToTemplate", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<AddFieldsTemplateResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (AddFieldsTemplateResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(AddFieldsTemplateResponse)));
+        }
+
+        /// <summary>
+        /// Add new fields to a Template 
+        /// </summary>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="addFieldsData"></param>
+        /// <returns>Task of AddFieldsTemplateResponse</returns>
+        public async System.Threading.Tasks.Task<AddFieldsTemplateResponse> AddFieldsToTemplateAsync (string templateId, AddFieldsData addFieldsData)
+        {
+             ApiResponse<AddFieldsTemplateResponse> localVarResponse = await AddFieldsToTemplateAsyncWithHttpInfo(templateId, addFieldsData);
+             return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        /// Add new fields to a Template 
+        /// </summary>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="addFieldsData"></param>
+        /// <returns>Task of ApiResponse (AddFieldsTemplateResponse)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<AddFieldsTemplateResponse>> AddFieldsToTemplateAsyncWithHttpInfo (string templateId, AddFieldsData addFieldsData)
+        {
+            // verify the required parameter 'templateId' is set
+            if (templateId == null)
+                throw new ApiException(400, "Missing required parameter 'templateId' when calling PDFApi->AddFieldsToTemplate");
+            // verify the required parameter 'addFieldsData' is set
+            if (addFieldsData == null)
+                throw new ApiException(400, "Missing required parameter 'addFieldsData' when calling PDFApi->AddFieldsToTemplate");
+
+            var localVarPath = "/templates/{template_id}/add_fields";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+                "application/json"
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (templateId != null) localVarPathParams.Add("template_id", this.Configuration.ApiClient.ParameterToString(templateId)); // path parameter
+            if (addFieldsData != null && addFieldsData.GetType() != typeof(byte[]))
+            {
+                localVarPostBody = this.Configuration.ApiClient.Serialize(addFieldsData); // http body (model) parameter
+            }
+            else
+            {
+                localVarPostBody = addFieldsData; // byte array
+            }
+
+            // authentication (api_token_basic) required
+            // http basic authentication required
+            if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
+            {
+                localVarHeaderParams["Authorization"] = "Basic " + ApiClient.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password);
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.PUT, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("AddFieldsToTemplate", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<AddFieldsTemplateResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (AddFieldsTemplateResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(AddFieldsTemplateResponse)));
         }
 
         /// <summary>
@@ -2519,11 +2738,11 @@ namespace DocSpring.Client.Api
         /// Create a new HTML template 
         /// </summary>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="createTemplateData1"></param>
+        /// <param name="createHtmlTemplateData"></param>
         /// <returns>PendingTemplate</returns>
-        public PendingTemplate CreateHTMLTemplate (CreateTemplateData1 createTemplateData1)
+        public PendingTemplate CreateHTMLTemplate (CreateHtmlTemplateData createHtmlTemplateData)
         {
-             ApiResponse<PendingTemplate> localVarResponse = CreateHTMLTemplateWithHttpInfo(createTemplateData1);
+             ApiResponse<PendingTemplate> localVarResponse = CreateHTMLTemplateWithHttpInfo(createHtmlTemplateData);
              return localVarResponse.Data;
         }
 
@@ -2531,13 +2750,13 @@ namespace DocSpring.Client.Api
         /// Create a new HTML template 
         /// </summary>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="createTemplateData1"></param>
+        /// <param name="createHtmlTemplateData"></param>
         /// <returns>ApiResponse of PendingTemplate</returns>
-        public ApiResponse< PendingTemplate > CreateHTMLTemplateWithHttpInfo (CreateTemplateData1 createTemplateData1)
+        public ApiResponse< PendingTemplate > CreateHTMLTemplateWithHttpInfo (CreateHtmlTemplateData createHtmlTemplateData)
         {
-            // verify the required parameter 'createTemplateData1' is set
-            if (createTemplateData1 == null)
-                throw new ApiException(400, "Missing required parameter 'createTemplateData1' when calling PDFApi->CreateHTMLTemplate");
+            // verify the required parameter 'createHtmlTemplateData' is set
+            if (createHtmlTemplateData == null)
+                throw new ApiException(400, "Missing required parameter 'createHtmlTemplateData' when calling PDFApi->CreateHTMLTemplate");
 
             var localVarPath = "/templates?desc=html";
             var localVarPathParams = new Dictionary<String, String>();
@@ -2561,13 +2780,13 @@ namespace DocSpring.Client.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (createTemplateData1 != null && createTemplateData1.GetType() != typeof(byte[]))
+            if (createHtmlTemplateData != null && createHtmlTemplateData.GetType() != typeof(byte[]))
             {
-                localVarPostBody = this.Configuration.ApiClient.Serialize(createTemplateData1); // http body (model) parameter
+                localVarPostBody = this.Configuration.ApiClient.Serialize(createHtmlTemplateData); // http body (model) parameter
             }
             else
             {
-                localVarPostBody = createTemplateData1; // byte array
+                localVarPostBody = createHtmlTemplateData; // byte array
             }
 
             // authentication (api_token_basic) required
@@ -2599,11 +2818,11 @@ namespace DocSpring.Client.Api
         /// Create a new HTML template 
         /// </summary>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="createTemplateData1"></param>
+        /// <param name="createHtmlTemplateData"></param>
         /// <returns>Task of PendingTemplate</returns>
-        public async System.Threading.Tasks.Task<PendingTemplate> CreateHTMLTemplateAsync (CreateTemplateData1 createTemplateData1)
+        public async System.Threading.Tasks.Task<PendingTemplate> CreateHTMLTemplateAsync (CreateHtmlTemplateData createHtmlTemplateData)
         {
-             ApiResponse<PendingTemplate> localVarResponse = await CreateHTMLTemplateAsyncWithHttpInfo(createTemplateData1);
+             ApiResponse<PendingTemplate> localVarResponse = await CreateHTMLTemplateAsyncWithHttpInfo(createHtmlTemplateData);
              return localVarResponse.Data;
 
         }
@@ -2612,13 +2831,13 @@ namespace DocSpring.Client.Api
         /// Create a new HTML template 
         /// </summary>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="createTemplateData1"></param>
+        /// <param name="createHtmlTemplateData"></param>
         /// <returns>Task of ApiResponse (PendingTemplate)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<PendingTemplate>> CreateHTMLTemplateAsyncWithHttpInfo (CreateTemplateData1 createTemplateData1)
+        public async System.Threading.Tasks.Task<ApiResponse<PendingTemplate>> CreateHTMLTemplateAsyncWithHttpInfo (CreateHtmlTemplateData createHtmlTemplateData)
         {
-            // verify the required parameter 'createTemplateData1' is set
-            if (createTemplateData1 == null)
-                throw new ApiException(400, "Missing required parameter 'createTemplateData1' when calling PDFApi->CreateHTMLTemplate");
+            // verify the required parameter 'createHtmlTemplateData' is set
+            if (createHtmlTemplateData == null)
+                throw new ApiException(400, "Missing required parameter 'createHtmlTemplateData' when calling PDFApi->CreateHTMLTemplate");
 
             var localVarPath = "/templates?desc=html";
             var localVarPathParams = new Dictionary<String, String>();
@@ -2642,13 +2861,13 @@ namespace DocSpring.Client.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (createTemplateData1 != null && createTemplateData1.GetType() != typeof(byte[]))
+            if (createHtmlTemplateData != null && createHtmlTemplateData.GetType() != typeof(byte[]))
             {
-                localVarPostBody = this.Configuration.ApiClient.Serialize(createTemplateData1); // http body (model) parameter
+                localVarPostBody = this.Configuration.ApiClient.Serialize(createHtmlTemplateData); // http body (model) parameter
             }
             else
             {
-                localVarPostBody = createTemplateData1; // byte array
+                localVarPostBody = createHtmlTemplateData; // byte array
             }
 
             // authentication (api_token_basic) required
@@ -2845,11 +3064,11 @@ namespace DocSpring.Client.Api
         /// Create a new PDF template from a cached presign upload 
         /// </summary>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="createTemplateData"></param>
+        /// <param name="createTemplateFromUploadData"></param>
         /// <returns>PendingTemplate</returns>
-        public PendingTemplate CreatePDFTemplateFromUpload (CreateTemplateData createTemplateData)
+        public PendingTemplate CreatePDFTemplateFromUpload (CreateTemplateFromUploadData createTemplateFromUploadData)
         {
-             ApiResponse<PendingTemplate> localVarResponse = CreatePDFTemplateFromUploadWithHttpInfo(createTemplateData);
+             ApiResponse<PendingTemplate> localVarResponse = CreatePDFTemplateFromUploadWithHttpInfo(createTemplateFromUploadData);
              return localVarResponse.Data;
         }
 
@@ -2857,13 +3076,13 @@ namespace DocSpring.Client.Api
         /// Create a new PDF template from a cached presign upload 
         /// </summary>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="createTemplateData"></param>
+        /// <param name="createTemplateFromUploadData"></param>
         /// <returns>ApiResponse of PendingTemplate</returns>
-        public ApiResponse< PendingTemplate > CreatePDFTemplateFromUploadWithHttpInfo (CreateTemplateData createTemplateData)
+        public ApiResponse< PendingTemplate > CreatePDFTemplateFromUploadWithHttpInfo (CreateTemplateFromUploadData createTemplateFromUploadData)
         {
-            // verify the required parameter 'createTemplateData' is set
-            if (createTemplateData == null)
-                throw new ApiException(400, "Missing required parameter 'createTemplateData' when calling PDFApi->CreatePDFTemplateFromUpload");
+            // verify the required parameter 'createTemplateFromUploadData' is set
+            if (createTemplateFromUploadData == null)
+                throw new ApiException(400, "Missing required parameter 'createTemplateFromUploadData' when calling PDFApi->CreatePDFTemplateFromUpload");
 
             var localVarPath = "/templates?desc=cached_upload";
             var localVarPathParams = new Dictionary<String, String>();
@@ -2887,13 +3106,13 @@ namespace DocSpring.Client.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (createTemplateData != null && createTemplateData.GetType() != typeof(byte[]))
+            if (createTemplateFromUploadData != null && createTemplateFromUploadData.GetType() != typeof(byte[]))
             {
-                localVarPostBody = this.Configuration.ApiClient.Serialize(createTemplateData); // http body (model) parameter
+                localVarPostBody = this.Configuration.ApiClient.Serialize(createTemplateFromUploadData); // http body (model) parameter
             }
             else
             {
-                localVarPostBody = createTemplateData; // byte array
+                localVarPostBody = createTemplateFromUploadData; // byte array
             }
 
             // authentication (api_token_basic) required
@@ -2925,11 +3144,11 @@ namespace DocSpring.Client.Api
         /// Create a new PDF template from a cached presign upload 
         /// </summary>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="createTemplateData"></param>
+        /// <param name="createTemplateFromUploadData"></param>
         /// <returns>Task of PendingTemplate</returns>
-        public async System.Threading.Tasks.Task<PendingTemplate> CreatePDFTemplateFromUploadAsync (CreateTemplateData createTemplateData)
+        public async System.Threading.Tasks.Task<PendingTemplate> CreatePDFTemplateFromUploadAsync (CreateTemplateFromUploadData createTemplateFromUploadData)
         {
-             ApiResponse<PendingTemplate> localVarResponse = await CreatePDFTemplateFromUploadAsyncWithHttpInfo(createTemplateData);
+             ApiResponse<PendingTemplate> localVarResponse = await CreatePDFTemplateFromUploadAsyncWithHttpInfo(createTemplateFromUploadData);
              return localVarResponse.Data;
 
         }
@@ -2938,13 +3157,13 @@ namespace DocSpring.Client.Api
         /// Create a new PDF template from a cached presign upload 
         /// </summary>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="createTemplateData"></param>
+        /// <param name="createTemplateFromUploadData"></param>
         /// <returns>Task of ApiResponse (PendingTemplate)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<PendingTemplate>> CreatePDFTemplateFromUploadAsyncWithHttpInfo (CreateTemplateData createTemplateData)
+        public async System.Threading.Tasks.Task<ApiResponse<PendingTemplate>> CreatePDFTemplateFromUploadAsyncWithHttpInfo (CreateTemplateFromUploadData createTemplateFromUploadData)
         {
-            // verify the required parameter 'createTemplateData' is set
-            if (createTemplateData == null)
-                throw new ApiException(400, "Missing required parameter 'createTemplateData' when calling PDFApi->CreatePDFTemplateFromUpload");
+            // verify the required parameter 'createTemplateFromUploadData' is set
+            if (createTemplateFromUploadData == null)
+                throw new ApiException(400, "Missing required parameter 'createTemplateFromUploadData' when calling PDFApi->CreatePDFTemplateFromUpload");
 
             var localVarPath = "/templates?desc=cached_upload";
             var localVarPathParams = new Dictionary<String, String>();
@@ -2968,13 +3187,13 @@ namespace DocSpring.Client.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (createTemplateData != null && createTemplateData.GetType() != typeof(byte[]))
+            if (createTemplateFromUploadData != null && createTemplateFromUploadData.GetType() != typeof(byte[]))
             {
-                localVarPostBody = this.Configuration.ApiClient.Serialize(createTemplateData); // http body (model) parameter
+                localVarPostBody = this.Configuration.ApiClient.Serialize(createTemplateFromUploadData); // http body (model) parameter
             }
             else
             {
-                localVarPostBody = createTemplateData; // byte array
+                localVarPostBody = createTemplateFromUploadData; // byte array
             }
 
             // authentication (api_token_basic) required

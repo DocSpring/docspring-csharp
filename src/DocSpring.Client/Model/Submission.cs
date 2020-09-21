@@ -126,13 +126,14 @@ namespace DocSpring.Client.Model
         /// <param name="processedAt">processedAt.</param>
         /// <param name="state">state (required).</param>
         /// <param name="metadata">metadata.</param>
+        /// <param name="truncatedText">truncatedText.</param>
         /// <param name="pdfHash">pdfHash.</param>
         /// <param name="downloadUrl">downloadUrl.</param>
         /// <param name="permanentDownloadUrl">permanentDownloadUrl.</param>
         /// <param name="batchId">batchId.</param>
         /// <param name="dataRequests">dataRequests.</param>
         /// <param name="actions">actions.</param>
-        public Submission(string id = default(string), string templateId = default(string), bool? test = default(bool?), bool? editable = default(bool?), bool? expired = default(bool?), string expiresAt = default(string), string processedAt = default(string), StateEnum state = default(StateEnum), Object metadata = default(Object), string pdfHash = default(string), string downloadUrl = default(string), string permanentDownloadUrl = default(string), string batchId = default(string), List<SubmissionDataRequest> dataRequests = default(List<SubmissionDataRequest>), List<SubmissionAction> actions = default(List<SubmissionAction>))
+        public Submission(string id = default(string), string templateId = default(string), bool? test = default(bool?), bool? editable = default(bool?), bool? expired = default(bool?), string expiresAt = default(string), string processedAt = default(string), StateEnum state = default(StateEnum), Object metadata = default(Object), Object truncatedText = default(Object), string pdfHash = default(string), string downloadUrl = default(string), string permanentDownloadUrl = default(string), string batchId = default(string), List<SubmissionDataRequest> dataRequests = default(List<SubmissionDataRequest>), List<SubmissionAction> actions = default(List<SubmissionAction>))
         {
             // to ensure "id" is required (not null)
             if (id == null)
@@ -175,6 +176,7 @@ namespace DocSpring.Client.Model
             this.ExpiresAt = expiresAt;
             this.ProcessedAt = processedAt;
             this.Metadata = metadata;
+            this.TruncatedText = truncatedText;
             this.PdfHash = pdfHash;
             this.DownloadUrl = downloadUrl;
             this.PermanentDownloadUrl = permanentDownloadUrl;
@@ -233,6 +235,12 @@ namespace DocSpring.Client.Model
         public Object Metadata { get; set; }
 
         /// <summary>
+        /// Gets or Sets TruncatedText
+        /// </summary>
+        [DataMember(Name="truncated_text", EmitDefaultValue=false)]
+        public Object TruncatedText { get; set; }
+
+        /// <summary>
         /// Gets or Sets PdfHash
         /// </summary>
         [DataMember(Name="pdf_hash", EmitDefaultValue=false)]
@@ -285,6 +293,7 @@ namespace DocSpring.Client.Model
             sb.Append("  ProcessedAt: ").Append(ProcessedAt).Append("\n");
             sb.Append("  State: ").Append(State).Append("\n");
             sb.Append("  Metadata: ").Append(Metadata).Append("\n");
+            sb.Append("  TruncatedText: ").Append(TruncatedText).Append("\n");
             sb.Append("  PdfHash: ").Append(PdfHash).Append("\n");
             sb.Append("  DownloadUrl: ").Append(DownloadUrl).Append("\n");
             sb.Append("  PermanentDownloadUrl: ").Append(PermanentDownloadUrl).Append("\n");
@@ -371,6 +380,11 @@ namespace DocSpring.Client.Model
                     this.Metadata.Equals(input.Metadata))
                 ) && 
                 (
+                    this.TruncatedText == input.TruncatedText ||
+                    (this.TruncatedText != null &&
+                    this.TruncatedText.Equals(input.TruncatedText))
+                ) && 
+                (
                     this.PdfHash == input.PdfHash ||
                     (this.PdfHash != null &&
                     this.PdfHash.Equals(input.PdfHash))
@@ -429,6 +443,8 @@ namespace DocSpring.Client.Model
                     hashCode = hashCode * 59 + this.State.GetHashCode();
                 if (this.Metadata != null)
                     hashCode = hashCode * 59 + this.Metadata.GetHashCode();
+                if (this.TruncatedText != null)
+                    hashCode = hashCode * 59 + this.TruncatedText.GetHashCode();
                 if (this.PdfHash != null)
                     hashCode = hashCode * 59 + this.PdfHash.GetHashCode();
                 if (this.DownloadUrl != null)

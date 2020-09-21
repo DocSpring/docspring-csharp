@@ -428,7 +428,7 @@ namespace DocSpring.Client.Test
         /// Test GetTemplate
         /// </summary>
         [Test]
-        public void CreateTemplateTest()
+        public void CreatePDFTemplateTest()
         {
             // Path is relative to clients/csharp/src/DocSpring.Client.Test/bin/Debug
             var pdfFixturePath = Path.Combine(
@@ -436,7 +436,7 @@ namespace DocSpring.Client.Test
               "../../../../../../test_fixtures/first_last_signature.pdf");
             Stream templateDocument = File.OpenRead(pdfFixturePath);
             var templateName = "Test PDF Template from C Sharp";
-            var template = instance.CreateTemplate(templateDocument, templateName);
+            var template = instance.CreatePDFTemplate(templateDocument, templateName);
 
             Assert.IsInstanceOf<PendingTemplate> (template, "template is PendingTemplate");
             StringAssert.StartsWith("tpl_", template.Id);
