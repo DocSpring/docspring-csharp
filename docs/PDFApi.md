@@ -1202,7 +1202,7 @@ namespace Example
 
             var apiInstance = new PDFApi();
             var submissionId = sub_000000000000000001;  // string | 
-            var includeData = false;  // bool? |  (optional) 
+            var includeData = true;  // bool? |  (optional) 
 
             try
             {

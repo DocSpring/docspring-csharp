@@ -125,6 +125,7 @@ namespace DocSpring.Client.Model
         /// <param name="expiresAt">expiresAt.</param>
         /// <param name="processedAt">processedAt.</param>
         /// <param name="state">state (required).</param>
+        /// <param name="data">data.</param>
         /// <param name="metadata">metadata.</param>
         /// <param name="truncatedText">truncatedText.</param>
         /// <param name="pdfHash">pdfHash.</param>
@@ -133,7 +134,9 @@ namespace DocSpring.Client.Model
         /// <param name="batchId">batchId.</param>
         /// <param name="dataRequests">dataRequests.</param>
         /// <param name="actions">actions.</param>
-        public Submission(string id = default(string), string templateId = default(string), bool? test = default(bool?), bool? editable = default(bool?), bool? expired = default(bool?), string expiresAt = default(string), string processedAt = default(string), StateEnum state = default(StateEnum), Object metadata = default(Object), Object truncatedText = default(Object), string pdfHash = default(string), string downloadUrl = default(string), string permanentDownloadUrl = default(string), string batchId = default(string), List<SubmissionDataRequest> dataRequests = default(List<SubmissionDataRequest>), List<SubmissionAction> actions = default(List<SubmissionAction>))
+        /// <param name="source">source.</param>
+        /// <param name="referrer">referrer.</param>
+        public Submission(string id = default(string), string templateId = default(string), bool? test = default(bool?), bool? editable = default(bool?), bool? expired = default(bool?), string expiresAt = default(string), string processedAt = default(string), StateEnum state = default(StateEnum), Object data = default(Object), Object metadata = default(Object), Object truncatedText = default(Object), string pdfHash = default(string), string downloadUrl = default(string), string permanentDownloadUrl = default(string), string batchId = default(string), List<SubmissionDataRequest> dataRequests = default(List<SubmissionDataRequest>), List<SubmissionAction> actions = default(List<SubmissionAction>), string source = default(string), string referrer = default(string))
         {
             // to ensure "id" is required (not null)
             if (id == null)
@@ -175,6 +178,7 @@ namespace DocSpring.Client.Model
             this.Editable = editable;
             this.ExpiresAt = expiresAt;
             this.ProcessedAt = processedAt;
+            this.Data = data;
             this.Metadata = metadata;
             this.TruncatedText = truncatedText;
             this.PdfHash = pdfHash;
@@ -183,6 +187,8 @@ namespace DocSpring.Client.Model
             this.BatchId = batchId;
             this.DataRequests = dataRequests;
             this.Actions = actions;
+            this.Source = source;
+            this.Referrer = referrer;
         }
         
         /// <summary>
@@ -227,6 +233,12 @@ namespace DocSpring.Client.Model
         [DataMember(Name="processed_at", EmitDefaultValue=false)]
         public string ProcessedAt { get; set; }
 
+
+        /// <summary>
+        /// Gets or Sets Data
+        /// </summary>
+        [DataMember(Name="data", EmitDefaultValue=false)]
+        public Object Data { get; set; }
 
         /// <summary>
         /// Gets or Sets Metadata
@@ -277,6 +289,18 @@ namespace DocSpring.Client.Model
         public List<SubmissionAction> Actions { get; set; }
 
         /// <summary>
+        /// Gets or Sets Source
+        /// </summary>
+        [DataMember(Name="source", EmitDefaultValue=false)]
+        public string Source { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Referrer
+        /// </summary>
+        [DataMember(Name="referrer", EmitDefaultValue=false)]
+        public string Referrer { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -292,6 +316,7 @@ namespace DocSpring.Client.Model
             sb.Append("  ExpiresAt: ").Append(ExpiresAt).Append("\n");
             sb.Append("  ProcessedAt: ").Append(ProcessedAt).Append("\n");
             sb.Append("  State: ").Append(State).Append("\n");
+            sb.Append("  Data: ").Append(Data).Append("\n");
             sb.Append("  Metadata: ").Append(Metadata).Append("\n");
             sb.Append("  TruncatedText: ").Append(TruncatedText).Append("\n");
             sb.Append("  PdfHash: ").Append(PdfHash).Append("\n");
@@ -300,6 +325,8 @@ namespace DocSpring.Client.Model
             sb.Append("  BatchId: ").Append(BatchId).Append("\n");
             sb.Append("  DataRequests: ").Append(DataRequests).Append("\n");
             sb.Append("  Actions: ").Append(Actions).Append("\n");
+            sb.Append("  Source: ").Append(Source).Append("\n");
+            sb.Append("  Referrer: ").Append(Referrer).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -375,6 +402,11 @@ namespace DocSpring.Client.Model
                     this.State.Equals(input.State))
                 ) && 
                 (
+                    this.Data == input.Data ||
+                    (this.Data != null &&
+                    this.Data.Equals(input.Data))
+                ) && 
+                (
                     this.Metadata == input.Metadata ||
                     (this.Metadata != null &&
                     this.Metadata.Equals(input.Metadata))
@@ -413,6 +445,16 @@ namespace DocSpring.Client.Model
                     this.Actions == input.Actions ||
                     this.Actions != null &&
                     this.Actions.SequenceEqual(input.Actions)
+                ) && 
+                (
+                    this.Source == input.Source ||
+                    (this.Source != null &&
+                    this.Source.Equals(input.Source))
+                ) && 
+                (
+                    this.Referrer == input.Referrer ||
+                    (this.Referrer != null &&
+                    this.Referrer.Equals(input.Referrer))
                 );
         }
 
@@ -441,6 +483,8 @@ namespace DocSpring.Client.Model
                     hashCode = hashCode * 59 + this.ProcessedAt.GetHashCode();
                 if (this.State != null)
                     hashCode = hashCode * 59 + this.State.GetHashCode();
+                if (this.Data != null)
+                    hashCode = hashCode * 59 + this.Data.GetHashCode();
                 if (this.Metadata != null)
                     hashCode = hashCode * 59 + this.Metadata.GetHashCode();
                 if (this.TruncatedText != null)
@@ -457,6 +501,10 @@ namespace DocSpring.Client.Model
                     hashCode = hashCode * 59 + this.DataRequests.GetHashCode();
                 if (this.Actions != null)
                     hashCode = hashCode * 59 + this.Actions.GetHashCode();
+                if (this.Source != null)
+                    hashCode = hashCode * 59 + this.Source.GetHashCode();
+                if (this.Referrer != null)
+                    hashCode = hashCode * 59 + this.Referrer.GetHashCode();
                 return hashCode;
             }
         }

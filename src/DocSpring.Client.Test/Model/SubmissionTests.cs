@@ -131,6 +131,14 @@ namespace DocSpring.Client.Test
             // TODO unit test for the property 'State'
         }
         /// <summary>
+        /// Test the property 'Data'
+        /// </summary>
+        [Test]
+        public void DataTest()
+        {
+            // TODO unit test for the property 'Data'
+        }
+        /// <summary>
         /// Test the property 'Metadata'
         /// </summary>
         [Test]
@@ -193,6 +201,22 @@ namespace DocSpring.Client.Test
         public void ActionsTest()
         {
             // TODO unit test for the property 'Actions'
+        }
+        /// <summary>
+        /// Test the property 'Source'
+        /// </summary>
+        [Test]
+        public void SourceTest()
+        {
+            // TODO unit test for the property 'Source'
+        }
+        /// <summary>
+        /// Test the property 'Referrer'
+        /// </summary>
+        [Test]
+        public void ReferrerTest()
+        {
+            // TODO unit test for the property 'Referrer'
         }
 
     }

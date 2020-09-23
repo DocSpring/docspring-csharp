@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **ExpiresAt** | **string** |  | [optional] 
 **ProcessedAt** | **string** |  | [optional] 
 **State** | **string** |  | 
+**Data** | **Object** |  | [optional] 
 **Metadata** | **Object** |  | [optional] 
 **TruncatedText** | **Object** |  | [optional] 
 **PdfHash** | **string** |  | [optional] 
@@ -19,6 +20,8 @@ Name | Type | Description | Notes
 **BatchId** | **string** |  | [optional] 
 **DataRequests** | [**List&lt;SubmissionDataRequest&gt;**](SubmissionDataRequest.md) |  | [optional] 
 **Actions** | [**List&lt;SubmissionAction&gt;**](SubmissionAction.md) |  | [optional] 
+**Source** | **string** |  | [optional] 
+**Referrer** | **string** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
