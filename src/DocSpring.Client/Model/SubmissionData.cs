@@ -38,14 +38,14 @@ namespace DocSpring.Client.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="SubmissionData" /> class.
         /// </summary>
-        /// <param name="test">test.</param>
-        /// <param name="data">data (required).</param>
-        /// <param name="html">html.</param>
         /// <param name="css">css.</param>
-        /// <param name="metadata">metadata.</param>
-        /// <param name="fieldOverrides">fieldOverrides.</param>
+        /// <param name="data">data (required).</param>
         /// <param name="dataRequests">dataRequests.</param>
-        public SubmissionData(bool? test = default(bool?), Object data = default(Object), string html = default(string), string css = default(string), Object metadata = default(Object), Object fieldOverrides = default(Object), List<CreateSubmissionDataRequestData> dataRequests = default(List<CreateSubmissionDataRequestData>))
+        /// <param name="fieldOverrides">fieldOverrides.</param>
+        /// <param name="html">html.</param>
+        /// <param name="metadata">metadata.</param>
+        /// <param name="test">test.</param>
+        public SubmissionData(string css = default(string), Object data = default(Object), List<CreateSubmissionDataRequestData> dataRequests = default(List<CreateSubmissionDataRequestData>), Object fieldOverrides = default(Object), string html = default(string), Object metadata = default(Object), bool? test = default(bool?))
         {
             // to ensure "data" is required (not null)
             if (data == null)
@@ -56,19 +56,19 @@ namespace DocSpring.Client.Model
             {
                 this.Data = data;
             }
-            this.Test = test;
-            this.Html = html;
             this.Css = css;
-            this.Metadata = metadata;
-            this.FieldOverrides = fieldOverrides;
             this.DataRequests = dataRequests;
+            this.FieldOverrides = fieldOverrides;
+            this.Html = html;
+            this.Metadata = metadata;
+            this.Test = test;
         }
         
         /// <summary>
-        /// Gets or Sets Test
+        /// Gets or Sets Css
         /// </summary>
-        [DataMember(Name="test", EmitDefaultValue=false)]
-        public bool? Test { get; set; }
+        [DataMember(Name="css", EmitDefaultValue=false)]
+        public string Css { get; set; }
 
         /// <summary>
         /// Gets or Sets Data
@@ -77,22 +77,10 @@ namespace DocSpring.Client.Model
         public Object Data { get; set; }
 
         /// <summary>
-        /// Gets or Sets Html
+        /// Gets or Sets DataRequests
         /// </summary>
-        [DataMember(Name="html", EmitDefaultValue=false)]
-        public string Html { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Css
-        /// </summary>
-        [DataMember(Name="css", EmitDefaultValue=false)]
-        public string Css { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Metadata
-        /// </summary>
-        [DataMember(Name="metadata", EmitDefaultValue=false)]
-        public Object Metadata { get; set; }
+        [DataMember(Name="data_requests", EmitDefaultValue=false)]
+        public List<CreateSubmissionDataRequestData> DataRequests { get; set; }
 
         /// <summary>
         /// Gets or Sets FieldOverrides
@@ -101,10 +89,22 @@ namespace DocSpring.Client.Model
         public Object FieldOverrides { get; set; }
 
         /// <summary>
-        /// Gets or Sets DataRequests
+        /// Gets or Sets Html
         /// </summary>
-        [DataMember(Name="data_requests", EmitDefaultValue=false)]
-        public List<CreateSubmissionDataRequestData> DataRequests { get; set; }
+        [DataMember(Name="html", EmitDefaultValue=false)]
+        public string Html { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Metadata
+        /// </summary>
+        [DataMember(Name="metadata", EmitDefaultValue=false)]
+        public Object Metadata { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Test
+        /// </summary>
+        [DataMember(Name="test", EmitDefaultValue=false)]
+        public bool? Test { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -114,13 +114,13 @@ namespace DocSpring.Client.Model
         {
             var sb = new StringBuilder();
             sb.Append("class SubmissionData {\n");
-            sb.Append("  Test: ").Append(Test).Append("\n");
-            sb.Append("  Data: ").Append(Data).Append("\n");
-            sb.Append("  Html: ").Append(Html).Append("\n");
             sb.Append("  Css: ").Append(Css).Append("\n");
-            sb.Append("  Metadata: ").Append(Metadata).Append("\n");
-            sb.Append("  FieldOverrides: ").Append(FieldOverrides).Append("\n");
+            sb.Append("  Data: ").Append(Data).Append("\n");
             sb.Append("  DataRequests: ").Append(DataRequests).Append("\n");
+            sb.Append("  FieldOverrides: ").Append(FieldOverrides).Append("\n");
+            sb.Append("  Html: ").Append(Html).Append("\n");
+            sb.Append("  Metadata: ").Append(Metadata).Append("\n");
+            sb.Append("  Test: ").Append(Test).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -156,9 +156,9 @@ namespace DocSpring.Client.Model
 
             return 
                 (
-                    this.Test == input.Test ||
-                    (this.Test != null &&
-                    this.Test.Equals(input.Test))
+                    this.Css == input.Css ||
+                    (this.Css != null &&
+                    this.Css.Equals(input.Css))
                 ) && 
                 (
                     this.Data == input.Data ||
@@ -166,19 +166,9 @@ namespace DocSpring.Client.Model
                     this.Data.Equals(input.Data))
                 ) && 
                 (
-                    this.Html == input.Html ||
-                    (this.Html != null &&
-                    this.Html.Equals(input.Html))
-                ) && 
-                (
-                    this.Css == input.Css ||
-                    (this.Css != null &&
-                    this.Css.Equals(input.Css))
-                ) && 
-                (
-                    this.Metadata == input.Metadata ||
-                    (this.Metadata != null &&
-                    this.Metadata.Equals(input.Metadata))
+                    this.DataRequests == input.DataRequests ||
+                    this.DataRequests != null &&
+                    this.DataRequests.SequenceEqual(input.DataRequests)
                 ) && 
                 (
                     this.FieldOverrides == input.FieldOverrides ||
@@ -186,9 +176,19 @@ namespace DocSpring.Client.Model
                     this.FieldOverrides.Equals(input.FieldOverrides))
                 ) && 
                 (
-                    this.DataRequests == input.DataRequests ||
-                    this.DataRequests != null &&
-                    this.DataRequests.SequenceEqual(input.DataRequests)
+                    this.Html == input.Html ||
+                    (this.Html != null &&
+                    this.Html.Equals(input.Html))
+                ) && 
+                (
+                    this.Metadata == input.Metadata ||
+                    (this.Metadata != null &&
+                    this.Metadata.Equals(input.Metadata))
+                ) && 
+                (
+                    this.Test == input.Test ||
+                    (this.Test != null &&
+                    this.Test.Equals(input.Test))
                 );
         }
 
@@ -201,20 +201,20 @@ namespace DocSpring.Client.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.Test != null)
-                    hashCode = hashCode * 59 + this.Test.GetHashCode();
-                if (this.Data != null)
-                    hashCode = hashCode * 59 + this.Data.GetHashCode();
-                if (this.Html != null)
-                    hashCode = hashCode * 59 + this.Html.GetHashCode();
                 if (this.Css != null)
                     hashCode = hashCode * 59 + this.Css.GetHashCode();
-                if (this.Metadata != null)
-                    hashCode = hashCode * 59 + this.Metadata.GetHashCode();
-                if (this.FieldOverrides != null)
-                    hashCode = hashCode * 59 + this.FieldOverrides.GetHashCode();
+                if (this.Data != null)
+                    hashCode = hashCode * 59 + this.Data.GetHashCode();
                 if (this.DataRequests != null)
                     hashCode = hashCode * 59 + this.DataRequests.GetHashCode();
+                if (this.FieldOverrides != null)
+                    hashCode = hashCode * 59 + this.FieldOverrides.GetHashCode();
+                if (this.Html != null)
+                    hashCode = hashCode * 59 + this.Html.GetHashCode();
+                if (this.Metadata != null)
+                    hashCode = hashCode * 59 + this.Metadata.GetHashCode();
+                if (this.Test != null)
+                    hashCode = hashCode * 59 + this.Test.GetHashCode();
                 return hashCode;
             }
         }

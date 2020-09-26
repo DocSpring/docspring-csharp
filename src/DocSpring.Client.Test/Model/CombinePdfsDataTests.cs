@@ -67,28 +67,12 @@ namespace DocSpring.Client.Test
 
 
         /// <summary>
-        /// Test the property 'Test'
+        /// Test the property 'DeleteCustomFiles'
         /// </summary>
         [Test]
-        public void TestTest()
+        public void DeleteCustomFilesTest()
         {
-            // TODO unit test for the property 'Test'
-        }
-        /// <summary>
-        /// Test the property 'SourcePdfs'
-        /// </summary>
-        [Test]
-        public void SourcePdfsTest()
-        {
-            // TODO unit test for the property 'SourcePdfs'
-        }
-        /// <summary>
-        /// Test the property 'Metadata'
-        /// </summary>
-        [Test]
-        public void MetadataTest()
-        {
-            // TODO unit test for the property 'Metadata'
+            // TODO unit test for the property 'DeleteCustomFiles'
         }
         /// <summary>
         /// Test the property 'ExpiresIn'
@@ -99,12 +83,28 @@ namespace DocSpring.Client.Test
             // TODO unit test for the property 'ExpiresIn'
         }
         /// <summary>
-        /// Test the property 'DeleteCustomFiles'
+        /// Test the property 'Metadata'
         /// </summary>
         [Test]
-        public void DeleteCustomFilesTest()
+        public void MetadataTest()
         {
-            // TODO unit test for the property 'DeleteCustomFiles'
+            // TODO unit test for the property 'Metadata'
+        }
+        /// <summary>
+        /// Test the property 'SourcePdfs'
+        /// </summary>
+        [Test]
+        public void SourcePdfsTest()
+        {
+            // TODO unit test for the property 'SourcePdfs'
+        }
+        /// <summary>
+        /// Test the property 'Test'
+        /// </summary>
+        [Test]
+        public void TestTest()
+        {
+            // TODO unit test for the property 'Test'
         }
 
     }

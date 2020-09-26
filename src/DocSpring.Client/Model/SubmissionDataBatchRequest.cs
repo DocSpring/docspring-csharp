@@ -35,18 +35,18 @@ namespace DocSpring.Client.Model
         /// </summary>
         /// <param name="css">css.</param>
         /// <param name="metadata">metadata.</param>
-        /// <param name="test">test.</param>
         /// <param name="data">data.</param>
-        /// <param name="templateId">templateId.</param>
+        /// <param name="test">test.</param>
         /// <param name="html">html.</param>
-        public SubmissionDataBatchRequest(string css = default(string), Object metadata = default(Object), bool? test = default(bool?), Object data = default(Object), string templateId = default(string), string html = default(string))
+        /// <param name="templateId">templateId.</param>
+        public SubmissionDataBatchRequest(string css = default(string), Object metadata = default(Object), Object data = default(Object), bool? test = default(bool?), string html = default(string), string templateId = default(string))
         {
             this.Css = css;
             this.Metadata = metadata;
-            this.Test = test;
             this.Data = data;
-            this.TemplateId = templateId;
+            this.Test = test;
             this.Html = html;
+            this.TemplateId = templateId;
         }
         
         /// <summary>
@@ -62,28 +62,28 @@ namespace DocSpring.Client.Model
         public Object Metadata { get; set; }
 
         /// <summary>
-        /// Gets or Sets Test
-        /// </summary>
-        [DataMember(Name="test", EmitDefaultValue=false)]
-        public bool? Test { get; set; }
-
-        /// <summary>
         /// Gets or Sets Data
         /// </summary>
         [DataMember(Name="data", EmitDefaultValue=false)]
         public Object Data { get; set; }
 
         /// <summary>
-        /// Gets or Sets TemplateId
+        /// Gets or Sets Test
         /// </summary>
-        [DataMember(Name="template_id", EmitDefaultValue=false)]
-        public string TemplateId { get; set; }
+        [DataMember(Name="test", EmitDefaultValue=false)]
+        public bool? Test { get; set; }
 
         /// <summary>
         /// Gets or Sets Html
         /// </summary>
         [DataMember(Name="html", EmitDefaultValue=false)]
         public string Html { get; set; }
+
+        /// <summary>
+        /// Gets or Sets TemplateId
+        /// </summary>
+        [DataMember(Name="template_id", EmitDefaultValue=false)]
+        public string TemplateId { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -95,10 +95,10 @@ namespace DocSpring.Client.Model
             sb.Append("class SubmissionDataBatchRequest {\n");
             sb.Append("  Css: ").Append(Css).Append("\n");
             sb.Append("  Metadata: ").Append(Metadata).Append("\n");
-            sb.Append("  Test: ").Append(Test).Append("\n");
             sb.Append("  Data: ").Append(Data).Append("\n");
-            sb.Append("  TemplateId: ").Append(TemplateId).Append("\n");
+            sb.Append("  Test: ").Append(Test).Append("\n");
             sb.Append("  Html: ").Append(Html).Append("\n");
+            sb.Append("  TemplateId: ").Append(TemplateId).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -144,24 +144,24 @@ namespace DocSpring.Client.Model
                     this.Metadata.Equals(input.Metadata))
                 ) && 
                 (
-                    this.Test == input.Test ||
-                    (this.Test != null &&
-                    this.Test.Equals(input.Test))
-                ) && 
-                (
                     this.Data == input.Data ||
                     (this.Data != null &&
                     this.Data.Equals(input.Data))
                 ) && 
                 (
-                    this.TemplateId == input.TemplateId ||
-                    (this.TemplateId != null &&
-                    this.TemplateId.Equals(input.TemplateId))
+                    this.Test == input.Test ||
+                    (this.Test != null &&
+                    this.Test.Equals(input.Test))
                 ) && 
                 (
                     this.Html == input.Html ||
                     (this.Html != null &&
                     this.Html.Equals(input.Html))
+                ) && 
+                (
+                    this.TemplateId == input.TemplateId ||
+                    (this.TemplateId != null &&
+                    this.TemplateId.Equals(input.TemplateId))
                 );
         }
 
@@ -178,14 +178,14 @@ namespace DocSpring.Client.Model
                     hashCode = hashCode * 59 + this.Css.GetHashCode();
                 if (this.Metadata != null)
                     hashCode = hashCode * 59 + this.Metadata.GetHashCode();
-                if (this.Test != null)
-                    hashCode = hashCode * 59 + this.Test.GetHashCode();
                 if (this.Data != null)
                     hashCode = hashCode * 59 + this.Data.GetHashCode();
-                if (this.TemplateId != null)
-                    hashCode = hashCode * 59 + this.TemplateId.GetHashCode();
+                if (this.Test != null)
+                    hashCode = hashCode * 59 + this.Test.GetHashCode();
                 if (this.Html != null)
                     hashCode = hashCode * 59 + this.Html.GetHashCode();
+                if (this.TemplateId != null)
+                    hashCode = hashCode * 59 + this.TemplateId.GetHashCode();
                 return hashCode;
             }
         }

@@ -39,10 +39,10 @@ namespace DocSpring.Client.Model
         /// Initializes a new instance of the <see cref="SubmissionBatchData" /> class.
         /// </summary>
         /// <param name="metadata">metadata.</param>
-        /// <param name="test">test.</param>
-        /// <param name="templateId">templateId.</param>
         /// <param name="submissions">submissions (required).</param>
-        public SubmissionBatchData(Object metadata = default(Object), bool? test = default(bool?), string templateId = default(string), List<SubmissionDataBatchRequest> submissions = default(List<SubmissionDataBatchRequest>))
+        /// <param name="templateId">templateId.</param>
+        /// <param name="test">test.</param>
+        public SubmissionBatchData(Object metadata = default(Object), List<SubmissionDataBatchRequest> submissions = default(List<SubmissionDataBatchRequest>), string templateId = default(string), bool? test = default(bool?))
         {
             // to ensure "submissions" is required (not null)
             if (submissions == null)
@@ -54,8 +54,8 @@ namespace DocSpring.Client.Model
                 this.Submissions = submissions;
             }
             this.Metadata = metadata;
-            this.Test = test;
             this.TemplateId = templateId;
+            this.Test = test;
         }
         
         /// <summary>
@@ -65,10 +65,10 @@ namespace DocSpring.Client.Model
         public Object Metadata { get; set; }
 
         /// <summary>
-        /// Gets or Sets Test
+        /// Gets or Sets Submissions
         /// </summary>
-        [DataMember(Name="test", EmitDefaultValue=false)]
-        public bool? Test { get; set; }
+        [DataMember(Name="submissions", EmitDefaultValue=false)]
+        public List<SubmissionDataBatchRequest> Submissions { get; set; }
 
         /// <summary>
         /// Gets or Sets TemplateId
@@ -77,10 +77,10 @@ namespace DocSpring.Client.Model
         public string TemplateId { get; set; }
 
         /// <summary>
-        /// Gets or Sets Submissions
+        /// Gets or Sets Test
         /// </summary>
-        [DataMember(Name="submissions", EmitDefaultValue=false)]
-        public List<SubmissionDataBatchRequest> Submissions { get; set; }
+        [DataMember(Name="test", EmitDefaultValue=false)]
+        public bool? Test { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -91,9 +91,9 @@ namespace DocSpring.Client.Model
             var sb = new StringBuilder();
             sb.Append("class SubmissionBatchData {\n");
             sb.Append("  Metadata: ").Append(Metadata).Append("\n");
-            sb.Append("  Test: ").Append(Test).Append("\n");
-            sb.Append("  TemplateId: ").Append(TemplateId).Append("\n");
             sb.Append("  Submissions: ").Append(Submissions).Append("\n");
+            sb.Append("  TemplateId: ").Append(TemplateId).Append("\n");
+            sb.Append("  Test: ").Append(Test).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -134,9 +134,9 @@ namespace DocSpring.Client.Model
                     this.Metadata.Equals(input.Metadata))
                 ) && 
                 (
-                    this.Test == input.Test ||
-                    (this.Test != null &&
-                    this.Test.Equals(input.Test))
+                    this.Submissions == input.Submissions ||
+                    this.Submissions != null &&
+                    this.Submissions.SequenceEqual(input.Submissions)
                 ) && 
                 (
                     this.TemplateId == input.TemplateId ||
@@ -144,9 +144,9 @@ namespace DocSpring.Client.Model
                     this.TemplateId.Equals(input.TemplateId))
                 ) && 
                 (
-                    this.Submissions == input.Submissions ||
-                    this.Submissions != null &&
-                    this.Submissions.SequenceEqual(input.Submissions)
+                    this.Test == input.Test ||
+                    (this.Test != null &&
+                    this.Test.Equals(input.Test))
                 );
         }
 
@@ -161,12 +161,12 @@ namespace DocSpring.Client.Model
                 int hashCode = 41;
                 if (this.Metadata != null)
                     hashCode = hashCode * 59 + this.Metadata.GetHashCode();
-                if (this.Test != null)
-                    hashCode = hashCode * 59 + this.Test.GetHashCode();
-                if (this.TemplateId != null)
-                    hashCode = hashCode * 59 + this.TemplateId.GetHashCode();
                 if (this.Submissions != null)
                     hashCode = hashCode * 59 + this.Submissions.GetHashCode();
+                if (this.TemplateId != null)
+                    hashCode = hashCode * 59 + this.TemplateId.GetHashCode();
+                if (this.Test != null)
+                    hashCode = hashCode * 59 + this.Test.GetHashCode();
                 return hashCode;
             }
         }

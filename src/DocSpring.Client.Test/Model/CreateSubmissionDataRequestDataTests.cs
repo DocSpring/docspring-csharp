@@ -67,20 +67,20 @@ namespace DocSpring.Client.Test
 
 
         /// <summary>
-        /// Test the property 'Metadata'
-        /// </summary>
-        [Test]
-        public void MetadataTest()
-        {
-            // TODO unit test for the property 'Metadata'
-        }
-        /// <summary>
         /// Test the property 'AuthType'
         /// </summary>
         [Test]
         public void AuthTypeTest()
         {
             // TODO unit test for the property 'AuthType'
+        }
+        /// <summary>
+        /// Test the property 'Metadata'
+        /// </summary>
+        [Test]
+        public void MetadataTest()
+        {
+            // TODO unit test for the property 'Metadata'
         }
         /// <summary>
         /// Test the property 'AuthSecondFactorType'
@@ -147,20 +147,20 @@ namespace DocSpring.Client.Test
             // TODO unit test for the property 'Fields'
         }
         /// <summary>
-        /// Test the property 'Email'
-        /// </summary>
-        [Test]
-        public void EmailTest()
-        {
-            // TODO unit test for the property 'Email'
-        }
-        /// <summary>
         /// Test the property 'AuthProvider'
         /// </summary>
         [Test]
         public void AuthProviderTest()
         {
             // TODO unit test for the property 'AuthProvider'
+        }
+        /// <summary>
+        /// Test the property 'Email'
+        /// </summary>
+        [Test]
+        public void EmailTest()
+        {
+            // TODO unit test for the property 'Email'
         }
         /// <summary>
         /// Test the property 'Order'

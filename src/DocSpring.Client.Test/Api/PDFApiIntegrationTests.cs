@@ -136,11 +136,11 @@ namespace DocSpring.Client.Test
         public void CombineSubmissionsTest()
         {
             var combinedSubmissionData = new CombinedSubmissionData(
-              false,
-              new List<string>(new string[] {
+              submissionIds: new List<string>(new string[] {
                 "sub_000000000000000001",
                 "sub_000000000000000002"
-              })
+              }),
+              test: false
             );
             var response = instance.CombineSubmissions(combinedSubmissionData);
             Assert.IsInstanceOf<CreateCombinedSubmissionResponse> (response, "response is CreateCombinedSubmissionResponse");

@@ -137,8 +137,8 @@ namespace DocSpring.Client.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateSubmissionDataRequestData" /> class.
         /// </summary>
-        /// <param name="metadata">metadata.</param>
         /// <param name="authType">authType.</param>
+        /// <param name="metadata">metadata.</param>
         /// <param name="authSecondFactorType">authSecondFactorType.</param>
         /// <param name="authPhoneNumberHash">authPhoneNumberHash.</param>
         /// <param name="authSessionStartedAt">authSessionStartedAt.</param>
@@ -147,13 +147,13 @@ namespace DocSpring.Client.Model
         /// <param name="authUsernameHash">authUsernameHash.</param>
         /// <param name="name">name.</param>
         /// <param name="fields">fields.</param>
-        /// <param name="email">email.</param>
         /// <param name="authProvider">authProvider.</param>
+        /// <param name="email">email.</param>
         /// <param name="order">order.</param>
-        public CreateSubmissionDataRequestData(Object metadata = default(Object), AuthTypeEnum? authType = default(AuthTypeEnum?), AuthSecondFactorTypeEnum? authSecondFactorType = default(AuthSecondFactorTypeEnum?), string authPhoneNumberHash = default(string), string authSessionStartedAt = default(string), string authUserIdHash = default(string), string authSessionIdHash = default(string), string authUsernameHash = default(string), string name = default(string), List<string> fields = default(List<string>), string email = default(string), string authProvider = default(string), int? order = default(int?))
+        public CreateSubmissionDataRequestData(AuthTypeEnum? authType = default(AuthTypeEnum?), Object metadata = default(Object), AuthSecondFactorTypeEnum? authSecondFactorType = default(AuthSecondFactorTypeEnum?), string authPhoneNumberHash = default(string), string authSessionStartedAt = default(string), string authUserIdHash = default(string), string authSessionIdHash = default(string), string authUsernameHash = default(string), string name = default(string), List<string> fields = default(List<string>), string authProvider = default(string), string email = default(string), int? order = default(int?))
         {
-            this.Metadata = metadata;
             this.AuthType = authType;
+            this.Metadata = metadata;
             this.AuthSecondFactorType = authSecondFactorType;
             this.AuthPhoneNumberHash = authPhoneNumberHash;
             this.AuthSessionStartedAt = authSessionStartedAt;
@@ -162,17 +162,17 @@ namespace DocSpring.Client.Model
             this.AuthUsernameHash = authUsernameHash;
             this.Name = name;
             this.Fields = fields;
-            this.Email = email;
             this.AuthProvider = authProvider;
+            this.Email = email;
             this.Order = order;
         }
         
+
         /// <summary>
         /// Gets or Sets Metadata
         /// </summary>
         [DataMember(Name="metadata", EmitDefaultValue=false)]
         public Object Metadata { get; set; }
-
 
 
         /// <summary>
@@ -218,16 +218,16 @@ namespace DocSpring.Client.Model
         public List<string> Fields { get; set; }
 
         /// <summary>
-        /// Gets or Sets Email
-        /// </summary>
-        [DataMember(Name="email", EmitDefaultValue=false)]
-        public string Email { get; set; }
-
-        /// <summary>
         /// Gets or Sets AuthProvider
         /// </summary>
         [DataMember(Name="auth_provider", EmitDefaultValue=false)]
         public string AuthProvider { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Email
+        /// </summary>
+        [DataMember(Name="email", EmitDefaultValue=false)]
+        public string Email { get; set; }
 
         /// <summary>
         /// Gets or Sets Order
@@ -243,8 +243,8 @@ namespace DocSpring.Client.Model
         {
             var sb = new StringBuilder();
             sb.Append("class CreateSubmissionDataRequestData {\n");
-            sb.Append("  Metadata: ").Append(Metadata).Append("\n");
             sb.Append("  AuthType: ").Append(AuthType).Append("\n");
+            sb.Append("  Metadata: ").Append(Metadata).Append("\n");
             sb.Append("  AuthSecondFactorType: ").Append(AuthSecondFactorType).Append("\n");
             sb.Append("  AuthPhoneNumberHash: ").Append(AuthPhoneNumberHash).Append("\n");
             sb.Append("  AuthSessionStartedAt: ").Append(AuthSessionStartedAt).Append("\n");
@@ -253,8 +253,8 @@ namespace DocSpring.Client.Model
             sb.Append("  AuthUsernameHash: ").Append(AuthUsernameHash).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Fields: ").Append(Fields).Append("\n");
-            sb.Append("  Email: ").Append(Email).Append("\n");
             sb.Append("  AuthProvider: ").Append(AuthProvider).Append("\n");
+            sb.Append("  Email: ").Append(Email).Append("\n");
             sb.Append("  Order: ").Append(Order).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -291,14 +291,14 @@ namespace DocSpring.Client.Model
 
             return 
                 (
-                    this.Metadata == input.Metadata ||
-                    (this.Metadata != null &&
-                    this.Metadata.Equals(input.Metadata))
-                ) && 
-                (
                     this.AuthType == input.AuthType ||
                     (this.AuthType != null &&
                     this.AuthType.Equals(input.AuthType))
+                ) && 
+                (
+                    this.Metadata == input.Metadata ||
+                    (this.Metadata != null &&
+                    this.Metadata.Equals(input.Metadata))
                 ) && 
                 (
                     this.AuthSecondFactorType == input.AuthSecondFactorType ||
@@ -341,14 +341,14 @@ namespace DocSpring.Client.Model
                     this.Fields.SequenceEqual(input.Fields)
                 ) && 
                 (
-                    this.Email == input.Email ||
-                    (this.Email != null &&
-                    this.Email.Equals(input.Email))
-                ) && 
-                (
                     this.AuthProvider == input.AuthProvider ||
                     (this.AuthProvider != null &&
                     this.AuthProvider.Equals(input.AuthProvider))
+                ) && 
+                (
+                    this.Email == input.Email ||
+                    (this.Email != null &&
+                    this.Email.Equals(input.Email))
                 ) && 
                 (
                     this.Order == input.Order ||
@@ -366,10 +366,10 @@ namespace DocSpring.Client.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.Metadata != null)
-                    hashCode = hashCode * 59 + this.Metadata.GetHashCode();
                 if (this.AuthType != null)
                     hashCode = hashCode * 59 + this.AuthType.GetHashCode();
+                if (this.Metadata != null)
+                    hashCode = hashCode * 59 + this.Metadata.GetHashCode();
                 if (this.AuthSecondFactorType != null)
                     hashCode = hashCode * 59 + this.AuthSecondFactorType.GetHashCode();
                 if (this.AuthPhoneNumberHash != null)
@@ -386,10 +386,10 @@ namespace DocSpring.Client.Model
                     hashCode = hashCode * 59 + this.Name.GetHashCode();
                 if (this.Fields != null)
                     hashCode = hashCode * 59 + this.Fields.GetHashCode();
-                if (this.Email != null)
-                    hashCode = hashCode * 59 + this.Email.GetHashCode();
                 if (this.AuthProvider != null)
                     hashCode = hashCode * 59 + this.AuthProvider.GetHashCode();
+                if (this.Email != null)
+                    hashCode = hashCode * 59 + this.Email.GetHashCode();
                 if (this.Order != null)
                     hashCode = hashCode * 59 + this.Order.GetHashCode();
                 return hashCode;

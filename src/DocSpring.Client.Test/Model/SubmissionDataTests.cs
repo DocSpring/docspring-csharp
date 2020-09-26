@@ -67,12 +67,12 @@ namespace DocSpring.Client.Test
 
 
         /// <summary>
-        /// Test the property 'Test'
+        /// Test the property 'Css'
         /// </summary>
         [Test]
-        public void TestTest()
+        public void CssTest()
         {
-            // TODO unit test for the property 'Test'
+            // TODO unit test for the property 'Css'
         }
         /// <summary>
         /// Test the property 'Data'
@@ -83,28 +83,12 @@ namespace DocSpring.Client.Test
             // TODO unit test for the property 'Data'
         }
         /// <summary>
-        /// Test the property 'Html'
+        /// Test the property 'DataRequests'
         /// </summary>
         [Test]
-        public void HtmlTest()
+        public void DataRequestsTest()
         {
-            // TODO unit test for the property 'Html'
-        }
-        /// <summary>
-        /// Test the property 'Css'
-        /// </summary>
-        [Test]
-        public void CssTest()
-        {
-            // TODO unit test for the property 'Css'
-        }
-        /// <summary>
-        /// Test the property 'Metadata'
-        /// </summary>
-        [Test]
-        public void MetadataTest()
-        {
-            // TODO unit test for the property 'Metadata'
+            // TODO unit test for the property 'DataRequests'
         }
         /// <summary>
         /// Test the property 'FieldOverrides'
@@ -115,12 +99,28 @@ namespace DocSpring.Client.Test
             // TODO unit test for the property 'FieldOverrides'
         }
         /// <summary>
-        /// Test the property 'DataRequests'
+        /// Test the property 'Html'
         /// </summary>
         [Test]
-        public void DataRequestsTest()
+        public void HtmlTest()
         {
-            // TODO unit test for the property 'DataRequests'
+            // TODO unit test for the property 'Html'
+        }
+        /// <summary>
+        /// Test the property 'Metadata'
+        /// </summary>
+        [Test]
+        public void MetadataTest()
+        {
+            // TODO unit test for the property 'Metadata'
+        }
+        /// <summary>
+        /// Test the property 'Test'
+        /// </summary>
+        [Test]
+        public void TestTest()
+        {
+            // TODO unit test for the property 'Test'
         }
 
     }

@@ -67,60 +67,12 @@ namespace DocSpring.Client.Test
 
 
         /// <summary>
-        /// Test the property 'Name'
+        /// Test the property 'AuthPhoneNumberHash'
         /// </summary>
         [Test]
-        public void NameTest()
+        public void AuthPhoneNumberHashTest()
         {
-            // TODO unit test for the property 'Name'
-        }
-        /// <summary>
-        /// Test the property 'Email'
-        /// </summary>
-        [Test]
-        public void EmailTest()
-        {
-            // TODO unit test for the property 'Email'
-        }
-        /// <summary>
-        /// Test the property 'Order'
-        /// </summary>
-        [Test]
-        public void OrderTest()
-        {
-            // TODO unit test for the property 'Order'
-        }
-        /// <summary>
-        /// Test the property 'Fields'
-        /// </summary>
-        [Test]
-        public void FieldsTest()
-        {
-            // TODO unit test for the property 'Fields'
-        }
-        /// <summary>
-        /// Test the property 'Metadata'
-        /// </summary>
-        [Test]
-        public void MetadataTest()
-        {
-            // TODO unit test for the property 'Metadata'
-        }
-        /// <summary>
-        /// Test the property 'AuthType'
-        /// </summary>
-        [Test]
-        public void AuthTypeTest()
-        {
-            // TODO unit test for the property 'AuthType'
-        }
-        /// <summary>
-        /// Test the property 'AuthSecondFactorType'
-        /// </summary>
-        [Test]
-        public void AuthSecondFactorTypeTest()
-        {
-            // TODO unit test for the property 'AuthSecondFactorType'
+            // TODO unit test for the property 'AuthPhoneNumberHash'
         }
         /// <summary>
         /// Test the property 'AuthProvider'
@@ -131,12 +83,12 @@ namespace DocSpring.Client.Test
             // TODO unit test for the property 'AuthProvider'
         }
         /// <summary>
-        /// Test the property 'AuthSessionStartedAt'
+        /// Test the property 'AuthSecondFactorType'
         /// </summary>
         [Test]
-        public void AuthSessionStartedAtTest()
+        public void AuthSecondFactorTypeTest()
         {
-            // TODO unit test for the property 'AuthSessionStartedAt'
+            // TODO unit test for the property 'AuthSecondFactorType'
         }
         /// <summary>
         /// Test the property 'AuthSessionIdHash'
@@ -145,6 +97,22 @@ namespace DocSpring.Client.Test
         public void AuthSessionIdHashTest()
         {
             // TODO unit test for the property 'AuthSessionIdHash'
+        }
+        /// <summary>
+        /// Test the property 'AuthSessionStartedAt'
+        /// </summary>
+        [Test]
+        public void AuthSessionStartedAtTest()
+        {
+            // TODO unit test for the property 'AuthSessionStartedAt'
+        }
+        /// <summary>
+        /// Test the property 'AuthType'
+        /// </summary>
+        [Test]
+        public void AuthTypeTest()
+        {
+            // TODO unit test for the property 'AuthType'
         }
         /// <summary>
         /// Test the property 'AuthUserIdHash'
@@ -163,12 +131,44 @@ namespace DocSpring.Client.Test
             // TODO unit test for the property 'AuthUsernameHash'
         }
         /// <summary>
-        /// Test the property 'AuthPhoneNumberHash'
+        /// Test the property 'Email'
         /// </summary>
         [Test]
-        public void AuthPhoneNumberHashTest()
+        public void EmailTest()
         {
-            // TODO unit test for the property 'AuthPhoneNumberHash'
+            // TODO unit test for the property 'Email'
+        }
+        /// <summary>
+        /// Test the property 'Fields'
+        /// </summary>
+        [Test]
+        public void FieldsTest()
+        {
+            // TODO unit test for the property 'Fields'
+        }
+        /// <summary>
+        /// Test the property 'Metadata'
+        /// </summary>
+        [Test]
+        public void MetadataTest()
+        {
+            // TODO unit test for the property 'Metadata'
+        }
+        /// <summary>
+        /// Test the property 'Name'
+        /// </summary>
+        [Test]
+        public void NameTest()
+        {
+            // TODO unit test for the property 'Name'
+        }
+        /// <summary>
+        /// Test the property 'Order'
+        /// </summary>
+        [Test]
+        public void OrderTest()
+        {
+            // TODO unit test for the property 'Order'
         }
 
     }

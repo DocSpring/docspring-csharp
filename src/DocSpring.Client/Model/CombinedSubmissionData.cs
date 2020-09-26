@@ -38,11 +38,11 @@ namespace DocSpring.Client.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="CombinedSubmissionData" /> class.
         /// </summary>
-        /// <param name="test">test.</param>
-        /// <param name="submissionIds">submissionIds (required).</param>
-        /// <param name="metadata">metadata.</param>
         /// <param name="expiresIn">expiresIn.</param>
-        public CombinedSubmissionData(bool? test = default(bool?), List<string> submissionIds = default(List<string>), Object metadata = default(Object), int? expiresIn = default(int?))
+        /// <param name="metadata">metadata.</param>
+        /// <param name="submissionIds">submissionIds (required).</param>
+        /// <param name="test">test.</param>
+        public CombinedSubmissionData(int? expiresIn = default(int?), Object metadata = default(Object), List<string> submissionIds = default(List<string>), bool? test = default(bool?))
         {
             // to ensure "submissionIds" is required (not null)
             if (submissionIds == null)
@@ -53,22 +53,16 @@ namespace DocSpring.Client.Model
             {
                 this.SubmissionIds = submissionIds;
             }
-            this.Test = test;
-            this.Metadata = metadata;
             this.ExpiresIn = expiresIn;
+            this.Metadata = metadata;
+            this.Test = test;
         }
         
         /// <summary>
-        /// Gets or Sets Test
+        /// Gets or Sets ExpiresIn
         /// </summary>
-        [DataMember(Name="test", EmitDefaultValue=false)]
-        public bool? Test { get; set; }
-
-        /// <summary>
-        /// Gets or Sets SubmissionIds
-        /// </summary>
-        [DataMember(Name="submission_ids", EmitDefaultValue=false)]
-        public List<string> SubmissionIds { get; set; }
+        [DataMember(Name="expires_in", EmitDefaultValue=false)]
+        public int? ExpiresIn { get; set; }
 
         /// <summary>
         /// Gets or Sets Metadata
@@ -77,10 +71,16 @@ namespace DocSpring.Client.Model
         public Object Metadata { get; set; }
 
         /// <summary>
-        /// Gets or Sets ExpiresIn
+        /// Gets or Sets SubmissionIds
         /// </summary>
-        [DataMember(Name="expires_in", EmitDefaultValue=false)]
-        public int? ExpiresIn { get; set; }
+        [DataMember(Name="submission_ids", EmitDefaultValue=false)]
+        public List<string> SubmissionIds { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Test
+        /// </summary>
+        [DataMember(Name="test", EmitDefaultValue=false)]
+        public bool? Test { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -90,10 +90,10 @@ namespace DocSpring.Client.Model
         {
             var sb = new StringBuilder();
             sb.Append("class CombinedSubmissionData {\n");
-            sb.Append("  Test: ").Append(Test).Append("\n");
-            sb.Append("  SubmissionIds: ").Append(SubmissionIds).Append("\n");
-            sb.Append("  Metadata: ").Append(Metadata).Append("\n");
             sb.Append("  ExpiresIn: ").Append(ExpiresIn).Append("\n");
+            sb.Append("  Metadata: ").Append(Metadata).Append("\n");
+            sb.Append("  SubmissionIds: ").Append(SubmissionIds).Append("\n");
+            sb.Append("  Test: ").Append(Test).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -129,14 +129,9 @@ namespace DocSpring.Client.Model
 
             return 
                 (
-                    this.Test == input.Test ||
-                    (this.Test != null &&
-                    this.Test.Equals(input.Test))
-                ) && 
-                (
-                    this.SubmissionIds == input.SubmissionIds ||
-                    this.SubmissionIds != null &&
-                    this.SubmissionIds.SequenceEqual(input.SubmissionIds)
+                    this.ExpiresIn == input.ExpiresIn ||
+                    (this.ExpiresIn != null &&
+                    this.ExpiresIn.Equals(input.ExpiresIn))
                 ) && 
                 (
                     this.Metadata == input.Metadata ||
@@ -144,9 +139,14 @@ namespace DocSpring.Client.Model
                     this.Metadata.Equals(input.Metadata))
                 ) && 
                 (
-                    this.ExpiresIn == input.ExpiresIn ||
-                    (this.ExpiresIn != null &&
-                    this.ExpiresIn.Equals(input.ExpiresIn))
+                    this.SubmissionIds == input.SubmissionIds ||
+                    this.SubmissionIds != null &&
+                    this.SubmissionIds.SequenceEqual(input.SubmissionIds)
+                ) && 
+                (
+                    this.Test == input.Test ||
+                    (this.Test != null &&
+                    this.Test.Equals(input.Test))
                 );
         }
 
@@ -159,14 +159,14 @@ namespace DocSpring.Client.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.Test != null)
-                    hashCode = hashCode * 59 + this.Test.GetHashCode();
-                if (this.SubmissionIds != null)
-                    hashCode = hashCode * 59 + this.SubmissionIds.GetHashCode();
-                if (this.Metadata != null)
-                    hashCode = hashCode * 59 + this.Metadata.GetHashCode();
                 if (this.ExpiresIn != null)
                     hashCode = hashCode * 59 + this.ExpiresIn.GetHashCode();
+                if (this.Metadata != null)
+                    hashCode = hashCode * 59 + this.Metadata.GetHashCode();
+                if (this.SubmissionIds != null)
+                    hashCode = hashCode * 59 + this.SubmissionIds.GetHashCode();
+                if (this.Test != null)
+                    hashCode = hashCode * 59 + this.Test.GetHashCode();
                 return hashCode;
             }
         }

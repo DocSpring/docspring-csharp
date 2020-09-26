@@ -67,20 +67,20 @@ namespace DocSpring.Client.Test
 
 
         /// <summary>
-        /// Test the property 'Uppercase'
-        /// </summary>
-        [Test]
-        public void UppercaseTest()
-        {
-            // TODO unit test for the property 'Uppercase'
-        }
-        /// <summary>
         /// Test the property 'BackgroundColorFieldName'
         /// </summary>
         [Test]
         public void BackgroundColorFieldNameTest()
         {
             // TODO unit test for the property 'BackgroundColorFieldName'
+        }
+        /// <summary>
+        /// Test the property 'Uppercase'
+        /// </summary>
+        [Test]
+        public void UppercaseTest()
+        {
+            // TODO unit test for the property 'Uppercase'
         }
         /// <summary>
         /// Test the property 'Metadata'
@@ -227,20 +227,20 @@ namespace DocSpring.Client.Test
             // TODO unit test for the property 'InvertBooleanCondition'
         }
         /// <summary>
-        /// Test the property 'Static'
-        /// </summary>
-        [Test]
-        public void StaticTest()
-        {
-            // TODO unit test for the property 'Static'
-        }
-        /// <summary>
         /// Test the property 'ShapeFillColorFieldName'
         /// </summary>
         [Test]
         public void ShapeFillColorFieldNameTest()
         {
             // TODO unit test for the property 'ShapeFillColorFieldName'
+        }
+        /// <summary>
+        /// Test the property 'Static'
+        /// </summary>
+        [Test]
+        public void StaticTest()
+        {
+            // TODO unit test for the property 'Static'
         }
         /// <summary>
         /// Test the property 'ShapeBorderColorFieldName'
@@ -291,20 +291,20 @@ namespace DocSpring.Client.Test
             // TODO unit test for the property 'ShapeBorderColor'
         }
         /// <summary>
-        /// Test the property 'Typeface'
-        /// </summary>
-        [Test]
-        public void TypefaceTest()
-        {
-            // TODO unit test for the property 'Typeface'
-        }
-        /// <summary>
         /// Test the property 'Comb'
         /// </summary>
         [Test]
         public void CombTest()
         {
             // TODO unit test for the property 'Comb'
+        }
+        /// <summary>
+        /// Test the property 'Typeface'
+        /// </summary>
+        [Test]
+        public void TypefaceTest()
+        {
+            // TODO unit test for the property 'Typeface'
         }
         /// <summary>
         /// Test the property 'ShapeType'
@@ -315,20 +315,20 @@ namespace DocSpring.Client.Test
             // TODO unit test for the property 'ShapeType'
         }
         /// <summary>
-        /// Test the property 'DisplayType'
-        /// </summary>
-        [Test]
-        public void DisplayTypeTest()
-        {
-            // TODO unit test for the property 'DisplayType'
-        }
-        /// <summary>
         /// Test the property 'Condition'
         /// </summary>
         [Test]
         public void ConditionTest()
         {
             // TODO unit test for the property 'Condition'
+        }
+        /// <summary>
+        /// Test the property 'DisplayType'
+        /// </summary>
+        [Test]
+        public void DisplayTypeTest()
+        {
+            // TODO unit test for the property 'DisplayType'
         }
         /// <summary>
         /// Test the property 'CheckColor'
@@ -435,20 +435,20 @@ namespace DocSpring.Client.Test
             // TODO unit test for the property 'NumberConditionRangeMin'
         }
         /// <summary>
-        /// Test the property 'Hidden'
-        /// </summary>
-        [Test]
-        public void HiddenTest()
-        {
-            // TODO unit test for the property 'Hidden'
-        }
-        /// <summary>
         /// Test the property 'Color'
         /// </summary>
         [Test]
         public void ColorTest()
         {
             // TODO unit test for the property 'Color'
+        }
+        /// <summary>
+        /// Test the property 'Hidden'
+        /// </summary>
+        [Test]
+        public void HiddenTest()
+        {
+            // TODO unit test for the property 'Hidden'
         }
         /// <summary>
         /// Test the property 'CheckColorFieldRequired'
@@ -563,20 +563,20 @@ namespace DocSpring.Client.Test
             // TODO unit test for the property 'Currency'
         }
         /// <summary>
-        /// Test the property 'Strikethrough'
-        /// </summary>
-        [Test]
-        public void StrikethroughTest()
-        {
-            // TODO unit test for the property 'Strikethrough'
-        }
-        /// <summary>
         /// Test the property 'FalseText'
         /// </summary>
         [Test]
         public void FalseTextTest()
         {
             // TODO unit test for the property 'FalseText'
+        }
+        /// <summary>
+        /// Test the property 'Strikethrough'
+        /// </summary>
+        [Test]
+        public void StrikethroughTest()
+        {
+            // TODO unit test for the property 'Strikethrough'
         }
         /// <summary>
         /// Test the property 'CharacterSpacing'
@@ -659,14 +659,6 @@ namespace DocSpring.Client.Test
             // TODO unit test for the property 'ShapeFillColorFieldRequired'
         }
         /// <summary>
-        /// Test the property 'IncludeTime'
-        /// </summary>
-        [Test]
-        public void IncludeTimeTest()
-        {
-            // TODO unit test for the property 'IncludeTime'
-        }
-        /// <summary>
         /// Test the property 'DecimalPlaces'
         /// </summary>
         [Test]
@@ -675,12 +667,12 @@ namespace DocSpring.Client.Test
             // TODO unit test for the property 'DecimalPlaces'
         }
         /// <summary>
-        /// Test the property 'X'
+        /// Test the property 'IncludeTime'
         /// </summary>
         [Test]
-        public void XTest()
+        public void IncludeTimeTest()
         {
-            // TODO unit test for the property 'X'
+            // TODO unit test for the property 'IncludeTime'
         }
         /// <summary>
         /// Test the property 'Width'
@@ -689,6 +681,14 @@ namespace DocSpring.Client.Test
         public void WidthTest()
         {
             // TODO unit test for the property 'Width'
+        }
+        /// <summary>
+        /// Test the property 'X'
+        /// </summary>
+        [Test]
+        public void XTest()
+        {
+            // TODO unit test for the property 'X'
         }
         /// <summary>
         /// Test the property 'Maximum'
@@ -715,20 +715,20 @@ namespace DocSpring.Client.Test
             // TODO unit test for the property 'SignatureAllowDraw'
         }
         /// <summary>
-        /// Test the property 'Opacity'
-        /// </summary>
-        [Test]
-        public void OpacityTest()
-        {
-            // TODO unit test for the property 'Opacity'
-        }
-        /// <summary>
         /// Test the property 'NumberConditionType'
         /// </summary>
         [Test]
         public void NumberConditionTypeTest()
         {
             // TODO unit test for the property 'NumberConditionType'
+        }
+        /// <summary>
+        /// Test the property 'Opacity'
+        /// </summary>
+        [Test]
+        public void OpacityTest()
+        {
+            // TODO unit test for the property 'Opacity'
         }
         /// <summary>
         /// Test the property 'Minimum'

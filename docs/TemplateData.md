@@ -6,8 +6,8 @@ Name | Type | Description | Notes
 **ExpirationInterval** | **string** |  | [optional] 
 **WebhookUrl** | **string** |  | [optional] 
 **Scss** | **string** |  | [optional] 
-**ExpireAfter** | **decimal?** |  | [optional] 
 **AllowAdditionalProperties** | **bool?** |  | [optional] 
+**ExpireAfter** | **decimal?** |  | [optional] 
 **Description** | **string** |  | [optional] 
 **PublicSubmissions** | **bool?** |  | [optional] 
 **SlackWebhookUrl** | **string** |  | [optional] 
@@ -16,8 +16,8 @@ Name | Type | Description | Notes
 **EditableSubmissions** | **bool?** |  | [optional] 
 **ExpireSubmissions** | **bool?** |  | [optional] 
 **Name** | **string** |  | [optional] 
-**Html** | **string** |  | [optional] 
 **FooterHtml** | **string** |  | [optional] 
+**Html** | **string** |  | [optional] 
 **RedirectUrl** | **string** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

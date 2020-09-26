@@ -3,19 +3,19 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Name** | **string** |  | [optional] 
-**Email** | **string** |  | [optional] 
-**Order** | **int?** |  | [optional] 
-**Fields** | **List&lt;string&gt;** |  | [optional] 
-**Metadata** | **Object** |  | [optional] 
-**AuthType** | **string** |  | [optional] 
-**AuthSecondFactorType** | **string** |  | [optional] 
+**AuthPhoneNumberHash** | **string** |  | [optional] 
 **AuthProvider** | **string** |  | [optional] 
-**AuthSessionStartedAt** | **string** |  | [optional] 
+**AuthSecondFactorType** | **string** |  | [optional] 
 **AuthSessionIdHash** | **string** |  | [optional] 
+**AuthSessionStartedAt** | **string** |  | [optional] 
+**AuthType** | **string** |  | [optional] 
 **AuthUserIdHash** | **string** |  | [optional] 
 **AuthUsernameHash** | **string** |  | [optional] 
-**AuthPhoneNumberHash** | **string** |  | [optional] 
+**Email** | **string** |  | [optional] 
+**Fields** | **List&lt;string&gt;** |  | [optional] 
+**Metadata** | **Object** |  | [optional] 
+**Name** | **string** |  | [optional] 
+**Order** | **int?** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -3,11 +3,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Test** | **bool?** |  | [optional] 
-**SourcePdfs** | **List&lt;Object&gt;** |  | 
-**Metadata** | **Object** |  | [optional] 
-**ExpiresIn** | **int?** |  | [optional] 
 **DeleteCustomFiles** | **bool?** |  | [optional] 
+**ExpiresIn** | **int?** |  | [optional] 
+**Metadata** | **Object** |  | [optional] 
+**SourcePdfs** | **List&lt;Object&gt;** |  | 
+**Test** | **bool?** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

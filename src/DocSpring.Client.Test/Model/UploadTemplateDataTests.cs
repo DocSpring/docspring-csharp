@@ -91,14 +91,6 @@ namespace DocSpring.Client.Test
             // TODO unit test for the property 'Scss'
         }
         /// <summary>
-        /// Test the property 'ExpireAfter'
-        /// </summary>
-        [Test]
-        public void ExpireAfterTest()
-        {
-            // TODO unit test for the property 'ExpireAfter'
-        }
-        /// <summary>
         /// Test the property 'AllowAdditionalProperties'
         /// </summary>
         [Test]
@@ -113,6 +105,14 @@ namespace DocSpring.Client.Test
         public void DocumentTest()
         {
             // TODO unit test for the property 'Document'
+        }
+        /// <summary>
+        /// Test the property 'ExpireAfter'
+        /// </summary>
+        [Test]
+        public void ExpireAfterTest()
+        {
+            // TODO unit test for the property 'ExpireAfter'
         }
         /// <summary>
         /// Test the property 'Description'
@@ -179,20 +179,20 @@ namespace DocSpring.Client.Test
             // TODO unit test for the property 'Name'
         }
         /// <summary>
-        /// Test the property 'Html'
-        /// </summary>
-        [Test]
-        public void HtmlTest()
-        {
-            // TODO unit test for the property 'Html'
-        }
-        /// <summary>
         /// Test the property 'FooterHtml'
         /// </summary>
         [Test]
         public void FooterHtmlTest()
         {
             // TODO unit test for the property 'FooterHtml'
+        }
+        /// <summary>
+        /// Test the property 'Html'
+        /// </summary>
+        [Test]
+        public void HtmlTest()
+        {
+            // TODO unit test for the property 'Html'
         }
         /// <summary>
         /// Test the property 'TemplateType'

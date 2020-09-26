@@ -38,12 +38,12 @@ namespace DocSpring.Client.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="CombinePdfsData" /> class.
         /// </summary>
-        /// <param name="test">test.</param>
-        /// <param name="sourcePdfs">sourcePdfs (required).</param>
-        /// <param name="metadata">metadata.</param>
-        /// <param name="expiresIn">expiresIn.</param>
         /// <param name="deleteCustomFiles">deleteCustomFiles.</param>
-        public CombinePdfsData(bool? test = default(bool?), List<Object> sourcePdfs = default(List<Object>), Object metadata = default(Object), int? expiresIn = default(int?), bool? deleteCustomFiles = default(bool?))
+        /// <param name="expiresIn">expiresIn.</param>
+        /// <param name="metadata">metadata.</param>
+        /// <param name="sourcePdfs">sourcePdfs (required).</param>
+        /// <param name="test">test.</param>
+        public CombinePdfsData(bool? deleteCustomFiles = default(bool?), int? expiresIn = default(int?), Object metadata = default(Object), List<Object> sourcePdfs = default(List<Object>), bool? test = default(bool?))
         {
             // to ensure "sourcePdfs" is required (not null)
             if (sourcePdfs == null)
@@ -54,29 +54,17 @@ namespace DocSpring.Client.Model
             {
                 this.SourcePdfs = sourcePdfs;
             }
-            this.Test = test;
-            this.Metadata = metadata;
-            this.ExpiresIn = expiresIn;
             this.DeleteCustomFiles = deleteCustomFiles;
+            this.ExpiresIn = expiresIn;
+            this.Metadata = metadata;
+            this.Test = test;
         }
         
         /// <summary>
-        /// Gets or Sets Test
+        /// Gets or Sets DeleteCustomFiles
         /// </summary>
-        [DataMember(Name="test", EmitDefaultValue=false)]
-        public bool? Test { get; set; }
-
-        /// <summary>
-        /// Gets or Sets SourcePdfs
-        /// </summary>
-        [DataMember(Name="source_pdfs", EmitDefaultValue=false)]
-        public List<Object> SourcePdfs { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Metadata
-        /// </summary>
-        [DataMember(Name="metadata", EmitDefaultValue=false)]
-        public Object Metadata { get; set; }
+        [DataMember(Name="delete_custom_files", EmitDefaultValue=false)]
+        public bool? DeleteCustomFiles { get; set; }
 
         /// <summary>
         /// Gets or Sets ExpiresIn
@@ -85,10 +73,22 @@ namespace DocSpring.Client.Model
         public int? ExpiresIn { get; set; }
 
         /// <summary>
-        /// Gets or Sets DeleteCustomFiles
+        /// Gets or Sets Metadata
         /// </summary>
-        [DataMember(Name="delete_custom_files", EmitDefaultValue=false)]
-        public bool? DeleteCustomFiles { get; set; }
+        [DataMember(Name="metadata", EmitDefaultValue=false)]
+        public Object Metadata { get; set; }
+
+        /// <summary>
+        /// Gets or Sets SourcePdfs
+        /// </summary>
+        [DataMember(Name="source_pdfs", EmitDefaultValue=false)]
+        public List<Object> SourcePdfs { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Test
+        /// </summary>
+        [DataMember(Name="test", EmitDefaultValue=false)]
+        public bool? Test { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -98,11 +98,11 @@ namespace DocSpring.Client.Model
         {
             var sb = new StringBuilder();
             sb.Append("class CombinePdfsData {\n");
-            sb.Append("  Test: ").Append(Test).Append("\n");
-            sb.Append("  SourcePdfs: ").Append(SourcePdfs).Append("\n");
-            sb.Append("  Metadata: ").Append(Metadata).Append("\n");
-            sb.Append("  ExpiresIn: ").Append(ExpiresIn).Append("\n");
             sb.Append("  DeleteCustomFiles: ").Append(DeleteCustomFiles).Append("\n");
+            sb.Append("  ExpiresIn: ").Append(ExpiresIn).Append("\n");
+            sb.Append("  Metadata: ").Append(Metadata).Append("\n");
+            sb.Append("  SourcePdfs: ").Append(SourcePdfs).Append("\n");
+            sb.Append("  Test: ").Append(Test).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -138,19 +138,9 @@ namespace DocSpring.Client.Model
 
             return 
                 (
-                    this.Test == input.Test ||
-                    (this.Test != null &&
-                    this.Test.Equals(input.Test))
-                ) && 
-                (
-                    this.SourcePdfs == input.SourcePdfs ||
-                    this.SourcePdfs != null &&
-                    this.SourcePdfs.SequenceEqual(input.SourcePdfs)
-                ) && 
-                (
-                    this.Metadata == input.Metadata ||
-                    (this.Metadata != null &&
-                    this.Metadata.Equals(input.Metadata))
+                    this.DeleteCustomFiles == input.DeleteCustomFiles ||
+                    (this.DeleteCustomFiles != null &&
+                    this.DeleteCustomFiles.Equals(input.DeleteCustomFiles))
                 ) && 
                 (
                     this.ExpiresIn == input.ExpiresIn ||
@@ -158,9 +148,19 @@ namespace DocSpring.Client.Model
                     this.ExpiresIn.Equals(input.ExpiresIn))
                 ) && 
                 (
-                    this.DeleteCustomFiles == input.DeleteCustomFiles ||
-                    (this.DeleteCustomFiles != null &&
-                    this.DeleteCustomFiles.Equals(input.DeleteCustomFiles))
+                    this.Metadata == input.Metadata ||
+                    (this.Metadata != null &&
+                    this.Metadata.Equals(input.Metadata))
+                ) && 
+                (
+                    this.SourcePdfs == input.SourcePdfs ||
+                    this.SourcePdfs != null &&
+                    this.SourcePdfs.SequenceEqual(input.SourcePdfs)
+                ) && 
+                (
+                    this.Test == input.Test ||
+                    (this.Test != null &&
+                    this.Test.Equals(input.Test))
                 );
         }
 
@@ -173,16 +173,16 @@ namespace DocSpring.Client.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.Test != null)
-                    hashCode = hashCode * 59 + this.Test.GetHashCode();
-                if (this.SourcePdfs != null)
-                    hashCode = hashCode * 59 + this.SourcePdfs.GetHashCode();
-                if (this.Metadata != null)
-                    hashCode = hashCode * 59 + this.Metadata.GetHashCode();
-                if (this.ExpiresIn != null)
-                    hashCode = hashCode * 59 + this.ExpiresIn.GetHashCode();
                 if (this.DeleteCustomFiles != null)
                     hashCode = hashCode * 59 + this.DeleteCustomFiles.GetHashCode();
+                if (this.ExpiresIn != null)
+                    hashCode = hashCode * 59 + this.ExpiresIn.GetHashCode();
+                if (this.Metadata != null)
+                    hashCode = hashCode * 59 + this.Metadata.GetHashCode();
+                if (this.SourcePdfs != null)
+                    hashCode = hashCode * 59 + this.SourcePdfs.GetHashCode();
+                if (this.Test != null)
+                    hashCode = hashCode * 59 + this.Test.GetHashCode();
                 return hashCode;
             }
         }

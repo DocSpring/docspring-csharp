@@ -75,12 +75,12 @@ namespace DocSpring.Client.Test
             // TODO unit test for the property 'Metadata'
         }
         /// <summary>
-        /// Test the property 'Test'
+        /// Test the property 'Submissions'
         /// </summary>
         [Test]
-        public void TestTest()
+        public void SubmissionsTest()
         {
-            // TODO unit test for the property 'Test'
+            // TODO unit test for the property 'Submissions'
         }
         /// <summary>
         /// Test the property 'TemplateId'
@@ -91,12 +91,12 @@ namespace DocSpring.Client.Test
             // TODO unit test for the property 'TemplateId'
         }
         /// <summary>
-        /// Test the property 'Submissions'
+        /// Test the property 'Test'
         /// </summary>
         [Test]
-        public void SubmissionsTest()
+        public void TestTest()
         {
-            // TODO unit test for the property 'Submissions'
+            // TODO unit test for the property 'Test'
         }
 
     }

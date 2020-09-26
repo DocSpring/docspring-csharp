@@ -524,8 +524,8 @@ namespace DocSpring.Client.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="TemplatestemplateIdaddFieldsFields" /> class.
         /// </summary>
-        /// <param name="uppercase">uppercase.</param>
         /// <param name="backgroundColorFieldName">backgroundColorFieldName.</param>
+        /// <param name="uppercase">uppercase.</param>
         /// <param name="metadata">metadata.</param>
         /// <param name="barcodeSymbology">barcodeSymbology.</param>
         /// <param name="minLength">minLength.</param>
@@ -544,19 +544,19 @@ namespace DocSpring.Client.Model
         /// <param name="height">height.</param>
         /// <param name="numberConditionRangeExclusiveMax">numberConditionRangeExclusiveMax.</param>
         /// <param name="invertBooleanCondition">invertBooleanCondition.</param>
-        /// <param name="_static">_static.</param>
         /// <param name="shapeFillColorFieldName">shapeFillColorFieldName.</param>
+        /// <param name="_static">_static.</param>
         /// <param name="shapeBorderColorFieldName">shapeBorderColorFieldName.</param>
         /// <param name="vAlignment">vAlignment.</param>
         /// <param name="bold">bold.</param>
         /// <param name="shapeBorderWidth">shapeBorderWidth.</param>
         /// <param name="combNumberOfCells">combNumberOfCells.</param>
         /// <param name="shapeBorderColor">shapeBorderColor.</param>
-        /// <param name="typeface">typeface.</param>
         /// <param name="comb">comb.</param>
+        /// <param name="typeface">typeface.</param>
         /// <param name="shapeType">shapeType.</param>
-        /// <param name="displayType">displayType.</param>
         /// <param name="condition">condition.</param>
+        /// <param name="displayType">displayType.</param>
         /// <param name="checkColor">checkColor.</param>
         /// <param name="multilineLines">multilineLines.</param>
         /// <param name="multiline">multiline.</param>
@@ -570,8 +570,8 @@ namespace DocSpring.Client.Model
         /// <param name="colorFieldName">colorFieldName.</param>
         /// <param name="qrcodeColorFieldName">qrcodeColorFieldName.</param>
         /// <param name="numberConditionRangeMin">numberConditionRangeMin.</param>
-        /// <param name="hidden">hidden.</param>
         /// <param name="color">color.</param>
+        /// <param name="hidden">hidden.</param>
         /// <param name="checkColorFieldRequired">checkColorFieldRequired.</param>
         /// <param name="combinedFieldFormat">combinedFieldFormat.</param>
         /// <param name="description">description.</param>
@@ -586,8 +586,8 @@ namespace DocSpring.Client.Model
         /// <param name="dateTimeFormat">dateTimeFormat.</param>
         /// <param name="qrcodeColorFieldRequired">qrcodeColorFieldRequired.</param>
         /// <param name="currency">currency.</param>
-        /// <param name="strikethrough">strikethrough.</param>
         /// <param name="falseText">falseText.</param>
+        /// <param name="strikethrough">strikethrough.</param>
         /// <param name="characterSpacing">characterSpacing.</param>
         /// <param name="numberConditionRangeMax">numberConditionRangeMax.</param>
         /// <param name="backgroundColor">backgroundColor.</param>
@@ -598,21 +598,21 @@ namespace DocSpring.Client.Model
         /// <param name="shapeFillColor">shapeFillColor.</param>
         /// <param name="stringConditionType">stringConditionType.</param>
         /// <param name="shapeFillColorFieldRequired">shapeFillColorFieldRequired.</param>
-        /// <param name="includeTime">includeTime.</param>
         /// <param name="decimalPlaces">decimalPlaces.</param>
-        /// <param name="x">x.</param>
+        /// <param name="includeTime">includeTime.</param>
         /// <param name="width">width.</param>
+        /// <param name="x">x.</param>
         /// <param name="maximum">maximum.</param>
         /// <param name="y">y.</param>
         /// <param name="signatureAllowDraw">signatureAllowDraw.</param>
-        /// <param name="opacity">opacity.</param>
         /// <param name="numberConditionType">numberConditionType.</param>
+        /// <param name="opacity">opacity.</param>
         /// <param name="minimum">minimum.</param>
         /// <param name="signatureAllowType">signatureAllowType.</param>
-        public TemplatestemplateIdaddFieldsFields(bool? uppercase = default(bool?), string backgroundColorFieldName = default(string), string metadata = default(string), string barcodeSymbology = default(string), decimal? minLength = default(decimal?), bool? integer = default(bool?), TypeEnum? type = default(TypeEnum?), bool? required = default(bool?), decimal? combValueOffset = default(decimal?), ImageGravityEnum? imageGravity = default(ImageGravityEnum?), OverflowEnum? overflow = default(OverflowEnum?), string qrcodeColor = default(string), bool? colorFieldRequired = default(bool?), bool? backgroundColorFieldRequired = default(bool?), decimal? id = default(decimal?), ImageScaleTypeEnum? imageScaleType = default(ImageScaleTypeEnum?), bool? exclusiveMinimum = default(bool?), decimal? height = default(decimal?), bool? numberConditionRangeExclusiveMax = default(bool?), bool? invertBooleanCondition = default(bool?), bool? _static = default(bool?), string shapeFillColorFieldName = default(string), string shapeBorderColorFieldName = default(string), VAlignmentEnum? vAlignment = default(VAlignmentEnum?), bool? bold = default(bool?), decimal? shapeBorderWidth = default(decimal?), decimal? combNumberOfCells = default(decimal?), string shapeBorderColor = default(string), string typeface = default(string), bool? comb = default(bool?), ShapeTypeEnum? shapeType = default(ShapeTypeEnum?), DisplayTypeEnum? displayType = default(DisplayTypeEnum?), string condition = default(string), string checkColor = default(string), decimal? multilineLines = default(decimal?), bool? multiline = default(bool?), string trueText = default(string), string name = default(string), decimal? fontSize = default(decimal?), decimal? page = default(decimal?), AlignmentEnum? alignment = default(AlignmentEnum?), decimal? maxLength = default(decimal?), bool? autoCalculateMaxLength = default(bool?), string colorFieldName = default(string), string qrcodeColorFieldName = default(string), decimal? numberConditionRangeMin = default(decimal?), bool? hidden = default(bool?), string color = default(string), bool? checkColorFieldRequired = default(bool?), string combinedFieldFormat = default(string), string description = default(string), bool? shapeBorderColorFieldRequired = default(bool?), string combinedFieldNames = default(string), string title = default(string), bool? numberConditionRangeExclusiveMin = default(bool?), string combinedFieldSeparator = default(string), bool? exclusiveMaximum = default(bool?), string _default = default(string), string combinedFieldType = default(string), string dateTimeFormat = default(string), bool? qrcodeColorFieldRequired = default(bool?), bool? currency = default(bool?), bool? strikethrough = default(bool?), string falseText = default(string), decimal? characterSpacing = default(decimal?), decimal? numberConditionRangeMax = default(decimal?), string backgroundColor = default(string), string checkColorFieldName = default(string), CheckCharacterEnum? checkCharacter = default(CheckCharacterEnum?), decimal? rotation = default(decimal?), string optionList = default(string), string shapeFillColor = default(string), StringConditionTypeEnum? stringConditionType = default(StringConditionTypeEnum?), bool? shapeFillColorFieldRequired = default(bool?), bool? includeTime = default(bool?), decimal? decimalPlaces = default(decimal?), decimal? x = default(decimal?), decimal? width = default(decimal?), decimal? maximum = default(decimal?), decimal? y = default(decimal?), bool? signatureAllowDraw = default(bool?), decimal? opacity = default(decimal?), NumberConditionTypeEnum? numberConditionType = default(NumberConditionTypeEnum?), decimal? minimum = default(decimal?), bool? signatureAllowType = default(bool?))
+        public TemplatestemplateIdaddFieldsFields(string backgroundColorFieldName = default(string), bool? uppercase = default(bool?), string metadata = default(string), string barcodeSymbology = default(string), decimal? minLength = default(decimal?), bool? integer = default(bool?), TypeEnum? type = default(TypeEnum?), bool? required = default(bool?), decimal? combValueOffset = default(decimal?), ImageGravityEnum? imageGravity = default(ImageGravityEnum?), OverflowEnum? overflow = default(OverflowEnum?), string qrcodeColor = default(string), bool? colorFieldRequired = default(bool?), bool? backgroundColorFieldRequired = default(bool?), decimal? id = default(decimal?), ImageScaleTypeEnum? imageScaleType = default(ImageScaleTypeEnum?), bool? exclusiveMinimum = default(bool?), decimal? height = default(decimal?), bool? numberConditionRangeExclusiveMax = default(bool?), bool? invertBooleanCondition = default(bool?), string shapeFillColorFieldName = default(string), bool? _static = default(bool?), string shapeBorderColorFieldName = default(string), VAlignmentEnum? vAlignment = default(VAlignmentEnum?), bool? bold = default(bool?), decimal? shapeBorderWidth = default(decimal?), decimal? combNumberOfCells = default(decimal?), string shapeBorderColor = default(string), bool? comb = default(bool?), string typeface = default(string), ShapeTypeEnum? shapeType = default(ShapeTypeEnum?), string condition = default(string), DisplayTypeEnum? displayType = default(DisplayTypeEnum?), string checkColor = default(string), decimal? multilineLines = default(decimal?), bool? multiline = default(bool?), string trueText = default(string), string name = default(string), decimal? fontSize = default(decimal?), decimal? page = default(decimal?), AlignmentEnum? alignment = default(AlignmentEnum?), decimal? maxLength = default(decimal?), bool? autoCalculateMaxLength = default(bool?), string colorFieldName = default(string), string qrcodeColorFieldName = default(string), decimal? numberConditionRangeMin = default(decimal?), string color = default(string), bool? hidden = default(bool?), bool? checkColorFieldRequired = default(bool?), string combinedFieldFormat = default(string), string description = default(string), bool? shapeBorderColorFieldRequired = default(bool?), string combinedFieldNames = default(string), string title = default(string), bool? numberConditionRangeExclusiveMin = default(bool?), string combinedFieldSeparator = default(string), bool? exclusiveMaximum = default(bool?), string _default = default(string), string combinedFieldType = default(string), string dateTimeFormat = default(string), bool? qrcodeColorFieldRequired = default(bool?), bool? currency = default(bool?), string falseText = default(string), bool? strikethrough = default(bool?), decimal? characterSpacing = default(decimal?), decimal? numberConditionRangeMax = default(decimal?), string backgroundColor = default(string), string checkColorFieldName = default(string), CheckCharacterEnum? checkCharacter = default(CheckCharacterEnum?), decimal? rotation = default(decimal?), string optionList = default(string), string shapeFillColor = default(string), StringConditionTypeEnum? stringConditionType = default(StringConditionTypeEnum?), bool? shapeFillColorFieldRequired = default(bool?), decimal? decimalPlaces = default(decimal?), bool? includeTime = default(bool?), decimal? width = default(decimal?), decimal? x = default(decimal?), decimal? maximum = default(decimal?), decimal? y = default(decimal?), bool? signatureAllowDraw = default(bool?), NumberConditionTypeEnum? numberConditionType = default(NumberConditionTypeEnum?), decimal? opacity = default(decimal?), decimal? minimum = default(decimal?), bool? signatureAllowType = default(bool?))
         {
-            this.Uppercase = uppercase;
             this.BackgroundColorFieldName = backgroundColorFieldName;
+            this.Uppercase = uppercase;
             this.Metadata = metadata;
             this.BarcodeSymbology = barcodeSymbology;
             this.MinLength = minLength;
@@ -631,19 +631,19 @@ namespace DocSpring.Client.Model
             this.Height = height;
             this.NumberConditionRangeExclusiveMax = numberConditionRangeExclusiveMax;
             this.InvertBooleanCondition = invertBooleanCondition;
-            this.Static = _static;
             this.ShapeFillColorFieldName = shapeFillColorFieldName;
+            this.Static = _static;
             this.ShapeBorderColorFieldName = shapeBorderColorFieldName;
             this.VAlignment = vAlignment;
             this.Bold = bold;
             this.ShapeBorderWidth = shapeBorderWidth;
             this.CombNumberOfCells = combNumberOfCells;
             this.ShapeBorderColor = shapeBorderColor;
-            this.Typeface = typeface;
             this.Comb = comb;
+            this.Typeface = typeface;
             this.ShapeType = shapeType;
-            this.DisplayType = displayType;
             this.Condition = condition;
+            this.DisplayType = displayType;
             this.CheckColor = checkColor;
             this.MultilineLines = multilineLines;
             this.Multiline = multiline;
@@ -657,8 +657,8 @@ namespace DocSpring.Client.Model
             this.ColorFieldName = colorFieldName;
             this.QrcodeColorFieldName = qrcodeColorFieldName;
             this.NumberConditionRangeMin = numberConditionRangeMin;
-            this.Hidden = hidden;
             this.Color = color;
+            this.Hidden = hidden;
             this.CheckColorFieldRequired = checkColorFieldRequired;
             this.CombinedFieldFormat = combinedFieldFormat;
             this.Description = description;
@@ -673,8 +673,8 @@ namespace DocSpring.Client.Model
             this.DateTimeFormat = dateTimeFormat;
             this.QrcodeColorFieldRequired = qrcodeColorFieldRequired;
             this.Currency = currency;
-            this.Strikethrough = strikethrough;
             this.FalseText = falseText;
+            this.Strikethrough = strikethrough;
             this.CharacterSpacing = characterSpacing;
             this.NumberConditionRangeMax = numberConditionRangeMax;
             this.BackgroundColor = backgroundColor;
@@ -685,30 +685,30 @@ namespace DocSpring.Client.Model
             this.ShapeFillColor = shapeFillColor;
             this.StringConditionType = stringConditionType;
             this.ShapeFillColorFieldRequired = shapeFillColorFieldRequired;
-            this.IncludeTime = includeTime;
             this.DecimalPlaces = decimalPlaces;
-            this.X = x;
+            this.IncludeTime = includeTime;
             this.Width = width;
+            this.X = x;
             this.Maximum = maximum;
             this.Y = y;
             this.SignatureAllowDraw = signatureAllowDraw;
-            this.Opacity = opacity;
             this.NumberConditionType = numberConditionType;
+            this.Opacity = opacity;
             this.Minimum = minimum;
             this.SignatureAllowType = signatureAllowType;
         }
         
         /// <summary>
-        /// Gets or Sets Uppercase
-        /// </summary>
-        [DataMember(Name="uppercase", EmitDefaultValue=false)]
-        public bool? Uppercase { get; set; }
-
-        /// <summary>
         /// Gets or Sets BackgroundColorFieldName
         /// </summary>
         [DataMember(Name="backgroundColorFieldName", EmitDefaultValue=false)]
         public string BackgroundColorFieldName { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Uppercase
+        /// </summary>
+        [DataMember(Name="uppercase", EmitDefaultValue=false)]
+        public bool? Uppercase { get; set; }
 
         /// <summary>
         /// Gets or Sets Metadata
@@ -799,16 +799,16 @@ namespace DocSpring.Client.Model
         public bool? InvertBooleanCondition { get; set; }
 
         /// <summary>
-        /// Gets or Sets Static
-        /// </summary>
-        [DataMember(Name="static", EmitDefaultValue=false)]
-        public bool? Static { get; set; }
-
-        /// <summary>
         /// Gets or Sets ShapeFillColorFieldName
         /// </summary>
         [DataMember(Name="shapeFillColorFieldName", EmitDefaultValue=false)]
         public string ShapeFillColorFieldName { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Static
+        /// </summary>
+        [DataMember(Name="static", EmitDefaultValue=false)]
+        public bool? Static { get; set; }
 
         /// <summary>
         /// Gets or Sets ShapeBorderColorFieldName
@@ -842,17 +842,16 @@ namespace DocSpring.Client.Model
         public string ShapeBorderColor { get; set; }
 
         /// <summary>
-        /// Gets or Sets Typeface
-        /// </summary>
-        [DataMember(Name="typeface", EmitDefaultValue=false)]
-        public string Typeface { get; set; }
-
-        /// <summary>
         /// Gets or Sets Comb
         /// </summary>
         [DataMember(Name="comb", EmitDefaultValue=false)]
         public bool? Comb { get; set; }
 
+        /// <summary>
+        /// Gets or Sets Typeface
+        /// </summary>
+        [DataMember(Name="typeface", EmitDefaultValue=false)]
+        public string Typeface { get; set; }
 
 
         /// <summary>
@@ -860,6 +859,7 @@ namespace DocSpring.Client.Model
         /// </summary>
         [DataMember(Name="condition", EmitDefaultValue=false)]
         public string Condition { get; set; }
+
 
         /// <summary>
         /// Gets or Sets CheckColor
@@ -935,16 +935,16 @@ namespace DocSpring.Client.Model
         public decimal? NumberConditionRangeMin { get; set; }
 
         /// <summary>
-        /// Gets or Sets Hidden
-        /// </summary>
-        [DataMember(Name="hidden", EmitDefaultValue=false)]
-        public bool? Hidden { get; set; }
-
-        /// <summary>
         /// Gets or Sets Color
         /// </summary>
         [DataMember(Name="color", EmitDefaultValue=false)]
         public string Color { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Hidden
+        /// </summary>
+        [DataMember(Name="hidden", EmitDefaultValue=false)]
+        public bool? Hidden { get; set; }
 
         /// <summary>
         /// Gets or Sets CheckColorFieldRequired
@@ -1031,16 +1031,16 @@ namespace DocSpring.Client.Model
         public bool? Currency { get; set; }
 
         /// <summary>
-        /// Gets or Sets Strikethrough
-        /// </summary>
-        [DataMember(Name="strikethrough", EmitDefaultValue=false)]
-        public bool? Strikethrough { get; set; }
-
-        /// <summary>
         /// Gets or Sets FalseText
         /// </summary>
         [DataMember(Name="falseText", EmitDefaultValue=false)]
         public string FalseText { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Strikethrough
+        /// </summary>
+        [DataMember(Name="strikethrough", EmitDefaultValue=false)]
+        public bool? Strikethrough { get; set; }
 
         /// <summary>
         /// Gets or Sets CharacterSpacing
@@ -1093,28 +1093,28 @@ namespace DocSpring.Client.Model
         public bool? ShapeFillColorFieldRequired { get; set; }
 
         /// <summary>
-        /// Gets or Sets IncludeTime
-        /// </summary>
-        [DataMember(Name="includeTime", EmitDefaultValue=false)]
-        public bool? IncludeTime { get; set; }
-
-        /// <summary>
         /// Gets or Sets DecimalPlaces
         /// </summary>
         [DataMember(Name="decimalPlaces", EmitDefaultValue=false)]
         public decimal? DecimalPlaces { get; set; }
 
         /// <summary>
-        /// Gets or Sets X
+        /// Gets or Sets IncludeTime
         /// </summary>
-        [DataMember(Name="x", EmitDefaultValue=false)]
-        public decimal? X { get; set; }
+        [DataMember(Name="includeTime", EmitDefaultValue=false)]
+        public bool? IncludeTime { get; set; }
 
         /// <summary>
         /// Gets or Sets Width
         /// </summary>
         [DataMember(Name="width", EmitDefaultValue=false)]
         public decimal? Width { get; set; }
+
+        /// <summary>
+        /// Gets or Sets X
+        /// </summary>
+        [DataMember(Name="x", EmitDefaultValue=false)]
+        public decimal? X { get; set; }
 
         /// <summary>
         /// Gets or Sets Maximum
@@ -1134,12 +1134,12 @@ namespace DocSpring.Client.Model
         [DataMember(Name="signatureAllowDraw", EmitDefaultValue=false)]
         public bool? SignatureAllowDraw { get; set; }
 
+
         /// <summary>
         /// Gets or Sets Opacity
         /// </summary>
         [DataMember(Name="opacity", EmitDefaultValue=false)]
         public decimal? Opacity { get; set; }
-
 
         /// <summary>
         /// Gets or Sets Minimum
@@ -1161,8 +1161,8 @@ namespace DocSpring.Client.Model
         {
             var sb = new StringBuilder();
             sb.Append("class TemplatestemplateIdaddFieldsFields {\n");
-            sb.Append("  Uppercase: ").Append(Uppercase).Append("\n");
             sb.Append("  BackgroundColorFieldName: ").Append(BackgroundColorFieldName).Append("\n");
+            sb.Append("  Uppercase: ").Append(Uppercase).Append("\n");
             sb.Append("  Metadata: ").Append(Metadata).Append("\n");
             sb.Append("  BarcodeSymbology: ").Append(BarcodeSymbology).Append("\n");
             sb.Append("  MinLength: ").Append(MinLength).Append("\n");
@@ -1181,19 +1181,19 @@ namespace DocSpring.Client.Model
             sb.Append("  Height: ").Append(Height).Append("\n");
             sb.Append("  NumberConditionRangeExclusiveMax: ").Append(NumberConditionRangeExclusiveMax).Append("\n");
             sb.Append("  InvertBooleanCondition: ").Append(InvertBooleanCondition).Append("\n");
-            sb.Append("  Static: ").Append(Static).Append("\n");
             sb.Append("  ShapeFillColorFieldName: ").Append(ShapeFillColorFieldName).Append("\n");
+            sb.Append("  Static: ").Append(Static).Append("\n");
             sb.Append("  ShapeBorderColorFieldName: ").Append(ShapeBorderColorFieldName).Append("\n");
             sb.Append("  VAlignment: ").Append(VAlignment).Append("\n");
             sb.Append("  Bold: ").Append(Bold).Append("\n");
             sb.Append("  ShapeBorderWidth: ").Append(ShapeBorderWidth).Append("\n");
             sb.Append("  CombNumberOfCells: ").Append(CombNumberOfCells).Append("\n");
             sb.Append("  ShapeBorderColor: ").Append(ShapeBorderColor).Append("\n");
-            sb.Append("  Typeface: ").Append(Typeface).Append("\n");
             sb.Append("  Comb: ").Append(Comb).Append("\n");
+            sb.Append("  Typeface: ").Append(Typeface).Append("\n");
             sb.Append("  ShapeType: ").Append(ShapeType).Append("\n");
-            sb.Append("  DisplayType: ").Append(DisplayType).Append("\n");
             sb.Append("  Condition: ").Append(Condition).Append("\n");
+            sb.Append("  DisplayType: ").Append(DisplayType).Append("\n");
             sb.Append("  CheckColor: ").Append(CheckColor).Append("\n");
             sb.Append("  MultilineLines: ").Append(MultilineLines).Append("\n");
             sb.Append("  Multiline: ").Append(Multiline).Append("\n");
@@ -1207,8 +1207,8 @@ namespace DocSpring.Client.Model
             sb.Append("  ColorFieldName: ").Append(ColorFieldName).Append("\n");
             sb.Append("  QrcodeColorFieldName: ").Append(QrcodeColorFieldName).Append("\n");
             sb.Append("  NumberConditionRangeMin: ").Append(NumberConditionRangeMin).Append("\n");
-            sb.Append("  Hidden: ").Append(Hidden).Append("\n");
             sb.Append("  Color: ").Append(Color).Append("\n");
+            sb.Append("  Hidden: ").Append(Hidden).Append("\n");
             sb.Append("  CheckColorFieldRequired: ").Append(CheckColorFieldRequired).Append("\n");
             sb.Append("  CombinedFieldFormat: ").Append(CombinedFieldFormat).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
@@ -1223,8 +1223,8 @@ namespace DocSpring.Client.Model
             sb.Append("  DateTimeFormat: ").Append(DateTimeFormat).Append("\n");
             sb.Append("  QrcodeColorFieldRequired: ").Append(QrcodeColorFieldRequired).Append("\n");
             sb.Append("  Currency: ").Append(Currency).Append("\n");
-            sb.Append("  Strikethrough: ").Append(Strikethrough).Append("\n");
             sb.Append("  FalseText: ").Append(FalseText).Append("\n");
+            sb.Append("  Strikethrough: ").Append(Strikethrough).Append("\n");
             sb.Append("  CharacterSpacing: ").Append(CharacterSpacing).Append("\n");
             sb.Append("  NumberConditionRangeMax: ").Append(NumberConditionRangeMax).Append("\n");
             sb.Append("  BackgroundColor: ").Append(BackgroundColor).Append("\n");
@@ -1235,15 +1235,15 @@ namespace DocSpring.Client.Model
             sb.Append("  ShapeFillColor: ").Append(ShapeFillColor).Append("\n");
             sb.Append("  StringConditionType: ").Append(StringConditionType).Append("\n");
             sb.Append("  ShapeFillColorFieldRequired: ").Append(ShapeFillColorFieldRequired).Append("\n");
-            sb.Append("  IncludeTime: ").Append(IncludeTime).Append("\n");
             sb.Append("  DecimalPlaces: ").Append(DecimalPlaces).Append("\n");
-            sb.Append("  X: ").Append(X).Append("\n");
+            sb.Append("  IncludeTime: ").Append(IncludeTime).Append("\n");
             sb.Append("  Width: ").Append(Width).Append("\n");
+            sb.Append("  X: ").Append(X).Append("\n");
             sb.Append("  Maximum: ").Append(Maximum).Append("\n");
             sb.Append("  Y: ").Append(Y).Append("\n");
             sb.Append("  SignatureAllowDraw: ").Append(SignatureAllowDraw).Append("\n");
-            sb.Append("  Opacity: ").Append(Opacity).Append("\n");
             sb.Append("  NumberConditionType: ").Append(NumberConditionType).Append("\n");
+            sb.Append("  Opacity: ").Append(Opacity).Append("\n");
             sb.Append("  Minimum: ").Append(Minimum).Append("\n");
             sb.Append("  SignatureAllowType: ").Append(SignatureAllowType).Append("\n");
             sb.Append("}\n");
@@ -1281,14 +1281,14 @@ namespace DocSpring.Client.Model
 
             return 
                 (
-                    this.Uppercase == input.Uppercase ||
-                    (this.Uppercase != null &&
-                    this.Uppercase.Equals(input.Uppercase))
-                ) && 
-                (
                     this.BackgroundColorFieldName == input.BackgroundColorFieldName ||
                     (this.BackgroundColorFieldName != null &&
                     this.BackgroundColorFieldName.Equals(input.BackgroundColorFieldName))
+                ) && 
+                (
+                    this.Uppercase == input.Uppercase ||
+                    (this.Uppercase != null &&
+                    this.Uppercase.Equals(input.Uppercase))
                 ) && 
                 (
                     this.Metadata == input.Metadata ||
@@ -1381,14 +1381,14 @@ namespace DocSpring.Client.Model
                     this.InvertBooleanCondition.Equals(input.InvertBooleanCondition))
                 ) && 
                 (
-                    this.Static == input.Static ||
-                    (this.Static != null &&
-                    this.Static.Equals(input.Static))
-                ) && 
-                (
                     this.ShapeFillColorFieldName == input.ShapeFillColorFieldName ||
                     (this.ShapeFillColorFieldName != null &&
                     this.ShapeFillColorFieldName.Equals(input.ShapeFillColorFieldName))
+                ) && 
+                (
+                    this.Static == input.Static ||
+                    (this.Static != null &&
+                    this.Static.Equals(input.Static))
                 ) && 
                 (
                     this.ShapeBorderColorFieldName == input.ShapeBorderColorFieldName ||
@@ -1421,14 +1421,14 @@ namespace DocSpring.Client.Model
                     this.ShapeBorderColor.Equals(input.ShapeBorderColor))
                 ) && 
                 (
-                    this.Typeface == input.Typeface ||
-                    (this.Typeface != null &&
-                    this.Typeface.Equals(input.Typeface))
-                ) && 
-                (
                     this.Comb == input.Comb ||
                     (this.Comb != null &&
                     this.Comb.Equals(input.Comb))
+                ) && 
+                (
+                    this.Typeface == input.Typeface ||
+                    (this.Typeface != null &&
+                    this.Typeface.Equals(input.Typeface))
                 ) && 
                 (
                     this.ShapeType == input.ShapeType ||
@@ -1436,14 +1436,14 @@ namespace DocSpring.Client.Model
                     this.ShapeType.Equals(input.ShapeType))
                 ) && 
                 (
-                    this.DisplayType == input.DisplayType ||
-                    (this.DisplayType != null &&
-                    this.DisplayType.Equals(input.DisplayType))
-                ) && 
-                (
                     this.Condition == input.Condition ||
                     (this.Condition != null &&
                     this.Condition.Equals(input.Condition))
+                ) && 
+                (
+                    this.DisplayType == input.DisplayType ||
+                    (this.DisplayType != null &&
+                    this.DisplayType.Equals(input.DisplayType))
                 ) && 
                 (
                     this.CheckColor == input.CheckColor ||
@@ -1511,14 +1511,14 @@ namespace DocSpring.Client.Model
                     this.NumberConditionRangeMin.Equals(input.NumberConditionRangeMin))
                 ) && 
                 (
-                    this.Hidden == input.Hidden ||
-                    (this.Hidden != null &&
-                    this.Hidden.Equals(input.Hidden))
-                ) && 
-                (
                     this.Color == input.Color ||
                     (this.Color != null &&
                     this.Color.Equals(input.Color))
+                ) && 
+                (
+                    this.Hidden == input.Hidden ||
+                    (this.Hidden != null &&
+                    this.Hidden.Equals(input.Hidden))
                 ) && 
                 (
                     this.CheckColorFieldRequired == input.CheckColorFieldRequired ||
@@ -1591,14 +1591,14 @@ namespace DocSpring.Client.Model
                     this.Currency.Equals(input.Currency))
                 ) && 
                 (
-                    this.Strikethrough == input.Strikethrough ||
-                    (this.Strikethrough != null &&
-                    this.Strikethrough.Equals(input.Strikethrough))
-                ) && 
-                (
                     this.FalseText == input.FalseText ||
                     (this.FalseText != null &&
                     this.FalseText.Equals(input.FalseText))
+                ) && 
+                (
+                    this.Strikethrough == input.Strikethrough ||
+                    (this.Strikethrough != null &&
+                    this.Strikethrough.Equals(input.Strikethrough))
                 ) && 
                 (
                     this.CharacterSpacing == input.CharacterSpacing ||
@@ -1651,24 +1651,24 @@ namespace DocSpring.Client.Model
                     this.ShapeFillColorFieldRequired.Equals(input.ShapeFillColorFieldRequired))
                 ) && 
                 (
-                    this.IncludeTime == input.IncludeTime ||
-                    (this.IncludeTime != null &&
-                    this.IncludeTime.Equals(input.IncludeTime))
-                ) && 
-                (
                     this.DecimalPlaces == input.DecimalPlaces ||
                     (this.DecimalPlaces != null &&
                     this.DecimalPlaces.Equals(input.DecimalPlaces))
                 ) && 
                 (
-                    this.X == input.X ||
-                    (this.X != null &&
-                    this.X.Equals(input.X))
+                    this.IncludeTime == input.IncludeTime ||
+                    (this.IncludeTime != null &&
+                    this.IncludeTime.Equals(input.IncludeTime))
                 ) && 
                 (
                     this.Width == input.Width ||
                     (this.Width != null &&
                     this.Width.Equals(input.Width))
+                ) && 
+                (
+                    this.X == input.X ||
+                    (this.X != null &&
+                    this.X.Equals(input.X))
                 ) && 
                 (
                     this.Maximum == input.Maximum ||
@@ -1686,14 +1686,14 @@ namespace DocSpring.Client.Model
                     this.SignatureAllowDraw.Equals(input.SignatureAllowDraw))
                 ) && 
                 (
-                    this.Opacity == input.Opacity ||
-                    (this.Opacity != null &&
-                    this.Opacity.Equals(input.Opacity))
-                ) && 
-                (
                     this.NumberConditionType == input.NumberConditionType ||
                     (this.NumberConditionType != null &&
                     this.NumberConditionType.Equals(input.NumberConditionType))
+                ) && 
+                (
+                    this.Opacity == input.Opacity ||
+                    (this.Opacity != null &&
+                    this.Opacity.Equals(input.Opacity))
                 ) && 
                 (
                     this.Minimum == input.Minimum ||
@@ -1716,10 +1716,10 @@ namespace DocSpring.Client.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.Uppercase != null)
-                    hashCode = hashCode * 59 + this.Uppercase.GetHashCode();
                 if (this.BackgroundColorFieldName != null)
                     hashCode = hashCode * 59 + this.BackgroundColorFieldName.GetHashCode();
+                if (this.Uppercase != null)
+                    hashCode = hashCode * 59 + this.Uppercase.GetHashCode();
                 if (this.Metadata != null)
                     hashCode = hashCode * 59 + this.Metadata.GetHashCode();
                 if (this.BarcodeSymbology != null)
@@ -1756,10 +1756,10 @@ namespace DocSpring.Client.Model
                     hashCode = hashCode * 59 + this.NumberConditionRangeExclusiveMax.GetHashCode();
                 if (this.InvertBooleanCondition != null)
                     hashCode = hashCode * 59 + this.InvertBooleanCondition.GetHashCode();
-                if (this.Static != null)
-                    hashCode = hashCode * 59 + this.Static.GetHashCode();
                 if (this.ShapeFillColorFieldName != null)
                     hashCode = hashCode * 59 + this.ShapeFillColorFieldName.GetHashCode();
+                if (this.Static != null)
+                    hashCode = hashCode * 59 + this.Static.GetHashCode();
                 if (this.ShapeBorderColorFieldName != null)
                     hashCode = hashCode * 59 + this.ShapeBorderColorFieldName.GetHashCode();
                 if (this.VAlignment != null)
@@ -1772,16 +1772,16 @@ namespace DocSpring.Client.Model
                     hashCode = hashCode * 59 + this.CombNumberOfCells.GetHashCode();
                 if (this.ShapeBorderColor != null)
                     hashCode = hashCode * 59 + this.ShapeBorderColor.GetHashCode();
-                if (this.Typeface != null)
-                    hashCode = hashCode * 59 + this.Typeface.GetHashCode();
                 if (this.Comb != null)
                     hashCode = hashCode * 59 + this.Comb.GetHashCode();
+                if (this.Typeface != null)
+                    hashCode = hashCode * 59 + this.Typeface.GetHashCode();
                 if (this.ShapeType != null)
                     hashCode = hashCode * 59 + this.ShapeType.GetHashCode();
-                if (this.DisplayType != null)
-                    hashCode = hashCode * 59 + this.DisplayType.GetHashCode();
                 if (this.Condition != null)
                     hashCode = hashCode * 59 + this.Condition.GetHashCode();
+                if (this.DisplayType != null)
+                    hashCode = hashCode * 59 + this.DisplayType.GetHashCode();
                 if (this.CheckColor != null)
                     hashCode = hashCode * 59 + this.CheckColor.GetHashCode();
                 if (this.MultilineLines != null)
@@ -1808,10 +1808,10 @@ namespace DocSpring.Client.Model
                     hashCode = hashCode * 59 + this.QrcodeColorFieldName.GetHashCode();
                 if (this.NumberConditionRangeMin != null)
                     hashCode = hashCode * 59 + this.NumberConditionRangeMin.GetHashCode();
-                if (this.Hidden != null)
-                    hashCode = hashCode * 59 + this.Hidden.GetHashCode();
                 if (this.Color != null)
                     hashCode = hashCode * 59 + this.Color.GetHashCode();
+                if (this.Hidden != null)
+                    hashCode = hashCode * 59 + this.Hidden.GetHashCode();
                 if (this.CheckColorFieldRequired != null)
                     hashCode = hashCode * 59 + this.CheckColorFieldRequired.GetHashCode();
                 if (this.CombinedFieldFormat != null)
@@ -1840,10 +1840,10 @@ namespace DocSpring.Client.Model
                     hashCode = hashCode * 59 + this.QrcodeColorFieldRequired.GetHashCode();
                 if (this.Currency != null)
                     hashCode = hashCode * 59 + this.Currency.GetHashCode();
-                if (this.Strikethrough != null)
-                    hashCode = hashCode * 59 + this.Strikethrough.GetHashCode();
                 if (this.FalseText != null)
                     hashCode = hashCode * 59 + this.FalseText.GetHashCode();
+                if (this.Strikethrough != null)
+                    hashCode = hashCode * 59 + this.Strikethrough.GetHashCode();
                 if (this.CharacterSpacing != null)
                     hashCode = hashCode * 59 + this.CharacterSpacing.GetHashCode();
                 if (this.NumberConditionRangeMax != null)
@@ -1864,24 +1864,24 @@ namespace DocSpring.Client.Model
                     hashCode = hashCode * 59 + this.StringConditionType.GetHashCode();
                 if (this.ShapeFillColorFieldRequired != null)
                     hashCode = hashCode * 59 + this.ShapeFillColorFieldRequired.GetHashCode();
-                if (this.IncludeTime != null)
-                    hashCode = hashCode * 59 + this.IncludeTime.GetHashCode();
                 if (this.DecimalPlaces != null)
                     hashCode = hashCode * 59 + this.DecimalPlaces.GetHashCode();
-                if (this.X != null)
-                    hashCode = hashCode * 59 + this.X.GetHashCode();
+                if (this.IncludeTime != null)
+                    hashCode = hashCode * 59 + this.IncludeTime.GetHashCode();
                 if (this.Width != null)
                     hashCode = hashCode * 59 + this.Width.GetHashCode();
+                if (this.X != null)
+                    hashCode = hashCode * 59 + this.X.GetHashCode();
                 if (this.Maximum != null)
                     hashCode = hashCode * 59 + this.Maximum.GetHashCode();
                 if (this.Y != null)
                     hashCode = hashCode * 59 + this.Y.GetHashCode();
                 if (this.SignatureAllowDraw != null)
                     hashCode = hashCode * 59 + this.SignatureAllowDraw.GetHashCode();
-                if (this.Opacity != null)
-                    hashCode = hashCode * 59 + this.Opacity.GetHashCode();
                 if (this.NumberConditionType != null)
                     hashCode = hashCode * 59 + this.NumberConditionType.GetHashCode();
+                if (this.Opacity != null)
+                    hashCode = hashCode * 59 + this.Opacity.GetHashCode();
                 if (this.Minimum != null)
                     hashCode = hashCode * 59 + this.Minimum.GetHashCode();
                 if (this.SignatureAllowType != null)
@@ -1957,16 +1957,16 @@ namespace DocSpring.Client.Model
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for DecimalPlaces, must be a value greater than or equal to 0.", new [] { "DecimalPlaces" });
             }
 
-            // X (decimal?) minimum
-            if(this.X < (decimal?)0)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for X, must be a value greater than or equal to 0.", new [] { "X" });
-            }
-
             // Width (decimal?) minimum
             if(this.Width < (decimal?)0)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Width, must be a value greater than or equal to 0.", new [] { "Width" });
+            }
+
+            // X (decimal?) minimum
+            if(this.X < (decimal?)0)
+            {
+                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for X, must be a value greater than or equal to 0.", new [] { "X" });
             }
 
             // Y (decimal?) minimum

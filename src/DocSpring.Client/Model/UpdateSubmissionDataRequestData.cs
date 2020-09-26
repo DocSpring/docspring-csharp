@@ -31,6 +31,55 @@ namespace DocSpring.Client.Model
     public partial class UpdateSubmissionDataRequestData :  IEquatable<UpdateSubmissionDataRequestData>, IValidatableObject
     {
         /// <summary>
+        /// Defines AuthSecondFactorType
+        /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum AuthSecondFactorTypeEnum
+        {
+            /// <summary>
+            /// Enum None for value: none
+            /// </summary>
+            [EnumMember(Value = "none")]
+            None = 1,
+
+            /// <summary>
+            /// Enum Phonenumber for value: phone_number
+            /// </summary>
+            [EnumMember(Value = "phone_number")]
+            Phonenumber = 2,
+
+            /// <summary>
+            /// Enum Totp for value: totp
+            /// </summary>
+            [EnumMember(Value = "totp")]
+            Totp = 3,
+
+            /// <summary>
+            /// Enum Mobilepush for value: mobile_push
+            /// </summary>
+            [EnumMember(Value = "mobile_push")]
+            Mobilepush = 4,
+
+            /// <summary>
+            /// Enum Securitykey for value: security_key
+            /// </summary>
+            [EnumMember(Value = "security_key")]
+            Securitykey = 5,
+
+            /// <summary>
+            /// Enum Fingerprint for value: fingerprint
+            /// </summary>
+            [EnumMember(Value = "fingerprint")]
+            Fingerprint = 6
+
+        }
+
+        /// <summary>
+        /// Gets or Sets AuthSecondFactorType
+        /// </summary>
+        [DataMember(Name="auth_second_factor_type", EmitDefaultValue=false)]
+        public AuthSecondFactorTypeEnum? AuthSecondFactorType { get; set; }
+        /// <summary>
         /// Defines AuthType
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
@@ -86,118 +135,43 @@ namespace DocSpring.Client.Model
         [DataMember(Name="auth_type", EmitDefaultValue=false)]
         public AuthTypeEnum? AuthType { get; set; }
         /// <summary>
-        /// Defines AuthSecondFactorType
-        /// </summary>
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum AuthSecondFactorTypeEnum
-        {
-            /// <summary>
-            /// Enum None for value: none
-            /// </summary>
-            [EnumMember(Value = "none")]
-            None = 1,
-
-            /// <summary>
-            /// Enum Phonenumber for value: phone_number
-            /// </summary>
-            [EnumMember(Value = "phone_number")]
-            Phonenumber = 2,
-
-            /// <summary>
-            /// Enum Totp for value: totp
-            /// </summary>
-            [EnumMember(Value = "totp")]
-            Totp = 3,
-
-            /// <summary>
-            /// Enum Mobilepush for value: mobile_push
-            /// </summary>
-            [EnumMember(Value = "mobile_push")]
-            Mobilepush = 4,
-
-            /// <summary>
-            /// Enum Securitykey for value: security_key
-            /// </summary>
-            [EnumMember(Value = "security_key")]
-            Securitykey = 5,
-
-            /// <summary>
-            /// Enum Fingerprint for value: fingerprint
-            /// </summary>
-            [EnumMember(Value = "fingerprint")]
-            Fingerprint = 6
-
-        }
-
-        /// <summary>
-        /// Gets or Sets AuthSecondFactorType
-        /// </summary>
-        [DataMember(Name="auth_second_factor_type", EmitDefaultValue=false)]
-        public AuthSecondFactorTypeEnum? AuthSecondFactorType { get; set; }
-        /// <summary>
         /// Initializes a new instance of the <see cref="UpdateSubmissionDataRequestData" /> class.
         /// </summary>
-        /// <param name="name">name.</param>
-        /// <param name="email">email.</param>
-        /// <param name="order">order.</param>
-        /// <param name="fields">fields.</param>
-        /// <param name="metadata">metadata.</param>
-        /// <param name="authType">authType.</param>
-        /// <param name="authSecondFactorType">authSecondFactorType.</param>
+        /// <param name="authPhoneNumberHash">authPhoneNumberHash.</param>
         /// <param name="authProvider">authProvider.</param>
-        /// <param name="authSessionStartedAt">authSessionStartedAt.</param>
+        /// <param name="authSecondFactorType">authSecondFactorType.</param>
         /// <param name="authSessionIdHash">authSessionIdHash.</param>
+        /// <param name="authSessionStartedAt">authSessionStartedAt.</param>
+        /// <param name="authType">authType.</param>
         /// <param name="authUserIdHash">authUserIdHash.</param>
         /// <param name="authUsernameHash">authUsernameHash.</param>
-        /// <param name="authPhoneNumberHash">authPhoneNumberHash.</param>
-        public UpdateSubmissionDataRequestData(string name = default(string), string email = default(string), int? order = default(int?), List<string> fields = default(List<string>), Object metadata = default(Object), AuthTypeEnum? authType = default(AuthTypeEnum?), AuthSecondFactorTypeEnum? authSecondFactorType = default(AuthSecondFactorTypeEnum?), string authProvider = default(string), string authSessionStartedAt = default(string), string authSessionIdHash = default(string), string authUserIdHash = default(string), string authUsernameHash = default(string), string authPhoneNumberHash = default(string))
+        /// <param name="email">email.</param>
+        /// <param name="fields">fields.</param>
+        /// <param name="metadata">metadata.</param>
+        /// <param name="name">name.</param>
+        /// <param name="order">order.</param>
+        public UpdateSubmissionDataRequestData(string authPhoneNumberHash = default(string), string authProvider = default(string), AuthSecondFactorTypeEnum? authSecondFactorType = default(AuthSecondFactorTypeEnum?), string authSessionIdHash = default(string), string authSessionStartedAt = default(string), AuthTypeEnum? authType = default(AuthTypeEnum?), string authUserIdHash = default(string), string authUsernameHash = default(string), string email = default(string), List<string> fields = default(List<string>), Object metadata = default(Object), string name = default(string), int? order = default(int?))
         {
-            this.Name = name;
-            this.Email = email;
-            this.Order = order;
-            this.Fields = fields;
-            this.Metadata = metadata;
-            this.AuthType = authType;
-            this.AuthSecondFactorType = authSecondFactorType;
+            this.AuthPhoneNumberHash = authPhoneNumberHash;
             this.AuthProvider = authProvider;
-            this.AuthSessionStartedAt = authSessionStartedAt;
+            this.AuthSecondFactorType = authSecondFactorType;
             this.AuthSessionIdHash = authSessionIdHash;
+            this.AuthSessionStartedAt = authSessionStartedAt;
+            this.AuthType = authType;
             this.AuthUserIdHash = authUserIdHash;
             this.AuthUsernameHash = authUsernameHash;
-            this.AuthPhoneNumberHash = authPhoneNumberHash;
+            this.Email = email;
+            this.Fields = fields;
+            this.Metadata = metadata;
+            this.Name = name;
+            this.Order = order;
         }
         
         /// <summary>
-        /// Gets or Sets Name
+        /// Gets or Sets AuthPhoneNumberHash
         /// </summary>
-        [DataMember(Name="name", EmitDefaultValue=false)]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Email
-        /// </summary>
-        [DataMember(Name="email", EmitDefaultValue=false)]
-        public string Email { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Order
-        /// </summary>
-        [DataMember(Name="order", EmitDefaultValue=false)]
-        public int? Order { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Fields
-        /// </summary>
-        [DataMember(Name="fields", EmitDefaultValue=false)]
-        public List<string> Fields { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Metadata
-        /// </summary>
-        [DataMember(Name="metadata", EmitDefaultValue=false)]
-        public Object Metadata { get; set; }
-
-
+        [DataMember(Name="auth_phone_number_hash", EmitDefaultValue=false)]
+        public string AuthPhoneNumberHash { get; set; }
 
         /// <summary>
         /// Gets or Sets AuthProvider
@@ -205,17 +179,19 @@ namespace DocSpring.Client.Model
         [DataMember(Name="auth_provider", EmitDefaultValue=false)]
         public string AuthProvider { get; set; }
 
-        /// <summary>
-        /// Gets or Sets AuthSessionStartedAt
-        /// </summary>
-        [DataMember(Name="auth_session_started_at", EmitDefaultValue=false)]
-        public string AuthSessionStartedAt { get; set; }
 
         /// <summary>
         /// Gets or Sets AuthSessionIdHash
         /// </summary>
         [DataMember(Name="auth_session_id_hash", EmitDefaultValue=false)]
         public string AuthSessionIdHash { get; set; }
+
+        /// <summary>
+        /// Gets or Sets AuthSessionStartedAt
+        /// </summary>
+        [DataMember(Name="auth_session_started_at", EmitDefaultValue=false)]
+        public string AuthSessionStartedAt { get; set; }
+
 
         /// <summary>
         /// Gets or Sets AuthUserIdHash
@@ -230,10 +206,34 @@ namespace DocSpring.Client.Model
         public string AuthUsernameHash { get; set; }
 
         /// <summary>
-        /// Gets or Sets AuthPhoneNumberHash
+        /// Gets or Sets Email
         /// </summary>
-        [DataMember(Name="auth_phone_number_hash", EmitDefaultValue=false)]
-        public string AuthPhoneNumberHash { get; set; }
+        [DataMember(Name="email", EmitDefaultValue=false)]
+        public string Email { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Fields
+        /// </summary>
+        [DataMember(Name="fields", EmitDefaultValue=false)]
+        public List<string> Fields { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Metadata
+        /// </summary>
+        [DataMember(Name="metadata", EmitDefaultValue=false)]
+        public Object Metadata { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Name
+        /// </summary>
+        [DataMember(Name="name", EmitDefaultValue=false)]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Order
+        /// </summary>
+        [DataMember(Name="order", EmitDefaultValue=false)]
+        public int? Order { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -243,19 +243,19 @@ namespace DocSpring.Client.Model
         {
             var sb = new StringBuilder();
             sb.Append("class UpdateSubmissionDataRequestData {\n");
-            sb.Append("  Name: ").Append(Name).Append("\n");
-            sb.Append("  Email: ").Append(Email).Append("\n");
-            sb.Append("  Order: ").Append(Order).Append("\n");
-            sb.Append("  Fields: ").Append(Fields).Append("\n");
-            sb.Append("  Metadata: ").Append(Metadata).Append("\n");
-            sb.Append("  AuthType: ").Append(AuthType).Append("\n");
-            sb.Append("  AuthSecondFactorType: ").Append(AuthSecondFactorType).Append("\n");
+            sb.Append("  AuthPhoneNumberHash: ").Append(AuthPhoneNumberHash).Append("\n");
             sb.Append("  AuthProvider: ").Append(AuthProvider).Append("\n");
-            sb.Append("  AuthSessionStartedAt: ").Append(AuthSessionStartedAt).Append("\n");
+            sb.Append("  AuthSecondFactorType: ").Append(AuthSecondFactorType).Append("\n");
             sb.Append("  AuthSessionIdHash: ").Append(AuthSessionIdHash).Append("\n");
+            sb.Append("  AuthSessionStartedAt: ").Append(AuthSessionStartedAt).Append("\n");
+            sb.Append("  AuthType: ").Append(AuthType).Append("\n");
             sb.Append("  AuthUserIdHash: ").Append(AuthUserIdHash).Append("\n");
             sb.Append("  AuthUsernameHash: ").Append(AuthUsernameHash).Append("\n");
-            sb.Append("  AuthPhoneNumberHash: ").Append(AuthPhoneNumberHash).Append("\n");
+            sb.Append("  Email: ").Append(Email).Append("\n");
+            sb.Append("  Fields: ").Append(Fields).Append("\n");
+            sb.Append("  Metadata: ").Append(Metadata).Append("\n");
+            sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  Order: ").Append(Order).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -291,39 +291,9 @@ namespace DocSpring.Client.Model
 
             return 
                 (
-                    this.Name == input.Name ||
-                    (this.Name != null &&
-                    this.Name.Equals(input.Name))
-                ) && 
-                (
-                    this.Email == input.Email ||
-                    (this.Email != null &&
-                    this.Email.Equals(input.Email))
-                ) && 
-                (
-                    this.Order == input.Order ||
-                    (this.Order != null &&
-                    this.Order.Equals(input.Order))
-                ) && 
-                (
-                    this.Fields == input.Fields ||
-                    this.Fields != null &&
-                    this.Fields.SequenceEqual(input.Fields)
-                ) && 
-                (
-                    this.Metadata == input.Metadata ||
-                    (this.Metadata != null &&
-                    this.Metadata.Equals(input.Metadata))
-                ) && 
-                (
-                    this.AuthType == input.AuthType ||
-                    (this.AuthType != null &&
-                    this.AuthType.Equals(input.AuthType))
-                ) && 
-                (
-                    this.AuthSecondFactorType == input.AuthSecondFactorType ||
-                    (this.AuthSecondFactorType != null &&
-                    this.AuthSecondFactorType.Equals(input.AuthSecondFactorType))
+                    this.AuthPhoneNumberHash == input.AuthPhoneNumberHash ||
+                    (this.AuthPhoneNumberHash != null &&
+                    this.AuthPhoneNumberHash.Equals(input.AuthPhoneNumberHash))
                 ) && 
                 (
                     this.AuthProvider == input.AuthProvider ||
@@ -331,14 +301,24 @@ namespace DocSpring.Client.Model
                     this.AuthProvider.Equals(input.AuthProvider))
                 ) && 
                 (
-                    this.AuthSessionStartedAt == input.AuthSessionStartedAt ||
-                    (this.AuthSessionStartedAt != null &&
-                    this.AuthSessionStartedAt.Equals(input.AuthSessionStartedAt))
+                    this.AuthSecondFactorType == input.AuthSecondFactorType ||
+                    (this.AuthSecondFactorType != null &&
+                    this.AuthSecondFactorType.Equals(input.AuthSecondFactorType))
                 ) && 
                 (
                     this.AuthSessionIdHash == input.AuthSessionIdHash ||
                     (this.AuthSessionIdHash != null &&
                     this.AuthSessionIdHash.Equals(input.AuthSessionIdHash))
+                ) && 
+                (
+                    this.AuthSessionStartedAt == input.AuthSessionStartedAt ||
+                    (this.AuthSessionStartedAt != null &&
+                    this.AuthSessionStartedAt.Equals(input.AuthSessionStartedAt))
+                ) && 
+                (
+                    this.AuthType == input.AuthType ||
+                    (this.AuthType != null &&
+                    this.AuthType.Equals(input.AuthType))
                 ) && 
                 (
                     this.AuthUserIdHash == input.AuthUserIdHash ||
@@ -351,9 +331,29 @@ namespace DocSpring.Client.Model
                     this.AuthUsernameHash.Equals(input.AuthUsernameHash))
                 ) && 
                 (
-                    this.AuthPhoneNumberHash == input.AuthPhoneNumberHash ||
-                    (this.AuthPhoneNumberHash != null &&
-                    this.AuthPhoneNumberHash.Equals(input.AuthPhoneNumberHash))
+                    this.Email == input.Email ||
+                    (this.Email != null &&
+                    this.Email.Equals(input.Email))
+                ) && 
+                (
+                    this.Fields == input.Fields ||
+                    this.Fields != null &&
+                    this.Fields.SequenceEqual(input.Fields)
+                ) && 
+                (
+                    this.Metadata == input.Metadata ||
+                    (this.Metadata != null &&
+                    this.Metadata.Equals(input.Metadata))
+                ) && 
+                (
+                    this.Name == input.Name ||
+                    (this.Name != null &&
+                    this.Name.Equals(input.Name))
+                ) && 
+                (
+                    this.Order == input.Order ||
+                    (this.Order != null &&
+                    this.Order.Equals(input.Order))
                 );
         }
 
@@ -366,32 +366,32 @@ namespace DocSpring.Client.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.Name != null)
-                    hashCode = hashCode * 59 + this.Name.GetHashCode();
-                if (this.Email != null)
-                    hashCode = hashCode * 59 + this.Email.GetHashCode();
-                if (this.Order != null)
-                    hashCode = hashCode * 59 + this.Order.GetHashCode();
-                if (this.Fields != null)
-                    hashCode = hashCode * 59 + this.Fields.GetHashCode();
-                if (this.Metadata != null)
-                    hashCode = hashCode * 59 + this.Metadata.GetHashCode();
-                if (this.AuthType != null)
-                    hashCode = hashCode * 59 + this.AuthType.GetHashCode();
-                if (this.AuthSecondFactorType != null)
-                    hashCode = hashCode * 59 + this.AuthSecondFactorType.GetHashCode();
+                if (this.AuthPhoneNumberHash != null)
+                    hashCode = hashCode * 59 + this.AuthPhoneNumberHash.GetHashCode();
                 if (this.AuthProvider != null)
                     hashCode = hashCode * 59 + this.AuthProvider.GetHashCode();
-                if (this.AuthSessionStartedAt != null)
-                    hashCode = hashCode * 59 + this.AuthSessionStartedAt.GetHashCode();
+                if (this.AuthSecondFactorType != null)
+                    hashCode = hashCode * 59 + this.AuthSecondFactorType.GetHashCode();
                 if (this.AuthSessionIdHash != null)
                     hashCode = hashCode * 59 + this.AuthSessionIdHash.GetHashCode();
+                if (this.AuthSessionStartedAt != null)
+                    hashCode = hashCode * 59 + this.AuthSessionStartedAt.GetHashCode();
+                if (this.AuthType != null)
+                    hashCode = hashCode * 59 + this.AuthType.GetHashCode();
                 if (this.AuthUserIdHash != null)
                     hashCode = hashCode * 59 + this.AuthUserIdHash.GetHashCode();
                 if (this.AuthUsernameHash != null)
                     hashCode = hashCode * 59 + this.AuthUsernameHash.GetHashCode();
-                if (this.AuthPhoneNumberHash != null)
-                    hashCode = hashCode * 59 + this.AuthPhoneNumberHash.GetHashCode();
+                if (this.Email != null)
+                    hashCode = hashCode * 59 + this.Email.GetHashCode();
+                if (this.Fields != null)
+                    hashCode = hashCode * 59 + this.Fields.GetHashCode();
+                if (this.Metadata != null)
+                    hashCode = hashCode * 59 + this.Metadata.GetHashCode();
+                if (this.Name != null)
+                    hashCode = hashCode * 59 + this.Name.GetHashCode();
+                if (this.Order != null)
+                    hashCode = hashCode * 59 + this.Order.GetHashCode();
                 return hashCode;
             }
         }

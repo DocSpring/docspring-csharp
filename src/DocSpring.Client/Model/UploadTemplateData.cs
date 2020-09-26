@@ -92,9 +92,9 @@ namespace DocSpring.Client.Model
         /// <param name="expirationInterval">expirationInterval.</param>
         /// <param name="webhookUrl">webhookUrl.</param>
         /// <param name="scss">scss.</param>
-        /// <param name="expireAfter">expireAfter.</param>
         /// <param name="allowAdditionalProperties">allowAdditionalProperties.</param>
         /// <param name="document">document.</param>
+        /// <param name="expireAfter">expireAfter.</param>
         /// <param name="description">description.</param>
         /// <param name="publicSubmissions">publicSubmissions.</param>
         /// <param name="slackWebhookUrl">slackWebhookUrl.</param>
@@ -103,18 +103,18 @@ namespace DocSpring.Client.Model
         /// <param name="editableSubmissions">editableSubmissions.</param>
         /// <param name="expireSubmissions">expireSubmissions.</param>
         /// <param name="name">name.</param>
-        /// <param name="html">html.</param>
         /// <param name="footerHtml">footerHtml.</param>
+        /// <param name="html">html.</param>
         /// <param name="templateType">templateType.</param>
         /// <param name="redirectUrl">redirectUrl.</param>
-        public UploadTemplateData(ExpirationIntervalEnum? expirationInterval = default(ExpirationIntervalEnum?), string webhookUrl = default(string), string scss = default(string), decimal? expireAfter = default(decimal?), bool? allowAdditionalProperties = default(bool?), UploadTemplateDataDocument document = default(UploadTemplateDataDocument), string description = default(string), bool? publicSubmissions = default(bool?), string slackWebhookUrl = default(string), string headerHtml = default(string), bool? publicWebForm = default(bool?), bool? editableSubmissions = default(bool?), bool? expireSubmissions = default(bool?), string name = default(string), string html = default(string), string footerHtml = default(string), TemplateTypeEnum? templateType = default(TemplateTypeEnum?), string redirectUrl = default(string))
+        public UploadTemplateData(ExpirationIntervalEnum? expirationInterval = default(ExpirationIntervalEnum?), string webhookUrl = default(string), string scss = default(string), bool? allowAdditionalProperties = default(bool?), UploadTemplateDataDocument document = default(UploadTemplateDataDocument), decimal? expireAfter = default(decimal?), string description = default(string), bool? publicSubmissions = default(bool?), string slackWebhookUrl = default(string), string headerHtml = default(string), bool? publicWebForm = default(bool?), bool? editableSubmissions = default(bool?), bool? expireSubmissions = default(bool?), string name = default(string), string footerHtml = default(string), string html = default(string), TemplateTypeEnum? templateType = default(TemplateTypeEnum?), string redirectUrl = default(string))
         {
             this.ExpirationInterval = expirationInterval;
             this.WebhookUrl = webhookUrl;
             this.Scss = scss;
-            this.ExpireAfter = expireAfter;
             this.AllowAdditionalProperties = allowAdditionalProperties;
             this.Document = document;
+            this.ExpireAfter = expireAfter;
             this.Description = description;
             this.PublicSubmissions = publicSubmissions;
             this.SlackWebhookUrl = slackWebhookUrl;
@@ -123,8 +123,8 @@ namespace DocSpring.Client.Model
             this.EditableSubmissions = editableSubmissions;
             this.ExpireSubmissions = expireSubmissions;
             this.Name = name;
-            this.Html = html;
             this.FooterHtml = footerHtml;
+            this.Html = html;
             this.TemplateType = templateType;
             this.RedirectUrl = redirectUrl;
         }
@@ -143,12 +143,6 @@ namespace DocSpring.Client.Model
         public string Scss { get; set; }
 
         /// <summary>
-        /// Gets or Sets ExpireAfter
-        /// </summary>
-        [DataMember(Name="expire_after", EmitDefaultValue=false)]
-        public decimal? ExpireAfter { get; set; }
-
-        /// <summary>
         /// Gets or Sets AllowAdditionalProperties
         /// </summary>
         [DataMember(Name="allow_additional_properties", EmitDefaultValue=false)]
@@ -159,6 +153,12 @@ namespace DocSpring.Client.Model
         /// </summary>
         [DataMember(Name="document", EmitDefaultValue=false)]
         public UploadTemplateDataDocument Document { get; set; }
+
+        /// <summary>
+        /// Gets or Sets ExpireAfter
+        /// </summary>
+        [DataMember(Name="expire_after", EmitDefaultValue=false)]
+        public decimal? ExpireAfter { get; set; }
 
         /// <summary>
         /// Gets or Sets Description
@@ -209,16 +209,16 @@ namespace DocSpring.Client.Model
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or Sets Html
-        /// </summary>
-        [DataMember(Name="html", EmitDefaultValue=false)]
-        public string Html { get; set; }
-
-        /// <summary>
         /// Gets or Sets FooterHtml
         /// </summary>
         [DataMember(Name="footer_html", EmitDefaultValue=false)]
         public string FooterHtml { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Html
+        /// </summary>
+        [DataMember(Name="html", EmitDefaultValue=false)]
+        public string Html { get; set; }
 
 
         /// <summary>
@@ -238,9 +238,9 @@ namespace DocSpring.Client.Model
             sb.Append("  ExpirationInterval: ").Append(ExpirationInterval).Append("\n");
             sb.Append("  WebhookUrl: ").Append(WebhookUrl).Append("\n");
             sb.Append("  Scss: ").Append(Scss).Append("\n");
-            sb.Append("  ExpireAfter: ").Append(ExpireAfter).Append("\n");
             sb.Append("  AllowAdditionalProperties: ").Append(AllowAdditionalProperties).Append("\n");
             sb.Append("  Document: ").Append(Document).Append("\n");
+            sb.Append("  ExpireAfter: ").Append(ExpireAfter).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  PublicSubmissions: ").Append(PublicSubmissions).Append("\n");
             sb.Append("  SlackWebhookUrl: ").Append(SlackWebhookUrl).Append("\n");
@@ -249,8 +249,8 @@ namespace DocSpring.Client.Model
             sb.Append("  EditableSubmissions: ").Append(EditableSubmissions).Append("\n");
             sb.Append("  ExpireSubmissions: ").Append(ExpireSubmissions).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
-            sb.Append("  Html: ").Append(Html).Append("\n");
             sb.Append("  FooterHtml: ").Append(FooterHtml).Append("\n");
+            sb.Append("  Html: ").Append(Html).Append("\n");
             sb.Append("  TemplateType: ").Append(TemplateType).Append("\n");
             sb.Append("  RedirectUrl: ").Append(RedirectUrl).Append("\n");
             sb.Append("}\n");
@@ -303,11 +303,6 @@ namespace DocSpring.Client.Model
                     this.Scss.Equals(input.Scss))
                 ) && 
                 (
-                    this.ExpireAfter == input.ExpireAfter ||
-                    (this.ExpireAfter != null &&
-                    this.ExpireAfter.Equals(input.ExpireAfter))
-                ) && 
-                (
                     this.AllowAdditionalProperties == input.AllowAdditionalProperties ||
                     (this.AllowAdditionalProperties != null &&
                     this.AllowAdditionalProperties.Equals(input.AllowAdditionalProperties))
@@ -316,6 +311,11 @@ namespace DocSpring.Client.Model
                     this.Document == input.Document ||
                     (this.Document != null &&
                     this.Document.Equals(input.Document))
+                ) && 
+                (
+                    this.ExpireAfter == input.ExpireAfter ||
+                    (this.ExpireAfter != null &&
+                    this.ExpireAfter.Equals(input.ExpireAfter))
                 ) && 
                 (
                     this.Description == input.Description ||
@@ -358,14 +358,14 @@ namespace DocSpring.Client.Model
                     this.Name.Equals(input.Name))
                 ) && 
                 (
-                    this.Html == input.Html ||
-                    (this.Html != null &&
-                    this.Html.Equals(input.Html))
-                ) && 
-                (
                     this.FooterHtml == input.FooterHtml ||
                     (this.FooterHtml != null &&
                     this.FooterHtml.Equals(input.FooterHtml))
+                ) && 
+                (
+                    this.Html == input.Html ||
+                    (this.Html != null &&
+                    this.Html.Equals(input.Html))
                 ) && 
                 (
                     this.TemplateType == input.TemplateType ||
@@ -394,12 +394,12 @@ namespace DocSpring.Client.Model
                     hashCode = hashCode * 59 + this.WebhookUrl.GetHashCode();
                 if (this.Scss != null)
                     hashCode = hashCode * 59 + this.Scss.GetHashCode();
-                if (this.ExpireAfter != null)
-                    hashCode = hashCode * 59 + this.ExpireAfter.GetHashCode();
                 if (this.AllowAdditionalProperties != null)
                     hashCode = hashCode * 59 + this.AllowAdditionalProperties.GetHashCode();
                 if (this.Document != null)
                     hashCode = hashCode * 59 + this.Document.GetHashCode();
+                if (this.ExpireAfter != null)
+                    hashCode = hashCode * 59 + this.ExpireAfter.GetHashCode();
                 if (this.Description != null)
                     hashCode = hashCode * 59 + this.Description.GetHashCode();
                 if (this.PublicSubmissions != null)
@@ -416,10 +416,10 @@ namespace DocSpring.Client.Model
                     hashCode = hashCode * 59 + this.ExpireSubmissions.GetHashCode();
                 if (this.Name != null)
                     hashCode = hashCode * 59 + this.Name.GetHashCode();
-                if (this.Html != null)
-                    hashCode = hashCode * 59 + this.Html.GetHashCode();
                 if (this.FooterHtml != null)
                     hashCode = hashCode * 59 + this.FooterHtml.GetHashCode();
+                if (this.Html != null)
+                    hashCode = hashCode * 59 + this.Html.GetHashCode();
                 if (this.TemplateType != null)
                     hashCode = hashCode * 59 + this.TemplateType.GetHashCode();
                 if (this.RedirectUrl != null)
