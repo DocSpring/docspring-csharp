@@ -99,6 +99,14 @@ namespace DocSpring.Client.Test
             // TODO unit test for the property 'Order'
         }
         /// <summary>
+        /// Test the property 'SortOrder'
+        /// </summary>
+        [Test]
+        public void SortOrderTest()
+        {
+            // TODO unit test for the property 'SortOrder'
+        }
+        /// <summary>
         /// Test the property 'Fields'
         /// </summary>
         [Test]

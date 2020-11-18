@@ -9,6 +9,7 @@ Method | HTTP request | Description
 [**BatchGeneratePdfs**](PDFApi.md#batchgeneratepdfs) | **POST** /submissions/batches | Generates multiple PDFs
 [**CombinePdfs**](PDFApi.md#combinepdfs) | **POST** /combined_submissions?v&#x3D;2 | Merge submission PDFs, template PDFs, or custom files
 [**CombineSubmissions**](PDFApi.md#combinesubmissions) | **POST** /combined_submissions | Merge generated PDFs together
+[**CopyTemplate**](PDFApi.md#copytemplate) | **POST** /templates/{template_id}/copy | Copy a Template
 [**CreateCustomFileFromUpload**](PDFApi.md#createcustomfilefromupload) | **POST** /custom_files | Create a new custom file from a cached presign upload
 [**CreateDataRequestToken**](PDFApi.md#createdatarequesttoken) | **POST** /data_requests/{data_request_id}/tokens | Creates a new data request token for form authentication
 [**CreateFolder**](PDFApi.md#createfolder) | **POST** /folders/ | Create a folder
@@ -343,6 +344,71 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**CreateCombinedSubmissionResponse**](CreateCombinedSubmissionResponse.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a name="copytemplate"></a>
+# **CopyTemplate**
+> Template CopyTemplate (string templateId, CopyTemplateData copyTemplateData)
+
+Copy a Template
+
+### Example
+```csharp
+using System;
+using System.Diagnostics;
+using DocSpring.Client.Api;
+using DocSpring.Client.Client;
+using DocSpring.Client.Model;
+
+namespace Example
+{
+    public class CopyTemplateExample
+    {
+        public void main()
+        {
+            // Configure HTTP basic authorization: api_token_basic
+            Configuration.Default.Username = "YOUR_USERNAME";
+            Configuration.Default.Password = "YOUR_PASSWORD";
+
+            var apiInstance = new PDFApi();
+            var templateId = tpl_000000000000000001;  // string | 
+            var copyTemplateData = new CopyTemplateData(); // CopyTemplateData | 
+
+            try
+            {
+                // Copy a Template
+                Template result = apiInstance.CopyTemplate(templateId, copyTemplateData);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling PDFApi.CopyTemplate: " + e.Message );
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **templateId** | **string**|  | 
+ **copyTemplateData** | [**CopyTemplateData**](CopyTemplateData.md)|  | 
+
+### Return type
+
+[**Template**](Template.md)
 
 ### Authorization
 

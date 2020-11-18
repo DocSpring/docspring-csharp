@@ -127,6 +127,19 @@ namespace DocSpring.Client.Test
         }
         
         /// <summary>
+        /// Test CopyTemplate
+        /// </summary>
+        [Test]
+        public void CopyTemplateTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string templateId = null;
+            //CopyTemplateData copyTemplateData = null;
+            //var response = instance.CopyTemplate(templateId, copyTemplateData);
+            //Assert.IsInstanceOf<Template> (response, "response is Template");
+        }
+        
+        /// <summary>
         /// Test CreateCustomFileFromUpload
         /// </summary>
         [Test]

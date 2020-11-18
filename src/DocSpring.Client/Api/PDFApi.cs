@@ -134,6 +134,29 @@ namespace DocSpring.Client.Api
         /// <returns>ApiResponse of CreateCombinedSubmissionResponse</returns>
         ApiResponse<CreateCombinedSubmissionResponse> CombineSubmissionsWithHttpInfo (CombinedSubmissionData combinedSubmissionData);
         /// <summary>
+        /// Copy a Template
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="copyTemplateData"></param>
+        /// <returns>Template</returns>
+        Template CopyTemplate (string templateId, CopyTemplateData copyTemplateData);
+
+        /// <summary>
+        /// Copy a Template
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="copyTemplateData"></param>
+        /// <returns>ApiResponse of Template</returns>
+        ApiResponse<Template> CopyTemplateWithHttpInfo (string templateId, CopyTemplateData copyTemplateData);
+        /// <summary>
         /// Create a new custom file from a cached presign upload
         /// </summary>
         /// <remarks>
@@ -791,6 +814,29 @@ namespace DocSpring.Client.Api
         /// <param name="combinedSubmissionData"></param>
         /// <returns>Task of ApiResponse (CreateCombinedSubmissionResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<CreateCombinedSubmissionResponse>> CombineSubmissionsAsyncWithHttpInfo (CombinedSubmissionData combinedSubmissionData);
+        /// <summary>
+        /// Copy a Template
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="copyTemplateData"></param>
+        /// <returns>Task of Template</returns>
+        System.Threading.Tasks.Task<Template> CopyTemplateAsync (string templateId, CopyTemplateData copyTemplateData);
+
+        /// <summary>
+        /// Copy a Template
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="copyTemplateData"></param>
+        /// <returns>Task of ApiResponse (Template)</returns>
+        System.Threading.Tasks.Task<ApiResponse<Template>> CopyTemplateAsyncWithHttpInfo (string templateId, CopyTemplateData copyTemplateData);
         /// <summary>
         /// Create a new custom file from a cached presign upload
         /// </summary>
@@ -2265,6 +2311,179 @@ namespace DocSpring.Client.Api
             return new ApiResponse<CreateCombinedSubmissionResponse>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (CreateCombinedSubmissionResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(CreateCombinedSubmissionResponse)));
+        }
+
+        /// <summary>
+        /// Copy a Template 
+        /// </summary>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="copyTemplateData"></param>
+        /// <returns>Template</returns>
+        public Template CopyTemplate (string templateId, CopyTemplateData copyTemplateData)
+        {
+             ApiResponse<Template> localVarResponse = CopyTemplateWithHttpInfo(templateId, copyTemplateData);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Copy a Template 
+        /// </summary>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="copyTemplateData"></param>
+        /// <returns>ApiResponse of Template</returns>
+        public ApiResponse< Template > CopyTemplateWithHttpInfo (string templateId, CopyTemplateData copyTemplateData)
+        {
+            // verify the required parameter 'templateId' is set
+            if (templateId == null)
+                throw new ApiException(400, "Missing required parameter 'templateId' when calling PDFApi->CopyTemplate");
+            // verify the required parameter 'copyTemplateData' is set
+            if (copyTemplateData == null)
+                throw new ApiException(400, "Missing required parameter 'copyTemplateData' when calling PDFApi->CopyTemplate");
+
+            var localVarPath = "/templates/{template_id}/copy";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+                "application/json"
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (templateId != null) localVarPathParams.Add("template_id", this.Configuration.ApiClient.ParameterToString(templateId)); // path parameter
+            if (copyTemplateData != null && copyTemplateData.GetType() != typeof(byte[]))
+            {
+                localVarPostBody = this.Configuration.ApiClient.Serialize(copyTemplateData); // http body (model) parameter
+            }
+            else
+            {
+                localVarPostBody = copyTemplateData; // byte array
+            }
+
+            // authentication (api_token_basic) required
+            // http basic authentication required
+            if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
+            {
+                localVarHeaderParams["Authorization"] = "Basic " + ApiClient.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password);
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("CopyTemplate", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<Template>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (Template) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Template)));
+        }
+
+        /// <summary>
+        /// Copy a Template 
+        /// </summary>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="copyTemplateData"></param>
+        /// <returns>Task of Template</returns>
+        public async System.Threading.Tasks.Task<Template> CopyTemplateAsync (string templateId, CopyTemplateData copyTemplateData)
+        {
+             ApiResponse<Template> localVarResponse = await CopyTemplateAsyncWithHttpInfo(templateId, copyTemplateData);
+             return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        /// Copy a Template 
+        /// </summary>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="copyTemplateData"></param>
+        /// <returns>Task of ApiResponse (Template)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<Template>> CopyTemplateAsyncWithHttpInfo (string templateId, CopyTemplateData copyTemplateData)
+        {
+            // verify the required parameter 'templateId' is set
+            if (templateId == null)
+                throw new ApiException(400, "Missing required parameter 'templateId' when calling PDFApi->CopyTemplate");
+            // verify the required parameter 'copyTemplateData' is set
+            if (copyTemplateData == null)
+                throw new ApiException(400, "Missing required parameter 'copyTemplateData' when calling PDFApi->CopyTemplate");
+
+            var localVarPath = "/templates/{template_id}/copy";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+                "application/json"
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (templateId != null) localVarPathParams.Add("template_id", this.Configuration.ApiClient.ParameterToString(templateId)); // path parameter
+            if (copyTemplateData != null && copyTemplateData.GetType() != typeof(byte[]))
+            {
+                localVarPostBody = this.Configuration.ApiClient.Serialize(copyTemplateData); // http body (model) parameter
+            }
+            else
+            {
+                localVarPostBody = copyTemplateData; // byte array
+            }
+
+            // authentication (api_token_basic) required
+            // http basic authentication required
+            if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
+            {
+                localVarHeaderParams["Authorization"] = "Basic " + ApiClient.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password);
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("CopyTemplate", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<Template>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (Template) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Template)));
         }
 
         /// <summary>

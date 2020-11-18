@@ -25,33 +25,41 @@ using OpenAPIDateConverter = DocSpring.Client.Client.OpenAPIDateConverter;
 namespace DocSpring.Client.Model
 {
     /// <summary>
-    /// MoveTemplateData
+    /// CopyTemplateData
     /// </summary>
     [DataContract]
-    public partial class MoveTemplateData :  IEquatable<MoveTemplateData>, IValidatableObject
+    public partial class CopyTemplateData :  IEquatable<CopyTemplateData>, IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MoveTemplateData" /> class.
+        /// Initializes a new instance of the <see cref="CopyTemplateData" /> class.
         /// </summary>
         [JsonConstructorAttribute]
-        protected MoveTemplateData() { }
+        protected CopyTemplateData() { }
         /// <summary>
-        /// Initializes a new instance of the <see cref="MoveTemplateData" /> class.
+        /// Initializes a new instance of the <see cref="CopyTemplateData" /> class.
         /// </summary>
+        /// <param name="name">name.</param>
         /// <param name="parentFolderId">parentFolderId (required).</param>
-        public MoveTemplateData(string parentFolderId = default(string))
+        public CopyTemplateData(string name = default(string), string parentFolderId = default(string))
         {
             // to ensure "parentFolderId" is required (not null)
             if (parentFolderId == null)
             {
-                throw new InvalidDataException("parentFolderId is a required property for MoveTemplateData and cannot be null");
+                throw new InvalidDataException("parentFolderId is a required property for CopyTemplateData and cannot be null");
             }
             else
             {
                 this.ParentFolderId = parentFolderId;
             }
+            this.Name = name;
         }
         
+        /// <summary>
+        /// Gets or Sets Name
+        /// </summary>
+        [DataMember(Name="name", EmitDefaultValue=false)]
+        public string Name { get; set; }
+
         /// <summary>
         /// Gets or Sets ParentFolderId
         /// </summary>
@@ -65,7 +73,8 @@ namespace DocSpring.Client.Model
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append("class MoveTemplateData {\n");
+            sb.Append("class CopyTemplateData {\n");
+            sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  ParentFolderId: ").Append(ParentFolderId).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -87,20 +96,25 @@ namespace DocSpring.Client.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as MoveTemplateData);
+            return this.Equals(input as CopyTemplateData);
         }
 
         /// <summary>
-        /// Returns true if MoveTemplateData instances are equal
+        /// Returns true if CopyTemplateData instances are equal
         /// </summary>
-        /// <param name="input">Instance of MoveTemplateData to be compared</param>
+        /// <param name="input">Instance of CopyTemplateData to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(MoveTemplateData input)
+        public bool Equals(CopyTemplateData input)
         {
             if (input == null)
                 return false;
 
             return 
+                (
+                    this.Name == input.Name ||
+                    (this.Name != null &&
+                    this.Name.Equals(input.Name))
+                ) && 
                 (
                     this.ParentFolderId == input.ParentFolderId ||
                     (this.ParentFolderId != null &&
@@ -117,6 +131,8 @@ namespace DocSpring.Client.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
+                if (this.Name != null)
+                    hashCode = hashCode * 59 + this.Name.GetHashCode();
                 if (this.ParentFolderId != null)
                     hashCode = hashCode * 59 + this.ParentFolderId.GetHashCode();
                 return hashCode;

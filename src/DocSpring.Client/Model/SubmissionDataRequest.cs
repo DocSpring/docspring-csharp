@@ -171,6 +171,7 @@ namespace DocSpring.Client.Model
         /// <param name="name">name (required).</param>
         /// <param name="email">email (required).</param>
         /// <param name="order">order (required).</param>
+        /// <param name="sortOrder">sortOrder (required).</param>
         /// <param name="fields">fields (required).</param>
         /// <param name="metadata">metadata (required).</param>
         /// <param name="state">state (required).</param>
@@ -186,7 +187,7 @@ namespace DocSpring.Client.Model
         /// <param name="authPhoneNumberHash">authPhoneNumberHash.</param>
         /// <param name="ipAddress">ipAddress.</param>
         /// <param name="userAgent">userAgent.</param>
-        public SubmissionDataRequest(string id = default(string), string name = default(string), string email = default(string), int? order = default(int?), List<string> fields = default(List<string>), Object metadata = default(Object), StateEnum state = default(StateEnum), string viewedAt = default(string), string completedAt = default(string), AuthTypeEnum? authType = default(AuthTypeEnum?), AuthSecondFactorTypeEnum? authSecondFactorType = default(AuthSecondFactorTypeEnum?), string authProvider = default(string), string authSessionStartedAt = default(string), string authSessionIdHash = default(string), string authUserIdHash = default(string), string authUsernameHash = default(string), string authPhoneNumberHash = default(string), string ipAddress = default(string), string userAgent = default(string))
+        public SubmissionDataRequest(string id = default(string), string name = default(string), string email = default(string), int? order = default(int?), int? sortOrder = default(int?), List<string> fields = default(List<string>), Object metadata = default(Object), StateEnum state = default(StateEnum), string viewedAt = default(string), string completedAt = default(string), AuthTypeEnum? authType = default(AuthTypeEnum?), AuthSecondFactorTypeEnum? authSecondFactorType = default(AuthSecondFactorTypeEnum?), string authProvider = default(string), string authSessionStartedAt = default(string), string authSessionIdHash = default(string), string authUserIdHash = default(string), string authUsernameHash = default(string), string authPhoneNumberHash = default(string), string ipAddress = default(string), string userAgent = default(string))
         {
             // to ensure "id" is required (not null)
             if (id == null)
@@ -223,6 +224,15 @@ namespace DocSpring.Client.Model
             else
             {
                 this.Order = order;
+            }
+            // to ensure "sortOrder" is required (not null)
+            if (sortOrder == null)
+            {
+                throw new InvalidDataException("sortOrder is a required property for SubmissionDataRequest and cannot be null");
+            }
+            else
+            {
+                this.SortOrder = sortOrder;
             }
             // to ensure "fields" is required (not null)
             if (fields == null)
@@ -288,6 +298,12 @@ namespace DocSpring.Client.Model
         /// </summary>
         [DataMember(Name="order", EmitDefaultValue=false)]
         public int? Order { get; set; }
+
+        /// <summary>
+        /// Gets or Sets SortOrder
+        /// </summary>
+        [DataMember(Name="sort_order", EmitDefaultValue=false)]
+        public int? SortOrder { get; set; }
 
         /// <summary>
         /// Gets or Sets Fields
@@ -376,6 +392,7 @@ namespace DocSpring.Client.Model
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Email: ").Append(Email).Append("\n");
             sb.Append("  Order: ").Append(Order).Append("\n");
+            sb.Append("  SortOrder: ").Append(SortOrder).Append("\n");
             sb.Append("  Fields: ").Append(Fields).Append("\n");
             sb.Append("  Metadata: ").Append(Metadata).Append("\n");
             sb.Append("  State: ").Append(State).Append("\n");
@@ -444,6 +461,11 @@ namespace DocSpring.Client.Model
                     this.Order == input.Order ||
                     (this.Order != null &&
                     this.Order.Equals(input.Order))
+                ) && 
+                (
+                    this.SortOrder == input.SortOrder ||
+                    (this.SortOrder != null &&
+                    this.SortOrder.Equals(input.SortOrder))
                 ) && 
                 (
                     this.Fields == input.Fields ||
@@ -539,6 +561,8 @@ namespace DocSpring.Client.Model
                     hashCode = hashCode * 59 + this.Email.GetHashCode();
                 if (this.Order != null)
                     hashCode = hashCode * 59 + this.Order.GetHashCode();
+                if (this.SortOrder != null)
+                    hashCode = hashCode * 59 + this.SortOrder.GetHashCode();
                 if (this.Fields != null)
                     hashCode = hashCode * 59 + this.Fields.GetHashCode();
                 if (this.Metadata != null)
