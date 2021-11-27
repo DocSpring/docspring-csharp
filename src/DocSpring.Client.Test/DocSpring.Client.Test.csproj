@@ -81,7 +81,7 @@ OpenAPI spec version: v1
   <Import Project="$(MsBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
       <ProjectReference Include="..\DocSpring.Client\DocSpring.Client.csproj">
-          <Project>{FEFEED34-7CA9-4A2F-8786-DE6229AD9384}</Project>
+          <Project>{D70750F6-0AF7-46D5-90B6-6AA06C938D9F}</Project>
           <Name>DocSpring.Client</Name>
       </ProjectReference>
   </ItemGroup>
