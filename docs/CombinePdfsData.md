@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 **DeleteCustomFiles** | **bool?** |  | [optional] 
 **ExpiresIn** | **int?** |  | [optional] 
 **Metadata** | **Object** |  | [optional] 
+**Password** | **string** |  | [optional] 
 **SourcePdfs** | **List&lt;Object&gt;** |  | 
 **Test** | **bool?** |  | [optional] 
 

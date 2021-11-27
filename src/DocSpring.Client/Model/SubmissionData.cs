@@ -44,8 +44,9 @@ namespace DocSpring.Client.Model
         /// <param name="fieldOverrides">fieldOverrides.</param>
         /// <param name="html">html.</param>
         /// <param name="metadata">metadata.</param>
+        /// <param name="password">password.</param>
         /// <param name="test">test.</param>
-        public SubmissionData(string css = default(string), Object data = default(Object), List<CreateSubmissionDataRequestData> dataRequests = default(List<CreateSubmissionDataRequestData>), Object fieldOverrides = default(Object), string html = default(string), Object metadata = default(Object), bool? test = default(bool?))
+        public SubmissionData(string css = default(string), Object data = default(Object), List<CreateSubmissionDataRequestData> dataRequests = default(List<CreateSubmissionDataRequestData>), Object fieldOverrides = default(Object), string html = default(string), Object metadata = default(Object), string password = default(string), bool? test = default(bool?))
         {
             // to ensure "data" is required (not null)
             if (data == null)
@@ -61,6 +62,7 @@ namespace DocSpring.Client.Model
             this.FieldOverrides = fieldOverrides;
             this.Html = html;
             this.Metadata = metadata;
+            this.Password = password;
             this.Test = test;
         }
         
@@ -101,6 +103,12 @@ namespace DocSpring.Client.Model
         public Object Metadata { get; set; }
 
         /// <summary>
+        /// Gets or Sets Password
+        /// </summary>
+        [DataMember(Name="password", EmitDefaultValue=false)]
+        public string Password { get; set; }
+
+        /// <summary>
         /// Gets or Sets Test
         /// </summary>
         [DataMember(Name="test", EmitDefaultValue=false)]
@@ -120,6 +128,7 @@ namespace DocSpring.Client.Model
             sb.Append("  FieldOverrides: ").Append(FieldOverrides).Append("\n");
             sb.Append("  Html: ").Append(Html).Append("\n");
             sb.Append("  Metadata: ").Append(Metadata).Append("\n");
+            sb.Append("  Password: ").Append(Password).Append("\n");
             sb.Append("  Test: ").Append(Test).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -186,6 +195,11 @@ namespace DocSpring.Client.Model
                     this.Metadata.Equals(input.Metadata))
                 ) && 
                 (
+                    this.Password == input.Password ||
+                    (this.Password != null &&
+                    this.Password.Equals(input.Password))
+                ) && 
+                (
                     this.Test == input.Test ||
                     (this.Test != null &&
                     this.Test.Equals(input.Test))
@@ -213,6 +227,8 @@ namespace DocSpring.Client.Model
                     hashCode = hashCode * 59 + this.Html.GetHashCode();
                 if (this.Metadata != null)
                     hashCode = hashCode * 59 + this.Metadata.GetHashCode();
+                if (this.Password != null)
+                    hashCode = hashCode * 59 + this.Password.GetHashCode();
                 if (this.Test != null)
                     hashCode = hashCode * 59 + this.Test.GetHashCode();
                 return hashCode;

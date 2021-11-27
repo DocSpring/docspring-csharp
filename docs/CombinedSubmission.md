@@ -4,6 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Metadata** | **Object** |  | [optional] 
+**Password** | **string** |  | [optional] 
 **Expired** | **bool?** |  | [optional] 
 **ExpiresAt** | **string** |  | [optional] 
 **SourcePdfs** | **List&lt;Object&gt;** |  | [optional] 

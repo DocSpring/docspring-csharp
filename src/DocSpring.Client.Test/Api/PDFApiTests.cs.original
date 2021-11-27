@@ -287,6 +287,18 @@ namespace DocSpring.Client.Test
         }
         
         /// <summary>
+        /// Test GetFullTemplate
+        /// </summary>
+        [Test]
+        public void GetFullTemplateTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string templateId = null;
+            //var response = instance.GetFullTemplate(templateId);
+            //Assert.IsInstanceOf<Template1> (response, "response is Template1");
+        }
+        
+        /// <summary>
         /// Test GetPresignUrl
         /// </summary>
         [Test]
@@ -357,6 +369,41 @@ namespace DocSpring.Client.Test
             //string parentFolderId = null;
             //var response = instance.ListFolders(parentFolderId);
             //Assert.IsInstanceOf<List<Folder>> (response, "response is List<Folder>");
+        }
+        
+        /// <summary>
+        /// Test ListSubmissions
+        /// </summary>
+        [Test]
+        public void ListSubmissionsTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string cursor = null;
+            //decimal? limit = null;
+            //string createdAfter = null;
+            //string createdBefore = null;
+            //string type = null;
+            //bool? includeData = null;
+            //var response = instance.ListSubmissions(cursor, limit, createdAfter, createdBefore, type, includeData);
+            //Assert.IsInstanceOf<ListSubmissionsResponse> (response, "response is ListSubmissionsResponse");
+        }
+        
+        /// <summary>
+        /// Test ListSubmissions_0
+        /// </summary>
+        [Test]
+        public void ListSubmissions_0Test()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string templateId = null;
+            //string cursor = null;
+            //decimal? limit = null;
+            //string createdAfter = null;
+            //string createdBefore = null;
+            //string type = null;
+            //bool? includeData = null;
+            //var response = instance.ListSubmissions_0(templateId, cursor, limit, createdAfter, createdBefore, type, includeData);
+            //Assert.IsInstanceOf<ListSubmissionsResponse> (response, "response is ListSubmissionsResponse");
         }
         
         /// <summary>

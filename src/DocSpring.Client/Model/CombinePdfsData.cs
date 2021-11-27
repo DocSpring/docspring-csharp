@@ -41,9 +41,10 @@ namespace DocSpring.Client.Model
         /// <param name="deleteCustomFiles">deleteCustomFiles.</param>
         /// <param name="expiresIn">expiresIn.</param>
         /// <param name="metadata">metadata.</param>
+        /// <param name="password">password.</param>
         /// <param name="sourcePdfs">sourcePdfs (required).</param>
         /// <param name="test">test.</param>
-        public CombinePdfsData(bool? deleteCustomFiles = default(bool?), int? expiresIn = default(int?), Object metadata = default(Object), List<Object> sourcePdfs = default(List<Object>), bool? test = default(bool?))
+        public CombinePdfsData(bool? deleteCustomFiles = default(bool?), int? expiresIn = default(int?), Object metadata = default(Object), string password = default(string), List<Object> sourcePdfs = default(List<Object>), bool? test = default(bool?))
         {
             // to ensure "sourcePdfs" is required (not null)
             if (sourcePdfs == null)
@@ -57,6 +58,7 @@ namespace DocSpring.Client.Model
             this.DeleteCustomFiles = deleteCustomFiles;
             this.ExpiresIn = expiresIn;
             this.Metadata = metadata;
+            this.Password = password;
             this.Test = test;
         }
         
@@ -77,6 +79,12 @@ namespace DocSpring.Client.Model
         /// </summary>
         [DataMember(Name="metadata", EmitDefaultValue=false)]
         public Object Metadata { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Password
+        /// </summary>
+        [DataMember(Name="password", EmitDefaultValue=false)]
+        public string Password { get; set; }
 
         /// <summary>
         /// Gets or Sets SourcePdfs
@@ -101,6 +109,7 @@ namespace DocSpring.Client.Model
             sb.Append("  DeleteCustomFiles: ").Append(DeleteCustomFiles).Append("\n");
             sb.Append("  ExpiresIn: ").Append(ExpiresIn).Append("\n");
             sb.Append("  Metadata: ").Append(Metadata).Append("\n");
+            sb.Append("  Password: ").Append(Password).Append("\n");
             sb.Append("  SourcePdfs: ").Append(SourcePdfs).Append("\n");
             sb.Append("  Test: ").Append(Test).Append("\n");
             sb.Append("}\n");
@@ -153,6 +162,11 @@ namespace DocSpring.Client.Model
                     this.Metadata.Equals(input.Metadata))
                 ) && 
                 (
+                    this.Password == input.Password ||
+                    (this.Password != null &&
+                    this.Password.Equals(input.Password))
+                ) && 
+                (
                     this.SourcePdfs == input.SourcePdfs ||
                     this.SourcePdfs != null &&
                     this.SourcePdfs.SequenceEqual(input.SourcePdfs)
@@ -179,6 +193,8 @@ namespace DocSpring.Client.Model
                     hashCode = hashCode * 59 + this.ExpiresIn.GetHashCode();
                 if (this.Metadata != null)
                     hashCode = hashCode * 59 + this.Metadata.GetHashCode();
+                if (this.Password != null)
+                    hashCode = hashCode * 59 + this.Password.GetHashCode();
                 if (this.SourcePdfs != null)
                     hashCode = hashCode * 59 + this.SourcePdfs.GetHashCode();
                 if (this.Test != null)

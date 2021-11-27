@@ -83,6 +83,14 @@ namespace DocSpring.Client.Test
             // TODO unit test for the property 'Metadata'
         }
         /// <summary>
+        /// Test the property 'Password'
+        /// </summary>
+        [Test]
+        public void PasswordTest()
+        {
+            // TODO unit test for the property 'Password'
+        }
+        /// <summary>
         /// Test the property 'SubmissionIds'
         /// </summary>
         [Test]

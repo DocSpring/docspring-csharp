@@ -22,12 +22,15 @@ Method | HTTP request | Description
 [**GeneratePDF**](PDFApi.md#generatepdf) | **POST** /templates/{template_id}/submissions | Generates a new PDF
 [**GetCombinedSubmission**](PDFApi.md#getcombinedsubmission) | **GET** /combined_submissions/{combined_submission_id} | Check the status of a combined submission (merged PDFs)
 [**GetDataRequest**](PDFApi.md#getdatarequest) | **GET** /data_requests/{data_request_id} | Look up a submission data request
+[**GetFullTemplate**](PDFApi.md#getfulltemplate) | **GET** /templates/{template_id}?full&#x3D;true | Fetch the full template attributes
 [**GetPresignUrl**](PDFApi.md#getpresignurl) | **GET** /uploads/presign | Get a presigned URL so that you can upload a file to our AWS S3 bucket
 [**GetSubmission**](PDFApi.md#getsubmission) | **GET** /submissions/{submission_id} | Check the status of a PDF
 [**GetSubmissionBatch**](PDFApi.md#getsubmissionbatch) | **GET** /submissions/batches/{submission_batch_id} | Check the status of a submission batch job
-[**GetTemplate**](PDFApi.md#gettemplate) | **GET** /templates/{template_id} | Get a single template
+[**GetTemplate**](PDFApi.md#gettemplate) | **GET** /templates/{template_id} | Check the status of an uploaded template
 [**GetTemplateSchema**](PDFApi.md#gettemplateschema) | **GET** /templates/{template_id}/schema | Fetch the JSON schema for a template
 [**ListFolders**](PDFApi.md#listfolders) | **GET** /folders/ | Get a list of all folders
+[**ListSubmissions**](PDFApi.md#listsubmissions) | **GET** /submissions | List all submissions
+[**ListSubmissions_0**](PDFApi.md#listsubmissions_0) | **GET** /templates/{template_id}/submissions | List all submissions for a given template
 [**ListTemplates**](PDFApi.md#listtemplates) | **GET** /templates | Get a list of all templates
 [**MoveFolderToFolder**](PDFApi.md#movefoldertofolder) | **POST** /folders/{folder_id}/move | Move a folder
 [**MoveTemplateToFolder**](PDFApi.md#movetemplatetofolder) | **POST** /templates/{template_id}/move | Move Template to folder
@@ -1183,6 +1186,69 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+<a name="getfulltemplate"></a>
+# **GetFullTemplate**
+> Template1 GetFullTemplate (string templateId)
+
+Fetch the full template attributes
+
+### Example
+```csharp
+using System;
+using System.Diagnostics;
+using DocSpring.Client.Api;
+using DocSpring.Client.Client;
+using DocSpring.Client.Model;
+
+namespace Example
+{
+    public class GetFullTemplateExample
+    {
+        public void main()
+        {
+            // Configure HTTP basic authorization: api_token_basic
+            Configuration.Default.Username = "YOUR_USERNAME";
+            Configuration.Default.Password = "YOUR_PASSWORD";
+
+            var apiInstance = new PDFApi();
+            var templateId = tpl_000000000000000001;  // string | 
+
+            try
+            {
+                // Fetch the full template attributes
+                Template1 result = apiInstance.GetFullTemplate(templateId);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling PDFApi.GetFullTemplate: " + e.Message );
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **templateId** | **string**|  | 
+
+### Return type
+
+[**Template1**](Template1.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 <a name="getpresignurl"></a>
 # **GetPresignUrl**
 > Dictionary<string, Object> GetPresignUrl ()
@@ -1376,7 +1442,7 @@ Name | Type | Description  | Notes
 # **GetTemplate**
 > Template GetTemplate (string templateId)
 
-Get a single template
+Check the status of an uploaded template
 
 ### Example
 ```csharp
@@ -1397,11 +1463,11 @@ namespace Example
             Configuration.Default.Password = "YOUR_PASSWORD";
 
             var apiInstance = new PDFApi();
-            var templateId = tpl_000000000000000011;  // string | 
+            var templateId = tpl_000000000000000001;  // string | 
 
             try
             {
-                // Get a single template
+                // Check the status of an uploaded template
                 Template result = apiInstance.GetTemplate(templateId);
                 Debug.WriteLine(result);
             }
@@ -1549,6 +1615,154 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**List<Folder>**](Folder.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a name="listsubmissions"></a>
+# **ListSubmissions**
+> ListSubmissionsResponse ListSubmissions (string cursor = null, decimal? limit = null, string createdAfter = null, string createdBefore = null, string type = null, bool? includeData = null)
+
+List all submissions
+
+### Example
+```csharp
+using System;
+using System.Diagnostics;
+using DocSpring.Client.Api;
+using DocSpring.Client.Client;
+using DocSpring.Client.Model;
+
+namespace Example
+{
+    public class ListSubmissionsExample
+    {
+        public void main()
+        {
+            // Configure HTTP basic authorization: api_token_basic
+            Configuration.Default.Username = "YOUR_USERNAME";
+            Configuration.Default.Password = "YOUR_PASSWORD";
+
+            var apiInstance = new PDFApi();
+            var cursor = sub_list_000012;  // string |  (optional) 
+            var limit = 3;  // decimal? |  (optional) 
+            var createdAfter = 2019-01-01T09:00:00-05:00;  // string |  (optional) 
+            var createdBefore = 2020-01-01T09:00:00-05:00;  // string |  (optional) 
+            var type = test;  // string |  (optional) 
+            var includeData = true;  // bool? |  (optional) 
+
+            try
+            {
+                // List all submissions
+                ListSubmissionsResponse result = apiInstance.ListSubmissions(cursor, limit, createdAfter, createdBefore, type, includeData);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling PDFApi.ListSubmissions: " + e.Message );
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **cursor** | **string**|  | [optional] 
+ **limit** | **decimal?**|  | [optional] 
+ **createdAfter** | **string**|  | [optional] 
+ **createdBefore** | **string**|  | [optional] 
+ **type** | **string**|  | [optional] 
+ **includeData** | **bool?**|  | [optional] 
+
+### Return type
+
+[**ListSubmissionsResponse**](ListSubmissionsResponse.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a name="listsubmissions_0"></a>
+# **ListSubmissions_0**
+> ListSubmissionsResponse ListSubmissions_0 (string templateId, string cursor = null, decimal? limit = null, string createdAfter = null, string createdBefore = null, string type = null, bool? includeData = null)
+
+List all submissions for a given template
+
+### Example
+```csharp
+using System;
+using System.Diagnostics;
+using DocSpring.Client.Api;
+using DocSpring.Client.Client;
+using DocSpring.Client.Model;
+
+namespace Example
+{
+    public class ListSubmissions_0Example
+    {
+        public void main()
+        {
+            // Configure HTTP basic authorization: api_token_basic
+            Configuration.Default.Username = "YOUR_USERNAME";
+            Configuration.Default.Password = "YOUR_PASSWORD";
+
+            var apiInstance = new PDFApi();
+            var templateId = tpl_000000000000000002;  // string | 
+            var cursor = cursor_example;  // string |  (optional) 
+            var limit = 8.14;  // decimal? |  (optional) 
+            var createdAfter = createdAfter_example;  // string |  (optional) 
+            var createdBefore = createdBefore_example;  // string |  (optional) 
+            var type = type_example;  // string |  (optional) 
+            var includeData = true;  // bool? |  (optional) 
+
+            try
+            {
+                // List all submissions for a given template
+                ListSubmissionsResponse result = apiInstance.ListSubmissions_0(templateId, cursor, limit, createdAfter, createdBefore, type, includeData);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling PDFApi.ListSubmissions_0: " + e.Message );
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **templateId** | **string**|  | 
+ **cursor** | **string**|  | [optional] 
+ **limit** | **decimal?**|  | [optional] 
+ **createdAfter** | **string**|  | [optional] 
+ **createdBefore** | **string**|  | [optional] 
+ **type** | **string**|  | [optional] 
+ **includeData** | **bool?**|  | [optional] 
+
+### Return type
+
+[**ListSubmissionsResponse**](ListSubmissionsResponse.md)
 
 ### Authorization
 

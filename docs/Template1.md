@@ -1,0 +1,47 @@
+# DocSpring.Client.Model.Template1
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**DocumentProcessed** | **bool?** |  | [optional] 
+**ExpirationInterval** | **string** |  | [optional] 
+**Scss** | **string** |  | [optional] 
+**DocumentState** | **string** |  | [optional] 
+**ExpireAfter** | **decimal?** |  | [optional] 
+**Description** | **string** |  | [optional] 
+**SlackWebhookUrl** | **string** |  | [optional] 
+**Demo** | **bool?** |  | [optional] 
+**Path** | **string** |  | [optional] 
+**HeaderHtml** | **string** |  | [optional] 
+**PublicWebForm** | **bool?** |  | [optional] 
+**FieldOrder** | **List&lt;List&lt;decimal?&gt;&gt;** |  | [optional] 
+**PermanentDocumentUrl** | **string** |  | [optional] 
+**Html** | **string** |  | [optional] 
+**TemplateType** | **string** |  | [optional] 
+**Id** | **string** |  | [optional] 
+**PageDimensions** | **List&lt;List&lt;decimal?&gt;&gt;** |  | [optional] 
+**Locked** | **bool?** |  | [optional] 
+**PageCount** | **decimal?** |  | [optional] 
+**EncryptPdfs** | **bool?** |  | [optional] 
+**WebhookUrl** | **string** |  | [optional] 
+**EmbedDomains** | **List&lt;string&gt;** |  | [optional] 
+**ParentFolderId** | **string** |  | [optional] 
+**AllowAdditionalProperties** | **bool?** |  | [optional] 
+**EncryptPdfsPassword** | **string** |  | [optional] 
+**PublicSubmissions** | **bool?** |  | [optional] 
+**SharedFieldData** | **Object** |  | [optional] 
+**DocumentMd5** | **string** |  | [optional] 
+**FirstTemplate** | **bool?** |  | [optional] 
+**Defaults** | [**Template1Defaults**](Template1Defaults.md) |  | [optional] 
+**EditableSubmissions** | **bool?** |  | [optional] 
+**ExpireSubmissions** | **bool?** |  | [optional] 
+**Name** | **string** |  | [optional] 
+**FooterHtml** | **string** |  | [optional] 
+**DocumentParseError** | **bool?** |  | [optional] 
+**Fields** | **Object** |  | [optional] 
+**DocumentFilename** | **string** |  | [optional] 
+**RedirectUrl** | **string** |  | [optional] 
+**DocumentUrl** | **string** |  | [optional] 
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+

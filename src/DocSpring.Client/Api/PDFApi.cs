@@ -415,6 +415,27 @@ namespace DocSpring.Client.Api
         /// <returns>ApiResponse of SubmissionDataRequest</returns>
         ApiResponse<SubmissionDataRequest> GetDataRequestWithHttpInfo (string dataRequestId);
         /// <summary>
+        /// Fetch the full template attributes
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <returns>Template1</returns>
+        Template1 GetFullTemplate (string templateId);
+
+        /// <summary>
+        /// Fetch the full template attributes
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <returns>ApiResponse of Template1</returns>
+        ApiResponse<Template1> GetFullTemplateWithHttpInfo (string templateId);
+        /// <summary>
         /// Get a presigned URL so that you can upload a file to our AWS S3 bucket
         /// </summary>
         /// <remarks>
@@ -480,7 +501,7 @@ namespace DocSpring.Client.Api
         /// <returns>ApiResponse of SubmissionBatch</returns>
         ApiResponse<SubmissionBatch> GetSubmissionBatchWithHttpInfo (string submissionBatchId, bool? includeSubmissions = null);
         /// <summary>
-        /// Get a single template
+        /// Check the status of an uploaded template
         /// </summary>
         /// <remarks>
         /// 
@@ -491,7 +512,7 @@ namespace DocSpring.Client.Api
         Template GetTemplate (string templateId);
 
         /// <summary>
-        /// Get a single template
+        /// Check the status of an uploaded template
         /// </summary>
         /// <remarks>
         /// 
@@ -542,6 +563,70 @@ namespace DocSpring.Client.Api
         /// <param name="parentFolderId">Filter By Folder Id (optional)</param>
         /// <returns>ApiResponse of List&lt;Folder&gt;</returns>
         ApiResponse<List<Folder>> ListFoldersWithHttpInfo (string parentFolderId = null);
+        /// <summary>
+        /// List all submissions
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="cursor"> (optional)</param>
+        /// <param name="limit"> (optional)</param>
+        /// <param name="createdAfter"> (optional)</param>
+        /// <param name="createdBefore"> (optional)</param>
+        /// <param name="type"> (optional)</param>
+        /// <param name="includeData"> (optional)</param>
+        /// <returns>ListSubmissionsResponse</returns>
+        ListSubmissionsResponse ListSubmissions (string cursor = null, decimal? limit = null, string createdAfter = null, string createdBefore = null, string type = null, bool? includeData = null);
+
+        /// <summary>
+        /// List all submissions
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="cursor"> (optional)</param>
+        /// <param name="limit"> (optional)</param>
+        /// <param name="createdAfter"> (optional)</param>
+        /// <param name="createdBefore"> (optional)</param>
+        /// <param name="type"> (optional)</param>
+        /// <param name="includeData"> (optional)</param>
+        /// <returns>ApiResponse of ListSubmissionsResponse</returns>
+        ApiResponse<ListSubmissionsResponse> ListSubmissionsWithHttpInfo (string cursor = null, decimal? limit = null, string createdAfter = null, string createdBefore = null, string type = null, bool? includeData = null);
+        /// <summary>
+        /// List all submissions for a given template
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="cursor"> (optional)</param>
+        /// <param name="limit"> (optional)</param>
+        /// <param name="createdAfter"> (optional)</param>
+        /// <param name="createdBefore"> (optional)</param>
+        /// <param name="type"> (optional)</param>
+        /// <param name="includeData"> (optional)</param>
+        /// <returns>ListSubmissionsResponse</returns>
+        ListSubmissionsResponse ListSubmissions_0 (string templateId, string cursor = null, decimal? limit = null, string createdAfter = null, string createdBefore = null, string type = null, bool? includeData = null);
+
+        /// <summary>
+        /// List all submissions for a given template
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="cursor"> (optional)</param>
+        /// <param name="limit"> (optional)</param>
+        /// <param name="createdAfter"> (optional)</param>
+        /// <param name="createdBefore"> (optional)</param>
+        /// <param name="type"> (optional)</param>
+        /// <param name="includeData"> (optional)</param>
+        /// <returns>ApiResponse of ListSubmissionsResponse</returns>
+        ApiResponse<ListSubmissionsResponse> ListSubmissions_0WithHttpInfo (string templateId, string cursor = null, decimal? limit = null, string createdAfter = null, string createdBefore = null, string type = null, bool? includeData = null);
         /// <summary>
         /// Get a list of all templates
         /// </summary>
@@ -1096,6 +1181,27 @@ namespace DocSpring.Client.Api
         /// <returns>Task of ApiResponse (SubmissionDataRequest)</returns>
         System.Threading.Tasks.Task<ApiResponse<SubmissionDataRequest>> GetDataRequestAsyncWithHttpInfo (string dataRequestId);
         /// <summary>
+        /// Fetch the full template attributes
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <returns>Task of Template1</returns>
+        System.Threading.Tasks.Task<Template1> GetFullTemplateAsync (string templateId);
+
+        /// <summary>
+        /// Fetch the full template attributes
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <returns>Task of ApiResponse (Template1)</returns>
+        System.Threading.Tasks.Task<ApiResponse<Template1>> GetFullTemplateAsyncWithHttpInfo (string templateId);
+        /// <summary>
         /// Get a presigned URL so that you can upload a file to our AWS S3 bucket
         /// </summary>
         /// <remarks>
@@ -1161,7 +1267,7 @@ namespace DocSpring.Client.Api
         /// <returns>Task of ApiResponse (SubmissionBatch)</returns>
         System.Threading.Tasks.Task<ApiResponse<SubmissionBatch>> GetSubmissionBatchAsyncWithHttpInfo (string submissionBatchId, bool? includeSubmissions = null);
         /// <summary>
-        /// Get a single template
+        /// Check the status of an uploaded template
         /// </summary>
         /// <remarks>
         /// 
@@ -1172,7 +1278,7 @@ namespace DocSpring.Client.Api
         System.Threading.Tasks.Task<Template> GetTemplateAsync (string templateId);
 
         /// <summary>
-        /// Get a single template
+        /// Check the status of an uploaded template
         /// </summary>
         /// <remarks>
         /// 
@@ -1223,6 +1329,70 @@ namespace DocSpring.Client.Api
         /// <param name="parentFolderId">Filter By Folder Id (optional)</param>
         /// <returns>Task of ApiResponse (List&lt;Folder&gt;)</returns>
         System.Threading.Tasks.Task<ApiResponse<List<Folder>>> ListFoldersAsyncWithHttpInfo (string parentFolderId = null);
+        /// <summary>
+        /// List all submissions
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="cursor"> (optional)</param>
+        /// <param name="limit"> (optional)</param>
+        /// <param name="createdAfter"> (optional)</param>
+        /// <param name="createdBefore"> (optional)</param>
+        /// <param name="type"> (optional)</param>
+        /// <param name="includeData"> (optional)</param>
+        /// <returns>Task of ListSubmissionsResponse</returns>
+        System.Threading.Tasks.Task<ListSubmissionsResponse> ListSubmissionsAsync (string cursor = null, decimal? limit = null, string createdAfter = null, string createdBefore = null, string type = null, bool? includeData = null);
+
+        /// <summary>
+        /// List all submissions
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="cursor"> (optional)</param>
+        /// <param name="limit"> (optional)</param>
+        /// <param name="createdAfter"> (optional)</param>
+        /// <param name="createdBefore"> (optional)</param>
+        /// <param name="type"> (optional)</param>
+        /// <param name="includeData"> (optional)</param>
+        /// <returns>Task of ApiResponse (ListSubmissionsResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<ListSubmissionsResponse>> ListSubmissionsAsyncWithHttpInfo (string cursor = null, decimal? limit = null, string createdAfter = null, string createdBefore = null, string type = null, bool? includeData = null);
+        /// <summary>
+        /// List all submissions for a given template
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="cursor"> (optional)</param>
+        /// <param name="limit"> (optional)</param>
+        /// <param name="createdAfter"> (optional)</param>
+        /// <param name="createdBefore"> (optional)</param>
+        /// <param name="type"> (optional)</param>
+        /// <param name="includeData"> (optional)</param>
+        /// <returns>Task of ListSubmissionsResponse</returns>
+        System.Threading.Tasks.Task<ListSubmissionsResponse> ListSubmissions_0Async (string templateId, string cursor = null, decimal? limit = null, string createdAfter = null, string createdBefore = null, string type = null, bool? includeData = null);
+
+        /// <summary>
+        /// List all submissions for a given template
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="cursor"> (optional)</param>
+        /// <param name="limit"> (optional)</param>
+        /// <param name="createdAfter"> (optional)</param>
+        /// <param name="createdBefore"> (optional)</param>
+        /// <param name="type"> (optional)</param>
+        /// <param name="includeData"> (optional)</param>
+        /// <returns>Task of ApiResponse (ListSubmissionsResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<ListSubmissionsResponse>> ListSubmissions_0AsyncWithHttpInfo (string templateId, string cursor = null, decimal? limit = null, string createdAfter = null, string createdBefore = null, string type = null, bool? includeData = null);
         /// <summary>
         /// Get a list of all templates
         /// </summary>
@@ -4339,6 +4509,151 @@ namespace DocSpring.Client.Api
         }
 
         /// <summary>
+        /// Fetch the full template attributes 
+        /// </summary>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <returns>Template1</returns>
+        public Template1 GetFullTemplate (string templateId)
+        {
+             ApiResponse<Template1> localVarResponse = GetFullTemplateWithHttpInfo(templateId);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Fetch the full template attributes 
+        /// </summary>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <returns>ApiResponse of Template1</returns>
+        public ApiResponse< Template1 > GetFullTemplateWithHttpInfo (string templateId)
+        {
+            // verify the required parameter 'templateId' is set
+            if (templateId == null)
+                throw new ApiException(400, "Missing required parameter 'templateId' when calling PDFApi->GetFullTemplate");
+
+            var localVarPath = "/templates/{template_id}?full=true";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (templateId != null) localVarPathParams.Add("template_id", this.Configuration.ApiClient.ParameterToString(templateId)); // path parameter
+
+            // authentication (api_token_basic) required
+            // http basic authentication required
+            if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
+            {
+                localVarHeaderParams["Authorization"] = "Basic " + ApiClient.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password);
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetFullTemplate", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<Template1>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (Template1) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Template1)));
+        }
+
+        /// <summary>
+        /// Fetch the full template attributes 
+        /// </summary>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <returns>Task of Template1</returns>
+        public async System.Threading.Tasks.Task<Template1> GetFullTemplateAsync (string templateId)
+        {
+             ApiResponse<Template1> localVarResponse = await GetFullTemplateAsyncWithHttpInfo(templateId);
+             return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        /// Fetch the full template attributes 
+        /// </summary>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <returns>Task of ApiResponse (Template1)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<Template1>> GetFullTemplateAsyncWithHttpInfo (string templateId)
+        {
+            // verify the required parameter 'templateId' is set
+            if (templateId == null)
+                throw new ApiException(400, "Missing required parameter 'templateId' when calling PDFApi->GetFullTemplate");
+
+            var localVarPath = "/templates/{template_id}?full=true";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (templateId != null) localVarPathParams.Add("template_id", this.Configuration.ApiClient.ParameterToString(templateId)); // path parameter
+
+            // authentication (api_token_basic) required
+            // http basic authentication required
+            if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
+            {
+                localVarHeaderParams["Authorization"] = "Basic " + ApiClient.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password);
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("GetFullTemplate", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<Template1>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (Template1) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Template1)));
+        }
+
+        /// <summary>
         /// Get a presigned URL so that you can upload a file to our AWS S3 bucket 
         /// </summary>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
@@ -4774,7 +5089,7 @@ namespace DocSpring.Client.Api
         }
 
         /// <summary>
-        /// Get a single template 
+        /// Check the status of an uploaded template 
         /// </summary>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId"></param>
@@ -4786,7 +5101,7 @@ namespace DocSpring.Client.Api
         }
 
         /// <summary>
-        /// Get a single template 
+        /// Check the status of an uploaded template 
         /// </summary>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId"></param>
@@ -4846,7 +5161,7 @@ namespace DocSpring.Client.Api
         }
 
         /// <summary>
-        /// Get a single template 
+        /// Check the status of an uploaded template 
         /// </summary>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId"></param>
@@ -4859,7 +5174,7 @@ namespace DocSpring.Client.Api
         }
 
         /// <summary>
-        /// Get a single template 
+        /// Check the status of an uploaded template 
         /// </summary>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId"></param>
@@ -5200,6 +5515,356 @@ namespace DocSpring.Client.Api
             return new ApiResponse<List<Folder>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 (List<Folder>) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<Folder>)));
+        }
+
+        /// <summary>
+        /// List all submissions 
+        /// </summary>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="cursor"> (optional)</param>
+        /// <param name="limit"> (optional)</param>
+        /// <param name="createdAfter"> (optional)</param>
+        /// <param name="createdBefore"> (optional)</param>
+        /// <param name="type"> (optional)</param>
+        /// <param name="includeData"> (optional)</param>
+        /// <returns>ListSubmissionsResponse</returns>
+        public ListSubmissionsResponse ListSubmissions (string cursor = null, decimal? limit = null, string createdAfter = null, string createdBefore = null, string type = null, bool? includeData = null)
+        {
+             ApiResponse<ListSubmissionsResponse> localVarResponse = ListSubmissionsWithHttpInfo(cursor, limit, createdAfter, createdBefore, type, includeData);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// List all submissions 
+        /// </summary>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="cursor"> (optional)</param>
+        /// <param name="limit"> (optional)</param>
+        /// <param name="createdAfter"> (optional)</param>
+        /// <param name="createdBefore"> (optional)</param>
+        /// <param name="type"> (optional)</param>
+        /// <param name="includeData"> (optional)</param>
+        /// <returns>ApiResponse of ListSubmissionsResponse</returns>
+        public ApiResponse< ListSubmissionsResponse > ListSubmissionsWithHttpInfo (string cursor = null, decimal? limit = null, string createdAfter = null, string createdBefore = null, string type = null, bool? includeData = null)
+        {
+
+            var localVarPath = "/submissions";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (cursor != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "cursor", cursor)); // query parameter
+            if (limit != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "limit", limit)); // query parameter
+            if (createdAfter != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "created_after", createdAfter)); // query parameter
+            if (createdBefore != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "created_before", createdBefore)); // query parameter
+            if (type != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "type", type)); // query parameter
+            if (includeData != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "include_data", includeData)); // query parameter
+
+            // authentication (api_token_basic) required
+            // http basic authentication required
+            if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
+            {
+                localVarHeaderParams["Authorization"] = "Basic " + ApiClient.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password);
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("ListSubmissions", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<ListSubmissionsResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (ListSubmissionsResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(ListSubmissionsResponse)));
+        }
+
+        /// <summary>
+        /// List all submissions 
+        /// </summary>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="cursor"> (optional)</param>
+        /// <param name="limit"> (optional)</param>
+        /// <param name="createdAfter"> (optional)</param>
+        /// <param name="createdBefore"> (optional)</param>
+        /// <param name="type"> (optional)</param>
+        /// <param name="includeData"> (optional)</param>
+        /// <returns>Task of ListSubmissionsResponse</returns>
+        public async System.Threading.Tasks.Task<ListSubmissionsResponse> ListSubmissionsAsync (string cursor = null, decimal? limit = null, string createdAfter = null, string createdBefore = null, string type = null, bool? includeData = null)
+        {
+             ApiResponse<ListSubmissionsResponse> localVarResponse = await ListSubmissionsAsyncWithHttpInfo(cursor, limit, createdAfter, createdBefore, type, includeData);
+             return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        /// List all submissions 
+        /// </summary>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="cursor"> (optional)</param>
+        /// <param name="limit"> (optional)</param>
+        /// <param name="createdAfter"> (optional)</param>
+        /// <param name="createdBefore"> (optional)</param>
+        /// <param name="type"> (optional)</param>
+        /// <param name="includeData"> (optional)</param>
+        /// <returns>Task of ApiResponse (ListSubmissionsResponse)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<ListSubmissionsResponse>> ListSubmissionsAsyncWithHttpInfo (string cursor = null, decimal? limit = null, string createdAfter = null, string createdBefore = null, string type = null, bool? includeData = null)
+        {
+
+            var localVarPath = "/submissions";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (cursor != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "cursor", cursor)); // query parameter
+            if (limit != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "limit", limit)); // query parameter
+            if (createdAfter != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "created_after", createdAfter)); // query parameter
+            if (createdBefore != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "created_before", createdBefore)); // query parameter
+            if (type != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "type", type)); // query parameter
+            if (includeData != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "include_data", includeData)); // query parameter
+
+            // authentication (api_token_basic) required
+            // http basic authentication required
+            if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
+            {
+                localVarHeaderParams["Authorization"] = "Basic " + ApiClient.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password);
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("ListSubmissions", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<ListSubmissionsResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (ListSubmissionsResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(ListSubmissionsResponse)));
+        }
+
+        /// <summary>
+        /// List all submissions for a given template 
+        /// </summary>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="cursor"> (optional)</param>
+        /// <param name="limit"> (optional)</param>
+        /// <param name="createdAfter"> (optional)</param>
+        /// <param name="createdBefore"> (optional)</param>
+        /// <param name="type"> (optional)</param>
+        /// <param name="includeData"> (optional)</param>
+        /// <returns>ListSubmissionsResponse</returns>
+        public ListSubmissionsResponse ListSubmissions_0 (string templateId, string cursor = null, decimal? limit = null, string createdAfter = null, string createdBefore = null, string type = null, bool? includeData = null)
+        {
+             ApiResponse<ListSubmissionsResponse> localVarResponse = ListSubmissions_0WithHttpInfo(templateId, cursor, limit, createdAfter, createdBefore, type, includeData);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// List all submissions for a given template 
+        /// </summary>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="cursor"> (optional)</param>
+        /// <param name="limit"> (optional)</param>
+        /// <param name="createdAfter"> (optional)</param>
+        /// <param name="createdBefore"> (optional)</param>
+        /// <param name="type"> (optional)</param>
+        /// <param name="includeData"> (optional)</param>
+        /// <returns>ApiResponse of ListSubmissionsResponse</returns>
+        public ApiResponse< ListSubmissionsResponse > ListSubmissions_0WithHttpInfo (string templateId, string cursor = null, decimal? limit = null, string createdAfter = null, string createdBefore = null, string type = null, bool? includeData = null)
+        {
+            // verify the required parameter 'templateId' is set
+            if (templateId == null)
+                throw new ApiException(400, "Missing required parameter 'templateId' when calling PDFApi->ListSubmissions_0");
+
+            var localVarPath = "/templates/{template_id}/submissions";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (templateId != null) localVarPathParams.Add("template_id", this.Configuration.ApiClient.ParameterToString(templateId)); // path parameter
+            if (cursor != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "cursor", cursor)); // query parameter
+            if (limit != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "limit", limit)); // query parameter
+            if (createdAfter != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "created_after", createdAfter)); // query parameter
+            if (createdBefore != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "created_before", createdBefore)); // query parameter
+            if (type != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "type", type)); // query parameter
+            if (includeData != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "include_data", includeData)); // query parameter
+
+            // authentication (api_token_basic) required
+            // http basic authentication required
+            if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
+            {
+                localVarHeaderParams["Authorization"] = "Basic " + ApiClient.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password);
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("ListSubmissions_0", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<ListSubmissionsResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (ListSubmissionsResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(ListSubmissionsResponse)));
+        }
+
+        /// <summary>
+        /// List all submissions for a given template 
+        /// </summary>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="cursor"> (optional)</param>
+        /// <param name="limit"> (optional)</param>
+        /// <param name="createdAfter"> (optional)</param>
+        /// <param name="createdBefore"> (optional)</param>
+        /// <param name="type"> (optional)</param>
+        /// <param name="includeData"> (optional)</param>
+        /// <returns>Task of ListSubmissionsResponse</returns>
+        public async System.Threading.Tasks.Task<ListSubmissionsResponse> ListSubmissions_0Async (string templateId, string cursor = null, decimal? limit = null, string createdAfter = null, string createdBefore = null, string type = null, bool? includeData = null)
+        {
+             ApiResponse<ListSubmissionsResponse> localVarResponse = await ListSubmissions_0AsyncWithHttpInfo(templateId, cursor, limit, createdAfter, createdBefore, type, includeData);
+             return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        /// List all submissions for a given template 
+        /// </summary>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="cursor"> (optional)</param>
+        /// <param name="limit"> (optional)</param>
+        /// <param name="createdAfter"> (optional)</param>
+        /// <param name="createdBefore"> (optional)</param>
+        /// <param name="type"> (optional)</param>
+        /// <param name="includeData"> (optional)</param>
+        /// <returns>Task of ApiResponse (ListSubmissionsResponse)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<ListSubmissionsResponse>> ListSubmissions_0AsyncWithHttpInfo (string templateId, string cursor = null, decimal? limit = null, string createdAfter = null, string createdBefore = null, string type = null, bool? includeData = null)
+        {
+            // verify the required parameter 'templateId' is set
+            if (templateId == null)
+                throw new ApiException(400, "Missing required parameter 'templateId' when calling PDFApi->ListSubmissions_0");
+
+            var localVarPath = "/templates/{template_id}/submissions";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (templateId != null) localVarPathParams.Add("template_id", this.Configuration.ApiClient.ParameterToString(templateId)); // path parameter
+            if (cursor != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "cursor", cursor)); // query parameter
+            if (limit != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "limit", limit)); // query parameter
+            if (createdAfter != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "created_after", createdAfter)); // query parameter
+            if (createdBefore != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "created_before", createdBefore)); // query parameter
+            if (type != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "type", type)); // query parameter
+            if (includeData != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "include_data", includeData)); // query parameter
+
+            // authentication (api_token_basic) required
+            // http basic authentication required
+            if (!String.IsNullOrEmpty(this.Configuration.Username) || !String.IsNullOrEmpty(this.Configuration.Password))
+            {
+                localVarHeaderParams["Authorization"] = "Basic " + ApiClient.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password);
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("ListSubmissions_0", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<ListSubmissionsResponse>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
+                (ListSubmissionsResponse) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(ListSubmissionsResponse)));
         }
 
         /// <summary>

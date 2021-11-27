@@ -65,6 +65,7 @@ namespace DocSpring.Client.Model
         /// Initializes a new instance of the <see cref="CombinedSubmission" /> class.
         /// </summary>
         /// <param name="metadata">metadata.</param>
+        /// <param name="password">password.</param>
         /// <param name="expired">expired.</param>
         /// <param name="expiresAt">expiresAt.</param>
         /// <param name="sourcePdfs">sourcePdfs.</param>
@@ -74,9 +75,10 @@ namespace DocSpring.Client.Model
         /// <param name="id">id.</param>
         /// <param name="state">state.</param>
         /// <param name="actions">actions.</param>
-        public CombinedSubmission(Object metadata = default(Object), bool? expired = default(bool?), string expiresAt = default(string), List<Object> sourcePdfs = default(List<Object>), string pdfHash = default(string), string downloadUrl = default(string), List<string> submissionIds = default(List<string>), string id = default(string), StateEnum? state = default(StateEnum?), List<CombinedSubmissionAction> actions = default(List<CombinedSubmissionAction>))
+        public CombinedSubmission(Object metadata = default(Object), string password = default(string), bool? expired = default(bool?), string expiresAt = default(string), List<Object> sourcePdfs = default(List<Object>), string pdfHash = default(string), string downloadUrl = default(string), List<string> submissionIds = default(List<string>), string id = default(string), StateEnum? state = default(StateEnum?), List<CombinedSubmissionAction> actions = default(List<CombinedSubmissionAction>))
         {
             this.Metadata = metadata;
+            this.Password = password;
             this.Expired = expired;
             this.ExpiresAt = expiresAt;
             this.SourcePdfs = sourcePdfs;
@@ -93,6 +95,12 @@ namespace DocSpring.Client.Model
         /// </summary>
         [DataMember(Name="metadata", EmitDefaultValue=false)]
         public Object Metadata { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Password
+        /// </summary>
+        [DataMember(Name="password", EmitDefaultValue=false)]
+        public string Password { get; set; }
 
         /// <summary>
         /// Gets or Sets Expired
@@ -152,6 +160,7 @@ namespace DocSpring.Client.Model
             var sb = new StringBuilder();
             sb.Append("class CombinedSubmission {\n");
             sb.Append("  Metadata: ").Append(Metadata).Append("\n");
+            sb.Append("  Password: ").Append(Password).Append("\n");
             sb.Append("  Expired: ").Append(Expired).Append("\n");
             sb.Append("  ExpiresAt: ").Append(ExpiresAt).Append("\n");
             sb.Append("  SourcePdfs: ").Append(SourcePdfs).Append("\n");
@@ -199,6 +208,11 @@ namespace DocSpring.Client.Model
                     this.Metadata == input.Metadata ||
                     (this.Metadata != null &&
                     this.Metadata.Equals(input.Metadata))
+                ) && 
+                (
+                    this.Password == input.Password ||
+                    (this.Password != null &&
+                    this.Password.Equals(input.Password))
                 ) && 
                 (
                     this.Expired == input.Expired ||
@@ -258,6 +272,8 @@ namespace DocSpring.Client.Model
                 int hashCode = 41;
                 if (this.Metadata != null)
                     hashCode = hashCode * 59 + this.Metadata.GetHashCode();
+                if (this.Password != null)
+                    hashCode = hashCode * 59 + this.Password.GetHashCode();
                 if (this.Expired != null)
                     hashCode = hashCode * 59 + this.Expired.GetHashCode();
                 if (this.ExpiresAt != null)

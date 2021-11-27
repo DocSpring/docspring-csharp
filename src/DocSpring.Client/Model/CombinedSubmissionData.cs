@@ -40,9 +40,10 @@ namespace DocSpring.Client.Model
         /// </summary>
         /// <param name="expiresIn">expiresIn.</param>
         /// <param name="metadata">metadata.</param>
+        /// <param name="password">password.</param>
         /// <param name="submissionIds">submissionIds (required).</param>
         /// <param name="test">test.</param>
-        public CombinedSubmissionData(int? expiresIn = default(int?), Object metadata = default(Object), List<string> submissionIds = default(List<string>), bool? test = default(bool?))
+        public CombinedSubmissionData(int? expiresIn = default(int?), Object metadata = default(Object), string password = default(string), List<string> submissionIds = default(List<string>), bool? test = default(bool?))
         {
             // to ensure "submissionIds" is required (not null)
             if (submissionIds == null)
@@ -55,6 +56,7 @@ namespace DocSpring.Client.Model
             }
             this.ExpiresIn = expiresIn;
             this.Metadata = metadata;
+            this.Password = password;
             this.Test = test;
         }
         
@@ -69,6 +71,12 @@ namespace DocSpring.Client.Model
         /// </summary>
         [DataMember(Name="metadata", EmitDefaultValue=false)]
         public Object Metadata { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Password
+        /// </summary>
+        [DataMember(Name="password", EmitDefaultValue=false)]
+        public string Password { get; set; }
 
         /// <summary>
         /// Gets or Sets SubmissionIds
@@ -92,6 +100,7 @@ namespace DocSpring.Client.Model
             sb.Append("class CombinedSubmissionData {\n");
             sb.Append("  ExpiresIn: ").Append(ExpiresIn).Append("\n");
             sb.Append("  Metadata: ").Append(Metadata).Append("\n");
+            sb.Append("  Password: ").Append(Password).Append("\n");
             sb.Append("  SubmissionIds: ").Append(SubmissionIds).Append("\n");
             sb.Append("  Test: ").Append(Test).Append("\n");
             sb.Append("}\n");
@@ -139,6 +148,11 @@ namespace DocSpring.Client.Model
                     this.Metadata.Equals(input.Metadata))
                 ) && 
                 (
+                    this.Password == input.Password ||
+                    (this.Password != null &&
+                    this.Password.Equals(input.Password))
+                ) && 
+                (
                     this.SubmissionIds == input.SubmissionIds ||
                     this.SubmissionIds != null &&
                     this.SubmissionIds.SequenceEqual(input.SubmissionIds)
@@ -163,6 +177,8 @@ namespace DocSpring.Client.Model
                     hashCode = hashCode * 59 + this.ExpiresIn.GetHashCode();
                 if (this.Metadata != null)
                     hashCode = hashCode * 59 + this.Metadata.GetHashCode();
+                if (this.Password != null)
+                    hashCode = hashCode * 59 + this.Password.GetHashCode();
                 if (this.SubmissionIds != null)
                     hashCode = hashCode * 59 + this.SubmissionIds.GetHashCode();
                 if (this.Test != null)
