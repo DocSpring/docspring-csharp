@@ -12,7 +12,7 @@ OpenAPI spec version: v1
     
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B9A18E74-4885-4131-AB20-FC12BADDAE4B}</ProjectGuid>
+    <ProjectGuid>{CB01AB60-20B9-4ACF-9D72-A7CA3DA7F1E1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DocSpring.Client</RootNamespace>
