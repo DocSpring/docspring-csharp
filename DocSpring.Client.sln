@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocSpring.Client", "src\DocSpring.Client\DocSpring.Client.csproj", "{12E962E3-572F-48FE-AD53-E9796AEA62AF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocSpring.Client", "src\DocSpring.Client\DocSpring.Client.csproj", "{8CDDCE41-F407-4D0C-8E96-90C81FB9647D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocSpring.Client.Test", "src\DocSpring.Client.Test\DocSpring.Client.Test.csproj", "{19F1DEBC-DE5E-4517-8062-F000CD499087}"
 EndProject
@@ -12,10 +12,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{12E962E3-572F-48FE-AD53-E9796AEA62AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{12E962E3-572F-48FE-AD53-E9796AEA62AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{12E962E3-572F-48FE-AD53-E9796AEA62AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{12E962E3-572F-48FE-AD53-E9796AEA62AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CDDCE41-F407-4D0C-8E96-90C81FB9647D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CDDCE41-F407-4D0C-8E96-90C81FB9647D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CDDCE41-F407-4D0C-8E96-90C81FB9647D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CDDCE41-F407-4D0C-8E96-90C81FB9647D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{19F1DEBC-DE5E-4517-8062-F000CD499087}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{19F1DEBC-DE5E-4517-8062-F000CD499087}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19F1DEBC-DE5E-4517-8062-F000CD499087}.Release|Any CPU.ActiveCfg = Release|Any CPU
