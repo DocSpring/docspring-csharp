@@ -1,11 +1,12 @@
 # DocSpring.Client.Model.CreateCombinedSubmissionResponse
+
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**CombinedSubmission** | [**CombinedSubmission**](CombinedSubmission.md) |  | [optional] 
+**Status** | **string** |  | 
 **Errors** | **List&lt;string&gt;** |  | [optional] 
-**Status** | **string** |  | [optional] 
+**CombinedSubmission** | [**CombinedSubmission**](CombinedSubmission.md) |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

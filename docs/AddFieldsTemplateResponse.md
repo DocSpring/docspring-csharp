@@ -1,11 +1,12 @@
 # DocSpring.Client.Model.AddFieldsTemplateResponse
+
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**NewFieldIds** | **List&lt;int?&gt;** |  | [optional] 
+**Status** | **string** |  | 
 **Errors** | **List&lt;string&gt;** |  | [optional] 
-**Status** | **string** |  | [optional] 
+**NewFieldIds** | **List&lt;int&gt;** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

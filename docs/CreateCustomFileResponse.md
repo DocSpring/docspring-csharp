@@ -1,11 +1,12 @@
 # DocSpring.Client.Model.CreateCustomFileResponse
+
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**CustomFile** | [**CustomFile**](CustomFile.md) |  | [optional] 
+**Status** | **string** |  | 
 **Errors** | **List&lt;string&gt;** |  | [optional] 
-**Status** | **string** |  | [optional] 
+**CustomFile** | **Object** |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

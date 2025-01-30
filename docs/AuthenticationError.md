@@ -1,4 +1,5 @@
 # DocSpring.Client.Model.AuthenticationError
+
 ## Properties
 
 Name | Type | Description | Notes

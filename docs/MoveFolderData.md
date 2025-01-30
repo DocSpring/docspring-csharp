@@ -1,4 +1,5 @@
 # DocSpring.Client.Model.MoveFolderData
+
 ## Properties
 
 Name | Type | Description | Notes

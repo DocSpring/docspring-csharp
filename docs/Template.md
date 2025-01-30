@@ -1,28 +1,29 @@
 # DocSpring.Client.Model.Template
+
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ExpirationInterval** | **string** |  | [optional] 
-**WebhookUrl** | **string** |  | [optional] 
-**ParentFolderId** | **string** |  | [optional] 
-**ExpireAfter** | **decimal?** |  | [optional] 
-**AllowAdditionalProperties** | **bool?** |  | [optional] 
-**Description** | **string** |  | [optional] 
-**PublicSubmissions** | **bool?** |  | [optional] 
-**SlackWebhookUrl** | **string** |  | [optional] 
-**Path** | **string** |  | [optional] 
-**PublicWebForm** | **bool?** |  | [optional] 
-**EditableSubmissions** | **bool?** |  | [optional] 
-**ExpireSubmissions** | **bool?** |  | [optional] 
-**Name** | **string** |  | [optional] 
-**PermanentDocumentUrl** | **string** |  | [optional] 
-**TemplateType** | **string** |  | [optional] 
-**Id** | **string** |  | [optional] 
-**PageDimensions** | **List&lt;List&lt;decimal?&gt;&gt;** |  | [optional] 
-**Locked** | **bool?** |  | [optional] 
-**RedirectUrl** | **string** |  | [optional] 
-**DocumentUrl** | **string** |  | [optional] 
+**Name** | **string** |  | 
+**Description** | **string** |  | 
+**PublicWebForm** | **bool** |  | 
+**PublicSubmissions** | **bool** |  | 
+**ExpireSubmissions** | **bool** |  | 
+**ExpireAfter** | **decimal** |  | 
+**ExpirationInterval** | **string** |  | 
+**AllowAdditionalProperties** | **bool** |  | 
+**EditableSubmissions** | **bool** |  | 
+**Locked** | **bool** |  | 
+**WebhookUrl** | **string** |  | 
+**SlackWebhookUrl** | **string** |  | 
+**RedirectUrl** | **string** |  | 
+**Id** | **string** |  | 
+**TemplateType** | **string** |  | 
+**PageDimensions** | **List&lt;List&lt;decimal&gt;&gt;** |  | 
+**DocumentUrl** | **string** |  | 
+**PermanentDocumentUrl** | **string** |  | 
+**Path** | **string** |  | 
+**ParentFolderId** | **string** |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

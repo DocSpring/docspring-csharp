@@ -1,3 +1,8 @@
+### 2.0.0 [January 31, 2025]
+
+- Updated OpenAPI Generator to 7.11.0
+- Added template versioning parameters to API methods
+
 ### 1.4.3 [November 28, 2021]
 
 - Added 'password' parameter to Generate PDF and Combine PDF API endpoints. You can now encrypt each generated PDF with a unique password.

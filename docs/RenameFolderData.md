@@ -1,4 +1,5 @@
 # DocSpring.Client.Model.RenameFolderData
+
 ## Properties
 
 Name | Type | Description | Notes

@@ -1,4 +1,5 @@
 # DocSpring.Client.Model.InvalidRequest
+
 ## Properties
 
 Name | Type | Description | Notes

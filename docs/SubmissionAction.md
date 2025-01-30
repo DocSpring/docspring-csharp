@@ -1,4 +1,5 @@
 # DocSpring.Client.Model.SubmissionAction
+
 ## Properties
 
 Name | Type | Description | Notes

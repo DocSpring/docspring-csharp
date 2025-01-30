@@ -1,13 +1,14 @@
 # DocSpring.Client.Model.Submission
+
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **string** |  | 
 **TemplateId** | **string** |  | [optional] 
-**Test** | **bool?** |  | 
+**Test** | **bool** |  | 
 **Editable** | **bool?** |  | [optional] 
-**Expired** | **bool?** |  | 
+**Expired** | **bool** |  | 
 **ExpiresAt** | **string** |  | [optional] 
 **ProcessedAt** | **string** |  | [optional] 
 **State** | **string** |  | 

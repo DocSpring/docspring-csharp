@@ -1,13 +1,15 @@
 # DocSpring.Client.Model.SubmissionDataRequest
+
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **string** |  | 
+**SubmissionId** | **string** |  | [optional] 
 **Name** | **string** |  | 
 **Email** | **string** |  | 
-**Order** | **int?** |  | 
-**SortOrder** | **int?** |  | 
+**Order** | **int** |  | 
+**SortOrder** | **int** |  | 
 **Fields** | **List&lt;string&gt;** |  | 
 **Metadata** | **Object** |  | 
 **State** | **string** |  | 

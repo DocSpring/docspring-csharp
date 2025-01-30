@@ -1,4 +1,5 @@
 # DocSpring.Client.Model.UpdateTemplateData
+
 ## Properties
 
 Name | Type | Description | Notes

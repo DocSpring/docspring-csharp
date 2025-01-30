@@ -1,4 +1,5 @@
 # DocSpring.Client.Model.CopyTemplateData
+
 ## Properties
 
 Name | Type | Description | Notes
