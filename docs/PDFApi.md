@@ -1,11 +1,10 @@
 # DocSpring.Client.Api.PDFApi
 
-All URIs are relative to *https://api.docspring.com/api/v1*
+All URIs are relative to *https://sync.api.docspring.com/api/v1*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
 | [**AddFieldsToTemplate**](PDFApi.md#addfieldstotemplate) | **PUT** /templates/{template_id}/add_fields | Add new fields to a Template |
-| [**BatchGeneratePdfV1**](PDFApi.md#batchgeneratepdfv1) | **POST** /templates/{template_id}/submissions/batch | Generates multiple PDFs |
 | [**BatchGeneratePdfs**](PDFApi.md#batchgeneratepdfs) | **POST** /submissions/batches | Generates multiple PDFs |
 | [**CombinePdfs**](PDFApi.md#combinepdfs) | **POST** /combined_submissions?v&#x3D;2 | Merge submission PDFs, template PDFs, or custom files |
 | [**CombineSubmissions**](PDFApi.md#combinesubmissions) | **POST** /combined_submissions | Merge generated PDFs together |
@@ -14,14 +13,15 @@ All URIs are relative to *https://api.docspring.com/api/v1*
 | [**CreateDataRequestEvent**](PDFApi.md#createdatarequestevent) | **POST** /data_requests/{data_request_id}/events | Creates a new event for emailing a signee a request for signature |
 | [**CreateDataRequestToken**](PDFApi.md#createdatarequesttoken) | **POST** /data_requests/{data_request_id}/tokens | Creates a new data request token for form authentication |
 | [**CreateFolder**](PDFApi.md#createfolder) | **POST** /folders/ | Create a folder |
-| [**CreateHTMLTemplate**](PDFApi.md#createhtmltemplate) | **POST** /templates?desc&#x3D;html | Create a new HTML template |
+| [**CreateHTMLTemplate**](PDFApi.md#createhtmltemplate) | **POST** /templates?endpoint_description&#x3D;html | Create a new HTML template |
 | [**CreatePDFTemplate**](PDFApi.md#createpdftemplate) | **POST** /templates | Create a new PDF template with a form POST file upload |
-| [**CreatePDFTemplateFromUpload**](PDFApi.md#createpdftemplatefromupload) | **POST** /templates?desc&#x3D;cached_upload | Create a new PDF template from a cached presign upload |
+| [**CreatePDFTemplateFromUpload**](PDFApi.md#createpdftemplatefromupload) | **POST** /templates?endpoint_description&#x3D;cached_upload | Create a new PDF template from a cached presign upload |
 | [**DeleteFolder**](PDFApi.md#deletefolder) | **DELETE** /folders/{folder_id} | Delete a folder |
 | [**DeleteTemplate**](PDFApi.md#deletetemplate) | **DELETE** /templates/{template_id} | Delete a template |
 | [**ExpireCombinedSubmission**](PDFApi.md#expirecombinedsubmission) | **DELETE** /combined_submissions/{combined_submission_id} | Expire a combined submission |
 | [**ExpireSubmission**](PDFApi.md#expiresubmission) | **DELETE** /submissions/{submission_id} | Expire a PDF submission |
-| [**GeneratePDF**](PDFApi.md#generatepdf) | **POST** /templates/{template_id}/submissions | Generates a new PDF |
+| [**GeneratePdf**](PDFApi.md#generatepdf) | **POST** /templates/{template_id}/submissions | Generates a new PDF |
+| [**GeneratePdfForHtmlTemplate**](PDFApi.md#generatepdfforhtmltemplate) | **POST** /templates/{template_id}/submissions?endpoint_description&#x3D;html_templates | Generates a new PDF for an HTML template |
 | [**GeneratePreview**](PDFApi.md#generatepreview) | **POST** /submissions/{submission_id}/generate_preview | Generated a preview PDF for partially completed data requests |
 | [**GetCombinedSubmission**](PDFApi.md#getcombinedsubmission) | **GET** /combined_submissions/{combined_submission_id} | Check the status of a combined submission (merged PDFs) |
 | [**GetDataRequest**](PDFApi.md#getdatarequest) | **GET** /data_requests/{data_request_id} | Look up a submission data request |
@@ -38,16 +38,14 @@ All URIs are relative to *https://api.docspring.com/api/v1*
 | [**ListTemplates**](PDFApi.md#listtemplates) | **GET** /templates | Get a list of all templates |
 | [**MoveFolderToFolder**](PDFApi.md#movefoldertofolder) | **POST** /folders/{folder_id}/move | Move a folder |
 | [**MoveTemplateToFolder**](PDFApi.md#movetemplatetofolder) | **POST** /templates/{template_id}/move | Move Template to folder |
-| [**PublishTemplateVersion**](PDFApi.md#publishtemplateversion) | **POST** /templates/{template_id}/publish_version | Publish a template version |
 | [**RenameFolder**](PDFApi.md#renamefolder) | **POST** /folders/{folder_id}/rename | Rename a folder |
-| [**RestoreTemplateVersion**](PDFApi.md#restoretemplateversion) | **POST** /templates/{template_id}/restore_version | Restore a template version |
 | [**TestAuthentication**](PDFApi.md#testauthentication) | **GET** /authentication | Test Authentication |
 | [**UpdateDataRequest**](PDFApi.md#updatedatarequest) | **PUT** /data_requests/{data_request_id} | Update a submission data request |
 | [**UpdateTemplate**](PDFApi.md#updatetemplate) | **PUT** /templates/{template_id} | Update a Template |
 
 <a id="addfieldstotemplate"></a>
 # **AddFieldsToTemplate**
-> AddFieldsTemplateResponse AddFieldsToTemplate (string templateId, AddFieldsData data)
+> TemplateAddFieldsResponse AddFieldsToTemplate (string templateId, AddFieldsData data)
 
 Add new fields to a Template
 
@@ -66,19 +64,19 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
 
             var apiInstance = new PDFApi(config);
-            var templateId = tpl_000000000000000002;  // string | 
+            var templateId = tpl_1234567890abcdef02;  // string | 
             var data = new AddFieldsData(); // AddFieldsData | 
 
             try
             {
                 // Add new fields to a Template
-                AddFieldsTemplateResponse result = apiInstance.AddFieldsToTemplate(templateId, data);
+                TemplateAddFieldsResponse result = apiInstance.AddFieldsToTemplate(templateId, data);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -99,7 +97,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Add new fields to a Template
-    ApiResponse<AddFieldsTemplateResponse> response = apiInstance.AddFieldsToTemplateWithHttpInfo(templateId, data);
+    ApiResponse<TemplateAddFieldsResponse> response = apiInstance.AddFieldsToTemplateWithHttpInfo(templateId, data);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -121,7 +119,7 @@ catch (ApiException e)
 
 ### Return type
 
-[**AddFieldsTemplateResponse**](AddFieldsTemplateResponse.md)
+[**TemplateAddFieldsResponse**](TemplateAddFieldsResponse.md)
 
 ### Authorization
 
@@ -141,107 +139,9 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a id="batchgeneratepdfv1"></a>
-# **BatchGeneratePdfV1**
-> List&lt;CreateSubmissionResponse&gt; BatchGeneratePdfV1 (string templateId, List<SubmissionData> data)
-
-Generates multiple PDFs
-
-### Example
-```csharp
-using System.Collections.Generic;
-using System.Diagnostics;
-using DocSpring.Client.Api;
-using DocSpring.Client.Client;
-using DocSpring.Client.Model;
-
-namespace Example
-{
-    public class BatchGeneratePdfV1Example
-    {
-        public static void Main()
-        {
-            Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
-            // Configure HTTP basic authorization: api_token_basic
-            config.Username = "YOUR_USERNAME";
-            config.Password = "YOUR_PASSWORD";
-
-            var apiInstance = new PDFApi(config);
-            var templateId = tpl_000000000000000001;  // string | 
-            var data = new List<SubmissionData>(); // List<SubmissionData> | 
-
-            try
-            {
-                // Generates multiple PDFs
-                List<CreateSubmissionResponse> result = apiInstance.BatchGeneratePdfV1(templateId, data);
-                Debug.WriteLine(result);
-            }
-            catch (ApiException  e)
-            {
-                Debug.Print("Exception when calling PDFApi.BatchGeneratePdfV1: " + e.Message);
-                Debug.Print("Status Code: " + e.ErrorCode);
-                Debug.Print(e.StackTrace);
-            }
-        }
-    }
-}
-```
-
-#### Using the BatchGeneratePdfV1WithHttpInfo variant
-This returns an ApiResponse object which contains the response data, status code and headers.
-
-```csharp
-try
-{
-    // Generates multiple PDFs
-    ApiResponse<List<CreateSubmissionResponse>> response = apiInstance.BatchGeneratePdfV1WithHttpInfo(templateId, data);
-    Debug.Write("Status Code: " + response.StatusCode);
-    Debug.Write("Response Headers: " + response.Headers);
-    Debug.Write("Response Body: " + response.Data);
-}
-catch (ApiException e)
-{
-    Debug.Print("Exception when calling PDFApi.BatchGeneratePdfV1WithHttpInfo: " + e.Message);
-    Debug.Print("Status Code: " + e.ErrorCode);
-    Debug.Print(e.StackTrace);
-}
-```
-
-### Parameters
-
-| Name | Type | Description | Notes |
-|------|------|-------------|-------|
-| **templateId** | **string** |  |  |
-| **data** | [**List&lt;SubmissionData&gt;**](SubmissionData.md) |  |  |
-
-### Return type
-
-[**List&lt;CreateSubmissionResponse&gt;**](CreateSubmissionResponse.md)
-
-### Authorization
-
-[api_token_basic](../README.md#api_token_basic)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **201** | submissions created |  -  |
-| **422** | invalid requests |  -  |
-| **401** | authentication failed |  -  |
-| **400** | invalid JSON |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 <a id="batchgeneratepdfs"></a>
 # **BatchGeneratePdfs**
-> CreateSubmissionBatchResponse BatchGeneratePdfs (SubmissionBatchData data)
+> BatchGeneratePdfs201Response BatchGeneratePdfs (SubmissionBatchData data, bool? wait = null)
 
 Generates multiple PDFs
 
@@ -260,18 +160,19 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
 
             var apiInstance = new PDFApi(config);
             var data = new SubmissionBatchData(); // SubmissionBatchData | 
+            var wait = true;  // bool? | Wait for submission batch to be processed before returning. Set to false to return immediately. Default: true (on sync.* subdomain) (optional)  (default to true)
 
             try
             {
                 // Generates multiple PDFs
-                CreateSubmissionBatchResponse result = apiInstance.BatchGeneratePdfs(data);
+                BatchGeneratePdfs201Response result = apiInstance.BatchGeneratePdfs(data, wait);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -292,7 +193,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Generates multiple PDFs
-    ApiResponse<CreateSubmissionBatchResponse> response = apiInstance.BatchGeneratePdfsWithHttpInfo(data);
+    ApiResponse<BatchGeneratePdfs201Response> response = apiInstance.BatchGeneratePdfsWithHttpInfo(data, wait);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -310,10 +211,11 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **data** | [**SubmissionBatchData**](SubmissionBatchData.md) |  |  |
+| **wait** | **bool?** | Wait for submission batch to be processed before returning. Set to false to return immediately. Default: true (on sync.* subdomain) | [optional] [default to true] |
 
 ### Return type
 
-[**CreateSubmissionBatchResponse**](CreateSubmissionBatchResponse.md)
+[**BatchGeneratePdfs201Response**](BatchGeneratePdfs201Response.md)
 
 ### Authorization
 
@@ -331,6 +233,7 @@ catch (ApiException e)
 | **201** | submissions created |  -  |
 | **200** | some PDFs with invalid data |  -  |
 | **401** | authentication failed |  -  |
+| **422** | array of arrays |  -  |
 | **400** | invalid JSON |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -356,7 +259,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
@@ -433,7 +336,7 @@ catch (ApiException e)
 
 <a id="combinesubmissions"></a>
 # **CombineSubmissions**
-> CreateCombinedSubmissionResponse CombineSubmissions (CombinedSubmissionData data)
+> CreateCombinedSubmissionResponse CombineSubmissions (CombinedSubmissionData data, bool? wait = null)
 
 Merge generated PDFs together
 
@@ -452,18 +355,19 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
 
             var apiInstance = new PDFApi(config);
             var data = new CombinedSubmissionData(); // CombinedSubmissionData | 
+            var wait = true;  // bool? | Wait for combined submission to be processed before returning. Set to false to return immediately. Default: true (on sync.* subdomain) (optional)  (default to true)
 
             try
             {
                 // Merge generated PDFs together
-                CreateCombinedSubmissionResponse result = apiInstance.CombineSubmissions(data);
+                CreateCombinedSubmissionResponse result = apiInstance.CombineSubmissions(data, wait);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -484,7 +388,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Merge generated PDFs together
-    ApiResponse<CreateCombinedSubmissionResponse> response = apiInstance.CombineSubmissionsWithHttpInfo(data);
+    ApiResponse<CreateCombinedSubmissionResponse> response = apiInstance.CombineSubmissionsWithHttpInfo(data, wait);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -502,6 +406,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **data** | [**CombinedSubmissionData**](CombinedSubmissionData.md) |  |  |
+| **wait** | **bool?** | Wait for combined submission to be processed before returning. Set to false to return immediately. Default: true (on sync.* subdomain) | [optional] [default to true] |
 
 ### Return type
 
@@ -529,7 +434,7 @@ catch (ApiException e)
 
 <a id="copytemplate"></a>
 # **CopyTemplate**
-> Template CopyTemplate (string templateId, CopyTemplateData data)
+> TemplatePreview CopyTemplate (string templateId, CopyTemplateOptions options = null)
 
 Copy a Template
 
@@ -548,19 +453,19 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
 
             var apiInstance = new PDFApi(config);
-            var templateId = tpl_000000000000000001;  // string | 
-            var data = new CopyTemplateData(); // CopyTemplateData | 
+            var templateId = tpl_1234567890abcdef01;  // string | 
+            var options = new CopyTemplateOptions(); // CopyTemplateOptions |  (optional) 
 
             try
             {
                 // Copy a Template
-                Template result = apiInstance.CopyTemplate(templateId, data);
+                TemplatePreview result = apiInstance.CopyTemplate(templateId, options);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -581,7 +486,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Copy a Template
-    ApiResponse<Template> response = apiInstance.CopyTemplateWithHttpInfo(templateId, data);
+    ApiResponse<TemplatePreview> response = apiInstance.CopyTemplateWithHttpInfo(templateId, options);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -599,11 +504,11 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **templateId** | **string** |  |  |
-| **data** | [**CopyTemplateData**](CopyTemplateData.md) |  |  |
+| **options** | [**CopyTemplateOptions**](CopyTemplateOptions.md) |  | [optional]  |
 
 ### Return type
 
-[**Template**](Template.md)
+[**TemplatePreview**](TemplatePreview.md)
 
 ### Authorization
 
@@ -644,7 +549,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
@@ -738,13 +643,13 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
 
             var apiInstance = new PDFApi(config);
-            var dataRequestId = drq_000000000000000001;  // string | 
+            var dataRequestId = drq_1234567890abcdef01;  // string | 
             var varEvent = new CreateSubmissionDataRequestEventRequest(); // CreateSubmissionDataRequestEventRequest | 
 
             try
@@ -816,7 +721,7 @@ catch (ApiException e)
 
 <a id="createdatarequesttoken"></a>
 # **CreateDataRequestToken**
-> CreateSubmissionDataRequestTokenResponse CreateDataRequestToken (string dataRequestId)
+> CreateSubmissionDataRequestTokenResponse CreateDataRequestToken (string dataRequestId, string type = null)
 
 Creates a new data request token for form authentication
 
@@ -835,18 +740,19 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
 
             var apiInstance = new PDFApi(config);
-            var dataRequestId = drq_000000000000000001;  // string | 
+            var dataRequestId = drq_1234567890abcdef01;  // string | 
+            var type = api;  // string |  (optional) 
 
             try
             {
                 // Creates a new data request token for form authentication
-                CreateSubmissionDataRequestTokenResponse result = apiInstance.CreateDataRequestToken(dataRequestId);
+                CreateSubmissionDataRequestTokenResponse result = apiInstance.CreateDataRequestToken(dataRequestId, type);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -867,7 +773,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Creates a new data request token for form authentication
-    ApiResponse<CreateSubmissionDataRequestTokenResponse> response = apiInstance.CreateDataRequestTokenWithHttpInfo(dataRequestId);
+    ApiResponse<CreateSubmissionDataRequestTokenResponse> response = apiInstance.CreateDataRequestTokenWithHttpInfo(dataRequestId, type);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -885,6 +791,7 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **dataRequestId** | **string** |  |  |
+| **type** | **string** |  | [optional]  |
 
 ### Return type
 
@@ -905,6 +812,7 @@ catch (ApiException e)
 |-------------|-------------|------------------|
 | **201** | token created |  -  |
 | **401** | authentication failed |  -  |
+| **422** | invalid request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -929,7 +837,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
@@ -998,7 +906,7 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **422** | name already exist |  -  |
-| **404** | parent folder doesnt exist |  -  |
+| **404** | parent folder doesn&#39;t exist |  -  |
 | **200** | folder created inside another folder |  -  |
 | **401** | authentication failed |  -  |
 
@@ -1006,7 +914,7 @@ catch (ApiException e)
 
 <a id="createhtmltemplate"></a>
 # **CreateHTMLTemplate**
-> PendingTemplate CreateHTMLTemplate (CreateHtmlTemplateData data)
+> TemplatePreview CreateHTMLTemplate (CreateHtmlTemplate data)
 
 Create a new HTML template
 
@@ -1025,18 +933,18 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
 
             var apiInstance = new PDFApi(config);
-            var data = new CreateHtmlTemplateData(); // CreateHtmlTemplateData | 
+            var data = new CreateHtmlTemplate(); // CreateHtmlTemplate | 
 
             try
             {
                 // Create a new HTML template
-                PendingTemplate result = apiInstance.CreateHTMLTemplate(data);
+                TemplatePreview result = apiInstance.CreateHTMLTemplate(data);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1057,7 +965,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Create a new HTML template
-    ApiResponse<PendingTemplate> response = apiInstance.CreateHTMLTemplateWithHttpInfo(data);
+    ApiResponse<TemplatePreview> response = apiInstance.CreateHTMLTemplateWithHttpInfo(data);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1074,11 +982,11 @@ catch (ApiException e)
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **data** | [**CreateHtmlTemplateData**](CreateHtmlTemplateData.md) |  |  |
+| **data** | [**CreateHtmlTemplate**](CreateHtmlTemplate.md) |  |  |
 
 ### Return type
 
-[**PendingTemplate**](PendingTemplate.md)
+[**TemplatePreview**](TemplatePreview.md)
 
 ### Authorization
 
@@ -1100,7 +1008,7 @@ catch (ApiException e)
 
 <a id="createpdftemplate"></a>
 # **CreatePDFTemplate**
-> PendingTemplate CreatePDFTemplate (System.IO.Stream templateDocument, string templateName, string templateParentFolderId = null)
+> TemplatePreview CreatePDFTemplate (System.IO.Stream templateDocument, string templateName, bool? wait = null, string templateDescription = null, string templateParentFolderId = null)
 
 Create a new PDF template with a form POST file upload
 
@@ -1119,7 +1027,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
@@ -1127,12 +1035,14 @@ namespace Example
             var apiInstance = new PDFApi(config);
             var templateDocument = new System.IO.MemoryStream(System.IO.File.ReadAllBytes("/path/to/file.txt"));  // System.IO.Stream | 
             var templateName = "templateName_example";  // string | 
+            var wait = true;  // bool? | Wait for template document to be processed before returning. Set to false to return immediately. Default: true (on sync.* subdomain) (optional)  (default to true)
+            var templateDescription = "templateDescription_example";  // string |  (optional) 
             var templateParentFolderId = "templateParentFolderId_example";  // string |  (optional) 
 
             try
             {
                 // Create a new PDF template with a form POST file upload
-                PendingTemplate result = apiInstance.CreatePDFTemplate(templateDocument, templateName, templateParentFolderId);
+                TemplatePreview result = apiInstance.CreatePDFTemplate(templateDocument, templateName, wait, templateDescription, templateParentFolderId);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1153,7 +1063,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Create a new PDF template with a form POST file upload
-    ApiResponse<PendingTemplate> response = apiInstance.CreatePDFTemplateWithHttpInfo(templateDocument, templateName, templateParentFolderId);
+    ApiResponse<TemplatePreview> response = apiInstance.CreatePDFTemplateWithHttpInfo(templateDocument, templateName, wait, templateDescription, templateParentFolderId);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1172,11 +1082,13 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **templateDocument** | **System.IO.Stream****System.IO.Stream** |  |  |
 | **templateName** | **string** |  |  |
+| **wait** | **bool?** | Wait for template document to be processed before returning. Set to false to return immediately. Default: true (on sync.* subdomain) | [optional] [default to true] |
+| **templateDescription** | **string** |  | [optional]  |
 | **templateParentFolderId** | **string** |  | [optional]  |
 
 ### Return type
 
-[**PendingTemplate**](PendingTemplate.md)
+[**TemplatePreview**](TemplatePreview.md)
 
 ### Authorization
 
@@ -1198,7 +1110,7 @@ catch (ApiException e)
 
 <a id="createpdftemplatefromupload"></a>
 # **CreatePDFTemplateFromUpload**
-> PendingTemplate CreatePDFTemplateFromUpload (CreateTemplateFromUploadData data)
+> TemplatePreview CreatePDFTemplateFromUpload (CreatePdfTemplate data)
 
 Create a new PDF template from a cached presign upload
 
@@ -1217,18 +1129,18 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
 
             var apiInstance = new PDFApi(config);
-            var data = new CreateTemplateFromUploadData(); // CreateTemplateFromUploadData | 
+            var data = new CreatePdfTemplate(); // CreatePdfTemplate | 
 
             try
             {
                 // Create a new PDF template from a cached presign upload
-                PendingTemplate result = apiInstance.CreatePDFTemplateFromUpload(data);
+                TemplatePreview result = apiInstance.CreatePDFTemplateFromUpload(data);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1249,7 +1161,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Create a new PDF template from a cached presign upload
-    ApiResponse<PendingTemplate> response = apiInstance.CreatePDFTemplateFromUploadWithHttpInfo(data);
+    ApiResponse<TemplatePreview> response = apiInstance.CreatePDFTemplateFromUploadWithHttpInfo(data);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1266,11 +1178,11 @@ catch (ApiException e)
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **data** | [**CreateTemplateFromUploadData**](CreateTemplateFromUploadData.md) |  |  |
+| **data** | [**CreatePdfTemplate**](CreatePdfTemplate.md) |  |  |
 
 ### Return type
 
-[**PendingTemplate**](PendingTemplate.md)
+[**TemplatePreview**](TemplatePreview.md)
 
 ### Authorization
 
@@ -1311,13 +1223,13 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
 
             var apiInstance = new PDFApi(config);
-            var folderId = fld_0000000000000000001;  // string | 
+            var folderId = fld_1234567890abcdef01;  // string | 
 
             try
             {
@@ -1379,7 +1291,7 @@ catch (ApiException e)
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **404** | folder doesnt exist |  -  |
+| **404** | folder doesn&#39;t exist |  -  |
 | **422** | folder has contents |  -  |
 | **200** | folder is empty |  -  |
 | **401** | authentication failed |  -  |
@@ -1388,7 +1300,7 @@ catch (ApiException e)
 
 <a id="deletetemplate"></a>
 # **DeleteTemplate**
-> DeleteTemplateResponse DeleteTemplate (string templateId, string version = null)
+> SuccessMultipleErrorsResponse DeleteTemplate (string templateId)
 
 Delete a template
 
@@ -1407,19 +1319,18 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
 
             var apiInstance = new PDFApi(config);
-            var templateId = tpl_000000000000000001;  // string | 
-            var version = 0.1.0;  // string |  (optional) 
+            var templateId = tpl_1234567890abcdef01;  // string | 
 
             try
             {
                 // Delete a template
-                DeleteTemplateResponse result = apiInstance.DeleteTemplate(templateId, version);
+                SuccessMultipleErrorsResponse result = apiInstance.DeleteTemplate(templateId);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1440,7 +1351,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Delete a template
-    ApiResponse<DeleteTemplateResponse> response = apiInstance.DeleteTemplateWithHttpInfo(templateId, version);
+    ApiResponse<SuccessMultipleErrorsResponse> response = apiInstance.DeleteTemplateWithHttpInfo(templateId);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1458,11 +1369,10 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **templateId** | **string** |  |  |
-| **version** | **string** |  | [optional]  |
 
 ### Return type
 
-[**DeleteTemplateResponse**](DeleteTemplateResponse.md)
+[**SuccessMultipleErrorsResponse**](SuccessMultipleErrorsResponse.md)
 
 ### Authorization
 
@@ -1504,13 +1414,13 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
 
             var apiInstance = new PDFApi(config);
-            var combinedSubmissionId = com_0000000000000000001;  // string | 
+            var combinedSubmissionId = com_1234567890abcdef01;  // string | 
 
             try
             {
@@ -1581,7 +1491,7 @@ catch (ApiException e)
 
 <a id="expiresubmission"></a>
 # **ExpireSubmission**
-> Submission ExpireSubmission (string submissionId)
+> SubmissionPreview ExpireSubmission (string submissionId)
 
 Expire a PDF submission
 
@@ -1600,18 +1510,18 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
 
             var apiInstance = new PDFApi(config);
-            var submissionId = sub_000000000000000001;  // string | 
+            var submissionId = sub_1234567890abcdef01;  // string | 
 
             try
             {
                 // Expire a PDF submission
-                Submission result = apiInstance.ExpireSubmission(submissionId);
+                SubmissionPreview result = apiInstance.ExpireSubmission(submissionId);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1632,7 +1542,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Expire a PDF submission
-    ApiResponse<Submission> response = apiInstance.ExpireSubmissionWithHttpInfo(submissionId);
+    ApiResponse<SubmissionPreview> response = apiInstance.ExpireSubmissionWithHttpInfo(submissionId);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1653,7 +1563,7 @@ catch (ApiException e)
 
 ### Return type
 
-[**Submission**](Submission.md)
+[**SubmissionPreview**](SubmissionPreview.md)
 
 ### Authorization
 
@@ -1676,8 +1586,8 @@ catch (ApiException e)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="generatepdf"></a>
-# **GeneratePDF**
-> CreateSubmissionResponse GeneratePDF (string templateId, CreateSubmissionData submission)
+# **GeneratePdf**
+> CreateSubmissionResponse GeneratePdf (string templateId, CreatePdfSubmissionData submission, bool? wait = null)
 
 Generates a new PDF
 
@@ -1691,29 +1601,30 @@ using DocSpring.Client.Model;
 
 namespace Example
 {
-    public class GeneratePDFExample
+    public class GeneratePdfExample
     {
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
 
             var apiInstance = new PDFApi(config);
-            var templateId = tpl_000000000000000001;  // string | 
-            var submission = new CreateSubmissionData(); // CreateSubmissionData | 
+            var templateId = tpl_1234567890abcdef01;  // string | 
+            var submission = new CreatePdfSubmissionData(); // CreatePdfSubmissionData | 
+            var wait = true;  // bool? | Wait for submission to be processed before returning. Set to false to return immediately. Default: true (on sync.* subdomain) (optional)  (default to true)
 
             try
             {
                 // Generates a new PDF
-                CreateSubmissionResponse result = apiInstance.GeneratePDF(templateId, submission);
+                CreateSubmissionResponse result = apiInstance.GeneratePdf(templateId, submission, wait);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling PDFApi.GeneratePDF: " + e.Message);
+                Debug.Print("Exception when calling PDFApi.GeneratePdf: " + e.Message);
                 Debug.Print("Status Code: " + e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
@@ -1722,21 +1633,21 @@ namespace Example
 }
 ```
 
-#### Using the GeneratePDFWithHttpInfo variant
+#### Using the GeneratePdfWithHttpInfo variant
 This returns an ApiResponse object which contains the response data, status code and headers.
 
 ```csharp
 try
 {
     // Generates a new PDF
-    ApiResponse<CreateSubmissionResponse> response = apiInstance.GeneratePDFWithHttpInfo(templateId, submission);
+    ApiResponse<CreateSubmissionResponse> response = apiInstance.GeneratePdfWithHttpInfo(templateId, submission, wait);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
-    Debug.Print("Exception when calling PDFApi.GeneratePDFWithHttpInfo: " + e.Message);
+    Debug.Print("Exception when calling PDFApi.GeneratePdfWithHttpInfo: " + e.Message);
     Debug.Print("Status Code: " + e.ErrorCode);
     Debug.Print(e.StackTrace);
 }
@@ -1747,7 +1658,8 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **templateId** | **string** |  |  |
-| **submission** | [**CreateSubmissionData**](CreateSubmissionData.md) |  |  |
+| **submission** | [**CreatePdfSubmissionData**](CreatePdfSubmissionData.md) |  |  |
+| **wait** | **bool?** | Wait for submission to be processed before returning. Set to false to return immediately. Default: true (on sync.* subdomain) | [optional] [default to true] |
 
 ### Return type
 
@@ -1767,15 +1679,112 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | submission created |  -  |
-| **400** | invalid JSON |  -  |
 | **422** | invalid request |  -  |
 | **401** | authentication failed |  -  |
+| **400** | invalid JSON |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a id="generatepdfforhtmltemplate"></a>
+# **GeneratePdfForHtmlTemplate**
+> CreateSubmissionResponse GeneratePdfForHtmlTemplate (string templateId, CreateHtmlSubmissionData submission, bool? wait = null)
+
+Generates a new PDF for an HTML template
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using DocSpring.Client.Api;
+using DocSpring.Client.Client;
+using DocSpring.Client.Model;
+
+namespace Example
+{
+    public class GeneratePdfForHtmlTemplateExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
+            // Configure HTTP basic authorization: api_token_basic
+            config.Username = "YOUR_USERNAME";
+            config.Password = "YOUR_PASSWORD";
+
+            var apiInstance = new PDFApi(config);
+            var templateId = tpl_HTML567890abcdef01;  // string | 
+            var submission = new CreateHtmlSubmissionData(); // CreateHtmlSubmissionData | 
+            var wait = true;  // bool? | Wait for submission to be processed before returning. Set to false to return immediately. Default: true (on sync.* subdomain) (optional)  (default to true)
+
+            try
+            {
+                // Generates a new PDF for an HTML template
+                CreateSubmissionResponse result = apiInstance.GeneratePdfForHtmlTemplate(templateId, submission, wait);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling PDFApi.GeneratePdfForHtmlTemplate: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the GeneratePdfForHtmlTemplateWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // Generates a new PDF for an HTML template
+    ApiResponse<CreateSubmissionResponse> response = apiInstance.GeneratePdfForHtmlTemplateWithHttpInfo(templateId, submission, wait);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling PDFApi.GeneratePdfForHtmlTemplateWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **templateId** | **string** |  |  |
+| **submission** | [**CreateHtmlSubmissionData**](CreateHtmlSubmissionData.md) |  |  |
+| **wait** | **bool?** | Wait for submission to be processed before returning. Set to false to return immediately. Default: true (on sync.* subdomain) | [optional] [default to true] |
+
+### Return type
+
+[**CreateSubmissionResponse**](CreateSubmissionResponse.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **201** | submission created |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="generatepreview"></a>
 # **GeneratePreview**
-> PreviewPdfResponse GeneratePreview (string submissionId)
+> SuccessErrorResponse GeneratePreview (string submissionId)
 
 Generated a preview PDF for partially completed data requests
 
@@ -1794,18 +1803,18 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
 
             var apiInstance = new PDFApi(config);
-            var submissionId = sub_00000000000000001;  // string | 
+            var submissionId = sub_1234567890abcdef01;  // string | 
 
             try
             {
                 // Generated a preview PDF for partially completed data requests
-                PreviewPdfResponse result = apiInstance.GeneratePreview(submissionId);
+                SuccessErrorResponse result = apiInstance.GeneratePreview(submissionId);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1826,7 +1835,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Generated a preview PDF for partially completed data requests
-    ApiResponse<PreviewPdfResponse> response = apiInstance.GeneratePreviewWithHttpInfo(submissionId);
+    ApiResponse<SuccessErrorResponse> response = apiInstance.GeneratePreviewWithHttpInfo(submissionId);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1847,7 +1856,7 @@ catch (ApiException e)
 
 ### Return type
 
-[**PreviewPdfResponse**](PreviewPdfResponse.md)
+[**SuccessErrorResponse**](SuccessErrorResponse.md)
 
 ### Authorization
 
@@ -1889,13 +1898,13 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
 
             var apiInstance = new PDFApi(config);
-            var combinedSubmissionId = com_0000000000000000001;  // string | 
+            var combinedSubmissionId = com_1234567890abcdef01;  // string | 
 
             try
             {
@@ -1965,7 +1974,7 @@ catch (ApiException e)
 
 <a id="getdatarequest"></a>
 # **GetDataRequest**
-> SubmissionDataRequest GetDataRequest (string dataRequestId)
+> SubmissionDataRequestShow GetDataRequest (string dataRequestId)
 
 Look up a submission data request
 
@@ -1984,18 +1993,18 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
 
             var apiInstance = new PDFApi(config);
-            var dataRequestId = drq_000000000000000001;  // string | 
+            var dataRequestId = drq_1234567890abcdef01;  // string | 
 
             try
             {
                 // Look up a submission data request
-                SubmissionDataRequest result = apiInstance.GetDataRequest(dataRequestId);
+                SubmissionDataRequestShow result = apiInstance.GetDataRequest(dataRequestId);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -2016,7 +2025,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Look up a submission data request
-    ApiResponse<SubmissionDataRequest> response = apiInstance.GetDataRequestWithHttpInfo(dataRequestId);
+    ApiResponse<SubmissionDataRequestShow> response = apiInstance.GetDataRequestWithHttpInfo(dataRequestId);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -2037,7 +2046,7 @@ catch (ApiException e)
 
 ### Return type
 
-[**SubmissionDataRequest**](SubmissionDataRequest.md)
+[**SubmissionDataRequestShow**](SubmissionDataRequestShow.md)
 
 ### Authorization
 
@@ -2060,7 +2069,7 @@ catch (ApiException e)
 
 <a id="getfulltemplate"></a>
 # **GetFullTemplate**
-> FullTemplate GetFullTemplate (string templateId)
+> Template GetFullTemplate (string templateId)
 
 Fetch the full template attributes
 
@@ -2079,18 +2088,18 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
 
             var apiInstance = new PDFApi(config);
-            var templateId = tpl_000000000000000001;  // string | 
+            var templateId = tpl_1234567890abcdef01;  // string | 
 
             try
             {
                 // Fetch the full template attributes
-                FullTemplate result = apiInstance.GetFullTemplate(templateId);
+                Template result = apiInstance.GetFullTemplate(templateId);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -2111,7 +2120,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Fetch the full template attributes
-    ApiResponse<FullTemplate> response = apiInstance.GetFullTemplateWithHttpInfo(templateId);
+    ApiResponse<Template> response = apiInstance.GetFullTemplateWithHttpInfo(templateId);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -2132,7 +2141,7 @@ catch (ApiException e)
 
 ### Return type
 
-[**FullTemplate**](FullTemplate.md)
+[**Template**](Template.md)
 
 ### Authorization
 
@@ -2155,7 +2164,7 @@ catch (ApiException e)
 
 <a id="getpresignurl"></a>
 # **GetPresignUrl**
-> UploadPresign GetPresignUrl ()
+> UploadPresignResponse GetPresignUrl ()
 
 Get a presigned URL so that you can upload a file to our AWS S3 bucket
 
@@ -2174,7 +2183,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
@@ -2184,7 +2193,7 @@ namespace Example
             try
             {
                 // Get a presigned URL so that you can upload a file to our AWS S3 bucket
-                UploadPresign result = apiInstance.GetPresignUrl();
+                UploadPresignResponse result = apiInstance.GetPresignUrl();
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -2205,7 +2214,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Get a presigned URL so that you can upload a file to our AWS S3 bucket
-    ApiResponse<UploadPresign> response = apiInstance.GetPresignUrlWithHttpInfo();
+    ApiResponse<UploadPresignResponse> response = apiInstance.GetPresignUrlWithHttpInfo();
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -2222,7 +2231,7 @@ catch (ApiException e)
 This endpoint does not need any parameter.
 ### Return type
 
-[**UploadPresign**](UploadPresign.md)
+[**UploadPresignResponse**](UploadPresignResponse.md)
 
 ### Authorization
 
@@ -2263,13 +2272,13 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
 
             var apiInstance = new PDFApi(config);
-            var submissionId = sub_000000000000000001;  // string | 
+            var submissionId = sub_1234567890abcdef01;  // string | 
             var includeData = true;  // bool? |  (optional) 
 
             try
@@ -2341,7 +2350,7 @@ catch (ApiException e)
 
 <a id="getsubmissionbatch"></a>
 # **GetSubmissionBatch**
-> SubmissionBatch GetSubmissionBatch (string submissionBatchId, bool? includeSubmissions = null)
+> SubmissionBatchWithSubmissions GetSubmissionBatch (string submissionBatchId, bool? includeSubmissions = null)
 
 Check the status of a submission batch job
 
@@ -2360,19 +2369,19 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
 
             var apiInstance = new PDFApi(config);
-            var submissionBatchId = sbb_000000000000000001;  // string | 
+            var submissionBatchId = sbb_1234567890abcdef01;  // string | 
             var includeSubmissions = true;  // bool? |  (optional) 
 
             try
             {
                 // Check the status of a submission batch job
-                SubmissionBatch result = apiInstance.GetSubmissionBatch(submissionBatchId, includeSubmissions);
+                SubmissionBatchWithSubmissions result = apiInstance.GetSubmissionBatch(submissionBatchId, includeSubmissions);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -2393,7 +2402,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Check the status of a submission batch job
-    ApiResponse<SubmissionBatch> response = apiInstance.GetSubmissionBatchWithHttpInfo(submissionBatchId, includeSubmissions);
+    ApiResponse<SubmissionBatchWithSubmissions> response = apiInstance.GetSubmissionBatchWithHttpInfo(submissionBatchId, includeSubmissions);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -2415,7 +2424,7 @@ catch (ApiException e)
 
 ### Return type
 
-[**SubmissionBatch**](SubmissionBatch.md)
+[**SubmissionBatchWithSubmissions**](SubmissionBatchWithSubmissions.md)
 
 ### Authorization
 
@@ -2438,7 +2447,7 @@ catch (ApiException e)
 
 <a id="gettemplate"></a>
 # **GetTemplate**
-> Template GetTemplate (string templateId)
+> TemplatePreview GetTemplate (string templateId)
 
 Check the status of an uploaded template
 
@@ -2457,18 +2466,18 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
 
             var apiInstance = new PDFApi(config);
-            var templateId = tpl_000000000000000001;  // string | 
+            var templateId = tpl_1234567890abcdef01;  // string | 
 
             try
             {
                 // Check the status of an uploaded template
-                Template result = apiInstance.GetTemplate(templateId);
+                TemplatePreview result = apiInstance.GetTemplate(templateId);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -2489,7 +2498,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Check the status of an uploaded template
-    ApiResponse<Template> response = apiInstance.GetTemplateWithHttpInfo(templateId);
+    ApiResponse<TemplatePreview> response = apiInstance.GetTemplateWithHttpInfo(templateId);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -2510,7 +2519,7 @@ catch (ApiException e)
 
 ### Return type
 
-[**Template**](Template.md)
+[**TemplatePreview**](TemplatePreview.md)
 
 ### Authorization
 
@@ -2533,7 +2542,7 @@ catch (ApiException e)
 
 <a id="gettemplateschema"></a>
 # **GetTemplateSchema**
-> TemplateSchema GetTemplateSchema (string templateId)
+> JsonSchema GetTemplateSchema (string templateId)
 
 Fetch the JSON schema for a template
 
@@ -2552,18 +2561,18 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
 
             var apiInstance = new PDFApi(config);
-            var templateId = tpl_000000000000000001;  // string | 
+            var templateId = tpl_1234567890abcdef01;  // string | 
 
             try
             {
                 // Fetch the JSON schema for a template
-                TemplateSchema result = apiInstance.GetTemplateSchema(templateId);
+                JsonSchema result = apiInstance.GetTemplateSchema(templateId);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -2584,7 +2593,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Fetch the JSON schema for a template
-    ApiResponse<TemplateSchema> response = apiInstance.GetTemplateSchemaWithHttpInfo(templateId);
+    ApiResponse<JsonSchema> response = apiInstance.GetTemplateSchemaWithHttpInfo(templateId);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -2605,7 +2614,7 @@ catch (ApiException e)
 
 ### Return type
 
-[**TemplateSchema**](TemplateSchema.md)
+[**JsonSchema**](JsonSchema.md)
 
 ### Authorization
 
@@ -2647,7 +2656,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
@@ -2743,13 +2752,13 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
 
             var apiInstance = new PDFApi(config);
-            var parentFolderId = fld_0000000000000000002;  // string | Filter By Folder Id (optional) 
+            var parentFolderId = fld_1234567890abcdef02;  // string | Filter By Folder Id (optional) 
 
             try
             {
@@ -2837,13 +2846,13 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
 
             var apiInstance = new PDFApi(config);
-            var cursor = sub_list_000012;  // string |  (optional) 
+            var cursor = sub_1234567890abcdef12;  // string |  (optional) 
             var limit = 3;  // decimal? |  (optional) 
             var createdAfter = 2019-01-01T09:00:00-05:00;  // string |  (optional) 
             var createdBefore = 2020-01-01T09:00:00.000+0200;  // string |  (optional) 
@@ -2916,7 +2925,7 @@ catch (ApiException e)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | listing submissions |  -  |
-| **400** | invalid type |  -  |
+| **422** | invalid type |  -  |
 | **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -2942,13 +2951,13 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
 
             var apiInstance = new PDFApi(config);
-            var templateId = tpl_000000000000000002;  // string | 
+            var templateId = tpl_1234567890abcdef02;  // string | 
             var cursor = "cursor_example";  // string |  (optional) 
             var limit = 8.14D;  // decimal? |  (optional) 
             var createdAfter = "createdAfter_example";  // string |  (optional) 
@@ -3029,7 +3038,7 @@ catch (ApiException e)
 
 <a id="listtemplates"></a>
 # **ListTemplates**
-> List&lt;Template&gt; ListTemplates (string query = null, string parentFolderId = null, int? page = null, int? perPage = null)
+> List&lt;TemplatePreview&gt; ListTemplates (string query = null, string parentFolderId = null, int? page = null, int? perPage = null)
 
 Get a list of all templates
 
@@ -3048,21 +3057,21 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
 
             var apiInstance = new PDFApi(config);
             var query = 2;  // string | Search By Name (optional) 
-            var parentFolderId = fld_000000000000000001;  // string | Filter By Folder Id (optional) 
+            var parentFolderId = fld_1234567890abcdef01;  // string | Filter By Folder Id (optional) 
             var page = 2;  // int? | Default: 1 (optional) 
             var perPage = 1;  // int? | Default: 50 (optional) 
 
             try
             {
                 // Get a list of all templates
-                List<Template> result = apiInstance.ListTemplates(query, parentFolderId, page, perPage);
+                List<TemplatePreview> result = apiInstance.ListTemplates(query, parentFolderId, page, perPage);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -3083,7 +3092,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Get a list of all templates
-    ApiResponse<List<Template>> response = apiInstance.ListTemplatesWithHttpInfo(query, parentFolderId, page, perPage);
+    ApiResponse<List<TemplatePreview>> response = apiInstance.ListTemplatesWithHttpInfo(query, parentFolderId, page, perPage);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -3107,7 +3116,7 @@ catch (ApiException e)
 
 ### Return type
 
-[**List&lt;Template&gt;**](Template.md)
+[**List&lt;TemplatePreview&gt;**](TemplatePreview.md)
 
 ### Authorization
 
@@ -3149,13 +3158,13 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
 
             var apiInstance = new PDFApi(config);
-            var folderId = fld_0000000000000000001;  // string | 
+            var folderId = fld_1234567890abcdef01;  // string | 
             var data = new MoveFolderData(); // MoveFolderData | 
 
             try
@@ -3219,7 +3228,7 @@ catch (ApiException e)
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **404** | parent folder doesnt exist |  -  |
+| **404** | parent folder doesn&#39;t exist |  -  |
 | **200** | move to root folder |  -  |
 | **401** | authentication failed |  -  |
 
@@ -3227,7 +3236,7 @@ catch (ApiException e)
 
 <a id="movetemplatetofolder"></a>
 # **MoveTemplateToFolder**
-> Template MoveTemplateToFolder (string templateId, MoveTemplateData data)
+> TemplatePreview MoveTemplateToFolder (string templateId, MoveTemplateData data)
 
 Move Template to folder
 
@@ -3246,19 +3255,19 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
 
             var apiInstance = new PDFApi(config);
-            var templateId = tpl_000000000000000001;  // string | 
+            var templateId = tpl_1234567890abcdef01;  // string | 
             var data = new MoveTemplateData(); // MoveTemplateData | 
 
             try
             {
                 // Move Template to folder
-                Template result = apiInstance.MoveTemplateToFolder(templateId, data);
+                TemplatePreview result = apiInstance.MoveTemplateToFolder(templateId, data);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -3279,7 +3288,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Move Template to folder
-    ApiResponse<Template> response = apiInstance.MoveTemplateToFolderWithHttpInfo(templateId, data);
+    ApiResponse<TemplatePreview> response = apiInstance.MoveTemplateToFolderWithHttpInfo(templateId, data);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -3301,7 +3310,7 @@ catch (ApiException e)
 
 ### Return type
 
-[**Template**](Template.md)
+[**TemplatePreview**](TemplatePreview.md)
 
 ### Authorization
 
@@ -3321,107 +3330,9 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-<a id="publishtemplateversion"></a>
-# **PublishTemplateVersion**
-> PublishTemplateVersionResponse PublishTemplateVersion (string templateId, PublishVersionData data)
-
-Publish a template version
-
-### Example
-```csharp
-using System.Collections.Generic;
-using System.Diagnostics;
-using DocSpring.Client.Api;
-using DocSpring.Client.Client;
-using DocSpring.Client.Model;
-
-namespace Example
-{
-    public class PublishTemplateVersionExample
-    {
-        public static void Main()
-        {
-            Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
-            // Configure HTTP basic authorization: api_token_basic
-            config.Username = "YOUR_USERNAME";
-            config.Password = "YOUR_PASSWORD";
-
-            var apiInstance = new PDFApi(config);
-            var templateId = tpl_000000000000000001;  // string | 
-            var data = new PublishVersionData(); // PublishVersionData | 
-
-            try
-            {
-                // Publish a template version
-                PublishTemplateVersionResponse result = apiInstance.PublishTemplateVersion(templateId, data);
-                Debug.WriteLine(result);
-            }
-            catch (ApiException  e)
-            {
-                Debug.Print("Exception when calling PDFApi.PublishTemplateVersion: " + e.Message);
-                Debug.Print("Status Code: " + e.ErrorCode);
-                Debug.Print(e.StackTrace);
-            }
-        }
-    }
-}
-```
-
-#### Using the PublishTemplateVersionWithHttpInfo variant
-This returns an ApiResponse object which contains the response data, status code and headers.
-
-```csharp
-try
-{
-    // Publish a template version
-    ApiResponse<PublishTemplateVersionResponse> response = apiInstance.PublishTemplateVersionWithHttpInfo(templateId, data);
-    Debug.Write("Status Code: " + response.StatusCode);
-    Debug.Write("Response Headers: " + response.Headers);
-    Debug.Write("Response Body: " + response.Data);
-}
-catch (ApiException e)
-{
-    Debug.Print("Exception when calling PDFApi.PublishTemplateVersionWithHttpInfo: " + e.Message);
-    Debug.Print("Status Code: " + e.ErrorCode);
-    Debug.Print(e.StackTrace);
-}
-```
-
-### Parameters
-
-| Name | Type | Description | Notes |
-|------|------|-------------|-------|
-| **templateId** | **string** |  |  |
-| **data** | [**PublishVersionData**](PublishVersionData.md) |  |  |
-
-### Return type
-
-[**PublishTemplateVersionResponse**](PublishTemplateVersionResponse.md)
-
-### Authorization
-
-[api_token_basic](../README.md#api_token_basic)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | version published successfully |  -  |
-| **422** | invalid version type |  -  |
-| **404** | template not found |  -  |
-| **401** | authentication failed |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 <a id="renamefolder"></a>
 # **RenameFolder**
-> void RenameFolder (string folderId, RenameFolderData data)
+> Folder RenameFolder (string folderId, RenameFolderData data)
 
 Rename a folder
 
@@ -3440,19 +3351,20 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
 
             var apiInstance = new PDFApi(config);
-            var folderId = fld_0000000000000000001;  // string | 
+            var folderId = fld_1234567890abcdef01;  // string | 
             var data = new RenameFolderData(); // RenameFolderData | 
 
             try
             {
                 // Rename a folder
-                apiInstance.RenameFolder(folderId, data);
+                Folder result = apiInstance.RenameFolder(folderId, data);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -3472,7 +3384,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Rename a folder
-    apiInstance.RenameFolderWithHttpInfo(folderId, data);
+    ApiResponse<Folder> response = apiInstance.RenameFolderWithHttpInfo(folderId, data);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -3491,7 +3406,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**Folder**](Folder.md)
 
 ### Authorization
 
@@ -3507,113 +3422,15 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **422** | name already exist |  -  |
-| **404** | folder doesnt belong to me |  -  |
+| **404** | folder doesn&#39;t belong to me |  -  |
 | **200** | successful rename |  -  |
-| **401** | authentication failed |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-<a id="restoretemplateversion"></a>
-# **RestoreTemplateVersion**
-> RestoreTemplateVersionResponse RestoreTemplateVersion (string templateId, RestoreVersionData data)
-
-Restore a template version
-
-### Example
-```csharp
-using System.Collections.Generic;
-using System.Diagnostics;
-using DocSpring.Client.Api;
-using DocSpring.Client.Client;
-using DocSpring.Client.Model;
-
-namespace Example
-{
-    public class RestoreTemplateVersionExample
-    {
-        public static void Main()
-        {
-            Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
-            // Configure HTTP basic authorization: api_token_basic
-            config.Username = "YOUR_USERNAME";
-            config.Password = "YOUR_PASSWORD";
-
-            var apiInstance = new PDFApi(config);
-            var templateId = tpl_000000000000000001;  // string | 
-            var data = new RestoreVersionData(); // RestoreVersionData | 
-
-            try
-            {
-                // Restore a template version
-                RestoreTemplateVersionResponse result = apiInstance.RestoreTemplateVersion(templateId, data);
-                Debug.WriteLine(result);
-            }
-            catch (ApiException  e)
-            {
-                Debug.Print("Exception when calling PDFApi.RestoreTemplateVersion: " + e.Message);
-                Debug.Print("Status Code: " + e.ErrorCode);
-                Debug.Print(e.StackTrace);
-            }
-        }
-    }
-}
-```
-
-#### Using the RestoreTemplateVersionWithHttpInfo variant
-This returns an ApiResponse object which contains the response data, status code and headers.
-
-```csharp
-try
-{
-    // Restore a template version
-    ApiResponse<RestoreTemplateVersionResponse> response = apiInstance.RestoreTemplateVersionWithHttpInfo(templateId, data);
-    Debug.Write("Status Code: " + response.StatusCode);
-    Debug.Write("Response Headers: " + response.Headers);
-    Debug.Write("Response Body: " + response.Data);
-}
-catch (ApiException e)
-{
-    Debug.Print("Exception when calling PDFApi.RestoreTemplateVersionWithHttpInfo: " + e.Message);
-    Debug.Print("Status Code: " + e.ErrorCode);
-    Debug.Print(e.StackTrace);
-}
-```
-
-### Parameters
-
-| Name | Type | Description | Notes |
-|------|------|-------------|-------|
-| **templateId** | **string** |  |  |
-| **data** | [**RestoreVersionData**](RestoreVersionData.md) |  |  |
-
-### Return type
-
-[**RestoreTemplateVersionResponse**](RestoreTemplateVersionResponse.md)
-
-### Authorization
-
-[api_token_basic](../README.md#api_token_basic)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | version restored successfully |  -  |
-| **422** | draft version not allowed |  -  |
-| **404** | template version not found |  -  |
 | **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="testauthentication"></a>
 # **TestAuthentication**
-> AuthenticationSuccessResponse TestAuthentication ()
+> SuccessErrorResponse TestAuthentication ()
 
 Test Authentication
 
@@ -3632,7 +3449,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
@@ -3642,7 +3459,7 @@ namespace Example
             try
             {
                 // Test Authentication
-                AuthenticationSuccessResponse result = apiInstance.TestAuthentication();
+                SuccessErrorResponse result = apiInstance.TestAuthentication();
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -3663,7 +3480,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Test Authentication
-    ApiResponse<AuthenticationSuccessResponse> response = apiInstance.TestAuthenticationWithHttpInfo();
+    ApiResponse<SuccessErrorResponse> response = apiInstance.TestAuthenticationWithHttpInfo();
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -3680,7 +3497,7 @@ catch (ApiException e)
 This endpoint does not need any parameter.
 ### Return type
 
-[**AuthenticationSuccessResponse**](AuthenticationSuccessResponse.md)
+[**SuccessErrorResponse**](SuccessErrorResponse.md)
 
 ### Authorization
 
@@ -3702,7 +3519,7 @@ This endpoint does not need any parameter.
 
 <a id="updatedatarequest"></a>
 # **UpdateDataRequest**
-> UpdateDataRequestResponse UpdateDataRequest (string dataRequestId, UpdateSubmissionDataRequestData data)
+> CreateSubmissionDataRequestResponse UpdateDataRequest (string dataRequestId, UpdateSubmissionDataRequestData data)
 
 Update a submission data request
 
@@ -3721,19 +3538,19 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
 
             var apiInstance = new PDFApi(config);
-            var dataRequestId = drq_000000000000000001;  // string | 
+            var dataRequestId = drq_1234567890abcdef01;  // string | 
             var data = new UpdateSubmissionDataRequestData(); // UpdateSubmissionDataRequestData | 
 
             try
             {
                 // Update a submission data request
-                UpdateDataRequestResponse result = apiInstance.UpdateDataRequest(dataRequestId, data);
+                CreateSubmissionDataRequestResponse result = apiInstance.UpdateDataRequest(dataRequestId, data);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -3754,7 +3571,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update a submission data request
-    ApiResponse<UpdateDataRequestResponse> response = apiInstance.UpdateDataRequestWithHttpInfo(dataRequestId, data);
+    ApiResponse<CreateSubmissionDataRequestResponse> response = apiInstance.UpdateDataRequestWithHttpInfo(dataRequestId, data);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -3776,7 +3593,7 @@ catch (ApiException e)
 
 ### Return type
 
-[**UpdateDataRequestResponse**](UpdateDataRequestResponse.md)
+[**CreateSubmissionDataRequestResponse**](CreateSubmissionDataRequestResponse.md)
 
 ### Authorization
 
@@ -3800,7 +3617,7 @@ catch (ApiException e)
 
 <a id="updatetemplate"></a>
 # **UpdateTemplate**
-> UpdateTemplateResponse UpdateTemplate (string templateId, UpdateTemplateData data)
+> SuccessMultipleErrorsResponse UpdateTemplate (string templateId, UpdateHtmlTemplate data)
 
 Update a Template
 
@@ -3819,19 +3636,19 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "https://api.docspring.com/api/v1";
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
             // Configure HTTP basic authorization: api_token_basic
             config.Username = "YOUR_USERNAME";
             config.Password = "YOUR_PASSWORD";
 
             var apiInstance = new PDFApi(config);
-            var templateId = tpl_000000000000000003;  // string | 
-            var data = new UpdateTemplateData(); // UpdateTemplateData | 
+            var templateId = tpl_1234567890abcdef03;  // string | 
+            var data = new UpdateHtmlTemplate(); // UpdateHtmlTemplate | 
 
             try
             {
                 // Update a Template
-                UpdateTemplateResponse result = apiInstance.UpdateTemplate(templateId, data);
+                SuccessMultipleErrorsResponse result = apiInstance.UpdateTemplate(templateId, data);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -3852,7 +3669,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update a Template
-    ApiResponse<UpdateTemplateResponse> response = apiInstance.UpdateTemplateWithHttpInfo(templateId, data);
+    ApiResponse<SuccessMultipleErrorsResponse> response = apiInstance.UpdateTemplateWithHttpInfo(templateId, data);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -3870,11 +3687,11 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **templateId** | **string** |  |  |
-| **data** | [**UpdateTemplateData**](UpdateTemplateData.md) |  |  |
+| **data** | [**UpdateHtmlTemplate**](UpdateHtmlTemplate.md) |  |  |
 
 ### Return type
 
-[**UpdateTemplateResponse**](UpdateTemplateResponse.md)
+[**SuccessMultipleErrorsResponse**](SuccessMultipleErrorsResponse.md)
 
 ### Authorization
 

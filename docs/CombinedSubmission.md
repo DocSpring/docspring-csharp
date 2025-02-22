@@ -5,18 +5,19 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **string** |  | 
-**Expired** | **bool** |  | 
-**ExpiresIn** | **int?** |  | [optional] 
-**ExpiresAt** | **string** |  | [optional] 
 **State** | **string** |  | 
-**ErrorMessage** | **string** |  | [optional] 
-**Metadata** | **Object** |  | [optional] 
-**Password** | **string** |  | [optional] 
+**Expired** | **bool** |  | 
+**ExpiresIn** | **int?** |  | 
+**ExpiresAt** | **string** |  | 
+**ProcessedAt** | **string** |  | 
+**ErrorMessage** | **string** |  | 
 **SubmissionIds** | **List&lt;string&gt;** |  | 
 **SourcePdfs** | **List&lt;Object&gt;** |  | 
-**DownloadUrl** | **string** |  | [optional] 
-**PdfHash** | **string** |  | [optional] 
-**Actions** | [**List&lt;CombinedSubmissionAction&gt;**](CombinedSubmissionAction.md) |  | [optional] 
+**Metadata** | **Object** |  | 
+**Password** | **string** |  | 
+**PdfHash** | **string** |  | 
+**DownloadUrl** | **string** |  | 
+**Actions** | [**List&lt;CombinedSubmissionAction&gt;**](CombinedSubmissionAction.md) |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

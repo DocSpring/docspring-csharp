@@ -4,25 +4,30 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  | 
-**TemplateId** | **string** |  | [optional] 
-**Test** | **bool** |  | 
-**Editable** | **bool?** |  | [optional] 
+**BatchId** | **string** |  | 
+**DataRequests** | [**List&lt;SubmissionDataRequest&gt;**](SubmissionDataRequest.md) |  | 
+**Editable** | **bool?** |  | 
 **Expired** | **bool** |  | 
-**ExpiresAt** | **string** |  | [optional] 
-**ProcessedAt** | **string** |  | [optional] 
+**ExpiresAt** | **string** |  | 
+**Id** | **string** |  | 
+**JsonSchemaErrors** | **List&lt;string&gt;** |  | 
+**Metadata** | **Object** |  | 
+**Password** | **string** |  | 
+**ProcessedAt** | **string** |  | 
 **State** | **string** |  | 
-**Data** | **Object** |  | [optional] 
-**Metadata** | **Object** |  | [optional] 
-**TruncatedText** | **Object** |  | [optional] 
-**PdfHash** | **string** |  | [optional] 
-**DownloadUrl** | **string** |  | [optional] 
-**PermanentDownloadUrl** | **string** |  | [optional] 
-**BatchId** | **string** |  | [optional] 
-**DataRequests** | [**List&lt;SubmissionDataRequest&gt;**](SubmissionDataRequest.md) |  | [optional] 
-**Actions** | [**List&lt;SubmissionAction&gt;**](SubmissionAction.md) |  | [optional] 
-**Source** | **string** |  | [optional] 
-**Referrer** | **string** |  | [optional] 
+**TemplateId** | **string** |  | 
+**Test** | **bool** |  | 
+**TruncatedText** | **Object** |  | 
+**PdfHash** | **string** |  | 
+**DownloadUrl** | **string** |  | 
+**PermanentDownloadUrl** | **string** |  | 
+**PreviewDownloadUrl** | **string** |  | 
+**PreviewGeneratedAt** | **string** |  | 
+**AuditTrailDownloadUrl** | **string** |  | 
+**Actions** | [**List&lt;SubmissionAction&gt;**](SubmissionAction.md) |  | 
+**Source** | **string** |  | 
+**Referrer** | **string** |  | 
+**Data** | **Object** |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
