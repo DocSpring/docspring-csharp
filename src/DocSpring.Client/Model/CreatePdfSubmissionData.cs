@@ -41,12 +41,13 @@ namespace DocSpring.Client.Model
         /// </summary>
         /// <param name="data">data (required).</param>
         /// <param name="dataRequests">dataRequests.</param>
+        /// <param name="editable">editable.</param>
         /// <param name="expiresIn">expiresIn.</param>
         /// <param name="fieldOverrides">fieldOverrides.</param>
         /// <param name="metadata">metadata.</param>
         /// <param name="password">password.</param>
         /// <param name="test">test.</param>
-        public CreatePdfSubmissionData(Object data = default(Object), List<CreateSubmissionDataRequestData> dataRequests = default(List<CreateSubmissionDataRequestData>), int expiresIn = default(int), Object fieldOverrides = default(Object), Object metadata = default(Object), string password = default(string), bool test = default(bool))
+        public CreatePdfSubmissionData(Object data = default(Object), List<CreateSubmissionDataRequestData> dataRequests = default(List<CreateSubmissionDataRequestData>), bool editable = default(bool), int expiresIn = default(int), Object fieldOverrides = default(Object), Object metadata = default(Object), string password = default(string), bool test = default(bool))
         {
             // to ensure "data" is required (not null)
             if (data == null)
@@ -55,6 +56,7 @@ namespace DocSpring.Client.Model
             }
             this.Data = data;
             this.DataRequests = dataRequests;
+            this.Editable = editable;
             this.ExpiresIn = expiresIn;
             this.FieldOverrides = fieldOverrides;
             this.Metadata = metadata;
@@ -73,6 +75,12 @@ namespace DocSpring.Client.Model
         /// </summary>
         [DataMember(Name = "data_requests", EmitDefaultValue = false)]
         public List<CreateSubmissionDataRequestData> DataRequests { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Editable
+        /// </summary>
+        [DataMember(Name = "editable", EmitDefaultValue = true)]
+        public bool Editable { get; set; }
 
         /// <summary>
         /// Gets or Sets ExpiresIn
@@ -114,6 +122,7 @@ namespace DocSpring.Client.Model
             sb.Append("class CreatePdfSubmissionData {\n");
             sb.Append("  Data: ").Append(Data).Append("\n");
             sb.Append("  DataRequests: ").Append(DataRequests).Append("\n");
+            sb.Append("  Editable: ").Append(Editable).Append("\n");
             sb.Append("  ExpiresIn: ").Append(ExpiresIn).Append("\n");
             sb.Append("  FieldOverrides: ").Append(FieldOverrides).Append("\n");
             sb.Append("  Metadata: ").Append(Metadata).Append("\n");

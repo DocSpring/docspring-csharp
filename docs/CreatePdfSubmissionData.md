@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Data** | **Object** |  | 
 **DataRequests** | [**List&lt;CreateSubmissionDataRequestData&gt;**](CreateSubmissionDataRequestData.md) |  | [optional] 
+**Editable** | **bool** |  | [optional] 
 **ExpiresIn** | **int** |  | [optional] 
 **FieldOverrides** | **Object** |  | [optional] 
 **Metadata** | **Object** |  | [optional] 

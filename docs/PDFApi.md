@@ -1681,7 +1681,6 @@ catch (ApiException e)
 | **201** | submission created |  -  |
 | **422** | invalid request |  -  |
 | **401** | authentication failed |  -  |
-| **400** | invalid JSON |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

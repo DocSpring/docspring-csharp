@@ -1621,17 +1621,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/error_response'
           description: authentication failed
-        "400":
-          content:
-            application/json:
-              example:
-                status: error
-                error: "There was a problem with the JSON you submitted: unexpected\
-                  \ character at line 1, column 25 in '{ \"first_name\": \"John\"\
-                  , last_name: \"Smith\" }"
-              schema:
-                $ref: '#/components/schemas/error_response'
-          description: invalid JSON
       security:
       - api_token_basic: []
       summary: Generates a new PDF
@@ -5658,6 +5647,8 @@ components:
           items:
             $ref: '#/components/schemas/create_submission_data_request_data'
           type: array
+        editable:
+          type: boolean
         expires_in:
           type: integer
         field_overrides:
@@ -5799,6 +5790,8 @@ components:
           properties: {}
           title: submission_data
           type: object
+        editable:
+          type: boolean
         expires_in:
           type: integer
         field_overrides:

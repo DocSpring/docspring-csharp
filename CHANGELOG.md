@@ -1,3 +1,7 @@
+### 3.0.1 [February 26, 2025]
+
+- Fixed User-Agent header: docspring-csharp-x.x.x
+
 ### 3.0.0 [February 23, 2025]
 
 - **BREAKING CHANGE**: Updated default host to our new synchronous API subdomain: sync.api.docspring.com. (EU customers should use sync.api-eu.docspring.com). Removed all custom polling code from library since this logic is now handled by the API service running on our sync subdomain

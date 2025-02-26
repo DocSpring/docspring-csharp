@@ -36,16 +36,18 @@ namespace DocSpring.Client.Model
         /// </summary>
         /// <param name="css">css.</param>
         /// <param name="data">data.</param>
+        /// <param name="editable">editable.</param>
         /// <param name="expiresIn">expiresIn.</param>
         /// <param name="fieldOverrides">fieldOverrides.</param>
         /// <param name="html">html.</param>
         /// <param name="metadata">metadata.</param>
         /// <param name="password">password.</param>
         /// <param name="test">test.</param>
-        public CreateHtmlSubmissionData(string css = default(string), Object data = default(Object), int expiresIn = default(int), Object fieldOverrides = default(Object), string html = default(string), Object metadata = default(Object), string password = default(string), bool test = default(bool))
+        public CreateHtmlSubmissionData(string css = default(string), Object data = default(Object), bool editable = default(bool), int expiresIn = default(int), Object fieldOverrides = default(Object), string html = default(string), Object metadata = default(Object), string password = default(string), bool test = default(bool))
         {
             this.Css = css;
             this.Data = data;
+            this.Editable = editable;
             this.ExpiresIn = expiresIn;
             this.FieldOverrides = fieldOverrides;
             this.Html = html;
@@ -65,6 +67,12 @@ namespace DocSpring.Client.Model
         /// </summary>
         [DataMember(Name = "data", EmitDefaultValue = false)]
         public Object Data { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Editable
+        /// </summary>
+        [DataMember(Name = "editable", EmitDefaultValue = true)]
+        public bool Editable { get; set; }
 
         /// <summary>
         /// Gets or Sets ExpiresIn
@@ -112,6 +120,7 @@ namespace DocSpring.Client.Model
             sb.Append("class CreateHtmlSubmissionData {\n");
             sb.Append("  Css: ").Append(Css).Append("\n");
             sb.Append("  Data: ").Append(Data).Append("\n");
+            sb.Append("  Editable: ").Append(Editable).Append("\n");
             sb.Append("  ExpiresIn: ").Append(ExpiresIn).Append("\n");
             sb.Append("  FieldOverrides: ").Append(FieldOverrides).Append("\n");
             sb.Append("  Html: ").Append(Html).Append("\n");

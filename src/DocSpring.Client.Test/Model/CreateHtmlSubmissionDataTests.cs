@@ -73,6 +73,15 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'Editable'
+        /// </summary>
+        [Fact]
+        public void EditableTest()
+        {
+            // TODO unit test for the property 'Editable'
+        }
+
+        /// <summary>
         /// Test the property 'ExpiresIn'
         /// </summary>
         [Fact]

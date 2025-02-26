@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Css** | **string** |  | [optional] 
 **Data** | **Object** |  | [optional] 
+**Editable** | **bool** |  | [optional] 
 **ExpiresIn** | **int** |  | [optional] 
 **FieldOverrides** | **Object** |  | [optional] 
 **Html** | **string** |  | [optional] 

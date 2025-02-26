@@ -33,7 +33,7 @@ namespace DocSpring.Client.Client
         /// Version of the package.
         /// </summary>
         /// <value>Version of the package.</value>
-        public const string Version = "3.0.0";
+        public const string Version = "3.0.1";
 
         /// <summary>
         /// Identifier for ISO 8601 DateTime Format
@@ -112,7 +112,7 @@ namespace DocSpring.Client.Client
         public Configuration()
         {
             Proxy = null;
-            UserAgent = WebUtility.UrlEncode("docspring-csharp-#{VERSION}");
+            UserAgent = WebUtility.UrlEncode("docspring-csharp-3.0.1");
             BasePath = "https://sync.api.docspring.com/api/v1";
             DefaultHeaders = new ConcurrentDictionary<string, string>();
             ApiKey = new ConcurrentDictionary<string, string>();
@@ -535,7 +535,7 @@ namespace DocSpring.Client.Client
             report += "    OS: " + System.Environment.OSVersion + "\n";
             report += "    .NET Framework Version: " + System.Environment.Version  + "\n";
             report += "    Version of the API: v1\n";
-            report += "    SDK Package Version: 3.0.0\n";
+            report += "    SDK Package Version: 3.0.1\n";
 
             return report;
         }
