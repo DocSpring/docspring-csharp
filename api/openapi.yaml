@@ -245,6 +245,9 @@ paths:
                     id: sub_1234567890abcdef01
                   - type: template
                     id: tpl_1234567890abcdef01
+                    template_version: 1.0.0
+                  - type: template
+                    id: tpl_1234567890abcdef01
                   - type: submission
                     id: sub_1234567890abcdef02
                   - type: custom_file
@@ -272,6 +275,8 @@ paths:
                 - "source_pdfs: Could not find Submission with ID: MISSING_SUBMISSION_ID"
                 - "source_pdfs: Template document is not processed: tpl_1234567890abcdef01\
                   \ (state: pending)"
+                - "source_pdfs: Invalid template version: 'x.y.z' for template: tpl_1234567890abcdef01"
+                - "source_pdfs: Could not find Template with version 3.4.5: tpl_1234567890abcdef01"
                 - "source_pdfs: Could not find Template with ID: MISSING_TEMPLATE_ID"
                 - "source_pdfs: Could not find Custom File with ID: MISSING_CUSTOM_FILE_ID"
                 - "source_pdfs: Could not find Combined Submission with ID: MISSING_COMBINED_SUBMISSION_ID"
@@ -599,7 +604,7 @@ paths:
           content:
             application/json:
               example:
-                id: fld_1234567890abcdef0n1
+                id: fld_1234567890abcdef05
                 name: Folder 3
                 path: /
                 parent_folder_id: null
@@ -862,10 +867,10 @@ paths:
               example:
                 status: success
                 token:
-                  id: 1234567890abcdefa1
+                  id: 1234567890abcdef01
                   secret: ABCDEF01234567890
                   expires_at: 2018-10-20T14:00:00Z
-                  data_request_url: https://app.docspring.com/data_requests/drq_1234567890abcdef01?token_id=1234567890abcdefa1&token_secret=ABCDEF01234567890
+                  data_request_url: https://app.docspring.com/data_requests/drq_1234567890abcdef01?token_id=1234567890abcdef01&token_secret=ABCDEF01234567890
               schema:
                 $ref: '#/components/schemas/create_submission_data_request_token_response'
           description: token created
@@ -1097,6 +1102,8 @@ paths:
                     processed_at: null
                     state: pending
                     template_id: tpl_1234567890abcdef01
+                    template_type: pdf
+                    template_version: null
                     test: false
                     truncated_text: {}
                     pdf_hash: null
@@ -1121,6 +1128,8 @@ paths:
                     processed_at: null
                     state: pending
                     template_id: tpl_1234567890abcdef01
+                    template_type: pdf
+                    template_version: null
                     test: true
                     truncated_text: {}
                     pdf_hash: null
@@ -1150,6 +1159,7 @@ paths:
                   completion_percentage: 100
                 submissions:
                 - status: valid_but_not_saved
+                  errors: []
                 - status: error
                   submission:
                     batch_id: sbb_1234567890abcdef01
@@ -1166,6 +1176,8 @@ paths:
                     processed_at: null
                     state: invalid_data
                     template_id: tpl_1234567890abcdef01
+                    template_type: pdf
+                    template_version: null
                     test: true
                     truncated_text: {}
                     pdf_hash: null
@@ -1261,6 +1273,8 @@ paths:
                   processed_at: null
                   state: processed
                   template_id: tpl_1234567890abcdef01
+                  template_type: pdf
+                  template_version: null
                   test: false
                   truncated_text: {}
                   pdf_hash: bbc369dd471442006963e3244a1b43610e066165c09770978221f91bd7ace8f5
@@ -1282,6 +1296,8 @@ paths:
                   processed_at: null
                   state: processed
                   template_id: tpl_1234567890abcdef01
+                  template_type: pdf
+                  template_version: null
                   test: false
                   truncated_text: {}
                   pdf_hash: bbc369dd471442006963e3244a1b43610e066165c09770978221f91bd7ace8f5
@@ -1373,6 +1389,8 @@ paths:
                   processed_at: 2020-05-14T02:00:00Z
                   state: processed
                   template_id: tpl_1234567890abcdef02
+                  template_type: pdf
+                  template_version: null
                   test: false
                   truncated_text:
                     first_name:
@@ -1404,6 +1422,8 @@ paths:
                   processed_at: 2020-05-14T02:00:00Z
                   state: processed
                   template_id: tpl_1234567890abcdef02
+                  template_type: pdf
+                  template_version: null
                   test: false
                   truncated_text:
                     first_name:
@@ -1435,6 +1455,8 @@ paths:
                   processed_at: 2020-05-14T02:00:00Z
                   state: processed
                   template_id: tpl_1234567890abcdef02
+                  template_type: pdf
+                  template_version: null
                   test: false
                   truncated_text:
                     first_name:
@@ -1466,6 +1488,8 @@ paths:
                   processed_at: 2020-05-14T02:00:00Z
                   state: processed
                   template_id: tpl_1234567890abcdef02
+                  template_type: pdf
+                  template_version: null
                   test: false
                   truncated_text:
                     first_name:
@@ -1563,6 +1587,8 @@ paths:
                   processed_at: null
                   state: waiting_for_data_requests
                   template_id: tpl_1234567890abcdef02
+                  template_type: pdf
+                  template_version: null
                   test: false
                   truncated_text: {}
                   pdf_hash: null
@@ -1598,6 +1624,8 @@ paths:
                   processed_at: null
                   state: invalid_data
                   template_id: tpl_1234567890abcdef01
+                  template_type: pdf
+                  template_version: null
                   test: false
                   truncated_text: {}
                   pdf_hash: null
@@ -1671,6 +1699,8 @@ paths:
                   processed_at: null
                   state: pending
                   template_id: tpl_HTML567890abcdef01
+                  template_type: html
+                  template_version: null
                   test: false
                   truncated_text: {}
                   pdf_hash: null
@@ -1718,6 +1748,8 @@ paths:
                 processed_at: 2020-05-14T02:00:00Z
                 state: processed
                 template_id: tpl_1234567890abcdef01
+                template_type: pdf
+                template_version: null
                 test: true
                 truncated_text:
                   first_name:
@@ -1807,6 +1839,8 @@ paths:
                 processed_at: 2020-05-14T02:00:00Z
                 state: processed
                 template_id: tpl_1234567890abcdef01
+                template_type: pdf
+                template_version: null
                 test: true
                 truncated_text:
                   first_name:
@@ -1958,6 +1992,8 @@ paths:
                   processed_at: 2020-05-14T02:00:00Z
                   state: processed
                   template_id: tpl_1234567890abcdef01
+                  template_type: pdf
+                  template_version: null
                   test: true
                   truncated_text:
                     first_name:
@@ -1989,6 +2025,8 @@ paths:
                   processed_at: 2020-05-14T02:00:00Z
                   state: processed
                   template_id: tpl_1234567890abcdef01
+                  template_type: pdf
+                  template_version: null
                   test: true
                   truncated_text:
                     first_name:
@@ -2020,6 +2058,8 @@ paths:
                   processed_at: 2020-05-14T02:00:00Z
                   state: processed
                   template_id: tpl_1234567890abcdef01
+                  template_type: pdf
+                  template_version: null
                   test: true
                   truncated_text:
                     first_name:
@@ -2121,7 +2161,7 @@ paths:
                 external_predefined_fields_template_id: null
                 external_predefined_fields_template_name: null
                 first_template: false
-                id: tpl_1234567890abcdef011
+                id: tpl_1234567890abcdef04
                 locked: false
                 merge_audit_trail_pdf: true
                 name: Sub Template 1
@@ -2135,15 +2175,21 @@ paths:
                   - 792
                 parent_folder_id: fld_1234567890abcdef01
                 path: /Folder
-                permanent_document_url: https://app.docspring.com/templates/tpl_1234567890abcdef011/original_pdf?token=123456789abcdef
+                permanent_document_url: https://app.docspring.com/templates/tpl_1234567890abcdef04/original_pdf?token=123456789abcdef
                 public_submissions: false
                 public_web_form: false
                 redirect_url: null
                 slack_webhook_url: null
                 template_type: pdf
                 updated_at: 2018-10-20T09:00:00.000-04:00
+                version_published_at: null
+                version: null
                 webhook_url: null
                 demo: false
+                latest_version: null
+                last_changed_at: null
+                last_changed_by_type: null
+                last_changed_by_id: null
               - add_data_request_submission_id_footers: true
                 allow_additional_properties: false
                 description: null
@@ -2178,8 +2224,14 @@ paths:
                 slack_webhook_url: null
                 template_type: html
                 updated_at: 2018-10-20T09:00:00.000-04:00
+                version_published_at: null
+                version: null
                 webhook_url: null
                 demo: false
+                latest_version: null
+                last_changed_at: null
+                last_changed_by_type: null
+                last_changed_by_id: null
               - add_data_request_submission_id_footers: true
                 allow_additional_properties: false
                 description: null
@@ -2220,8 +2272,14 @@ paths:
                 slack_webhook_url: null
                 template_type: pdf
                 updated_at: 2018-10-20T09:00:00.000-04:00
+                version_published_at: null
+                version: null
                 webhook_url: null
                 demo: false
+                latest_version: null
+                last_changed_at: null
+                last_changed_by_type: null
+                last_changed_by_id: null
               - add_data_request_submission_id_footers: true
                 allow_additional_properties: false
                 description: null
@@ -2230,7 +2288,7 @@ paths:
                 document_parse_error: false
                 document_processed: true
                 document_state: processed
-                document_url: https://docspring-s3-example.s3.amazonaws.com/store/acc_1234567890abcdef01/templates/tpl_1234567890abcdef01/document/original-0000000000.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=docspring-s3-example%2F20210101%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210101T090000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef0123456789
+                document_url: https://docspring-s3-example.s3.amazonaws.com/store/acc_1234567890abcdef01/templates/tpl_1234567890abcdef01/draft/document/original-0000000000.abcdef1234567890abcd.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=docspring-s3-example%2F20210101%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210101T090000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef0123456789
                 editable_submissions: false
                 embed_domains: null
                 encrypt_pdfs_password: null
@@ -2258,8 +2316,14 @@ paths:
                 slack_webhook_url: null
                 template_type: pdf
                 updated_at: 2018-10-20T09:00:00.000-04:00
+                version_published_at: null
+                version: null
                 webhook_url: null
                 demo: false
+                latest_version: null
+                last_changed_at: null
+                last_changed_by_type: null
+                last_changed_by_id: null
               schema:
                 items:
                   $ref: '#/components/schemas/template_preview'
@@ -2328,7 +2392,7 @@ paths:
                 external_predefined_fields_template_id: null
                 external_predefined_fields_template_name: null
                 first_template: true
-                id: tpl_1234567890abcdef04
+                id: tpl_1234567890abcdef01
                 locked: false
                 merge_audit_trail_pdf: true
                 name: Test Template
@@ -2343,8 +2407,14 @@ paths:
                 slack_webhook_url: null
                 template_type: pdf
                 updated_at: 2018-10-20T09:00:00.000-04:00
+                version_published_at: null
+                version: null
                 webhook_url: null
                 demo: false
+                latest_version: null
+                last_changed_at: 2018-10-20T09:00:00.000-04:00
+                last_changed_by_type: null
+                last_changed_by_id: usr_1234567890abcdef01
               schema:
                 $ref: '#/components/schemas/template_preview'
           description: returns a pending template
@@ -2396,7 +2466,7 @@ paths:
                 external_predefined_fields_template_id: null
                 external_predefined_fields_template_name: null
                 first_template: true
-                id: tpl_1234567890abcdef04
+                id: tpl_1234567890abcdef01
                 locked: false
                 merge_audit_trail_pdf: true
                 name: Test HTML Template
@@ -2411,8 +2481,14 @@ paths:
                 slack_webhook_url: null
                 template_type: html
                 updated_at: 2018-10-20T09:00:00.000-04:00
+                version_published_at: null
+                version: null
                 webhook_url: null
                 demo: false
+                latest_version: null
+                last_changed_at: 2018-10-20T09:00:00.000-04:00
+                last_changed_by_type: null
+                last_changed_by_id: usr_1234567890abcdef01
               schema:
                 $ref: '#/components/schemas/template_preview'
           description: returns a created template
@@ -2465,7 +2541,7 @@ paths:
                 external_predefined_fields_template_id: null
                 external_predefined_fields_template_name: null
                 first_template: false
-                id: tpl_1234567890abcdef04
+                id: tpl_1234567890abcdef05
                 locked: false
                 merge_audit_trail_pdf: true
                 name: Test Template Presigned
@@ -2480,8 +2556,14 @@ paths:
                 slack_webhook_url: null
                 template_type: pdf
                 updated_at: 2018-10-20T09:00:00.000-04:00
+                version_published_at: null
+                version: null
                 webhook_url: null
                 demo: false
+                latest_version: null
+                last_changed_at: 2018-10-20T09:00:00.000-04:00
+                last_changed_by_type: null
+                last_changed_by_id: usr_1234567890abcdef01
               schema:
                 $ref: '#/components/schemas/template_preview'
           description: returns a pending template
@@ -2511,21 +2593,36 @@ paths:
         required: true
         schema:
           type: string
+      - example: 0.1.0
+        in: query
+        name: version
+        schema:
+          type: string
       responses:
         "200":
           content:
             application/json:
               example:
                 status: success
+                latest_version: 1.0.1
+                versions:
+                - version: 1.0.1
+                  description: null
+                  published_at: 2018-10-20T09:00:02.000-04:00
+                  published_by_id: usr_1234567890abcdef01
+                - version: 1.0.0
+                  description: null
+                  published_at: 2018-10-20T09:00:01.000-04:00
+                  published_by_id: usr_1234567890abcdef01
               schema:
-                $ref: '#/components/schemas/success_multiple_errors_response'
-          description: template deleted
+                $ref: '#/components/schemas/template_delete_response'
+          description: template version deleted successfully
         "404":
           content:
             application/json:
               example:
                 status: error
-                error: Template not found.
+                error: Template not found
               schema:
                 $ref: '#/components/schemas/error_response'
           description: template not found
@@ -2566,7 +2663,7 @@ paths:
                 document_parse_error: false
                 document_processed: true
                 document_state: processed
-                document_url: https://docspring-s3-example.s3.amazonaws.com/store/acc_1234567890abcdef01/templates/tpl_1234567890abcdef01/document/original-0000000000.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=docspring-s3-example%2F20210101%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210101T090000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef0123456789
+                document_url: https://docspring-s3-example.s3.amazonaws.com/store/acc_1234567890abcdef01/templates/tpl_1234567890abcdef01/draft/document/original-0000000000.abcdef1234567890abcd.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=docspring-s3-example%2F20210101%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210101T090000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef0123456789
                 editable_submissions: false
                 embed_domains: null
                 encrypt_pdfs_password: null
@@ -2594,8 +2691,14 @@ paths:
                 slack_webhook_url: null
                 template_type: pdf
                 updated_at: 2018-10-20T09:00:00.000-04:00
+                version_published_at: null
+                version: null
                 webhook_url: null
                 demo: false
+                latest_version: null
+                last_changed_at: null
+                last_changed_by_type: null
+                last_changed_by_id: null
               schema:
                 $ref: '#/components/schemas/template_preview'
           description: template found
@@ -2604,7 +2707,7 @@ paths:
             application/json:
               example:
                 status: error
-                error: Template not found.
+                error: Template not found
               schema:
                 $ref: '#/components/schemas/error_response'
           description: template not found
@@ -2653,6 +2756,133 @@ paths:
       tags:
       - PDF
       x-codegen-request-body-name: data
+  /templates/{template_id}/publish_version:
+    post:
+      operationId: publishTemplateVersion
+      parameters:
+      - example: tpl_1234567890abcdef01
+        in: path
+        name: template_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/publish_version_data'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                status: success
+                result:
+                  version: 0.1.0
+                  description: Added new fields
+                  published_by_id: usr_1234567890abcdef01
+                  published_at: 2018-10-20T09:00:00.000-04:00
+              schema:
+                $ref: '#/components/schemas/template_publish_version_response'
+          description: version published successfully
+        "422":
+          content:
+            application/json:
+              example:
+                status: error
+                errors:
+                - "Invalid version type! Must be one of: major, minor, patch"
+              schema:
+                $ref: '#/components/schemas/success_multiple_errors_response'
+          description: invalid version type
+        "404":
+          content:
+            application/json:
+              example:
+                status: error
+                error: Template not found
+              schema:
+                $ref: '#/components/schemas/error_response'
+          description: template not found
+        "401":
+          content:
+            application/json:
+              example:
+                status: error
+                error: "Missing Basic Auth: Please provide an API token via Basic\
+                  \ Auth. See: https://docspring.com/docs/api/authentication.html"
+              schema:
+                $ref: '#/components/schemas/error_response'
+          description: authentication failed
+      security:
+      - api_token_basic: []
+      summary: Publish a template version
+      tags:
+      - PDF
+      x-codegen-request-body-name: data
+  /templates/{template_id}/restore_version:
+    post:
+      operationId: restoreTemplateVersion
+      parameters:
+      - example: tpl_1234567890abcdef01
+        in: path
+        name: template_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/restore_version_data'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                status: success
+              schema:
+                $ref: '#/components/schemas/success_error_response'
+          description: version restored successfully
+        "422":
+          content:
+            application/json:
+              example:
+                status: error
+                errors:
+                - Version is required!
+              schema:
+                $ref: '#/components/schemas/success_multiple_errors_response'
+          description: draft version not allowed
+        "404":
+          content:
+            application/json:
+              example:
+                status: error
+                errors:
+                - Couldn't find published template for tpl_1234567890abcdef01 version
+                  999.999.999
+              schema:
+                $ref: '#/components/schemas/success_multiple_errors_response'
+          description: template version not found
+        "401":
+          content:
+            application/json:
+              example:
+                status: error
+                error: "Missing Basic Auth: Please provide an API token via Basic\
+                  \ Auth. See: https://docspring.com/docs/api/authentication.html"
+              schema:
+                $ref: '#/components/schemas/error_response'
+          description: authentication failed
+      security:
+      - api_token_basic: []
+      summary: Restore a template version
+      tags:
+      - PDF
+      x-codegen-request-body-name: data
   /templates/{template_id}?full=true:
     get:
       operationId: getFullTemplate
@@ -2676,7 +2906,7 @@ paths:
                 document_parse_error: false
                 document_processed: true
                 document_state: processed
-                document_url: https://docspring-s3-example.s3.amazonaws.com/store/acc_1234567890abcdef01/templates/tpl_1234567890abcdef01/document/original-0000000000.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=docspring-s3-example%2F20210101%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210101T090000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef0123456789
+                document_url: https://docspring-s3-example.s3.amazonaws.com/store/acc_1234567890abcdef01/templates/tpl_1234567890abcdef01/draft/document/original-0000000000.abcdef1234567890abcd.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=docspring-s3-example%2F20210101%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210101T090000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef0123456789
                 editable_submissions: false
                 embed_domains: null
                 encrypt_pdfs_password: null
@@ -2704,8 +2934,14 @@ paths:
                 slack_webhook_url: null
                 template_type: pdf
                 updated_at: 2018-10-20T09:00:00.000-04:00
+                version_published_at: null
+                version: null
                 webhook_url: null
                 demo: false
+                latest_version: null
+                last_changed_at: null
+                last_changed_by_type: null
+                last_changed_by_id: null
                 defaults:
                   color: "444444"
                   opacity: 1
@@ -2774,6 +3010,7 @@ paths:
                     type: string
                     required: false
                     fieldCount: 1
+                versions: []
               schema:
                 $ref: '#/components/schemas/template'
           description: template found
@@ -2782,7 +3019,7 @@ paths:
             application/json:
               example:
                 status: error
-                error: Template not found.
+                error: Template not found
               schema:
                 $ref: '#/components/schemas/error_response'
           description: template not found
@@ -2798,7 +3035,7 @@ paths:
           description: authentication failed
       security:
       - api_token_basic: []
-      summary: Fetch the full template attributes
+      summary: Fetch the full attributes for a PDF template
       tags:
       - PDF
   /templates/{template_id}/add_fields:
@@ -2907,7 +3144,7 @@ paths:
                 document_parse_error: false
                 document_processed: true
                 document_state: processed
-                document_url: https://docspring-s3-example.s3.amazonaws.com/store/acc_1234567890abcdef01/templates/tpl_1234567890abcdef01/document/original-0000000000.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=docspring-s3-example%2F20210101%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210101T090000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef0123456789
+                document_url: https://docspring-s3-example.s3.amazonaws.com/store/acc_1234567890abcdef01/templates/tpl_1234567890abcdef01/draft/document/original-0000000000.abcdef1234567890abcd.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=docspring-s3-example%2F20210101%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210101T090000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef0123456789
                 editable_submissions: false
                 embed_domains: null
                 encrypt_pdfs_password: null
@@ -2935,8 +3172,14 @@ paths:
                 slack_webhook_url: null
                 template_type: pdf
                 updated_at: 2018-10-20T09:00:00.000-04:00
+                version_published_at: null
+                version: null
                 webhook_url: null
                 demo: false
+                latest_version: null
+                last_changed_at: null
+                last_changed_by_type: null
+                last_changed_by_id: null
               schema:
                 $ref: '#/components/schemas/template_preview'
           description: move template success
@@ -2984,7 +3227,7 @@ paths:
                 document_parse_error: false
                 document_processed: true
                 document_state: processed
-                document_url: https://docspring-s3-example.s3.amazonaws.com/store/acc_1234567890abcdef01/templates/tpl_1234567890abcdef0new1/document/original-0000000000.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=docspring-s3-example%2F20210101%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210101T090000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef0123456789
+                document_url: https://docspring-s3-example.s3.amazonaws.com/store/acc_1234567890abcdef01/templates/tpl_1234567890abcdef05/draft/document/original-0000000000.abcdef1234567890abcd.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=docspring-s3-example%2F20210101%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210101T090000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef0123456789
                 editable_submissions: false
                 embed_domains: null
                 encrypt_pdfs_password: null
@@ -2995,7 +3238,7 @@ paths:
                 external_predefined_fields_template_id: null
                 external_predefined_fields_template_name: null
                 first_template: false
-                id: tpl_1234567890abcdef0new1
+                id: tpl_1234567890abcdef05
                 locked: false
                 merge_audit_trail_pdf: true
                 name: Copied Template Name
@@ -3005,15 +3248,21 @@ paths:
                   - 792
                 parent_folder_id: fld_1234567890abcdef01
                 path: /Folder
-                permanent_document_url: https://app.docspring.com/templates/tpl_1234567890abcdef0new1/original_pdf?token=123456789abcdef
+                permanent_document_url: https://app.docspring.com/templates/tpl_1234567890abcdef05/original_pdf?token=123456789abcdef
                 public_submissions: false
                 public_web_form: false
                 redirect_url: null
                 slack_webhook_url: null
                 template_type: pdf
                 updated_at: 2018-10-20T09:00:00.000-04:00
+                version_published_at: null
+                version: null
                 webhook_url: null
                 demo: false
+                latest_version: null
+                last_changed_at: null
+                last_changed_by_type: null
+                last_changed_by_id: null
               schema:
                 $ref: '#/components/schemas/template_preview'
           description: copy template success
@@ -3077,7 +3326,7 @@ paths:
             application/json:
               example:
                 status: error
-                error: Template not found.
+                error: Template not found
               schema:
                 $ref: '#/components/schemas/error_response'
           description: template not found
@@ -3243,6 +3492,65 @@ components:
       - status
       title: template_add_fields_response
       type: object
+    template_delete_response:
+      additionalProperties: false
+      example:
+        latest_version: latest_version
+        versions:
+        - "{}"
+        - "{}"
+        errors:
+        - errors
+        - errors
+        status: success
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+        errors:
+          items:
+            type: string
+          type: array
+        latest_version:
+          nullable: true
+          type: string
+        versions:
+          items:
+            additionalProperties: false
+            type: object
+          type: array
+      required:
+      - status
+      title: template_delete_response
+      type: object
+    template_publish_version_response:
+      additionalProperties: false
+      example:
+        result: "{}"
+        errors:
+        - errors
+        - errors
+        status: success
+      properties:
+        status:
+          enum:
+          - success
+          - error
+          type: string
+        result:
+          additionalProperties: false
+          type: object
+        errors:
+          items:
+            type: string
+          type: array
+      required:
+      - result
+      - status
+      title: template_publish_version_response
+      type: object
     upload_presign_response:
       additionalProperties: false
       example:
@@ -3298,6 +3606,7 @@ components:
           - slack_webhook
           - email
           - aws_s3_upload
+          nullable: true
           type: string
         action_category:
           enum:
@@ -3562,6 +3871,7 @@ components:
         submissions:
         - preview_generated_at: preview_generated_at
           metadata: "{}"
+          template_version: template_version
           json_schema_errors:
           - json_schema_errors
           - json_schema_errors
@@ -3578,6 +3888,7 @@ components:
           download_url: download_url
           processed_at: processed_at
           template_id: template_id
+          template_type: pdf
           id: id
           state: pending
           truncated_text: "{}"
@@ -3643,6 +3954,7 @@ components:
             order: 5
         - preview_generated_at: preview_generated_at
           metadata: "{}"
+          template_version: template_version
           json_schema_errors:
           - json_schema_errors
           - json_schema_errors
@@ -3659,6 +3971,7 @@ components:
           download_url: download_url
           processed_at: processed_at
           template_id: template_id
+          template_type: pdf
           id: id
           state: pending
           truncated_text: "{}"
@@ -3805,6 +4118,7 @@ components:
           - discord
           - telegram
           - whatsapp
+          nullable: true
           type: string
         message_recipient:
           nullable: true
@@ -4122,6 +4436,7 @@ components:
       example:
         preview_generated_at: preview_generated_at
         metadata: "{}"
+        template_version: template_version
         json_schema_errors:
         - json_schema_errors
         - json_schema_errors
@@ -4138,6 +4453,7 @@ components:
         download_url: download_url
         processed_at: processed_at
         template_id: template_id
+        template_type: pdf
         id: id
         state: pending
         truncated_text: "{}"
@@ -4249,6 +4565,14 @@ components:
           - accidental
           type: string
         template_id:
+          nullable: true
+          type: string
+        template_type:
+          enum:
+          - pdf
+          - html
+          type: string
+        template_version:
           nullable: true
           type: string
         test:
@@ -4299,6 +4623,8 @@ components:
       - processed_at
       - state
       - template_id
+      - template_type
+      - template_version
       - test
       - truncated_text
       title: submission_preview
@@ -4306,43 +4632,25 @@ components:
     submission:
       additionalProperties: false
       example:
-        preview_generated_at: preview_generated_at
         metadata: "{}"
+        template_version: template_version
         json_schema_errors:
         - json_schema_errors
         - json_schema_errors
-        test: true
         data: "{}"
         batch_id: batch_id
-        editable: true
-        permanent_download_url: permanent_download_url
         preview_download_url: preview_download_url
-        audit_trail_download_url: audit_trail_download_url
         source: api
-        referrer: referrer
         password: password
         expired: true
         expires_at: expires_at
         pdf_hash: pdf_hash
         download_url: download_url
         processed_at: processed_at
-        template_id: template_id
+        template_type: pdf
         id: id
         state: pending
         truncated_text: "{}"
-        actions:
-        - integration_id: integration_id
-          action_category: notification
-          action_type: webhook
-          result_data: "{}"
-          id: id
-          state: pending
-        - integration_id: integration_id
-          action_category: notification
-          action_type: webhook
-          result_data: "{}"
-          id: id
-          state: pending
         data_requests:
         - metadata: "{}"
           auth_type: none
@@ -4390,6 +4698,26 @@ components:
           auth_provider: auth_provider
           user_agent: user_agent
           order: 5
+        preview_generated_at: preview_generated_at
+        test: true
+        editable: true
+        permanent_download_url: permanent_download_url
+        audit_trail_download_url: audit_trail_download_url
+        referrer: referrer
+        template_id: template_id
+        actions:
+        - integration_id: integration_id
+          action_category: notification
+          action_type: webhook
+          result_data: "{}"
+          id: id
+          state: pending
+        - integration_id: integration_id
+          action_category: notification
+          action_type: webhook
+          result_data: "{}"
+          id: id
+          state: pending
       properties:
         batch_id:
           nullable: true
@@ -4438,6 +4766,14 @@ components:
           - accidental
           type: string
         template_id:
+          nullable: true
+          type: string
+        template_type:
+          enum:
+          - pdf
+          - html
+          type: string
+        template_version:
           nullable: true
           type: string
         test:
@@ -4505,6 +4841,8 @@ components:
       - source
       - state
       - template_id
+      - template_type
+      - template_version
       - test
       - truncated_text
       title: submission
@@ -4523,8 +4861,11 @@ components:
         external_predefined_fields_template_name: external_predefined_fields_template_name
         path: path
         public_web_form: true
+        last_changed_by_type: user
         updated_at: updated_at
+        latest_version: latest_version
         permanent_document_url: permanent_document_url
+        version_published_at: version_published_at
         template_type: pdf
         id: id
         page_dimensions:
@@ -4542,8 +4883,11 @@ components:
         allow_additional_properties: true
         encrypt_pdfs_password: encrypt_pdfs_password
         public_submissions: true
+        version: version
         add_data_request_submission_id_footers: true
         document_md5: document_md5
+        last_changed_at: last_changed_at
+        last_changed_by_id: last_changed_by_id
         first_template: true
         editable_submissions: true
         expire_submissions: true
@@ -4653,11 +4997,32 @@ components:
         updated_at:
           nullable: true
           type: string
+        version_published_at:
+          nullable: true
+          type: string
+        version:
+          nullable: true
+          type: string
         webhook_url:
           nullable: true
           type: string
         demo:
           type: boolean
+        latest_version:
+          nullable: true
+          type: string
+        last_changed_at:
+          nullable: true
+          type: string
+        last_changed_by_type:
+          enum:
+          - user
+          - api
+          nullable: true
+          type: string
+        last_changed_by_id:
+          nullable: true
+          type: string
       required:
       - add_data_request_submission_id_footers
       - allow_additional_properties
@@ -4680,6 +5045,10 @@ components:
       - external_predefined_fields_template_name
       - first_template
       - id
+      - last_changed_at
+      - last_changed_by_id
+      - last_changed_by_type
+      - latest_version
       - locked
       - merge_audit_trail_pdf
       - name
@@ -4694,32 +5063,22 @@ components:
       - slack_webhook_url
       - template_type
       - updated_at
+      - version
+      - version_published_at
       - webhook_url
       title: template_preview
       type: object
     template:
       additionalProperties: false
       example:
-        document_processed: true
         expiration_interval: expiration_interval
         scss: scss
-        document_state: pending
         expire_after: 0
-        description: description
         external_predefined_fields_template_id: external_predefined_fields_template_id
-        slack_webhook_url: slack_webhook_url
-        demo: true
         external_predefined_fields_template_name: external_predefined_fields_template_name
         path: path
         header_html: header_html
-        public_web_form: true
-        field_order:
-        - - 5.962133916683182
-          - 5.962133916683182
-        - - 5.962133916683182
-          - 5.962133916683182
-        updated_at: updated_at
-        permanent_document_url: permanent_document_url
+        version_published_at: version_published_at
         template_type: pdf
         html: html
         id: id
@@ -4732,30 +5091,51 @@ components:
         page_count: 6
         encrypt_pdfs: true
         merge_audit_trail_pdf: true
-        html_engine_options: "{}"
-        webhook_url: webhook_url
-        embed_domains: embed_domains
         parent_folder_id: parent_folder_id
-        allow_additional_properties: true
         encrypt_pdfs_password: encrypt_pdfs_password
         predefined_fields:
         - "{}"
         - "{}"
         public_submissions: true
+        version: version
         add_data_request_submission_id_footers: true
-        document_md5: document_md5
+        last_changed_at: last_changed_at
         shared_field_data: "{}"
-        first_template: true
         defaults: "{}"
-        editable_submissions: true
-        expire_submissions: true
+        versions:
+        - "{}"
+        - "{}"
         name: name
-        document_parse_error: true
         footer_html: footer_html
         fields: "{}"
+        redirect_url: redirect_url
+        document_processed: true
+        document_state: pending
+        description: description
+        slack_webhook_url: slack_webhook_url
+        demo: true
+        public_web_form: true
+        last_changed_by_type: user
+        field_order:
+        - - 5.962133916683182
+          - 5.962133916683182
+        - - 5.962133916683182
+          - 5.962133916683182
+        updated_at: updated_at
+        latest_version: latest_version
+        permanent_document_url: permanent_document_url
+        html_engine_options: "{}"
+        webhook_url: webhook_url
+        embed_domains: embed_domains
+        allow_additional_properties: true
+        document_md5: document_md5
+        last_changed_by_id: last_changed_by_id
+        first_template: true
+        editable_submissions: true
+        expire_submissions: true
+        document_parse_error: true
         document_filename: document_filename
         document_url: document_url
-        redirect_url: redirect_url
       properties:
         add_data_request_submission_id_footers:
           type: boolean
@@ -4857,11 +5237,32 @@ components:
         updated_at:
           nullable: true
           type: string
+        version_published_at:
+          nullable: true
+          type: string
+        version:
+          nullable: true
+          type: string
         webhook_url:
           nullable: true
           type: string
         demo:
           type: boolean
+        latest_version:
+          nullable: true
+          type: string
+        last_changed_at:
+          nullable: true
+          type: string
+        last_changed_by_type:
+          enum:
+          - user
+          - api
+          nullable: true
+          type: string
+        last_changed_by_id:
+          nullable: true
+          type: string
         defaults:
           additionalProperties: false
           title: template_defaults
@@ -4902,6 +5303,11 @@ components:
           properties: {}
           title: template_shared_field_data
           type: object
+        versions:
+          items:
+            additionalProperties: false
+            type: object
+          type: array
       required:
       - add_data_request_submission_id_footers
       - allow_additional_properties
@@ -4931,6 +5337,10 @@ components:
       - html
       - html_engine_options
       - id
+      - last_changed_at
+      - last_changed_by_id
+      - last_changed_by_type
+      - latest_version
       - locked
       - merge_audit_trail_pdf
       - name
@@ -4948,6 +5358,9 @@ components:
       - slack_webhook_url
       - template_type
       - updated_at
+      - version
+      - version_published_at
+      - versions
       - webhook_url
       title: template
       type: object
@@ -5041,6 +5454,9 @@ components:
         source_pdfs:
         - type: submission
           id: sub_1234567890abcdef01
+        - type: template
+          id: tpl_1234567890abcdef01
+          template_version: 1.0.0
         - type: template
           id: tpl_1234567890abcdef01
         - type: submission
@@ -5333,12 +5749,14 @@ components:
         submissions:
         - test: false
           template_id: tpl_1234567890abcdef01
+          template_version: draft
           data:
             first_name: Johnny
             last_name: Smith
           metadata:
             submission_number: 1
         - template_id: tpl_1234567890abcdef01
+          template_version: latest
           data:
             first_name: Jane
             last_name: Doe
@@ -5409,43 +5827,25 @@ components:
       example:
         next_cursor: next_cursor
         submissions:
-        - preview_generated_at: preview_generated_at
-          metadata: "{}"
+        - metadata: "{}"
+          template_version: template_version
           json_schema_errors:
           - json_schema_errors
           - json_schema_errors
-          test: true
           data: "{}"
           batch_id: batch_id
-          editable: true
-          permanent_download_url: permanent_download_url
           preview_download_url: preview_download_url
-          audit_trail_download_url: audit_trail_download_url
           source: api
-          referrer: referrer
           password: password
           expired: true
           expires_at: expires_at
           pdf_hash: pdf_hash
           download_url: download_url
           processed_at: processed_at
-          template_id: template_id
+          template_type: pdf
           id: id
           state: pending
           truncated_text: "{}"
-          actions:
-          - integration_id: integration_id
-            action_category: notification
-            action_type: webhook
-            result_data: "{}"
-            id: id
-            state: pending
-          - integration_id: integration_id
-            action_category: notification
-            action_type: webhook
-            result_data: "{}"
-            id: id
-            state: pending
           data_requests:
           - metadata: "{}"
             auth_type: none
@@ -5493,30 +5893,13 @@ components:
             auth_provider: auth_provider
             user_agent: user_agent
             order: 5
-        - preview_generated_at: preview_generated_at
-          metadata: "{}"
-          json_schema_errors:
-          - json_schema_errors
-          - json_schema_errors
+          preview_generated_at: preview_generated_at
           test: true
-          data: "{}"
-          batch_id: batch_id
           editable: true
           permanent_download_url: permanent_download_url
-          preview_download_url: preview_download_url
           audit_trail_download_url: audit_trail_download_url
-          source: api
           referrer: referrer
-          password: password
-          expired: true
-          expires_at: expires_at
-          pdf_hash: pdf_hash
-          download_url: download_url
-          processed_at: processed_at
           template_id: template_id
-          id: id
-          state: pending
-          truncated_text: "{}"
           actions:
           - integration_id: integration_id
             action_category: notification
@@ -5530,6 +5913,25 @@ components:
             result_data: "{}"
             id: id
             state: pending
+        - metadata: "{}"
+          template_version: template_version
+          json_schema_errors:
+          - json_schema_errors
+          - json_schema_errors
+          data: "{}"
+          batch_id: batch_id
+          preview_download_url: preview_download_url
+          source: api
+          password: password
+          expired: true
+          expires_at: expires_at
+          pdf_hash: pdf_hash
+          download_url: download_url
+          processed_at: processed_at
+          template_type: pdf
+          id: id
+          state: pending
+          truncated_text: "{}"
           data_requests:
           - metadata: "{}"
             auth_type: none
@@ -5577,6 +5979,26 @@ components:
             auth_provider: auth_provider
             user_agent: user_agent
             order: 5
+          preview_generated_at: preview_generated_at
+          test: true
+          editable: true
+          permanent_download_url: permanent_download_url
+          audit_trail_download_url: audit_trail_download_url
+          referrer: referrer
+          template_id: template_id
+          actions:
+          - integration_id: integration_id
+            action_category: notification
+            action_type: webhook
+            result_data: "{}"
+            id: id
+            state: pending
+          - integration_id: integration_id
+            action_category: notification
+            action_type: webhook
+            result_data: "{}"
+            id: id
+            state: pending
         limit: 0.8008281904610115
       properties:
         submissions:
@@ -5630,6 +6052,7 @@ components:
     create_pdf_submission_data:
       additionalProperties: false
       example:
+        version: draft
         data:
           first_name: John
           last_name: Smith
@@ -5663,6 +6086,8 @@ components:
           type: string
         test:
           type: boolean
+        version:
+          type: string
       required:
       - data
       title: create_pdf_submission_data
@@ -5673,6 +6098,7 @@ components:
         submission:
           preview_generated_at: preview_generated_at
           metadata: "{}"
+          template_version: template_version
           json_schema_errors:
           - json_schema_errors
           - json_schema_errors
@@ -5689,6 +6115,7 @@ components:
           download_url: download_url
           processed_at: processed_at
           template_id: template_id
+          template_type: pdf
           id: id
           state: pending
           truncated_text: "{}"
@@ -5808,6 +6235,8 @@ components:
           type: string
         test:
           type: boolean
+        version:
+          type: string
       title: create_html_submission_data
       type: object
     createPDFTemplate_request:
@@ -5888,6 +6317,31 @@ components:
       required:
       - template
       title: update_html_template
+      type: object
+    publish_version_data:
+      additionalProperties: false
+      example:
+        version_type: minor
+        description: Added new fields
+      properties:
+        description:
+          type: string
+        version_type:
+          type: string
+      required:
+      - version_type
+      title: publish_version_data
+      type: object
+    restore_version_data:
+      additionalProperties: false
+      example:
+        version: 1.0.0
+      properties:
+        version:
+          type: string
+      required:
+      - version
+      title: restore_version_data
       type: object
     add_fields_data:
       additionalProperties: false

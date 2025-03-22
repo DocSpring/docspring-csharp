@@ -111,6 +111,31 @@ namespace DocSpring.Client.Model
         [DataMember(Name = "state", IsRequired = true, EmitDefaultValue = true)]
         public StateEnum State { get; set; }
         /// <summary>
+        /// Defines TemplateType
+        /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum TemplateTypeEnum
+        {
+            /// <summary>
+            /// Enum Pdf for value: pdf
+            /// </summary>
+            [EnumMember(Value = "pdf")]
+            Pdf = 1,
+
+            /// <summary>
+            /// Enum Html for value: html
+            /// </summary>
+            [EnumMember(Value = "html")]
+            Html = 2
+        }
+
+
+        /// <summary>
+        /// Gets or Sets TemplateType
+        /// </summary>
+        [DataMember(Name = "template_type", IsRequired = true, EmitDefaultValue = true)]
+        public TemplateTypeEnum TemplateType { get; set; }
+        /// <summary>
         /// Defines Source
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
@@ -167,6 +192,8 @@ namespace DocSpring.Client.Model
         /// <param name="processedAt">processedAt (required).</param>
         /// <param name="state">state (required).</param>
         /// <param name="templateId">templateId (required).</param>
+        /// <param name="templateType">templateType (required).</param>
+        /// <param name="templateVersion">templateVersion (required).</param>
         /// <param name="test">test (required).</param>
         /// <param name="truncatedText">truncatedText (required).</param>
         /// <param name="pdfHash">pdfHash (required).</param>
@@ -179,7 +206,7 @@ namespace DocSpring.Client.Model
         /// <param name="source">source (required).</param>
         /// <param name="referrer">referrer (required).</param>
         /// <param name="data">data (required).</param>
-        public Submission(string batchId = default(string), List<SubmissionDataRequest> dataRequests = default(List<SubmissionDataRequest>), bool? editable = default(bool?), bool expired = default(bool), string expiresAt = default(string), string id = default(string), List<string> jsonSchemaErrors = default(List<string>), Object metadata = default(Object), string password = default(string), string processedAt = default(string), StateEnum state = default(StateEnum), string templateId = default(string), bool test = default(bool), Object truncatedText = default(Object), string pdfHash = default(string), string downloadUrl = default(string), string permanentDownloadUrl = default(string), string previewDownloadUrl = default(string), string previewGeneratedAt = default(string), string auditTrailDownloadUrl = default(string), List<SubmissionAction> actions = default(List<SubmissionAction>), SourceEnum source = default(SourceEnum), string referrer = default(string), Object data = default(Object))
+        public Submission(string batchId = default(string), List<SubmissionDataRequest> dataRequests = default(List<SubmissionDataRequest>), bool? editable = default(bool?), bool expired = default(bool), string expiresAt = default(string), string id = default(string), List<string> jsonSchemaErrors = default(List<string>), Object metadata = default(Object), string password = default(string), string processedAt = default(string), StateEnum state = default(StateEnum), string templateId = default(string), TemplateTypeEnum templateType = default(TemplateTypeEnum), string templateVersion = default(string), bool test = default(bool), Object truncatedText = default(Object), string pdfHash = default(string), string downloadUrl = default(string), string permanentDownloadUrl = default(string), string previewDownloadUrl = default(string), string previewGeneratedAt = default(string), string auditTrailDownloadUrl = default(string), List<SubmissionAction> actions = default(List<SubmissionAction>), SourceEnum source = default(SourceEnum), string referrer = default(string), Object data = default(Object))
         {
             // to ensure "batchId" is required (not null)
             if (batchId == null)
@@ -243,6 +270,13 @@ namespace DocSpring.Client.Model
                 throw new ArgumentNullException("templateId is a required property for Submission and cannot be null");
             }
             this.TemplateId = templateId;
+            this.TemplateType = templateType;
+            // to ensure "templateVersion" is required (not null)
+            if (templateVersion == null)
+            {
+                throw new ArgumentNullException("templateVersion is a required property for Submission and cannot be null");
+            }
+            this.TemplateVersion = templateVersion;
             this.Test = test;
             // to ensure "truncatedText" is required (not null)
             if (truncatedText == null)
@@ -374,6 +408,12 @@ namespace DocSpring.Client.Model
         public string TemplateId { get; set; }
 
         /// <summary>
+        /// Gets or Sets TemplateVersion
+        /// </summary>
+        [DataMember(Name = "template_version", IsRequired = true, EmitDefaultValue = true)]
+        public string TemplateVersion { get; set; }
+
+        /// <summary>
         /// Gets or Sets Test
         /// </summary>
         [DataMember(Name = "test", IsRequired = true, EmitDefaultValue = true)]
@@ -459,6 +499,8 @@ namespace DocSpring.Client.Model
             sb.Append("  ProcessedAt: ").Append(ProcessedAt).Append("\n");
             sb.Append("  State: ").Append(State).Append("\n");
             sb.Append("  TemplateId: ").Append(TemplateId).Append("\n");
+            sb.Append("  TemplateType: ").Append(TemplateType).Append("\n");
+            sb.Append("  TemplateVersion: ").Append(TemplateVersion).Append("\n");
             sb.Append("  Test: ").Append(Test).Append("\n");
             sb.Append("  TruncatedText: ").Append(TruncatedText).Append("\n");
             sb.Append("  PdfHash: ").Append(PdfHash).Append("\n");

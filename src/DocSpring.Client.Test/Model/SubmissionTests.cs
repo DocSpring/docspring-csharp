@@ -163,6 +163,24 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'TemplateType'
+        /// </summary>
+        [Fact]
+        public void TemplateTypeTest()
+        {
+            // TODO unit test for the property 'TemplateType'
+        }
+
+        /// <summary>
+        /// Test the property 'TemplateVersion'
+        /// </summary>
+        [Fact]
+        public void TemplateVersionTest()
+        {
+            // TODO unit test for the property 'TemplateVersion'
+        }
+
+        /// <summary>
         /// Test the property 'Test'
         /// </summary>
         [Fact]

@@ -38,8 +38,14 @@ Name | Type | Description | Notes
 **SlackWebhookUrl** | **string** |  | 
 **TemplateType** | **string** |  | 
 **UpdatedAt** | **string** |  | 
+**VersionPublishedAt** | **string** |  | 
+**VarVersion** | **string** |  | 
 **WebhookUrl** | **string** |  | 
 **Demo** | **bool** |  | 
+**LatestVersion** | **string** |  | 
+**LastChangedAt** | **string** |  | 
+**LastChangedByType** | **string** |  | 
+**LastChangedById** | **string** |  | 
 **Defaults** | **Object** |  | 
 **FieldOrder** | **List&lt;List&lt;decimal&gt;&gt;** |  | 
 **Fields** | **Object** |  | 
@@ -50,6 +56,7 @@ Name | Type | Description | Notes
 **PredefinedFields** | **List&lt;Object&gt;** |  | 
 **Scss** | **string** |  | 
 **SharedFieldData** | **Object** |  | 
+**Versions** | **List&lt;Object&gt;** |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

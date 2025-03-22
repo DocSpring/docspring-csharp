@@ -47,7 +47,8 @@ namespace DocSpring.Client.Model
         /// <param name="metadata">metadata.</param>
         /// <param name="password">password.</param>
         /// <param name="test">test.</param>
-        public CreatePdfSubmissionData(Object data = default(Object), List<CreateSubmissionDataRequestData> dataRequests = default(List<CreateSubmissionDataRequestData>), bool editable = default(bool), int expiresIn = default(int), Object fieldOverrides = default(Object), Object metadata = default(Object), string password = default(string), bool test = default(bool))
+        /// <param name="varVersion">varVersion.</param>
+        public CreatePdfSubmissionData(Object data = default(Object), List<CreateSubmissionDataRequestData> dataRequests = default(List<CreateSubmissionDataRequestData>), bool editable = default(bool), int expiresIn = default(int), Object fieldOverrides = default(Object), Object metadata = default(Object), string password = default(string), bool test = default(bool), string varVersion = default(string))
         {
             // to ensure "data" is required (not null)
             if (data == null)
@@ -62,6 +63,7 @@ namespace DocSpring.Client.Model
             this.Metadata = metadata;
             this.Password = password;
             this.Test = test;
+            this.VarVersion = varVersion;
         }
 
         /// <summary>
@@ -113,6 +115,12 @@ namespace DocSpring.Client.Model
         public bool Test { get; set; }
 
         /// <summary>
+        /// Gets or Sets VarVersion
+        /// </summary>
+        [DataMember(Name = "version", EmitDefaultValue = false)]
+        public string VarVersion { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -128,6 +136,7 @@ namespace DocSpring.Client.Model
             sb.Append("  Metadata: ").Append(Metadata).Append("\n");
             sb.Append("  Password: ").Append(Password).Append("\n");
             sb.Append("  Test: ").Append(Test).Append("\n");
+            sb.Append("  VarVersion: ").Append(VarVersion).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

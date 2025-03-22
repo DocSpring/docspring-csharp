@@ -25,7 +25,7 @@ All URIs are relative to *https://sync.api.docspring.com/api/v1*
 | [**GeneratePreview**](PDFApi.md#generatepreview) | **POST** /submissions/{submission_id}/generate_preview | Generated a preview PDF for partially completed data requests |
 | [**GetCombinedSubmission**](PDFApi.md#getcombinedsubmission) | **GET** /combined_submissions/{combined_submission_id} | Check the status of a combined submission (merged PDFs) |
 | [**GetDataRequest**](PDFApi.md#getdatarequest) | **GET** /data_requests/{data_request_id} | Look up a submission data request |
-| [**GetFullTemplate**](PDFApi.md#getfulltemplate) | **GET** /templates/{template_id}?full&#x3D;true | Fetch the full template attributes |
+| [**GetFullTemplate**](PDFApi.md#getfulltemplate) | **GET** /templates/{template_id}?full&#x3D;true | Fetch the full attributes for a PDF template |
 | [**GetPresignUrl**](PDFApi.md#getpresignurl) | **GET** /uploads/presign | Get a presigned URL so that you can upload a file to our AWS S3 bucket |
 | [**GetSubmission**](PDFApi.md#getsubmission) | **GET** /submissions/{submission_id} | Check the status of a PDF |
 | [**GetSubmissionBatch**](PDFApi.md#getsubmissionbatch) | **GET** /submissions/batches/{submission_batch_id} | Check the status of a submission batch job |
@@ -38,7 +38,9 @@ All URIs are relative to *https://sync.api.docspring.com/api/v1*
 | [**ListTemplates**](PDFApi.md#listtemplates) | **GET** /templates | Get a list of all templates |
 | [**MoveFolderToFolder**](PDFApi.md#movefoldertofolder) | **POST** /folders/{folder_id}/move | Move a folder |
 | [**MoveTemplateToFolder**](PDFApi.md#movetemplatetofolder) | **POST** /templates/{template_id}/move | Move Template to folder |
+| [**PublishTemplateVersion**](PDFApi.md#publishtemplateversion) | **POST** /templates/{template_id}/publish_version | Publish a template version |
 | [**RenameFolder**](PDFApi.md#renamefolder) | **POST** /folders/{folder_id}/rename | Rename a folder |
+| [**RestoreTemplateVersion**](PDFApi.md#restoretemplateversion) | **POST** /templates/{template_id}/restore_version | Restore a template version |
 | [**TestAuthentication**](PDFApi.md#testauthentication) | **GET** /authentication | Test Authentication |
 | [**UpdateDataRequest**](PDFApi.md#updatedatarequest) | **PUT** /data_requests/{data_request_id} | Update a submission data request |
 | [**UpdateTemplate**](PDFApi.md#updatetemplate) | **PUT** /templates/{template_id} | Update a Template |
@@ -1300,7 +1302,7 @@ catch (ApiException e)
 
 <a id="deletetemplate"></a>
 # **DeleteTemplate**
-> SuccessMultipleErrorsResponse DeleteTemplate (string templateId)
+> TemplateDeleteResponse DeleteTemplate (string templateId, string version = null)
 
 Delete a template
 
@@ -1326,11 +1328,12 @@ namespace Example
 
             var apiInstance = new PDFApi(config);
             var templateId = tpl_1234567890abcdef01;  // string | 
+            var version = 0.1.0;  // string |  (optional) 
 
             try
             {
                 // Delete a template
-                SuccessMultipleErrorsResponse result = apiInstance.DeleteTemplate(templateId);
+                TemplateDeleteResponse result = apiInstance.DeleteTemplate(templateId, version);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
@@ -1351,7 +1354,7 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Delete a template
-    ApiResponse<SuccessMultipleErrorsResponse> response = apiInstance.DeleteTemplateWithHttpInfo(templateId);
+    ApiResponse<TemplateDeleteResponse> response = apiInstance.DeleteTemplateWithHttpInfo(templateId, version);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
     Debug.Write("Response Body: " + response.Data);
@@ -1369,10 +1372,11 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **templateId** | **string** |  |  |
+| **version** | **string** |  | [optional]  |
 
 ### Return type
 
-[**SuccessMultipleErrorsResponse**](SuccessMultipleErrorsResponse.md)
+[**TemplateDeleteResponse**](TemplateDeleteResponse.md)
 
 ### Authorization
 
@@ -1387,7 +1391,7 @@ catch (ApiException e)
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | template deleted |  -  |
+| **200** | template version deleted successfully |  -  |
 | **404** | template not found |  -  |
 | **401** | authentication failed |  -  |
 
@@ -2070,7 +2074,7 @@ catch (ApiException e)
 # **GetFullTemplate**
 > Template GetFullTemplate (string templateId)
 
-Fetch the full template attributes
+Fetch the full attributes for a PDF template
 
 ### Example
 ```csharp
@@ -2097,7 +2101,7 @@ namespace Example
 
             try
             {
-                // Fetch the full template attributes
+                // Fetch the full attributes for a PDF template
                 Template result = apiInstance.GetFullTemplate(templateId);
                 Debug.WriteLine(result);
             }
@@ -2118,7 +2122,7 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Fetch the full template attributes
+    // Fetch the full attributes for a PDF template
     ApiResponse<Template> response = apiInstance.GetFullTemplateWithHttpInfo(templateId);
     Debug.Write("Status Code: " + response.StatusCode);
     Debug.Write("Response Headers: " + response.Headers);
@@ -3329,6 +3333,104 @@ catch (ApiException e)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+<a id="publishtemplateversion"></a>
+# **PublishTemplateVersion**
+> TemplatePublishVersionResponse PublishTemplateVersion (string templateId, PublishVersionData data)
+
+Publish a template version
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using DocSpring.Client.Api;
+using DocSpring.Client.Client;
+using DocSpring.Client.Model;
+
+namespace Example
+{
+    public class PublishTemplateVersionExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
+            // Configure HTTP basic authorization: api_token_basic
+            config.Username = "YOUR_USERNAME";
+            config.Password = "YOUR_PASSWORD";
+
+            var apiInstance = new PDFApi(config);
+            var templateId = tpl_1234567890abcdef01;  // string | 
+            var data = new PublishVersionData(); // PublishVersionData | 
+
+            try
+            {
+                // Publish a template version
+                TemplatePublishVersionResponse result = apiInstance.PublishTemplateVersion(templateId, data);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling PDFApi.PublishTemplateVersion: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the PublishTemplateVersionWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // Publish a template version
+    ApiResponse<TemplatePublishVersionResponse> response = apiInstance.PublishTemplateVersionWithHttpInfo(templateId, data);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling PDFApi.PublishTemplateVersionWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **templateId** | **string** |  |  |
+| **data** | [**PublishVersionData**](PublishVersionData.md) |  |  |
+
+### Return type
+
+[**TemplatePublishVersionResponse**](TemplatePublishVersionResponse.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | version published successfully |  -  |
+| **422** | invalid version type |  -  |
+| **404** | template not found |  -  |
+| **401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 <a id="renamefolder"></a>
 # **RenameFolder**
 > Folder RenameFolder (string folderId, RenameFolderData data)
@@ -3423,6 +3525,104 @@ catch (ApiException e)
 | **422** | name already exist |  -  |
 | **404** | folder doesn&#39;t belong to me |  -  |
 | **200** | successful rename |  -  |
+| **401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a id="restoretemplateversion"></a>
+# **RestoreTemplateVersion**
+> SuccessErrorResponse RestoreTemplateVersion (string templateId, RestoreVersionData data)
+
+Restore a template version
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using DocSpring.Client.Api;
+using DocSpring.Client.Client;
+using DocSpring.Client.Model;
+
+namespace Example
+{
+    public class RestoreTemplateVersionExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://sync.api.docspring.com/api/v1";
+            // Configure HTTP basic authorization: api_token_basic
+            config.Username = "YOUR_USERNAME";
+            config.Password = "YOUR_PASSWORD";
+
+            var apiInstance = new PDFApi(config);
+            var templateId = tpl_1234567890abcdef01;  // string | 
+            var data = new RestoreVersionData(); // RestoreVersionData | 
+
+            try
+            {
+                // Restore a template version
+                SuccessErrorResponse result = apiInstance.RestoreTemplateVersion(templateId, data);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling PDFApi.RestoreTemplateVersion: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the RestoreTemplateVersionWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // Restore a template version
+    ApiResponse<SuccessErrorResponse> response = apiInstance.RestoreTemplateVersionWithHttpInfo(templateId, data);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling PDFApi.RestoreTemplateVersionWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **templateId** | **string** |  |  |
+| **data** | [**RestoreVersionData**](RestoreVersionData.md) |  |  |
+
+### Return type
+
+[**SuccessErrorResponse**](SuccessErrorResponse.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | version restored successfully |  -  |
+| **422** | draft version not allowed |  -  |
+| **404** | template version not found |  -  |
 | **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

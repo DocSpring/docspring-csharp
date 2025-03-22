@@ -16,6 +16,8 @@ Name | Type | Description | Notes
 **ProcessedAt** | **string** |  | 
 **State** | **string** |  | 
 **TemplateId** | **string** |  | 
+**TemplateType** | **string** |  | 
+**TemplateVersion** | **string** |  | 
 **Test** | **bool** |  | 
 **TruncatedText** | **Object** |  | 
 **PdfHash** | **string** |  | 

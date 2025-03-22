@@ -33,7 +33,9 @@ docs/MoveFolderData.md
 docs/MoveTemplateData.md
 docs/MultipleErrorsResponse.md
 docs/PDFApi.md
+docs/PublishVersionData.md
 docs/RenameFolderData.md
+docs/RestoreVersionData.md
 docs/Submission.md
 docs/SubmissionAction.md
 docs/SubmissionBatch.md
@@ -48,7 +50,9 @@ docs/SuccessErrorResponse.md
 docs/SuccessMultipleErrorsResponse.md
 docs/Template.md
 docs/TemplateAddFieldsResponse.md
+docs/TemplateDeleteResponse.md
 docs/TemplatePreview.md
+docs/TemplatePublishVersionResponse.md
 docs/UpdateHtmlTemplate.md
 docs/UpdateSubmissionDataRequestData.md
 docs/UploadPresignResponse.md
@@ -84,7 +88,9 @@ src/DocSpring.Client.Test/Model/ListSubmissionsResponseTests.cs
 src/DocSpring.Client.Test/Model/MoveFolderDataTests.cs
 src/DocSpring.Client.Test/Model/MoveTemplateDataTests.cs
 src/DocSpring.Client.Test/Model/MultipleErrorsResponseTests.cs
+src/DocSpring.Client.Test/Model/PublishVersionDataTests.cs
 src/DocSpring.Client.Test/Model/RenameFolderDataTests.cs
+src/DocSpring.Client.Test/Model/RestoreVersionDataTests.cs
 src/DocSpring.Client.Test/Model/SubmissionActionTests.cs
 src/DocSpring.Client.Test/Model/SubmissionBatchDataTests.cs
 src/DocSpring.Client.Test/Model/SubmissionBatchTests.cs
@@ -98,7 +104,9 @@ src/DocSpring.Client.Test/Model/SubmissionTests.cs
 src/DocSpring.Client.Test/Model/SuccessErrorResponseTests.cs
 src/DocSpring.Client.Test/Model/SuccessMultipleErrorsResponseTests.cs
 src/DocSpring.Client.Test/Model/TemplateAddFieldsResponseTests.cs
+src/DocSpring.Client.Test/Model/TemplateDeleteResponseTests.cs
 src/DocSpring.Client.Test/Model/TemplatePreviewTests.cs
+src/DocSpring.Client.Test/Model/TemplatePublishVersionResponseTests.cs
 src/DocSpring.Client.Test/Model/TemplateTests.cs
 src/DocSpring.Client.Test/Model/UpdateHtmlTemplateTests.cs
 src/DocSpring.Client.Test/Model/UpdateSubmissionDataRequestDataTests.cs
@@ -151,7 +159,9 @@ src/DocSpring.Client/Model/ListSubmissionsResponse.cs
 src/DocSpring.Client/Model/MoveFolderData.cs
 src/DocSpring.Client/Model/MoveTemplateData.cs
 src/DocSpring.Client/Model/MultipleErrorsResponse.cs
+src/DocSpring.Client/Model/PublishVersionData.cs
 src/DocSpring.Client/Model/RenameFolderData.cs
+src/DocSpring.Client/Model/RestoreVersionData.cs
 src/DocSpring.Client/Model/Submission.cs
 src/DocSpring.Client/Model/SubmissionAction.cs
 src/DocSpring.Client/Model/SubmissionBatch.cs
@@ -166,7 +176,9 @@ src/DocSpring.Client/Model/SuccessErrorResponse.cs
 src/DocSpring.Client/Model/SuccessMultipleErrorsResponse.cs
 src/DocSpring.Client/Model/Template.cs
 src/DocSpring.Client/Model/TemplateAddFieldsResponse.cs
+src/DocSpring.Client/Model/TemplateDeleteResponse.cs
 src/DocSpring.Client/Model/TemplatePreview.cs
+src/DocSpring.Client/Model/TemplatePublishVersionResponse.cs
 src/DocSpring.Client/Model/UpdateHtmlTemplate.cs
 src/DocSpring.Client/Model/UpdateSubmissionDataRequestData.cs
 src/DocSpring.Client/Model/UploadPresignResponse.cs

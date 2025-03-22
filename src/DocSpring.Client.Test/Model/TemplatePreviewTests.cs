@@ -361,6 +361,24 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'VersionPublishedAt'
+        /// </summary>
+        [Fact]
+        public void VersionPublishedAtTest()
+        {
+            // TODO unit test for the property 'VersionPublishedAt'
+        }
+
+        /// <summary>
+        /// Test the property 'VarVersion'
+        /// </summary>
+        [Fact]
+        public void VarVersionTest()
+        {
+            // TODO unit test for the property 'VarVersion'
+        }
+
+        /// <summary>
         /// Test the property 'WebhookUrl'
         /// </summary>
         [Fact]
@@ -376,6 +394,42 @@ namespace DocSpring.Client.Test.Model
         public void DemoTest()
         {
             // TODO unit test for the property 'Demo'
+        }
+
+        /// <summary>
+        /// Test the property 'LatestVersion'
+        /// </summary>
+        [Fact]
+        public void LatestVersionTest()
+        {
+            // TODO unit test for the property 'LatestVersion'
+        }
+
+        /// <summary>
+        /// Test the property 'LastChangedAt'
+        /// </summary>
+        [Fact]
+        public void LastChangedAtTest()
+        {
+            // TODO unit test for the property 'LastChangedAt'
+        }
+
+        /// <summary>
+        /// Test the property 'LastChangedByType'
+        /// </summary>
+        [Fact]
+        public void LastChangedByTypeTest()
+        {
+            // TODO unit test for the property 'LastChangedByType'
+        }
+
+        /// <summary>
+        /// Test the property 'LastChangedById'
+        /// </summary>
+        [Fact]
+        public void LastChangedByIdTest()
+        {
+            // TODO unit test for the property 'LastChangedById'
         }
     }
 }

@@ -100,6 +100,31 @@ namespace DocSpring.Client.Model
         [DataMember(Name = "template_type", IsRequired = true, EmitDefaultValue = true)]
         public TemplateTypeEnum TemplateType { get; set; }
         /// <summary>
+        /// Defines LastChangedByType
+        /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
+        public enum LastChangedByTypeEnum
+        {
+            /// <summary>
+            /// Enum User for value: user
+            /// </summary>
+            [EnumMember(Value = "user")]
+            User = 1,
+
+            /// <summary>
+            /// Enum Api for value: api
+            /// </summary>
+            [EnumMember(Value = "api")]
+            Api = 2
+        }
+
+
+        /// <summary>
+        /// Gets or Sets LastChangedByType
+        /// </summary>
+        [DataMember(Name = "last_changed_by_type", IsRequired = true, EmitDefaultValue = true)]
+        public LastChangedByTypeEnum LastChangedByType { get; set; }
+        /// <summary>
         /// Initializes a new instance of the <see cref="TemplatePreview" /> class.
         /// </summary>
         [JsonConstructorAttribute]
@@ -141,9 +166,15 @@ namespace DocSpring.Client.Model
         /// <param name="slackWebhookUrl">slackWebhookUrl (required).</param>
         /// <param name="templateType">templateType (required).</param>
         /// <param name="updatedAt">updatedAt (required).</param>
+        /// <param name="versionPublishedAt">versionPublishedAt (required).</param>
+        /// <param name="varVersion">varVersion (required).</param>
         /// <param name="webhookUrl">webhookUrl (required).</param>
         /// <param name="demo">demo (required).</param>
-        public TemplatePreview(bool addDataRequestSubmissionIdFooters = default(bool), bool allowAdditionalProperties = default(bool), string description = default(string), string documentFilename = default(string), string documentMd5 = default(string), bool documentParseError = default(bool), bool documentProcessed = default(bool), DocumentStateEnum documentState = default(DocumentStateEnum), string documentUrl = default(string), bool editableSubmissions = default(bool), string embedDomains = default(string), string encryptPdfsPassword = default(string), bool encryptPdfs = default(bool), string expirationInterval = default(string), int expireAfter = default(int), bool expireSubmissions = default(bool), string externalPredefinedFieldsTemplateId = default(string), string externalPredefinedFieldsTemplateName = default(string), bool firstTemplate = default(bool), string id = default(string), bool locked = default(bool), bool mergeAuditTrailPdf = default(bool), string name = default(string), int pageCount = default(int), List<List<decimal>> pageDimensions = default(List<List<decimal>>), string parentFolderId = default(string), string path = default(string), string permanentDocumentUrl = default(string), bool publicSubmissions = default(bool), bool publicWebForm = default(bool), string redirectUrl = default(string), string slackWebhookUrl = default(string), TemplateTypeEnum templateType = default(TemplateTypeEnum), string updatedAt = default(string), string webhookUrl = default(string), bool demo = default(bool))
+        /// <param name="latestVersion">latestVersion (required).</param>
+        /// <param name="lastChangedAt">lastChangedAt (required).</param>
+        /// <param name="lastChangedByType">lastChangedByType (required).</param>
+        /// <param name="lastChangedById">lastChangedById (required).</param>
+        public TemplatePreview(bool addDataRequestSubmissionIdFooters = default(bool), bool allowAdditionalProperties = default(bool), string description = default(string), string documentFilename = default(string), string documentMd5 = default(string), bool documentParseError = default(bool), bool documentProcessed = default(bool), DocumentStateEnum documentState = default(DocumentStateEnum), string documentUrl = default(string), bool editableSubmissions = default(bool), string embedDomains = default(string), string encryptPdfsPassword = default(string), bool encryptPdfs = default(bool), string expirationInterval = default(string), int expireAfter = default(int), bool expireSubmissions = default(bool), string externalPredefinedFieldsTemplateId = default(string), string externalPredefinedFieldsTemplateName = default(string), bool firstTemplate = default(bool), string id = default(string), bool locked = default(bool), bool mergeAuditTrailPdf = default(bool), string name = default(string), int pageCount = default(int), List<List<decimal>> pageDimensions = default(List<List<decimal>>), string parentFolderId = default(string), string path = default(string), string permanentDocumentUrl = default(string), bool publicSubmissions = default(bool), bool publicWebForm = default(bool), string redirectUrl = default(string), string slackWebhookUrl = default(string), TemplateTypeEnum templateType = default(TemplateTypeEnum), string updatedAt = default(string), string versionPublishedAt = default(string), string varVersion = default(string), string webhookUrl = default(string), bool demo = default(bool), string latestVersion = default(string), string lastChangedAt = default(string), LastChangedByTypeEnum lastChangedByType = default(LastChangedByTypeEnum), string lastChangedById = default(string))
         {
             this.AddDataRequestSubmissionIdFooters = addDataRequestSubmissionIdFooters;
             this.AllowAdditionalProperties = allowAdditionalProperties;
@@ -269,6 +300,18 @@ namespace DocSpring.Client.Model
                 throw new ArgumentNullException("updatedAt is a required property for TemplatePreview and cannot be null");
             }
             this.UpdatedAt = updatedAt;
+            // to ensure "versionPublishedAt" is required (not null)
+            if (versionPublishedAt == null)
+            {
+                throw new ArgumentNullException("versionPublishedAt is a required property for TemplatePreview and cannot be null");
+            }
+            this.VersionPublishedAt = versionPublishedAt;
+            // to ensure "varVersion" is required (not null)
+            if (varVersion == null)
+            {
+                throw new ArgumentNullException("varVersion is a required property for TemplatePreview and cannot be null");
+            }
+            this.VarVersion = varVersion;
             // to ensure "webhookUrl" is required (not null)
             if (webhookUrl == null)
             {
@@ -276,6 +319,25 @@ namespace DocSpring.Client.Model
             }
             this.WebhookUrl = webhookUrl;
             this.Demo = demo;
+            // to ensure "latestVersion" is required (not null)
+            if (latestVersion == null)
+            {
+                throw new ArgumentNullException("latestVersion is a required property for TemplatePreview and cannot be null");
+            }
+            this.LatestVersion = latestVersion;
+            // to ensure "lastChangedAt" is required (not null)
+            if (lastChangedAt == null)
+            {
+                throw new ArgumentNullException("lastChangedAt is a required property for TemplatePreview and cannot be null");
+            }
+            this.LastChangedAt = lastChangedAt;
+            this.LastChangedByType = lastChangedByType;
+            // to ensure "lastChangedById" is required (not null)
+            if (lastChangedById == null)
+            {
+                throw new ArgumentNullException("lastChangedById is a required property for TemplatePreview and cannot be null");
+            }
+            this.LastChangedById = lastChangedById;
         }
 
         /// <summary>
@@ -471,6 +533,18 @@ namespace DocSpring.Client.Model
         public string UpdatedAt { get; set; }
 
         /// <summary>
+        /// Gets or Sets VersionPublishedAt
+        /// </summary>
+        [DataMember(Name = "version_published_at", IsRequired = true, EmitDefaultValue = true)]
+        public string VersionPublishedAt { get; set; }
+
+        /// <summary>
+        /// Gets or Sets VarVersion
+        /// </summary>
+        [DataMember(Name = "version", IsRequired = true, EmitDefaultValue = true)]
+        public string VarVersion { get; set; }
+
+        /// <summary>
         /// Gets or Sets WebhookUrl
         /// </summary>
         [DataMember(Name = "webhook_url", IsRequired = true, EmitDefaultValue = true)]
@@ -481,6 +555,24 @@ namespace DocSpring.Client.Model
         /// </summary>
         [DataMember(Name = "demo", IsRequired = true, EmitDefaultValue = true)]
         public bool Demo { get; set; }
+
+        /// <summary>
+        /// Gets or Sets LatestVersion
+        /// </summary>
+        [DataMember(Name = "latest_version", IsRequired = true, EmitDefaultValue = true)]
+        public string LatestVersion { get; set; }
+
+        /// <summary>
+        /// Gets or Sets LastChangedAt
+        /// </summary>
+        [DataMember(Name = "last_changed_at", IsRequired = true, EmitDefaultValue = true)]
+        public string LastChangedAt { get; set; }
+
+        /// <summary>
+        /// Gets or Sets LastChangedById
+        /// </summary>
+        [DataMember(Name = "last_changed_by_id", IsRequired = true, EmitDefaultValue = true)]
+        public string LastChangedById { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -524,8 +616,14 @@ namespace DocSpring.Client.Model
             sb.Append("  SlackWebhookUrl: ").Append(SlackWebhookUrl).Append("\n");
             sb.Append("  TemplateType: ").Append(TemplateType).Append("\n");
             sb.Append("  UpdatedAt: ").Append(UpdatedAt).Append("\n");
+            sb.Append("  VersionPublishedAt: ").Append(VersionPublishedAt).Append("\n");
+            sb.Append("  VarVersion: ").Append(VarVersion).Append("\n");
             sb.Append("  WebhookUrl: ").Append(WebhookUrl).Append("\n");
             sb.Append("  Demo: ").Append(Demo).Append("\n");
+            sb.Append("  LatestVersion: ").Append(LatestVersion).Append("\n");
+            sb.Append("  LastChangedAt: ").Append(LastChangedAt).Append("\n");
+            sb.Append("  LastChangedByType: ").Append(LastChangedByType).Append("\n");
+            sb.Append("  LastChangedById: ").Append(LastChangedById).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

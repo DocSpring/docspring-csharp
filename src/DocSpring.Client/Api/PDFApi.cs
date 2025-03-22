@@ -311,9 +311,10 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId"></param>
+        /// <param name="version"> (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>SuccessMultipleErrorsResponse</returns>
-        SuccessMultipleErrorsResponse DeleteTemplate(string templateId, int operationIndex = 0);
+        /// <returns>TemplateDeleteResponse</returns>
+        TemplateDeleteResponse DeleteTemplate(string templateId, string version = default(string), int operationIndex = 0);
 
         /// <summary>
         /// Delete a template
@@ -323,9 +324,10 @@ namespace DocSpring.Client.Api
         /// </remarks>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId"></param>
+        /// <param name="version"> (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of SuccessMultipleErrorsResponse</returns>
-        ApiResponse<SuccessMultipleErrorsResponse> DeleteTemplateWithHttpInfo(string templateId, int operationIndex = 0);
+        /// <returns>ApiResponse of TemplateDeleteResponse</returns>
+        ApiResponse<TemplateDeleteResponse> DeleteTemplateWithHttpInfo(string templateId, string version = default(string), int operationIndex = 0);
         /// <summary>
         /// Expire a combined submission
         /// </summary>
@@ -475,7 +477,7 @@ namespace DocSpring.Client.Api
         /// <returns>ApiResponse of SubmissionDataRequestShow</returns>
         ApiResponse<SubmissionDataRequestShow> GetDataRequestWithHttpInfo(string dataRequestId, int operationIndex = 0);
         /// <summary>
-        /// Fetch the full template attributes
+        /// Fetch the full attributes for a PDF template
         /// </summary>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId"></param>
@@ -484,7 +486,7 @@ namespace DocSpring.Client.Api
         Template GetFullTemplate(string templateId, int operationIndex = 0);
 
         /// <summary>
-        /// Fetch the full template attributes
+        /// Fetch the full attributes for a PDF template
         /// </summary>
         /// <remarks>
         /// 
@@ -771,6 +773,28 @@ namespace DocSpring.Client.Api
         /// <returns>ApiResponse of TemplatePreview</returns>
         ApiResponse<TemplatePreview> MoveTemplateToFolderWithHttpInfo(string templateId, MoveTemplateData data, int operationIndex = 0);
         /// <summary>
+        /// Publish a template version
+        /// </summary>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="data"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>TemplatePublishVersionResponse</returns>
+        TemplatePublishVersionResponse PublishTemplateVersion(string templateId, PublishVersionData data, int operationIndex = 0);
+
+        /// <summary>
+        /// Publish a template version
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="data"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>ApiResponse of TemplatePublishVersionResponse</returns>
+        ApiResponse<TemplatePublishVersionResponse> PublishTemplateVersionWithHttpInfo(string templateId, PublishVersionData data, int operationIndex = 0);
+        /// <summary>
         /// Rename a folder
         /// </summary>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
@@ -792,6 +816,28 @@ namespace DocSpring.Client.Api
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <returns>ApiResponse of Folder</returns>
         ApiResponse<Folder> RenameFolderWithHttpInfo(string folderId, RenameFolderData data, int operationIndex = 0);
+        /// <summary>
+        /// Restore a template version
+        /// </summary>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="data"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>SuccessErrorResponse</returns>
+        SuccessErrorResponse RestoreTemplateVersion(string templateId, RestoreVersionData data, int operationIndex = 0);
+
+        /// <summary>
+        /// Restore a template version
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="data"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>ApiResponse of SuccessErrorResponse</returns>
+        ApiResponse<SuccessErrorResponse> RestoreTemplateVersionWithHttpInfo(string templateId, RestoreVersionData data, int operationIndex = 0);
         /// <summary>
         /// Test Authentication
         /// </summary>
@@ -1216,10 +1262,11 @@ namespace DocSpring.Client.Api
         /// </remarks>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId"></param>
+        /// <param name="version"> (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of SuccessMultipleErrorsResponse</returns>
-        System.Threading.Tasks.Task<SuccessMultipleErrorsResponse> DeleteTemplateAsync(string templateId, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
+        /// <returns>Task of TemplateDeleteResponse</returns>
+        System.Threading.Tasks.Task<TemplateDeleteResponse> DeleteTemplateAsync(string templateId, string version = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
         /// Delete a template
@@ -1229,10 +1276,11 @@ namespace DocSpring.Client.Api
         /// </remarks>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId"></param>
+        /// <param name="version"> (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (SuccessMultipleErrorsResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<SuccessMultipleErrorsResponse>> DeleteTemplateWithHttpInfoAsync(string templateId, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
+        /// <returns>Task of ApiResponse (TemplateDeleteResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<TemplateDeleteResponse>> DeleteTemplateWithHttpInfoAsync(string templateId, string version = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Expire a combined submission
         /// </summary>
@@ -1417,7 +1465,7 @@ namespace DocSpring.Client.Api
         /// <returns>Task of ApiResponse (SubmissionDataRequestShow)</returns>
         System.Threading.Tasks.Task<ApiResponse<SubmissionDataRequestShow>> GetDataRequestWithHttpInfoAsync(string dataRequestId, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
-        /// Fetch the full template attributes
+        /// Fetch the full attributes for a PDF template
         /// </summary>
         /// <remarks>
         /// 
@@ -1430,7 +1478,7 @@ namespace DocSpring.Client.Api
         System.Threading.Tasks.Task<Template> GetFullTemplateAsync(string templateId, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
 
         /// <summary>
-        /// Fetch the full template attributes
+        /// Fetch the full attributes for a PDF template
         /// </summary>
         /// <remarks>
         /// 
@@ -1778,6 +1826,33 @@ namespace DocSpring.Client.Api
         /// <returns>Task of ApiResponse (TemplatePreview)</returns>
         System.Threading.Tasks.Task<ApiResponse<TemplatePreview>> MoveTemplateToFolderWithHttpInfoAsync(string templateId, MoveTemplateData data, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
+        /// Publish a template version
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="data"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of TemplatePublishVersionResponse</returns>
+        System.Threading.Tasks.Task<TemplatePublishVersionResponse> PublishTemplateVersionAsync(string templateId, PublishVersionData data, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
+
+        /// <summary>
+        /// Publish a template version
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="data"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (TemplatePublishVersionResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<TemplatePublishVersionResponse>> PublishTemplateVersionWithHttpInfoAsync(string templateId, PublishVersionData data, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
+        /// <summary>
         /// Rename a folder
         /// </summary>
         /// <remarks>
@@ -1804,6 +1879,33 @@ namespace DocSpring.Client.Api
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (Folder)</returns>
         System.Threading.Tasks.Task<ApiResponse<Folder>> RenameFolderWithHttpInfoAsync(string folderId, RenameFolderData data, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
+        /// <summary>
+        /// Restore a template version
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="data"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of SuccessErrorResponse</returns>
+        System.Threading.Tasks.Task<SuccessErrorResponse> RestoreTemplateVersionAsync(string templateId, RestoreVersionData data, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
+
+        /// <summary>
+        /// Restore a template version
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="data"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (SuccessErrorResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<SuccessErrorResponse>> RestoreTemplateVersionWithHttpInfoAsync(string templateId, RestoreVersionData data, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken));
         /// <summary>
         /// Test Authentication
         /// </summary>
@@ -4201,11 +4303,12 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId"></param>
+        /// <param name="version"> (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>SuccessMultipleErrorsResponse</returns>
-        public SuccessMultipleErrorsResponse DeleteTemplate(string templateId, int operationIndex = 0)
+        /// <returns>TemplateDeleteResponse</returns>
+        public TemplateDeleteResponse DeleteTemplate(string templateId, string version = default(string), int operationIndex = 0)
         {
-            DocSpring.Client.Client.ApiResponse<SuccessMultipleErrorsResponse> localVarResponse = DeleteTemplateWithHttpInfo(templateId);
+            DocSpring.Client.Client.ApiResponse<TemplateDeleteResponse> localVarResponse = DeleteTemplateWithHttpInfo(templateId, version);
             return localVarResponse.Data;
         }
 
@@ -4214,9 +4317,10 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId"></param>
+        /// <param name="version"> (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
-        /// <returns>ApiResponse of SuccessMultipleErrorsResponse</returns>
-        public DocSpring.Client.Client.ApiResponse<SuccessMultipleErrorsResponse> DeleteTemplateWithHttpInfo(string templateId, int operationIndex = 0)
+        /// <returns>ApiResponse of TemplateDeleteResponse</returns>
+        public DocSpring.Client.Client.ApiResponse<TemplateDeleteResponse> DeleteTemplateWithHttpInfo(string templateId, string version = default(string), int operationIndex = 0)
         {
             // verify the required parameter 'templateId' is set
             if (templateId == null)
@@ -4248,6 +4352,10 @@ namespace DocSpring.Client.Api
             }
 
             localVarRequestOptions.PathParameters.Add("template_id", DocSpring.Client.Client.ClientUtils.ParameterToString(templateId)); // path parameter
+            if (version != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(DocSpring.Client.Client.ClientUtils.ParameterToMultiMap("", "version", version));
+            }
 
             localVarRequestOptions.Operation = "PDFApi.DeleteTemplate";
             localVarRequestOptions.OperationIndex = operationIndex;
@@ -4260,7 +4368,7 @@ namespace DocSpring.Client.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Delete<SuccessMultipleErrorsResponse>("/templates/{template_id}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Delete<TemplateDeleteResponse>("/templates/{template_id}", localVarRequestOptions, this.Configuration);
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("DeleteTemplate", localVarResponse);
@@ -4278,12 +4386,13 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId"></param>
+        /// <param name="version"> (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of SuccessMultipleErrorsResponse</returns>
-        public async System.Threading.Tasks.Task<SuccessMultipleErrorsResponse> DeleteTemplateAsync(string templateId, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+        /// <returns>Task of TemplateDeleteResponse</returns>
+        public async System.Threading.Tasks.Task<TemplateDeleteResponse> DeleteTemplateAsync(string templateId, string version = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
-            DocSpring.Client.Client.ApiResponse<SuccessMultipleErrorsResponse> localVarResponse = await DeleteTemplateWithHttpInfoAsync(templateId, operationIndex, cancellationToken).ConfigureAwait(false);
+            DocSpring.Client.Client.ApiResponse<TemplateDeleteResponse> localVarResponse = await DeleteTemplateWithHttpInfoAsync(templateId, version, operationIndex, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -4292,10 +4401,11 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId"></param>
+        /// <param name="version"> (optional)</param>
         /// <param name="operationIndex">Index associated with the operation.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (SuccessMultipleErrorsResponse)</returns>
-        public async System.Threading.Tasks.Task<DocSpring.Client.Client.ApiResponse<SuccessMultipleErrorsResponse>> DeleteTemplateWithHttpInfoAsync(string templateId, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+        /// <returns>Task of ApiResponse (TemplateDeleteResponse)</returns>
+        public async System.Threading.Tasks.Task<DocSpring.Client.Client.ApiResponse<TemplateDeleteResponse>> DeleteTemplateWithHttpInfoAsync(string templateId, string version = default(string), int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
         {
             // verify the required parameter 'templateId' is set
             if (templateId == null)
@@ -4327,6 +4437,10 @@ namespace DocSpring.Client.Api
             }
 
             localVarRequestOptions.PathParameters.Add("template_id", DocSpring.Client.Client.ClientUtils.ParameterToString(templateId)); // path parameter
+            if (version != null)
+            {
+                localVarRequestOptions.QueryParameters.Add(DocSpring.Client.Client.ClientUtils.ParameterToMultiMap("", "version", version));
+            }
 
             localVarRequestOptions.Operation = "PDFApi.DeleteTemplate";
             localVarRequestOptions.OperationIndex = operationIndex;
@@ -4339,7 +4453,7 @@ namespace DocSpring.Client.Api
             }
 
             // make the HTTP request
-            var localVarResponse = await this.AsynchronousClient.DeleteAsync<SuccessMultipleErrorsResponse>("/templates/{template_id}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.DeleteAsync<TemplateDeleteResponse>("/templates/{template_id}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -5517,7 +5631,7 @@ namespace DocSpring.Client.Api
         }
 
         /// <summary>
-        /// Fetch the full template attributes 
+        /// Fetch the full attributes for a PDF template 
         /// </summary>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId"></param>
@@ -5530,7 +5644,7 @@ namespace DocSpring.Client.Api
         }
 
         /// <summary>
-        /// Fetch the full template attributes 
+        /// Fetch the full attributes for a PDF template 
         /// </summary>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId"></param>
@@ -5594,7 +5708,7 @@ namespace DocSpring.Client.Api
         }
 
         /// <summary>
-        /// Fetch the full template attributes 
+        /// Fetch the full attributes for a PDF template 
         /// </summary>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId"></param>
@@ -5608,7 +5722,7 @@ namespace DocSpring.Client.Api
         }
 
         /// <summary>
-        /// Fetch the full template attributes 
+        /// Fetch the full attributes for a PDF template 
         /// </summary>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId"></param>
@@ -7760,6 +7874,183 @@ namespace DocSpring.Client.Api
         }
 
         /// <summary>
+        /// Publish a template version 
+        /// </summary>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="data"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>TemplatePublishVersionResponse</returns>
+        public TemplatePublishVersionResponse PublishTemplateVersion(string templateId, PublishVersionData data, int operationIndex = 0)
+        {
+            DocSpring.Client.Client.ApiResponse<TemplatePublishVersionResponse> localVarResponse = PublishTemplateVersionWithHttpInfo(templateId, data);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Publish a template version 
+        /// </summary>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="data"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>ApiResponse of TemplatePublishVersionResponse</returns>
+        public DocSpring.Client.Client.ApiResponse<TemplatePublishVersionResponse> PublishTemplateVersionWithHttpInfo(string templateId, PublishVersionData data, int operationIndex = 0)
+        {
+            // verify the required parameter 'templateId' is set
+            if (templateId == null)
+            {
+                throw new DocSpring.Client.Client.ApiException(400, "Missing required parameter 'templateId' when calling PDFApi->PublishTemplateVersion");
+            }
+
+            // verify the required parameter 'data' is set
+            if (data == null)
+            {
+                throw new DocSpring.Client.Client.ApiException(400, "Missing required parameter 'data' when calling PDFApi->PublishTemplateVersion");
+            }
+
+            DocSpring.Client.Client.RequestOptions localVarRequestOptions = new DocSpring.Client.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = DocSpring.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarMultipartFormData = localVarContentType == "multipart/form-data";
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
+
+            var localVarAccept = DocSpring.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
+
+            localVarRequestOptions.PathParameters.Add("template_id", DocSpring.Client.Client.ClientUtils.ParameterToString(templateId)); // path parameter
+            localVarRequestOptions.Data = data;
+
+            localVarRequestOptions.Operation = "PDFApi.PublishTemplateVersion";
+            localVarRequestOptions.OperationIndex = operationIndex;
+
+            // authentication (api_token_basic) required
+            // http basic authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.Username) || !string.IsNullOrEmpty(this.Configuration.Password) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + DocSpring.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+            }
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Post<TemplatePublishVersionResponse>("/templates/{template_id}/publish_version", localVarRequestOptions, this.Configuration);
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("PublishTemplateVersion", localVarResponse);
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Publish a template version 
+        /// </summary>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="data"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of TemplatePublishVersionResponse</returns>
+        public async System.Threading.Tasks.Task<TemplatePublishVersionResponse> PublishTemplateVersionAsync(string templateId, PublishVersionData data, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+        {
+            DocSpring.Client.Client.ApiResponse<TemplatePublishVersionResponse> localVarResponse = await PublishTemplateVersionWithHttpInfoAsync(templateId, data, operationIndex, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Publish a template version 
+        /// </summary>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="data"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (TemplatePublishVersionResponse)</returns>
+        public async System.Threading.Tasks.Task<DocSpring.Client.Client.ApiResponse<TemplatePublishVersionResponse>> PublishTemplateVersionWithHttpInfoAsync(string templateId, PublishVersionData data, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+        {
+            // verify the required parameter 'templateId' is set
+            if (templateId == null)
+            {
+                throw new DocSpring.Client.Client.ApiException(400, "Missing required parameter 'templateId' when calling PDFApi->PublishTemplateVersion");
+            }
+
+            // verify the required parameter 'data' is set
+            if (data == null)
+            {
+                throw new DocSpring.Client.Client.ApiException(400, "Missing required parameter 'data' when calling PDFApi->PublishTemplateVersion");
+            }
+
+
+            DocSpring.Client.Client.RequestOptions localVarRequestOptions = new DocSpring.Client.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = DocSpring.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
+
+            var localVarAccept = DocSpring.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
+
+            localVarRequestOptions.PathParameters.Add("template_id", DocSpring.Client.Client.ClientUtils.ParameterToString(templateId)); // path parameter
+            localVarRequestOptions.Data = data;
+
+            localVarRequestOptions.Operation = "PDFApi.PublishTemplateVersion";
+            localVarRequestOptions.OperationIndex = operationIndex;
+
+            // authentication (api_token_basic) required
+            // http basic authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.Username) || !string.IsNullOrEmpty(this.Configuration.Password) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + DocSpring.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+            }
+
+            // make the HTTP request
+            var localVarResponse = await this.AsynchronousClient.PostAsync<TemplatePublishVersionResponse>("/templates/{template_id}/publish_version", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("PublishTemplateVersion", localVarResponse);
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
         /// Rename a folder 
         /// </summary>
         /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
@@ -7927,6 +8218,183 @@ namespace DocSpring.Client.Api
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("RenameFolder", localVarResponse);
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Restore a template version 
+        /// </summary>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="data"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>SuccessErrorResponse</returns>
+        public SuccessErrorResponse RestoreTemplateVersion(string templateId, RestoreVersionData data, int operationIndex = 0)
+        {
+            DocSpring.Client.Client.ApiResponse<SuccessErrorResponse> localVarResponse = RestoreTemplateVersionWithHttpInfo(templateId, data);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Restore a template version 
+        /// </summary>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="data"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <returns>ApiResponse of SuccessErrorResponse</returns>
+        public DocSpring.Client.Client.ApiResponse<SuccessErrorResponse> RestoreTemplateVersionWithHttpInfo(string templateId, RestoreVersionData data, int operationIndex = 0)
+        {
+            // verify the required parameter 'templateId' is set
+            if (templateId == null)
+            {
+                throw new DocSpring.Client.Client.ApiException(400, "Missing required parameter 'templateId' when calling PDFApi->RestoreTemplateVersion");
+            }
+
+            // verify the required parameter 'data' is set
+            if (data == null)
+            {
+                throw new DocSpring.Client.Client.ApiException(400, "Missing required parameter 'data' when calling PDFApi->RestoreTemplateVersion");
+            }
+
+            DocSpring.Client.Client.RequestOptions localVarRequestOptions = new DocSpring.Client.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = DocSpring.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            var localVarMultipartFormData = localVarContentType == "multipart/form-data";
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
+
+            var localVarAccept = DocSpring.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
+
+            localVarRequestOptions.PathParameters.Add("template_id", DocSpring.Client.Client.ClientUtils.ParameterToString(templateId)); // path parameter
+            localVarRequestOptions.Data = data;
+
+            localVarRequestOptions.Operation = "PDFApi.RestoreTemplateVersion";
+            localVarRequestOptions.OperationIndex = operationIndex;
+
+            // authentication (api_token_basic) required
+            // http basic authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.Username) || !string.IsNullOrEmpty(this.Configuration.Password) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + DocSpring.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+            }
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Post<SuccessErrorResponse>("/templates/{template_id}/restore_version", localVarRequestOptions, this.Configuration);
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("RestoreTemplateVersion", localVarResponse);
+                if (_exception != null)
+                {
+                    throw _exception;
+                }
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Restore a template version 
+        /// </summary>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="data"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of SuccessErrorResponse</returns>
+        public async System.Threading.Tasks.Task<SuccessErrorResponse> RestoreTemplateVersionAsync(string templateId, RestoreVersionData data, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+        {
+            DocSpring.Client.Client.ApiResponse<SuccessErrorResponse> localVarResponse = await RestoreTemplateVersionWithHttpInfoAsync(templateId, data, operationIndex, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Restore a template version 
+        /// </summary>
+        /// <exception cref="DocSpring.Client.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="data"></param>
+        /// <param name="operationIndex">Index associated with the operation.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (SuccessErrorResponse)</returns>
+        public async System.Threading.Tasks.Task<DocSpring.Client.Client.ApiResponse<SuccessErrorResponse>> RestoreTemplateVersionWithHttpInfoAsync(string templateId, RestoreVersionData data, int operationIndex = 0, System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+        {
+            // verify the required parameter 'templateId' is set
+            if (templateId == null)
+            {
+                throw new DocSpring.Client.Client.ApiException(400, "Missing required parameter 'templateId' when calling PDFApi->RestoreTemplateVersion");
+            }
+
+            // verify the required parameter 'data' is set
+            if (data == null)
+            {
+                throw new DocSpring.Client.Client.ApiException(400, "Missing required parameter 'data' when calling PDFApi->RestoreTemplateVersion");
+            }
+
+
+            DocSpring.Client.Client.RequestOptions localVarRequestOptions = new DocSpring.Client.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = DocSpring.Client.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+            }
+
+            var localVarAccept = DocSpring.Client.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null)
+            {
+                localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+            }
+
+            localVarRequestOptions.PathParameters.Add("template_id", DocSpring.Client.Client.ClientUtils.ParameterToString(templateId)); // path parameter
+            localVarRequestOptions.Data = data;
+
+            localVarRequestOptions.Operation = "PDFApi.RestoreTemplateVersion";
+            localVarRequestOptions.OperationIndex = operationIndex;
+
+            // authentication (api_token_basic) required
+            // http basic authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.Username) || !string.IsNullOrEmpty(this.Configuration.Password) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Basic " + DocSpring.Client.Client.ClientUtils.Base64Encode(this.Configuration.Username + ":" + this.Configuration.Password));
+            }
+
+            // make the HTTP request
+            var localVarResponse = await this.AsynchronousClient.PostAsync<SuccessErrorResponse>("/templates/{template_id}/restore_version", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("RestoreTemplateVersion", localVarResponse);
                 if (_exception != null)
                 {
                     throw _exception;

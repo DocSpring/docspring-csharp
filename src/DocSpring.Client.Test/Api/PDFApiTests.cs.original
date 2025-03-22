@@ -228,8 +228,9 @@ namespace DocSpring.Client.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string templateId = null;
-            //var response = instance.DeleteTemplate(templateId);
-            //Assert.IsType<SuccessMultipleErrorsResponse>(response);
+            //string version = null;
+            //var response = instance.DeleteTemplate(templateId, version);
+            //Assert.IsType<TemplateDeleteResponse>(response);
         }
 
         /// <summary>
@@ -495,6 +496,19 @@ namespace DocSpring.Client.Test.Api
         }
 
         /// <summary>
+        /// Test PublishTemplateVersion
+        /// </summary>
+        [Fact]
+        public void PublishTemplateVersionTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string templateId = null;
+            //PublishVersionData data = null;
+            //var response = instance.PublishTemplateVersion(templateId, data);
+            //Assert.IsType<TemplatePublishVersionResponse>(response);
+        }
+
+        /// <summary>
         /// Test RenameFolder
         /// </summary>
         [Fact]
@@ -505,6 +519,19 @@ namespace DocSpring.Client.Test.Api
             //RenameFolderData data = null;
             //var response = instance.RenameFolder(folderId, data);
             //Assert.IsType<Folder>(response);
+        }
+
+        /// <summary>
+        /// Test RestoreTemplateVersion
+        /// </summary>
+        [Fact]
+        public void RestoreTemplateVersionTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string templateId = null;
+            //RestoreVersionData data = null;
+            //var response = instance.RestoreTemplateVersion(templateId, data);
+            //Assert.IsType<SuccessErrorResponse>(response);
         }
 
         /// <summary>

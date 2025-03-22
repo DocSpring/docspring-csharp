@@ -125,5 +125,14 @@ namespace DocSpring.Client.Test.Model
         {
             // TODO unit test for the property 'Test'
         }
+
+        /// <summary>
+        /// Test the property 'VarVersion'
+        /// </summary>
+        [Fact]
+        public void VarVersionTest()
+        {
+            // TODO unit test for the property 'VarVersion'
+        }
     }
 }
