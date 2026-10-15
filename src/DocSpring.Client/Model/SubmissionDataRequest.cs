@@ -43,6 +43,7 @@ namespace DocSpring.Client.Model
         /// <param name="metadata">metadata</param>
         /// <param name="viewedAt">viewedAt</param>
         /// <param name="completedAt">completedAt</param>
+        /// <param name="declinedAt">declinedAt</param>
         /// <param name="data">data</param>
         /// <param name="authProvider">authProvider</param>
         /// <param name="authSessionStartedAt">authSessionStartedAt</param>
@@ -53,7 +54,7 @@ namespace DocSpring.Client.Model
         /// <param name="ipAddress">ipAddress</param>
         /// <param name="userAgent">userAgent</param>
         [JsonConstructor]
-        public SubmissionDataRequest(int sortOrder, StateEnum state, AuthTypeEnum authType, AuthSecondFactorTypeEnum authSecondFactorType, string id = default, string email = default, string name = default, int? order = default, List<string> fields = default, Object metadata = default, string viewedAt = default, string completedAt = default, Object data = default, string authProvider = default, string authSessionStartedAt = default, string authSessionIdHash = default, string authUserIdHash = default, string authUsernameHash = default, string authPhoneNumberHash = default, string ipAddress = default, string userAgent = default)
+        public SubmissionDataRequest(int sortOrder, StateEnum state, AuthTypeEnum authType, AuthSecondFactorTypeEnum authSecondFactorType, string id = default, string email = default, string name = default, int? order = default, List<string> fields = default, Object metadata = default, string viewedAt = default, string completedAt = default, string declinedAt = default, Object data = default, string authProvider = default, string authSessionStartedAt = default, string authSessionIdHash = default, string authUserIdHash = default, string authUsernameHash = default, string authPhoneNumberHash = default, string ipAddress = default, string userAgent = default)
         {
             this.sort_order = sortOrder;
             this.state = state;
@@ -67,6 +68,7 @@ namespace DocSpring.Client.Model
             this.metadata = metadata;
             this.viewed_at = viewedAt;
             this.completed_at = completedAt;
+            this.declined_at = declinedAt;
             this.data = data;
             this.auth_provider = authProvider;
             this.auth_session_started_at = authSessionStartedAt;
@@ -94,7 +96,17 @@ namespace DocSpring.Client.Model
             /// <summary>
             /// Enum Completed for value: completed
             /// </summary>
-            Completed = 2
+            Completed = 2,
+
+            /// <summary>
+            /// Enum Declined for value: declined
+            /// </summary>
+            Declined = 3,
+
+            /// <summary>
+            /// Enum UnknownDefaultOpenApi for value: unknown_default_open_api
+            /// </summary>
+            UnknownDefaultOpenApi = 4
         }
 
         /// <summary>
@@ -111,7 +123,14 @@ namespace DocSpring.Client.Model
             if (value.Equals("completed"))
                 return StateEnum.Completed;
 
-            throw new NotImplementedException($"Could not convert value to type StateEnum: '{value}'");
+            if (value.Equals("declined"))
+                return StateEnum.Declined;
+
+            if (value.Equals("unknown_default_open_api"))
+                return StateEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return StateEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -127,7 +146,14 @@ namespace DocSpring.Client.Model
             if (value.Equals("completed"))
                 return StateEnum.Completed;
 
-            return null;
+            if (value.Equals("declined"))
+                return StateEnum.Declined;
+
+            if (value.Equals("unknown_default_open_api"))
+                return StateEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return StateEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -143,6 +169,12 @@ namespace DocSpring.Client.Model
 
             if (value == StateEnum.Completed)
                 return "completed";
+
+            if (value == StateEnum.Declined)
+                return "declined";
+
+            if (value == StateEnum.UnknownDefaultOpenApi)
+                return "unknown_default_open_api";
 
             throw new NotImplementedException($"Value could not be handled: '{value}'");
         }
@@ -191,7 +223,12 @@ namespace DocSpring.Client.Model
             /// <summary>
             /// Enum Saml for value: saml
             /// </summary>
-            Saml = 7
+            Saml = 7,
+
+            /// <summary>
+            /// Enum UnknownDefaultOpenApi for value: unknown_default_open_api
+            /// </summary>
+            UnknownDefaultOpenApi = 8
         }
 
         /// <summary>
@@ -223,7 +260,11 @@ namespace DocSpring.Client.Model
             if (value.Equals("saml"))
                 return AuthTypeEnum.Saml;
 
-            throw new NotImplementedException($"Could not convert value to type AuthTypeEnum: '{value}'");
+            if (value.Equals("unknown_default_open_api"))
+                return AuthTypeEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return AuthTypeEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -254,7 +295,11 @@ namespace DocSpring.Client.Model
             if (value.Equals("saml"))
                 return AuthTypeEnum.Saml;
 
-            return null;
+            if (value.Equals("unknown_default_open_api"))
+                return AuthTypeEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return AuthTypeEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -285,6 +330,9 @@ namespace DocSpring.Client.Model
 
             if (value == AuthTypeEnum.Saml)
                 return "saml";
+
+            if (value == AuthTypeEnum.UnknownDefaultOpenApi)
+                return "unknown_default_open_api";
 
             throw new NotImplementedException($"Value could not be handled: '{value}'");
         }
@@ -328,7 +376,12 @@ namespace DocSpring.Client.Model
             /// <summary>
             /// Enum Fingerprint for value: fingerprint
             /// </summary>
-            Fingerprint = 6
+            Fingerprint = 6,
+
+            /// <summary>
+            /// Enum UnknownDefaultOpenApi for value: unknown_default_open_api
+            /// </summary>
+            UnknownDefaultOpenApi = 7
         }
 
         /// <summary>
@@ -357,7 +410,11 @@ namespace DocSpring.Client.Model
             if (value.Equals("fingerprint"))
                 return AuthSecondFactorTypeEnum.Fingerprint;
 
-            throw new NotImplementedException($"Could not convert value to type AuthSecondFactorTypeEnum: '{value}'");
+            if (value.Equals("unknown_default_open_api"))
+                return AuthSecondFactorTypeEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return AuthSecondFactorTypeEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -385,7 +442,11 @@ namespace DocSpring.Client.Model
             if (value.Equals("fingerprint"))
                 return AuthSecondFactorTypeEnum.Fingerprint;
 
-            return null;
+            if (value.Equals("unknown_default_open_api"))
+                return AuthSecondFactorTypeEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return AuthSecondFactorTypeEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -413,6 +474,9 @@ namespace DocSpring.Client.Model
 
             if (value == AuthSecondFactorTypeEnum.Fingerprint)
                 return "fingerprint";
+
+            if (value == AuthSecondFactorTypeEnum.UnknownDefaultOpenApi)
+                return "unknown_default_open_api";
 
             throw new NotImplementedException($"Value could not be handled: '{value}'");
         }
@@ -476,6 +540,12 @@ namespace DocSpring.Client.Model
         /// </summary>
         [JsonPropertyName("completed_at")]
         public string completed_at { get; set; }
+
+        /// <summary>
+        /// Gets or Sets declined_at
+        /// </summary>
+        [JsonPropertyName("declined_at")]
+        public string declined_at { get; set; }
 
         /// <summary>
         /// Gets or Sets data
@@ -551,6 +621,7 @@ namespace DocSpring.Client.Model
             sb.Append("  metadata: ").Append(metadata).Append("\n");
             sb.Append("  viewed_at: ").Append(viewed_at).Append("\n");
             sb.Append("  completed_at: ").Append(completed_at).Append("\n");
+            sb.Append("  declined_at: ").Append(declined_at).Append("\n");
             sb.Append("  data: ").Append(data).Append("\n");
             sb.Append("  auth_provider: ").Append(auth_provider).Append("\n");
             sb.Append("  auth_session_started_at: ").Append(auth_session_started_at).Append("\n");
@@ -610,6 +681,7 @@ namespace DocSpring.Client.Model
             Option<Object> metadata = default;
             Option<string> viewedAt = default;
             Option<string> completedAt = default;
+            Option<string> declinedAt = default;
             Option<Object> data = default;
             Option<string> authProvider = default;
             Option<string> authSessionStartedAt = default;
@@ -676,6 +748,9 @@ namespace DocSpring.Client.Model
                             break;
                         case "completed_at":
                             completedAt = new Option<string>(utf8JsonReader.GetString());
+                            break;
+                        case "declined_at":
+                            declinedAt = new Option<string>(utf8JsonReader.GetString());
                             break;
                         case "data":
                             data = new Option<Object>(JsonSerializer.Deserialize<Object>(ref utf8JsonReader, jsonSerializerOptions));
@@ -746,6 +821,9 @@ namespace DocSpring.Client.Model
             if (!completedAt.IsSet)
                 throw new ArgumentException("Property is required for class SubmissionDataRequest.", nameof(completedAt));
 
+            if (!declinedAt.IsSet)
+                throw new ArgumentException("Property is required for class SubmissionDataRequest.", nameof(declinedAt));
+
             if (!data.IsSet)
                 throw new ArgumentException("Property is required for class SubmissionDataRequest.", nameof(data));
 
@@ -785,7 +863,7 @@ namespace DocSpring.Client.Model
             if (authSecondFactorType.IsSet && authSecondFactorType.Value == null)
                 throw new ArgumentNullException(nameof(authSecondFactorType), "Property is not nullable for class SubmissionDataRequest.");
 
-            return new SubmissionDataRequest(sortOrder.Value.Value, state.Value.Value, authType.Value.Value, authSecondFactorType.Value.Value, id.Value, email.Value, name.Value, order.Value, fields.Value, metadata.Value, viewedAt.Value, completedAt.Value, data.Value, authProvider.Value, authSessionStartedAt.Value, authSessionIdHash.Value, authUserIdHash.Value, authUsernameHash.Value, authPhoneNumberHash.Value, ipAddress.Value, userAgent.Value);
+            return new SubmissionDataRequest(sortOrder.Value.Value, state.Value.Value, authType.Value.Value, authSecondFactorType.Value.Value, id.Value, email.Value, name.Value, order.Value, fields.Value, metadata.Value, viewedAt.Value, completedAt.Value, declinedAt.Value, data.Value, authProvider.Value, authSessionStartedAt.Value, authSessionIdHash.Value, authUserIdHash.Value, authUsernameHash.Value, authPhoneNumberHash.Value, ipAddress.Value, userAgent.Value);
         }
 
         /// <summary>
@@ -863,6 +941,11 @@ namespace DocSpring.Client.Model
                 writer.WriteString("completed_at", submissionDataRequest.completed_at);
             else
                 writer.WriteNull("completed_at");
+
+            if (submissionDataRequest.declined_at != null)
+                writer.WriteString("declined_at", submissionDataRequest.declined_at);
+            else
+                writer.WriteNull("declined_at");
 
             if (submissionDataRequest.data != null)
             {

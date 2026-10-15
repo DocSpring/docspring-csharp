@@ -54,6 +54,15 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'name'
+        /// </summary>
+        [Fact]
+        public void nameTest()
+        {
+            // TODO unit test for the property 'name'
+        }
+
+        /// <summary>
         /// Test the property 'parent_folder_id'
         /// </summary>
         [Fact]
@@ -63,12 +72,12 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
-        /// Test the property 'name'
+        /// Test the property 'version'
         /// </summary>
         [Fact]
-        public void nameTest()
+        public void versionTest()
         {
-            // TODO unit test for the property 'name'
+            // TODO unit test for the property 'version'
         }
     }
 }

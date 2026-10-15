@@ -98,6 +98,7 @@ paths:
                     s3_url: https://docspring-s3-example.s3.amazonaws.com/acc_1234/2018/combined_submissions/20181005090010-com_1234.pdf
                     s3_bucket: docspring-s3-example
                     s3_region: us-east-1
+                  error_message: null
               - id: com_1234567890abcdef02
                 state: pending
                 expired: false
@@ -136,6 +137,7 @@ paths:
                     s3_url: https://docspring-s3-example.s3.amazonaws.com/acc_1234/2018/combined_submissions/20181005090010-com_1234.pdf
                     s3_bucket: docspring-s3-example
                     s3_region: us-east-1
+                  error_message: null
               - id: com_1234567890abcdef04
                 state: error
                 expired: false
@@ -174,6 +176,7 @@ paths:
                     s3_url: https://docspring-s3-example.s3.amazonaws.com/acc_1234/2018/combined_submissions/20181005090010-com_1234.pdf
                     s3_bucket: docspring-s3-example
                     s3_region: us-east-1
+                  error_message: null
               schema:
                 items:
                   $ref: "#/components/schemas/combined_submission"
@@ -270,6 +273,15 @@ paths:
               schema:
                 $ref: "#/components/schemas/multiple_errors_response"
           description: invalid request
+        "403":
+          content:
+            application/json:
+              example:
+                status: error
+                error: You must use a live API token to delete custom files.
+              schema:
+                $ref: "#/components/schemas/error_response"
+          description: test API token used to delete custom files
         "400":
           content:
             application/json:
@@ -346,6 +358,7 @@ paths:
                     s3_url: https://docspring-s3-example.s3.amazonaws.com/acc_1234/2018/combined_submissions/20181005090010-com_1234.pdf
                     s3_bucket: docspring-s3-example
                     s3_region: us-east-1
+                  error_message: null
               schema:
                 $ref: "#/components/schemas/combined_submission"
           description: submission was expired
@@ -431,6 +444,7 @@ paths:
                     s3_url: https://docspring-s3-example.s3.amazonaws.com/acc_1234/2018/combined_submissions/20181005090010-com_1234.pdf
                     s3_bucket: docspring-s3-example
                     s3_region: us-east-1
+                  error_message: null
               schema:
                 $ref: "#/components/schemas/combined_submission"
           description: processed combined submission found
@@ -882,9 +896,9 @@ paths:
   /data_requests/{data_request_id}/tokens:
     post:
       description: |
-        Creates an authentication token for accessing a data request form. Tokens can be created
-        for API access (1 hour expiration) or email links (30 day expiration). Returns a token
-        and a pre-authenticated URL for the data request form.
+        Creates an authentication token for accessing a data request form. Returns a token
+        and a pre-authenticated URL for the data request form. The token remains valid until
+        the data request is completed.
 
         See also:
         - [Embedded Data Requests Guide](https://docspring.com/docs/guides/embedded-forms/embedded-data-requests/)
@@ -980,6 +994,7 @@ paths:
                 state: pending
                 viewed_at: null
                 completed_at: null
+                declined_at: null
                 data:
                   last_name: Smithers
                 auth_type: password
@@ -1062,6 +1077,7 @@ paths:
                   state: pending
                   viewed_at: null
                   completed_at: null
+                  declined_at: null
                   data:
                     last_name: Smithers
                   auth_type: oauth
@@ -1122,7 +1138,7 @@ paths:
         efficient than individual requests when creating multiple PDFs.
 
         See also:
-        - [Batch and Combine PDFs](https://docspring.com/docs/api-guide/generate-pdfs/batch-generate-pdfs/) - Generate and merge PDFs in one request
+        - [Batch Generate PDFs](https://docspring.com/docs/api-guide/generate-pdfs/batch-generate-pdfs/) - Request format, responses, and limits
       externalDocs:
         description: Learn more about generating multiple PDFs in batches
         url: https://docspring.com/docs/api-guide/generate-pdfs/batch-generate-pdfs/
@@ -1163,6 +1179,7 @@ paths:
                     batch_id: sbb_1234567890abcdef01
                     data_requests: []
                     editable: null
+                    error_message: null
                     expired: false
                     expires_at: null
                     id: sub_1234567890abcdef01
@@ -1189,6 +1206,7 @@ paths:
                     batch_id: sbb_1234567890abcdef01
                     data_requests: []
                     editable: null
+                    error_message: null
                     expired: false
                     expires_at: null
                     id: sub_1234567890abcdef02
@@ -1223,7 +1241,7 @@ paths:
                   state: error
                   metadata:
                     job_id: 54321
-                  processed_at: null
+                  processed_at: 2018-10-20T13:00:00Z
                   total_count: 2
                   pending_count: 0
                   error_count: 1
@@ -1236,6 +1254,7 @@ paths:
                     batch_id: sbb_1234567890abcdef01
                     data_requests: []
                     editable: null
+                    error_message: null
                     expired: false
                     expires_at: null
                     id: sub_1234567890abcdef02
@@ -1339,6 +1358,7 @@ paths:
                 - batch_id: sbb_1234567890abcdef01
                   data_requests: []
                   editable: false
+                  error_message: null
                   expired: false
                   expires_at: null
                   id: sub_1234567890abcdef01
@@ -1362,6 +1382,7 @@ paths:
                 - batch_id: sbb_1234567890abcdef01
                   data_requests: []
                   editable: false
+                  error_message: null
                   expired: false
                   expires_at: null
                   id: sub_1234567890abcdef02
@@ -1457,6 +1478,7 @@ paths:
                 - batch_id: null
                   data_requests: []
                   editable: false
+                  error_message: null
                   expired: false
                   expires_at: 2020-10-27T13:00:00Z
                   id: sub_1234567890abcdef11
@@ -1490,6 +1512,7 @@ paths:
                 - batch_id: null
                   data_requests: []
                   editable: false
+                  error_message: null
                   expired: false
                   expires_at: 2020-10-27T13:00:00Z
                   id: sub_1234567890abcdef12
@@ -1523,6 +1546,7 @@ paths:
                 - batch_id: null
                   data_requests: []
                   editable: false
+                  error_message: null
                   expired: false
                   expires_at: 2020-10-27T13:00:00Z
                   id: sub_1234567890abcdef13
@@ -1556,6 +1580,7 @@ paths:
                 - batch_id: null
                   data_requests: []
                   editable: false
+                  error_message: null
                   expired: false
                   expires_at: 2020-10-27T13:00:00Z
                   id: sub_1234567890abcdef14
@@ -1605,7 +1630,7 @@ paths:
     post:
       description: |
         Creates a PDF submission by filling in a template with data. Supports both synchronous (default) and
-        asynchronous processing. Set `wait: false` to return immediately.
+        asynchronous processing. Add the `wait=false` query parameter to return immediately.
 
         See also:
         - [Customize the PDF Title and Filename](https://docspring.com/docs/api-guide/generate-pdfs/customize-pdf-title-and-filename/) - Set custom metadata
@@ -1653,6 +1678,7 @@ paths:
                     state: pending
                     viewed_at: null
                     completed_at: null
+                    declined_at: null
                     data: null
                     auth_type: email_link
                     auth_second_factor_type: none
@@ -1665,6 +1691,7 @@ paths:
                     ip_address: null
                     user_agent: null
                   editable: null
+                  error_message: null
                   expired: false
                   expires_at: null
                   id: sub_1234567890abcdef01
@@ -1701,6 +1728,7 @@ paths:
                   batch_id: null
                   data_requests: []
                   editable: null
+                  error_message: null
                   expired: false
                   expires_at: null
                   id: sub_1234567890abcdef01
@@ -1767,6 +1795,7 @@ paths:
                 batch_id: null
                 data_requests: []
                 editable: false
+                error_message: null
                 expired: true
                 expires_at: 2018-10-20T13:00:00Z
                 id: sub_1234567890abcdef01
@@ -1801,6 +1830,7 @@ paths:
                     s3_url: https://docspring-s3-example.s3.amazonaws.com/templates/tpl_eGc5CmFbPnCCmerqsx/sub_gzYpKDYFqEHxzca4kK.pdf
                     s3_bucket: docspring-s3-example
                     s3_region: us-east-1
+                  error_message: null
               schema:
                 $ref: "#/components/schemas/submission_preview"
           description: submission was expired
@@ -1862,6 +1892,7 @@ paths:
                 batch_id: null
                 data_requests: []
                 editable: false
+                error_message: null
                 expired: false
                 expires_at: 2018-10-27T13:00:00Z
                 id: sub_1234567890abcdef01
@@ -1896,6 +1927,7 @@ paths:
                     s3_url: https://docspring-s3-example.s3.amazonaws.com/templates/tpl_eGc5CmFbPnCCmerqsx/sub_gzYpKDYFqEHxzca4kK.pdf
                     s3_bucket: docspring-s3-example
                     s3_region: us-east-1
+                  error_message: null
                 source: api
                 referrer: null
                 data:
@@ -2023,6 +2055,7 @@ paths:
                 - batch_id: null
                   data_requests: []
                   editable: false
+                  error_message: null
                   expired: false
                   expires_at: 2020-10-27T13:00:00Z
                   id: sub_1234567890abcdef01
@@ -2056,6 +2089,7 @@ paths:
                 - batch_id: null
                   data_requests: []
                   editable: false
+                  error_message: null
                   expired: false
                   expires_at: 2020-10-27T13:00:00Z
                   id: sub_1234567890abcdef02
@@ -2089,6 +2123,7 @@ paths:
                 - batch_id: null
                   data_requests: []
                   editable: false
+                  error_message: null
                   expired: false
                   expires_at: 2020-10-27T13:00:00Z
                   id: sub_1234567890abcdef03
@@ -2199,6 +2234,9 @@ paths:
                 document_url: https://docspring-s3-example.s3.amazonaws.com/store/templates/test/test-document.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=docspring-s3-example%2F20210101%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210101T090000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef0123456789
                 editable_submissions: false
                 embed_domains: null
+                embed_edit_allow_settings: false
+                embed_edit_allow_versioning: false
+                embed_edit_allow_document_replacement: false
                 encrypt_pdfs_password: null
                 encrypt_pdfs: false
                 expiration_interval: days
@@ -2227,7 +2265,7 @@ paths:
                 redirect_url: null
                 slack_webhook_url: null
                 template_type: pdf
-                updated_at: 2018-10-20T09:00:00.000-04:00
+                updated_at: 2018-10-20T13:00:00Z
                 version_published_at: null
                 version: null
                 webhook_url: null
@@ -2236,6 +2274,9 @@ paths:
                 last_changed_at: null
                 last_changed_by_type: null
                 last_changed_by_id: null
+                last_changed_by_external_name: null
+                last_changed_by_external_email: null
+                last_changed_by_external_id: null
               - add_data_request_submission_id_footers: true
                 allow_additional_properties: false
                 description: null
@@ -2247,6 +2288,9 @@ paths:
                 document_url: null
                 editable_submissions: false
                 embed_domains: null
+                embed_edit_allow_settings: false
+                embed_edit_allow_versioning: false
+                embed_edit_allow_document_replacement: false
                 encrypt_pdfs_password: null
                 encrypt_pdfs: false
                 expiration_interval: days
@@ -2269,7 +2313,7 @@ paths:
                 redirect_url: null
                 slack_webhook_url: null
                 template_type: html
-                updated_at: 2018-10-20T09:00:00.000-04:00
+                updated_at: 2018-10-20T13:00:00Z
                 version_published_at: null
                 version: null
                 webhook_url: null
@@ -2278,6 +2322,9 @@ paths:
                 last_changed_at: null
                 last_changed_by_type: null
                 last_changed_by_id: null
+                last_changed_by_external_name: null
+                last_changed_by_external_email: null
+                last_changed_by_external_id: null
               - add_data_request_submission_id_footers: true
                 allow_additional_properties: false
                 description: null
@@ -2289,6 +2336,9 @@ paths:
                 document_url: https://docspring-s3-example.s3.amazonaws.com/store/templates/test/test-document.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=docspring-s3-example%2F20210101%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210101T090000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef0123456789
                 editable_submissions: false
                 embed_domains: null
+                embed_edit_allow_settings: false
+                embed_edit_allow_versioning: false
+                embed_edit_allow_document_replacement: false
                 encrypt_pdfs_password: null
                 encrypt_pdfs: false
                 expiration_interval: days
@@ -2317,7 +2367,7 @@ paths:
                 redirect_url: null
                 slack_webhook_url: null
                 template_type: pdf
-                updated_at: 2018-10-20T09:00:00.000-04:00
+                updated_at: 2018-10-20T13:00:00Z
                 version_published_at: null
                 version: null
                 webhook_url: null
@@ -2326,6 +2376,9 @@ paths:
                 last_changed_at: null
                 last_changed_by_type: null
                 last_changed_by_id: null
+                last_changed_by_external_name: null
+                last_changed_by_external_email: null
+                last_changed_by_external_id: null
               - add_data_request_submission_id_footers: true
                 allow_additional_properties: false
                 description: null
@@ -2337,6 +2390,9 @@ paths:
                 document_url: https://docspring-s3-example.s3.amazonaws.com/store/acc_1234567890abcdef01/templates/tpl_1234567890abcdef01/draft/document/original-0000000000.abcdef1234567890abcd.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=docspring-s3-example%2F20210101%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210101T090000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef0123456789
                 editable_submissions: false
                 embed_domains: null
+                embed_edit_allow_settings: false
+                embed_edit_allow_versioning: false
+                embed_edit_allow_document_replacement: false
                 encrypt_pdfs_password: null
                 encrypt_pdfs: false
                 expiration_interval: days
@@ -2361,7 +2417,7 @@ paths:
                 redirect_url: null
                 slack_webhook_url: null
                 template_type: pdf
-                updated_at: 2018-10-20T09:00:00.000-04:00
+                updated_at: 2018-10-20T13:00:00Z
                 version_published_at: null
                 version: null
                 webhook_url: null
@@ -2370,6 +2426,9 @@ paths:
                 last_changed_at: null
                 last_changed_by_type: null
                 last_changed_by_id: null
+                last_changed_by_external_name: null
+                last_changed_by_external_email: null
+                last_changed_by_external_id: null
               schema:
                 items:
                   $ref: "#/components/schemas/template_preview"
@@ -2434,6 +2493,9 @@ paths:
                 document_url: /cache/cached_upload.pdf
                 editable_submissions: false
                 embed_domains: null
+                embed_edit_allow_settings: false
+                embed_edit_allow_versioning: false
+                embed_edit_allow_document_replacement: false
                 encrypt_pdfs_password: null
                 encrypt_pdfs: false
                 expiration_interval: days
@@ -2456,15 +2518,19 @@ paths:
                 redirect_url: null
                 slack_webhook_url: null
                 template_type: pdf
-                updated_at: 2018-10-20T09:00:00.000-04:00
+                updated_at: 2018-10-20T13:00:00Z
                 version_published_at: null
                 version: null
                 webhook_url: null
+                embed_edit_token: exampleEmbedEditTokenGenerated001
                 demo: false
                 latest_version: null
-                last_changed_at: 2018-10-20T09:00:00.000-04:00
+                last_changed_at: 2018-10-20T13:00:00Z
                 last_changed_by_type: null
                 last_changed_by_id: usr_1234567890abcdef01
+                last_changed_by_external_name: null
+                last_changed_by_external_email: null
+                last_changed_by_external_id: null
               schema:
                 $ref: "#/components/schemas/template_preview"
           description: returns a pending template
@@ -2515,6 +2581,9 @@ paths:
                 document_url: null
                 editable_submissions: false
                 embed_domains: null
+                embed_edit_allow_settings: false
+                embed_edit_allow_versioning: false
+                embed_edit_allow_document_replacement: false
                 encrypt_pdfs_password: null
                 encrypt_pdfs: false
                 expiration_interval: days
@@ -2537,15 +2606,19 @@ paths:
                 redirect_url: null
                 slack_webhook_url: null
                 template_type: html
-                updated_at: 2018-10-20T09:00:00.000-04:00
+                updated_at: 2018-10-20T13:00:00Z
                 version_published_at: null
                 version: null
                 webhook_url: null
+                embed_edit_token: exampleEmbedEditTokenGenerated001
                 demo: false
                 latest_version: null
-                last_changed_at: 2018-10-20T09:00:00.000-04:00
+                last_changed_at: 2018-10-20T13:00:00Z
                 last_changed_by_type: null
                 last_changed_by_id: usr_1234567890abcdef01
+                last_changed_by_external_name: null
+                last_changed_by_external_email: null
+                last_changed_by_external_id: null
               schema:
                 $ref: "#/components/schemas/template_preview"
           description: returns a created template
@@ -2594,6 +2667,9 @@ paths:
                 document_url: https://docspring-s3-example.s3.amazonaws.com/cache/original-0000000000?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=docspring-s3-example%2F20210101%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210101T090000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef0123456789
                 editable_submissions: false
                 embed_domains: null
+                embed_edit_allow_settings: false
+                embed_edit_allow_versioning: false
+                embed_edit_allow_document_replacement: false
                 encrypt_pdfs_password: null
                 encrypt_pdfs: false
                 expiration_interval: days
@@ -2616,15 +2692,19 @@ paths:
                 redirect_url: null
                 slack_webhook_url: null
                 template_type: pdf
-                updated_at: 2018-10-20T09:00:00.000-04:00
+                updated_at: 2018-10-20T13:00:00Z
                 version_published_at: null
                 version: null
                 webhook_url: null
+                embed_edit_token: exampleEmbedEditTokenGenerated001
                 demo: false
                 latest_version: null
-                last_changed_at: 2018-10-20T09:00:00.000-04:00
+                last_changed_at: 2018-10-20T13:00:00Z
                 last_changed_by_type: null
                 last_changed_by_id: usr_1234567890abcdef01
+                last_changed_by_external_name: null
+                last_changed_by_external_email: null
+                last_changed_by_external_id: null
               schema:
                 $ref: "#/components/schemas/template_preview"
           description: returns a pending template
@@ -2674,12 +2754,16 @@ paths:
                 versions:
                 - version: 1.0.1
                   description: null
-                  published_at: 2018-10-20T09:00:02.000-04:00
-                  published_by_id: usr_1234567890abcdef01
+                  published_at: 2018-10-20T13:00:02Z
+                  published_by_type: user
+                  published_by_user_id: usr_1234567890abcdef01
+                  published_by_name: Test User 1
                 - version: 1.0.0
                   description: null
-                  published_at: 2018-10-20T09:00:01.000-04:00
-                  published_by_id: usr_1234567890abcdef01
+                  published_at: 2018-10-20T13:00:01Z
+                  published_by_type: user
+                  published_by_user_id: usr_1234567890abcdef01
+                  published_by_name: Test User 1
               schema:
                 $ref: "#/components/schemas/template_delete_response"
           description: template version deleted successfully
@@ -2735,6 +2819,9 @@ paths:
                 document_url: https://docspring-s3-example.s3.amazonaws.com/store/acc_1234567890abcdef01/templates/tpl_1234567890abcdef01/draft/document/original-0000000000.abcdef1234567890abcd.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=docspring-s3-example%2F20210101%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210101T090000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef0123456789
                 editable_submissions: false
                 embed_domains: null
+                embed_edit_allow_settings: false
+                embed_edit_allow_versioning: false
+                embed_edit_allow_document_replacement: false
                 encrypt_pdfs_password: null
                 encrypt_pdfs: false
                 expiration_interval: days
@@ -2759,15 +2846,19 @@ paths:
                 redirect_url: null
                 slack_webhook_url: null
                 template_type: pdf
-                updated_at: 2018-10-20T09:00:00.000-04:00
+                updated_at: 2018-10-20T13:00:00Z
                 version_published_at: null
                 version: null
                 webhook_url: null
+                embed_edit_token: exampleEmbedEditTokenForTemplate1
                 demo: false
                 latest_version: null
                 last_changed_at: null
                 last_changed_by_type: null
                 last_changed_by_id: null
+                last_changed_by_external_name: null
+                last_changed_by_external_email: null
+                last_changed_by_external_id: null
               schema:
                 $ref: "#/components/schemas/template_preview"
           description: template found
@@ -2799,7 +2890,8 @@ paths:
       description: |
         Updates template content and properties. For HTML templates, you can modify the HTML,
         SCSS, headers, footers, name, and description. Changes are applied to your draft
-        template and do not affect published template versions.
+        template and do not affect published template versions. The exception is
+        `parent_folder_id`: moving the template to another folder moves its published versions too.
       operationId: updateTemplate
       parameters:
       - example: tpl_1234567890abcdef03
@@ -2823,6 +2915,15 @@ paths:
               schema:
                 $ref: "#/components/schemas/success_multiple_errors_response"
           description: update template success
+        "404":
+          content:
+            application/json:
+              example:
+                status: error
+                error: Could not find parent folder MISSING_ID
+              schema:
+                $ref: "#/components/schemas/error_response"
+          description: folder not found
       security:
       - api_token_basic: []
       summary: Update a Template
@@ -2857,8 +2958,10 @@ paths:
                 result:
                   version: 0.1.0
                   description: Added new fields
-                  published_by_id: usr_1234567890abcdef01
-                  published_at: 2018-10-20T09:00:00.000-04:00
+                  published_at: 2018-10-20T13:00:00Z
+                  published_by_type: user
+                  published_by_user_id: usr_1234567890abcdef01
+                  published_by_name: Test User 1
               schema:
                 $ref: "#/components/schemas/template_publish_version_response"
           description: version published successfully
@@ -2993,6 +3096,9 @@ paths:
                 document_url: https://docspring-s3-example.s3.amazonaws.com/store/acc_1234567890abcdef01/templates/tpl_1234567890abcdef01/draft/document/original-0000000000.abcdef1234567890abcd.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=docspring-s3-example%2F20210101%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210101T090000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef0123456789
                 editable_submissions: false
                 embed_domains: null
+                embed_edit_allow_settings: false
+                embed_edit_allow_versioning: false
+                embed_edit_allow_document_replacement: false
                 encrypt_pdfs_password: null
                 encrypt_pdfs: false
                 expiration_interval: days
@@ -3017,15 +3123,19 @@ paths:
                 redirect_url: null
                 slack_webhook_url: null
                 template_type: pdf
-                updated_at: 2018-10-20T09:00:00.000-04:00
+                updated_at: 2018-10-20T13:00:00Z
                 version_published_at: null
                 version: null
                 webhook_url: null
+                embed_edit_token: exampleEmbedEditTokenForTemplate1
                 demo: false
                 latest_version: null
                 last_changed_at: null
                 last_changed_by_type: null
                 last_changed_by_id: null
+                last_changed_by_external_name: null
+                last_changed_by_external_email: null
+                last_changed_by_external_id: null
                 defaults:
                   color: "444444"
                   opacity: 1
@@ -3036,6 +3146,7 @@ paths:
                   dateTimeFormat: '%m/%d/%Y %H:%M:%S'
                   characterSpacing: 0
                   shapeBorderColor: 4A90E2
+                field_dependencies: []
                 field_order:
                 - - 1
                   - 2
@@ -3094,6 +3205,7 @@ paths:
                     type: string
                     required: false
                     fieldCount: 1
+                template_schema_version: 4
                 versions: []
               schema:
                 $ref: "#/components/schemas/template"
@@ -3268,7 +3380,7 @@ paths:
                   \ barcode, image, shape"
                 - "The property '#/fields/6/type' value \"unknown type\" did not match\
                   \ one of the following values: string, number, boolean, date, address,\
-                  \ country, email, url, image, signature, barcode, combined"
+                  \ country, email, url, image, signature, initials, barcode, combined"
                 - The property '#/fields/6' did not contain a required property of
                   'page'
                 - "The property '#/fields/7/width' of type string did not match the\
@@ -3332,6 +3444,9 @@ paths:
                 document_url: https://docspring-s3-example.s3.amazonaws.com/store/acc_1234567890abcdef01/templates/tpl_1234567890abcdef01/draft/document/original-0000000000.abcdef1234567890abcd.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=docspring-s3-example%2F20210101%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210101T090000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef0123456789
                 editable_submissions: false
                 embed_domains: null
+                embed_edit_allow_settings: false
+                embed_edit_allow_versioning: false
+                embed_edit_allow_document_replacement: false
                 encrypt_pdfs_password: null
                 encrypt_pdfs: false
                 expiration_interval: days
@@ -3356,15 +3471,19 @@ paths:
                 redirect_url: null
                 slack_webhook_url: null
                 template_type: pdf
-                updated_at: 2018-10-20T09:00:00.000-04:00
+                updated_at: 2018-10-20T13:00:00Z
                 version_published_at: null
                 version: null
                 webhook_url: null
+                embed_edit_token: exampleEmbedEditTokenForTemplate1
                 demo: false
                 latest_version: null
                 last_changed_at: null
                 last_changed_by_type: null
                 last_changed_by_id: null
+                last_changed_by_external_name: null
+                last_changed_by_external_email: null
+                last_changed_by_external_id: null
               schema:
                 $ref: "#/components/schemas/template_preview"
           description: move template success
@@ -3419,6 +3538,9 @@ paths:
                 document_url: https://docspring-s3-example.s3.amazonaws.com/store/acc_1234567890abcdef01/templates/tpl_1234567890abcdef05/draft/document/original-0000000000.abcdef1234567890abcd.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=docspring-s3-example%2F20210101%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210101T090000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=abcdef0123456789
                 editable_submissions: false
                 embed_domains: null
+                embed_edit_allow_settings: false
+                embed_edit_allow_versioning: false
+                embed_edit_allow_document_replacement: false
                 encrypt_pdfs_password: null
                 encrypt_pdfs: false
                 expiration_interval: days
@@ -3443,15 +3565,19 @@ paths:
                 redirect_url: null
                 slack_webhook_url: null
                 template_type: pdf
-                updated_at: 2018-10-20T09:00:00.000-04:00
+                updated_at: 2018-10-20T13:00:00Z
                 version_published_at: null
                 version: null
                 webhook_url: null
+                embed_edit_token: exampleEmbedEditTokenGenerated001
                 demo: false
                 latest_version: null
                 last_changed_at: null
                 last_changed_by_type: null
                 last_changed_by_id: null
+                last_changed_by_external_name: null
+                last_changed_by_external_email: null
+                last_changed_by_external_id: null
               schema:
                 $ref: "#/components/schemas/template_preview"
           description: copy template success
@@ -3492,8 +3618,8 @@ paths:
           content:
             application/json:
               example:
-                $schema: http://json-schema.org/draft-04/schema#
-                id: https://api.docspring.com/api/v1/templates/tpl_1234567890abcdef01/schema.json
+                $schema: http://json-schema.org/draft-07/schema#
+                $id: https://api.docspring.com/api/v1/templates/tpl_1234567890abcdef01/schema.json
                 title: Template 1
                 description: JSON Schema generated by DocSpring.com
                 definitions: {}
@@ -3540,6 +3666,673 @@ paths:
       summary: Fetch the JSON schema for a template
       tags:
       - Client
+  /templates/{template_id}/model_code:
+    get:
+      description: |
+        Generates typed model code for a template's submission data from its JSON schema, in
+        TypeScript, JavaScript, Ruby, Python, PHP, Java, C#, Elixir or Go. Build your submission
+        data with the generated types so your app catches mistakes before it calls the API.
+
+        `root_type_name` is the type that describes the whole submission data object, qualified
+        with its namespace or package where there is one. Java returns every class in `code`,
+        each under a `// ClassName.java` comment: split them into one file per class.
+
+        A template with no named fields returns 422, since there are no types to generate.
+
+        See also:
+        - [Generate Model Code](https://docspring.com/docs/template-editor/generate-model-code/) - Use the generated types
+      externalDocs:
+        description: Learn how to use the generated model code
+        url: https://docspring.com/docs/template-editor/generate-model-code/
+      operationId: getTemplateModelCode
+      parameters:
+      - example: tpl_1234567890abcdef01
+        in: path
+        name: template_id
+        required: true
+        schema:
+          type: string
+      - description: The language to generate code for
+        example: typescript
+        in: query
+        name: lang
+        required: true
+        schema:
+          enum:
+          - typescript
+          - javascript
+          - ruby
+          - python
+          - php
+          - java
+          - csharp
+          - elixir
+          - go
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                lang: typescript
+                root_type_name: Template1
+                code: |
+                  // To parse this data:
+                  //
+                  //   import { Convert, Template1 } from "./template1";
+                  //
+                  //   const template1 = Convert.toTemplate1(json);
+                  //
+                  // These functions will throw an error if the JSON doesn't
+                  // match the expected interface, even if the JSON is valid.
+
+                  /**
+                   * JSON Schema generated by DocSpring.com
+                   */
+                  export interface Template1 {
+                      first_name:    string;
+                      last_name:     string;
+                      phone_number?: null | string;
+                  }
+
+                  // Converts JSON strings to/from your types
+                  // and asserts the results of JSON.parse at runtime
+                  export class Convert {
+                      public static toTemplate1(json: string): Template1 {
+                          return cast(JSON.parse(json), r("Template1"));
+                      }
+
+                      public static template1ToJson(value: Template1): string {
+                          return JSON.stringify(uncast(value, r("Template1")), null, 2);
+                      }
+                  }
+
+                  function invalidValue(typ: any, val: any, key: any, parent: any = ''): never {
+                      const prettyTyp = prettyTypeName(typ);
+                      const parentText = parent ? ` on ${parent}` : '';
+                      const keyText = key ? ` for key "${key}"` : '';
+                      throw Error(`Invalid value${keyText}${parentText}. Expected ${prettyTyp} but got ${JSON.stringify(val)}`);
+                  }
+
+                  function prettyTypeName(typ: any): string {
+                      if (Array.isArray(typ)) {
+                          if (typ.length === 2 && typ[0] === undefined) {
+                              return `an optional ${prettyTypeName(typ[1])}`;
+                          } else {
+                              return `one of [${typ.map(a => { return prettyTypeName(a); }).join(", ")}]`;
+                          }
+                      } else if (typeof typ === "object" && typ.literal !== undefined) {
+                          return typ.literal;
+                      } else {
+                          return typeof typ;
+                      }
+                  }
+
+                  function jsonToJSProps(typ: any): any {
+                      if (typ.jsonToJS === undefined) {
+                          const map: any = {};
+                          typ.props.forEach((p: any) => map[p.json] = { key: p.js, typ: p.typ });
+                          typ.jsonToJS = map;
+                      }
+                      return typ.jsonToJS;
+                  }
+
+                  function jsToJSONProps(typ: any): any {
+                      if (typ.jsToJSON === undefined) {
+                          const map: any = {};
+                          typ.props.forEach((p: any) => map[p.js] = { key: p.json, typ: p.typ });
+                          typ.jsToJSON = map;
+                      }
+                      return typ.jsToJSON;
+                  }
+
+                  function transform(val: any, typ: any, getProps: any, key: any = '', parent: any = ''): any {
+                      function transformPrimitive(typ: string, val: any): any {
+                          if (typeof typ === typeof val) return val;
+                          return invalidValue(typ, val, key, parent);
+                      }
+
+                      function transformUnion(typs: any[], val: any): any {
+                          // val must validate against one typ in typs
+                          const l = typs.length;
+                          for (let i = 0; i < l; i++) {
+                              const typ = typs[i];
+                              try {
+                                  return transform(val, typ, getProps);
+                              } catch (_) {}
+                          }
+                          return invalidValue(typs, val, key, parent);
+                      }
+
+                      function transformEnum(cases: string[], val: any): any {
+                          if (cases.indexOf(val) !== -1) return val;
+                          return invalidValue(cases.map(a => { return l(a); }), val, key, parent);
+                      }
+
+                      function transformArray(typ: any, val: any): any {
+                          // val must be an array with no invalid elements
+                          if (!Array.isArray(val)) return invalidValue(l("array"), val, key, parent);
+                          return val.map(el => transform(el, typ, getProps));
+                      }
+
+                      function transformDate(val: any): any {
+                          if (val === null) {
+                              return null;
+                          }
+                          const d = new Date(val);
+                          if (isNaN(d.valueOf())) {
+                              return invalidValue(l("Date"), val, key, parent);
+                          }
+                          return d;
+                      }
+
+                      function transformObject(props: { [k: string]: any }, additional: any, val: any): any {
+                          if (val === null || typeof val !== "object" || Array.isArray(val)) {
+                              return invalidValue(l(ref || "object"), val, key, parent);
+                          }
+                          const result: any = {};
+                          Object.getOwnPropertyNames(props).forEach(key => {
+                              const prop = props[key];
+                              const v = Object.prototype.hasOwnProperty.call(val, key) ? val[key] : undefined;
+                              result[prop.key] = transform(v, prop.typ, getProps, key, ref);
+                          });
+                          Object.getOwnPropertyNames(val).forEach(key => {
+                              if (!Object.prototype.hasOwnProperty.call(props, key)) {
+                                  result[key] = transform(val[key], additional, getProps, key, ref);
+                              }
+                          });
+                          return result;
+                      }
+
+                      if (typ === "any") return val;
+                      if (typ === null) {
+                          if (val === null) return val;
+                          return invalidValue(typ, val, key, parent);
+                      }
+                      if (typ === false) return invalidValue(typ, val, key, parent);
+                      let ref: any = undefined;
+                      while (typeof typ === "object" && typ.ref !== undefined) {
+                          ref = typ.ref;
+                          typ = typeMap[typ.ref];
+                      }
+                      if (Array.isArray(typ)) return transformEnum(typ, val);
+                      if (typeof typ === "object") {
+                          return typ.hasOwnProperty("unionMembers") ? transformUnion(typ.unionMembers, val)
+                              : typ.hasOwnProperty("arrayItems")    ? transformArray(typ.arrayItems, val)
+                              : typ.hasOwnProperty("props")         ? transformObject(getProps(typ), typ.additional, val)
+                              : invalidValue(typ, val, key, parent);
+                      }
+                      // Numbers can be parsed by Date but shouldn't be.
+                      if (typ === Date && typeof val !== "number") return transformDate(val);
+                      return transformPrimitive(typ, val);
+                  }
+
+                  function cast<T>(val: any, typ: any): T {
+                      return transform(val, typ, jsonToJSProps);
+                  }
+
+                  function uncast<T>(val: T, typ: any): any {
+                      return transform(val, typ, jsToJSONProps);
+                  }
+
+                  function l(typ: any) {
+                      return { literal: typ };
+                  }
+
+                  function a(typ: any) {
+                      return { arrayItems: typ };
+                  }
+
+                  function u(...typs: any[]) {
+                      return { unionMembers: typs };
+                  }
+
+                  function o(props: any[], additional: any) {
+                      return { props, additional };
+                  }
+
+                  function m(additional: any) {
+                      return { props: [], additional };
+                  }
+
+                  function r(name: string) {
+                      return { ref: name };
+                  }
+
+                  const typeMap: any = {
+                      "Template1": o([
+                          { json: "first_name", js: "first_name", typ: "" },
+                          { json: "last_name", js: "last_name", typ: "" },
+                          { json: "phone_number", js: "phone_number", typ: u(undefined, u(null, "")) },
+                      ], false),
+                  };
+              schema:
+                $ref: "#/components/schemas/template_model_code_response"
+          description: model code generated
+        "404":
+          content:
+            application/json:
+              example:
+                status: error
+                error: Template not found
+              schema:
+                $ref: "#/components/schemas/error_response"
+          description: template not found
+        "422":
+          content:
+            application/json:
+              example:
+                status: error
+                error: "lang must be one of: typescript, javascript, ruby, python,\
+                  \ php, java, csharp, elixir, go"
+              schema:
+                $ref: "#/components/schemas/error_response"
+          description: unknown language
+        "401":
+          content:
+            application/json:
+              example:
+                status: error
+                error: "Missing Basic Auth: Please provide an API token via Basic\
+                  \ Auth. See: https://docspring.com/docs/api-guide/authentication/"
+              schema:
+                $ref: "#/components/schemas/error_response"
+          description: authentication failed
+      security:
+      - api_token_basic: []
+      summary: Generate typed model code for a template
+      tags:
+      - Client
+  /webhooks:
+    get:
+      description: |
+        Returns a list of the webhooks configured for your account. Supports pagination and
+        filtering by event type, mode, and the API token, template, or folder a webhook is scoped to.
+      operationId: listWebhooks
+      parameters:
+      - description: "Default: 1"
+        in: query
+        name: page
+        schema:
+          minimum: 1
+          type: integer
+      - description: "Default: 50"
+        in: query
+        name: per_page
+        schema:
+          maximum: 100
+          minimum: 1
+          type: integer
+      - description: Filter by a subscribed event type
+        example: submission.processed
+        in: query
+        name: event_type
+        schema:
+          type: string
+      - description: Filter by mode (test or live)
+        example: live
+        in: query
+        name: mode
+        schema:
+          type: string
+      - description: Filter by a scoped template ID
+        example: tpl_1234567890abcdef01
+        in: query
+        name: template_id
+        schema:
+          type: string
+      - description: Filter by a scoped folder ID
+        in: query
+        name: folder_id
+        schema:
+          type: string
+      - description: Filter by a scoped API token ID
+        in: query
+        name: api_token_id
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+              - id: whk_1234567890abcdef01
+                name: Test Webhook
+                url: https://example.com/webhook
+                enabled: true
+                event_types:
+                - submission.processed
+                mode: null
+                version: 3
+                api_token_ids: []
+                template_ids: []
+                folder_ids: []
+                include_submission_data: true
+                strip_fields: []
+                headers: {}
+                consecutive_failures: 0
+                last_failure_at: null
+                disabled_at: null
+                disabled_reason: null
+                secret: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+                created_at: 2018-10-20T13:00:00Z
+                updated_at: 2018-10-20T13:00:00Z
+              - id: whk_1234567890abcdef02
+                name: Test Webhook
+                url: https://example.com/webhook
+                enabled: true
+                event_types:
+                - submission.processed
+                mode: null
+                version: 3
+                api_token_ids: []
+                template_ids: []
+                folder_ids: []
+                include_submission_data: true
+                strip_fields: []
+                headers: {}
+                consecutive_failures: 0
+                last_failure_at: null
+                disabled_at: null
+                disabled_reason: null
+                secret: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+                created_at: 2018-10-20T13:00:00Z
+                updated_at: 2018-10-20T13:00:00Z
+              - id: whk_1234567890abcdef03
+                name: Test Webhook
+                url: https://example.com/webhook
+                enabled: true
+                event_types:
+                - submission.processed
+                mode: null
+                version: 3
+                api_token_ids: []
+                template_ids: []
+                folder_ids: []
+                include_submission_data: true
+                strip_fields: []
+                headers: {}
+                consecutive_failures: 0
+                last_failure_at: null
+                disabled_at: null
+                disabled_reason: null
+                secret: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+                created_at: 2018-10-20T13:00:00Z
+                updated_at: 2018-10-20T13:00:00Z
+              schema:
+                items:
+                  $ref: "#/components/schemas/webhook"
+                title: list_webhooks
+                type: array
+          description: filter webhooks by scope and event type
+        "401":
+          content:
+            application/json:
+              example:
+                status: error
+                error: "Missing Basic Auth: Please provide an API token via Basic\
+                  \ Auth. See: https://docspring.com/docs/api-guide/authentication/"
+              schema:
+                $ref: "#/components/schemas/error_response"
+          description: authentication failed
+      security:
+      - api_token_basic: []
+      summary: Get a list of all webhooks
+      tags:
+      - Client
+    post:
+      description: |
+        Creates a webhook that delivers a POST request to your endpoint whenever a subscribed event
+        occurs. Optionally scope the webhook to specific API tokens, templates, or folders.
+      operationId: createWebhook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/create_webhook_data"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              example:
+                id: whk_1234567890abcdef01
+                name: Test Webhook
+                url: https://example.com/webhook
+                enabled: true
+                event_types:
+                - submission.processed
+                - submission.failed
+                mode: null
+                version: 3
+                api_token_ids: []
+                template_ids: []
+                folder_ids: []
+                include_submission_data: true
+                strip_fields: []
+                headers:
+                  X-Zapier-Subscription: "123"
+                consecutive_failures: 0
+                last_failure_at: null
+                disabled_at: null
+                disabled_reason: null
+                secret: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+                created_at: 2018-10-20T13:00:00Z
+                updated_at: 2018-10-20T13:00:00Z
+              schema:
+                $ref: "#/components/schemas/webhook"
+          description: webhook created
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/multiple_errors_response"
+          description: invalid parameters
+        "401":
+          content:
+            application/json:
+              example:
+                status: error
+                error: "Missing Basic Auth: Please provide an API token via Basic\
+                  \ Auth. See: https://docspring.com/docs/api-guide/authentication/"
+              schema:
+                $ref: "#/components/schemas/error_response"
+          description: authentication failed
+      security:
+      - api_token_basic: []
+      summary: Create a webhook
+      tags:
+      - Client
+      x-codegen-request-body-name: data
+  /webhooks/{webhook_id}:
+    delete:
+      description: "Permanently deletes a webhook so it stops receiving events, and\
+        \ returns the deleted webhook."
+      operationId: deleteWebhook
+      parameters:
+      - example: whk_1234567890abcdef01
+        in: path
+        name: webhook_id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                id: whk_1234567890abcdef01
+                name: Test Webhook
+                url: https://example.com/webhook
+                enabled: true
+                event_types:
+                - submission.processed
+                mode: null
+                version: 3
+                api_token_ids: []
+                template_ids: []
+                folder_ids: []
+                include_submission_data: true
+                strip_fields: []
+                headers: {}
+                consecutive_failures: 0
+                last_failure_at: null
+                disabled_at: null
+                disabled_reason: null
+                secret: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+                created_at: 2018-10-20T13:00:00Z
+                updated_at: 2018-10-20T13:00:00Z
+              schema:
+                $ref: "#/components/schemas/webhook"
+          description: webhook deleted
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error_response"
+          description: webhook not found
+        "401":
+          content:
+            application/json:
+              example:
+                status: error
+                error: "Missing Basic Auth: Please provide an API token via Basic\
+                  \ Auth. See: https://docspring.com/docs/api-guide/authentication/"
+              schema:
+                $ref: "#/components/schemas/error_response"
+          description: authentication failed
+      security:
+      - api_token_basic: []
+      summary: Delete a webhook
+      tags:
+      - Client
+    get:
+      description: Retrieves a single webhook by its ID.
+      operationId: getWebhook
+      parameters:
+      - example: whk_1234567890abcdef01
+        in: path
+        name: webhook_id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                id: whk_1234567890abcdef01
+                name: Test Webhook
+                url: https://example.com/webhook
+                enabled: true
+                event_types:
+                - submission.processed
+                mode: null
+                version: 3
+                api_token_ids: []
+                template_ids: []
+                folder_ids: []
+                include_submission_data: true
+                strip_fields: []
+                headers: {}
+                consecutive_failures: 0
+                last_failure_at: null
+                disabled_at: null
+                disabled_reason: null
+                secret: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+                created_at: 2018-10-20T13:00:00Z
+                updated_at: 2018-10-20T13:00:00Z
+              schema:
+                $ref: "#/components/schemas/webhook"
+          description: webhook found
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error_response"
+          description: webhook not found
+        "401":
+          content:
+            application/json:
+              example:
+                status: error
+                error: "Missing Basic Auth: Please provide an API token via Basic\
+                  \ Auth. See: https://docspring.com/docs/api-guide/authentication/"
+              schema:
+                $ref: "#/components/schemas/error_response"
+          description: authentication failed
+      security:
+      - api_token_basic: []
+      summary: Get a webhook
+      tags:
+      - Client
+    put:
+      description: Updates the configuration of an existing webhook.
+      operationId: updateWebhook
+      parameters:
+      - example: whk_1234567890abcdef01
+        in: path
+        name: webhook_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/update_webhook_data"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                id: whk_1234567890abcdef01
+                name: Updated Webhook
+                url: https://example.com/webhook
+                enabled: false
+                event_types:
+                - submission.processed
+                mode: null
+                version: 3
+                api_token_ids: []
+                template_ids: []
+                folder_ids: []
+                include_submission_data: true
+                strip_fields: []
+                headers: {}
+                consecutive_failures: 0
+                last_failure_at: null
+                disabled_at: 2018-10-20T13:00:00Z
+                disabled_reason: Manually disabled
+                secret: 0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+                created_at: 2018-10-20T13:00:00Z
+                updated_at: 2018-10-20T13:00:00Z
+              schema:
+                $ref: "#/components/schemas/webhook"
+          description: webhook updated
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error_response"
+          description: webhook not found
+        "401":
+          content:
+            application/json:
+              example:
+                status: error
+                error: "Missing Basic Auth: Please provide an API token via Basic\
+                  \ Auth. See: https://docspring.com/docs/api-guide/authentication/"
+              schema:
+                $ref: "#/components/schemas/error_response"
+          description: authentication failed
+      security:
+      - api_token_basic: []
+      summary: Update a webhook
+      tags:
+      - Client
+      x-codegen-request-body-name: data
 components:
   schemas:
     error_or_multiple_errors_response:
@@ -3587,6 +4380,9 @@ components:
     json_schema:
       additionalProperties: false
       example:
+        allOf:
+        - "{}"
+        - "{}"
         $schema: https://openapi-generator.tech
         description: description
         id: id
@@ -3598,11 +4394,16 @@ components:
         required:
         - required
         - required
+        $id: $id
+        dependencies: "{}"
       properties:
         $schema:
           format: uri
           type: string
         id:
+          format: uri-reference
+          type: string
+        $id:
           format: uri-reference
           type: string
         title:
@@ -3622,6 +4423,14 @@ components:
         required:
           items:
             type: string
+          type: array
+        dependencies:
+          properties: {}
+          type: object
+        allOf:
+          items:
+            properties: {}
+            type: object
           type: array
       title: json_schema
       type: object
@@ -3650,6 +4459,7 @@ components:
       additionalProperties: false
       example:
         submission:
+          error_message: error_message
           preview_generated_at: preview_generated_at
           metadata: "{}"
           template_version: template_version
@@ -3674,13 +4484,15 @@ components:
           state: pending
           truncated_text: "{}"
           actions:
-          - integration_id: integration_id
+          - error_message: error_message
+            integration_id: integration_id
             action_category: notification
             action_type: webhook
             result_data: "{}"
             id: id
             state: pending
-          - integration_id: integration_id
+          - error_message: error_message
+            integration_id: integration_id
             action_category: notification
             action_type: webhook
             result_data: "{}"
@@ -3688,6 +4500,7 @@ components:
             state: pending
           data_requests:
           - metadata: "{}"
+            declined_at: declined_at
             auth_type: none
             viewed_at: viewed_at
             data: "{}"
@@ -3711,6 +4524,7 @@ components:
             user_agent: user_agent
             order: 5
           - metadata: "{}"
+            declined_at: declined_at
             auth_type: none
             viewed_at: viewed_at
             data: "{}"
@@ -3857,6 +4671,35 @@ components:
       - status
       title: template_delete_response
       type: object
+    template_model_code_response:
+      additionalProperties: false
+      example:
+        code: code
+        lang: typescript
+        root_type_name: root_type_name
+      properties:
+        lang:
+          enum:
+          - typescript
+          - javascript
+          - ruby
+          - python
+          - php
+          - java
+          - csharp
+          - elixir
+          - go
+          type: string
+        root_type_name:
+          type: string
+        code:
+          type: string
+      required:
+      - code
+      - lang
+      - root_type_name
+      title: template_model_code_response
+      type: object
     template_publish_version_response:
       additionalProperties: false
       example:
@@ -3912,6 +4755,7 @@ components:
     combined_submission_action:
       additionalProperties: false
       example:
+        error_message: error_message
         integration_id: integration_id
         action_category: notification
         action_type: webhook
@@ -3948,9 +4792,13 @@ components:
         result_data:
           properties: {}
           type: object
+        error_message:
+          nullable: true
+          type: string
       required:
       - action_category
       - action_type
+      - error_message
       - id
       - integration_id
       - result_data
@@ -3978,13 +4826,15 @@ components:
         state: pending
         expires_in: 0
         actions:
-        - integration_id: integration_id
+        - error_message: error_message
+          integration_id: integration_id
           action_category: notification
           action_type: webhook
           result_data: "{}"
           id: id
           state: pending
-        - integration_id: integration_id
+        - error_message: error_message
+          integration_id: integration_id
           action_category: notification
           action_type: webhook
           result_data: "{}"
@@ -4103,6 +4953,7 @@ components:
     submission_action:
       additionalProperties: false
       example:
+        error_message: error_message
         integration_id: integration_id
         action_category: notification
         action_type: webhook
@@ -4138,9 +4989,13 @@ components:
         result_data:
           properties: {}
           type: object
+        error_message:
+          nullable: true
+          type: string
       required:
       - action_category
       - action_type
+      - error_message
       - id
       - integration_id
       - result_data
@@ -4201,7 +5056,8 @@ components:
         metadata: "{}"
         total_count: 0
         submissions:
-        - preview_generated_at: preview_generated_at
+        - error_message: error_message
+          preview_generated_at: preview_generated_at
           metadata: "{}"
           template_version: template_version
           json_schema_errors:
@@ -4225,13 +5081,15 @@ components:
           state: pending
           truncated_text: "{}"
           actions:
-          - integration_id: integration_id
+          - error_message: error_message
+            integration_id: integration_id
             action_category: notification
             action_type: webhook
             result_data: "{}"
             id: id
             state: pending
-          - integration_id: integration_id
+          - error_message: error_message
+            integration_id: integration_id
             action_category: notification
             action_type: webhook
             result_data: "{}"
@@ -4239,6 +5097,7 @@ components:
             state: pending
           data_requests:
           - metadata: "{}"
+            declined_at: declined_at
             auth_type: none
             viewed_at: viewed_at
             data: "{}"
@@ -4262,6 +5121,7 @@ components:
             user_agent: user_agent
             order: 5
           - metadata: "{}"
+            declined_at: declined_at
             auth_type: none
             viewed_at: viewed_at
             data: "{}"
@@ -4284,7 +5144,8 @@ components:
             auth_provider: auth_provider
             user_agent: user_agent
             order: 5
-        - preview_generated_at: preview_generated_at
+        - error_message: error_message
+          preview_generated_at: preview_generated_at
           metadata: "{}"
           template_version: template_version
           json_schema_errors:
@@ -4308,13 +5169,15 @@ components:
           state: pending
           truncated_text: "{}"
           actions:
-          - integration_id: integration_id
+          - error_message: error_message
+            integration_id: integration_id
             action_category: notification
             action_type: webhook
             result_data: "{}"
             id: id
             state: pending
-          - integration_id: integration_id
+          - error_message: error_message
+            integration_id: integration_id
             action_category: notification
             action_type: webhook
             result_data: "{}"
@@ -4322,6 +5185,7 @@ components:
             state: pending
           data_requests:
           - metadata: "{}"
+            declined_at: declined_at
             auth_type: none
             viewed_at: viewed_at
             data: "{}"
@@ -4345,6 +5209,7 @@ components:
             user_agent: user_agent
             order: 5
           - metadata: "{}"
+            declined_at: declined_at
             auth_type: none
             viewed_at: viewed_at
             data: "{}"
@@ -4472,6 +5337,7 @@ components:
       additionalProperties: false
       example:
         metadata: "{}"
+        declined_at: declined_at
         auth_type: none
         viewed_at: viewed_at
         data: "{}"
@@ -4522,11 +5388,15 @@ components:
           enum:
           - pending
           - completed
+          - declined
           type: string
         viewed_at:
           nullable: true
           type: string
         completed_at:
+          nullable: true
+          type: string
+        declined_at:
           nullable: true
           type: string
         data:
@@ -4587,6 +5457,7 @@ components:
       - auth_username_hash
       - completed_at
       - data
+      - declined_at
       - email
       - fields
       - id
@@ -4604,6 +5475,7 @@ components:
       additionalProperties: false
       example:
         metadata: "{}"
+        declined_at: declined_at
         auth_type: none
         viewed_at: viewed_at
         data: "{}"
@@ -4655,11 +5527,15 @@ components:
           enum:
           - pending
           - completed
+          - declined
           type: string
         viewed_at:
           nullable: true
           type: string
         completed_at:
+          nullable: true
+          type: string
+        declined_at:
           nullable: true
           type: string
         data:
@@ -4723,6 +5599,7 @@ components:
       - auth_username_hash
       - completed_at
       - data
+      - declined_at
       - email
       - fields
       - id
@@ -4766,6 +5643,7 @@ components:
     submission_preview:
       additionalProperties: false
       example:
+        error_message: error_message
         preview_generated_at: preview_generated_at
         metadata: "{}"
         template_version: template_version
@@ -4790,13 +5668,15 @@ components:
         state: pending
         truncated_text: "{}"
         actions:
-        - integration_id: integration_id
+        - error_message: error_message
+          integration_id: integration_id
           action_category: notification
           action_type: webhook
           result_data: "{}"
           id: id
           state: pending
-        - integration_id: integration_id
+        - error_message: error_message
+          integration_id: integration_id
           action_category: notification
           action_type: webhook
           result_data: "{}"
@@ -4804,6 +5684,7 @@ components:
           state: pending
         data_requests:
         - metadata: "{}"
+          declined_at: declined_at
           auth_type: none
           viewed_at: viewed_at
           data: "{}"
@@ -4827,6 +5708,7 @@ components:
           user_agent: user_agent
           order: 5
         - metadata: "{}"
+          declined_at: declined_at
           auth_type: none
           viewed_at: viewed_at
           data: "{}"
@@ -4860,6 +5742,9 @@ components:
         editable:
           nullable: true
           type: boolean
+        error_message:
+          nullable: true
+          type: string
         expired:
           type: boolean
         expires_at:
@@ -4895,6 +5780,7 @@ components:
           - account_suspended
           - license_revoked
           - accidental
+          - declined
           type: string
         template_id:
           nullable: true
@@ -4942,6 +5828,7 @@ components:
       - data_requests
       - download_url
       - editable
+      - error_message
       - expired
       - expires_at
       - id
@@ -4985,6 +5872,7 @@ components:
         truncated_text: "{}"
         data_requests:
         - metadata: "{}"
+          declined_at: declined_at
           auth_type: none
           viewed_at: viewed_at
           data: "{}"
@@ -5008,6 +5896,7 @@ components:
           user_agent: user_agent
           order: 5
         - metadata: "{}"
+          declined_at: declined_at
           auth_type: none
           viewed_at: viewed_at
           data: "{}"
@@ -5030,6 +5919,7 @@ components:
           auth_provider: auth_provider
           user_agent: user_agent
           order: 5
+        error_message: error_message
         preview_generated_at: preview_generated_at
         test: true
         editable: true
@@ -5038,13 +5928,15 @@ components:
         referrer: referrer
         template_id: template_id
         actions:
-        - integration_id: integration_id
+        - error_message: error_message
+          integration_id: integration_id
           action_category: notification
           action_type: webhook
           result_data: "{}"
           id: id
           state: pending
-        - integration_id: integration_id
+        - error_message: error_message
+          integration_id: integration_id
           action_category: notification
           action_type: webhook
           result_data: "{}"
@@ -5061,6 +5953,9 @@ components:
         editable:
           nullable: true
           type: boolean
+        error_message:
+          nullable: true
+          type: string
         expired:
           type: boolean
         expires_at:
@@ -5096,6 +5991,7 @@ components:
           - account_suspended
           - license_revoked
           - accidental
+          - declined
           type: string
         template_id:
           nullable: true
@@ -5154,10 +6050,10 @@ components:
       - actions
       - audit_trail_download_url
       - batch_id
-      - data
       - data_requests
       - download_url
       - editable
+      - error_message
       - expired
       - expires_at
       - id
@@ -5169,8 +6065,6 @@ components:
       - preview_download_url
       - preview_generated_at
       - processed_at
-      - referrer
-      - source
       - state
       - template_id
       - template_type
@@ -5182,21 +6076,13 @@ components:
     template_preview:
       additionalProperties: false
       example:
-        document_processed: true
+        embed_edit_allow_document_replacement: true
         expiration_interval: expiration_interval
-        document_state: pending
         expire_after: 0
-        description: description
+        embed_edit_allow_versioning: true
         external_predefined_fields_template_id: external_predefined_fields_template_id
-        slack_webhook_url: slack_webhook_url
-        demo: true
         external_predefined_fields_template_name: external_predefined_fields_template_name
         path: path
-        public_web_form: true
-        last_changed_by_type: user
-        updated_at: updated_at
-        latest_version: latest_version
-        permanent_document_url: permanent_document_url
         version_published_at: version_published_at
         template_type: pdf
         id: id
@@ -5206,28 +6092,43 @@ components:
         - - 1.4658129805029452
           - 1.4658129805029452
         locked: true
+        last_changed_by_external_name: last_changed_by_external_name
         page_count: 6
         encrypt_pdfs: true
         merge_audit_trail_pdf: true
-        webhook_url: webhook_url
-        embed_domains: embed_domains
         parent_folder_id: parent_folder_id
-        allow_additional_properties: true
         encrypt_pdfs_password: encrypt_pdfs_password
         public_submissions: true
         version: version
         add_data_request_submission_id_footers: true
-        document_md5: document_md5
         last_changed_at: last_changed_at
+        name: name
+        last_changed_by_external_id: last_changed_by_external_id
+        redirect_url: redirect_url
+        document_processed: true
+        embed_edit_token: embed_edit_token
+        document_state: pending
+        description: description
+        slack_webhook_url: slack_webhook_url
+        demo: true
+        public_web_form: true
+        last_changed_by_type: user
+        updated_at: updated_at
+        latest_version: latest_version
+        permanent_document_url: permanent_document_url
+        last_changed_by_external_email: last_changed_by_external_email
+        webhook_url: webhook_url
+        embed_domains: embed_domains
+        allow_additional_properties: true
+        embed_edit_allow_settings: true
+        document_md5: document_md5
         last_changed_by_id: last_changed_by_id
         first_template: true
         editable_submissions: true
         expire_submissions: true
-        name: name
         document_parse_error: true
         document_filename: document_filename
         document_url: document_url
-        redirect_url: redirect_url
       properties:
         add_data_request_submission_id_footers:
           type: boolean
@@ -5262,6 +6163,12 @@ components:
         embed_domains:
           nullable: true
           type: string
+        embed_edit_allow_settings:
+          type: boolean
+        embed_edit_allow_versioning:
+          type: boolean
+        embed_edit_allow_document_replacement:
+          type: boolean
         encrypt_pdfs_password:
           nullable: true
           type: string
@@ -5306,7 +6213,6 @@ components:
           nullable: true
           type: string
         path:
-          nullable: true
           type: string
         permanent_document_url:
           nullable: true
@@ -5338,6 +6244,9 @@ components:
         webhook_url:
           nullable: true
           type: string
+        embed_edit_token:
+          nullable: true
+          type: string
         demo:
           type: boolean
         latest_version:
@@ -5350,9 +6259,19 @@ components:
           enum:
           - user
           - api
+          - external_user
           nullable: true
           type: string
         last_changed_by_id:
+          nullable: true
+          type: string
+        last_changed_by_external_name:
+          nullable: true
+          type: string
+        last_changed_by_external_email:
+          nullable: true
+          type: string
+        last_changed_by_external_id:
           nullable: true
           type: string
       required:
@@ -5368,6 +6287,9 @@ components:
       - document_url
       - editable_submissions
       - embed_domains
+      - embed_edit_allow_document_replacement
+      - embed_edit_allow_settings
+      - embed_edit_allow_versioning
       - encrypt_pdfs
       - encrypt_pdfs_password
       - expiration_interval
@@ -5378,6 +6300,9 @@ components:
       - first_template
       - id
       - last_changed_at
+      - last_changed_by_external_email
+      - last_changed_by_external_id
+      - last_changed_by_external_name
       - last_changed_by_id
       - last_changed_by_type
       - latest_version
@@ -5403,9 +6328,11 @@ components:
     template:
       additionalProperties: false
       example:
+        embed_edit_allow_document_replacement: true
         expiration_interval: expiration_interval
         scss: scss
         expire_after: 0
+        embed_edit_allow_versioning: true
         external_predefined_fields_template_id: external_predefined_fields_template_id
         external_predefined_fields_template_name: external_predefined_fields_template_name
         path: path
@@ -5420,6 +6347,7 @@ components:
         - - 1.4658129805029452
           - 1.4658129805029452
         locked: true
+        last_changed_by_external_name: last_changed_by_external_name
         page_count: 6
         encrypt_pdfs: true
         merge_audit_trail_pdf: true
@@ -5433,15 +6361,18 @@ components:
         add_data_request_submission_id_footers: true
         last_changed_at: last_changed_at
         shared_field_data: "{}"
+        template_schema_version: 5
         defaults: "{}"
         versions:
         - "{}"
         - "{}"
         name: name
+        last_changed_by_external_id: last_changed_by_external_id
         footer_html: footer_html
         fields: "{}"
         redirect_url: redirect_url
         document_processed: true
+        embed_edit_token: embed_edit_token
         document_state: pending
         description: description
         slack_webhook_url: slack_webhook_url
@@ -5456,16 +6387,21 @@ components:
         updated_at: updated_at
         latest_version: latest_version
         permanent_document_url: permanent_document_url
+        last_changed_by_external_email: last_changed_by_external_email
         html_engine_options: "{}"
         webhook_url: webhook_url
         embed_domains: embed_domains
         allow_additional_properties: true
+        embed_edit_allow_settings: true
         document_md5: document_md5
         last_changed_by_id: last_changed_by_id
         first_template: true
         editable_submissions: true
         expire_submissions: true
         document_parse_error: true
+        field_dependencies:
+        - "{}"
+        - "{}"
         document_filename: document_filename
         document_url: document_url
       properties:
@@ -5502,6 +6438,12 @@ components:
         embed_domains:
           nullable: true
           type: string
+        embed_edit_allow_settings:
+          type: boolean
+        embed_edit_allow_versioning:
+          type: boolean
+        embed_edit_allow_document_replacement:
+          type: boolean
         encrypt_pdfs_password:
           nullable: true
           type: string
@@ -5546,7 +6488,6 @@ components:
           nullable: true
           type: string
         path:
-          nullable: true
           type: string
         permanent_document_url:
           nullable: true
@@ -5578,6 +6519,9 @@ components:
         webhook_url:
           nullable: true
           type: string
+        embed_edit_token:
+          nullable: true
+          type: string
         demo:
           type: boolean
         latest_version:
@@ -5590,15 +6534,31 @@ components:
           enum:
           - user
           - api
+          - external_user
           nullable: true
           type: string
         last_changed_by_id:
+          nullable: true
+          type: string
+        last_changed_by_external_name:
+          nullable: true
+          type: string
+        last_changed_by_external_email:
+          nullable: true
+          type: string
+        last_changed_by_external_id:
           nullable: true
           type: string
         defaults:
           additionalProperties: false
           title: template_defaults
           type: object
+        field_dependencies:
+          items:
+            properties: {}
+            title: template_field_dependency
+            type: object
+          type: array
         field_order:
           items:
             items:
@@ -5635,6 +6595,8 @@ components:
           properties: {}
           title: template_shared_field_data
           type: object
+        template_schema_version:
+          type: integer
         versions:
           items:
             additionalProperties: false
@@ -5654,6 +6616,9 @@ components:
       - document_url
       - editable_submissions
       - embed_domains
+      - embed_edit_allow_document_replacement
+      - embed_edit_allow_settings
+      - embed_edit_allow_versioning
       - encrypt_pdfs
       - encrypt_pdfs_password
       - expiration_interval
@@ -5661,6 +6626,7 @@ components:
       - expire_submissions
       - external_predefined_fields_template_id
       - external_predefined_fields_template_name
+      - field_dependencies
       - field_order
       - fields
       - first_template
@@ -5670,6 +6636,9 @@ components:
       - html_engine_options
       - id
       - last_changed_at
+      - last_changed_by_external_email
+      - last_changed_by_external_id
+      - last_changed_by_external_name
       - last_changed_by_id
       - last_changed_by_type
       - latest_version
@@ -5688,6 +6657,7 @@ components:
       - scss
       - shared_field_data
       - slack_webhook_url
+      - template_schema_version
       - template_type
       - updated_at
       - version
@@ -5695,6 +6665,128 @@ components:
       - versions
       - webhook_url
       title: template
+      type: object
+    webhook:
+      additionalProperties: false
+      example:
+        headers:
+          key: headers
+        disabled_at: disabled_at
+        created_at: created_at
+        include_submission_data: true
+        template_ids:
+        - template_ids
+        - template_ids
+        secret: secret
+        last_failure_at: last_failure_at
+        disabled_reason: disabled_reason
+        version: 0
+        strip_fields:
+        - strip_fields
+        - strip_fields
+        url: url
+        enabled: true
+        folder_ids:
+        - folder_ids
+        - folder_ids
+        mode: test
+        api_token_ids:
+        - api_token_ids
+        - api_token_ids
+        event_types:
+        - event_types
+        - event_types
+        updated_at: updated_at
+        name: name
+        consecutive_failures: 6
+        id: id
+      properties:
+        id:
+          type: string
+        name:
+          nullable: true
+          type: string
+        url:
+          nullable: true
+          type: string
+        enabled:
+          type: boolean
+        event_types:
+          items:
+            type: string
+          type: array
+        mode:
+          enum:
+          - test
+          - live
+          nullable: true
+          type: string
+        version:
+          type: integer
+        api_token_ids:
+          items:
+            type: string
+          type: array
+        template_ids:
+          items:
+            type: string
+          type: array
+        folder_ids:
+          items:
+            type: string
+          type: array
+        include_submission_data:
+          type: boolean
+        strip_fields:
+          items:
+            type: string
+          type: array
+        headers:
+          additionalProperties:
+            type: string
+          type: object
+        consecutive_failures:
+          type: integer
+        last_failure_at:
+          nullable: true
+          type: string
+        disabled_at:
+          nullable: true
+          type: string
+        disabled_reason:
+          nullable: true
+          type: string
+        secret:
+          nullable: true
+          type: string
+        created_at:
+          nullable: true
+          type: string
+        updated_at:
+          nullable: true
+          type: string
+      required:
+      - api_token_ids
+      - consecutive_failures
+      - created_at
+      - disabled_at
+      - disabled_reason
+      - enabled
+      - event_types
+      - folder_ids
+      - headers
+      - id
+      - include_submission_data
+      - last_failure_at
+      - mode
+      - name
+      - secret
+      - strip_fields
+      - template_ids
+      - updated_at
+      - url
+      - version
+      title: webhook
       type: object
     combine_pdfs_data:
       additionalProperties: false
@@ -5719,9 +6811,11 @@ components:
           foo: 123
           bar: baz
         expires_in: 300
-        delete_custom_files: true
       properties:
         delete_custom_files:
+          description: Delete the custom files in source_pdfs once the combined PDF
+            has been processed (they're kept if it fails). Other combined submissions
+            can't use them after that. A test API token can't delete custom files.
           type: boolean
         expires_in:
           type: integer
@@ -5736,6 +6830,8 @@ components:
             type: object
           type: array
         test:
+          description: "Deprecated, and has no effect. A combined PDF is a test or\
+            \ live document because of its source PDFs."
           type: boolean
       required:
       - source_pdfs
@@ -5763,13 +6859,15 @@ components:
           state: pending
           expires_in: 0
           actions:
-          - integration_id: integration_id
+          - error_message: error_message
+            integration_id: integration_id
             action_category: notification
             action_type: webhook
             result_data: "{}"
             id: id
             state: pending
-          - integration_id: integration_id
+          - error_message: error_message
+            integration_id: integration_id
             action_category: notification
             action_type: webhook
             result_data: "{}"
@@ -5855,6 +6953,7 @@ components:
         parent_folder_id: fld_1234567890abcdef02
       properties:
         parent_folder_id:
+          nullable: true
           type: string
       title: move_folder_data
       type: object
@@ -6040,6 +7139,7 @@ components:
       example:
         data_request:
           metadata: "{}"
+          declined_at: declined_at
           auth_type: none
           viewed_at: viewed_at
           data: "{}"
@@ -6198,6 +7298,7 @@ components:
           truncated_text: "{}"
           data_requests:
           - metadata: "{}"
+            declined_at: declined_at
             auth_type: none
             viewed_at: viewed_at
             data: "{}"
@@ -6221,6 +7322,7 @@ components:
             user_agent: user_agent
             order: 5
           - metadata: "{}"
+            declined_at: declined_at
             auth_type: none
             viewed_at: viewed_at
             data: "{}"
@@ -6243,6 +7345,7 @@ components:
             auth_provider: auth_provider
             user_agent: user_agent
             order: 5
+          error_message: error_message
           preview_generated_at: preview_generated_at
           test: true
           editable: true
@@ -6251,13 +7354,15 @@ components:
           referrer: referrer
           template_id: template_id
           actions:
-          - integration_id: integration_id
+          - error_message: error_message
+            integration_id: integration_id
             action_category: notification
             action_type: webhook
             result_data: "{}"
             id: id
             state: pending
-          - integration_id: integration_id
+          - error_message: error_message
+            integration_id: integration_id
             action_category: notification
             action_type: webhook
             result_data: "{}"
@@ -6284,6 +7389,7 @@ components:
           truncated_text: "{}"
           data_requests:
           - metadata: "{}"
+            declined_at: declined_at
             auth_type: none
             viewed_at: viewed_at
             data: "{}"
@@ -6307,6 +7413,7 @@ components:
             user_agent: user_agent
             order: 5
           - metadata: "{}"
+            declined_at: declined_at
             auth_type: none
             viewed_at: viewed_at
             data: "{}"
@@ -6329,6 +7436,7 @@ components:
             auth_provider: auth_provider
             user_agent: user_agent
             order: 5
+          error_message: error_message
           preview_generated_at: preview_generated_at
           test: true
           editable: true
@@ -6337,13 +7445,15 @@ components:
           referrer: referrer
           template_id: template_id
           actions:
-          - integration_id: integration_id
+          - error_message: error_message
+            integration_id: integration_id
             action_category: notification
             action_type: webhook
             result_data: "{}"
             id: id
             state: pending
-          - integration_id: integration_id
+          - error_message: error_message
+            integration_id: integration_id
             action_category: notification
             action_type: webhook
             result_data: "{}"
@@ -6473,6 +7583,7 @@ components:
       additionalProperties: false
       example:
         submission:
+          error_message: error_message
           preview_generated_at: preview_generated_at
           metadata: "{}"
           template_version: template_version
@@ -6497,13 +7608,15 @@ components:
           state: pending
           truncated_text: "{}"
           actions:
-          - integration_id: integration_id
+          - error_message: error_message
+            integration_id: integration_id
             action_category: notification
             action_type: webhook
             result_data: "{}"
             id: id
             state: pending
-          - integration_id: integration_id
+          - error_message: error_message
+            integration_id: integration_id
             action_category: notification
             action_type: webhook
             result_data: "{}"
@@ -6511,6 +7624,7 @@ components:
             state: pending
           data_requests:
           - metadata: "{}"
+            declined_at: declined_at
             auth_type: none
             viewed_at: viewed_at
             data: "{}"
@@ -6534,6 +7648,7 @@ components:
             user_agent: user_agent
             order: 5
           - metadata: "{}"
+            declined_at: declined_at
             auth_type: none
             viewed_at: viewed_at
             data: "{}"
@@ -6780,6 +7895,9 @@ components:
         parent_folder_id: fld_1234567890abcdef01
       properties:
         parent_folder_id:
+          nullable: true
+          type: string
+        version:
           type: string
       required:
       - parent_folder_id
@@ -6795,9 +7913,44 @@ components:
           type: string
         parent_folder_id:
           type: string
-      required:
-      - parent_folder_id
+        version:
+          type: string
       title: copy_template_options
+      type: object
+    create_webhook_data:
+      additionalProperties: false
+      example:
+        webhook:
+          name: Test Webhook
+          url: https://example.com/webhook
+          event_types:
+          - submission.processed
+          - submission.failed
+          headers:
+            X-Zapier-Subscription: "123"
+      properties:
+        webhook:
+          additionalProperties: false
+          title: create_webhook_attributes
+          type: object
+      required:
+      - webhook
+      title: create_webhook_data
+      type: object
+    update_webhook_data:
+      additionalProperties: false
+      example:
+        webhook:
+          name: Updated Webhook
+          enabled: false
+      properties:
+        webhook:
+          additionalProperties: false
+          title: update_webhook_attributes
+          type: object
+      required:
+      - webhook
+      title: update_webhook_data
       type: object
   securitySchemes:
     api_token_basic:

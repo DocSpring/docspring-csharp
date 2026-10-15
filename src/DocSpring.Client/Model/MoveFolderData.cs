@@ -127,9 +127,6 @@ namespace DocSpring.Client.Model
                 }
             }
 
-            if (parentFolderId.IsSet && parentFolderId.Value == null)
-                throw new ArgumentNullException(nameof(parentFolderId), "Property is not nullable for class MoveFolderData.");
-
             return new MoveFolderData(parentFolderId);
         }
 
@@ -157,11 +154,11 @@ namespace DocSpring.Client.Model
         /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, MoveFolderData moveFolderData, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (moveFolderData.parent_folder_idOption.IsSet && moveFolderData.parent_folder_id == null)
-                throw new ArgumentNullException(nameof(moveFolderData.parent_folder_id), "Property is required for class MoveFolderData.");
-
             if (moveFolderData.parent_folder_idOption.IsSet)
-                writer.WriteString("parent_folder_id", moveFolderData.parent_folder_id);
+                if (moveFolderData.parent_folder_idOption.Value != null)
+                    writer.WriteString("parent_folder_id", moveFolderData.parent_folder_id);
+                else
+                    writer.WriteNull("parent_folder_id");
         }
     }
 }

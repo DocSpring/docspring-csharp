@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **result_data** | **Object** |  | 
 **id** | **string** |  | 
 **integration_id** | **string** |  | 
+**error_message** | **string** |  | 
 
 [[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 

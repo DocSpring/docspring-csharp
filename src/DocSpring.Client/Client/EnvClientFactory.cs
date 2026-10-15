@@ -77,25 +77,16 @@ namespace DocSpring.Client.Client
 
         private static string NormalizeBaseUrl(string h)
         {
+            h = h.Trim();
             if (!h.StartsWith("http://", StringComparison.OrdinalIgnoreCase) && !h.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
             {
                 h = "https://" + h;
             }
-            // Strip any trailing /api/v1
-            if (h.EndsWith("/api/v1", StringComparison.OrdinalIgnoreCase))
-            {
-                h = h.Substring(0, h.Length - "/api/v1".Length);
-            }
+            // Ensure a single /api/v1 suffix
+            h = h.TrimEnd('/');
             if (!h.EndsWith("/api/v1", StringComparison.OrdinalIgnoreCase))
             {
-                if (h.EndsWith("/"))
-                {
-                    h = h + "api/v1";
-                }
-                else
-                {
-                    h = h + "/api/v1";
-                }
+                h += "/api/v1";
             }
             return h;
         }

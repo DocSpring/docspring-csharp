@@ -33,6 +33,7 @@ namespace DocSpring.Client.Model
         /// </summary>
         /// <param name="schema">schema</param>
         /// <param name="id">id</param>
+        /// <param name="schemaId">schemaId</param>
         /// <param name="title">title</param>
         /// <param name="description">description</param>
         /// <param name="definitions">definitions</param>
@@ -40,11 +41,14 @@ namespace DocSpring.Client.Model
         /// <param name="properties">properties</param>
         /// <param name="additionalProperties">additionalProperties</param>
         /// <param name="required">required</param>
+        /// <param name="dependencies">dependencies</param>
+        /// <param name="allOf">allOf</param>
         [JsonConstructor]
-        public JsonSchema(Option<string> schema = default, Option<string> id = default, Option<string> title = default, Option<string> description = default, Option<Object> definitions = default, Option<string> type = default, Option<Object> properties = default, Option<bool?> additionalProperties = default, Option<List<string>> required = default)
+        public JsonSchema(Option<string> schema = default, Option<string> id = default, Option<string> schemaId = default, Option<string> title = default, Option<string> description = default, Option<Object> definitions = default, Option<string> type = default, Option<Object> properties = default, Option<bool?> additionalProperties = default, Option<List<string>> required = default, Option<Object> dependencies = default, Option<List<Object>> allOf = default)
         {
             schemaOption = schema;
             idOption = id;
+            schema_idOption = schemaId;
             titleOption = title;
             descriptionOption = description;
             definitionsOption = definitions;
@@ -52,6 +56,8 @@ namespace DocSpring.Client.Model
             propertiesOption = properties;
             additionalPropertiesOption = additionalProperties;
             requiredOption = required;
+            dependenciesOption = dependencies;
+            allOfOption = allOf;
             OnCreated();
         }
 
@@ -82,6 +88,19 @@ namespace DocSpring.Client.Model
         /// </summary>
         [JsonPropertyName("id")]
         public string id { get { return this.idOption; } set { this.idOption = new Option<string>(value); } }
+
+        /// <summary>
+        /// Used to track the state of schema_id
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string> schema_idOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets schema_id
+        /// </summary>
+        [JsonPropertyName("$id")]
+        public string schema_id { get { return this.schema_idOption; } set { this.schema_idOption = new Option<string>(value); } }
 
         /// <summary>
         /// Used to track the state of title
@@ -175,6 +194,32 @@ namespace DocSpring.Client.Model
         public List<string> required { get { return this.requiredOption; } set { this.requiredOption = new Option<List<string>>(value); } }
 
         /// <summary>
+        /// Used to track the state of dependencies
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<Object> dependenciesOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets dependencies
+        /// </summary>
+        [JsonPropertyName("dependencies")]
+        public Object dependencies { get { return this.dependenciesOption; } set { this.dependenciesOption = new Option<Object>(value); } }
+
+        /// <summary>
+        /// Used to track the state of allOf
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<List<Object>> allOfOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets allOf
+        /// </summary>
+        [JsonPropertyName("allOf")]
+        public List<Object> allOf { get { return this.allOfOption; } set { this.allOfOption = new Option<List<Object>>(value); } }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -184,6 +229,7 @@ namespace DocSpring.Client.Model
             sb.Append("class JsonSchema {\n");
             sb.Append("  schema: ").Append(schema).Append("\n");
             sb.Append("  id: ").Append(id).Append("\n");
+            sb.Append("  schema_id: ").Append(schema_id).Append("\n");
             sb.Append("  title: ").Append(title).Append("\n");
             sb.Append("  description: ").Append(description).Append("\n");
             sb.Append("  definitions: ").Append(definitions).Append("\n");
@@ -191,6 +237,8 @@ namespace DocSpring.Client.Model
             sb.Append("  properties: ").Append(properties).Append("\n");
             sb.Append("  additionalProperties: ").Append(additionalProperties).Append("\n");
             sb.Append("  required: ").Append(required).Append("\n");
+            sb.Append("  dependencies: ").Append(dependencies).Append("\n");
+            sb.Append("  allOf: ").Append(allOf).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -231,6 +279,7 @@ namespace DocSpring.Client.Model
 
             Option<string> schema = default;
             Option<string> id = default;
+            Option<string> schemaId = default;
             Option<string> title = default;
             Option<string> description = default;
             Option<Object> definitions = default;
@@ -238,6 +287,8 @@ namespace DocSpring.Client.Model
             Option<Object> properties = default;
             Option<bool?> additionalProperties = default;
             Option<List<string>> required = default;
+            Option<Object> dependencies = default;
+            Option<List<Object>> allOf = default;
 
             while (utf8JsonReader.Read())
             {
@@ -260,6 +311,9 @@ namespace DocSpring.Client.Model
                         case "id":
                             id = new Option<string>(utf8JsonReader.GetString());
                             break;
+                        case "$id":
+                            schemaId = new Option<string>(utf8JsonReader.GetString());
+                            break;
                         case "title":
                             title = new Option<string>(utf8JsonReader.GetString());
                             break;
@@ -281,6 +335,12 @@ namespace DocSpring.Client.Model
                         case "required":
                             required = new Option<List<string>>(JsonSerializer.Deserialize<List<string>>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
+                        case "dependencies":
+                            dependencies = new Option<Object>(JsonSerializer.Deserialize<Object>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
+                        case "allOf":
+                            allOf = new Option<List<Object>>(JsonSerializer.Deserialize<List<Object>>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
                         default:
                             break;
                     }
@@ -292,6 +352,9 @@ namespace DocSpring.Client.Model
 
             if (id.IsSet && id.Value == null)
                 throw new ArgumentNullException(nameof(id), "Property is not nullable for class JsonSchema.");
+
+            if (schemaId.IsSet && schemaId.Value == null)
+                throw new ArgumentNullException(nameof(schemaId), "Property is not nullable for class JsonSchema.");
 
             if (title.IsSet && title.Value == null)
                 throw new ArgumentNullException(nameof(title), "Property is not nullable for class JsonSchema.");
@@ -314,7 +377,13 @@ namespace DocSpring.Client.Model
             if (required.IsSet && required.Value == null)
                 throw new ArgumentNullException(nameof(required), "Property is not nullable for class JsonSchema.");
 
-            return new JsonSchema(schema, id, title, description, definitions, type, properties, additionalProperties, required);
+            if (dependencies.IsSet && dependencies.Value == null)
+                throw new ArgumentNullException(nameof(dependencies), "Property is not nullable for class JsonSchema.");
+
+            if (allOf.IsSet && allOf.Value == null)
+                throw new ArgumentNullException(nameof(allOf), "Property is not nullable for class JsonSchema.");
+
+            return new JsonSchema(schema, id, schemaId, title, description, definitions, type, properties, additionalProperties, required, dependencies, allOf);
         }
 
         /// <summary>
@@ -347,6 +416,9 @@ namespace DocSpring.Client.Model
             if (jsonSchema.idOption.IsSet && jsonSchema.id == null)
                 throw new ArgumentNullException(nameof(jsonSchema.id), "Property is required for class JsonSchema.");
 
+            if (jsonSchema.schema_idOption.IsSet && jsonSchema.schema_id == null)
+                throw new ArgumentNullException(nameof(jsonSchema.schema_id), "Property is required for class JsonSchema.");
+
             if (jsonSchema.titleOption.IsSet && jsonSchema.title == null)
                 throw new ArgumentNullException(nameof(jsonSchema.title), "Property is required for class JsonSchema.");
 
@@ -365,11 +437,20 @@ namespace DocSpring.Client.Model
             if (jsonSchema.requiredOption.IsSet && jsonSchema.required == null)
                 throw new ArgumentNullException(nameof(jsonSchema.required), "Property is required for class JsonSchema.");
 
+            if (jsonSchema.dependenciesOption.IsSet && jsonSchema.dependencies == null)
+                throw new ArgumentNullException(nameof(jsonSchema.dependencies), "Property is required for class JsonSchema.");
+
+            if (jsonSchema.allOfOption.IsSet && jsonSchema.allOf == null)
+                throw new ArgumentNullException(nameof(jsonSchema.allOf), "Property is required for class JsonSchema.");
+
             if (jsonSchema.schemaOption.IsSet)
                 writer.WriteString("$schema", jsonSchema.schema);
 
             if (jsonSchema.idOption.IsSet)
                 writer.WriteString("id", jsonSchema.id);
+
+            if (jsonSchema.schema_idOption.IsSet)
+                writer.WriteString("$id", jsonSchema.schema_id);
 
             if (jsonSchema.titleOption.IsSet)
                 writer.WriteString("title", jsonSchema.title);
@@ -397,6 +478,16 @@ namespace DocSpring.Client.Model
             {
                 writer.WritePropertyName("required");
                 JsonSerializer.Serialize(writer, jsonSchema.requiredOption.Value, jsonSerializerOptions);
+            }
+            if (jsonSchema.dependenciesOption.IsSet)
+            {
+                writer.WritePropertyName("dependencies");
+                JsonSerializer.Serialize(writer, jsonSchema.dependenciesOption.Value, jsonSerializerOptions);
+            }
+            if (jsonSchema.allOfOption.IsSet)
+            {
+                writer.WritePropertyName("allOf");
+                JsonSerializer.Serialize(writer, jsonSchema.allOfOption.Value, jsonSerializerOptions);
             }
         }
     }

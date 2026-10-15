@@ -32,10 +32,12 @@ namespace DocSpring.Client.Model
         /// Initializes a new instance of the <see cref="MoveTemplateData" /> class.
         /// </summary>
         /// <param name="parentFolderId">parentFolderId</param>
+        /// <param name="version">version</param>
         [JsonConstructor]
-        public MoveTemplateData(string parentFolderId)
+        public MoveTemplateData(string parentFolderId = default, Option<string> version = default)
         {
             this.parent_folder_id = parentFolderId;
+            versionOption = version;
             OnCreated();
         }
 
@@ -48,6 +50,19 @@ namespace DocSpring.Client.Model
         public string parent_folder_id { get; set; }
 
         /// <summary>
+        /// Used to track the state of version
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string> versionOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets version
+        /// </summary>
+        [JsonPropertyName("version")]
+        public string version { get { return this.versionOption; } set { this.versionOption = new Option<string>(value); } }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -56,6 +71,7 @@ namespace DocSpring.Client.Model
             StringBuilder sb = new StringBuilder();
             sb.Append("class MoveTemplateData {\n");
             sb.Append("  parent_folder_id: ").Append(parent_folder_id).Append("\n");
+            sb.Append("  version: ").Append(version).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -95,6 +111,7 @@ namespace DocSpring.Client.Model
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
             Option<string> parentFolderId = default;
+            Option<string> version = default;
 
             while (utf8JsonReader.Read())
             {
@@ -114,6 +131,9 @@ namespace DocSpring.Client.Model
                         case "parent_folder_id":
                             parentFolderId = new Option<string>(utf8JsonReader.GetString());
                             break;
+                        case "version":
+                            version = new Option<string>(utf8JsonReader.GetString());
+                            break;
                         default:
                             break;
                     }
@@ -123,10 +143,10 @@ namespace DocSpring.Client.Model
             if (!parentFolderId.IsSet)
                 throw new ArgumentException("Property is required for class MoveTemplateData.", nameof(parentFolderId));
 
-            if (parentFolderId.IsSet && parentFolderId.Value == null)
-                throw new ArgumentNullException(nameof(parentFolderId), "Property is not nullable for class MoveTemplateData.");
+            if (version.IsSet && version.Value == null)
+                throw new ArgumentNullException(nameof(version), "Property is not nullable for class MoveTemplateData.");
 
-            return new MoveTemplateData(parentFolderId.Value);
+            return new MoveTemplateData(parentFolderId.Value, version);
         }
 
         /// <summary>
@@ -153,10 +173,16 @@ namespace DocSpring.Client.Model
         /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, MoveTemplateData moveTemplateData, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (moveTemplateData.parent_folder_id == null)
-                throw new ArgumentNullException(nameof(moveTemplateData.parent_folder_id), "Property is required for class MoveTemplateData.");
+            if (moveTemplateData.versionOption.IsSet && moveTemplateData.version == null)
+                throw new ArgumentNullException(nameof(moveTemplateData.version), "Property is required for class MoveTemplateData.");
 
-            writer.WriteString("parent_folder_id", moveTemplateData.parent_folder_id);
+            if (moveTemplateData.parent_folder_id != null)
+                writer.WriteString("parent_folder_id", moveTemplateData.parent_folder_id);
+            else
+                writer.WriteNull("parent_folder_id");
+
+            if (moveTemplateData.versionOption.IsSet)
+                writer.WriteString("version", moveTemplateData.version);
         }
     }
 }

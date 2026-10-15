@@ -32,11 +32,11 @@ namespace DocSpring.Client.Model
         /// Initializes a new instance of the <see cref="CombinePdfsData" /> class.
         /// </summary>
         /// <param name="sourcePdfs">sourcePdfs</param>
-        /// <param name="deleteCustomFiles">deleteCustomFiles</param>
+        /// <param name="deleteCustomFiles">Delete the custom files in source_pdfs once the combined PDF has been processed (they&#39;re kept if it fails). Other combined submissions can&#39;t use them after that. A test API token can&#39;t delete custom files.</param>
         /// <param name="expiresIn">expiresIn</param>
         /// <param name="metadata">metadata</param>
         /// <param name="password">password</param>
-        /// <param name="test">test</param>
+        /// <param name="test">Deprecated, and has no effect. A combined PDF is a test or live document because of its source PDFs.</param>
         [JsonConstructor]
         public CombinePdfsData(List<Object> sourcePdfs, Option<bool?> deleteCustomFiles = default, Option<int?> expiresIn = default, Option<Object> metadata = default, Option<string> password = default, Option<bool?> test = default)
         {
@@ -65,8 +65,9 @@ namespace DocSpring.Client.Model
         public Option<bool?> delete_custom_filesOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets delete_custom_files
+        /// Delete the custom files in source_pdfs once the combined PDF has been processed (they&#39;re kept if it fails). Other combined submissions can&#39;t use them after that. A test API token can&#39;t delete custom files.
         /// </summary>
+        /// <value>Delete the custom files in source_pdfs once the combined PDF has been processed (they&#39;re kept if it fails). Other combined submissions can&#39;t use them after that. A test API token can&#39;t delete custom files.</value>
         [JsonPropertyName("delete_custom_files")]
         public bool? delete_custom_files { get { return this.delete_custom_filesOption; } set { this.delete_custom_filesOption = new Option<bool?>(value); } }
 
@@ -117,8 +118,9 @@ namespace DocSpring.Client.Model
         public Option<bool?> testOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets test
+        /// Deprecated, and has no effect. A combined PDF is a test or live document because of its source PDFs.
         /// </summary>
+        /// <value>Deprecated, and has no effect. A combined PDF is a test or live document because of its source PDFs.</value>
         [JsonPropertyName("test")]
         public bool? test { get { return this.testOption; } set { this.testOption = new Option<bool?>(value); } }
 

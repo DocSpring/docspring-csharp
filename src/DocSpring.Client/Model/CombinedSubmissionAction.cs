@@ -37,8 +37,9 @@ namespace DocSpring.Client.Model
         /// <param name="id">id</param>
         /// <param name="integrationId">integrationId</param>
         /// <param name="actionType">actionType</param>
+        /// <param name="errorMessage">errorMessage</param>
         [JsonConstructor]
-        public CombinedSubmissionAction(StateEnum state, ActionCategoryEnum actionCategory, Object resultData, string id = default, string integrationId = default, ActionTypeEnum? actionType = default)
+        public CombinedSubmissionAction(StateEnum state, ActionCategoryEnum actionCategory, Object resultData, string id = default, string integrationId = default, ActionTypeEnum? actionType = default, string errorMessage = default)
         {
             this.state = state;
             this.action_category = actionCategory;
@@ -46,6 +47,7 @@ namespace DocSpring.Client.Model
             this.id = id;
             this.integration_id = integrationId;
             this.action_type = actionType;
+            this.error_message = errorMessage;
             OnCreated();
         }
 
@@ -74,7 +76,12 @@ namespace DocSpring.Client.Model
             /// <summary>
             /// Enum Error for value: error
             /// </summary>
-            Error = 4
+            Error = 4,
+
+            /// <summary>
+            /// Enum UnknownDefaultOpenApi for value: unknown_default_open_api
+            /// </summary>
+            UnknownDefaultOpenApi = 5
         }
 
         /// <summary>
@@ -97,7 +104,11 @@ namespace DocSpring.Client.Model
             if (value.Equals("error"))
                 return StateEnum.Error;
 
-            throw new NotImplementedException($"Could not convert value to type StateEnum: '{value}'");
+            if (value.Equals("unknown_default_open_api"))
+                return StateEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return StateEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -119,7 +130,11 @@ namespace DocSpring.Client.Model
             if (value.Equals("error"))
                 return StateEnum.Error;
 
-            return null;
+            if (value.Equals("unknown_default_open_api"))
+                return StateEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return StateEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -141,6 +156,9 @@ namespace DocSpring.Client.Model
 
             if (value == StateEnum.Error)
                 return "error";
+
+            if (value == StateEnum.UnknownDefaultOpenApi)
+                return "unknown_default_open_api";
 
             throw new NotImplementedException($"Value could not be handled: '{value}'");
         }
@@ -164,7 +182,12 @@ namespace DocSpring.Client.Model
             /// <summary>
             /// Enum FileUpload for value: file_upload
             /// </summary>
-            FileUpload = 2
+            FileUpload = 2,
+
+            /// <summary>
+            /// Enum UnknownDefaultOpenApi for value: unknown_default_open_api
+            /// </summary>
+            UnknownDefaultOpenApi = 3
         }
 
         /// <summary>
@@ -181,7 +204,11 @@ namespace DocSpring.Client.Model
             if (value.Equals("file_upload"))
                 return ActionCategoryEnum.FileUpload;
 
-            throw new NotImplementedException($"Could not convert value to type ActionCategoryEnum: '{value}'");
+            if (value.Equals("unknown_default_open_api"))
+                return ActionCategoryEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return ActionCategoryEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -197,7 +224,11 @@ namespace DocSpring.Client.Model
             if (value.Equals("file_upload"))
                 return ActionCategoryEnum.FileUpload;
 
-            return null;
+            if (value.Equals("unknown_default_open_api"))
+                return ActionCategoryEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return ActionCategoryEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -213,6 +244,9 @@ namespace DocSpring.Client.Model
 
             if (value == ActionCategoryEnum.FileUpload)
                 return "file_upload";
+
+            if (value == ActionCategoryEnum.UnknownDefaultOpenApi)
+                return "unknown_default_open_api";
 
             throw new NotImplementedException($"Value could not be handled: '{value}'");
         }
@@ -246,7 +280,12 @@ namespace DocSpring.Client.Model
             /// <summary>
             /// Enum AwsS3Upload for value: aws_s3_upload
             /// </summary>
-            AwsS3Upload = 4
+            AwsS3Upload = 4,
+
+            /// <summary>
+            /// Enum UnknownDefaultOpenApi for value: unknown_default_open_api
+            /// </summary>
+            UnknownDefaultOpenApi = 5
         }
 
         /// <summary>
@@ -269,7 +308,11 @@ namespace DocSpring.Client.Model
             if (value.Equals("aws_s3_upload"))
                 return ActionTypeEnum.AwsS3Upload;
 
-            throw new NotImplementedException($"Could not convert value to type ActionTypeEnum: '{value}'");
+            if (value.Equals("unknown_default_open_api"))
+                return ActionTypeEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return ActionTypeEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -291,7 +334,11 @@ namespace DocSpring.Client.Model
             if (value.Equals("aws_s3_upload"))
                 return ActionTypeEnum.AwsS3Upload;
 
-            return null;
+            if (value.Equals("unknown_default_open_api"))
+                return ActionTypeEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return ActionTypeEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -316,6 +363,9 @@ namespace DocSpring.Client.Model
 
             if (value == ActionTypeEnum.AwsS3Upload)
                 return "aws_s3_upload";
+
+            if (value == ActionTypeEnum.UnknownDefaultOpenApi)
+                return "unknown_default_open_api";
 
             throw new NotImplementedException($"Value could not be handled: '{value}'");
         }
@@ -345,6 +395,12 @@ namespace DocSpring.Client.Model
         public string integration_id { get; set; }
 
         /// <summary>
+        /// Gets or Sets error_message
+        /// </summary>
+        [JsonPropertyName("error_message")]
+        public string error_message { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -358,6 +414,7 @@ namespace DocSpring.Client.Model
             sb.Append("  id: ").Append(id).Append("\n");
             sb.Append("  integration_id: ").Append(integration_id).Append("\n");
             sb.Append("  action_type: ").Append(action_type).Append("\n");
+            sb.Append("  error_message: ").Append(error_message).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -402,6 +459,7 @@ namespace DocSpring.Client.Model
             Option<string> id = default;
             Option<string> integrationId = default;
             Option<CombinedSubmissionAction.ActionTypeEnum?> actionType = default;
+            Option<string> errorMessage = default;
 
             while (utf8JsonReader.Read())
             {
@@ -439,8 +497,10 @@ namespace DocSpring.Client.Model
                             break;
                         case "action_type":
                             string actionTypeRawValue = utf8JsonReader.GetString();
-                            if (actionTypeRawValue != null)
-                                actionType = new Option<CombinedSubmissionAction.ActionTypeEnum?>(CombinedSubmissionAction.ActionTypeEnumFromStringOrDefault(actionTypeRawValue));
+                            actionType = new Option<CombinedSubmissionAction.ActionTypeEnum?>(actionTypeRawValue == null ? (CombinedSubmissionAction.ActionTypeEnum?)null : CombinedSubmissionAction.ActionTypeEnumFromStringOrDefault(actionTypeRawValue));
+                            break;
+                        case "error_message":
+                            errorMessage = new Option<string>(utf8JsonReader.GetString());
                             break;
                         default:
                             break;
@@ -466,6 +526,9 @@ namespace DocSpring.Client.Model
             if (!actionType.IsSet)
                 throw new ArgumentException("Property is required for class CombinedSubmissionAction.", nameof(actionType));
 
+            if (!errorMessage.IsSet)
+                throw new ArgumentException("Property is required for class CombinedSubmissionAction.", nameof(errorMessage));
+
             if (state.IsSet && state.Value == null)
                 throw new ArgumentNullException(nameof(state), "Property is not nullable for class CombinedSubmissionAction.");
 
@@ -475,7 +538,7 @@ namespace DocSpring.Client.Model
             if (resultData.IsSet && resultData.Value == null)
                 throw new ArgumentNullException(nameof(resultData), "Property is not nullable for class CombinedSubmissionAction.");
 
-            return new CombinedSubmissionAction(state.Value.Value, actionCategory.Value.Value, resultData.Value, id.Value, integrationId.Value, actionType.Value);
+            return new CombinedSubmissionAction(state.Value.Value, actionCategory.Value.Value, resultData.Value, id.Value, integrationId.Value, actionType.Value, errorMessage.Value);
         }
 
         /// <summary>
@@ -521,11 +584,21 @@ namespace DocSpring.Client.Model
             else
                 writer.WriteNull("integration_id");
 
-            var actionTypeRawValue = CombinedSubmissionAction.ActionTypeEnumToJsonValue(combinedSubmissionAction.action_type.Value);
-            if (actionTypeRawValue != null)
-                writer.WriteString("action_type", actionTypeRawValue);
-            else
+            if (combinedSubmissionAction.action_type == null)
                 writer.WriteNull("action_type");
+            else
+            {
+                var actionTypeRawValue = CombinedSubmissionAction.ActionTypeEnumToJsonValue(combinedSubmissionAction.action_type.Value);
+                if (actionTypeRawValue != null)
+                    writer.WriteString("action_type", actionTypeRawValue);
+                else
+                    writer.WriteNull("action_type");
+            }
+
+            if (combinedSubmissionAction.error_message != null)
+                writer.WriteString("error_message", combinedSubmissionAction.error_message);
+            else
+                writer.WriteNull("error_message");
         }
     }
 }

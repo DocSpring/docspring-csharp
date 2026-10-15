@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **metadata** | **Object** |  | 
 **viewed_at** | **string** |  | 
 **completed_at** | **string** |  | 
+**declined_at** | **string** |  | 
 **data** | **Object** |  | 
 **auth_provider** | **string** |  | 
 **auth_session_started_at** | **string** |  | 

@@ -108,6 +108,33 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'embed_edit_allow_settings'
+        /// </summary>
+        [Fact]
+        public void embed_edit_allow_settingsTest()
+        {
+            // TODO unit test for the property 'embed_edit_allow_settings'
+        }
+
+        /// <summary>
+        /// Test the property 'embed_edit_allow_versioning'
+        /// </summary>
+        [Fact]
+        public void embed_edit_allow_versioningTest()
+        {
+            // TODO unit test for the property 'embed_edit_allow_versioning'
+        }
+
+        /// <summary>
+        /// Test the property 'embed_edit_allow_document_replacement'
+        /// </summary>
+        [Fact]
+        public void embed_edit_allow_document_replacementTest()
+        {
+            // TODO unit test for the property 'embed_edit_allow_document_replacement'
+        }
+
+        /// <summary>
         /// Test the property 'encrypt_pdfs'
         /// </summary>
         [Fact]
@@ -177,6 +204,15 @@ namespace DocSpring.Client.Test.Model
         public void page_countTest()
         {
             // TODO unit test for the property 'page_count'
+        }
+
+        /// <summary>
+        /// Test the property 'path'
+        /// </summary>
+        [Fact]
+        public void pathTest()
+        {
+            // TODO unit test for the property 'path'
         }
 
         /// <summary>
@@ -324,15 +360,6 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
-        /// Test the property 'path'
-        /// </summary>
-        [Fact]
-        public void pathTest()
-        {
-            // TODO unit test for the property 'path'
-        }
-
-        /// <summary>
         /// Test the property 'permanent_document_url'
         /// </summary>
         [Fact]
@@ -396,6 +423,15 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'embed_edit_token'
+        /// </summary>
+        [Fact]
+        public void embed_edit_tokenTest()
+        {
+            // TODO unit test for the property 'embed_edit_token'
+        }
+
+        /// <summary>
         /// Test the property 'latest_version'
         /// </summary>
         [Fact]
@@ -429,6 +465,33 @@ namespace DocSpring.Client.Test.Model
         public void last_changed_by_idTest()
         {
             // TODO unit test for the property 'last_changed_by_id'
+        }
+
+        /// <summary>
+        /// Test the property 'last_changed_by_external_name'
+        /// </summary>
+        [Fact]
+        public void last_changed_by_external_nameTest()
+        {
+            // TODO unit test for the property 'last_changed_by_external_name'
+        }
+
+        /// <summary>
+        /// Test the property 'last_changed_by_external_email'
+        /// </summary>
+        [Fact]
+        public void last_changed_by_external_emailTest()
+        {
+            // TODO unit test for the property 'last_changed_by_external_email'
+        }
+
+        /// <summary>
+        /// Test the property 'last_changed_by_external_id'
+        /// </summary>
+        [Fact]
+        public void last_changed_by_external_idTest()
+        {
+            // TODO unit test for the property 'last_changed_by_external_id'
         }
     }
 }

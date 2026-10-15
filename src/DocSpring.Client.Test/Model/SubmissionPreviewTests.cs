@@ -135,6 +135,15 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'error_message'
+        /// </summary>
+        [Fact]
+        public void error_messageTest()
+        {
+            // TODO unit test for the property 'error_message'
+        }
+
+        /// <summary>
         /// Test the property 'expires_at'
         /// </summary>
         [Fact]

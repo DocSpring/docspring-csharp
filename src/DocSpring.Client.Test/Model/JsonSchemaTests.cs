@@ -72,6 +72,15 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'schema_id'
+        /// </summary>
+        [Fact]
+        public void schema_idTest()
+        {
+            // TODO unit test for the property 'schema_id'
+        }
+
+        /// <summary>
         /// Test the property 'title'
         /// </summary>
         [Fact]
@@ -132,6 +141,24 @@ namespace DocSpring.Client.Test.Model
         public void requiredTest()
         {
             // TODO unit test for the property 'required'
+        }
+
+        /// <summary>
+        /// Test the property 'dependencies'
+        /// </summary>
+        [Fact]
+        public void dependenciesTest()
+        {
+            // TODO unit test for the property 'dependencies'
+        }
+
+        /// <summary>
+        /// Test the property 'allOf'
+        /// </summary>
+        [Fact]
+        public void allOfTest()
+        {
+            // TODO unit test for the property 'allOf'
         }
     }
 }

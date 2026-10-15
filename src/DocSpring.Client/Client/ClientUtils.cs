@@ -195,6 +195,8 @@ namespace DocSpring.Client.Client
                 return TemplateAddFieldsResponse.StatusEnumToJsonValue(templateAddFieldsResponseStatusEnum);
             if (obj is TemplateDeleteResponse.StatusEnum templateDeleteResponseStatusEnum)
                 return TemplateDeleteResponse.StatusEnumToJsonValue(templateDeleteResponseStatusEnum);
+            if (obj is TemplateModelCodeResponse.LangEnum templateModelCodeResponseLangEnum)
+                return TemplateModelCodeResponse.LangEnumToJsonValue(templateModelCodeResponseLangEnum);
             if (obj is TemplatePreview.DocumentStateEnum templatePreviewDocumentStateEnum)
                 return TemplatePreview.DocumentStateEnumToJsonValue(templatePreviewDocumentStateEnum);
             if (obj is TemplatePreview.TemplateTypeEnum templatePreviewTemplateTypeEnum)
@@ -209,6 +211,8 @@ namespace DocSpring.Client.Client
                 return UpdateSubmissionDataRequestData.AuthTypeEnumToJsonValue(updateSubmissionDataRequestDataAuthTypeEnum);
             if (obj is UploadPresignResponse.MethodEnum uploadPresignResponseMethodEnum)
                 return UploadPresignResponse.MethodEnumToJsonValue(uploadPresignResponseMethodEnum);
+            if (obj is Webhook.ModeEnum webhookModeEnum)
+                return Webhook.ModeEnumToJsonValue(webhookModeEnum);
             if (obj is ICollection collection)
             {
                 List<string> entries = new List<string>();

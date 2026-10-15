@@ -85,7 +85,12 @@ namespace DocSpring.Client.Model
             /// <summary>
             /// Enum Error for value: error
             /// </summary>
-            Error = 3
+            Error = 3,
+
+            /// <summary>
+            /// Enum UnknownDefaultOpenApi for value: unknown_default_open_api
+            /// </summary>
+            UnknownDefaultOpenApi = 4
         }
 
         /// <summary>
@@ -105,7 +110,11 @@ namespace DocSpring.Client.Model
             if (value.Equals("error"))
                 return StateEnum.Error;
 
-            throw new NotImplementedException($"Could not convert value to type StateEnum: '{value}'");
+            if (value.Equals("unknown_default_open_api"))
+                return StateEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return StateEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -124,7 +133,11 @@ namespace DocSpring.Client.Model
             if (value.Equals("error"))
                 return StateEnum.Error;
 
-            return null;
+            if (value.Equals("unknown_default_open_api"))
+                return StateEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return StateEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -143,6 +156,9 @@ namespace DocSpring.Client.Model
 
             if (value == StateEnum.Error)
                 return "error";
+
+            if (value == StateEnum.UnknownDefaultOpenApi)
+                return "unknown_default_open_api";
 
             throw new NotImplementedException($"Value could not be handled: '{value}'");
         }

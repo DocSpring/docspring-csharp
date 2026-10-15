@@ -58,6 +58,7 @@ namespace DocSpring.Client.Client
             _jsonOptions.Converters.Add(new CreateSubmissionDataRequestResponseJsonConverter());
             _jsonOptions.Converters.Add(new CreateSubmissionDataRequestTokenResponseJsonConverter());
             _jsonOptions.Converters.Add(new CreateSubmissionResponseJsonConverter());
+            _jsonOptions.Converters.Add(new CreateWebhookDataJsonConverter());
             _jsonOptions.Converters.Add(new CustomFileJsonConverter());
             _jsonOptions.Converters.Add(new ErrorOrMultipleErrorsResponseJsonConverter());
             _jsonOptions.Converters.Add(new ErrorResponseJsonConverter());
@@ -86,12 +87,15 @@ namespace DocSpring.Client.Client
             _jsonOptions.Converters.Add(new TemplateJsonConverter());
             _jsonOptions.Converters.Add(new TemplateAddFieldsResponseJsonConverter());
             _jsonOptions.Converters.Add(new TemplateDeleteResponseJsonConverter());
+            _jsonOptions.Converters.Add(new TemplateModelCodeResponseJsonConverter());
             _jsonOptions.Converters.Add(new TemplatePreviewJsonConverter());
             _jsonOptions.Converters.Add(new TemplatePublishVersionResponseJsonConverter());
             _jsonOptions.Converters.Add(new UpdateHtmlTemplateJsonConverter());
             _jsonOptions.Converters.Add(new UpdatePdfTemplateJsonConverter());
             _jsonOptions.Converters.Add(new UpdateSubmissionDataRequestDataJsonConverter());
+            _jsonOptions.Converters.Add(new UpdateWebhookDataJsonConverter());
             _jsonOptions.Converters.Add(new UploadPresignResponseJsonConverter());
+            _jsonOptions.Converters.Add(new WebhookJsonConverter());
             JsonSerializerOptionsProvider jsonSerializerOptionsProvider = new JsonSerializerOptionsProvider(_jsonOptions);
             _services.AddSingleton(jsonSerializerOptionsProvider);
             _services.AddSingleton<IApiFactory, ApiFactory>();
@@ -113,7 +117,7 @@ namespace DocSpring.Client.Client
 
             List<IHttpClientBuilder> builders = new List<IHttpClientBuilder>();
 
-            builders.Add(_services.AddHttpClient<DocSpring.Client.Api.IClient, DocSpring.Client.Api.Client>(c => { c.DefaultRequestHeaders.UserAgent.ParseAdd("docspring-csharp-3.2.0"); if (client != null) client(c); }));
+            builders.Add(_services.AddHttpClient<DocSpring.Client.Api.IClient, DocSpring.Client.Api.Client>(c => { c.DefaultRequestHeaders.UserAgent.ParseAdd("docspring-csharp-3.3.0"); if (client != null) client(c); }));
             
             if (builder != null)
                 foreach (IHttpClientBuilder instance in builders)

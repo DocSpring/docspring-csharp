@@ -61,7 +61,7 @@ namespace DocSpring.Client.Api
         /// Generate multiple PDFs
         /// </summary>
         /// <remarks>
-        /// Generates up to 50 PDFs in a single request. Each submission can use a different template and data. Supports both synchronous (wait for all PDFs) and asynchronous processing. More efficient than individual requests when creating multiple PDFs.  See also: - [Batch and Combine PDFs](https://docspring.com/docs/api-guide/generate-pdfs/batch-generate-pdfs/) - Generate and merge PDFs in one request 
+        /// Generates up to 50 PDFs in a single request. Each submission can use a different template and data. Supports both synchronous (wait for all PDFs) and asynchronous processing. More efficient than individual requests when creating multiple PDFs.  See also: - [Batch Generate PDFs](https://docspring.com/docs/api-guide/generate-pdfs/batch-generate-pdfs/) - Request format, responses, and limits 
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="data"></param>
@@ -74,7 +74,7 @@ namespace DocSpring.Client.Api
         /// Generate multiple PDFs
         /// </summary>
         /// <remarks>
-        /// Generates up to 50 PDFs in a single request. Each submission can use a different template and data. Supports both synchronous (wait for all PDFs) and asynchronous processing. More efficient than individual requests when creating multiple PDFs.  See also: - [Batch and Combine PDFs](https://docspring.com/docs/api-guide/generate-pdfs/batch-generate-pdfs/) - Generate and merge PDFs in one request 
+        /// Generates up to 50 PDFs in a single request. Each submission can use a different template and data. Supports both synchronous (wait for all PDFs) and asynchronous processing. More efficient than individual requests when creating multiple PDFs.  See also: - [Batch Generate PDFs](https://docspring.com/docs/api-guide/generate-pdfs/batch-generate-pdfs/) - Request format, responses, and limits 
         /// </remarks>
         /// <param name="data"></param>
         /// <param name="wait">Wait for submission batch to be processed before returning. Set to false to return immediately. Default: true (on sync.* subdomain) (optional, default to true)</param>
@@ -182,7 +182,7 @@ namespace DocSpring.Client.Api
         /// Create a new data request token for form authentication
         /// </summary>
         /// <remarks>
-        /// Creates an authentication token for accessing a data request form. Tokens can be created for API access (1 hour expiration) or email links (30 day expiration). Returns a token and a pre-authenticated URL for the data request form.  See also: - [Embedded Data Requests Guide](https://docspring.com/docs/guides/embedded-forms/embedded-data-requests/) 
+        /// Creates an authentication token for accessing a data request form. Returns a token and a pre-authenticated URL for the data request form. The token remains valid until the data request is completed.  See also: - [Embedded Data Requests Guide](https://docspring.com/docs/guides/embedded-forms/embedded-data-requests/) 
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="dataRequestId"></param>
@@ -195,7 +195,7 @@ namespace DocSpring.Client.Api
         /// Create a new data request token for form authentication
         /// </summary>
         /// <remarks>
-        /// Creates an authentication token for accessing a data request form. Tokens can be created for API access (1 hour expiration) or email links (30 day expiration). Returns a token and a pre-authenticated URL for the data request form.  See also: - [Embedded Data Requests Guide](https://docspring.com/docs/guides/embedded-forms/embedded-data-requests/) 
+        /// Creates an authentication token for accessing a data request form. Returns a token and a pre-authenticated URL for the data request form. The token remains valid until the data request is completed.  See also: - [Embedded Data Requests Guide](https://docspring.com/docs/guides/embedded-forms/embedded-data-requests/) 
         /// </remarks>
         /// <param name="dataRequestId"></param>
         /// <param name="type"> (optional)</param>
@@ -304,6 +304,29 @@ namespace DocSpring.Client.Api
         Task<ICreatePdfTemplateFromUploadApiResponse> CreatePdfTemplateFromUploadOrDefaultAsync(CreatePdfTemplate data, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Create a webhook
+        /// </summary>
+        /// <remarks>
+        /// Creates a webhook that delivers a POST request to your endpoint whenever a subscribed event occurs. Optionally scope the webhook to specific API tokens, templates, or folders. 
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="data"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="ICreateWebhookApiResponse"/>&gt;</returns>
+        Task<ICreateWebhookApiResponse> CreateWebhookAsync(CreateWebhookData data, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Create a webhook
+        /// </summary>
+        /// <remarks>
+        /// Creates a webhook that delivers a POST request to your endpoint whenever a subscribed event occurs. Optionally scope the webhook to specific API tokens, templates, or folders. 
+        /// </remarks>
+        /// <param name="data"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="ICreateWebhookApiResponse"/>&gt;</returns>
+        Task<ICreateWebhookApiResponse> CreateWebhookOrDefaultAsync(CreateWebhookData data, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Delete a folder
         /// </summary>
         /// <remarks>
@@ -350,6 +373,29 @@ namespace DocSpring.Client.Api
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IDeleteTemplateApiResponse"/>&gt;</returns>
         Task<IDeleteTemplateApiResponse> DeleteTemplateOrDefaultAsync(string templateId, Option<string> version = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Delete a webhook
+        /// </summary>
+        /// <remarks>
+        /// Permanently deletes a webhook so it stops receiving events, and returns the deleted webhook.
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="webhookId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteWebhookApiResponse"/>&gt;</returns>
+        Task<IDeleteWebhookApiResponse> DeleteWebhookAsync(string webhookId, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Delete a webhook
+        /// </summary>
+        /// <remarks>
+        /// Permanently deletes a webhook so it stops receiving events, and returns the deleted webhook.
+        /// </remarks>
+        /// <param name="webhookId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteWebhookApiResponse"/>&gt;</returns>
+        Task<IDeleteWebhookApiResponse> DeleteWebhookOrDefaultAsync(string webhookId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Expire a combined submission
@@ -401,7 +447,7 @@ namespace DocSpring.Client.Api
         /// Generate a PDF
         /// </summary>
         /// <remarks>
-        /// Creates a PDF submission by filling in a template with data. Supports both synchronous (default) and asynchronous processing. Set &#x60;wait: false&#x60; to return immediately.  See also: - [Customize the PDF Title and Filename](https://docspring.com/docs/api-guide/generate-pdfs/customize-pdf-title-and-filename/) - Set custom metadata - [Handling Truncated Text](https://docspring.com/docs/api-guide/generate-pdfs/handle-truncated-text/) - Handle text that doesn&#39;t fit in fields 
+        /// Creates a PDF submission by filling in a template with data. Supports both synchronous (default) and asynchronous processing. Add the &#x60;wait&#x3D;false&#x60; query parameter to return immediately.  See also: - [Customize the PDF Title and Filename](https://docspring.com/docs/api-guide/generate-pdfs/customize-pdf-title-and-filename/) - Set custom metadata - [Handling Truncated Text](https://docspring.com/docs/api-guide/generate-pdfs/handle-truncated-text/) - Handle text that doesn&#39;t fit in fields 
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId"></param>
@@ -415,7 +461,7 @@ namespace DocSpring.Client.Api
         /// Generate a PDF
         /// </summary>
         /// <remarks>
-        /// Creates a PDF submission by filling in a template with data. Supports both synchronous (default) and asynchronous processing. Set &#x60;wait: false&#x60; to return immediately.  See also: - [Customize the PDF Title and Filename](https://docspring.com/docs/api-guide/generate-pdfs/customize-pdf-title-and-filename/) - Set custom metadata - [Handling Truncated Text](https://docspring.com/docs/api-guide/generate-pdfs/handle-truncated-text/) - Handle text that doesn&#39;t fit in fields 
+        /// Creates a PDF submission by filling in a template with data. Supports both synchronous (default) and asynchronous processing. Add the &#x60;wait&#x3D;false&#x60; query parameter to return immediately.  See also: - [Customize the PDF Title and Filename](https://docspring.com/docs/api-guide/generate-pdfs/customize-pdf-title-and-filename/) - Set custom metadata - [Handling Truncated Text](https://docspring.com/docs/api-guide/generate-pdfs/handle-truncated-text/) - Handle text that doesn&#39;t fit in fields 
         /// </remarks>
         /// <param name="templateId"></param>
         /// <param name="submission"></param>
@@ -611,6 +657,31 @@ namespace DocSpring.Client.Api
         Task<IGetTemplateApiResponse> GetTemplateOrDefaultAsync(string templateId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Generate typed model code for a template
+        /// </summary>
+        /// <remarks>
+        /// Generates typed model code for a template&#39;s submission data from its JSON schema, in TypeScript, JavaScript, Ruby, Python, PHP, Java, C#, Elixir or Go. Build your submission data with the generated types so your app catches mistakes before it calls the API.  &#x60;root_type_name&#x60; is the type that describes the whole submission data object, qualified with its namespace or package where there is one. Java returns every class in &#x60;code&#x60;, each under a &#x60;// ClassName.java&#x60; comment: split them into one file per class.  A template with no named fields returns 422, since there are no types to generate.  See also: - [Generate Model Code](https://docspring.com/docs/template-editor/generate-model-code/) - Use the generated types 
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="lang">The language to generate code for</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetTemplateModelCodeApiResponse"/>&gt;</returns>
+        Task<IGetTemplateModelCodeApiResponse> GetTemplateModelCodeAsync(string templateId, string lang, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Generate typed model code for a template
+        /// </summary>
+        /// <remarks>
+        /// Generates typed model code for a template&#39;s submission data from its JSON schema, in TypeScript, JavaScript, Ruby, Python, PHP, Java, C#, Elixir or Go. Build your submission data with the generated types so your app catches mistakes before it calls the API.  &#x60;root_type_name&#x60; is the type that describes the whole submission data object, qualified with its namespace or package where there is one. Java returns every class in &#x60;code&#x60;, each under a &#x60;// ClassName.java&#x60; comment: split them into one file per class.  A template with no named fields returns 422, since there are no types to generate.  See also: - [Generate Model Code](https://docspring.com/docs/template-editor/generate-model-code/) - Use the generated types 
+        /// </remarks>
+        /// <param name="templateId"></param>
+        /// <param name="lang">The language to generate code for</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetTemplateModelCodeApiResponse"/>&gt;</returns>
+        Task<IGetTemplateModelCodeApiResponse> GetTemplateModelCodeOrDefaultAsync(string templateId, string lang, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Fetch the JSON schema for a template
         /// </summary>
         /// <remarks>
@@ -632,6 +703,29 @@ namespace DocSpring.Client.Api
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IGetTemplateSchemaApiResponse"/>&gt;</returns>
         Task<IGetTemplateSchemaApiResponse> GetTemplateSchemaOrDefaultAsync(string templateId, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Get a webhook
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a single webhook by its ID.
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="webhookId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetWebhookApiResponse"/>&gt;</returns>
+        Task<IGetWebhookApiResponse> GetWebhookAsync(string webhookId, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Get a webhook
+        /// </summary>
+        /// <remarks>
+        /// Retrieves a single webhook by its ID.
+        /// </remarks>
+        /// <param name="webhookId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetWebhookApiResponse"/>&gt;</returns>
+        Task<IGetWebhookApiResponse> GetWebhookOrDefaultAsync(string webhookId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get a list of all combined submissions
@@ -777,6 +871,41 @@ namespace DocSpring.Client.Api
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IListTemplatesApiResponse"/>&gt;</returns>
         Task<IListTemplatesApiResponse> ListTemplatesOrDefaultAsync(Option<string> query = default, Option<string> parentFolderId = default, Option<int> page = default, Option<int> perPage = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Get a list of all webhooks
+        /// </summary>
+        /// <remarks>
+        /// Returns a list of the webhooks configured for your account. Supports pagination and filtering by event type, mode, and the API token, template, or folder a webhook is scoped to. 
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">Default: 1 (optional)</param>
+        /// <param name="perPage">Default: 50 (optional)</param>
+        /// <param name="eventType">Filter by a subscribed event type (optional)</param>
+        /// <param name="mode">Filter by mode (test or live) (optional)</param>
+        /// <param name="templateId">Filter by a scoped template ID (optional)</param>
+        /// <param name="folderId">Filter by a scoped folder ID (optional)</param>
+        /// <param name="apiTokenId">Filter by a scoped API token ID (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IListWebhooksApiResponse"/>&gt;</returns>
+        Task<IListWebhooksApiResponse> ListWebhooksAsync(Option<int> page = default, Option<int> perPage = default, Option<string> eventType = default, Option<string> mode = default, Option<string> templateId = default, Option<string> folderId = default, Option<string> apiTokenId = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Get a list of all webhooks
+        /// </summary>
+        /// <remarks>
+        /// Returns a list of the webhooks configured for your account. Supports pagination and filtering by event type, mode, and the API token, template, or folder a webhook is scoped to. 
+        /// </remarks>
+        /// <param name="page">Default: 1 (optional)</param>
+        /// <param name="perPage">Default: 50 (optional)</param>
+        /// <param name="eventType">Filter by a subscribed event type (optional)</param>
+        /// <param name="mode">Filter by mode (test or live) (optional)</param>
+        /// <param name="templateId">Filter by a scoped template ID (optional)</param>
+        /// <param name="folderId">Filter by a scoped folder ID (optional)</param>
+        /// <param name="apiTokenId">Filter by a scoped API token ID (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IListWebhooksApiResponse"/>&gt;</returns>
+        Task<IListWebhooksApiResponse> ListWebhooksOrDefaultAsync(Option<int> page = default, Option<int> perPage = default, Option<string> eventType = default, Option<string> mode = default, Option<string> templateId = default, Option<string> folderId = default, Option<string> apiTokenId = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Move a folder
@@ -953,7 +1082,7 @@ namespace DocSpring.Client.Api
         /// Update a Template
         /// </summary>
         /// <remarks>
-        /// Updates template content and properties. For HTML templates, you can modify the HTML, SCSS, headers, footers, name, and description. Changes are applied to your draft template and do not affect published template versions. 
+        /// Updates template content and properties. For HTML templates, you can modify the HTML, SCSS, headers, footers, name, and description. Changes are applied to your draft template and do not affect published template versions. The exception is &#x60;parent_folder_id&#x60;: moving the template to another folder moves its published versions too. 
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId"></param>
@@ -966,7 +1095,7 @@ namespace DocSpring.Client.Api
         /// Update a Template
         /// </summary>
         /// <remarks>
-        /// Updates template content and properties. For HTML templates, you can modify the HTML, SCSS, headers, footers, name, and description. Changes are applied to your draft template and do not affect published template versions. 
+        /// Updates template content and properties. For HTML templates, you can modify the HTML, SCSS, headers, footers, name, and description. Changes are applied to your draft template and do not affect published template versions. The exception is &#x60;parent_folder_id&#x60;: moving the template to another folder moves its published versions too. 
         /// </remarks>
         /// <param name="templateId"></param>
         /// <param name="data"></param>
@@ -1025,6 +1154,31 @@ namespace DocSpring.Client.Api
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IUpdateTemplateDocumentFromUploadApiResponse"/>&gt;</returns>
         Task<IUpdateTemplateDocumentFromUploadApiResponse> UpdateTemplateDocumentFromUploadOrDefaultAsync(string templateId, UpdatePdfTemplate data, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Update a webhook
+        /// </summary>
+        /// <remarks>
+        /// Updates the configuration of an existing webhook.
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="webhookId"></param>
+        /// <param name="data"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IUpdateWebhookApiResponse"/>&gt;</returns>
+        Task<IUpdateWebhookApiResponse> UpdateWebhookAsync(string webhookId, UpdateWebhookData data, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Update a webhook
+        /// </summary>
+        /// <remarks>
+        /// Updates the configuration of an existing webhook.
+        /// </remarks>
+        /// <param name="webhookId"></param>
+        /// <param name="data"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IUpdateWebhookApiResponse"/>&gt;</returns>
+        Task<IUpdateWebhookApiResponse> UpdateWebhookOrDefaultAsync(string webhookId, UpdateWebhookData data, System.Threading.CancellationToken cancellationToken = default);
     }
 
     /// <summary>
@@ -1084,7 +1238,7 @@ namespace DocSpring.Client.Api
     /// <summary>
     /// The <see cref="ICombinePdfsApiResponse"/>
     /// </summary>
-    public interface ICombinePdfsApiResponse : DocSpring.Client.Client.IApiResponse, ICreated<DocSpring.Client.Model.CreateCombinedSubmissionResponse>, IUnprocessableContent<DocSpring.Client.Model.MultipleErrorsResponse>, IBadRequest<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface ICombinePdfsApiResponse : DocSpring.Client.Client.IApiResponse, ICreated<DocSpring.Client.Model.CreateCombinedSubmissionResponse>, IUnprocessableContent<DocSpring.Client.Model.MultipleErrorsResponse>, IForbidden<DocSpring.Client.Model.ErrorResponse>, IBadRequest<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 201 Created
@@ -1097,6 +1251,12 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnprocessableContent { get; }
+
+        /// <summary>
+        /// Returns true if the response is 403 Forbidden
+        /// </summary>
+        /// <returns></returns>
+        bool IsForbidden { get; }
 
         /// <summary>
         /// Returns true if the response is 400 BadRequest
@@ -1280,6 +1440,30 @@ namespace DocSpring.Client.Api
     }
 
     /// <summary>
+    /// The <see cref="ICreateWebhookApiResponse"/>
+    /// </summary>
+    public interface ICreateWebhookApiResponse : DocSpring.Client.Client.IApiResponse, ICreated<DocSpring.Client.Model.Webhook>, IUnprocessableContent<DocSpring.Client.Model.MultipleErrorsResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    {
+        /// <summary>
+        /// Returns true if the response is 201 Created
+        /// </summary>
+        /// <returns></returns>
+        bool IsCreated { get; }
+
+        /// <summary>
+        /// Returns true if the response is 422 UnprocessableContent
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnprocessableContent { get; }
+
+        /// <summary>
+        /// Returns true if the response is 401 Unauthorized
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnauthorized { get; }
+    }
+
+    /// <summary>
     /// The <see cref="IDeleteFolderApiResponse"/>
     /// </summary>
     public interface IDeleteFolderApiResponse : DocSpring.Client.Client.IApiResponse, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IOk<DocSpring.Client.Model.Folder>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
@@ -1313,6 +1497,30 @@ namespace DocSpring.Client.Api
     /// The <see cref="IDeleteTemplateApiResponse"/>
     /// </summary>
     public interface IDeleteTemplateApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.TemplateDeleteResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    {
+        /// <summary>
+        /// Returns true if the response is 200 Ok
+        /// </summary>
+        /// <returns></returns>
+        bool IsOk { get; }
+
+        /// <summary>
+        /// Returns true if the response is 404 NotFound
+        /// </summary>
+        /// <returns></returns>
+        bool IsNotFound { get; }
+
+        /// <summary>
+        /// Returns true if the response is 401 Unauthorized
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnauthorized { get; }
+    }
+
+    /// <summary>
+    /// The <see cref="IDeleteWebhookApiResponse"/>
+    /// </summary>
+    public interface IDeleteWebhookApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Webhook>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -1604,9 +1812,63 @@ namespace DocSpring.Client.Api
     }
 
     /// <summary>
+    /// The <see cref="IGetTemplateModelCodeApiResponse"/>
+    /// </summary>
+    public interface IGetTemplateModelCodeApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.TemplateModelCodeResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    {
+        /// <summary>
+        /// Returns true if the response is 200 Ok
+        /// </summary>
+        /// <returns></returns>
+        bool IsOk { get; }
+
+        /// <summary>
+        /// Returns true if the response is 404 NotFound
+        /// </summary>
+        /// <returns></returns>
+        bool IsNotFound { get; }
+
+        /// <summary>
+        /// Returns true if the response is 422 UnprocessableContent
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnprocessableContent { get; }
+
+        /// <summary>
+        /// Returns true if the response is 401 Unauthorized
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnauthorized { get; }
+    }
+
+    /// <summary>
     /// The <see cref="IGetTemplateSchemaApiResponse"/>
     /// </summary>
     public interface IGetTemplateSchemaApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.JsonSchema>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    {
+        /// <summary>
+        /// Returns true if the response is 200 Ok
+        /// </summary>
+        /// <returns></returns>
+        bool IsOk { get; }
+
+        /// <summary>
+        /// Returns true if the response is 404 NotFound
+        /// </summary>
+        /// <returns></returns>
+        bool IsNotFound { get; }
+
+        /// <summary>
+        /// Returns true if the response is 401 Unauthorized
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnauthorized { get; }
+    }
+
+    /// <summary>
+    /// The <see cref="IGetWebhookApiResponse"/>
+    /// </summary>
+    public interface IGetWebhookApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Webhook>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -1721,6 +1983,24 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsNotFound { get; }
+
+        /// <summary>
+        /// Returns true if the response is 401 Unauthorized
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnauthorized { get; }
+    }
+
+    /// <summary>
+    /// The <see cref="IListWebhooksApiResponse"/>
+    /// </summary>
+    public interface IListWebhooksApiResponse : DocSpring.Client.Client.IApiResponse, IOk<List<Webhook>>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    {
+        /// <summary>
+        /// Returns true if the response is 200 Ok
+        /// </summary>
+        /// <returns></returns>
+        bool IsOk { get; }
 
         /// <summary>
         /// Returns true if the response is 401 Unauthorized
@@ -1912,13 +2192,19 @@ namespace DocSpring.Client.Api
     /// <summary>
     /// The <see cref="IUpdateTemplateApiResponse"/>
     /// </summary>
-    public interface IUpdateTemplateApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.SuccessMultipleErrorsResponse>
+    public interface IUpdateTemplateApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.SuccessMultipleErrorsResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
         /// </summary>
         /// <returns></returns>
         bool IsOk { get; }
+
+        /// <summary>
+        /// Returns true if the response is 404 NotFound
+        /// </summary>
+        /// <returns></returns>
+        bool IsNotFound { get; }
     }
 
     /// <summary>
@@ -1949,6 +2235,30 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsOk { get; }
+
+        /// <summary>
+        /// Returns true if the response is 401 Unauthorized
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnauthorized { get; }
+    }
+
+    /// <summary>
+    /// The <see cref="IUpdateWebhookApiResponse"/>
+    /// </summary>
+    public interface IUpdateWebhookApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Webhook>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    {
+        /// <summary>
+        /// Returns true if the response is 200 Ok
+        /// </summary>
+        /// <returns></returns>
+        bool IsOk { get; }
+
+        /// <summary>
+        /// Returns true if the response is 404 NotFound
+        /// </summary>
+        /// <returns></returns>
+        bool IsNotFound { get; }
 
         /// <summary>
         /// Returns true if the response is 401 Unauthorized
@@ -2185,6 +2495,26 @@ namespace DocSpring.Client.Api
         /// <summary>
         /// The event raised after the server response
         /// </summary>
+        public event EventHandler<ApiResponseEventArgs> OnCreateWebhook;
+
+        /// <summary>
+        /// The event raised after an error querying the server
+        /// </summary>
+        public event EventHandler<ExceptionEventArgs> OnErrorCreateWebhook;
+
+        internal void ExecuteOnCreateWebhook(Client.CreateWebhookApiResponse apiResponse)
+        {
+            OnCreateWebhook?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+        }
+
+        internal void ExecuteOnErrorCreateWebhook(Exception exception)
+        {
+            OnErrorCreateWebhook?.Invoke(this, new ExceptionEventArgs(exception));
+        }
+
+        /// <summary>
+        /// The event raised after the server response
+        /// </summary>
         public event EventHandler<ApiResponseEventArgs> OnDeleteFolder;
 
         /// <summary>
@@ -2220,6 +2550,26 @@ namespace DocSpring.Client.Api
         internal void ExecuteOnErrorDeleteTemplate(Exception exception)
         {
             OnErrorDeleteTemplate?.Invoke(this, new ExceptionEventArgs(exception));
+        }
+
+        /// <summary>
+        /// The event raised after the server response
+        /// </summary>
+        public event EventHandler<ApiResponseEventArgs> OnDeleteWebhook;
+
+        /// <summary>
+        /// The event raised after an error querying the server
+        /// </summary>
+        public event EventHandler<ExceptionEventArgs> OnErrorDeleteWebhook;
+
+        internal void ExecuteOnDeleteWebhook(Client.DeleteWebhookApiResponse apiResponse)
+        {
+            OnDeleteWebhook?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+        }
+
+        internal void ExecuteOnErrorDeleteWebhook(Exception exception)
+        {
+            OnErrorDeleteWebhook?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
@@ -2445,6 +2795,26 @@ namespace DocSpring.Client.Api
         /// <summary>
         /// The event raised after the server response
         /// </summary>
+        public event EventHandler<ApiResponseEventArgs> OnGetTemplateModelCode;
+
+        /// <summary>
+        /// The event raised after an error querying the server
+        /// </summary>
+        public event EventHandler<ExceptionEventArgs> OnErrorGetTemplateModelCode;
+
+        internal void ExecuteOnGetTemplateModelCode(Client.GetTemplateModelCodeApiResponse apiResponse)
+        {
+            OnGetTemplateModelCode?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+        }
+
+        internal void ExecuteOnErrorGetTemplateModelCode(Exception exception)
+        {
+            OnErrorGetTemplateModelCode?.Invoke(this, new ExceptionEventArgs(exception));
+        }
+
+        /// <summary>
+        /// The event raised after the server response
+        /// </summary>
         public event EventHandler<ApiResponseEventArgs> OnGetTemplateSchema;
 
         /// <summary>
@@ -2460,6 +2830,26 @@ namespace DocSpring.Client.Api
         internal void ExecuteOnErrorGetTemplateSchema(Exception exception)
         {
             OnErrorGetTemplateSchema?.Invoke(this, new ExceptionEventArgs(exception));
+        }
+
+        /// <summary>
+        /// The event raised after the server response
+        /// </summary>
+        public event EventHandler<ApiResponseEventArgs> OnGetWebhook;
+
+        /// <summary>
+        /// The event raised after an error querying the server
+        /// </summary>
+        public event EventHandler<ExceptionEventArgs> OnErrorGetWebhook;
+
+        internal void ExecuteOnGetWebhook(Client.GetWebhookApiResponse apiResponse)
+        {
+            OnGetWebhook?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+        }
+
+        internal void ExecuteOnErrorGetWebhook(Exception exception)
+        {
+            OnErrorGetWebhook?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
@@ -2560,6 +2950,26 @@ namespace DocSpring.Client.Api
         internal void ExecuteOnErrorListTemplates(Exception exception)
         {
             OnErrorListTemplates?.Invoke(this, new ExceptionEventArgs(exception));
+        }
+
+        /// <summary>
+        /// The event raised after the server response
+        /// </summary>
+        public event EventHandler<ApiResponseEventArgs> OnListWebhooks;
+
+        /// <summary>
+        /// The event raised after an error querying the server
+        /// </summary>
+        public event EventHandler<ExceptionEventArgs> OnErrorListWebhooks;
+
+        internal void ExecuteOnListWebhooks(Client.ListWebhooksApiResponse apiResponse)
+        {
+            OnListWebhooks?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+        }
+
+        internal void ExecuteOnErrorListWebhooks(Exception exception)
+        {
+            OnErrorListWebhooks?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
@@ -2760,6 +3170,26 @@ namespace DocSpring.Client.Api
         internal void ExecuteOnErrorUpdateTemplateDocumentFromUpload(Exception exception)
         {
             OnErrorUpdateTemplateDocumentFromUpload?.Invoke(this, new ExceptionEventArgs(exception));
+        }
+
+        /// <summary>
+        /// The event raised after the server response
+        /// </summary>
+        public event EventHandler<ApiResponseEventArgs> OnUpdateWebhook;
+
+        /// <summary>
+        /// The event raised after an error querying the server
+        /// </summary>
+        public event EventHandler<ExceptionEventArgs> OnErrorUpdateWebhook;
+
+        internal void ExecuteOnUpdateWebhook(Client.UpdateWebhookApiResponse apiResponse)
+        {
+            OnUpdateWebhook?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+        }
+
+        internal void ExecuteOnErrorUpdateWebhook(Exception exception)
+        {
+            OnErrorUpdateWebhook?.Invoke(this, new ExceptionEventArgs(exception));
         }
     }
 
@@ -3194,7 +3624,7 @@ namespace DocSpring.Client.Api
         partial void OnErrorBatchGeneratePdfs(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, SubmissionBatchData data, Option<bool> wait);
 
         /// <summary>
-        /// Generate multiple PDFs Generates up to 50 PDFs in a single request. Each submission can use a different template and data. Supports both synchronous (wait for all PDFs) and asynchronous processing. More efficient than individual requests when creating multiple PDFs.  See also: - [Batch and Combine PDFs](https://docspring.com/docs/api-guide/generate-pdfs/batch-generate-pdfs/) - Generate and merge PDFs in one request 
+        /// Generate multiple PDFs Generates up to 50 PDFs in a single request. Each submission can use a different template and data. Supports both synchronous (wait for all PDFs) and asynchronous processing. More efficient than individual requests when creating multiple PDFs.  See also: - [Batch Generate PDFs](https://docspring.com/docs/api-guide/generate-pdfs/batch-generate-pdfs/) - Request format, responses, and limits 
         /// </summary>
         /// <param name="data"></param>
         /// <param name="wait">Wait for submission batch to be processed before returning. Set to false to return immediately. Default: true (on sync.* subdomain) (optional, default to true)</param>
@@ -3213,7 +3643,7 @@ namespace DocSpring.Client.Api
         }
 
         /// <summary>
-        /// Generate multiple PDFs Generates up to 50 PDFs in a single request. Each submission can use a different template and data. Supports both synchronous (wait for all PDFs) and asynchronous processing. More efficient than individual requests when creating multiple PDFs.  See also: - [Batch and Combine PDFs](https://docspring.com/docs/api-guide/generate-pdfs/batch-generate-pdfs/) - Generate and merge PDFs in one request 
+        /// Generate multiple PDFs Generates up to 50 PDFs in a single request. Each submission can use a different template and data. Supports both synchronous (wait for all PDFs) and asynchronous processing. More efficient than individual requests when creating multiple PDFs.  See also: - [Batch Generate PDFs](https://docspring.com/docs/api-guide/generate-pdfs/batch-generate-pdfs/) - Request format, responses, and limits 
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="data"></param>
@@ -3859,6 +4289,44 @@ namespace DocSpring.Client.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)422);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 403 Forbidden
+            /// </summary>
+            /// <returns></returns>
+            public bool IsForbidden => 403 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 403 Forbidden
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse Forbidden()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsForbidden
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 403 Forbidden and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryForbidden(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Forbidden();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)403);
                 }
 
                 return result != null;
@@ -5007,7 +5475,7 @@ namespace DocSpring.Client.Api
         partial void OnErrorCreateDataRequestToken(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string dataRequestId, Option<string> type);
 
         /// <summary>
-        /// Create a new data request token for form authentication Creates an authentication token for accessing a data request form. Tokens can be created for API access (1 hour expiration) or email links (30 day expiration). Returns a token and a pre-authenticated URL for the data request form.  See also: - [Embedded Data Requests Guide](https://docspring.com/docs/guides/embedded-forms/embedded-data-requests/) 
+        /// Create a new data request token for form authentication Creates an authentication token for accessing a data request form. Returns a token and a pre-authenticated URL for the data request form. The token remains valid until the data request is completed.  See also: - [Embedded Data Requests Guide](https://docspring.com/docs/guides/embedded-forms/embedded-data-requests/) 
         /// </summary>
         /// <param name="dataRequestId"></param>
         /// <param name="type"> (optional)</param>
@@ -5026,7 +5494,7 @@ namespace DocSpring.Client.Api
         }
 
         /// <summary>
-        /// Create a new data request token for form authentication Creates an authentication token for accessing a data request form. Tokens can be created for API access (1 hour expiration) or email links (30 day expiration). Returns a token and a pre-authenticated URL for the data request form.  See also: - [Embedded Data Requests Guide](https://docspring.com/docs/guides/embedded-forms/embedded-data-requests/) 
+        /// Create a new data request token for form authentication Creates an authentication token for accessing a data request form. Returns a token and a pre-authenticated URL for the data request form. The token remains valid until the data request is completed.  See also: - [Embedded Data Requests Guide](https://docspring.com/docs/guides/embedded-forms/embedded-data-requests/) 
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="dataRequestId"></param>
@@ -6664,6 +7132,353 @@ namespace DocSpring.Client.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
+        partial void FormatCreateWebhook(CreateWebhookData data);
+
+        /// <summary>
+        /// Validates the request parameters
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        private void ValidateCreateWebhook(CreateWebhookData data)
+        {
+            if (data == null)
+                throw new ArgumentNullException(nameof(data));
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="data"></param>
+        private void AfterCreateWebhookDefaultImplementation(ICreateWebhookApiResponse apiResponseLocalVar, CreateWebhookData data)
+        {
+            bool suppressDefaultLog = false;
+            AfterCreateWebhook(ref suppressDefaultLog, apiResponseLocalVar, data);
+            if (!suppressDefaultLog)
+                Logger.LogInformation("{0,-9} | {1} | {3}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="suppressDefaultLog"></param>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="data"></param>
+        partial void AfterCreateWebhook(ref bool suppressDefaultLog, ICreateWebhookApiResponse apiResponseLocalVar, CreateWebhookData data);
+
+        /// <summary>
+        /// Logs exceptions that occur while retrieving the server response
+        /// </summary>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="data"></param>
+        private void OnErrorCreateWebhookDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, CreateWebhookData data)
+        {
+            bool suppressDefaultLogLocalVar = false;
+            OnErrorCreateWebhook(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, data);
+            if (!suppressDefaultLogLocalVar)
+                Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
+        }
+
+        /// <summary>
+        /// A partial method that gives developers a way to provide customized exception handling
+        /// </summary>
+        /// <param name="suppressDefaultLogLocalVar"></param>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="data"></param>
+        partial void OnErrorCreateWebhook(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, CreateWebhookData data);
+
+        /// <summary>
+        /// Create a webhook Creates a webhook that delivers a POST request to your endpoint whenever a subscribed event occurs. Optionally scope the webhook to specific API tokens, templates, or folders. 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="ICreateWebhookApiResponse"/>&gt;</returns>
+        public async Task<ICreateWebhookApiResponse> CreateWebhookOrDefaultAsync(CreateWebhookData data, System.Threading.CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await CreateWebhookAsync(data, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Create a webhook Creates a webhook that delivers a POST request to your endpoint whenever a subscribed event occurs. Optionally scope the webhook to specific API tokens, templates, or folders. 
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="data"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="ICreateWebhookApiResponse"/>&gt;</returns>
+        public async Task<ICreateWebhookApiResponse> CreateWebhookAsync(CreateWebhookData data, System.Threading.CancellationToken cancellationToken = default)
+        {
+            UriBuilder uriBuilderLocalVar = new UriBuilder();
+
+            try
+            {
+                ValidateCreateWebhook(data);
+
+                FormatCreateWebhook(data);
+
+                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
+                {
+                    uriBuilderLocalVar.Host = HttpClient.BaseAddress.Host;
+                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
+                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
+                    var _fullPathLocalVar = "/webhooks";
+                    var _pathLocalVar = _fullPathLocalVar;
+                    string _queryLocalVar = null;
+                    var _qIdx = _fullPathLocalVar.IndexOf("?");
+                    if (_qIdx >= 0) { _pathLocalVar = _fullPathLocalVar.Substring(0, _qIdx); _queryLocalVar = _fullPathLocalVar.Substring(_qIdx + 1); }
+
+                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
+                        ? _pathLocalVar
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath, _pathLocalVar);
+                    if (_queryLocalVar != null) { uriBuilderLocalVar.Query = _queryLocalVar; }
+
+                    httpRequestMessageLocalVar.Content = (data as object) is System.IO.Stream stream
+                        ? httpRequestMessageLocalVar.Content = new StreamContent(stream)
+                        : httpRequestMessageLocalVar.Content = new StringContent(JsonSerializer.Serialize(data, _jsonSerializerOptions));
+
+                    List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
+                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
+
+                    BasicToken basicTokenLocalVar1 = (BasicToken) await BasicTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
+
+                    tokenBaseLocalVars.Add(basicTokenLocalVar1);
+
+                    basicTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    string[] contentTypes = new string[] {
+                        "application/json"
+                    };
+
+                    string contentTypeLocalVar = ClientUtils.SelectHeaderContentType(contentTypes);
+
+                    if (contentTypeLocalVar != null && httpRequestMessageLocalVar.Content != null && !(httpRequestMessageLocalVar.Content is MultipartFormDataContent))
+                        httpRequestMessageLocalVar.Content.Headers.ContentType = new MediaTypeHeaderValue(contentTypeLocalVar);
+
+                    string[] acceptLocalVars = new string[] {
+                        "application/json"
+                    };
+
+                    string acceptLocalVar = ClientUtils.SelectHeaderAccept(acceptLocalVars);
+
+                    if (acceptLocalVar != null)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptLocalVar));
+                    httpRequestMessageLocalVar.Method = new HttpMethod("POST");
+
+                    DateTime requestedAtLocalVar = DateTime.UtcNow;
+
+                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
+                    {
+                        ILogger<CreateWebhookApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<CreateWebhookApiResponse>();
+                        CreateWebhookApiResponse apiResponseLocalVar;
+
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                apiResponseLocalVar = new CreateWebhookApiResponse(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/webhooks", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
+
+                        AfterCreateWebhookDefaultImplementation(apiResponseLocalVar, data);
+
+                        Events.ExecuteOnCreateWebhook(apiResponseLocalVar);
+
+                        if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
+                            foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
+                                tokenBaseLocalVar.BeginRateLimit();
+
+                        return apiResponseLocalVar;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                OnErrorCreateWebhookDefaultImplementation(e, "/webhooks", uriBuilderLocalVar.Path, data);
+                Events.ExecuteOnErrorCreateWebhook(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="CreateWebhookApiResponse"/>
+        /// </summary>
+        public partial class CreateWebhookApiResponse : DocSpring.Client.Client.ApiResponse, ICreateWebhookApiResponse
+        {
+            /// <summary>
+            /// The logger
+            /// </summary>
+            public ILogger<CreateWebhookApiResponse> Logger { get; }
+
+            /// <summary>
+            /// The <see cref="CreateWebhookApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="rawContent"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public CreateWebhookApiResponse(ILogger<CreateWebhookApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="CreateWebhookApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public CreateWebhookApiResponse(ILogger<CreateWebhookApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 201 Created
+            /// </summary>
+            /// <returns></returns>
+            public bool IsCreated => 201 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 201 Created
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.Webhook Created()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsCreated
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.Webhook>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 201 Created and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryCreated(out DocSpring.Client.Model.Webhook result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Created();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)201);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnprocessableContent => 422 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.MultipleErrorsResponse UnprocessableContent()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsUnprocessableContent
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.MultipleErrorsResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnprocessableContent(out DocSpring.Client.Model.MultipleErrorsResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = UnprocessableContent();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)422);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnauthorized => 401 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse Unauthorized()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsUnauthorized
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnauthorized(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Unauthorized();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
+            {
+                bool suppressDefaultLog = false;
+                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
+                if (!suppressDefaultLog)
+                    Logger.LogError(exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+            }
+
+            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
+        }
+
         partial void FormatDeleteFolder(ref string folderId);
 
         /// <summary>
@@ -7288,6 +8103,341 @@ namespace DocSpring.Client.Api
             /// <param name="result"></param>
             /// <returns></returns>
             public bool TryOk(out DocSpring.Client.Model.TemplateDeleteResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Ok();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public bool IsNotFound => 404 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse NotFound()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsNotFound
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryNotFound(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = NotFound();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)404);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnauthorized => 401 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse Unauthorized()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsUnauthorized
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnauthorized(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Unauthorized();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
+            {
+                bool suppressDefaultLog = false;
+                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
+                if (!suppressDefaultLog)
+                    Logger.LogError(exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+            }
+
+            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
+        }
+
+        partial void FormatDeleteWebhook(ref string webhookId);
+
+        /// <summary>
+        /// Validates the request parameters
+        /// </summary>
+        /// <param name="webhookId"></param>
+        /// <returns></returns>
+        private void ValidateDeleteWebhook(string webhookId)
+        {
+            if (webhookId == null)
+                throw new ArgumentNullException(nameof(webhookId));
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="webhookId"></param>
+        private void AfterDeleteWebhookDefaultImplementation(IDeleteWebhookApiResponse apiResponseLocalVar, string webhookId)
+        {
+            bool suppressDefaultLog = false;
+            AfterDeleteWebhook(ref suppressDefaultLog, apiResponseLocalVar, webhookId);
+            if (!suppressDefaultLog)
+                Logger.LogInformation("{0,-9} | {1} | {3}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="suppressDefaultLog"></param>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="webhookId"></param>
+        partial void AfterDeleteWebhook(ref bool suppressDefaultLog, IDeleteWebhookApiResponse apiResponseLocalVar, string webhookId);
+
+        /// <summary>
+        /// Logs exceptions that occur while retrieving the server response
+        /// </summary>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="webhookId"></param>
+        private void OnErrorDeleteWebhookDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string webhookId)
+        {
+            bool suppressDefaultLogLocalVar = false;
+            OnErrorDeleteWebhook(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, webhookId);
+            if (!suppressDefaultLogLocalVar)
+                Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
+        }
+
+        /// <summary>
+        /// A partial method that gives developers a way to provide customized exception handling
+        /// </summary>
+        /// <param name="suppressDefaultLogLocalVar"></param>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="webhookId"></param>
+        partial void OnErrorDeleteWebhook(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string webhookId);
+
+        /// <summary>
+        /// Delete a webhook Permanently deletes a webhook so it stops receiving events, and returns the deleted webhook.
+        /// </summary>
+        /// <param name="webhookId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteWebhookApiResponse"/>&gt;</returns>
+        public async Task<IDeleteWebhookApiResponse> DeleteWebhookOrDefaultAsync(string webhookId, System.Threading.CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await DeleteWebhookAsync(webhookId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Delete a webhook Permanently deletes a webhook so it stops receiving events, and returns the deleted webhook.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="webhookId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteWebhookApiResponse"/>&gt;</returns>
+        public async Task<IDeleteWebhookApiResponse> DeleteWebhookAsync(string webhookId, System.Threading.CancellationToken cancellationToken = default)
+        {
+            UriBuilder uriBuilderLocalVar = new UriBuilder();
+
+            try
+            {
+                ValidateDeleteWebhook(webhookId);
+
+                FormatDeleteWebhook(ref webhookId);
+
+                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
+                {
+                    uriBuilderLocalVar.Host = HttpClient.BaseAddress.Host;
+                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
+                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
+                    var _fullPathLocalVar = "/webhooks/{webhook_id}";
+                    var _pathLocalVar = _fullPathLocalVar;
+                    string _queryLocalVar = null;
+                    var _qIdx = _fullPathLocalVar.IndexOf("?");
+                    if (_qIdx >= 0) { _pathLocalVar = _fullPathLocalVar.Substring(0, _qIdx); _queryLocalVar = _fullPathLocalVar.Substring(_qIdx + 1); }
+
+                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
+                        ? _pathLocalVar
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath, _pathLocalVar);
+                    if (_queryLocalVar != null) { uriBuilderLocalVar.Query = _queryLocalVar; }
+                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bwebhook_id%7D", Uri.EscapeDataString(webhookId.ToString()));
+
+                    List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
+                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
+
+                    BasicToken basicTokenLocalVar1 = (BasicToken) await BasicTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
+
+                    tokenBaseLocalVars.Add(basicTokenLocalVar1);
+
+                    basicTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    string[] acceptLocalVars = new string[] {
+                        "application/json"
+                    };
+
+                    string acceptLocalVar = ClientUtils.SelectHeaderAccept(acceptLocalVars);
+
+                    if (acceptLocalVar != null)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptLocalVar));
+                    httpRequestMessageLocalVar.Method = new HttpMethod("DELETE");
+
+                    DateTime requestedAtLocalVar = DateTime.UtcNow;
+
+                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
+                    {
+                        ILogger<DeleteWebhookApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<DeleteWebhookApiResponse>();
+                        DeleteWebhookApiResponse apiResponseLocalVar;
+
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                apiResponseLocalVar = new DeleteWebhookApiResponse(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/webhooks/{webhook_id}", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
+
+                        AfterDeleteWebhookDefaultImplementation(apiResponseLocalVar, webhookId);
+
+                        Events.ExecuteOnDeleteWebhook(apiResponseLocalVar);
+
+                        if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
+                            foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
+                                tokenBaseLocalVar.BeginRateLimit();
+
+                        return apiResponseLocalVar;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                OnErrorDeleteWebhookDefaultImplementation(e, "/webhooks/{webhook_id}", uriBuilderLocalVar.Path, webhookId);
+                Events.ExecuteOnErrorDeleteWebhook(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="DeleteWebhookApiResponse"/>
+        /// </summary>
+        public partial class DeleteWebhookApiResponse : DocSpring.Client.Client.ApiResponse, IDeleteWebhookApiResponse
+        {
+            /// <summary>
+            /// The logger
+            /// </summary>
+            public ILogger<DeleteWebhookApiResponse> Logger { get; }
+
+            /// <summary>
+            /// The <see cref="DeleteWebhookApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="rawContent"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public DeleteWebhookApiResponse(ILogger<DeleteWebhookApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="DeleteWebhookApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public DeleteWebhookApiResponse(ILogger<DeleteWebhookApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public bool IsOk => 200 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.Webhook Ok()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsOk
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.Webhook>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryOk(out DocSpring.Client.Model.Webhook result)
             {
                 result = null;
 
@@ -8207,7 +9357,7 @@ namespace DocSpring.Client.Api
         partial void OnErrorGeneratePdf(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, CreatePdfSubmissionData submission, Option<bool> wait);
 
         /// <summary>
-        /// Generate a PDF Creates a PDF submission by filling in a template with data. Supports both synchronous (default) and asynchronous processing. Set &#x60;wait: false&#x60; to return immediately.  See also: - [Customize the PDF Title and Filename](https://docspring.com/docs/api-guide/generate-pdfs/customize-pdf-title-and-filename/) - Set custom metadata - [Handling Truncated Text](https://docspring.com/docs/api-guide/generate-pdfs/handle-truncated-text/) - Handle text that doesn&#39;t fit in fields 
+        /// Generate a PDF Creates a PDF submission by filling in a template with data. Supports both synchronous (default) and asynchronous processing. Add the &#x60;wait&#x3D;false&#x60; query parameter to return immediately.  See also: - [Customize the PDF Title and Filename](https://docspring.com/docs/api-guide/generate-pdfs/customize-pdf-title-and-filename/) - Set custom metadata - [Handling Truncated Text](https://docspring.com/docs/api-guide/generate-pdfs/handle-truncated-text/) - Handle text that doesn&#39;t fit in fields 
         /// </summary>
         /// <param name="templateId"></param>
         /// <param name="submission"></param>
@@ -8227,7 +9377,7 @@ namespace DocSpring.Client.Api
         }
 
         /// <summary>
-        /// Generate a PDF Creates a PDF submission by filling in a template with data. Supports both synchronous (default) and asynchronous processing. Set &#x60;wait: false&#x60; to return immediately.  See also: - [Customize the PDF Title and Filename](https://docspring.com/docs/api-guide/generate-pdfs/customize-pdf-title-and-filename/) - Set custom metadata - [Handling Truncated Text](https://docspring.com/docs/api-guide/generate-pdfs/handle-truncated-text/) - Handle text that doesn&#39;t fit in fields 
+        /// Generate a PDF Creates a PDF submission by filling in a template with data. Supports both synchronous (default) and asynchronous processing. Add the &#x60;wait&#x3D;false&#x60; query parameter to return immediately.  See also: - [Customize the PDF Title and Filename](https://docspring.com/docs/api-guide/generate-pdfs/customize-pdf-title-and-filename/) - Set custom metadata - [Handling Truncated Text](https://docspring.com/docs/api-guide/generate-pdfs/handle-truncated-text/) - Handle text that doesn&#39;t fit in fields 
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId"></param>
@@ -11150,6 +12300,395 @@ namespace DocSpring.Client.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
+        partial void FormatGetTemplateModelCode(ref string templateId, ref string lang);
+
+        /// <summary>
+        /// Validates the request parameters
+        /// </summary>
+        /// <param name="templateId"></param>
+        /// <param name="lang"></param>
+        /// <returns></returns>
+        private void ValidateGetTemplateModelCode(string templateId, string lang)
+        {
+            if (templateId == null)
+                throw new ArgumentNullException(nameof(templateId));
+
+            if (lang == null)
+                throw new ArgumentNullException(nameof(lang));
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="lang"></param>
+        private void AfterGetTemplateModelCodeDefaultImplementation(IGetTemplateModelCodeApiResponse apiResponseLocalVar, string templateId, string lang)
+        {
+            bool suppressDefaultLog = false;
+            AfterGetTemplateModelCode(ref suppressDefaultLog, apiResponseLocalVar, templateId, lang);
+            if (!suppressDefaultLog)
+                Logger.LogInformation("{0,-9} | {1} | {3}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="suppressDefaultLog"></param>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="lang"></param>
+        partial void AfterGetTemplateModelCode(ref bool suppressDefaultLog, IGetTemplateModelCodeApiResponse apiResponseLocalVar, string templateId, string lang);
+
+        /// <summary>
+        /// Logs exceptions that occur while retrieving the server response
+        /// </summary>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="lang"></param>
+        private void OnErrorGetTemplateModelCodeDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, string lang)
+        {
+            bool suppressDefaultLogLocalVar = false;
+            OnErrorGetTemplateModelCode(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, templateId, lang);
+            if (!suppressDefaultLogLocalVar)
+                Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
+        }
+
+        /// <summary>
+        /// A partial method that gives developers a way to provide customized exception handling
+        /// </summary>
+        /// <param name="suppressDefaultLogLocalVar"></param>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="lang"></param>
+        partial void OnErrorGetTemplateModelCode(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, string lang);
+
+        /// <summary>
+        /// Generate typed model code for a template Generates typed model code for a template&#39;s submission data from its JSON schema, in TypeScript, JavaScript, Ruby, Python, PHP, Java, C#, Elixir or Go. Build your submission data with the generated types so your app catches mistakes before it calls the API.  &#x60;root_type_name&#x60; is the type that describes the whole submission data object, qualified with its namespace or package where there is one. Java returns every class in &#x60;code&#x60;, each under a &#x60;// ClassName.java&#x60; comment: split them into one file per class.  A template with no named fields returns 422, since there are no types to generate.  See also: - [Generate Model Code](https://docspring.com/docs/template-editor/generate-model-code/) - Use the generated types 
+        /// </summary>
+        /// <param name="templateId"></param>
+        /// <param name="lang">The language to generate code for</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetTemplateModelCodeApiResponse"/>&gt;</returns>
+        public async Task<IGetTemplateModelCodeApiResponse> GetTemplateModelCodeOrDefaultAsync(string templateId, string lang, System.Threading.CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await GetTemplateModelCodeAsync(templateId, lang, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Generate typed model code for a template Generates typed model code for a template&#39;s submission data from its JSON schema, in TypeScript, JavaScript, Ruby, Python, PHP, Java, C#, Elixir or Go. Build your submission data with the generated types so your app catches mistakes before it calls the API.  &#x60;root_type_name&#x60; is the type that describes the whole submission data object, qualified with its namespace or package where there is one. Java returns every class in &#x60;code&#x60;, each under a &#x60;// ClassName.java&#x60; comment: split them into one file per class.  A template with no named fields returns 422, since there are no types to generate.  See also: - [Generate Model Code](https://docspring.com/docs/template-editor/generate-model-code/) - Use the generated types 
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId"></param>
+        /// <param name="lang">The language to generate code for</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetTemplateModelCodeApiResponse"/>&gt;</returns>
+        public async Task<IGetTemplateModelCodeApiResponse> GetTemplateModelCodeAsync(string templateId, string lang, System.Threading.CancellationToken cancellationToken = default)
+        {
+            UriBuilder uriBuilderLocalVar = new UriBuilder();
+
+            try
+            {
+                ValidateGetTemplateModelCode(templateId, lang);
+
+                FormatGetTemplateModelCode(ref templateId, ref lang);
+
+                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
+                {
+                    uriBuilderLocalVar.Host = HttpClient.BaseAddress.Host;
+                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
+                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
+                    var _fullPathLocalVar = "/templates/{template_id}/model_code";
+                    var _pathLocalVar = _fullPathLocalVar;
+                    string _queryLocalVar = null;
+                    var _qIdx = _fullPathLocalVar.IndexOf("?");
+                    if (_qIdx >= 0) { _pathLocalVar = _fullPathLocalVar.Substring(0, _qIdx); _queryLocalVar = _fullPathLocalVar.Substring(_qIdx + 1); }
+
+                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
+                        ? _pathLocalVar
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath, _pathLocalVar);
+                    if (_queryLocalVar != null) { uriBuilderLocalVar.Query = _queryLocalVar; }
+                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Btemplate_id%7D", Uri.EscapeDataString(templateId.ToString()));
+
+                    System.Collections.Specialized.NameValueCollection parseQueryStringLocalVar = System.Web.HttpUtility.ParseQueryString(string.Empty);
+
+                    parseQueryStringLocalVar["lang"] = ClientUtils.ParameterToString(lang);
+
+                    uriBuilderLocalVar.Query = parseQueryStringLocalVar.ToString();
+
+                    List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
+                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
+
+                    BasicToken basicTokenLocalVar1 = (BasicToken) await BasicTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
+
+                    tokenBaseLocalVars.Add(basicTokenLocalVar1);
+
+                    basicTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    string[] acceptLocalVars = new string[] {
+                        "application/json"
+                    };
+
+                    string acceptLocalVar = ClientUtils.SelectHeaderAccept(acceptLocalVars);
+
+                    if (acceptLocalVar != null)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptLocalVar));
+                    httpRequestMessageLocalVar.Method = new HttpMethod("GET");
+
+                    DateTime requestedAtLocalVar = DateTime.UtcNow;
+
+                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
+                    {
+                        ILogger<GetTemplateModelCodeApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<GetTemplateModelCodeApiResponse>();
+                        GetTemplateModelCodeApiResponse apiResponseLocalVar;
+
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                apiResponseLocalVar = new GetTemplateModelCodeApiResponse(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/templates/{template_id}/model_code", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
+
+                        AfterGetTemplateModelCodeDefaultImplementation(apiResponseLocalVar, templateId, lang);
+
+                        Events.ExecuteOnGetTemplateModelCode(apiResponseLocalVar);
+
+                        if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
+                            foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
+                                tokenBaseLocalVar.BeginRateLimit();
+
+                        return apiResponseLocalVar;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                OnErrorGetTemplateModelCodeDefaultImplementation(e, "/templates/{template_id}/model_code", uriBuilderLocalVar.Path, templateId, lang);
+                Events.ExecuteOnErrorGetTemplateModelCode(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="GetTemplateModelCodeApiResponse"/>
+        /// </summary>
+        public partial class GetTemplateModelCodeApiResponse : DocSpring.Client.Client.ApiResponse, IGetTemplateModelCodeApiResponse
+        {
+            /// <summary>
+            /// The logger
+            /// </summary>
+            public ILogger<GetTemplateModelCodeApiResponse> Logger { get; }
+
+            /// <summary>
+            /// The <see cref="GetTemplateModelCodeApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="rawContent"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetTemplateModelCodeApiResponse(ILogger<GetTemplateModelCodeApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="GetTemplateModelCodeApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetTemplateModelCodeApiResponse(ILogger<GetTemplateModelCodeApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public bool IsOk => 200 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.TemplateModelCodeResponse Ok()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsOk
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.TemplateModelCodeResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryOk(out DocSpring.Client.Model.TemplateModelCodeResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Ok();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public bool IsNotFound => 404 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse NotFound()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsNotFound
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryNotFound(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = NotFound();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)404);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnprocessableContent => 422 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse UnprocessableContent()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsUnprocessableContent
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnprocessableContent(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = UnprocessableContent();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)422);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnauthorized => 401 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse Unauthorized()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsUnauthorized
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnauthorized(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Unauthorized();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
+            {
+                bool suppressDefaultLog = false;
+                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
+                if (!suppressDefaultLog)
+                    Logger.LogError(exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+            }
+
+            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
+        }
+
         partial void FormatGetTemplateSchema(ref string templateId);
 
         /// <summary>
@@ -11384,6 +12923,341 @@ namespace DocSpring.Client.Api
             /// <param name="result"></param>
             /// <returns></returns>
             public bool TryOk(out DocSpring.Client.Model.JsonSchema result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Ok();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public bool IsNotFound => 404 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse NotFound()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsNotFound
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryNotFound(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = NotFound();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)404);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnauthorized => 401 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse Unauthorized()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsUnauthorized
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnauthorized(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Unauthorized();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
+            {
+                bool suppressDefaultLog = false;
+                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
+                if (!suppressDefaultLog)
+                    Logger.LogError(exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+            }
+
+            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
+        }
+
+        partial void FormatGetWebhook(ref string webhookId);
+
+        /// <summary>
+        /// Validates the request parameters
+        /// </summary>
+        /// <param name="webhookId"></param>
+        /// <returns></returns>
+        private void ValidateGetWebhook(string webhookId)
+        {
+            if (webhookId == null)
+                throw new ArgumentNullException(nameof(webhookId));
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="webhookId"></param>
+        private void AfterGetWebhookDefaultImplementation(IGetWebhookApiResponse apiResponseLocalVar, string webhookId)
+        {
+            bool suppressDefaultLog = false;
+            AfterGetWebhook(ref suppressDefaultLog, apiResponseLocalVar, webhookId);
+            if (!suppressDefaultLog)
+                Logger.LogInformation("{0,-9} | {1} | {3}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="suppressDefaultLog"></param>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="webhookId"></param>
+        partial void AfterGetWebhook(ref bool suppressDefaultLog, IGetWebhookApiResponse apiResponseLocalVar, string webhookId);
+
+        /// <summary>
+        /// Logs exceptions that occur while retrieving the server response
+        /// </summary>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="webhookId"></param>
+        private void OnErrorGetWebhookDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string webhookId)
+        {
+            bool suppressDefaultLogLocalVar = false;
+            OnErrorGetWebhook(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, webhookId);
+            if (!suppressDefaultLogLocalVar)
+                Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
+        }
+
+        /// <summary>
+        /// A partial method that gives developers a way to provide customized exception handling
+        /// </summary>
+        /// <param name="suppressDefaultLogLocalVar"></param>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="webhookId"></param>
+        partial void OnErrorGetWebhook(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string webhookId);
+
+        /// <summary>
+        /// Get a webhook Retrieves a single webhook by its ID.
+        /// </summary>
+        /// <param name="webhookId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetWebhookApiResponse"/>&gt;</returns>
+        public async Task<IGetWebhookApiResponse> GetWebhookOrDefaultAsync(string webhookId, System.Threading.CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await GetWebhookAsync(webhookId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Get a webhook Retrieves a single webhook by its ID.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="webhookId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetWebhookApiResponse"/>&gt;</returns>
+        public async Task<IGetWebhookApiResponse> GetWebhookAsync(string webhookId, System.Threading.CancellationToken cancellationToken = default)
+        {
+            UriBuilder uriBuilderLocalVar = new UriBuilder();
+
+            try
+            {
+                ValidateGetWebhook(webhookId);
+
+                FormatGetWebhook(ref webhookId);
+
+                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
+                {
+                    uriBuilderLocalVar.Host = HttpClient.BaseAddress.Host;
+                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
+                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
+                    var _fullPathLocalVar = "/webhooks/{webhook_id}";
+                    var _pathLocalVar = _fullPathLocalVar;
+                    string _queryLocalVar = null;
+                    var _qIdx = _fullPathLocalVar.IndexOf("?");
+                    if (_qIdx >= 0) { _pathLocalVar = _fullPathLocalVar.Substring(0, _qIdx); _queryLocalVar = _fullPathLocalVar.Substring(_qIdx + 1); }
+
+                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
+                        ? _pathLocalVar
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath, _pathLocalVar);
+                    if (_queryLocalVar != null) { uriBuilderLocalVar.Query = _queryLocalVar; }
+                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bwebhook_id%7D", Uri.EscapeDataString(webhookId.ToString()));
+
+                    List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
+                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
+
+                    BasicToken basicTokenLocalVar1 = (BasicToken) await BasicTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
+
+                    tokenBaseLocalVars.Add(basicTokenLocalVar1);
+
+                    basicTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    string[] acceptLocalVars = new string[] {
+                        "application/json"
+                    };
+
+                    string acceptLocalVar = ClientUtils.SelectHeaderAccept(acceptLocalVars);
+
+                    if (acceptLocalVar != null)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptLocalVar));
+                    httpRequestMessageLocalVar.Method = new HttpMethod("GET");
+
+                    DateTime requestedAtLocalVar = DateTime.UtcNow;
+
+                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
+                    {
+                        ILogger<GetWebhookApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<GetWebhookApiResponse>();
+                        GetWebhookApiResponse apiResponseLocalVar;
+
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                apiResponseLocalVar = new GetWebhookApiResponse(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/webhooks/{webhook_id}", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
+
+                        AfterGetWebhookDefaultImplementation(apiResponseLocalVar, webhookId);
+
+                        Events.ExecuteOnGetWebhook(apiResponseLocalVar);
+
+                        if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
+                            foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
+                                tokenBaseLocalVar.BeginRateLimit();
+
+                        return apiResponseLocalVar;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                OnErrorGetWebhookDefaultImplementation(e, "/webhooks/{webhook_id}", uriBuilderLocalVar.Path, webhookId);
+                Events.ExecuteOnErrorGetWebhook(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="GetWebhookApiResponse"/>
+        /// </summary>
+        public partial class GetWebhookApiResponse : DocSpring.Client.Client.ApiResponse, IGetWebhookApiResponse
+        {
+            /// <summary>
+            /// The logger
+            /// </summary>
+            public ILogger<GetWebhookApiResponse> Logger { get; }
+
+            /// <summary>
+            /// The <see cref="GetWebhookApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="rawContent"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetWebhookApiResponse(ILogger<GetWebhookApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="GetWebhookApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetWebhookApiResponse(ILogger<GetWebhookApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public bool IsOk => 200 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.Webhook Ok()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsOk
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.Webhook>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryOk(out DocSpring.Client.Model.Webhook result)
             {
                 result = null;
 
@@ -13174,6 +15048,379 @@ namespace DocSpring.Client.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)404);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnauthorized => 401 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse Unauthorized()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsUnauthorized
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnauthorized(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Unauthorized();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
+            {
+                bool suppressDefaultLog = false;
+                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
+                if (!suppressDefaultLog)
+                    Logger.LogError(exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+            }
+
+            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
+        }
+
+        partial void FormatListWebhooks(ref Option<int> page, ref Option<int> perPage, ref Option<string> eventType, ref Option<string> mode, ref Option<string> templateId, ref Option<string> folderId, ref Option<string> apiTokenId);
+
+        /// <summary>
+        /// Validates the request parameters
+        /// </summary>
+        /// <param name="eventType"></param>
+        /// <param name="mode"></param>
+        /// <param name="templateId"></param>
+        /// <param name="folderId"></param>
+        /// <param name="apiTokenId"></param>
+        /// <returns></returns>
+        private void ValidateListWebhooks(Option<string> eventType, Option<string> mode, Option<string> templateId, Option<string> folderId, Option<string> apiTokenId)
+        {
+            if (eventType.IsSet && eventType.Value == null)
+                throw new ArgumentNullException(nameof(eventType));
+
+            if (mode.IsSet && mode.Value == null)
+                throw new ArgumentNullException(nameof(mode));
+
+            if (templateId.IsSet && templateId.Value == null)
+                throw new ArgumentNullException(nameof(templateId));
+
+            if (folderId.IsSet && folderId.Value == null)
+                throw new ArgumentNullException(nameof(folderId));
+
+            if (apiTokenId.IsSet && apiTokenId.Value == null)
+                throw new ArgumentNullException(nameof(apiTokenId));
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="page"></param>
+        /// <param name="perPage"></param>
+        /// <param name="eventType"></param>
+        /// <param name="mode"></param>
+        /// <param name="templateId"></param>
+        /// <param name="folderId"></param>
+        /// <param name="apiTokenId"></param>
+        private void AfterListWebhooksDefaultImplementation(IListWebhooksApiResponse apiResponseLocalVar, Option<int> page, Option<int> perPage, Option<string> eventType, Option<string> mode, Option<string> templateId, Option<string> folderId, Option<string> apiTokenId)
+        {
+            bool suppressDefaultLog = false;
+            AfterListWebhooks(ref suppressDefaultLog, apiResponseLocalVar, page, perPage, eventType, mode, templateId, folderId, apiTokenId);
+            if (!suppressDefaultLog)
+                Logger.LogInformation("{0,-9} | {1} | {3}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="suppressDefaultLog"></param>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="page"></param>
+        /// <param name="perPage"></param>
+        /// <param name="eventType"></param>
+        /// <param name="mode"></param>
+        /// <param name="templateId"></param>
+        /// <param name="folderId"></param>
+        /// <param name="apiTokenId"></param>
+        partial void AfterListWebhooks(ref bool suppressDefaultLog, IListWebhooksApiResponse apiResponseLocalVar, Option<int> page, Option<int> perPage, Option<string> eventType, Option<string> mode, Option<string> templateId, Option<string> folderId, Option<string> apiTokenId);
+
+        /// <summary>
+        /// Logs exceptions that occur while retrieving the server response
+        /// </summary>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="page"></param>
+        /// <param name="perPage"></param>
+        /// <param name="eventType"></param>
+        /// <param name="mode"></param>
+        /// <param name="templateId"></param>
+        /// <param name="folderId"></param>
+        /// <param name="apiTokenId"></param>
+        private void OnErrorListWebhooksDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<int> page, Option<int> perPage, Option<string> eventType, Option<string> mode, Option<string> templateId, Option<string> folderId, Option<string> apiTokenId)
+        {
+            bool suppressDefaultLogLocalVar = false;
+            OnErrorListWebhooks(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, page, perPage, eventType, mode, templateId, folderId, apiTokenId);
+            if (!suppressDefaultLogLocalVar)
+                Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
+        }
+
+        /// <summary>
+        /// A partial method that gives developers a way to provide customized exception handling
+        /// </summary>
+        /// <param name="suppressDefaultLogLocalVar"></param>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="page"></param>
+        /// <param name="perPage"></param>
+        /// <param name="eventType"></param>
+        /// <param name="mode"></param>
+        /// <param name="templateId"></param>
+        /// <param name="folderId"></param>
+        /// <param name="apiTokenId"></param>
+        partial void OnErrorListWebhooks(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<int> page, Option<int> perPage, Option<string> eventType, Option<string> mode, Option<string> templateId, Option<string> folderId, Option<string> apiTokenId);
+
+        /// <summary>
+        /// Get a list of all webhooks Returns a list of the webhooks configured for your account. Supports pagination and filtering by event type, mode, and the API token, template, or folder a webhook is scoped to. 
+        /// </summary>
+        /// <param name="page">Default: 1 (optional)</param>
+        /// <param name="perPage">Default: 50 (optional)</param>
+        /// <param name="eventType">Filter by a subscribed event type (optional)</param>
+        /// <param name="mode">Filter by mode (test or live) (optional)</param>
+        /// <param name="templateId">Filter by a scoped template ID (optional)</param>
+        /// <param name="folderId">Filter by a scoped folder ID (optional)</param>
+        /// <param name="apiTokenId">Filter by a scoped API token ID (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IListWebhooksApiResponse"/>&gt;</returns>
+        public async Task<IListWebhooksApiResponse> ListWebhooksOrDefaultAsync(Option<int> page = default, Option<int> perPage = default, Option<string> eventType = default, Option<string> mode = default, Option<string> templateId = default, Option<string> folderId = default, Option<string> apiTokenId = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await ListWebhooksAsync(page, perPage, eventType, mode, templateId, folderId, apiTokenId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Get a list of all webhooks Returns a list of the webhooks configured for your account. Supports pagination and filtering by event type, mode, and the API token, template, or folder a webhook is scoped to. 
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="page">Default: 1 (optional)</param>
+        /// <param name="perPage">Default: 50 (optional)</param>
+        /// <param name="eventType">Filter by a subscribed event type (optional)</param>
+        /// <param name="mode">Filter by mode (test or live) (optional)</param>
+        /// <param name="templateId">Filter by a scoped template ID (optional)</param>
+        /// <param name="folderId">Filter by a scoped folder ID (optional)</param>
+        /// <param name="apiTokenId">Filter by a scoped API token ID (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IListWebhooksApiResponse"/>&gt;</returns>
+        public async Task<IListWebhooksApiResponse> ListWebhooksAsync(Option<int> page = default, Option<int> perPage = default, Option<string> eventType = default, Option<string> mode = default, Option<string> templateId = default, Option<string> folderId = default, Option<string> apiTokenId = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            UriBuilder uriBuilderLocalVar = new UriBuilder();
+
+            try
+            {
+                ValidateListWebhooks(eventType, mode, templateId, folderId, apiTokenId);
+
+                FormatListWebhooks(ref page, ref perPage, ref eventType, ref mode, ref templateId, ref folderId, ref apiTokenId);
+
+                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
+                {
+                    uriBuilderLocalVar.Host = HttpClient.BaseAddress.Host;
+                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
+                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
+                    var _fullPathLocalVar = "/webhooks";
+                    var _pathLocalVar = _fullPathLocalVar;
+                    string _queryLocalVar = null;
+                    var _qIdx = _fullPathLocalVar.IndexOf("?");
+                    if (_qIdx >= 0) { _pathLocalVar = _fullPathLocalVar.Substring(0, _qIdx); _queryLocalVar = _fullPathLocalVar.Substring(_qIdx + 1); }
+
+                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
+                        ? _pathLocalVar
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath, _pathLocalVar);
+                    if (_queryLocalVar != null) { uriBuilderLocalVar.Query = _queryLocalVar; }
+
+                    System.Collections.Specialized.NameValueCollection parseQueryStringLocalVar = System.Web.HttpUtility.ParseQueryString(string.Empty);
+
+                    if (page.IsSet)
+                        parseQueryStringLocalVar["page"] = ClientUtils.ParameterToString(page.Value);
+
+                    if (perPage.IsSet)
+                        parseQueryStringLocalVar["per_page"] = ClientUtils.ParameterToString(perPage.Value);
+
+                    if (eventType.IsSet)
+                        parseQueryStringLocalVar["event_type"] = ClientUtils.ParameterToString(eventType.Value);
+
+                    if (mode.IsSet)
+                        parseQueryStringLocalVar["mode"] = ClientUtils.ParameterToString(mode.Value);
+
+                    if (templateId.IsSet)
+                        parseQueryStringLocalVar["template_id"] = ClientUtils.ParameterToString(templateId.Value);
+
+                    if (folderId.IsSet)
+                        parseQueryStringLocalVar["folder_id"] = ClientUtils.ParameterToString(folderId.Value);
+
+                    if (apiTokenId.IsSet)
+                        parseQueryStringLocalVar["api_token_id"] = ClientUtils.ParameterToString(apiTokenId.Value);
+
+                    uriBuilderLocalVar.Query = parseQueryStringLocalVar.ToString();
+
+                    List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
+                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
+
+                    BasicToken basicTokenLocalVar1 = (BasicToken) await BasicTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
+
+                    tokenBaseLocalVars.Add(basicTokenLocalVar1);
+
+                    basicTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    string[] acceptLocalVars = new string[] {
+                        "application/json"
+                    };
+
+                    string acceptLocalVar = ClientUtils.SelectHeaderAccept(acceptLocalVars);
+
+                    if (acceptLocalVar != null)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptLocalVar));
+                    httpRequestMessageLocalVar.Method = new HttpMethod("GET");
+
+                    DateTime requestedAtLocalVar = DateTime.UtcNow;
+
+                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
+                    {
+                        ILogger<ListWebhooksApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<ListWebhooksApiResponse>();
+                        ListWebhooksApiResponse apiResponseLocalVar;
+
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                apiResponseLocalVar = new ListWebhooksApiResponse(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/webhooks", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
+
+                        AfterListWebhooksDefaultImplementation(apiResponseLocalVar, page, perPage, eventType, mode, templateId, folderId, apiTokenId);
+
+                        Events.ExecuteOnListWebhooks(apiResponseLocalVar);
+
+                        if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
+                            foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
+                                tokenBaseLocalVar.BeginRateLimit();
+
+                        return apiResponseLocalVar;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                OnErrorListWebhooksDefaultImplementation(e, "/webhooks", uriBuilderLocalVar.Path, page, perPage, eventType, mode, templateId, folderId, apiTokenId);
+                Events.ExecuteOnErrorListWebhooks(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ListWebhooksApiResponse"/>
+        /// </summary>
+        public partial class ListWebhooksApiResponse : DocSpring.Client.Client.ApiResponse, IListWebhooksApiResponse
+        {
+            /// <summary>
+            /// The logger
+            /// </summary>
+            public ILogger<ListWebhooksApiResponse> Logger { get; }
+
+            /// <summary>
+            /// The <see cref="ListWebhooksApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="rawContent"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public ListWebhooksApiResponse(ILogger<ListWebhooksApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="ListWebhooksApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public ListWebhooksApiResponse(ILogger<ListWebhooksApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public bool IsOk => 200 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public List<Webhook> Ok()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsOk
+                    ? System.Text.Json.JsonSerializer.Deserialize<List<Webhook>>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryOk(out List<Webhook> result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Ok();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
                 }
 
                 return result != null;
@@ -15831,7 +18078,7 @@ namespace DocSpring.Client.Api
         partial void OnErrorUpdateTemplate(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, UpdateHtmlTemplate data);
 
         /// <summary>
-        /// Update a Template Updates template content and properties. For HTML templates, you can modify the HTML, SCSS, headers, footers, name, and description. Changes are applied to your draft template and do not affect published template versions. 
+        /// Update a Template Updates template content and properties. For HTML templates, you can modify the HTML, SCSS, headers, footers, name, and description. Changes are applied to your draft template and do not affect published template versions. The exception is &#x60;parent_folder_id&#x60;: moving the template to another folder moves its published versions too. 
         /// </summary>
         /// <param name="templateId"></param>
         /// <param name="data"></param>
@@ -15850,7 +18097,7 @@ namespace DocSpring.Client.Api
         }
 
         /// <summary>
-        /// Update a Template Updates template content and properties. For HTML templates, you can modify the HTML, SCSS, headers, footers, name, and description. Changes are applied to your draft template and do not affect published template versions. 
+        /// Update a Template Updates template content and properties. For HTML templates, you can modify the HTML, SCSS, headers, footers, name, and description. Changes are applied to your draft template and do not affect published template versions. The exception is &#x60;parent_folder_id&#x60;: moving the template to another folder moves its published versions too. 
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId"></param>
@@ -16029,6 +18276,44 @@ namespace DocSpring.Client.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public bool IsNotFound => 404 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse NotFound()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsNotFound
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryNotFound(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = NotFound();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)404);
                 }
 
                 return result != null;
@@ -16653,6 +18938,364 @@ namespace DocSpring.Client.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnauthorized => 401 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse Unauthorized()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsUnauthorized
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnauthorized(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Unauthorized();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
+            {
+                bool suppressDefaultLog = false;
+                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
+                if (!suppressDefaultLog)
+                    Logger.LogError(exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+            }
+
+            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
+        }
+
+        partial void FormatUpdateWebhook(ref string webhookId, UpdateWebhookData data);
+
+        /// <summary>
+        /// Validates the request parameters
+        /// </summary>
+        /// <param name="webhookId"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        private void ValidateUpdateWebhook(string webhookId, UpdateWebhookData data)
+        {
+            if (webhookId == null)
+                throw new ArgumentNullException(nameof(webhookId));
+
+            if (data == null)
+                throw new ArgumentNullException(nameof(data));
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="webhookId"></param>
+        /// <param name="data"></param>
+        private void AfterUpdateWebhookDefaultImplementation(IUpdateWebhookApiResponse apiResponseLocalVar, string webhookId, UpdateWebhookData data)
+        {
+            bool suppressDefaultLog = false;
+            AfterUpdateWebhook(ref suppressDefaultLog, apiResponseLocalVar, webhookId, data);
+            if (!suppressDefaultLog)
+                Logger.LogInformation("{0,-9} | {1} | {3}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="suppressDefaultLog"></param>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="webhookId"></param>
+        /// <param name="data"></param>
+        partial void AfterUpdateWebhook(ref bool suppressDefaultLog, IUpdateWebhookApiResponse apiResponseLocalVar, string webhookId, UpdateWebhookData data);
+
+        /// <summary>
+        /// Logs exceptions that occur while retrieving the server response
+        /// </summary>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="webhookId"></param>
+        /// <param name="data"></param>
+        private void OnErrorUpdateWebhookDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string webhookId, UpdateWebhookData data)
+        {
+            bool suppressDefaultLogLocalVar = false;
+            OnErrorUpdateWebhook(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, webhookId, data);
+            if (!suppressDefaultLogLocalVar)
+                Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
+        }
+
+        /// <summary>
+        /// A partial method that gives developers a way to provide customized exception handling
+        /// </summary>
+        /// <param name="suppressDefaultLogLocalVar"></param>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="webhookId"></param>
+        /// <param name="data"></param>
+        partial void OnErrorUpdateWebhook(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string webhookId, UpdateWebhookData data);
+
+        /// <summary>
+        /// Update a webhook Updates the configuration of an existing webhook.
+        /// </summary>
+        /// <param name="webhookId"></param>
+        /// <param name="data"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IUpdateWebhookApiResponse"/>&gt;</returns>
+        public async Task<IUpdateWebhookApiResponse> UpdateWebhookOrDefaultAsync(string webhookId, UpdateWebhookData data, System.Threading.CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await UpdateWebhookAsync(webhookId, data, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Update a webhook Updates the configuration of an existing webhook.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="webhookId"></param>
+        /// <param name="data"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IUpdateWebhookApiResponse"/>&gt;</returns>
+        public async Task<IUpdateWebhookApiResponse> UpdateWebhookAsync(string webhookId, UpdateWebhookData data, System.Threading.CancellationToken cancellationToken = default)
+        {
+            UriBuilder uriBuilderLocalVar = new UriBuilder();
+
+            try
+            {
+                ValidateUpdateWebhook(webhookId, data);
+
+                FormatUpdateWebhook(ref webhookId, data);
+
+                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
+                {
+                    uriBuilderLocalVar.Host = HttpClient.BaseAddress.Host;
+                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
+                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
+                    var _fullPathLocalVar = "/webhooks/{webhook_id}";
+                    var _pathLocalVar = _fullPathLocalVar;
+                    string _queryLocalVar = null;
+                    var _qIdx = _fullPathLocalVar.IndexOf("?");
+                    if (_qIdx >= 0) { _pathLocalVar = _fullPathLocalVar.Substring(0, _qIdx); _queryLocalVar = _fullPathLocalVar.Substring(_qIdx + 1); }
+
+                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
+                        ? _pathLocalVar
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath, _pathLocalVar);
+                    if (_queryLocalVar != null) { uriBuilderLocalVar.Query = _queryLocalVar; }
+                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bwebhook_id%7D", Uri.EscapeDataString(webhookId.ToString()));
+
+                    httpRequestMessageLocalVar.Content = (data as object) is System.IO.Stream stream
+                        ? httpRequestMessageLocalVar.Content = new StreamContent(stream)
+                        : httpRequestMessageLocalVar.Content = new StringContent(JsonSerializer.Serialize(data, _jsonSerializerOptions));
+
+                    List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
+                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
+
+                    BasicToken basicTokenLocalVar1 = (BasicToken) await BasicTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
+
+                    tokenBaseLocalVars.Add(basicTokenLocalVar1);
+
+                    basicTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    string[] contentTypes = new string[] {
+                        "application/json"
+                    };
+
+                    string contentTypeLocalVar = ClientUtils.SelectHeaderContentType(contentTypes);
+
+                    if (contentTypeLocalVar != null && httpRequestMessageLocalVar.Content != null && !(httpRequestMessageLocalVar.Content is MultipartFormDataContent))
+                        httpRequestMessageLocalVar.Content.Headers.ContentType = new MediaTypeHeaderValue(contentTypeLocalVar);
+
+                    string[] acceptLocalVars = new string[] {
+                        "application/json"
+                    };
+
+                    string acceptLocalVar = ClientUtils.SelectHeaderAccept(acceptLocalVars);
+
+                    if (acceptLocalVar != null)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(acceptLocalVar));
+                    httpRequestMessageLocalVar.Method = new HttpMethod("PUT");
+
+                    DateTime requestedAtLocalVar = DateTime.UtcNow;
+
+                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
+                    {
+                        ILogger<UpdateWebhookApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<UpdateWebhookApiResponse>();
+                        UpdateWebhookApiResponse apiResponseLocalVar;
+
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                apiResponseLocalVar = new UpdateWebhookApiResponse(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/webhooks/{webhook_id}", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
+
+                        AfterUpdateWebhookDefaultImplementation(apiResponseLocalVar, webhookId, data);
+
+                        Events.ExecuteOnUpdateWebhook(apiResponseLocalVar);
+
+                        if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
+                            foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
+                                tokenBaseLocalVar.BeginRateLimit();
+
+                        return apiResponseLocalVar;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                OnErrorUpdateWebhookDefaultImplementation(e, "/webhooks/{webhook_id}", uriBuilderLocalVar.Path, webhookId, data);
+                Events.ExecuteOnErrorUpdateWebhook(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="UpdateWebhookApiResponse"/>
+        /// </summary>
+        public partial class UpdateWebhookApiResponse : DocSpring.Client.Client.ApiResponse, IUpdateWebhookApiResponse
+        {
+            /// <summary>
+            /// The logger
+            /// </summary>
+            public ILogger<UpdateWebhookApiResponse> Logger { get; }
+
+            /// <summary>
+            /// The <see cref="UpdateWebhookApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="rawContent"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public UpdateWebhookApiResponse(ILogger<UpdateWebhookApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="UpdateWebhookApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public UpdateWebhookApiResponse(ILogger<UpdateWebhookApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public bool IsOk => 200 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.Webhook Ok()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsOk
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.Webhook>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryOk(out DocSpring.Client.Model.Webhook result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Ok();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public bool IsNotFound => 404 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse NotFound()
+            {
+                // This logic may be modified with the AsModel.mustache template
+                return IsNotFound
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryNotFound(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = NotFound();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)404);
                 }
 
                 return result != null;

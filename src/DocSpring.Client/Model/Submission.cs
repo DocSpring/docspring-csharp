@@ -38,9 +38,9 @@ namespace DocSpring.Client.Model
         /// <param name="templateType">templateType</param>
         /// <param name="test">test</param>
         /// <param name="actions">actions</param>
-        /// <param name="source">source</param>
         /// <param name="batchId">batchId</param>
         /// <param name="editable">editable</param>
+        /// <param name="errorMessage">errorMessage</param>
         /// <param name="expiresAt">expiresAt</param>
         /// <param name="id">id</param>
         /// <param name="jsonSchemaErrors">jsonSchemaErrors</param>
@@ -55,10 +55,11 @@ namespace DocSpring.Client.Model
         /// <param name="previewDownloadUrl">previewDownloadUrl</param>
         /// <param name="previewGeneratedAt">previewGeneratedAt</param>
         /// <param name="auditTrailDownloadUrl">auditTrailDownloadUrl</param>
+        /// <param name="source">source</param>
         /// <param name="referrer">referrer</param>
         /// <param name="data">data</param>
         [JsonConstructor]
-        public Submission(List<SubmissionDataRequest> dataRequests, bool expired, Object metadata, StateEnum state, TemplateTypeEnum templateType, bool test, List<SubmissionAction> actions, SourceEnum source, string batchId = default, bool? editable = default, string expiresAt = default, string id = default, List<string> jsonSchemaErrors = default, string password = default, string processedAt = default, string templateId = default, string templateVersion = default, Object truncatedText = default, string pdfHash = default, string downloadUrl = default, string permanentDownloadUrl = default, string previewDownloadUrl = default, string previewGeneratedAt = default, string auditTrailDownloadUrl = default, string referrer = default, Object data = default)
+        public Submission(List<SubmissionDataRequest> dataRequests, bool expired, Object metadata, StateEnum state, TemplateTypeEnum templateType, bool test, List<SubmissionAction> actions, string batchId = default, bool? editable = default, string errorMessage = default, string expiresAt = default, string id = default, List<string> jsonSchemaErrors = default, string password = default, string processedAt = default, string templateId = default, string templateVersion = default, Object truncatedText = default, string pdfHash = default, string downloadUrl = default, string permanentDownloadUrl = default, string previewDownloadUrl = default, string previewGeneratedAt = default, string auditTrailDownloadUrl = default, Option<SourceEnum?> source = default, Option<string> referrer = default, Option<Object> data = default)
         {
             this.data_requests = dataRequests;
             this.expired = expired;
@@ -67,9 +68,9 @@ namespace DocSpring.Client.Model
             this.template_type = templateType;
             this.test = test;
             this.actions = actions;
-            this.source = source;
             this.batch_id = batchId;
             this.editable = editable;
+            this.error_message = errorMessage;
             this.expires_at = expiresAt;
             this.id = id;
             this.json_schema_errors = jsonSchemaErrors;
@@ -84,8 +85,9 @@ namespace DocSpring.Client.Model
             this.preview_download_url = previewDownloadUrl;
             this.preview_generated_at = previewGeneratedAt;
             this.audit_trail_download_url = auditTrailDownloadUrl;
-            this.referrer = referrer;
-            this.data = data;
+            sourceOption = source;
+            referrerOption = referrer;
+            dataOption = data;
             OnCreated();
         }
 
@@ -149,7 +151,17 @@ namespace DocSpring.Client.Model
             /// <summary>
             /// Enum Accidental for value: accidental
             /// </summary>
-            Accidental = 11
+            Accidental = 11,
+
+            /// <summary>
+            /// Enum Declined for value: declined
+            /// </summary>
+            Declined = 12,
+
+            /// <summary>
+            /// Enum UnknownDefaultOpenApi for value: unknown_default_open_api
+            /// </summary>
+            UnknownDefaultOpenApi = 13
         }
 
         /// <summary>
@@ -193,7 +205,14 @@ namespace DocSpring.Client.Model
             if (value.Equals("accidental"))
                 return StateEnum.Accidental;
 
-            throw new NotImplementedException($"Could not convert value to type StateEnum: '{value}'");
+            if (value.Equals("declined"))
+                return StateEnum.Declined;
+
+            if (value.Equals("unknown_default_open_api"))
+                return StateEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return StateEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -236,7 +255,14 @@ namespace DocSpring.Client.Model
             if (value.Equals("accidental"))
                 return StateEnum.Accidental;
 
-            return null;
+            if (value.Equals("declined"))
+                return StateEnum.Declined;
+
+            if (value.Equals("unknown_default_open_api"))
+                return StateEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return StateEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -280,6 +306,12 @@ namespace DocSpring.Client.Model
             if (value == StateEnum.Accidental)
                 return "accidental";
 
+            if (value == StateEnum.Declined)
+                return "declined";
+
+            if (value == StateEnum.UnknownDefaultOpenApi)
+                return "unknown_default_open_api";
+
             throw new NotImplementedException($"Value could not be handled: '{value}'");
         }
 
@@ -302,7 +334,12 @@ namespace DocSpring.Client.Model
             /// <summary>
             /// Enum Html for value: html
             /// </summary>
-            Html = 2
+            Html = 2,
+
+            /// <summary>
+            /// Enum UnknownDefaultOpenApi for value: unknown_default_open_api
+            /// </summary>
+            UnknownDefaultOpenApi = 3
         }
 
         /// <summary>
@@ -319,7 +356,11 @@ namespace DocSpring.Client.Model
             if (value.Equals("html"))
                 return TemplateTypeEnum.Html;
 
-            throw new NotImplementedException($"Could not convert value to type TemplateTypeEnum: '{value}'");
+            if (value.Equals("unknown_default_open_api"))
+                return TemplateTypeEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return TemplateTypeEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -335,7 +376,11 @@ namespace DocSpring.Client.Model
             if (value.Equals("html"))
                 return TemplateTypeEnum.Html;
 
-            return null;
+            if (value.Equals("unknown_default_open_api"))
+                return TemplateTypeEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return TemplateTypeEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -351,6 +396,9 @@ namespace DocSpring.Client.Model
 
             if (value == TemplateTypeEnum.Html)
                 return "html";
+
+            if (value == TemplateTypeEnum.UnknownDefaultOpenApi)
+                return "unknown_default_open_api";
 
             throw new NotImplementedException($"Value could not be handled: '{value}'");
         }
@@ -384,7 +432,12 @@ namespace DocSpring.Client.Model
             /// <summary>
             /// Enum Webhook for value: webhook
             /// </summary>
-            Webhook = 4
+            Webhook = 4,
+
+            /// <summary>
+            /// Enum UnknownDefaultOpenApi for value: unknown_default_open_api
+            /// </summary>
+            UnknownDefaultOpenApi = 5
         }
 
         /// <summary>
@@ -407,7 +460,11 @@ namespace DocSpring.Client.Model
             if (value.Equals("webhook"))
                 return SourceEnum.Webhook;
 
-            throw new NotImplementedException($"Could not convert value to type SourceEnum: '{value}'");
+            if (value.Equals("unknown_default_open_api"))
+                return SourceEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return SourceEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -429,7 +486,11 @@ namespace DocSpring.Client.Model
             if (value.Equals("webhook"))
                 return SourceEnum.Webhook;
 
-            return null;
+            if (value.Equals("unknown_default_open_api"))
+                return SourceEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return SourceEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -438,7 +499,7 @@ namespace DocSpring.Client.Model
         /// <param name="value"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public static string SourceEnumToJsonValue(SourceEnum value)
+        public static string SourceEnumToJsonValue(SourceEnum? value)
         {
             if (value == SourceEnum.Api)
                 return "api";
@@ -452,14 +513,24 @@ namespace DocSpring.Client.Model
             if (value == SourceEnum.Webhook)
                 return "webhook";
 
+            if (value == SourceEnum.UnknownDefaultOpenApi)
+                return "unknown_default_open_api";
+
             throw new NotImplementedException($"Value could not be handled: '{value}'");
         }
+
+        /// <summary>
+        /// Used to track the state of source
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<SourceEnum?> sourceOption { get; private set; }
 
         /// <summary>
         /// Gets or Sets source
         /// </summary>
         [JsonPropertyName("source")]
-        public SourceEnum source { get; set; }
+        public SourceEnum? source { get { return this.sourceOption; } set { this.sourceOption = new Option<SourceEnum?>(value); } }
 
         /// <summary>
         /// Gets or Sets data_requests
@@ -502,6 +573,12 @@ namespace DocSpring.Client.Model
         /// </summary>
         [JsonPropertyName("editable")]
         public bool? editable { get; set; }
+
+        /// <summary>
+        /// Gets or Sets error_message
+        /// </summary>
+        [JsonPropertyName("error_message")]
+        public string error_message { get; set; }
 
         /// <summary>
         /// Gets or Sets expires_at
@@ -588,16 +665,30 @@ namespace DocSpring.Client.Model
         public string audit_trail_download_url { get; set; }
 
         /// <summary>
+        /// Used to track the state of referrer
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string> referrerOption { get; private set; }
+
+        /// <summary>
         /// Gets or Sets referrer
         /// </summary>
         [JsonPropertyName("referrer")]
-        public string referrer { get; set; }
+        public string referrer { get { return this.referrerOption; } set { this.referrerOption = new Option<string>(value); } }
+
+        /// <summary>
+        /// Used to track the state of data
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<Object> dataOption { get; private set; }
 
         /// <summary>
         /// Gets or Sets data
         /// </summary>
         [JsonPropertyName("data")]
-        public Object data { get; set; }
+        public Object data { get { return this.dataOption; } set { this.dataOption = new Option<Object>(value); } }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -614,9 +705,9 @@ namespace DocSpring.Client.Model
             sb.Append("  template_type: ").Append(template_type).Append("\n");
             sb.Append("  test: ").Append(test).Append("\n");
             sb.Append("  actions: ").Append(actions).Append("\n");
-            sb.Append("  source: ").Append(source).Append("\n");
             sb.Append("  batch_id: ").Append(batch_id).Append("\n");
             sb.Append("  editable: ").Append(editable).Append("\n");
+            sb.Append("  error_message: ").Append(error_message).Append("\n");
             sb.Append("  expires_at: ").Append(expires_at).Append("\n");
             sb.Append("  id: ").Append(id).Append("\n");
             sb.Append("  json_schema_errors: ").Append(json_schema_errors).Append("\n");
@@ -631,6 +722,7 @@ namespace DocSpring.Client.Model
             sb.Append("  preview_download_url: ").Append(preview_download_url).Append("\n");
             sb.Append("  preview_generated_at: ").Append(preview_generated_at).Append("\n");
             sb.Append("  audit_trail_download_url: ").Append(audit_trail_download_url).Append("\n");
+            sb.Append("  source: ").Append(source).Append("\n");
             sb.Append("  referrer: ").Append(referrer).Append("\n");
             sb.Append("  data: ").Append(data).Append("\n");
             sb.Append("}\n");
@@ -678,9 +770,9 @@ namespace DocSpring.Client.Model
             Option<Submission.TemplateTypeEnum?> templateType = default;
             Option<bool?> test = default;
             Option<List<SubmissionAction>> actions = default;
-            Option<Submission.SourceEnum?> source = default;
             Option<string> batchId = default;
             Option<bool?> editable = default;
+            Option<string> errorMessage = default;
             Option<string> expiresAt = default;
             Option<string> id = default;
             Option<List<string>> jsonSchemaErrors = default;
@@ -695,6 +787,7 @@ namespace DocSpring.Client.Model
             Option<string> previewDownloadUrl = default;
             Option<string> previewGeneratedAt = default;
             Option<string> auditTrailDownloadUrl = default;
+            Option<Submission.SourceEnum?> source = default;
             Option<string> referrer = default;
             Option<Object> data = default;
 
@@ -738,16 +831,14 @@ namespace DocSpring.Client.Model
                         case "actions":
                             actions = new Option<List<SubmissionAction>>(JsonSerializer.Deserialize<List<SubmissionAction>>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
-                        case "source":
-                            string sourceRawValue = utf8JsonReader.GetString();
-                            if (sourceRawValue != null)
-                                source = new Option<Submission.SourceEnum?>(Submission.SourceEnumFromStringOrDefault(sourceRawValue));
-                            break;
                         case "batch_id":
                             batchId = new Option<string>(utf8JsonReader.GetString());
                             break;
                         case "editable":
                             editable = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
+                            break;
+                        case "error_message":
+                            errorMessage = new Option<string>(utf8JsonReader.GetString());
                             break;
                         case "expires_at":
                             expiresAt = new Option<string>(utf8JsonReader.GetString());
@@ -791,6 +882,11 @@ namespace DocSpring.Client.Model
                         case "audit_trail_download_url":
                             auditTrailDownloadUrl = new Option<string>(utf8JsonReader.GetString());
                             break;
+                        case "source":
+                            string sourceRawValue = utf8JsonReader.GetString();
+                            if (sourceRawValue != null)
+                                source = new Option<Submission.SourceEnum?>(Submission.SourceEnumFromStringOrDefault(sourceRawValue));
+                            break;
                         case "referrer":
                             referrer = new Option<string>(utf8JsonReader.GetString());
                             break;
@@ -824,14 +920,14 @@ namespace DocSpring.Client.Model
             if (!actions.IsSet)
                 throw new ArgumentException("Property is required for class Submission.", nameof(actions));
 
-            if (!source.IsSet)
-                throw new ArgumentException("Property is required for class Submission.", nameof(source));
-
             if (!batchId.IsSet)
                 throw new ArgumentException("Property is required for class Submission.", nameof(batchId));
 
             if (!editable.IsSet)
                 throw new ArgumentException("Property is required for class Submission.", nameof(editable));
+
+            if (!errorMessage.IsSet)
+                throw new ArgumentException("Property is required for class Submission.", nameof(errorMessage));
 
             if (!expiresAt.IsSet)
                 throw new ArgumentException("Property is required for class Submission.", nameof(expiresAt));
@@ -875,12 +971,6 @@ namespace DocSpring.Client.Model
             if (!auditTrailDownloadUrl.IsSet)
                 throw new ArgumentException("Property is required for class Submission.", nameof(auditTrailDownloadUrl));
 
-            if (!referrer.IsSet)
-                throw new ArgumentException("Property is required for class Submission.", nameof(referrer));
-
-            if (!data.IsSet)
-                throw new ArgumentException("Property is required for class Submission.", nameof(data));
-
             if (dataRequests.IsSet && dataRequests.Value == null)
                 throw new ArgumentNullException(nameof(dataRequests), "Property is not nullable for class Submission.");
 
@@ -905,7 +995,7 @@ namespace DocSpring.Client.Model
             if (source.IsSet && source.Value == null)
                 throw new ArgumentNullException(nameof(source), "Property is not nullable for class Submission.");
 
-            return new Submission(dataRequests.Value, expired.Value.Value, metadata.Value, state.Value.Value, templateType.Value.Value, test.Value.Value, actions.Value, source.Value.Value, batchId.Value, editable.Value, expiresAt.Value, id.Value, jsonSchemaErrors.Value, password.Value, processedAt.Value, templateId.Value, templateVersion.Value, truncatedText.Value, pdfHash.Value, downloadUrl.Value, permanentDownloadUrl.Value, previewDownloadUrl.Value, previewGeneratedAt.Value, auditTrailDownloadUrl.Value, referrer.Value, data.Value);
+            return new Submission(dataRequests.Value, expired.Value.Value, metadata.Value, state.Value.Value, templateType.Value.Value, test.Value.Value, actions.Value, batchId.Value, editable.Value, errorMessage.Value, expiresAt.Value, id.Value, jsonSchemaErrors.Value, password.Value, processedAt.Value, templateId.Value, templateVersion.Value, truncatedText.Value, pdfHash.Value, downloadUrl.Value, permanentDownloadUrl.Value, previewDownloadUrl.Value, previewGeneratedAt.Value, auditTrailDownloadUrl.Value, source, referrer, data);
         }
 
         /// <summary>
@@ -955,8 +1045,6 @@ namespace DocSpring.Client.Model
 
             writer.WritePropertyName("actions");
             JsonSerializer.Serialize(writer, submission.actions, jsonSerializerOptions);
-            var sourceRawValue = Submission.SourceEnumToJsonValue(submission.source);
-            writer.WriteString("source", sourceRawValue);
             if (submission.batch_id != null)
                 writer.WriteString("batch_id", submission.batch_id);
             else
@@ -966,6 +1054,11 @@ namespace DocSpring.Client.Model
                 writer.WriteBoolean("editable", submission.editable.Value);
             else
                 writer.WriteNull("editable");
+
+            if (submission.error_message != null)
+                writer.WriteString("error_message", submission.error_message);
+            else
+                writer.WriteNull("error_message");
 
             if (submission.expires_at != null)
                 writer.WriteString("expires_at", submission.expires_at);
@@ -1041,18 +1134,22 @@ namespace DocSpring.Client.Model
             else
                 writer.WriteNull("audit_trail_download_url");
 
-            if (submission.referrer != null)
-                writer.WriteString("referrer", submission.referrer);
-            else
-                writer.WriteNull("referrer");
+            var sourceRawValue = Submission.SourceEnumToJsonValue(submission.sourceOption.Value.Value);
+            writer.WriteString("source", sourceRawValue);
+            if (submission.referrerOption.IsSet)
+                if (submission.referrerOption.Value != null)
+                    writer.WriteString("referrer", submission.referrer);
+                else
+                    writer.WriteNull("referrer");
 
-            if (submission.data != null)
-            {
-                writer.WritePropertyName("data");
-                JsonSerializer.Serialize(writer, submission.data, jsonSerializerOptions);
-            }
-            else
-                writer.WriteNull("data");
+            if (submission.dataOption.IsSet)
+                if (submission.dataOption.Value != null)
+                {
+                    writer.WritePropertyName("data");
+                    JsonSerializer.Serialize(writer, submission.dataOption.Value, jsonSerializerOptions);
+                }
+                else
+                    writer.WriteNull("data");
         }
     }
 }

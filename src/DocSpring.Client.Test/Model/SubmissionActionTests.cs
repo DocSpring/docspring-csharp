@@ -106,5 +106,14 @@ namespace DocSpring.Client.Test.Model
         {
             // TODO unit test for the property 'integration_id'
         }
+
+        /// <summary>
+        /// Test the property 'error_message'
+        /// </summary>
+        [Fact]
+        public void error_messageTest()
+        {
+            // TODO unit test for the property 'error_message'
+        }
     }
 }

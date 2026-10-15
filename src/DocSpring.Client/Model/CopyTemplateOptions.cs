@@ -31,23 +31,19 @@ namespace DocSpring.Client.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="CopyTemplateOptions" /> class.
         /// </summary>
-        /// <param name="parentFolderId">parentFolderId</param>
         /// <param name="name">name</param>
+        /// <param name="parentFolderId">parentFolderId</param>
+        /// <param name="version">version</param>
         [JsonConstructor]
-        public CopyTemplateOptions(string parentFolderId, Option<string> name = default)
+        public CopyTemplateOptions(Option<string> name = default, Option<string> parentFolderId = default, Option<string> version = default)
         {
-            this.parent_folder_id = parentFolderId;
             nameOption = name;
+            parent_folder_idOption = parentFolderId;
+            versionOption = version;
             OnCreated();
         }
 
         partial void OnCreated();
-
-        /// <summary>
-        /// Gets or Sets parent_folder_id
-        /// </summary>
-        [JsonPropertyName("parent_folder_id")]
-        public string parent_folder_id { get; set; }
 
         /// <summary>
         /// Used to track the state of name
@@ -63,6 +59,32 @@ namespace DocSpring.Client.Model
         public string name { get { return this.nameOption; } set { this.nameOption = new Option<string>(value); } }
 
         /// <summary>
+        /// Used to track the state of parent_folder_id
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string> parent_folder_idOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets parent_folder_id
+        /// </summary>
+        [JsonPropertyName("parent_folder_id")]
+        public string parent_folder_id { get { return this.parent_folder_idOption; } set { this.parent_folder_idOption = new Option<string>(value); } }
+
+        /// <summary>
+        /// Used to track the state of version
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string> versionOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets version
+        /// </summary>
+        [JsonPropertyName("version")]
+        public string version { get { return this.versionOption; } set { this.versionOption = new Option<string>(value); } }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -70,8 +92,9 @@ namespace DocSpring.Client.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class CopyTemplateOptions {\n");
-            sb.Append("  parent_folder_id: ").Append(parent_folder_id).Append("\n");
             sb.Append("  name: ").Append(name).Append("\n");
+            sb.Append("  parent_folder_id: ").Append(parent_folder_id).Append("\n");
+            sb.Append("  version: ").Append(version).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -110,8 +133,9 @@ namespace DocSpring.Client.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
-            Option<string> parentFolderId = default;
             Option<string> name = default;
+            Option<string> parentFolderId = default;
+            Option<string> version = default;
 
             while (utf8JsonReader.Read())
             {
@@ -128,11 +152,14 @@ namespace DocSpring.Client.Model
 
                     switch (localVarJsonPropertyName)
                     {
+                        case "name":
+                            name = new Option<string>(utf8JsonReader.GetString());
+                            break;
                         case "parent_folder_id":
                             parentFolderId = new Option<string>(utf8JsonReader.GetString());
                             break;
-                        case "name":
-                            name = new Option<string>(utf8JsonReader.GetString());
+                        case "version":
+                            version = new Option<string>(utf8JsonReader.GetString());
                             break;
                         default:
                             break;
@@ -140,16 +167,16 @@ namespace DocSpring.Client.Model
                 }
             }
 
-            if (!parentFolderId.IsSet)
-                throw new ArgumentException("Property is required for class CopyTemplateOptions.", nameof(parentFolderId));
+            if (name.IsSet && name.Value == null)
+                throw new ArgumentNullException(nameof(name), "Property is not nullable for class CopyTemplateOptions.");
 
             if (parentFolderId.IsSet && parentFolderId.Value == null)
                 throw new ArgumentNullException(nameof(parentFolderId), "Property is not nullable for class CopyTemplateOptions.");
 
-            if (name.IsSet && name.Value == null)
-                throw new ArgumentNullException(nameof(name), "Property is not nullable for class CopyTemplateOptions.");
+            if (version.IsSet && version.Value == null)
+                throw new ArgumentNullException(nameof(version), "Property is not nullable for class CopyTemplateOptions.");
 
-            return new CopyTemplateOptions(parentFolderId.Value, name);
+            return new CopyTemplateOptions(name, parentFolderId, version);
         }
 
         /// <summary>
@@ -176,16 +203,23 @@ namespace DocSpring.Client.Model
         /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, CopyTemplateOptions copyTemplateOptions, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (copyTemplateOptions.parent_folder_id == null)
-                throw new ArgumentNullException(nameof(copyTemplateOptions.parent_folder_id), "Property is required for class CopyTemplateOptions.");
-
             if (copyTemplateOptions.nameOption.IsSet && copyTemplateOptions.name == null)
                 throw new ArgumentNullException(nameof(copyTemplateOptions.name), "Property is required for class CopyTemplateOptions.");
 
-            writer.WriteString("parent_folder_id", copyTemplateOptions.parent_folder_id);
+            if (copyTemplateOptions.parent_folder_idOption.IsSet && copyTemplateOptions.parent_folder_id == null)
+                throw new ArgumentNullException(nameof(copyTemplateOptions.parent_folder_id), "Property is required for class CopyTemplateOptions.");
+
+            if (copyTemplateOptions.versionOption.IsSet && copyTemplateOptions.version == null)
+                throw new ArgumentNullException(nameof(copyTemplateOptions.version), "Property is required for class CopyTemplateOptions.");
 
             if (copyTemplateOptions.nameOption.IsSet)
                 writer.WriteString("name", copyTemplateOptions.name);
+
+            if (copyTemplateOptions.parent_folder_idOption.IsSet)
+                writer.WriteString("parent_folder_id", copyTemplateOptions.parent_folder_id);
+
+            if (copyTemplateOptions.versionOption.IsSet)
+                writer.WriteString("version", copyTemplateOptions.version);
         }
     }
 }

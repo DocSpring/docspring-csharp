@@ -103,7 +103,12 @@ namespace DocSpring.Client.Model
             /// <summary>
             /// Enum Empty for value: 
             /// </summary>
-            Empty = 7
+            Empty = 7,
+
+            /// <summary>
+            /// Enum UnknownDefaultOpenApi for value: unknown_default_open_api
+            /// </summary>
+            UnknownDefaultOpenApi = 8
         }
 
         /// <summary>
@@ -135,7 +140,11 @@ namespace DocSpring.Client.Model
             if (value.Equals(""))
                 return AuthSecondFactorTypeEnum.Empty;
 
-            throw new NotImplementedException($"Could not convert value to type AuthSecondFactorTypeEnum: '{value}'");
+            if (value.Equals("unknown_default_open_api"))
+                return AuthSecondFactorTypeEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return AuthSecondFactorTypeEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -166,7 +175,11 @@ namespace DocSpring.Client.Model
             if (value.Equals(""))
                 return AuthSecondFactorTypeEnum.Empty;
 
-            return null;
+            if (value.Equals("unknown_default_open_api"))
+                return AuthSecondFactorTypeEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return AuthSecondFactorTypeEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -200,6 +213,9 @@ namespace DocSpring.Client.Model
 
             if (value == AuthSecondFactorTypeEnum.Empty)
                 return "";
+
+            if (value == AuthSecondFactorTypeEnum.UnknownDefaultOpenApi)
+                return "unknown_default_open_api";
 
             throw new NotImplementedException($"Value could not be handled: '{value}'");
         }
@@ -255,7 +271,12 @@ namespace DocSpring.Client.Model
             /// <summary>
             /// Enum Saml for value: saml
             /// </summary>
-            Saml = 7
+            Saml = 7,
+
+            /// <summary>
+            /// Enum UnknownDefaultOpenApi for value: unknown_default_open_api
+            /// </summary>
+            UnknownDefaultOpenApi = 8
         }
 
         /// <summary>
@@ -287,7 +308,11 @@ namespace DocSpring.Client.Model
             if (value.Equals("saml"))
                 return AuthTypeEnum.Saml;
 
-            throw new NotImplementedException($"Could not convert value to type AuthTypeEnum: '{value}'");
+            if (value.Equals("unknown_default_open_api"))
+                return AuthTypeEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return AuthTypeEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -318,7 +343,11 @@ namespace DocSpring.Client.Model
             if (value.Equals("saml"))
                 return AuthTypeEnum.Saml;
 
-            return null;
+            if (value.Equals("unknown_default_open_api"))
+                return AuthTypeEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return AuthTypeEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -349,6 +378,9 @@ namespace DocSpring.Client.Model
 
             if (value == AuthTypeEnum.Saml)
                 return "saml";
+
+            if (value == AuthTypeEnum.UnknownDefaultOpenApi)
+                return "unknown_default_open_api";
 
             throw new NotImplementedException($"Value could not be handled: '{value}'");
         }
@@ -605,8 +637,7 @@ namespace DocSpring.Client.Model
                             break;
                         case "auth_second_factor_type":
                             string authSecondFactorTypeRawValue = utf8JsonReader.GetString();
-                            if (authSecondFactorTypeRawValue != null)
-                                authSecondFactorType = new Option<UpdateSubmissionDataRequestData.AuthSecondFactorTypeEnum?>(UpdateSubmissionDataRequestData.AuthSecondFactorTypeEnumFromStringOrDefault(authSecondFactorTypeRawValue));
+                            authSecondFactorType = new Option<UpdateSubmissionDataRequestData.AuthSecondFactorTypeEnum?>(authSecondFactorTypeRawValue == null ? (UpdateSubmissionDataRequestData.AuthSecondFactorTypeEnum?)null : UpdateSubmissionDataRequestData.AuthSecondFactorTypeEnumFromStringOrDefault(authSecondFactorTypeRawValue));
                             break;
                         case "auth_session_id_hash":
                             authSessionIdHash = new Option<string>(utf8JsonReader.GetString());

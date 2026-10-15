@@ -162,6 +162,15 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'declined_at'
+        /// </summary>
+        [Fact]
+        public void declined_atTest()
+        {
+            // TODO unit test for the property 'declined_at'
+        }
+
+        /// <summary>
         /// Test the property 'data'
         /// </summary>
         [Fact]

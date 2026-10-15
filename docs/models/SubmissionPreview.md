@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **actions** | [**List&lt;SubmissionAction&gt;**](SubmissionAction.md) |  | 
 **batch_id** | **string** |  | 
 **editable** | **bool** |  | 
+**error_message** | **string** |  | 
 **expires_at** | **string** |  | 
 **id** | **string** |  | 
 **json_schema_errors** | **List&lt;string&gt;** |  | 

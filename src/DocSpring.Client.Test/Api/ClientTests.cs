@@ -192,6 +192,18 @@ namespace DocSpring.Client.Test.Api
         }
 
         /// <summary>
+        /// Test CreateWebhook
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task CreateWebhookAsyncTest()
+        {
+            CreateWebhookData data = default;
+            var response = await _instance.CreateWebhookAsync(data);
+            var model = response.Created();
+            Assert.IsType<Webhook>(model);
+        }
+
+        /// <summary>
         /// Test DeleteFolder
         /// </summary>
         [Fact (Skip = "not implemented")]
@@ -214,6 +226,18 @@ namespace DocSpring.Client.Test.Api
             var response = await _instance.DeleteTemplateAsync(templateId, version);
             var model = response.Ok();
             Assert.IsType<TemplateDeleteResponse>(model);
+        }
+
+        /// <summary>
+        /// Test DeleteWebhook
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task DeleteWebhookAsyncTest()
+        {
+            string webhookId = default;
+            var response = await _instance.DeleteWebhookAsync(webhookId);
+            var model = response.Ok();
+            Assert.IsType<Webhook>(model);
         }
 
         /// <summary>
@@ -352,6 +376,19 @@ namespace DocSpring.Client.Test.Api
         }
 
         /// <summary>
+        /// Test GetTemplateModelCode
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task GetTemplateModelCodeAsyncTest()
+        {
+            string templateId = default;
+            string lang = default;
+            var response = await _instance.GetTemplateModelCodeAsync(templateId, lang);
+            var model = response.Ok();
+            Assert.IsType<TemplateModelCodeResponse>(model);
+        }
+
+        /// <summary>
         /// Test GetTemplateSchema
         /// </summary>
         [Fact (Skip = "not implemented")]
@@ -361,6 +398,18 @@ namespace DocSpring.Client.Test.Api
             var response = await _instance.GetTemplateSchemaAsync(templateId);
             var model = response.Ok();
             Assert.IsType<JsonSchema>(model);
+        }
+
+        /// <summary>
+        /// Test GetWebhook
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task GetWebhookAsyncTest()
+        {
+            string webhookId = default;
+            var response = await _instance.GetWebhookAsync(webhookId);
+            var model = response.Ok();
+            Assert.IsType<Webhook>(model);
         }
 
         /// <summary>
@@ -436,6 +485,24 @@ namespace DocSpring.Client.Test.Api
             var response = await _instance.ListTemplatesAsync(query, parentFolderId, page, perPage);
             var model = response.Ok();
             Assert.IsType<List<TemplatePreview>>(model);
+        }
+
+        /// <summary>
+        /// Test ListWebhooks
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task ListWebhooksAsyncTest()
+        {
+            Client.Option<int> page = default;
+            Client.Option<int> perPage = default;
+            Client.Option<string> eventType = default;
+            Client.Option<string> mode = default;
+            Client.Option<string> templateId = default;
+            Client.Option<string> folderId = default;
+            Client.Option<string> apiTokenId = default;
+            var response = await _instance.ListWebhooksAsync(page, perPage, eventType, mode, templateId, folderId, apiTokenId);
+            var model = response.Ok();
+            Assert.IsType<List<Webhook>>(model);
         }
 
         /// <summary>
@@ -565,6 +632,19 @@ namespace DocSpring.Client.Test.Api
             var response = await _instance.UpdateTemplateDocumentFromUploadAsync(templateId, data);
             var model = response.Ok();
             Assert.IsType<SuccessMultipleErrorsResponse>(model);
+        }
+
+        /// <summary>
+        /// Test UpdateWebhook
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task UpdateWebhookAsyncTest()
+        {
+            string webhookId = default;
+            UpdateWebhookData data = default;
+            var response = await _instance.UpdateWebhookAsync(webhookId, data);
+            var model = response.Ok();
+            Assert.IsType<Webhook>(model);
         }
     }
 }

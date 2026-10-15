@@ -55,7 +55,12 @@ namespace DocSpring.Client.Model
             /// <summary>
             /// Enum Post for value: post
             /// </summary>
-            Post = 1
+            Post = 1,
+
+            /// <summary>
+            /// Enum UnknownDefaultOpenApi for value: unknown_default_open_api
+            /// </summary>
+            UnknownDefaultOpenApi = 2
         }
 
         /// <summary>
@@ -69,7 +74,11 @@ namespace DocSpring.Client.Model
             if (value.Equals("post"))
                 return MethodEnum.Post;
 
-            throw new NotImplementedException($"Could not convert value to type MethodEnum: '{value}'");
+            if (value.Equals("unknown_default_open_api"))
+                return MethodEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return MethodEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -82,7 +91,11 @@ namespace DocSpring.Client.Model
             if (value.Equals("post"))
                 return MethodEnum.Post;
 
-            return null;
+            if (value.Equals("unknown_default_open_api"))
+                return MethodEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return MethodEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -95,6 +108,9 @@ namespace DocSpring.Client.Model
         {
             if (value == MethodEnum.Post)
                 return "post";
+
+            if (value == MethodEnum.UnknownDefaultOpenApi)
+                return "unknown_default_open_api";
 
             throw new NotImplementedException($"Value could not be handled: '{value}'");
         }

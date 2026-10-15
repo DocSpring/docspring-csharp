@@ -11,9 +11,9 @@ Name | Type | Description | Notes
 **template_type** | **string** |  | 
 **test** | **bool** |  | 
 **actions** | [**List&lt;SubmissionAction&gt;**](SubmissionAction.md) |  | 
-**source** | **string** |  | 
 **batch_id** | **string** |  | 
 **editable** | **bool** |  | 
+**error_message** | **string** |  | 
 **expires_at** | **string** |  | 
 **id** | **string** |  | 
 **json_schema_errors** | **List&lt;string&gt;** |  | 
@@ -28,8 +28,9 @@ Name | Type | Description | Notes
 **preview_download_url** | **string** |  | 
 **preview_generated_at** | **string** |  | 
 **audit_trail_download_url** | **string** |  | 
-**referrer** | **string** |  | 
-**data** | **Object** |  | 
+**source** | **string** |  | [optional] 
+**referrer** | **string** |  | [optional] 
+**data** | **Object** |  | [optional] 
 
 [[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 

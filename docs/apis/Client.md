@@ -15,8 +15,10 @@ All URIs are relative to *https://sync.api.docspring.com/api/v1*
 | [**CreateHtmlTemplate**](Client.md#createhtmltemplate) | **POST** /templates?endpoint_variant&#x3D;create_html_template | Create a new HTML template |
 | [**CreatePdfTemplate**](Client.md#createpdftemplate) | **POST** /templates | Create a new PDF template with a form POST file upload |
 | [**CreatePdfTemplateFromUpload**](Client.md#createpdftemplatefromupload) | **POST** /templates?endpoint_variant&#x3D;create_template_from_cached_upload | Create a new PDF template from a cached S3 file upload |
+| [**CreateWebhook**](Client.md#createwebhook) | **POST** /webhooks | Create a webhook |
 | [**DeleteFolder**](Client.md#deletefolder) | **DELETE** /folders/{folder_id} | Delete a folder |
 | [**DeleteTemplate**](Client.md#deletetemplate) | **DELETE** /templates/{template_id} | Delete a template |
+| [**DeleteWebhook**](Client.md#deletewebhook) | **DELETE** /webhooks/{webhook_id} | Delete a webhook |
 | [**ExpireCombinedSubmission**](Client.md#expirecombinedsubmission) | **DELETE** /combined_submissions/{combined_submission_id} | Expire a combined submission |
 | [**ExpireSubmission**](Client.md#expiresubmission) | **DELETE** /submissions/{submission_id} | Expire a PDF submission |
 | [**GeneratePdf**](Client.md#generatepdf) | **POST** /templates/{template_id}/submissions | Generate a PDF |
@@ -28,12 +30,15 @@ All URIs are relative to *https://sync.api.docspring.com/api/v1*
 | [**GetSubmission**](Client.md#getsubmission) | **GET** /submissions/{submission_id} | Check the status of a PDF |
 | [**GetSubmissionBatch**](Client.md#getsubmissionbatch) | **GET** /submissions/batches/{submission_batch_id} | Check the status of a submission batch job |
 | [**GetTemplate**](Client.md#gettemplate) | **GET** /templates/{template_id} | Check the status of an uploaded template |
+| [**GetTemplateModelCode**](Client.md#gettemplatemodelcode) | **GET** /templates/{template_id}/model_code | Generate typed model code for a template |
 | [**GetTemplateSchema**](Client.md#gettemplateschema) | **GET** /templates/{template_id}/schema | Fetch the JSON schema for a template |
+| [**GetWebhook**](Client.md#getwebhook) | **GET** /webhooks/{webhook_id} | Get a webhook |
 | [**ListCombinedSubmissions**](Client.md#listcombinedsubmissions) | **GET** /combined_submissions | Get a list of all combined submissions |
 | [**ListFolders**](Client.md#listfolders) | **GET** /folders/ | Get a list of all folders |
 | [**ListSubmissions**](Client.md#listsubmissions) | **GET** /submissions | List all submissions |
 | [**ListTemplateSubmissions**](Client.md#listtemplatesubmissions) | **GET** /templates/{template_id}/submissions | List all submissions for a given template |
 | [**ListTemplates**](Client.md#listtemplates) | **GET** /templates | Get a list of all templates |
+| [**ListWebhooks**](Client.md#listwebhooks) | **GET** /webhooks | Get a list of all webhooks |
 | [**MoveFolderToFolder**](Client.md#movefoldertofolder) | **POST** /folders/{folder_id}/move | Move a folder |
 | [**MoveTemplateToFolder**](Client.md#movetemplatetofolder) | **POST** /templates/{template_id}/move | Move Template to folder |
 | [**PublishTemplateVersion**](Client.md#publishtemplateversion) | **POST** /templates/{template_id}/publish_version | Publish a template version |
@@ -44,6 +49,7 @@ All URIs are relative to *https://sync.api.docspring.com/api/v1*
 | [**UpdateTemplate**](Client.md#updatetemplate) | **PUT** /templates/{template_id} | Update a Template |
 | [**UpdateTemplateDocument**](Client.md#updatetemplatedocument) | **PUT** /templates/{template_id}?endpoint_variant&#x3D;update_template_pdf_with_form_post | Update a template&#39;s document with a form POST file upload |
 | [**UpdateTemplateDocumentFromUpload**](Client.md#updatetemplatedocumentfromupload) | **PUT** /templates/{template_id}?endpoint_variant&#x3D;update_template_pdf_with_cached_upload | Update a template&#39;s document with a cached S3 file upload |
+| [**UpdateWebhook**](Client.md#updatewebhook) | **PUT** /webhooks/{webhook_id} | Update a webhook |
 
 <a id="addfieldstotemplate"></a>
 # **AddFieldsToTemplate**
@@ -89,7 +95,7 @@ Adds fields to a PDF template. Configure field types, positions, defaults, and f
 
 Generate multiple PDFs
 
-Generates up to 50 PDFs in a single request. Each submission can use a different template and data. Supports both synchronous (wait for all PDFs) and asynchronous processing. More efficient than individual requests when creating multiple PDFs.  See also: - [Batch and Combine PDFs](https://docspring.com/docs/api-guide/generate-pdfs/batch-generate-pdfs/) - Generate and merge PDFs in one request 
+Generates up to 50 PDFs in a single request. Each submission can use a different template and data. Supports both synchronous (wait for all PDFs) and asynchronous processing. More efficient than individual requests when creating multiple PDFs.  See also: - [Batch Generate PDFs](https://docspring.com/docs/api-guide/generate-pdfs/batch-generate-pdfs/) - Request format, responses, and limits 
 
 
 ### Parameters
@@ -158,6 +164,7 @@ Combines multiple PDFs from various sources into a single PDF file. Supports mer
 |-------------|-------------|------------------|
 | **201** | combined submission created |  -  |
 | **422** | invalid request |  -  |
+| **403** | test API token used to delete custom files |  -  |
 | **400** | invalid JSON |  -  |
 | **401** | authentication failed |  -  |
 
@@ -283,7 +290,7 @@ Records user notification events for data requests. Use this to create an audit 
 
 Create a new data request token for form authentication
 
-Creates an authentication token for accessing a data request form. Tokens can be created for API access (1 hour expiration) or email links (30 day expiration). Returns a token and a pre-authenticated URL for the data request form.  See also: - [Embedded Data Requests Guide](https://docspring.com/docs/guides/embedded-forms/embedded-data-requests/) 
+Creates an authentication token for accessing a data request form. Returns a token and a pre-authenticated URL for the data request form. The token remains valid until the data request is completed.  See also: - [Embedded Data Requests Guide](https://docspring.com/docs/guides/embedded-forms/embedded-data-requests/) 
 
 
 ### Parameters
@@ -470,6 +477,44 @@ Creates a new PDF template from a file previously uploaded to S3 using a presign
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
+<a id="createwebhook"></a>
+# **CreateWebhook**
+> Webhook CreateWebhook (CreateWebhookData data)
+
+Create a webhook
+
+Creates a webhook that delivers a POST request to your endpoint whenever a subscribed event occurs. Optionally scope the webhook to specific API tokens, templates, or folders. 
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **data** | [**CreateWebhookData**](CreateWebhookData.md) |  |  |
+
+### Return type
+
+[**Webhook**](Webhook.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **201** | webhook created |  -  |
+| **422** | invalid parameters |  -  |
+| **401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
 <a id="deletefolder"></a>
 # **DeleteFolder**
 > Folder DeleteFolder (string folderId)
@@ -544,6 +589,44 @@ Deletes a template or a specific template version. When no version is specified,
 |-------------|-------------|------------------|
 | **200** | template version deleted successfully |  -  |
 | **404** | template not found |  -  |
+| **401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+<a id="deletewebhook"></a>
+# **DeleteWebhook**
+> Webhook DeleteWebhook (string webhookId)
+
+Delete a webhook
+
+Permanently deletes a webhook so it stops receiving events, and returns the deleted webhook.
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **webhookId** | **string** |  |  |
+
+### Return type
+
+[**Webhook**](Webhook.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | webhook deleted |  -  |
+| **404** | webhook not found |  -  |
 | **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
@@ -632,7 +715,7 @@ Expiring a PDF submission deletes the PDF and removes the data from our database
 
 Generate a PDF
 
-Creates a PDF submission by filling in a template with data. Supports both synchronous (default) and asynchronous processing. Set `wait: false` to return immediately.  See also: - [Customize the PDF Title and Filename](https://docspring.com/docs/api-guide/generate-pdfs/customize-pdf-title-and-filename/) - Set custom metadata - [Handling Truncated Text](https://docspring.com/docs/api-guide/generate-pdfs/handle-truncated-text/) - Handle text that doesn't fit in fields 
+Creates a PDF submission by filling in a template with data. Supports both synchronous (default) and asynchronous processing. Add the `wait=false` query parameter to return immediately.  See also: - [Customize the PDF Title and Filename](https://docspring.com/docs/api-guide/generate-pdfs/customize-pdf-title-and-filename/) - Set custom metadata - [Handling Truncated Text](https://docspring.com/docs/api-guide/generate-pdfs/handle-truncated-text/) - Handle text that doesn't fit in fields 
 
 
 ### Parameters
@@ -967,6 +1050,46 @@ Retrieves information about a template including processing status and document 
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
+<a id="gettemplatemodelcode"></a>
+# **GetTemplateModelCode**
+> TemplateModelCodeResponse GetTemplateModelCode (string templateId, string lang)
+
+Generate typed model code for a template
+
+Generates typed model code for a template's submission data from its JSON schema, in TypeScript, JavaScript, Ruby, Python, PHP, Java, C#, Elixir or Go. Build your submission data with the generated types so your app catches mistakes before it calls the API.  `root_type_name` is the type that describes the whole submission data object, qualified with its namespace or package where there is one. Java returns every class in `code`, each under a `// ClassName.java` comment: split them into one file per class.  A template with no named fields returns 422, since there are no types to generate.  See also: - [Generate Model Code](https://docspring.com/docs/template-editor/generate-model-code/) - Use the generated types 
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **templateId** | **string** |  |  |
+| **lang** | **string** | The language to generate code for |  |
+
+### Return type
+
+[**TemplateModelCodeResponse**](TemplateModelCodeResponse.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | model code generated |  -  |
+| **404** | template not found |  -  |
+| **422** | unknown language |  -  |
+| **401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
 <a id="gettemplateschema"></a>
 # **GetTemplateSchema**
 > JsonSchema GetTemplateSchema (string templateId)
@@ -1001,6 +1124,44 @@ Retrieves the JSON Schema definition for a template's fields. Use this to valida
 |-------------|-------------|------------------|
 | **200** | template found |  -  |
 | **404** | template not found |  -  |
+| **401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+<a id="getwebhook"></a>
+# **GetWebhook**
+> Webhook GetWebhook (string webhookId)
+
+Get a webhook
+
+Retrieves a single webhook by its ID.
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **webhookId** | **string** |  |  |
+
+### Return type
+
+[**Webhook**](Webhook.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | webhook found |  -  |
+| **404** | webhook not found |  -  |
 | **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
@@ -1203,6 +1364,49 @@ Retrieves a list of your templates with search, filtering, and pagination option
 |-------------|-------------|------------------|
 | **200** | enumerate all templates |  -  |
 | **404** | filter templates by invalid folder id |  -  |
+| **401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+<a id="listwebhooks"></a>
+# **ListWebhooks**
+> List&lt;Webhook&gt; ListWebhooks (int page = null, int perPage = null, string eventType = null, string mode = null, string templateId = null, string folderId = null, string apiTokenId = null)
+
+Get a list of all webhooks
+
+Returns a list of the webhooks configured for your account. Supports pagination and filtering by event type, mode, and the API token, template, or folder a webhook is scoped to. 
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **page** | **int** | Default: 1 | [optional]  |
+| **perPage** | **int** | Default: 50 | [optional]  |
+| **eventType** | **string** | Filter by a subscribed event type | [optional]  |
+| **mode** | **string** | Filter by mode (test or live) | [optional]  |
+| **templateId** | **string** | Filter by a scoped template ID | [optional]  |
+| **folderId** | **string** | Filter by a scoped folder ID | [optional]  |
+| **apiTokenId** | **string** | Filter by a scoped API token ID | [optional]  |
+
+### Return type
+
+[**List&lt;Webhook&gt;**](Webhook.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | filter webhooks by scope and event type |  -  |
 | **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
@@ -1483,7 +1687,7 @@ Updates authentication details for a data request. Use this when a user logs in 
 
 Update a Template
 
-Updates template content and properties. For HTML templates, you can modify the HTML, SCSS, headers, footers, name, and description. Changes are applied to your draft template and do not affect published template versions. 
+Updates template content and properties. For HTML templates, you can modify the HTML, SCSS, headers, footers, name, and description. Changes are applied to your draft template and do not affect published template versions. The exception is `parent_folder_id`: moving the template to another folder moves its published versions too. 
 
 
 ### Parameters
@@ -1511,6 +1715,7 @@ Updates template content and properties. For HTML templates, you can modify the 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | update template success |  -  |
+| **404** | folder not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -1587,6 +1792,45 @@ Updates a PDF template's document using a cached file upload. This is a three-st
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | returns a template with updated document |  -  |
+| **401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+<a id="updatewebhook"></a>
+# **UpdateWebhook**
+> Webhook UpdateWebhook (string webhookId, UpdateWebhookData data)
+
+Update a webhook
+
+Updates the configuration of an existing webhook.
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **webhookId** | **string** |  |  |
+| **data** | [**UpdateWebhookData**](UpdateWebhookData.md) |  |  |
+
+### Return type
+
+[**Webhook**](Webhook.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | webhook updated |  -  |
+| **404** | webhook not found |  -  |
 | **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)

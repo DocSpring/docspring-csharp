@@ -117,15 +117,6 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
-        /// Test the property 'source'
-        /// </summary>
-        [Fact]
-        public void sourceTest()
-        {
-            // TODO unit test for the property 'source'
-        }
-
-        /// <summary>
         /// Test the property 'batch_id'
         /// </summary>
         [Fact]
@@ -141,6 +132,15 @@ namespace DocSpring.Client.Test.Model
         public void editableTest()
         {
             // TODO unit test for the property 'editable'
+        }
+
+        /// <summary>
+        /// Test the property 'error_message'
+        /// </summary>
+        [Fact]
+        public void error_messageTest()
+        {
+            // TODO unit test for the property 'error_message'
         }
 
         /// <summary>
@@ -267,6 +267,15 @@ namespace DocSpring.Client.Test.Model
         public void audit_trail_download_urlTest()
         {
             // TODO unit test for the property 'audit_trail_download_url'
+        }
+
+        /// <summary>
+        /// Test the property 'source'
+        /// </summary>
+        [Fact]
+        public void sourceTest()
+        {
+            // TODO unit test for the property 'source'
         }
 
         /// <summary>

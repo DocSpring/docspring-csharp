@@ -86,7 +86,12 @@ namespace DocSpring.Client.Model
             /// <summary>
             /// Enum AllCompleted for value: all_completed
             /// </summary>
-            AllCompleted = 6
+            AllCompleted = 6,
+
+            /// <summary>
+            /// Enum UnknownDefaultOpenApi for value: unknown_default_open_api
+            /// </summary>
+            UnknownDefaultOpenApi = 7
         }
 
         /// <summary>
@@ -115,7 +120,11 @@ namespace DocSpring.Client.Model
             if (value.Equals("all_completed"))
                 return EventTypeEnum.AllCompleted;
 
-            throw new NotImplementedException($"Could not convert value to type EventTypeEnum: '{value}'");
+            if (value.Equals("unknown_default_open_api"))
+                return EventTypeEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return EventTypeEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -143,7 +152,11 @@ namespace DocSpring.Client.Model
             if (value.Equals("all_completed"))
                 return EventTypeEnum.AllCompleted;
 
-            return null;
+            if (value.Equals("unknown_default_open_api"))
+                return EventTypeEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return EventTypeEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -171,6 +184,9 @@ namespace DocSpring.Client.Model
 
             if (value == EventTypeEnum.AllCompleted)
                 return "all_completed";
+
+            if (value == EventTypeEnum.UnknownDefaultOpenApi)
+                return "unknown_default_open_api";
 
             throw new NotImplementedException($"Value could not be handled: '{value}'");
         }
@@ -229,7 +245,12 @@ namespace DocSpring.Client.Model
             /// <summary>
             /// Enum Whatsapp for value: whatsapp
             /// </summary>
-            Whatsapp = 9
+            Whatsapp = 9,
+
+            /// <summary>
+            /// Enum UnknownDefaultOpenApi for value: unknown_default_open_api
+            /// </summary>
+            UnknownDefaultOpenApi = 10
         }
 
         /// <summary>
@@ -267,7 +288,11 @@ namespace DocSpring.Client.Model
             if (value.Equals("whatsapp"))
                 return MessageTypeEnum.Whatsapp;
 
-            throw new NotImplementedException($"Could not convert value to type MessageTypeEnum: '{value}'");
+            if (value.Equals("unknown_default_open_api"))
+                return MessageTypeEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return MessageTypeEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -304,7 +329,11 @@ namespace DocSpring.Client.Model
             if (value.Equals("whatsapp"))
                 return MessageTypeEnum.Whatsapp;
 
-            return null;
+            if (value.Equals("unknown_default_open_api"))
+                return MessageTypeEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return MessageTypeEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -344,6 +373,9 @@ namespace DocSpring.Client.Model
 
             if (value == MessageTypeEnum.Whatsapp)
                 return "whatsapp";
+
+            if (value == MessageTypeEnum.UnknownDefaultOpenApi)
+                return "unknown_default_open_api";
 
             throw new NotImplementedException($"Value could not be handled: '{value}'");
         }
@@ -476,8 +508,7 @@ namespace DocSpring.Client.Model
                             break;
                         case "message_type":
                             string messageTypeRawValue = utf8JsonReader.GetString();
-                            if (messageTypeRawValue != null)
-                                messageType = new Option<SubmissionDataRequestEvent.MessageTypeEnum?>(SubmissionDataRequestEvent.MessageTypeEnumFromStringOrDefault(messageTypeRawValue));
+                            messageType = new Option<SubmissionDataRequestEvent.MessageTypeEnum?>(messageTypeRawValue == null ? (SubmissionDataRequestEvent.MessageTypeEnum?)null : SubmissionDataRequestEvent.MessageTypeEnumFromStringOrDefault(messageTypeRawValue));
                             break;
                         case "message_recipient":
                             messageRecipient = new Option<string>(utf8JsonReader.GetString());
@@ -559,11 +590,16 @@ namespace DocSpring.Client.Model
             else
                 writer.WriteNull("submission_data_request_id");
 
-            var messageTypeRawValue = SubmissionDataRequestEvent.MessageTypeEnumToJsonValue(submissionDataRequestEvent.message_type.Value);
-            if (messageTypeRawValue != null)
-                writer.WriteString("message_type", messageTypeRawValue);
-            else
+            if (submissionDataRequestEvent.message_type == null)
                 writer.WriteNull("message_type");
+            else
+            {
+                var messageTypeRawValue = SubmissionDataRequestEvent.MessageTypeEnumToJsonValue(submissionDataRequestEvent.message_type.Value);
+                if (messageTypeRawValue != null)
+                    writer.WriteString("message_type", messageTypeRawValue);
+                else
+                    writer.WriteNull("message_type");
+            }
 
             if (submissionDataRequestEvent.message_recipient != null)
                 writer.WriteString("message_recipient", submissionDataRequestEvent.message_recipient);

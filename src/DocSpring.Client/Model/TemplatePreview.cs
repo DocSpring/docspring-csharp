@@ -37,6 +37,9 @@ namespace DocSpring.Client.Model
         /// <param name="documentProcessed">documentProcessed</param>
         /// <param name="documentState">documentState</param>
         /// <param name="editableSubmissions">editableSubmissions</param>
+        /// <param name="embedEditAllowSettings">embedEditAllowSettings</param>
+        /// <param name="embedEditAllowVersioning">embedEditAllowVersioning</param>
+        /// <param name="embedEditAllowDocumentReplacement">embedEditAllowDocumentReplacement</param>
         /// <param name="encryptPdfs">encryptPdfs</param>
         /// <param name="expirationInterval">expirationInterval</param>
         /// <param name="expireAfter">expireAfter</param>
@@ -45,6 +48,7 @@ namespace DocSpring.Client.Model
         /// <param name="locked">locked</param>
         /// <param name="mergeAuditTrailPdf">mergeAuditTrailPdf</param>
         /// <param name="pageCount">pageCount</param>
+        /// <param name="path">path</param>
         /// <param name="publicSubmissions">publicSubmissions</param>
         /// <param name="publicWebForm">publicWebForm</param>
         /// <param name="templateType">templateType</param>
@@ -61,7 +65,6 @@ namespace DocSpring.Client.Model
         /// <param name="name">name</param>
         /// <param name="pageDimensions">pageDimensions</param>
         /// <param name="parentFolderId">parentFolderId</param>
-        /// <param name="path">path</param>
         /// <param name="permanentDocumentUrl">permanentDocumentUrl</param>
         /// <param name="redirectUrl">redirectUrl</param>
         /// <param name="slackWebhookUrl">slackWebhookUrl</param>
@@ -69,12 +72,16 @@ namespace DocSpring.Client.Model
         /// <param name="versionPublishedAt">versionPublishedAt</param>
         /// <param name="version">version</param>
         /// <param name="webhookUrl">webhookUrl</param>
+        /// <param name="embedEditToken">embedEditToken</param>
         /// <param name="latestVersion">latestVersion</param>
         /// <param name="lastChangedAt">lastChangedAt</param>
         /// <param name="lastChangedByType">lastChangedByType</param>
         /// <param name="lastChangedById">lastChangedById</param>
+        /// <param name="lastChangedByExternalName">lastChangedByExternalName</param>
+        /// <param name="lastChangedByExternalEmail">lastChangedByExternalEmail</param>
+        /// <param name="lastChangedByExternalId">lastChangedByExternalId</param>
         [JsonConstructor]
-        public TemplatePreview(bool addDataRequestSubmissionIdFooters, bool allowAdditionalProperties, bool documentParseError, bool documentProcessed, DocumentStateEnum documentState, bool editableSubmissions, bool encryptPdfs, string expirationInterval, int expireAfter, bool expireSubmissions, bool firstTemplate, bool locked, bool mergeAuditTrailPdf, int pageCount, bool publicSubmissions, bool publicWebForm, TemplateTypeEnum templateType, bool demo, string description = default, string documentFilename = default, string documentMd5 = default, string documentUrl = default, string embedDomains = default, string encryptPdfsPassword = default, string externalPredefinedFieldsTemplateId = default, string externalPredefinedFieldsTemplateName = default, string id = default, string name = default, List<List<decimal>> pageDimensions = default, string parentFolderId = default, string path = default, string permanentDocumentUrl = default, string redirectUrl = default, string slackWebhookUrl = default, string updatedAt = default, string versionPublishedAt = default, string version = default, string webhookUrl = default, string latestVersion = default, string lastChangedAt = default, LastChangedByTypeEnum? lastChangedByType = default, string lastChangedById = default)
+        public TemplatePreview(bool addDataRequestSubmissionIdFooters, bool allowAdditionalProperties, bool documentParseError, bool documentProcessed, DocumentStateEnum documentState, bool editableSubmissions, bool embedEditAllowSettings, bool embedEditAllowVersioning, bool embedEditAllowDocumentReplacement, bool encryptPdfs, string expirationInterval, int expireAfter, bool expireSubmissions, bool firstTemplate, bool locked, bool mergeAuditTrailPdf, int pageCount, string path, bool publicSubmissions, bool publicWebForm, TemplateTypeEnum templateType, bool demo, string description = default, string documentFilename = default, string documentMd5 = default, string documentUrl = default, string embedDomains = default, string encryptPdfsPassword = default, string externalPredefinedFieldsTemplateId = default, string externalPredefinedFieldsTemplateName = default, string id = default, string name = default, List<List<decimal>> pageDimensions = default, string parentFolderId = default, string permanentDocumentUrl = default, string redirectUrl = default, string slackWebhookUrl = default, string updatedAt = default, string versionPublishedAt = default, string version = default, string webhookUrl = default, Option<string> embedEditToken = default, string latestVersion = default, string lastChangedAt = default, LastChangedByTypeEnum? lastChangedByType = default, string lastChangedById = default, string lastChangedByExternalName = default, string lastChangedByExternalEmail = default, string lastChangedByExternalId = default)
         {
             this.add_data_request_submission_id_footers = addDataRequestSubmissionIdFooters;
             this.allow_additional_properties = allowAdditionalProperties;
@@ -82,6 +89,9 @@ namespace DocSpring.Client.Model
             this.document_processed = documentProcessed;
             this.document_state = documentState;
             this.editable_submissions = editableSubmissions;
+            this.embed_edit_allow_settings = embedEditAllowSettings;
+            this.embed_edit_allow_versioning = embedEditAllowVersioning;
+            this.embed_edit_allow_document_replacement = embedEditAllowDocumentReplacement;
             this.encrypt_pdfs = encryptPdfs;
             this.expiration_interval = expirationInterval;
             this.expire_after = expireAfter;
@@ -90,6 +100,7 @@ namespace DocSpring.Client.Model
             this.locked = locked;
             this.merge_audit_trail_pdf = mergeAuditTrailPdf;
             this.page_count = pageCount;
+            this.path = path;
             this.public_submissions = publicSubmissions;
             this.public_web_form = publicWebForm;
             this.template_type = templateType;
@@ -106,7 +117,6 @@ namespace DocSpring.Client.Model
             this.name = name;
             this.page_dimensions = pageDimensions;
             this.parent_folder_id = parentFolderId;
-            this.path = path;
             this.permanent_document_url = permanentDocumentUrl;
             this.redirect_url = redirectUrl;
             this.slack_webhook_url = slackWebhookUrl;
@@ -114,10 +124,14 @@ namespace DocSpring.Client.Model
             this.version_published_at = versionPublishedAt;
             this.version = version;
             this.webhook_url = webhookUrl;
+            embed_edit_tokenOption = embedEditToken;
             this.latest_version = latestVersion;
             this.last_changed_at = lastChangedAt;
             this.last_changed_by_type = lastChangedByType;
             this.last_changed_by_id = lastChangedById;
+            this.last_changed_by_external_name = lastChangedByExternalName;
+            this.last_changed_by_external_email = lastChangedByExternalEmail;
+            this.last_changed_by_external_id = lastChangedByExternalId;
             OnCreated();
         }
 
@@ -151,7 +165,12 @@ namespace DocSpring.Client.Model
             /// <summary>
             /// Enum UnknownError for value: unknown_error
             /// </summary>
-            UnknownError = 5
+            UnknownError = 5,
+
+            /// <summary>
+            /// Enum UnknownDefaultOpenApi for value: unknown_default_open_api
+            /// </summary>
+            UnknownDefaultOpenApi = 6
         }
 
         /// <summary>
@@ -177,7 +196,11 @@ namespace DocSpring.Client.Model
             if (value.Equals("unknown_error"))
                 return DocumentStateEnum.UnknownError;
 
-            throw new NotImplementedException($"Could not convert value to type DocumentStateEnum: '{value}'");
+            if (value.Equals("unknown_default_open_api"))
+                return DocumentStateEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return DocumentStateEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -202,7 +225,11 @@ namespace DocSpring.Client.Model
             if (value.Equals("unknown_error"))
                 return DocumentStateEnum.UnknownError;
 
-            return null;
+            if (value.Equals("unknown_default_open_api"))
+                return DocumentStateEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return DocumentStateEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -228,6 +255,9 @@ namespace DocSpring.Client.Model
             if (value == DocumentStateEnum.UnknownError)
                 return "unknown_error";
 
+            if (value == DocumentStateEnum.UnknownDefaultOpenApi)
+                return "unknown_default_open_api";
+
             throw new NotImplementedException($"Value could not be handled: '{value}'");
         }
 
@@ -250,7 +280,12 @@ namespace DocSpring.Client.Model
             /// <summary>
             /// Enum Html for value: html
             /// </summary>
-            Html = 2
+            Html = 2,
+
+            /// <summary>
+            /// Enum UnknownDefaultOpenApi for value: unknown_default_open_api
+            /// </summary>
+            UnknownDefaultOpenApi = 3
         }
 
         /// <summary>
@@ -267,7 +302,11 @@ namespace DocSpring.Client.Model
             if (value.Equals("html"))
                 return TemplateTypeEnum.Html;
 
-            throw new NotImplementedException($"Could not convert value to type TemplateTypeEnum: '{value}'");
+            if (value.Equals("unknown_default_open_api"))
+                return TemplateTypeEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return TemplateTypeEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -283,7 +322,11 @@ namespace DocSpring.Client.Model
             if (value.Equals("html"))
                 return TemplateTypeEnum.Html;
 
-            return null;
+            if (value.Equals("unknown_default_open_api"))
+                return TemplateTypeEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return TemplateTypeEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -299,6 +342,9 @@ namespace DocSpring.Client.Model
 
             if (value == TemplateTypeEnum.Html)
                 return "html";
+
+            if (value == TemplateTypeEnum.UnknownDefaultOpenApi)
+                return "unknown_default_open_api";
 
             throw new NotImplementedException($"Value could not be handled: '{value}'");
         }
@@ -322,7 +368,17 @@ namespace DocSpring.Client.Model
             /// <summary>
             /// Enum Api for value: api
             /// </summary>
-            Api = 2
+            Api = 2,
+
+            /// <summary>
+            /// Enum ExternalUser for value: external_user
+            /// </summary>
+            ExternalUser = 3,
+
+            /// <summary>
+            /// Enum UnknownDefaultOpenApi for value: unknown_default_open_api
+            /// </summary>
+            UnknownDefaultOpenApi = 4
         }
 
         /// <summary>
@@ -339,7 +395,14 @@ namespace DocSpring.Client.Model
             if (value.Equals("api"))
                 return LastChangedByTypeEnum.Api;
 
-            throw new NotImplementedException($"Could not convert value to type LastChangedByTypeEnum: '{value}'");
+            if (value.Equals("external_user"))
+                return LastChangedByTypeEnum.ExternalUser;
+
+            if (value.Equals("unknown_default_open_api"))
+                return LastChangedByTypeEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return LastChangedByTypeEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -355,7 +418,14 @@ namespace DocSpring.Client.Model
             if (value.Equals("api"))
                 return LastChangedByTypeEnum.Api;
 
-            return null;
+            if (value.Equals("external_user"))
+                return LastChangedByTypeEnum.ExternalUser;
+
+            if (value.Equals("unknown_default_open_api"))
+                return LastChangedByTypeEnum.UnknownDefaultOpenApi;
+
+            // Values added to the API after this client was released map to the unknown default member
+            return LastChangedByTypeEnum.UnknownDefaultOpenApi;
         }
 
         /// <summary>
@@ -374,6 +444,12 @@ namespace DocSpring.Client.Model
 
             if (value == LastChangedByTypeEnum.Api)
                 return "api";
+
+            if (value == LastChangedByTypeEnum.ExternalUser)
+                return "external_user";
+
+            if (value == LastChangedByTypeEnum.UnknownDefaultOpenApi)
+                return "unknown_default_open_api";
 
             throw new NotImplementedException($"Value could not be handled: '{value}'");
         }
@@ -413,6 +489,24 @@ namespace DocSpring.Client.Model
         /// </summary>
         [JsonPropertyName("editable_submissions")]
         public bool editable_submissions { get; set; }
+
+        /// <summary>
+        /// Gets or Sets embed_edit_allow_settings
+        /// </summary>
+        [JsonPropertyName("embed_edit_allow_settings")]
+        public bool embed_edit_allow_settings { get; set; }
+
+        /// <summary>
+        /// Gets or Sets embed_edit_allow_versioning
+        /// </summary>
+        [JsonPropertyName("embed_edit_allow_versioning")]
+        public bool embed_edit_allow_versioning { get; set; }
+
+        /// <summary>
+        /// Gets or Sets embed_edit_allow_document_replacement
+        /// </summary>
+        [JsonPropertyName("embed_edit_allow_document_replacement")]
+        public bool embed_edit_allow_document_replacement { get; set; }
 
         /// <summary>
         /// Gets or Sets encrypt_pdfs
@@ -461,6 +555,12 @@ namespace DocSpring.Client.Model
         /// </summary>
         [JsonPropertyName("page_count")]
         public int page_count { get; set; }
+
+        /// <summary>
+        /// Gets or Sets path
+        /// </summary>
+        [JsonPropertyName("path")]
+        public string path { get; set; }
 
         /// <summary>
         /// Gets or Sets public_submissions
@@ -553,12 +653,6 @@ namespace DocSpring.Client.Model
         public string parent_folder_id { get; set; }
 
         /// <summary>
-        /// Gets or Sets path
-        /// </summary>
-        [JsonPropertyName("path")]
-        public string path { get; set; }
-
-        /// <summary>
         /// Gets or Sets permanent_document_url
         /// </summary>
         [JsonPropertyName("permanent_document_url")]
@@ -601,6 +695,19 @@ namespace DocSpring.Client.Model
         public string webhook_url { get; set; }
 
         /// <summary>
+        /// Used to track the state of embed_edit_token
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string> embed_edit_tokenOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets embed_edit_token
+        /// </summary>
+        [JsonPropertyName("embed_edit_token")]
+        public string embed_edit_token { get { return this.embed_edit_tokenOption; } set { this.embed_edit_tokenOption = new Option<string>(value); } }
+
+        /// <summary>
         /// Gets or Sets latest_version
         /// </summary>
         [JsonPropertyName("latest_version")]
@@ -619,6 +726,24 @@ namespace DocSpring.Client.Model
         public string last_changed_by_id { get; set; }
 
         /// <summary>
+        /// Gets or Sets last_changed_by_external_name
+        /// </summary>
+        [JsonPropertyName("last_changed_by_external_name")]
+        public string last_changed_by_external_name { get; set; }
+
+        /// <summary>
+        /// Gets or Sets last_changed_by_external_email
+        /// </summary>
+        [JsonPropertyName("last_changed_by_external_email")]
+        public string last_changed_by_external_email { get; set; }
+
+        /// <summary>
+        /// Gets or Sets last_changed_by_external_id
+        /// </summary>
+        [JsonPropertyName("last_changed_by_external_id")]
+        public string last_changed_by_external_id { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -632,6 +757,9 @@ namespace DocSpring.Client.Model
             sb.Append("  document_processed: ").Append(document_processed).Append("\n");
             sb.Append("  document_state: ").Append(document_state).Append("\n");
             sb.Append("  editable_submissions: ").Append(editable_submissions).Append("\n");
+            sb.Append("  embed_edit_allow_settings: ").Append(embed_edit_allow_settings).Append("\n");
+            sb.Append("  embed_edit_allow_versioning: ").Append(embed_edit_allow_versioning).Append("\n");
+            sb.Append("  embed_edit_allow_document_replacement: ").Append(embed_edit_allow_document_replacement).Append("\n");
             sb.Append("  encrypt_pdfs: ").Append(encrypt_pdfs).Append("\n");
             sb.Append("  expiration_interval: ").Append(expiration_interval).Append("\n");
             sb.Append("  expire_after: ").Append(expire_after).Append("\n");
@@ -640,6 +768,7 @@ namespace DocSpring.Client.Model
             sb.Append("  locked: ").Append(locked).Append("\n");
             sb.Append("  merge_audit_trail_pdf: ").Append(merge_audit_trail_pdf).Append("\n");
             sb.Append("  page_count: ").Append(page_count).Append("\n");
+            sb.Append("  path: ").Append(path).Append("\n");
             sb.Append("  public_submissions: ").Append(public_submissions).Append("\n");
             sb.Append("  public_web_form: ").Append(public_web_form).Append("\n");
             sb.Append("  template_type: ").Append(template_type).Append("\n");
@@ -656,7 +785,6 @@ namespace DocSpring.Client.Model
             sb.Append("  name: ").Append(name).Append("\n");
             sb.Append("  page_dimensions: ").Append(page_dimensions).Append("\n");
             sb.Append("  parent_folder_id: ").Append(parent_folder_id).Append("\n");
-            sb.Append("  path: ").Append(path).Append("\n");
             sb.Append("  permanent_document_url: ").Append(permanent_document_url).Append("\n");
             sb.Append("  redirect_url: ").Append(redirect_url).Append("\n");
             sb.Append("  slack_webhook_url: ").Append(slack_webhook_url).Append("\n");
@@ -664,10 +792,14 @@ namespace DocSpring.Client.Model
             sb.Append("  version_published_at: ").Append(version_published_at).Append("\n");
             sb.Append("  version: ").Append(version).Append("\n");
             sb.Append("  webhook_url: ").Append(webhook_url).Append("\n");
+            sb.Append("  embed_edit_token: ").Append(embed_edit_token).Append("\n");
             sb.Append("  latest_version: ").Append(latest_version).Append("\n");
             sb.Append("  last_changed_at: ").Append(last_changed_at).Append("\n");
             sb.Append("  last_changed_by_type: ").Append(last_changed_by_type).Append("\n");
             sb.Append("  last_changed_by_id: ").Append(last_changed_by_id).Append("\n");
+            sb.Append("  last_changed_by_external_name: ").Append(last_changed_by_external_name).Append("\n");
+            sb.Append("  last_changed_by_external_email: ").Append(last_changed_by_external_email).Append("\n");
+            sb.Append("  last_changed_by_external_id: ").Append(last_changed_by_external_id).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -712,6 +844,9 @@ namespace DocSpring.Client.Model
             Option<bool?> documentProcessed = default;
             Option<TemplatePreview.DocumentStateEnum?> documentState = default;
             Option<bool?> editableSubmissions = default;
+            Option<bool?> embedEditAllowSettings = default;
+            Option<bool?> embedEditAllowVersioning = default;
+            Option<bool?> embedEditAllowDocumentReplacement = default;
             Option<bool?> encryptPdfs = default;
             Option<string> expirationInterval = default;
             Option<int?> expireAfter = default;
@@ -720,6 +855,7 @@ namespace DocSpring.Client.Model
             Option<bool?> locked = default;
             Option<bool?> mergeAuditTrailPdf = default;
             Option<int?> pageCount = default;
+            Option<string> path = default;
             Option<bool?> publicSubmissions = default;
             Option<bool?> publicWebForm = default;
             Option<TemplatePreview.TemplateTypeEnum?> templateType = default;
@@ -736,7 +872,6 @@ namespace DocSpring.Client.Model
             Option<string> name = default;
             Option<List<List<decimal>>> pageDimensions = default;
             Option<string> parentFolderId = default;
-            Option<string> path = default;
             Option<string> permanentDocumentUrl = default;
             Option<string> redirectUrl = default;
             Option<string> slackWebhookUrl = default;
@@ -744,10 +879,14 @@ namespace DocSpring.Client.Model
             Option<string> versionPublishedAt = default;
             Option<string> version = default;
             Option<string> webhookUrl = default;
+            Option<string> embedEditToken = default;
             Option<string> latestVersion = default;
             Option<string> lastChangedAt = default;
             Option<TemplatePreview.LastChangedByTypeEnum?> lastChangedByType = default;
             Option<string> lastChangedById = default;
+            Option<string> lastChangedByExternalName = default;
+            Option<string> lastChangedByExternalEmail = default;
+            Option<string> lastChangedByExternalId = default;
 
             while (utf8JsonReader.Read())
             {
@@ -784,6 +923,15 @@ namespace DocSpring.Client.Model
                         case "editable_submissions":
                             editableSubmissions = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
                             break;
+                        case "embed_edit_allow_settings":
+                            embedEditAllowSettings = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
+                            break;
+                        case "embed_edit_allow_versioning":
+                            embedEditAllowVersioning = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
+                            break;
+                        case "embed_edit_allow_document_replacement":
+                            embedEditAllowDocumentReplacement = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
+                            break;
                         case "encrypt_pdfs":
                             encryptPdfs = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
                             break;
@@ -807,6 +955,9 @@ namespace DocSpring.Client.Model
                             break;
                         case "page_count":
                             pageCount = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
+                            break;
+                        case "path":
+                            path = new Option<string>(utf8JsonReader.GetString());
                             break;
                         case "public_submissions":
                             publicSubmissions = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
@@ -858,9 +1009,6 @@ namespace DocSpring.Client.Model
                         case "parent_folder_id":
                             parentFolderId = new Option<string>(utf8JsonReader.GetString());
                             break;
-                        case "path":
-                            path = new Option<string>(utf8JsonReader.GetString());
-                            break;
                         case "permanent_document_url":
                             permanentDocumentUrl = new Option<string>(utf8JsonReader.GetString());
                             break;
@@ -882,6 +1030,9 @@ namespace DocSpring.Client.Model
                         case "webhook_url":
                             webhookUrl = new Option<string>(utf8JsonReader.GetString());
                             break;
+                        case "embed_edit_token":
+                            embedEditToken = new Option<string>(utf8JsonReader.GetString());
+                            break;
                         case "latest_version":
                             latestVersion = new Option<string>(utf8JsonReader.GetString());
                             break;
@@ -890,11 +1041,19 @@ namespace DocSpring.Client.Model
                             break;
                         case "last_changed_by_type":
                             string lastChangedByTypeRawValue = utf8JsonReader.GetString();
-                            if (lastChangedByTypeRawValue != null)
-                                lastChangedByType = new Option<TemplatePreview.LastChangedByTypeEnum?>(TemplatePreview.LastChangedByTypeEnumFromStringOrDefault(lastChangedByTypeRawValue));
+                            lastChangedByType = new Option<TemplatePreview.LastChangedByTypeEnum?>(lastChangedByTypeRawValue == null ? (TemplatePreview.LastChangedByTypeEnum?)null : TemplatePreview.LastChangedByTypeEnumFromStringOrDefault(lastChangedByTypeRawValue));
                             break;
                         case "last_changed_by_id":
                             lastChangedById = new Option<string>(utf8JsonReader.GetString());
+                            break;
+                        case "last_changed_by_external_name":
+                            lastChangedByExternalName = new Option<string>(utf8JsonReader.GetString());
+                            break;
+                        case "last_changed_by_external_email":
+                            lastChangedByExternalEmail = new Option<string>(utf8JsonReader.GetString());
+                            break;
+                        case "last_changed_by_external_id":
+                            lastChangedByExternalId = new Option<string>(utf8JsonReader.GetString());
                             break;
                         default:
                             break;
@@ -920,6 +1079,15 @@ namespace DocSpring.Client.Model
             if (!editableSubmissions.IsSet)
                 throw new ArgumentException("Property is required for class TemplatePreview.", nameof(editableSubmissions));
 
+            if (!embedEditAllowSettings.IsSet)
+                throw new ArgumentException("Property is required for class TemplatePreview.", nameof(embedEditAllowSettings));
+
+            if (!embedEditAllowVersioning.IsSet)
+                throw new ArgumentException("Property is required for class TemplatePreview.", nameof(embedEditAllowVersioning));
+
+            if (!embedEditAllowDocumentReplacement.IsSet)
+                throw new ArgumentException("Property is required for class TemplatePreview.", nameof(embedEditAllowDocumentReplacement));
+
             if (!encryptPdfs.IsSet)
                 throw new ArgumentException("Property is required for class TemplatePreview.", nameof(encryptPdfs));
 
@@ -943,6 +1111,9 @@ namespace DocSpring.Client.Model
 
             if (!pageCount.IsSet)
                 throw new ArgumentException("Property is required for class TemplatePreview.", nameof(pageCount));
+
+            if (!path.IsSet)
+                throw new ArgumentException("Property is required for class TemplatePreview.", nameof(path));
 
             if (!publicSubmissions.IsSet)
                 throw new ArgumentException("Property is required for class TemplatePreview.", nameof(publicSubmissions));
@@ -992,9 +1163,6 @@ namespace DocSpring.Client.Model
             if (!parentFolderId.IsSet)
                 throw new ArgumentException("Property is required for class TemplatePreview.", nameof(parentFolderId));
 
-            if (!path.IsSet)
-                throw new ArgumentException("Property is required for class TemplatePreview.", nameof(path));
-
             if (!permanentDocumentUrl.IsSet)
                 throw new ArgumentException("Property is required for class TemplatePreview.", nameof(permanentDocumentUrl));
 
@@ -1028,6 +1196,15 @@ namespace DocSpring.Client.Model
             if (!lastChangedById.IsSet)
                 throw new ArgumentException("Property is required for class TemplatePreview.", nameof(lastChangedById));
 
+            if (!lastChangedByExternalName.IsSet)
+                throw new ArgumentException("Property is required for class TemplatePreview.", nameof(lastChangedByExternalName));
+
+            if (!lastChangedByExternalEmail.IsSet)
+                throw new ArgumentException("Property is required for class TemplatePreview.", nameof(lastChangedByExternalEmail));
+
+            if (!lastChangedByExternalId.IsSet)
+                throw new ArgumentException("Property is required for class TemplatePreview.", nameof(lastChangedByExternalId));
+
             if (addDataRequestSubmissionIdFooters.IsSet && addDataRequestSubmissionIdFooters.Value == null)
                 throw new ArgumentNullException(nameof(addDataRequestSubmissionIdFooters), "Property is not nullable for class TemplatePreview.");
 
@@ -1045,6 +1222,15 @@ namespace DocSpring.Client.Model
 
             if (editableSubmissions.IsSet && editableSubmissions.Value == null)
                 throw new ArgumentNullException(nameof(editableSubmissions), "Property is not nullable for class TemplatePreview.");
+
+            if (embedEditAllowSettings.IsSet && embedEditAllowSettings.Value == null)
+                throw new ArgumentNullException(nameof(embedEditAllowSettings), "Property is not nullable for class TemplatePreview.");
+
+            if (embedEditAllowVersioning.IsSet && embedEditAllowVersioning.Value == null)
+                throw new ArgumentNullException(nameof(embedEditAllowVersioning), "Property is not nullable for class TemplatePreview.");
+
+            if (embedEditAllowDocumentReplacement.IsSet && embedEditAllowDocumentReplacement.Value == null)
+                throw new ArgumentNullException(nameof(embedEditAllowDocumentReplacement), "Property is not nullable for class TemplatePreview.");
 
             if (encryptPdfs.IsSet && encryptPdfs.Value == null)
                 throw new ArgumentNullException(nameof(encryptPdfs), "Property is not nullable for class TemplatePreview.");
@@ -1070,6 +1256,9 @@ namespace DocSpring.Client.Model
             if (pageCount.IsSet && pageCount.Value == null)
                 throw new ArgumentNullException(nameof(pageCount), "Property is not nullable for class TemplatePreview.");
 
+            if (path.IsSet && path.Value == null)
+                throw new ArgumentNullException(nameof(path), "Property is not nullable for class TemplatePreview.");
+
             if (publicSubmissions.IsSet && publicSubmissions.Value == null)
                 throw new ArgumentNullException(nameof(publicSubmissions), "Property is not nullable for class TemplatePreview.");
 
@@ -1082,7 +1271,7 @@ namespace DocSpring.Client.Model
             if (demo.IsSet && demo.Value == null)
                 throw new ArgumentNullException(nameof(demo), "Property is not nullable for class TemplatePreview.");
 
-            return new TemplatePreview(addDataRequestSubmissionIdFooters.Value.Value, allowAdditionalProperties.Value.Value, documentParseError.Value.Value, documentProcessed.Value.Value, documentState.Value.Value, editableSubmissions.Value.Value, encryptPdfs.Value.Value, expirationInterval.Value, expireAfter.Value.Value, expireSubmissions.Value.Value, firstTemplate.Value.Value, locked.Value.Value, mergeAuditTrailPdf.Value.Value, pageCount.Value.Value, publicSubmissions.Value.Value, publicWebForm.Value.Value, templateType.Value.Value, demo.Value.Value, description.Value, documentFilename.Value, documentMd5.Value, documentUrl.Value, embedDomains.Value, encryptPdfsPassword.Value, externalPredefinedFieldsTemplateId.Value, externalPredefinedFieldsTemplateName.Value, id.Value, name.Value, pageDimensions.Value, parentFolderId.Value, path.Value, permanentDocumentUrl.Value, redirectUrl.Value, slackWebhookUrl.Value, updatedAt.Value, versionPublishedAt.Value, version.Value, webhookUrl.Value, latestVersion.Value, lastChangedAt.Value, lastChangedByType.Value, lastChangedById.Value);
+            return new TemplatePreview(addDataRequestSubmissionIdFooters.Value.Value, allowAdditionalProperties.Value.Value, documentParseError.Value.Value, documentProcessed.Value.Value, documentState.Value.Value, editableSubmissions.Value.Value, embedEditAllowSettings.Value.Value, embedEditAllowVersioning.Value.Value, embedEditAllowDocumentReplacement.Value.Value, encryptPdfs.Value.Value, expirationInterval.Value, expireAfter.Value.Value, expireSubmissions.Value.Value, firstTemplate.Value.Value, locked.Value.Value, mergeAuditTrailPdf.Value.Value, pageCount.Value.Value, path.Value, publicSubmissions.Value.Value, publicWebForm.Value.Value, templateType.Value.Value, demo.Value.Value, description.Value, documentFilename.Value, documentMd5.Value, documentUrl.Value, embedDomains.Value, encryptPdfsPassword.Value, externalPredefinedFieldsTemplateId.Value, externalPredefinedFieldsTemplateName.Value, id.Value, name.Value, pageDimensions.Value, parentFolderId.Value, permanentDocumentUrl.Value, redirectUrl.Value, slackWebhookUrl.Value, updatedAt.Value, versionPublishedAt.Value, version.Value, webhookUrl.Value, embedEditToken, latestVersion.Value, lastChangedAt.Value, lastChangedByType.Value, lastChangedById.Value, lastChangedByExternalName.Value, lastChangedByExternalEmail.Value, lastChangedByExternalId.Value);
         }
 
         /// <summary>
@@ -1112,6 +1301,9 @@ namespace DocSpring.Client.Model
             if (templatePreview.expiration_interval == null)
                 throw new ArgumentNullException(nameof(templatePreview.expiration_interval), "Property is required for class TemplatePreview.");
 
+            if (templatePreview.path == null)
+                throw new ArgumentNullException(nameof(templatePreview.path), "Property is required for class TemplatePreview.");
+
             writer.WriteBoolean("add_data_request_submission_id_footers", templatePreview.add_data_request_submission_id_footers);
 
             writer.WriteBoolean("allow_additional_properties", templatePreview.allow_additional_properties);
@@ -1123,6 +1315,12 @@ namespace DocSpring.Client.Model
             var documentStateRawValue = TemplatePreview.DocumentStateEnumToJsonValue(templatePreview.document_state);
             writer.WriteString("document_state", documentStateRawValue);
             writer.WriteBoolean("editable_submissions", templatePreview.editable_submissions);
+
+            writer.WriteBoolean("embed_edit_allow_settings", templatePreview.embed_edit_allow_settings);
+
+            writer.WriteBoolean("embed_edit_allow_versioning", templatePreview.embed_edit_allow_versioning);
+
+            writer.WriteBoolean("embed_edit_allow_document_replacement", templatePreview.embed_edit_allow_document_replacement);
 
             writer.WriteBoolean("encrypt_pdfs", templatePreview.encrypt_pdfs);
 
@@ -1139,6 +1337,8 @@ namespace DocSpring.Client.Model
             writer.WriteBoolean("merge_audit_trail_pdf", templatePreview.merge_audit_trail_pdf);
 
             writer.WriteNumber("page_count", templatePreview.page_count);
+
+            writer.WriteString("path", templatePreview.path);
 
             writer.WriteBoolean("public_submissions", templatePreview.public_submissions);
 
@@ -1210,11 +1410,6 @@ namespace DocSpring.Client.Model
             else
                 writer.WriteNull("parent_folder_id");
 
-            if (templatePreview.path != null)
-                writer.WriteString("path", templatePreview.path);
-            else
-                writer.WriteNull("path");
-
             if (templatePreview.permanent_document_url != null)
                 writer.WriteString("permanent_document_url", templatePreview.permanent_document_url);
             else
@@ -1250,6 +1445,12 @@ namespace DocSpring.Client.Model
             else
                 writer.WriteNull("webhook_url");
 
+            if (templatePreview.embed_edit_tokenOption.IsSet)
+                if (templatePreview.embed_edit_tokenOption.Value != null)
+                    writer.WriteString("embed_edit_token", templatePreview.embed_edit_token);
+                else
+                    writer.WriteNull("embed_edit_token");
+
             if (templatePreview.latest_version != null)
                 writer.WriteString("latest_version", templatePreview.latest_version);
             else
@@ -1260,16 +1461,36 @@ namespace DocSpring.Client.Model
             else
                 writer.WriteNull("last_changed_at");
 
-            var lastChangedByTypeRawValue = TemplatePreview.LastChangedByTypeEnumToJsonValue(templatePreview.last_changed_by_type.Value);
-            if (lastChangedByTypeRawValue != null)
-                writer.WriteString("last_changed_by_type", lastChangedByTypeRawValue);
-            else
+            if (templatePreview.last_changed_by_type == null)
                 writer.WriteNull("last_changed_by_type");
+            else
+            {
+                var lastChangedByTypeRawValue = TemplatePreview.LastChangedByTypeEnumToJsonValue(templatePreview.last_changed_by_type.Value);
+                if (lastChangedByTypeRawValue != null)
+                    writer.WriteString("last_changed_by_type", lastChangedByTypeRawValue);
+                else
+                    writer.WriteNull("last_changed_by_type");
+            }
 
             if (templatePreview.last_changed_by_id != null)
                 writer.WriteString("last_changed_by_id", templatePreview.last_changed_by_id);
             else
                 writer.WriteNull("last_changed_by_id");
+
+            if (templatePreview.last_changed_by_external_name != null)
+                writer.WriteString("last_changed_by_external_name", templatePreview.last_changed_by_external_name);
+            else
+                writer.WriteNull("last_changed_by_external_name");
+
+            if (templatePreview.last_changed_by_external_email != null)
+                writer.WriteString("last_changed_by_external_email", templatePreview.last_changed_by_external_email);
+            else
+                writer.WriteNull("last_changed_by_external_email");
+
+            if (templatePreview.last_changed_by_external_id != null)
+                writer.WriteString("last_changed_by_external_id", templatePreview.last_changed_by_external_id);
+            else
+                writer.WriteNull("last_changed_by_external_id");
         }
     }
 }
