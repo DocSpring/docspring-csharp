@@ -28,6 +28,7 @@ docs/models/CustomFile.md
 docs/models/ErrorOrMultipleErrorsResponse.md
 docs/models/ErrorResponse.md
 docs/models/Folder.md
+docs/models/ForbiddenErrorResponse.md
 docs/models/JsonSchema.md
 docs/models/ListSubmissionsResponse.md
 docs/models/MoveFolderData.md
@@ -91,6 +92,7 @@ src/DocSpring.Client.Test/Model/CustomFileTests.cs
 src/DocSpring.Client.Test/Model/ErrorOrMultipleErrorsResponseTests.cs
 src/DocSpring.Client.Test/Model/ErrorResponseTests.cs
 src/DocSpring.Client.Test/Model/FolderTests.cs
+src/DocSpring.Client.Test/Model/ForbiddenErrorResponseTests.cs
 src/DocSpring.Client.Test/Model/JsonSchemaTests.cs
 src/DocSpring.Client.Test/Model/ListSubmissionsResponseTests.cs
 src/DocSpring.Client.Test/Model/MoveFolderDataTests.cs
@@ -172,6 +174,7 @@ src/DocSpring.Client/Model/CustomFile.cs
 src/DocSpring.Client/Model/ErrorOrMultipleErrorsResponse.cs
 src/DocSpring.Client/Model/ErrorResponse.cs
 src/DocSpring.Client/Model/Folder.cs
+src/DocSpring.Client/Model/ForbiddenErrorResponse.cs
 src/DocSpring.Client/Model/JsonSchema.cs
 src/DocSpring.Client/Model/ListSubmissionsResponse.cs
 src/DocSpring.Client/Model/MoveFolderData.cs

@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **field_overrides** | **Object** |  | [optional] 
 **metadata** | **Object** |  | [optional] 
 **password** | **string** |  | [optional] 
-**test** | **bool** |  | [optional] 
+**test** | **bool** | Generate a watermarked test PDF. Test PDFs are free; live PDFs (the default) use credits. | [optional] 
 **version** | **string** |  | [optional] 
 
 [[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)

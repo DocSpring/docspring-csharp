@@ -12,7 +12,7 @@
     <Description>C# client for the DocSpring API: fill PDF templates, generate PDFs from HTML, combine PDFs and collect e-signatures.</Description>
     <Copyright>Copyright © DocSpring, Inc.</Copyright>
     <RootNamespace>DocSpring.Client</RootNamespace>
-    <Version>3.4.0</Version>
+    <Version>3.5.0</Version>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\DocSpring.Client.xml</DocumentationFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/DocSpring/docspring-csharp.git</RepositoryUrl>

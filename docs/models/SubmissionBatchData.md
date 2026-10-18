@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **metadata** | **Object** |  | [optional] 
 **template_id** | **string** |  | [optional] 
 **template_version** | **string** |  | [optional] 
-**test** | **bool** |  | [optional] 
+**test** | **bool** | Generate a watermarked test PDF. Test PDFs are free; live PDFs (the default) use credits. | [optional] 
 
 [[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 

@@ -1,7 +1,10 @@
 openapi: 3.0.1
 info:
   description: "Use DocSpring's API to programmatically fill out PDF forms, convert\
-    \ HTML to PDFs, merge PDFs, or request legally binding e-signatures."
+    \ HTML to PDFs, merge PDFs, or request legally binding e-signatures. Requests\
+    \ are rate limited per account, and live PDFs use credits: a request over the\
+    \ limit returns 429 with a Retry-After header, and one your credits can't cover\
+    \ returns 402. See [Credits & Rate Limits](https://docspring.com/docs/api-guide/credits-and-rate-limits/)."
   title: DocSpring API
   version: v1
 servers:
@@ -203,6 +206,11 @@ paths:
         Combines multiple PDFs from various sources into a single PDF file. Supports merging
         submission PDFs, template PDFs, custom files, other merged PDFs,
         and PDFs from URLs. Merges the PDFs in the order provided.
+
+        Combining uses credits (4 per source PDF, plus 4 per unit of the combined PDF), even with a test API
+        token or watermarked source PDFs. If your balance can't cover it, the API returns 402 and the combined
+        submission waits in the `insufficient_credits` state until you add credits. See
+        [Credits & Rate Limits](https://docspring.com/docs/api-guide/credits-and-rate-limits/).
       externalDocs:
         description: Complete guide to combining PDFs with DocSpring
         url: https://docspring.com/docs/api-guide/combine-pdfs/
@@ -214,6 +222,63 @@ paths:
               $ref: "#/components/schemas/combine_pdfs_data"
         required: true
       responses:
+        "402":
+          content:
+            application/json:
+              example:
+                status: error
+                error: "Insufficient credits. This combined PDF will be processed\
+                  \ automatically once you add credits in Billing. If it's still waiting\
+                  \ after 30 days, it won't be processed."
+                combined_submission:
+                  id: com_1234567890abcdef02
+                  state: insufficient_credits
+                  expired: false
+                  expires_in: 300
+                  expires_at: null
+                  processed_at: null
+                  error_message: "Insufficient credits. This combined PDF will be\
+                    \ processed automatically once you add credits in Billing. If\
+                    \ it's still waiting after 30 days, it won't be processed."
+                  submission_ids:
+                  - sub_1234567890abcdef01
+                  - sub_1234567890abcdef02
+                  source_pdfs:
+                  - type: submission
+                    id: sub_1234567890abcdef01
+                  - type: template
+                    id: tpl_1234567890abcdef01
+                    template_version: 1.0.0
+                  - type: template
+                    id: tpl_1234567890abcdef01
+                  - type: submission
+                    id: sub_1234567890abcdef02
+                  - type: custom_file
+                    id: cfi_1234567890abcdef01
+                  - type: combined_submission
+                    id: com_1234567890abcdef01
+                  - type: url
+                    url: http://example.com/test-pdf.pdf
+                  metadata:
+                    foo: 123
+                    bar: baz
+                  password: null
+                  pdf_hash: null
+                  download_url: null
+                  actions: []
+                code: insufficient_credits
+              schema:
+                $ref: "#/components/schemas/create_combined_submission_response"
+          description: insufficient credits
+        "403":
+          content:
+            application/json:
+              example:
+                status: error
+                error: You must use a live API token to delete custom files.
+              schema:
+                $ref: "#/components/schemas/error_response"
+          description: test API token used to delete custom files
         "201":
           content:
             application/json:
@@ -273,15 +338,6 @@ paths:
               schema:
                 $ref: "#/components/schemas/multiple_errors_response"
           description: invalid request
-        "403":
-          content:
-            application/json:
-              example:
-                status: error
-                error: You must use a live API token to delete custom files.
-              schema:
-                $ref: "#/components/schemas/error_response"
-          description: test API token used to delete custom files
         "400":
           content:
             application/json:
@@ -400,6 +456,9 @@ paths:
         Retrieves the details and status of a combined submission. Returns processing state,
         download URL (if processed), metadata, and information about any integrated actions
         (e.g., S3 uploads).
+
+        `insufficient_credits` means the combined submission is waiting for credits and is processed once you
+        add them. If it's still waiting after 30 days, it moves to `error`.
       externalDocs:
         description: Complete guide to combining PDFs with DocSpring
         url: https://docspring.com/docs/api-guide/combine-pdfs/
@@ -1137,6 +1196,10 @@ paths:
         and data. Supports both synchronous (wait for all PDFs) and asynchronous processing. More
         efficient than individual requests when creating multiple PDFs.
 
+        Live PDFs use credits. If any live submission is waiting for credits, the API returns 402 and the
+        others are still processed: check each submission's `state`. See
+        [Credits & Rate Limits](https://docspring.com/docs/api-guide/credits-and-rate-limits/).
+
         See also:
         - [Batch Generate PDFs](https://docspring.com/docs/api-guide/generate-pdfs/batch-generate-pdfs/) - Request format, responses, and limits
       externalDocs:
@@ -1158,6 +1221,96 @@ paths:
               $ref: "#/components/schemas/submission_batch_data"
         required: true
       responses:
+        "402":
+          content:
+            application/json:
+              example:
+                status: error
+                submission_batch:
+                  id: sbb_1234567890abcdef01
+                  state: pending
+                  metadata:
+                    job_id: 54321
+                  processed_at: null
+                  total_count: 2
+                  pending_count: 2
+                  error_count: 0
+                  completion_percentage: 0
+                submissions:
+                - status: error
+                  error: "Insufficient credits. This submission will be processed\
+                    \ automatically once you add credits in Billing. If it's still\
+                    \ waiting after 30 days, it won't be processed."
+                  submission:
+                    batch_id: sbb_1234567890abcdef01
+                    data_requests: []
+                    editable: null
+                    error_message: "Insufficient credits. This submission will be\
+                      \ processed automatically once you add credits in Billing. If\
+                      \ it's still waiting after 30 days, it won't be processed."
+                    expired: false
+                    expires_at: null
+                    id: sub_1234567890abcdef01
+                    json_schema_errors: []
+                    metadata:
+                      submission_number: 1
+                    password: null
+                    processed_at: null
+                    state: insufficient_credits
+                    template_id: tpl_1234567890abcdef01
+                    template_type: pdf
+                    template_version: null
+                    test: false
+                    truncated_text: {}
+                    pdf_hash: null
+                    download_url: null
+                    permanent_download_url: null
+                    preview_download_url: null
+                    preview_generated_at: null
+                    audit_trail_download_url: null
+                    actions: []
+                - status: success
+                  submission:
+                    batch_id: sbb_1234567890abcdef01
+                    data_requests: []
+                    editable: null
+                    error_message: null
+                    expired: false
+                    expires_at: null
+                    id: sub_1234567890abcdef02
+                    json_schema_errors: []
+                    metadata:
+                      submission_number: 2
+                    password: null
+                    processed_at: null
+                    state: pending
+                    template_id: tpl_1234567890abcdef01
+                    template_type: pdf
+                    template_version: null
+                    test: true
+                    truncated_text: {}
+                    pdf_hash: null
+                    download_url: null
+                    permanent_download_url: null
+                    preview_download_url: null
+                    preview_generated_at: null
+                    audit_trail_download_url: null
+                    actions: []
+                code: insufficient_credits
+              schema:
+                $ref: "#/components/schemas/batch_generate_pdfs_201_response"
+          description: insufficient credits
+        "403":
+          content:
+            application/json:
+              example:
+                status: error
+                error: This DocSpring account is suspended. Reactivate it in Billing
+                  to create submissions.
+                code: account_suspended
+              schema:
+                $ref: "#/components/schemas/forbidden_error_response"
+          description: account suspended
         "201":
           content:
             application/json:
@@ -1229,7 +1382,7 @@ paths:
                     audit_trail_download_url: null
                     actions: []
               schema:
-                $ref: "#/components/schemas/batchGeneratePdfs_201_response"
+                $ref: "#/components/schemas/batch_generate_pdfs_201_response"
           description: submissions created
         "200":
           content:
@@ -1280,7 +1433,7 @@ paths:
                   errors:
                   - The object did not contain a required property of 'first_name'
               schema:
-                $ref: "#/components/schemas/batchGeneratePdfs_201_response"
+                $ref: "#/components/schemas/batch_generate_pdfs_201_response"
           description: some PDFs with invalid data
         "401":
           content:
@@ -1327,6 +1480,9 @@ paths:
         Retrieves the status and results of a batch PDF generation job. Returns processing state,
         completion statistics, and optionally includes all individual submission details. Use this
         to poll for completion when using asynchronous batch processing.
+
+        Submissions waiting for credits are in the `insufficient_credits` state and count as pending, so the
+        batch stays `pending` until you add credits or they stop waiting after 30 days.
       operationId: getSubmissionBatch
       parameters:
       - example: sbb_1234567890abcdef01
@@ -1632,6 +1788,10 @@ paths:
         Creates a PDF submission by filling in a template with data. Supports both synchronous (default) and
         asynchronous processing. Add the `wait=false` query parameter to return immediately.
 
+        Live PDFs use credits; test PDFs (`test: true`) are free and watermarked. If your balance can't cover a
+        live PDF, the API returns 402 and the submission waits in the `insufficient_credits` state until you add
+        credits. See [Credits & Rate Limits](https://docspring.com/docs/api-guide/credits-and-rate-limits/).
+
         See also:
         - [Customize the PDF Title and Filename](https://docspring.com/docs/api-guide/generate-pdfs/customize-pdf-title-and-filename/) - Set custom metadata
         - [Handling Truncated Text](https://docspring.com/docs/api-guide/generate-pdfs/handle-truncated-text/) - Handle text that doesn't fit in fields
@@ -1660,6 +1820,47 @@ paths:
               $ref: "#/components/schemas/create_pdf_submission_data"
         required: true
       responses:
+        "402":
+          content:
+            application/json:
+              example:
+                status: error
+                error: "Insufficient credits. This submission will be processed automatically\
+                  \ once you add credits in Billing. If it's still waiting after 30\
+                  \ days, it won't be processed."
+                submission:
+                  batch_id: null
+                  data_requests: []
+                  editable: null
+                  error_message: "Insufficient credits. This submission will be processed\
+                    \ automatically once you add credits in Billing. If it's still\
+                    \ waiting after 30 days, it won't be processed."
+                  expired: false
+                  expires_at: null
+                  id: sub_1234567890abcdef01
+                  json_schema_errors: []
+                  metadata:
+                    foo: 123
+                    bar: baz
+                  password: null
+                  processed_at: null
+                  state: insufficient_credits
+                  template_id: tpl_1234567890abcdef01
+                  template_type: pdf
+                  template_version: null
+                  test: false
+                  truncated_text: {}
+                  pdf_hash: null
+                  download_url: null
+                  permanent_download_url: null
+                  preview_download_url: null
+                  preview_generated_at: null
+                  audit_trail_download_url: null
+                  actions: []
+                code: insufficient_credits
+              schema:
+                $ref: "#/components/schemas/create_submission_response"
+          description: insufficient credits
         "201":
           content:
             application/json:
@@ -1757,6 +1958,18 @@ paths:
               schema:
                 $ref: "#/components/schemas/submission_422_response"
           description: invalid request
+        "403":
+          content:
+            application/json:
+              example:
+                status: error
+                error: Live data requests and e-signatures need the Starter plan or
+                  higher. Your Developer plan can create them in test mode. You can
+                  try Starter free for 14 days from the Billing page.
+                code: upgrade_required
+              schema:
+                $ref: "#/components/schemas/forbidden_error_response"
+          description: live data requests need Starter or higher
         "401":
           content:
             application/json:
@@ -1871,6 +2084,9 @@ paths:
         Retrieves the details and status of a PDF submission. Returns processing state, download
         URL (if processed), metadata, submission data (optional), and information about any
         integrated actions. Use this to poll for completion when using asynchronous processing.
+
+        `insufficient_credits` means the submission is waiting for credits and is processed once you add them.
+        If it's still waiting after 30 days, it moves to `error`.
       operationId: getSubmission
       parameters:
       - example: sub_1234567890abcdef01
@@ -2539,6 +2755,17 @@ paths:
               schema:
                 $ref: "#/components/schemas/template_preview"
           description: returns a pending template
+        "403":
+          content:
+            application/json:
+              example:
+                status: error
+                error: Your Developer plan includes 10 templates. Upgrade to Starter
+                  or higher to add more.
+                code: upgrade_required
+              schema:
+                $ref: "#/components/schemas/forbidden_error_response"
+          description: the plan's template limit is reached
         "401":
           content:
             application/json:
@@ -2628,6 +2855,17 @@ paths:
               schema:
                 $ref: "#/components/schemas/template_preview"
           description: returns a created template
+        "403":
+          content:
+            application/json:
+              example:
+                status: error
+                error: Your Developer plan includes 10 templates. Upgrade to Starter
+                  or higher to add more.
+                code: upgrade_required
+              schema:
+                $ref: "#/components/schemas/forbidden_error_response"
+          description: the plan's template limit is reached
         "401":
           content:
             application/json:
@@ -2725,6 +2963,18 @@ paths:
               schema:
                 $ref: "#/components/schemas/error_response"
           description: authentication failed
+        "403":
+          content:
+            application/json:
+              example:
+                status: error
+                error: Your Developer plan includes 10 templates. Upgrade to Starter
+                  or higher to add more. You can try Starter free for 14 days from
+                  the Billing page.
+                code: upgrade_required
+              schema:
+                $ref: "#/components/schemas/forbidden_error_response"
+          description: the plan's template limit is reached
       security:
       - api_token_basic: []
       summary: Create a new PDF template from a cached S3 file upload
@@ -3592,6 +3842,17 @@ paths:
               schema:
                 $ref: "#/components/schemas/template_preview"
           description: copy template success
+        "403":
+          content:
+            application/json:
+              example:
+                status: error
+                error: Your Developer plan includes 10 templates. Upgrade to Starter
+                  or higher to add more.
+                code: upgrade_required
+              schema:
+                $ref: "#/components/schemas/forbidden_error_response"
+          description: the plan's template limit is reached
         "404":
           content:
             application/json:
@@ -4388,6 +4649,30 @@ components:
       - status
       title: error_response
       type: object
+    forbidden_error_response:
+      additionalProperties: true
+      example:
+        code: upgrade_required
+        error: error
+        status: error
+      properties:
+        status:
+          enum:
+          - error
+          type: string
+        error:
+          type: string
+        code:
+          enum:
+          - upgrade_required
+          - account_suspended
+          type: string
+      required:
+      - code
+      - error
+      - status
+      title: forbidden_error_response
+      type: object
     json_schema:
       additionalProperties: false
       example:
@@ -4860,6 +5145,7 @@ components:
           - pending
           - processed
           - error
+          - insufficient_credits
           type: string
         expired:
           type: boolean
@@ -5788,6 +6074,7 @@ components:
           - image_processing_failed
           - waiting_for_data_requests
           - syntax_error
+          - insufficient_credits
           - account_suspended
           - license_revoked
           - accidental
@@ -5999,6 +6286,7 @@ components:
           - image_processing_failed
           - waiting_for_data_requests
           - syntax_error
+          - insufficient_credits
           - account_suspended
           - license_revoked
           - accidental
@@ -6849,8 +7137,8 @@ components:
             type: object
           type: array
         test:
-          description: "Deprecated, and has no effect. A combined PDF is a test or\
-            \ live document because of its source PDFs."
+          description: "Deprecated, and has no effect. Combining always uses credits,\
+            \ even with a test API token or watermarked source PDFs."
           type: boolean
       required:
       - source_pdfs
@@ -6892,6 +7180,8 @@ components:
             result_data: "{}"
             id: id
             state: pending
+        code: code
+        error: error
         errors:
         - errors
         - errors
@@ -6904,10 +7194,15 @@ components:
           type: string
         combined_submission:
           $ref: "#/components/schemas/combined_submission"
+        error:
+          type: string
         errors:
           items:
             type: string
           type: array
+        code:
+          description: '`insufficient_credits` when the response is a 402.'
+          type: string
       required:
       - combined_submission
       - status
@@ -6931,6 +7226,7 @@ components:
         custom_file:
           id: id
           url: url
+        error: error
         errors:
         - errors
         - errors
@@ -6943,6 +7239,8 @@ components:
           type: string
         custom_file:
           $ref: "#/components/schemas/custom_file"
+        error:
+          type: string
         errors:
           items:
             type: string
@@ -7037,6 +7335,7 @@ components:
           id: id
           submission_data_request_id: submission_data_request_id
           message_recipient: message_recipient
+        error: error
         errors:
         - errors
         - errors
@@ -7049,6 +7348,8 @@ components:
           type: string
         event:
           $ref: "#/components/schemas/submission_data_request_event"
+        error:
+          type: string
         errors:
           items:
             type: string
@@ -7061,6 +7362,7 @@ components:
     create_submission_data_request_token_response:
       additionalProperties: true
       example:
+        error: error
         errors:
         - errors
         - errors
@@ -7078,6 +7380,8 @@ components:
           type: string
         token:
           $ref: "#/components/schemas/submission_data_request_token"
+        error:
+          type: string
         errors:
           items:
             type: string
@@ -7182,6 +7486,7 @@ components:
           auth_provider: auth_provider
           user_agent: user_agent
           order: 0
+        error: error
         errors:
         - errors
         - errors
@@ -7194,6 +7499,8 @@ components:
           type: string
         data_request:
           $ref: "#/components/schemas/submission_data_request_show"
+        error:
+          type: string
         errors:
           items:
             type: string
@@ -7242,12 +7549,14 @@ components:
           nullable: true
           type: string
         test:
+          description: Generate a watermarked test PDF. Test PDFs are free; live PDFs
+            (the default) use credits.
           type: boolean
       required:
       - submissions
       title: submission_batch_data
       type: object
-    batchGeneratePdfs_201_response:
+    batch_generate_pdfs_201_response:
       additionalProperties: true
       example:
         submission_batch:
@@ -7259,6 +7568,7 @@ components:
           id: id
           state: pending
           error_count: 1
+        code: code
         submissions:
         - "{}"
         - "{}"
@@ -7286,10 +7596,14 @@ components:
             additionalProperties: false
             type: object
           type: array
+        code:
+          description: '`insufficient_credits` when the response is a 402.'
+          type: string
       required:
       - status
       - submission_batch
       - submissions
+      title: batch_generate_pdfs_201_response
       type: object
     list_submissions_response:
       additionalProperties: true
@@ -7591,6 +7905,8 @@ components:
         password:
           type: string
         test:
+          description: Generate a watermarked test PDF. Test PDFs are free; live PDFs
+            (the default) use credits.
           type: boolean
         version:
           type: string
@@ -7601,6 +7917,7 @@ components:
     create_submission_response:
       additionalProperties: true
       example:
+        code: code
         submission:
           error_message: error_message
           preview_generated_at: preview_generated_at
@@ -7690,6 +8007,7 @@ components:
             auth_provider: auth_provider
             user_agent: user_agent
             order: 5
+        error: error
         errors:
         - errors
         - errors
@@ -7702,10 +8020,15 @@ components:
           type: string
         submission:
           $ref: "#/components/schemas/submission_preview"
+        error:
+          type: string
         errors:
           items:
             type: string
           type: array
+        code:
+          description: '`insufficient_credits` when the response is a 402.'
+          type: string
       required:
       - status
       - submission
