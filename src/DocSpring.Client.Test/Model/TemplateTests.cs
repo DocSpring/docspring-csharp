@@ -207,6 +207,15 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'parse_dates_using_template_date_format'
+        /// </summary>
+        [Fact]
+        public void parse_dates_using_template_date_formatTest()
+        {
+            // TODO unit test for the property 'parse_dates_using_template_date_format'
+        }
+
+        /// <summary>
         /// Test the property 'path'
         /// </summary>
         [Fact]

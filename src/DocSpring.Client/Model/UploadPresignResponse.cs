@@ -147,6 +147,12 @@ namespace DocSpring.Client.Model
         public string url { get; set; }
 
         /// <summary>
+        /// Gets or Sets additional properties
+        /// </summary>
+        [JsonExtensionData]
+        public Dictionary<string, JsonElement> AdditionalProperties { get; } = new Dictionary<string, JsonElement>();
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -158,6 +164,7 @@ namespace DocSpring.Client.Model
             sb.Append("  headers: ").Append(headers).Append("\n");
             sb.Append("  url: ").Append(url).Append("\n");
             sb.Append("  method: ").Append(method).Append("\n");
+            sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -299,8 +306,11 @@ namespace DocSpring.Client.Model
             JsonSerializer.Serialize(writer, uploadPresignResponse.headers, jsonSerializerOptions);
             writer.WriteString("url", uploadPresignResponse.url);
 
-            var methodRawValue = UploadPresignResponse.MethodEnumToJsonValue(uploadPresignResponse.methodOption.Value.Value);
-            writer.WriteString("method", methodRawValue);
+            if (uploadPresignResponse.methodOption.IsSet)
+            {
+                var methodRawValue = UploadPresignResponse.MethodEnumToJsonValue(uploadPresignResponse.methodOption.Value.Value);
+                writer.WriteString("method", methodRawValue);
+            }
         }
     }
 }

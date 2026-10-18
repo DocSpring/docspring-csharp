@@ -244,6 +244,12 @@ namespace DocSpring.Client.Model
         public string code { get; set; }
 
         /// <summary>
+        /// Gets or Sets additional properties
+        /// </summary>
+        [JsonExtensionData]
+        public Dictionary<string, JsonElement> AdditionalProperties { get; } = new Dictionary<string, JsonElement>();
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -254,6 +260,7 @@ namespace DocSpring.Client.Model
             sb.Append("  lang: ").Append(lang).Append("\n");
             sb.Append("  root_type_name: ").Append(root_type_name).Append("\n");
             sb.Append("  code: ").Append(code).Append("\n");
+            sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

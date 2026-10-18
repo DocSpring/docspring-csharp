@@ -536,6 +536,12 @@ namespace DocSpring.Client.Model
         public string audit_trail_download_url { get; set; }
 
         /// <summary>
+        /// Gets or Sets additional properties
+        /// </summary>
+        [JsonExtensionData]
+        public Dictionary<string, JsonElement> AdditionalProperties { get; } = new Dictionary<string, JsonElement>();
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -567,6 +573,7 @@ namespace DocSpring.Client.Model
             sb.Append("  preview_download_url: ").Append(preview_download_url).Append("\n");
             sb.Append("  preview_generated_at: ").Append(preview_generated_at).Append("\n");
             sb.Append("  audit_trail_download_url: ").Append(audit_trail_download_url).Append("\n");
+            sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

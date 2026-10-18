@@ -285,6 +285,12 @@ namespace DocSpring.Client.Model
         public string updated_at { get; set; }
 
         /// <summary>
+        /// Gets or Sets additional properties
+        /// </summary>
+        [JsonExtensionData]
+        public Dictionary<string, JsonElement> AdditionalProperties { get; } = new Dictionary<string, JsonElement>();
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -312,6 +318,7 @@ namespace DocSpring.Client.Model
             sb.Append("  secret: ").Append(secret).Append("\n");
             sb.Append("  created_at: ").Append(created_at).Append("\n");
             sb.Append("  updated_at: ").Append(updated_at).Append("\n");
+            sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

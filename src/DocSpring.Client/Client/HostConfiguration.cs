@@ -117,7 +117,7 @@ namespace DocSpring.Client.Client
 
             List<IHttpClientBuilder> builders = new List<IHttpClientBuilder>();
 
-            builders.Add(_services.AddHttpClient<DocSpring.Client.Api.IClient, DocSpring.Client.Api.Client>(c => { c.DefaultRequestHeaders.UserAgent.ParseAdd("docspring-csharp-3.3.0"); if (client != null) client(c); }));
+            builders.Add(_services.AddHttpClient<DocSpring.Client.Api.IClient, DocSpring.Client.Api.Client>(c => { c.DefaultRequestHeaders.UserAgent.ParseAdd("docspring-csharp-3.4.0"); if (client != null) client(c); }));
             
             if (builder != null)
                 foreach (IHttpClientBuilder instance in builders)

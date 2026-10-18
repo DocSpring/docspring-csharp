@@ -215,6 +215,12 @@ namespace DocSpring.Client.Model
         public List<SubmissionPreview> submissions { get { return this.submissionsOption; } set { this.submissionsOption = new Option<List<SubmissionPreview>>(value); } }
 
         /// <summary>
+        /// Gets or Sets additional properties
+        /// </summary>
+        [JsonExtensionData]
+        public Dictionary<string, JsonElement> AdditionalProperties { get; } = new Dictionary<string, JsonElement>();
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -231,6 +237,7 @@ namespace DocSpring.Client.Model
             sb.Append("  id: ").Append(id).Append("\n");
             sb.Append("  processed_at: ").Append(processed_at).Append("\n");
             sb.Append("  submissions: ").Append(submissions).Append("\n");
+            sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

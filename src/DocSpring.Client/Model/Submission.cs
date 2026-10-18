@@ -691,6 +691,12 @@ namespace DocSpring.Client.Model
         public Object data { get { return this.dataOption; } set { this.dataOption = new Option<Object>(value); } }
 
         /// <summary>
+        /// Gets or Sets additional properties
+        /// </summary>
+        [JsonExtensionData]
+        public Dictionary<string, JsonElement> AdditionalProperties { get; } = new Dictionary<string, JsonElement>();
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -725,6 +731,7 @@ namespace DocSpring.Client.Model
             sb.Append("  source: ").Append(source).Append("\n");
             sb.Append("  referrer: ").Append(referrer).Append("\n");
             sb.Append("  data: ").Append(data).Append("\n");
+            sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -1134,8 +1141,11 @@ namespace DocSpring.Client.Model
             else
                 writer.WriteNull("audit_trail_download_url");
 
-            var sourceRawValue = Submission.SourceEnumToJsonValue(submission.sourceOption.Value.Value);
-            writer.WriteString("source", sourceRawValue);
+            if (submission.sourceOption.IsSet)
+            {
+                var sourceRawValue = Submission.SourceEnumToJsonValue(submission.sourceOption.Value.Value);
+                writer.WriteString("source", sourceRawValue);
+            }
             if (submission.referrerOption.IsSet)
                 if (submission.referrerOption.Value != null)
                     writer.WriteString("referrer", submission.referrer);

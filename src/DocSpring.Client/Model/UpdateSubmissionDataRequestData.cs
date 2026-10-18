@@ -755,8 +755,11 @@ namespace DocSpring.Client.Model
                 else
                     writer.WriteNull("auth_session_started_at");
 
-            var authTypeRawValue = UpdateSubmissionDataRequestData.AuthTypeEnumToJsonValue(updateSubmissionDataRequestData.auth_typeOption.Value.Value);
-            writer.WriteString("auth_type", authTypeRawValue);
+            if (updateSubmissionDataRequestData.auth_typeOption.IsSet)
+            {
+                var authTypeRawValue = UpdateSubmissionDataRequestData.AuthTypeEnumToJsonValue(updateSubmissionDataRequestData.auth_typeOption.Value.Value);
+                writer.WriteString("auth_type", authTypeRawValue);
+            }
             if (updateSubmissionDataRequestData.auth_user_id_hashOption.IsSet)
                 if (updateSubmissionDataRequestData.auth_user_id_hashOption.Value != null)
                     writer.WriteString("auth_user_id_hash", updateSubmissionDataRequestData.auth_user_id_hash);

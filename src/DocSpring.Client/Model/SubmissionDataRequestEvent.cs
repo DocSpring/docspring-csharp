@@ -417,6 +417,12 @@ namespace DocSpring.Client.Model
         public string occurred_at { get; set; }
 
         /// <summary>
+        /// Gets or Sets additional properties
+        /// </summary>
+        [JsonExtensionData]
+        public Dictionary<string, JsonElement> AdditionalProperties { get; } = new Dictionary<string, JsonElement>();
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -431,6 +437,7 @@ namespace DocSpring.Client.Model
             sb.Append("  message_type: ").Append(message_type).Append("\n");
             sb.Append("  message_recipient: ").Append(message_recipient).Append("\n");
             sb.Append("  occurred_at: ").Append(occurred_at).Append("\n");
+            sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

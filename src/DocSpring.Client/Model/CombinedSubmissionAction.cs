@@ -401,6 +401,12 @@ namespace DocSpring.Client.Model
         public string error_message { get; set; }
 
         /// <summary>
+        /// Gets or Sets additional properties
+        /// </summary>
+        [JsonExtensionData]
+        public Dictionary<string, JsonElement> AdditionalProperties { get; } = new Dictionary<string, JsonElement>();
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -415,6 +421,7 @@ namespace DocSpring.Client.Model
             sb.Append("  integration_id: ").Append(integration_id).Append("\n");
             sb.Append("  action_type: ").Append(action_type).Append("\n");
             sb.Append("  error_message: ").Append(error_message).Append("\n");
+            sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

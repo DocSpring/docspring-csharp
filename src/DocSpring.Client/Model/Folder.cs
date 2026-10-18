@@ -72,6 +72,12 @@ namespace DocSpring.Client.Model
         public string parent_folder_id { get; set; }
 
         /// <summary>
+        /// Gets or Sets additional properties
+        /// </summary>
+        [JsonExtensionData]
+        public Dictionary<string, JsonElement> AdditionalProperties { get; } = new Dictionary<string, JsonElement>();
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -83,6 +89,7 @@ namespace DocSpring.Client.Model
             sb.Append("  name: ").Append(name).Append("\n");
             sb.Append("  path: ").Append(path).Append("\n");
             sb.Append("  parent_folder_id: ").Append(parent_folder_id).Append("\n");
+            sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

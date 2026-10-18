@@ -160,6 +160,12 @@ namespace DocSpring.Client.Model
         public List<int> new_field_ids { get { return this.new_field_idsOption; } set { this.new_field_idsOption = new Option<List<int>>(value); } }
 
         /// <summary>
+        /// Gets or Sets additional properties
+        /// </summary>
+        [JsonExtensionData]
+        public Dictionary<string, JsonElement> AdditionalProperties { get; } = new Dictionary<string, JsonElement>();
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -170,6 +176,7 @@ namespace DocSpring.Client.Model
             sb.Append("  status: ").Append(status).Append("\n");
             sb.Append("  errors: ").Append(errors).Append("\n");
             sb.Append("  new_field_ids: ").Append(new_field_ids).Append("\n");
+            sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

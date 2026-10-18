@@ -21,6 +21,7 @@ Name | Type | Description | Notes
 **locked** | **bool** |  | 
 **merge_audit_trail_pdf** | **bool** |  | 
 **page_count** | **int** |  | 
+**parse_dates_using_template_date_format** | **bool** |  | 
 **path** | **string** |  | 
 **public_submissions** | **bool** |  | 
 **public_web_form** | **bool** |  | 

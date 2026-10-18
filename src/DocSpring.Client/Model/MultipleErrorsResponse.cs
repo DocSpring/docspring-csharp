@@ -124,6 +124,12 @@ namespace DocSpring.Client.Model
         public List<string> errors { get; set; }
 
         /// <summary>
+        /// Gets or Sets additional properties
+        /// </summary>
+        [JsonExtensionData]
+        public Dictionary<string, JsonElement> AdditionalProperties { get; } = new Dictionary<string, JsonElement>();
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -133,6 +139,7 @@ namespace DocSpring.Client.Model
             sb.Append("class MultipleErrorsResponse {\n");
             sb.Append("  status: ").Append(status).Append("\n");
             sb.Append("  errors: ").Append(errors).Append("\n");
+            sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

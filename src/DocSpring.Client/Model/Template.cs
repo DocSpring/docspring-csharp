@@ -48,6 +48,7 @@ namespace DocSpring.Client.Model
         /// <param name="locked">locked</param>
         /// <param name="mergeAuditTrailPdf">mergeAuditTrailPdf</param>
         /// <param name="pageCount">pageCount</param>
+        /// <param name="parseDatesUsingTemplateDateFormat">parseDatesUsingTemplateDateFormat</param>
         /// <param name="path">path</param>
         /// <param name="publicSubmissions">publicSubmissions</param>
         /// <param name="publicWebForm">publicWebForm</param>
@@ -94,7 +95,7 @@ namespace DocSpring.Client.Model
         /// <param name="html">html</param>
         /// <param name="scss">scss</param>
         [JsonConstructor]
-        public Template(bool addDataRequestSubmissionIdFooters, bool allowAdditionalProperties, bool documentParseError, bool documentProcessed, DocumentStateEnum documentState, bool editableSubmissions, bool embedEditAllowSettings, bool embedEditAllowVersioning, bool embedEditAllowDocumentReplacement, bool encryptPdfs, string expirationInterval, int expireAfter, bool expireSubmissions, bool firstTemplate, bool locked, bool mergeAuditTrailPdf, int pageCount, string path, bool publicSubmissions, bool publicWebForm, TemplateTypeEnum templateType, bool demo, Object defaults, List<Object> fieldDependencies, List<List<decimal>> fieldOrder, Object fields, Object htmlEngineOptions, List<Object> predefinedFields, Object sharedFieldData, int templateSchemaVersion, List<Object> versions, string description = default, string documentFilename = default, string documentMd5 = default, string documentUrl = default, string embedDomains = default, string encryptPdfsPassword = default, string externalPredefinedFieldsTemplateId = default, string externalPredefinedFieldsTemplateName = default, string id = default, string name = default, List<List<decimal>> pageDimensions = default, string parentFolderId = default, string permanentDocumentUrl = default, string redirectUrl = default, string slackWebhookUrl = default, string updatedAt = default, string versionPublishedAt = default, string version = default, string webhookUrl = default, Option<string> embedEditToken = default, string latestVersion = default, string lastChangedAt = default, LastChangedByTypeEnum? lastChangedByType = default, string lastChangedById = default, string lastChangedByExternalName = default, string lastChangedByExternalEmail = default, string lastChangedByExternalId = default, string footerHtml = default, string headerHtml = default, string html = default, string scss = default)
+        public Template(bool addDataRequestSubmissionIdFooters, bool allowAdditionalProperties, bool documentParseError, bool documentProcessed, DocumentStateEnum documentState, bool editableSubmissions, bool embedEditAllowSettings, bool embedEditAllowVersioning, bool embedEditAllowDocumentReplacement, bool encryptPdfs, string expirationInterval, int expireAfter, bool expireSubmissions, bool firstTemplate, bool locked, bool mergeAuditTrailPdf, int pageCount, bool parseDatesUsingTemplateDateFormat, string path, bool publicSubmissions, bool publicWebForm, TemplateTypeEnum templateType, bool demo, Object defaults, List<Object> fieldDependencies, List<List<decimal>> fieldOrder, Object fields, Object htmlEngineOptions, List<Object> predefinedFields, Object sharedFieldData, int templateSchemaVersion, List<Object> versions, string description = default, string documentFilename = default, string documentMd5 = default, string documentUrl = default, string embedDomains = default, string encryptPdfsPassword = default, string externalPredefinedFieldsTemplateId = default, string externalPredefinedFieldsTemplateName = default, string id = default, string name = default, List<List<decimal>> pageDimensions = default, string parentFolderId = default, string permanentDocumentUrl = default, string redirectUrl = default, string slackWebhookUrl = default, string updatedAt = default, string versionPublishedAt = default, string version = default, string webhookUrl = default, Option<string> embedEditToken = default, string latestVersion = default, string lastChangedAt = default, LastChangedByTypeEnum? lastChangedByType = default, string lastChangedById = default, string lastChangedByExternalName = default, string lastChangedByExternalEmail = default, string lastChangedByExternalId = default, string footerHtml = default, string headerHtml = default, string html = default, string scss = default)
         {
             this.add_data_request_submission_id_footers = addDataRequestSubmissionIdFooters;
             this.allow_additional_properties = allowAdditionalProperties;
@@ -113,6 +114,7 @@ namespace DocSpring.Client.Model
             this.locked = locked;
             this.merge_audit_trail_pdf = mergeAuditTrailPdf;
             this.page_count = pageCount;
+            this.parse_dates_using_template_date_format = parseDatesUsingTemplateDateFormat;
             this.path = path;
             this.public_submissions = publicSubmissions;
             this.public_web_form = publicWebForm;
@@ -583,6 +585,12 @@ namespace DocSpring.Client.Model
         public int page_count { get; set; }
 
         /// <summary>
+        /// Gets or Sets parse_dates_using_template_date_format
+        /// </summary>
+        [JsonPropertyName("parse_dates_using_template_date_format")]
+        public bool parse_dates_using_template_date_format { get; set; }
+
+        /// <summary>
         /// Gets or Sets path
         /// </summary>
         [JsonPropertyName("path")]
@@ -848,6 +856,12 @@ namespace DocSpring.Client.Model
         public string scss { get; set; }
 
         /// <summary>
+        /// Gets or Sets additional properties
+        /// </summary>
+        [JsonExtensionData]
+        public Dictionary<string, JsonElement> AdditionalProperties { get; } = new Dictionary<string, JsonElement>();
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -872,6 +886,7 @@ namespace DocSpring.Client.Model
             sb.Append("  locked: ").Append(locked).Append("\n");
             sb.Append("  merge_audit_trail_pdf: ").Append(merge_audit_trail_pdf).Append("\n");
             sb.Append("  page_count: ").Append(page_count).Append("\n");
+            sb.Append("  parse_dates_using_template_date_format: ").Append(parse_dates_using_template_date_format).Append("\n");
             sb.Append("  path: ").Append(path).Append("\n");
             sb.Append("  public_submissions: ").Append(public_submissions).Append("\n");
             sb.Append("  public_web_form: ").Append(public_web_form).Append("\n");
@@ -917,6 +932,7 @@ namespace DocSpring.Client.Model
             sb.Append("  header_html: ").Append(header_html).Append("\n");
             sb.Append("  html: ").Append(html).Append("\n");
             sb.Append("  scss: ").Append(scss).Append("\n");
+            sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -972,6 +988,7 @@ namespace DocSpring.Client.Model
             Option<bool?> locked = default;
             Option<bool?> mergeAuditTrailPdf = default;
             Option<int?> pageCount = default;
+            Option<bool?> parseDatesUsingTemplateDateFormat = default;
             Option<string> path = default;
             Option<bool?> publicSubmissions = default;
             Option<bool?> publicWebForm = default;
@@ -1085,6 +1102,9 @@ namespace DocSpring.Client.Model
                             break;
                         case "page_count":
                             pageCount = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
+                            break;
+                        case "parse_dates_using_template_date_format":
+                            parseDatesUsingTemplateDateFormat = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
                             break;
                         case "path":
                             path = new Option<string>(utf8JsonReader.GetString());
@@ -1281,6 +1301,9 @@ namespace DocSpring.Client.Model
             if (!pageCount.IsSet)
                 throw new ArgumentException("Property is required for class Template.", nameof(pageCount));
 
+            if (!parseDatesUsingTemplateDateFormat.IsSet)
+                throw new ArgumentException("Property is required for class Template.", nameof(parseDatesUsingTemplateDateFormat));
+
             if (!path.IsSet)
                 throw new ArgumentException("Property is required for class Template.", nameof(path));
 
@@ -1464,6 +1487,9 @@ namespace DocSpring.Client.Model
             if (pageCount.IsSet && pageCount.Value == null)
                 throw new ArgumentNullException(nameof(pageCount), "Property is not nullable for class Template.");
 
+            if (parseDatesUsingTemplateDateFormat.IsSet && parseDatesUsingTemplateDateFormat.Value == null)
+                throw new ArgumentNullException(nameof(parseDatesUsingTemplateDateFormat), "Property is not nullable for class Template.");
+
             if (path.IsSet && path.Value == null)
                 throw new ArgumentNullException(nameof(path), "Property is not nullable for class Template.");
 
@@ -1506,7 +1532,7 @@ namespace DocSpring.Client.Model
             if (versions.IsSet && versions.Value == null)
                 throw new ArgumentNullException(nameof(versions), "Property is not nullable for class Template.");
 
-            return new Template(addDataRequestSubmissionIdFooters.Value.Value, allowAdditionalProperties.Value.Value, documentParseError.Value.Value, documentProcessed.Value.Value, documentState.Value.Value, editableSubmissions.Value.Value, embedEditAllowSettings.Value.Value, embedEditAllowVersioning.Value.Value, embedEditAllowDocumentReplacement.Value.Value, encryptPdfs.Value.Value, expirationInterval.Value, expireAfter.Value.Value, expireSubmissions.Value.Value, firstTemplate.Value.Value, locked.Value.Value, mergeAuditTrailPdf.Value.Value, pageCount.Value.Value, path.Value, publicSubmissions.Value.Value, publicWebForm.Value.Value, templateType.Value.Value, demo.Value.Value, defaults.Value, fieldDependencies.Value, fieldOrder.Value, fields.Value, htmlEngineOptions.Value, predefinedFields.Value, sharedFieldData.Value, templateSchemaVersion.Value.Value, versions.Value, description.Value, documentFilename.Value, documentMd5.Value, documentUrl.Value, embedDomains.Value, encryptPdfsPassword.Value, externalPredefinedFieldsTemplateId.Value, externalPredefinedFieldsTemplateName.Value, id.Value, name.Value, pageDimensions.Value, parentFolderId.Value, permanentDocumentUrl.Value, redirectUrl.Value, slackWebhookUrl.Value, updatedAt.Value, versionPublishedAt.Value, version.Value, webhookUrl.Value, embedEditToken, latestVersion.Value, lastChangedAt.Value, lastChangedByType.Value, lastChangedById.Value, lastChangedByExternalName.Value, lastChangedByExternalEmail.Value, lastChangedByExternalId.Value, footerHtml.Value, headerHtml.Value, html.Value, scss.Value);
+            return new Template(addDataRequestSubmissionIdFooters.Value.Value, allowAdditionalProperties.Value.Value, documentParseError.Value.Value, documentProcessed.Value.Value, documentState.Value.Value, editableSubmissions.Value.Value, embedEditAllowSettings.Value.Value, embedEditAllowVersioning.Value.Value, embedEditAllowDocumentReplacement.Value.Value, encryptPdfs.Value.Value, expirationInterval.Value, expireAfter.Value.Value, expireSubmissions.Value.Value, firstTemplate.Value.Value, locked.Value.Value, mergeAuditTrailPdf.Value.Value, pageCount.Value.Value, parseDatesUsingTemplateDateFormat.Value.Value, path.Value, publicSubmissions.Value.Value, publicWebForm.Value.Value, templateType.Value.Value, demo.Value.Value, defaults.Value, fieldDependencies.Value, fieldOrder.Value, fields.Value, htmlEngineOptions.Value, predefinedFields.Value, sharedFieldData.Value, templateSchemaVersion.Value.Value, versions.Value, description.Value, documentFilename.Value, documentMd5.Value, documentUrl.Value, embedDomains.Value, encryptPdfsPassword.Value, externalPredefinedFieldsTemplateId.Value, externalPredefinedFieldsTemplateName.Value, id.Value, name.Value, pageDimensions.Value, parentFolderId.Value, permanentDocumentUrl.Value, redirectUrl.Value, slackWebhookUrl.Value, updatedAt.Value, versionPublishedAt.Value, version.Value, webhookUrl.Value, embedEditToken, latestVersion.Value, lastChangedAt.Value, lastChangedByType.Value, lastChangedById.Value, lastChangedByExternalName.Value, lastChangedByExternalEmail.Value, lastChangedByExternalId.Value, footerHtml.Value, headerHtml.Value, html.Value, scss.Value);
         }
 
         /// <summary>
@@ -1596,6 +1622,8 @@ namespace DocSpring.Client.Model
             writer.WriteBoolean("merge_audit_trail_pdf", template.merge_audit_trail_pdf);
 
             writer.WriteNumber("page_count", template.page_count);
+
+            writer.WriteBoolean("parse_dates_using_template_date_format", template.parse_dates_using_template_date_format);
 
             writer.WriteString("path", template.path);
 

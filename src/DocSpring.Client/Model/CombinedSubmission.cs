@@ -248,6 +248,12 @@ namespace DocSpring.Client.Model
         public string download_url { get; set; }
 
         /// <summary>
+        /// Gets or Sets additional properties
+        /// </summary>
+        [JsonExtensionData]
+        public Dictionary<string, JsonElement> AdditionalProperties { get; } = new Dictionary<string, JsonElement>();
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -269,6 +275,7 @@ namespace DocSpring.Client.Model
             sb.Append("  password: ").Append(password).Append("\n");
             sb.Append("  pdf_hash: ").Append(pdf_hash).Append("\n");
             sb.Append("  download_url: ").Append(download_url).Append("\n");
+            sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

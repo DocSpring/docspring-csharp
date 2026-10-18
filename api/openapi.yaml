@@ -2258,6 +2258,7 @@ paths:
                 - - 612
                   - 792
                 parent_folder_id: fld_1234567890abcdef01
+                parse_dates_using_template_date_format: false
                 path: /Folder
                 permanent_document_url: https://app.docspring.com/templates/tpl_1234567890abcdef04/original_pdf?token=123456789abcdef
                 public_submissions: false
@@ -2306,6 +2307,7 @@ paths:
                 page_count: 1
                 page_dimensions: null
                 parent_folder_id: null
+                parse_dates_using_template_date_format: false
                 path: /
                 permanent_document_url: null
                 public_submissions: false
@@ -2360,6 +2362,7 @@ paths:
                 - - 612
                   - 792
                 parent_folder_id: null
+                parse_dates_using_template_date_format: false
                 path: /
                 permanent_document_url: https://app.docspring.com/templates/tpl_1234567890abcdef02/original_pdf?token=123456789abcdef
                 public_submissions: false
@@ -2410,6 +2413,7 @@ paths:
                 - - 612
                   - 792
                 parent_folder_id: null
+                parse_dates_using_template_date_format: false
                 path: /
                 permanent_document_url: https://app.docspring.com/templates/tpl_1234567890abcdef01/original_pdf?token=123456789abcdef
                 public_submissions: false
@@ -2511,6 +2515,7 @@ paths:
                 page_count: 0
                 page_dimensions: null
                 parent_folder_id: fld_1234567890abcdef01
+                parse_dates_using_template_date_format: false
                 path: /Folder
                 permanent_document_url: null
                 public_submissions: false
@@ -2599,6 +2604,7 @@ paths:
                 page_count: 1
                 page_dimensions: null
                 parent_folder_id: null
+                parse_dates_using_template_date_format: false
                 path: /
                 permanent_document_url: null
                 public_submissions: false
@@ -2685,6 +2691,7 @@ paths:
                 page_count: 0
                 page_dimensions: null
                 parent_folder_id: null
+                parse_dates_using_template_date_format: false
                 path: /
                 permanent_document_url: null
                 public_submissions: false
@@ -2839,6 +2846,7 @@ paths:
                 - - 612
                   - 792
                 parent_folder_id: null
+                parse_dates_using_template_date_format: false
                 path: /
                 permanent_document_url: https://app.docspring.com/templates/tpl_1234567890abcdef01/original_pdf?token=123456789abcdef
                 public_submissions: false
@@ -3116,6 +3124,7 @@ paths:
                 - - 612
                   - 792
                 parent_folder_id: null
+                parse_dates_using_template_date_format: false
                 path: /
                 permanent_document_url: https://app.docspring.com/templates/tpl_1234567890abcdef01/original_pdf?token=123456789abcdef
                 public_submissions: false
@@ -3464,6 +3473,7 @@ paths:
                 - - 612
                   - 792
                 parent_folder_id: fld_1234567890abcdef01
+                parse_dates_using_template_date_format: false
                 path: /Folder
                 permanent_document_url: https://app.docspring.com/templates/tpl_1234567890abcdef01/original_pdf?token=123456789abcdef
                 public_submissions: false
@@ -3558,6 +3568,7 @@ paths:
                 - - 612
                   - 792
                 parent_folder_id: fld_1234567890abcdef01
+                parse_dates_using_template_date_format: false
                 path: /Folder
                 permanent_document_url: https://app.docspring.com/templates/tpl_1234567890abcdef05/original_pdf?token=123456789abcdef
                 public_submissions: false
@@ -4336,7 +4347,7 @@ paths:
 components:
   schemas:
     error_or_multiple_errors_response:
-      additionalProperties: false
+      additionalProperties: true
       example:
         error: error
         errors:
@@ -4361,7 +4372,7 @@ components:
       title: error_or_multiple_errors_response
       type: object
     error_response:
-      additionalProperties: false
+      additionalProperties: true
       example:
         error: error
         status: error
@@ -4435,7 +4446,7 @@ components:
       title: json_schema
       type: object
     multiple_errors_response:
-      additionalProperties: false
+      additionalProperties: true
       example:
         errors:
         - errors
@@ -4456,7 +4467,7 @@ components:
       title: multiple_errors_response
       type: object
     submission_422_response:
-      additionalProperties: false
+      additionalProperties: true
       example:
         submission:
           error_message: error_message
@@ -4573,7 +4584,7 @@ components:
       title: submission_422_response
       type: object
     success_error_response:
-      additionalProperties: false
+      additionalProperties: true
       example:
         error: error
         status: success
@@ -4590,7 +4601,7 @@ components:
       title: success_error_response
       type: object
     success_multiple_errors_response:
-      additionalProperties: false
+      additionalProperties: true
       example:
         errors:
         - errors
@@ -4611,7 +4622,7 @@ components:
       title: success_multiple_errors_response
       type: object
     template_add_fields_response:
-      additionalProperties: false
+      additionalProperties: true
       example:
         new_field_ids:
         - 0
@@ -4639,7 +4650,7 @@ components:
       title: template_add_fields_response
       type: object
     template_delete_response:
-      additionalProperties: false
+      additionalProperties: true
       example:
         latest_version: latest_version
         versions:
@@ -4672,7 +4683,7 @@ components:
       title: template_delete_response
       type: object
     template_model_code_response:
-      additionalProperties: false
+      additionalProperties: true
       example:
         code: code
         lang: typescript
@@ -4701,7 +4712,7 @@ components:
       title: template_model_code_response
       type: object
     template_publish_version_response:
-      additionalProperties: false
+      additionalProperties: true
       example:
         result: "{}"
         errors:
@@ -4727,7 +4738,7 @@ components:
       title: template_publish_version_response
       type: object
     upload_presign_response:
-      additionalProperties: false
+      additionalProperties: true
       example:
         headers: "{}"
         method: post
@@ -4753,7 +4764,7 @@ components:
       title: upload_presign_response
       type: object
     combined_submission_action:
-      additionalProperties: false
+      additionalProperties: true
       example:
         error_message: error_message
         integration_id: integration_id
@@ -4806,7 +4817,7 @@ components:
       title: combined_submission_action
       type: object
     combined_submission:
-      additionalProperties: false
+      additionalProperties: true
       example:
         error_message: error_message
         metadata: "{}"
@@ -4907,7 +4918,7 @@ components:
       title: combined_submission
       type: object
     custom_file:
-      additionalProperties: false
+      additionalProperties: true
       example:
         id: id
         url: url
@@ -4924,7 +4935,7 @@ components:
       title: custom_file
       type: object
     folder:
-      additionalProperties: false
+      additionalProperties: true
       example:
         path: path
         parent_folder_id: parent_folder_id
@@ -4951,7 +4962,7 @@ components:
       title: folder
       type: object
     submission_action:
-      additionalProperties: false
+      additionalProperties: true
       example:
         error_message: error_message
         integration_id: integration_id
@@ -5003,7 +5014,7 @@ components:
       title: submission_action
       type: object
     submission_batch:
-      additionalProperties: false
+      additionalProperties: true
       example:
         pending_count: 6
         completion_percentage: 5.962133916683182
@@ -5049,7 +5060,7 @@ components:
       title: submission_batch
       type: object
     submission_batch_with_submissions:
-      additionalProperties: false
+      additionalProperties: true
       example:
         pending_count: 6
         completion_percentage: 5.962133916683182
@@ -5276,7 +5287,7 @@ components:
       title: submission_preview
       type: object
     submission_data_request_event:
-      additionalProperties: false
+      additionalProperties: true
       example:
         occurred_at: occurred_at
         submission_id: submission_id
@@ -5334,7 +5345,7 @@ components:
       title: submission_data_request_event
       type: object
     submission_data_request:
-      additionalProperties: false
+      additionalProperties: true
       example:
         metadata: "{}"
         declined_at: declined_at
@@ -5472,7 +5483,7 @@ components:
       title: submission_data_request
       type: object
     submission_data_request_show:
-      additionalProperties: false
+      additionalProperties: true
       example:
         metadata: "{}"
         declined_at: declined_at
@@ -5615,7 +5626,7 @@ components:
       title: submission_data_request_show
       type: object
     submission_data_request_token:
-      additionalProperties: false
+      additionalProperties: true
       example:
         expires_at: expires_at
         id: id
@@ -5641,7 +5652,7 @@ components:
       title: submission_data_request_token
       type: object
     submission_preview:
-      additionalProperties: false
+      additionalProperties: true
       example:
         error_message: error_message
         preview_generated_at: preview_generated_at
@@ -5849,7 +5860,7 @@ components:
       title: submission_preview
       type: object
     submission:
-      additionalProperties: false
+      additionalProperties: true
       example:
         metadata: "{}"
         template_version: template_version
@@ -6074,10 +6085,11 @@ components:
       title: submission
       type: object
     template_preview:
-      additionalProperties: false
+      additionalProperties: true
       example:
         embed_edit_allow_document_replacement: true
         expiration_interval: expiration_interval
+        parse_dates_using_template_date_format: true
         expire_after: 0
         embed_edit_allow_versioning: true
         external_predefined_fields_template_id: external_predefined_fields_template_id
@@ -6212,6 +6224,8 @@ components:
         parent_folder_id:
           nullable: true
           type: string
+        parse_dates_using_template_date_format:
+          type: boolean
         path:
           type: string
         permanent_document_url:
@@ -6312,6 +6326,7 @@ components:
       - page_count
       - page_dimensions
       - parent_folder_id
+      - parse_dates_using_template_date_format
       - path
       - permanent_document_url
       - public_submissions
@@ -6326,10 +6341,11 @@ components:
       title: template_preview
       type: object
     template:
-      additionalProperties: false
+      additionalProperties: true
       example:
         embed_edit_allow_document_replacement: true
         expiration_interval: expiration_interval
+        parse_dates_using_template_date_format: true
         scss: scss
         expire_after: 0
         embed_edit_allow_versioning: true
@@ -6487,6 +6503,8 @@ components:
         parent_folder_id:
           nullable: true
           type: string
+        parse_dates_using_template_date_format:
+          type: boolean
         path:
           type: string
         permanent_document_url:
@@ -6648,6 +6666,7 @@ components:
       - page_count
       - page_dimensions
       - parent_folder_id
+      - parse_dates_using_template_date_format
       - path
       - permanent_document_url
       - predefined_fields
@@ -6667,7 +6686,7 @@ components:
       title: template
       type: object
     webhook:
-      additionalProperties: false
+      additionalProperties: true
       example:
         headers:
           key: headers
@@ -6838,7 +6857,7 @@ components:
       title: combine_pdfs_data
       type: object
     create_combined_submission_response:
-      additionalProperties: false
+      additionalProperties: true
       example:
         combined_submission:
           error_message: error_message
@@ -6907,7 +6926,7 @@ components:
       title: create_custom_file_data
       type: object
     create_custom_file_response:
-      additionalProperties: false
+      additionalProperties: true
       example:
         custom_file:
           id: id
@@ -7008,7 +7027,7 @@ components:
       title: create_submission_data_request_event_request
       type: object
     create_submission_data_request_event_response:
-      additionalProperties: false
+      additionalProperties: true
       example:
         event:
           occurred_at: occurred_at
@@ -7040,7 +7059,7 @@ components:
       title: create_submission_data_request_event_response
       type: object
     create_submission_data_request_token_response:
-      additionalProperties: false
+      additionalProperties: true
       example:
         errors:
         - errors
@@ -7135,7 +7154,7 @@ components:
       title: update_submission_data_request_data
       type: object
     create_submission_data_request_response:
-      additionalProperties: false
+      additionalProperties: true
       example:
         data_request:
           metadata: "{}"
@@ -7229,7 +7248,7 @@ components:
       title: submission_batch_data
       type: object
     batchGeneratePdfs_201_response:
-      additionalProperties: false
+      additionalProperties: true
       example:
         submission_batch:
           pending_count: 6
@@ -7273,7 +7292,7 @@ components:
       - submissions
       type: object
     list_submissions_response:
-      additionalProperties: false
+      additionalProperties: true
       example:
         next_cursor: next_cursor
         submissions:
@@ -7580,7 +7599,7 @@ components:
       title: create_pdf_submission_data
       type: object
     create_submission_response:
-      additionalProperties: false
+      additionalProperties: true
       example:
         submission:
           error_message: error_message

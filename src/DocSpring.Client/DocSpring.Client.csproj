@@ -6,17 +6,21 @@
     <AssemblyName>DocSpring.Client</AssemblyName>
     <PackageId>DocSpring.Client</PackageId>
     <OutputType>Library</OutputType>
-    <Authors>OpenAPI</Authors>
-    <Company>OpenAPI</Company>
-    <AssemblyTitle>OpenAPI Library</AssemblyTitle>
-    <Description>A library generated from a OpenAPI doc</Description>
-    <Copyright>No Copyright</Copyright>
+    <Authors>DocSpring</Authors>
+    <Company>DocSpring, Inc.</Company>
+    <AssemblyTitle>DocSpring API client</AssemblyTitle>
+    <Description>C# client for the DocSpring API: fill PDF templates, generate PDFs from HTML, combine PDFs and collect e-signatures.</Description>
+    <Copyright>Copyright © DocSpring, Inc.</Copyright>
     <RootNamespace>DocSpring.Client</RootNamespace>
-    <Version>3.3.0</Version>
+    <Version>3.4.0</Version>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\DocSpring.Client.xml</DocumentationFile>
-    <RepositoryUrl>https://github.com/GIT_USER_ID/GIT_REPO_ID.git</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/DocSpring/docspring-csharp.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageReleaseNotes>Minor update</PackageReleaseNotes>
+    <PackageProjectUrl>https://github.com/DocSpring/docspring-csharp</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReleaseNotes>https://github.com/DocSpring/docspring-csharp/blob/main/CHANGELOG.md</PackageReleaseNotes>
+    <PackageTags>docspring;pdf;pdf-generation;e-signature;api-client</PackageTags>
     <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
   </PropertyGroup>
 
@@ -26,6 +30,10 @@
     <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="5.0.1" />
     <PackageReference Include="System.Threading.Channels" Version="8.0.0" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="/" />
   </ItemGroup>
 
 </Project>

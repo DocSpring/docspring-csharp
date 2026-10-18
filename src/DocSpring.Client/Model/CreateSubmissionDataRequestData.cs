@@ -741,8 +741,11 @@ namespace DocSpring.Client.Model
                 else
                     writer.WriteNull("auth_provider");
 
-            var authSecondFactorTypeRawValue = CreateSubmissionDataRequestData.AuthSecondFactorTypeEnumToJsonValue(createSubmissionDataRequestData.auth_second_factor_typeOption.Value.Value);
-            writer.WriteString("auth_second_factor_type", authSecondFactorTypeRawValue);
+            if (createSubmissionDataRequestData.auth_second_factor_typeOption.IsSet)
+            {
+                var authSecondFactorTypeRawValue = CreateSubmissionDataRequestData.AuthSecondFactorTypeEnumToJsonValue(createSubmissionDataRequestData.auth_second_factor_typeOption.Value.Value);
+                writer.WriteString("auth_second_factor_type", authSecondFactorTypeRawValue);
+            }
             if (createSubmissionDataRequestData.auth_session_id_hashOption.IsSet)
                 if (createSubmissionDataRequestData.auth_session_id_hashOption.Value != null)
                     writer.WriteString("auth_session_id_hash", createSubmissionDataRequestData.auth_session_id_hash);
@@ -755,8 +758,11 @@ namespace DocSpring.Client.Model
                 else
                     writer.WriteNull("auth_session_started_at");
 
-            var authTypeRawValue = CreateSubmissionDataRequestData.AuthTypeEnumToJsonValue(createSubmissionDataRequestData.auth_typeOption.Value.Value);
-            writer.WriteString("auth_type", authTypeRawValue);
+            if (createSubmissionDataRequestData.auth_typeOption.IsSet)
+            {
+                var authTypeRawValue = CreateSubmissionDataRequestData.AuthTypeEnumToJsonValue(createSubmissionDataRequestData.auth_typeOption.Value.Value);
+                writer.WriteString("auth_type", authTypeRawValue);
+            }
             if (createSubmissionDataRequestData.auth_user_id_hashOption.IsSet)
                 if (createSubmissionDataRequestData.auth_user_id_hashOption.Value != null)
                     writer.WriteString("auth_user_id_hash", createSubmissionDataRequestData.auth_user_id_hash);

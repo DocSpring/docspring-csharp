@@ -72,6 +72,12 @@ namespace DocSpring.Client.Model
         public string data_request_url { get; set; }
 
         /// <summary>
+        /// Gets or Sets additional properties
+        /// </summary>
+        [JsonExtensionData]
+        public Dictionary<string, JsonElement> AdditionalProperties { get; } = new Dictionary<string, JsonElement>();
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -83,6 +89,7 @@ namespace DocSpring.Client.Model
             sb.Append("  id: ").Append(id).Append("\n");
             sb.Append("  expires_at: ").Append(expires_at).Append("\n");
             sb.Append("  data_request_url: ").Append(data_request_url).Append("\n");
+            sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
