@@ -5,6 +5,7 @@
     <RootNamespace>DocSpring.Client.Test</RootNamespace>
     <TargetFramework>net7.0</TargetFramework>
     <IsPackable>false</IsPackable>
+    <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
   </PropertyGroup>
 
   <ItemGroup>

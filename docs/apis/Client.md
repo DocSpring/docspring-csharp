@@ -1,197 +1,76 @@
 # DocSpring.Client.Api.Client
 
-All URIs are relative to *https://sync.api.docspring.com/api/v1*
+All URIs are relative to *https://sync.api.docspring.com/api/v2*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
-| [**AddFieldsToTemplate**](Client.md#addfieldstotemplate) | **PUT** /templates/{template_id}/add_fields | Add new fields to a Template |
-| [**BatchGeneratePdfs**](Client.md#batchgeneratepdfs) | **POST** /submissions/batches | Generate multiple PDFs |
-| [**CombinePdfs**](Client.md#combinepdfs) | **POST** /combined_submissions | Merge submission PDFs, template PDFs, or custom files |
 | [**CopyTemplate**](Client.md#copytemplate) | **POST** /templates/{template_id}/copy | Copy a template |
-| [**CreateCustomFileFromUpload**](Client.md#createcustomfilefromupload) | **POST** /custom_files | Create a new custom file from a cached S3 upload |
-| [**CreateDataRequestEvent**](Client.md#createdatarequestevent) | **POST** /data_requests/{data_request_id}/events | Create a new event for emailing a signee a request for signature |
-| [**CreateDataRequestToken**](Client.md#createdatarequesttoken) | **POST** /data_requests/{data_request_id}/tokens | Create a new data request token for form authentication |
-| [**CreateFolder**](Client.md#createfolder) | **POST** /folders/ | Create a folder |
-| [**CreateHtmlTemplate**](Client.md#createhtmltemplate) | **POST** /templates?endpoint_variant&#x3D;create_html_template | Create a new HTML template |
-| [**CreatePdfTemplate**](Client.md#createpdftemplate) | **POST** /templates | Create a new PDF template with a form POST file upload |
-| [**CreatePdfTemplateFromUpload**](Client.md#createpdftemplatefromupload) | **POST** /templates?endpoint_variant&#x3D;create_template_from_cached_upload | Create a new PDF template from a cached S3 file upload |
+| [**CreateCombinedPdf**](Client.md#createcombinedpdf) | **POST** /combined_pdfs | Combine PDFs |
+| [**CreateCustomFileFromUpload**](Client.md#createcustomfilefromupload) | **POST** /custom_files | Create a custom file from an upload |
+| [**CreateFolder**](Client.md#createfolder) | **POST** /folders | Create a folder |
+| [**CreateSignatureRequestEvent**](Client.md#createsignaturerequestevent) | **POST** /signature_requests/{signature_request_id}/events | Record a signature request event |
+| [**CreateSignatureRequestToken**](Client.md#createsignaturerequesttoken) | **POST** /signature_requests/{signature_request_id}/tokens | Create a signature request token |
+| [**CreateSubmission**](Client.md#createsubmission) | **POST** /templates/{template_id}/submissions | Generate a PDF |
+| [**CreateSubmissionBatch**](Client.md#createsubmissionbatch) | **POST** /submissions/batches | Generate PDFs in a batch |
+| [**CreateTemplate**](Client.md#createtemplate) | **POST** /templates | Create a template |
 | [**CreateWebhook**](Client.md#createwebhook) | **POST** /webhooks | Create a webhook |
+| [**DeleteCustomFile**](Client.md#deletecustomfile) | **DELETE** /custom_files/{custom_file_id} | Delete a custom file |
 | [**DeleteFolder**](Client.md#deletefolder) | **DELETE** /folders/{folder_id} | Delete a folder |
 | [**DeleteTemplate**](Client.md#deletetemplate) | **DELETE** /templates/{template_id} | Delete a template |
 | [**DeleteWebhook**](Client.md#deletewebhook) | **DELETE** /webhooks/{webhook_id} | Delete a webhook |
-| [**ExpireCombinedSubmission**](Client.md#expirecombinedsubmission) | **DELETE** /combined_submissions/{combined_submission_id} | Expire a combined submission |
-| [**ExpireSubmission**](Client.md#expiresubmission) | **DELETE** /submissions/{submission_id} | Expire a PDF submission |
-| [**GeneratePdf**](Client.md#generatepdf) | **POST** /templates/{template_id}/submissions | Generate a PDF |
-| [**GeneratePreview**](Client.md#generatepreview) | **POST** /submissions/{submission_id}/generate_preview | Generate a preview PDF for partially completed data requests |
-| [**GetCombinedSubmission**](Client.md#getcombinedsubmission) | **GET** /combined_submissions/{combined_submission_id} | Check the status of a combined submission (merged PDFs) |
-| [**GetDataRequest**](Client.md#getdatarequest) | **GET** /data_requests/{data_request_id} | Look up a submission data request |
-| [**GetFullTemplate**](Client.md#getfulltemplate) | **GET** /templates/{template_id}?full&#x3D;true | Fetch the full attributes for a PDF template |
-| [**GetPresignUrl**](Client.md#getpresignurl) | **GET** /uploads/presign | Get a presigned S3 URL for direct file upload |
-| [**GetSubmission**](Client.md#getsubmission) | **GET** /submissions/{submission_id} | Check the status of a PDF |
-| [**GetSubmissionBatch**](Client.md#getsubmissionbatch) | **GET** /submissions/batches/{submission_batch_id} | Check the status of a submission batch job |
-| [**GetTemplate**](Client.md#gettemplate) | **GET** /templates/{template_id} | Check the status of an uploaded template |
-| [**GetTemplateModelCode**](Client.md#gettemplatemodelcode) | **GET** /templates/{template_id}/model_code | Generate typed model code for a template |
-| [**GetTemplateSchema**](Client.md#gettemplateschema) | **GET** /templates/{template_id}/schema | Fetch the JSON schema for a template |
+| [**ExpireCombinedPdf**](Client.md#expirecombinedpdf) | **DELETE** /combined_pdfs/{combined_pdf_id} | Expire a combined PDF |
+| [**ExpireSubmission**](Client.md#expiresubmission) | **DELETE** /submissions/{submission_id} | Expire a submission |
+| [**GenerateSubmissionPreview**](Client.md#generatesubmissionpreview) | **POST** /submissions/{submission_id}/generate_preview | Generate a preview PDF |
+| [**GetCombinedPdf**](Client.md#getcombinedpdf) | **GET** /combined_pdfs/{combined_pdf_id} | Get a combined PDF |
+| [**GetCustomFile**](Client.md#getcustomfile) | **GET** /custom_files/{custom_file_id} | Get a custom file |
+| [**GetFolder**](Client.md#getfolder) | **GET** /folders/{folder_id} | Get a folder |
+| [**GetPresignUrl**](Client.md#getpresignurl) | **GET** /uploads/presign | Get a presigned URL to upload a file |
+| [**GetSignatureRequest**](Client.md#getsignaturerequest) | **GET** /signature_requests/{signature_request_id} | Get a signature request |
+| [**GetSubmission**](Client.md#getsubmission) | **GET** /submissions/{submission_id} | Get a submission |
+| [**GetSubmissionBatch**](Client.md#getsubmissionbatch) | **GET** /submissions/batches/{submission_batch_id} | Get a batch |
+| [**GetTemplate**](Client.md#gettemplate) | **GET** /templates/{template_id} | Get a template |
+| [**GetTemplateModelCode**](Client.md#gettemplatemodelcode) | **GET** /templates/{template_id}/model_code | Generate typed code for a template's submission data |
+| [**GetTemplateSchema**](Client.md#gettemplateschema) | **GET** /templates/{template_id}/schema | Get the JSON Schema of a template's submission data |
 | [**GetWebhook**](Client.md#getwebhook) | **GET** /webhooks/{webhook_id} | Get a webhook |
-| [**ListCombinedSubmissions**](Client.md#listcombinedsubmissions) | **GET** /combined_submissions | Get a list of all combined submissions |
-| [**ListFolders**](Client.md#listfolders) | **GET** /folders/ | Get a list of all folders |
-| [**ListSubmissions**](Client.md#listsubmissions) | **GET** /submissions | List all submissions |
-| [**ListTemplateSubmissions**](Client.md#listtemplatesubmissions) | **GET** /templates/{template_id}/submissions | List all submissions for a given template |
-| [**ListTemplates**](Client.md#listtemplates) | **GET** /templates | Get a list of all templates |
-| [**ListWebhooks**](Client.md#listwebhooks) | **GET** /webhooks | Get a list of all webhooks |
-| [**MoveFolderToFolder**](Client.md#movefoldertofolder) | **POST** /folders/{folder_id}/move | Move a folder |
-| [**MoveTemplateToFolder**](Client.md#movetemplatetofolder) | **POST** /templates/{template_id}/move | Move Template to folder |
+| [**ListCombinedPdfs**](Client.md#listcombinedpdfs) | **GET** /combined_pdfs | List combined PDFs |
+| [**ListCustomFiles**](Client.md#listcustomfiles) | **GET** /custom_files | List custom files |
+| [**ListFolders**](Client.md#listfolders) | **GET** /folders | List folders |
+| [**ListSubmissions**](Client.md#listsubmissions) | **GET** /submissions | List submissions |
+| [**ListTemplateSubmissions**](Client.md#listtemplatesubmissions) | **GET** /templates/{template_id}/submissions | List a template's submissions |
+| [**ListTemplates**](Client.md#listtemplates) | **GET** /templates | List templates |
+| [**ListWebhooks**](Client.md#listwebhooks) | **GET** /webhooks | List webhooks |
+| [**MoveFolder**](Client.md#movefolder) | **POST** /folders/{folder_id}/move | Move a folder |
+| [**MoveTemplate**](Client.md#movetemplate) | **POST** /templates/{template_id}/move | Move a template to a folder |
 | [**PublishTemplateVersion**](Client.md#publishtemplateversion) | **POST** /templates/{template_id}/publish_version | Publish a template version |
 | [**RenameFolder**](Client.md#renamefolder) | **POST** /folders/{folder_id}/rename | Rename a folder |
 | [**RestoreTemplateVersion**](Client.md#restoretemplateversion) | **POST** /templates/{template_id}/restore_version | Restore a template version |
 | [**TestAuthentication**](Client.md#testauthentication) | **GET** /authentication | Test authentication |
-| [**UpdateDataRequest**](Client.md#updatedatarequest) | **PUT** /data_requests/{data_request_id} | Update a submission data request |
-| [**UpdateTemplate**](Client.md#updatetemplate) | **PUT** /templates/{template_id} | Update a Template |
-| [**UpdateTemplateDocument**](Client.md#updatetemplatedocument) | **PUT** /templates/{template_id}?endpoint_variant&#x3D;update_template_pdf_with_form_post | Update a template&#39;s document with a form POST file upload |
-| [**UpdateTemplateDocumentFromUpload**](Client.md#updatetemplatedocumentfromupload) | **PUT** /templates/{template_id}?endpoint_variant&#x3D;update_template_pdf_with_cached_upload | Update a template&#39;s document with a cached S3 file upload |
+| [**UpdateSignatureRequest**](Client.md#updatesignaturerequest) | **PUT** /signature_requests/{signature_request_id} | Update a signature request |
+| [**UpdateTemplate**](Client.md#updatetemplate) | **PUT** /templates/{template_id} | Update a template |
+| [**UpdateTemplateDocument**](Client.md#updatetemplatedocument) | **PUT** /templates/{template_id}/document | Replace a template's PDF |
 | [**UpdateWebhook**](Client.md#updatewebhook) | **PUT** /webhooks/{webhook_id} | Update a webhook |
-
-<a id="addfieldstotemplate"></a>
-# **AddFieldsToTemplate**
-> TemplateAddFieldsResponse AddFieldsToTemplate (string templateId, AddFieldsData data)
-
-Add new fields to a Template
-
-Adds fields to a PDF template. Configure field types, positions, defaults, and formatting options. 
-
-
-### Parameters
-
-| Name | Type | Description | Notes |
-|------|------|-------------|-------|
-| **templateId** | **string** |  |  |
-| **data** | [**AddFieldsData**](AddFieldsData.md) |  |  |
-
-### Return type
-
-[**TemplateAddFieldsResponse**](TemplateAddFieldsResponse.md)
-
-### Authorization
-
-[api_token_basic](../README.md#api_token_basic)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | add fields success |  -  |
-| **422** | add fields error |  -  |
-
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
-
-<a id="batchgeneratepdfs"></a>
-# **BatchGeneratePdfs**
-> BatchGeneratePdfs201Response BatchGeneratePdfs (SubmissionBatchData data, bool wait = null)
-
-Generate multiple PDFs
-
-Generates up to 50 PDFs in a single request. Each submission can use a different template and data. Supports both synchronous (wait for all PDFs) and asynchronous processing. More efficient than individual requests when creating multiple PDFs.  Live PDFs use credits. If any live submission is waiting for credits, the API returns 402 and the others are still processed: check each submission's `state`. See [Credits & Rate Limits](https://docspring.com/docs/api-guide/credits-and-rate-limits/).  See also: - [Batch Generate PDFs](https://docspring.com/docs/api-guide/generate-pdfs/batch-generate-pdfs/) - Request format, responses, and limits 
-
-
-### Parameters
-
-| Name | Type | Description | Notes |
-|------|------|-------------|-------|
-| **data** | [**SubmissionBatchData**](SubmissionBatchData.md) |  |  |
-| **wait** | **bool** | Wait for submission batch to be processed before returning. Set to false to return immediately. Default: true (on sync.* subdomain) | [optional] [default to true] |
-
-### Return type
-
-[**BatchGeneratePdfs201Response**](BatchGeneratePdfs201Response.md)
-
-### Authorization
-
-[api_token_basic](../README.md#api_token_basic)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **402** | insufficient credits |  -  |
-| **403** | account suspended |  -  |
-| **201** | submissions created |  -  |
-| **200** | some PDFs with invalid data |  -  |
-| **401** | authentication failed |  -  |
-| **422** | array of arrays |  -  |
-| **400** | invalid JSON |  -  |
-
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
-
-<a id="combinepdfs"></a>
-# **CombinePdfs**
-> CreateCombinedSubmissionResponse CombinePdfs (CombinePdfsData data)
-
-Merge submission PDFs, template PDFs, or custom files
-
-Combines multiple PDFs from various sources into a single PDF file. Supports merging submission PDFs, template PDFs, custom files, other merged PDFs, and PDFs from URLs. Merges the PDFs in the order provided.  Combining uses credits (4 per source PDF, plus 4 per unit of the combined PDF), even with a test API token or watermarked source PDFs. If your balance can't cover it, the API returns 402 and the combined submission waits in the `insufficient_credits` state until you add credits. See [Credits & Rate Limits](https://docspring.com/docs/api-guide/credits-and-rate-limits/). 
-
-
-### Parameters
-
-| Name | Type | Description | Notes |
-|------|------|-------------|-------|
-| **data** | [**CombinePdfsData**](CombinePdfsData.md) |  |  |
-
-### Return type
-
-[**CreateCombinedSubmissionResponse**](CreateCombinedSubmissionResponse.md)
-
-### Authorization
-
-[api_token_basic](../README.md#api_token_basic)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **402** | insufficient credits |  -  |
-| **403** | test API token used to delete custom files |  -  |
-| **201** | combined submission created |  -  |
-| **422** | invalid request |  -  |
-| **400** | invalid JSON |  -  |
-| **401** | authentication failed |  -  |
-
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+| [**UploadTemplate**](Client.md#uploadtemplate) | **POST** /templates/upload | Create a PDF template from an uploaded PDF |
+| [**UploadTemplateDocument**](Client.md#uploadtemplatedocument) | **PUT** /templates/{template_id}/document/upload | Replace a template's PDF with an uploaded PDF |
 
 <a id="copytemplate"></a>
 # **CopyTemplate**
-> TemplatePreview CopyTemplate (string templateId, CopyTemplateOptions options = null)
+> Template CopyTemplate (string templateId, CopyTemplateRequest body = null)
 
 Copy a template
 
-Creates a copy of an existing template with all its fields and configuration. Optionally specify a new name and target folder. The copied template starts as a new draft that can be modified independently of the original. 
+Copies a template (its draft, or a published version) into a new template.
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **templateId** | **string** |  |  |
-| **options** | [**CopyTemplateOptions**](CopyTemplateOptions.md) |  | [optional]  |
+| **templateId** | **string** | The template's ID. |  |
+| **body** | [**CopyTemplateRequest**](CopyTemplateRequest.md) | Settings for the copy. | [optional]  |
 
 ### Return type
 
-[**TemplatePreview**](TemplatePreview.md)
+[**Template**](Template.md)
 
 ### Authorization
 
@@ -206,30 +85,73 @@ Creates a copy of an existing template with all its fields and configuration. Op
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | copy template success |  -  |
-| **403** | the plan&#39;s template limit is reached |  -  |
-| **404** | folder not found |  -  |
+| **201** | template copied |  -  |
+| **422** | invalid copy |  -  |
+| **403** | the plan's template limit is reached |  -  |
+| **404** | template not found |  -  |
+| **401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+<a id="createcombinedpdf"></a>
+# **CreateCombinedPdf**
+> CombinedPdf CreateCombinedPdf (CreateCombinedPdfRequest body, bool wait = null)
+
+Combine PDFs
+
+Merges PDFs into one: submissions, other combined PDFs, templates, custom files (POST /custom_files) and PDFs from URLs, in the order of `source_pdfs`. The PDF is generated in the background: on sync.api hosts the request waits for it (unless you pass `wait=false`), otherwise poll GET /combined_pdfs/{combined_pdf_id} until `state` isn't `pending`.  A template source merges the template's processed PDF by default: the PDF submissions are filled in on, decrypted and with its form fields removed. Pass `processed: false` to merge the PDF as it was uploaded. 
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **body** | [**CreateCombinedPdfRequest**](CreateCombinedPdfRequest.md) | The PDFs to merge, and the combined PDF's settings. |  |
+| **wait** | **bool** | Wait until the PDF has been generated before responding. Default true on sync.api hosts. | [optional]  |
+
+### Return type
+
+[**CombinedPdf**](CombinedPdf.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **201** | combined PDF created |  -  |
+| **422** | invalid source PDFs |  -  |
+| **403** | not allowed |  -  |
+| **402** | not enough credits |  -  |
+| **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 <a id="createcustomfilefromupload"></a>
 # **CreateCustomFileFromUpload**
-> CreateCustomFileResponse CreateCustomFileFromUpload (CreateCustomFileData data)
+> CustomFile CreateCustomFileFromUpload (CreateCustomFileFromUploadRequest body)
 
-Create a new custom file from a cached S3 upload
+Create a custom file from an upload
 
-The Custom Files API endpoint allows you to upload PDFs to DocSpring and then merge them with other PDFs. First upload your file using the presigned URL endpoint, then use the returned cache_id to create the custom file. 
+Creates a custom file from a PDF you uploaded, so you can merge it with other PDFs. Upload the file with the presigned upload (GET /uploads/presign) first, then pass its `fields.key` as `cache_id`. 
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **data** | [**CreateCustomFileData**](CreateCustomFileData.md) |  |  |
+| **body** | [**CreateCustomFileFromUploadRequest**](CreateCustomFileFromUploadRequest.md) | The uploaded file to create the custom file from. |  |
 
 ### Return type
 
-[**CreateCustomFileResponse**](CreateCustomFileResponse.md)
+[**CustomFile**](CustomFile.md)
 
 ### Authorization
 
@@ -244,103 +166,26 @@ The Custom Files API endpoint allows you to upload PDFs to DocSpring and then me
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **201** | returns the custom file |  -  |
+| **201** | custom file created |  -  |
+| **422** | invalid custom file |  -  |
 | **401** | authentication failed |  -  |
-
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
-
-<a id="createdatarequestevent"></a>
-# **CreateDataRequestEvent**
-> CreateSubmissionDataRequestEventResponse CreateDataRequestEvent (string dataRequestId, CreateSubmissionDataRequestEventRequest varEvent)
-
-Create a new event for emailing a signee a request for signature
-
-Records user notification events for data requests. Use this to create an audit trail showing when and how users were notified about data request forms. Supports email, SMS, and other notification types. Records the notification time for compliance tracking.  See also: - [Embedded Data Requests Guide](https://docspring.com/docs/guides/embedded-forms/embedded-data-requests/) - User notification workflow 
-
-
-### Parameters
-
-| Name | Type | Description | Notes |
-|------|------|-------------|-------|
-| **dataRequestId** | **string** |  |  |
-| **varEvent** | [**CreateSubmissionDataRequestEventRequest**](CreateSubmissionDataRequestEventRequest.md) |  |  |
-
-### Return type
-
-[**CreateSubmissionDataRequestEventResponse**](CreateSubmissionDataRequestEventResponse.md)
-
-### Authorization
-
-[api_token_basic](../README.md#api_token_basic)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **201** | event created |  -  |
-| **401** | authentication failed |  -  |
-| **422** | message recipient must not be blank |  -  |
-
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
-
-<a id="createdatarequesttoken"></a>
-# **CreateDataRequestToken**
-> CreateSubmissionDataRequestTokenResponse CreateDataRequestToken (string dataRequestId, string type = null)
-
-Create a new data request token for form authentication
-
-Creates an authentication token for accessing a data request form. Returns a token and a pre-authenticated URL for the data request form. The token remains valid until the data request is completed.  See also: - [Embedded Data Requests Guide](https://docspring.com/docs/guides/embedded-forms/embedded-data-requests/) 
-
-
-### Parameters
-
-| Name | Type | Description | Notes |
-|------|------|-------------|-------|
-| **dataRequestId** | **string** |  |  |
-| **type** | **string** |  | [optional]  |
-
-### Return type
-
-[**CreateSubmissionDataRequestTokenResponse**](CreateSubmissionDataRequestTokenResponse.md)
-
-### Authorization
-
-[api_token_basic](../README.md#api_token_basic)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **201** | token created |  -  |
-| **401** | authentication failed |  -  |
-| **422** | invalid request |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 <a id="createfolder"></a>
 # **CreateFolder**
-> Folder CreateFolder (CreateFolderData data)
+> Folder CreateFolder (CreateFolderRequest body)
 
 Create a folder
 
-Creates a new folder for organizing templates. Folders can be nested within other folders by providing a `parent_folder_id`. Folder names must be unique within the same parent. 
+Creates a folder for organizing templates. Pass `parent_folder_id` to create it inside another folder. Folder names are unique within their parent folder. 
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **data** | [**CreateFolderData**](CreateFolderData.md) |  |  |
+| **body** | [**CreateFolderRequest**](CreateFolderRequest.md) | The folder to create. |  |
 
 ### Return type
 
@@ -359,31 +204,31 @@ Creates a new folder for organizing templates. Folders can be nested within othe
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **422** | name already exist |  -  |
-| **404** | parent folder doesn&#39;t exist |  -  |
-| **200** | folder created inside another folder |  -  |
+| **201** | folder created inside another folder |  -  |
+| **422** | invalid folder |  -  |
 | **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
-<a id="createhtmltemplate"></a>
-# **CreateHtmlTemplate**
-> TemplatePreview CreateHtmlTemplate (CreateHtmlTemplate data)
+<a id="createsignaturerequestevent"></a>
+# **CreateSignatureRequestEvent**
+> SignatureRequestEvent CreateSignatureRequestEvent (string signatureRequestId, CreateSignatureRequestEventRequest body)
 
-Create a new HTML template
+Record a signature request event
 
-Creates a new HTML template using HTML, CSS/SCSS, and Liquid templating. Allows complete control over PDF layout and styling. Supports headers, footers, and dynamic content using Liquid syntax for field values, conditions, loops, and filters. 
+Records something that happened outside DocSpring in the signature request's audit trail: you sent the request to the person (`send_request`). The audit trail shows it as reported by your account. 
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **data** | [**CreateHtmlTemplate**](CreateHtmlTemplate.md) |  |  |
+| **signatureRequestId** | **string** | The signature request's ID. |  |
+| **body** | [**CreateSignatureRequestEventRequest**](CreateSignatureRequestEventRequest.md) | The event to record. |  |
 
 ### Return type
 
-[**TemplatePreview**](TemplatePreview.md)
+[**SignatureRequestEvent**](SignatureRequestEvent.md)
 
 ### Authorization
 
@@ -398,72 +243,32 @@ Creates a new HTML template using HTML, CSS/SCSS, and Liquid templating. Allows 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **201** | returns a created template |  -  |
-| **403** | the plan&#39;s template limit is reached |  -  |
+| **201** | event recorded |  -  |
+| **422** | invalid event |  -  |
+| **404** | signature request not found |  -  |
 | **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
-<a id="createpdftemplate"></a>
-# **CreatePdfTemplate**
-> TemplatePreview CreatePdfTemplate (System.IO.Stream templateDocument, string templateName, bool wait = null, string templateDescription = null, string templateParentFolderId = null)
+<a id="createsignaturerequesttoken"></a>
+# **CreateSignatureRequestToken**
+> SignatureRequestToken CreateSignatureRequestToken (string signatureRequestId, CreateSignatureRequestTokenRequest body = null)
 
-Create a new PDF template with a form POST file upload
+Create a signature request token
 
-Creates a new PDF template by uploading a PDF file. The uploaded PDF becomes the foundation for your template, and you can then add fillable fields using the template editor. Use the wait parameter to control whether the request waits for document processing to complete. 
+Creates a token that opens the signature request without signing in, in a form embedded in your app or from a link you send. The response is the only time the token's secret is returned. The link works for 24 hours, or 7 days for an `email` token, and a signing page that opened in time keeps working for 7 more days. A test API token can't create a token for a live signature request. 
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **templateDocument** | **System.IO.Stream****System.IO.Stream** |  |  |
-| **templateName** | **string** |  |  |
-| **wait** | **bool** | Wait for template document to be processed before returning. Set to false to return immediately. Default: true (on sync.* subdomain) | [optional] [default to true] |
-| **templateDescription** | **string** |  | [optional]  |
-| **templateParentFolderId** | **string** |  | [optional]  |
+| **signatureRequestId** | **string** | The signature request's ID. |  |
+| **body** | [**CreateSignatureRequestTokenRequest**](CreateSignatureRequestTokenRequest.md) | The kind of link to make. Send no body for an `api` token. | [optional]  |
 
 ### Return type
 
-[**TemplatePreview**](TemplatePreview.md)
-
-### Authorization
-
-[api_token_basic](../README.md#api_token_basic)
-
-### HTTP request headers
-
- - **Content-Type**: multipart/form-data
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **201** | returns a pending template |  -  |
-| **403** | the plan&#39;s template limit is reached |  -  |
-| **401** | authentication failed |  -  |
-
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
-
-<a id="createpdftemplatefromupload"></a>
-# **CreatePdfTemplateFromUpload**
-> TemplatePreview CreatePdfTemplateFromUpload (CreatePdfTemplate data)
-
-Create a new PDF template from a cached S3 file upload
-
-Creates a new PDF template from a file previously uploaded to S3 using a presigned URL. This two-step process allows for more reliable large file uploads by first uploading the file to S3, then creating the template using the cached upload ID. 
-
-
-### Parameters
-
-| Name | Type | Description | Notes |
-|------|------|-------------|-------|
-| **data** | [**CreatePdfTemplate**](CreatePdfTemplate.md) |  |  |
-
-### Return type
-
-[**TemplatePreview**](TemplatePreview.md)
+[**SignatureRequestToken**](SignatureRequestToken.md)
 
 ### Authorization
 
@@ -478,26 +283,154 @@ Creates a new PDF template from a file previously uploaded to S3 using a presign
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **201** | returns a pending template |  -  |
+| **201** | token created |  -  |
+| **403** | test API token on a live signature request |  -  |
+| **409** | signature request finished |  -  |
+| **422** | invalid token request |  -  |
+| **404** | signature request not found |  -  |
 | **401** | authentication failed |  -  |
-| **403** | the plan&#39;s template limit is reached |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+<a id="createsubmission"></a>
+# **CreateSubmission**
+> Submission CreateSubmission (string templateId, CreateSubmissionRequest body, string version = null, bool wait = null)
+
+Generate a PDF
+
+Creates a submission: fills in a template with your data and generates a PDF. The PDF is generated in the background: on sync.api hosts the request waits for it (unless you pass `wait=false`), otherwise poll GET /submissions/{submission_id} until `state` isn't `pending`.  Data that doesn't match the template's fields returns a 422 with an `invalid_data` error. The submission is still saved, with its errors, so you can find it in DocSpring: the error's `submission_id` is its ID. 
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **templateId** | **string** | The template's ID. |  |
+| **body** | [**CreateSubmissionRequest**](CreateSubmissionRequest.md) | The submission's data and settings. |  |
+| **version** | **string** | The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published). | [optional]  |
+| **wait** | **bool** | Wait until the PDF has been generated before responding. Default true on sync.api hosts. | [optional]  |
+
+### Return type
+
+[**Submission**](Submission.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **201** | submission created |  -  |
+| **422** | invalid data |  -  |
+| **402** | not enough credits |  -  |
+| **403** | the account is suspended |  -  |
+| **404** | template not found |  -  |
+| **401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+<a id="createsubmissionbatch"></a>
+# **CreateSubmissionBatch**
+> SubmissionBatch CreateSubmissionBatch (CreateSubmissionBatchRequest body, bool wait = null)
+
+Generate PDFs in a batch
+
+Creates up to 50 submissions in one request, from one template or several. The PDFs are only generated when every submission is valid. On sync.api hosts the request waits until every PDF has been generated (unless you pass `wait=false`), otherwise poll GET /submissions/batches/{submission_batch_id} until `processed_at` is set.  When any submission is invalid, nothing is generated and the request returns a 422. Submissions whose data doesn't match their template's fields are still saved with their errors (an `invalid_data` error, with each one's `submission_id` in its details), so you can find them in DocSpring. The other submissions aren't saved. 
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **body** | [**CreateSubmissionBatchRequest**](CreateSubmissionBatchRequest.md) | The submissions to create, and the settings they share. |  |
+| **wait** | **bool** | Wait until every PDF in the batch has been generated before responding. Default true on sync.api hosts. | [optional]  |
+
+### Return type
+
+[**SubmissionBatch**](SubmissionBatch.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **201** | batch created |  -  |
+| **422** | invalid data |  -  |
+| **402** | not enough credits |  -  |
+| **403** | account suspended |  -  |
+| **401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+<a id="createtemplate"></a>
+# **CreateTemplate**
+> Template CreateTemplate (CreateTemplateRequest body, bool wait = null)
+
+Create a template
+
+Creates an HTML template, or a PDF template from a PDF you uploaded with the presigned upload (GET /uploads/presign): pass its `fields.key` as `cache_id`. To send the PDF with the request instead, use POST /templates/upload.  A PDF template is ready to generate PDFs once DocSpring has processed its PDF (`ready` is true). On sync.api hosts the request waits for that unless you pass `wait=false`. 
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **body** | [**CreateTemplateRequest**](CreateTemplateRequest.md) | The template to create. |  |
+| **wait** | **bool** | Wait until the PDF has been processed before responding. Default true on sync.api hosts. | [optional]  |
+
+### Return type
+
+[**Template**](Template.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **201** | HTML template created |  -  |
+| **422** | invalid template |  -  |
+| **403** | the plan's template limit is reached |  -  |
+| **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 <a id="createwebhook"></a>
 # **CreateWebhook**
-> Webhook CreateWebhook (CreateWebhookData data)
+> Webhook CreateWebhook (CreateWebhookRequest body)
 
 Create a webhook
 
-Creates a webhook that delivers a POST request to your endpoint whenever a subscribed event occurs. Optionally scope the webhook to specific API tokens, templates, or folders. 
+Creates a webhook that sends a POST request to your endpoint whenever a subscribed event happens. Scope it to API tokens, templates or folders to receive only their events. 
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **data** | [**CreateWebhookData**](CreateWebhookData.md) |  |  |
+| **body** | [**CreateWebhookRequest**](CreateWebhookRequest.md) | The webhook to create. |  |
 
 ### Return type
 
@@ -517,7 +450,46 @@ Creates a webhook that delivers a POST request to your endpoint whenever a subsc
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | webhook created |  -  |
-| **422** | invalid parameters |  -  |
+| **422** | invalid webhook |  -  |
+| **401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+<a id="deletecustomfile"></a>
+# **DeleteCustomFile**
+> CustomFile DeleteCustomFile (string customFileId)
+
+Delete a custom file
+
+Deletes a custom file and returns it. Use a live API token: test tokens can't delete custom files. 
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **customFileId** | **string** | The custom file's ID. |  |
+
+### Return type
+
+[**CustomFile**](CustomFile.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | custom file deleted |  -  |
+| **403** | test API token |  -  |
+| **404** | custom file not found |  -  |
 | **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
@@ -528,14 +500,14 @@ Creates a webhook that delivers a POST request to your endpoint whenever a subsc
 
 Delete a folder
 
-Deletes an empty folder. The folder must not contain any templates or subfolders. Move or delete all contents before attempting to delete the folder. 
+Deletes an empty folder and returns it. A folder that still has templates or folders in it can't be deleted. 
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **folderId** | **string** |  |  |
+| **folderId** | **string** | The folder's ID. |  |
 
 ### Return type
 
@@ -554,32 +526,32 @@ Deletes an empty folder. The folder must not contain any templates or subfolders
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **404** | folder doesn&#39;t exist |  -  |
-| **422** | folder has contents |  -  |
-| **200** | folder is empty |  -  |
+| **200** | folder deleted |  -  |
+| **409** | folder is not empty |  -  |
+| **404** | folder not found |  -  |
 | **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 <a id="deletetemplate"></a>
 # **DeleteTemplate**
-> TemplateDeleteResponse DeleteTemplate (string templateId, string version = null)
+> Template DeleteTemplate (string templateId, string version = null)
 
 Delete a template
 
-Deletes a template or a specific template version. When no version is specified, deletes the entire template including all versions. When a version is specified, deletes only that version while preserving others. Returns remaining version information. 
+Deletes a template's draft and all of its published versions, or one published version (`version`). Returns the template as it was before it was deleted. 
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **templateId** | **string** |  |  |
-| **version** | **string** |  | [optional]  |
+| **templateId** | **string** | The template's ID. |  |
+| **version** | **string** | Delete only this published version (`1.2.0`) or the draft (`draft`, when no version has been published). Without it, the draft and every published version are deleted. | [optional]  |
 
 ### Return type
 
-[**TemplateDeleteResponse**](TemplateDeleteResponse.md)
+[**Template**](Template.md)
 
 ### Authorization
 
@@ -594,8 +566,10 @@ Deletes a template or a specific template version. When no version is specified,
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | template version deleted successfully |  -  |
+| **200** | template deleted |  -  |
+| **409** | template is locked |  -  |
 | **404** | template not found |  -  |
+| **422** | invalid version |  -  |
 | **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
@@ -606,14 +580,14 @@ Deletes a template or a specific template version. When no version is specified,
 
 Delete a webhook
 
-Permanently deletes a webhook so it stops receiving events, and returns the deleted webhook.
+Deletes a webhook so it stops receiving events, and returns it.
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **webhookId** | **string** |  |  |
+| **webhookId** | **string** | The webhook's ID. |  |
 
 ### Return type
 
@@ -638,24 +612,24 @@ Permanently deletes a webhook so it stops receiving events, and returns the dele
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
-<a id="expirecombinedsubmission"></a>
-# **ExpireCombinedSubmission**
-> CombinedSubmission ExpireCombinedSubmission (string combinedSubmissionId)
+<a id="expirecombinedpdf"></a>
+# **ExpireCombinedPdf**
+> CombinedPdf ExpireCombinedPdf (string combinedPdfId)
 
-Expire a combined submission
+Expire a combined PDF
 
-Expiring a combined submission deletes the PDF from our system. This is useful for invalidating sensitive documents. 
+Deletes a combined PDF's PDF and returns the expired combined PDF.
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **combinedSubmissionId** | **string** |  |  |
+| **combinedPdfId** | **string** | The combined PDF's ID. |  |
 
 ### Return type
 
-[**CombinedSubmission**](CombinedSubmission.md)
+[**CombinedPdf**](CombinedPdf.md)
 
 ### Authorization
 
@@ -670,294 +644,27 @@ Expiring a combined submission deletes the PDF from our system. This is useful f
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | submission was expired |  -  |
-| **404** | combined submission not found |  -  |
-| **403** | test API token used |  -  |
+| **200** | combined PDF expired |  -  |
+| **403** | test API token |  -  |
+| **404** | combined PDF not found |  -  |
 | **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 <a id="expiresubmission"></a>
 # **ExpireSubmission**
-> SubmissionPreview ExpireSubmission (string submissionId)
+> Submission ExpireSubmission (string submissionId)
 
-Expire a PDF submission
+Expire a submission
 
-Expiring a PDF submission deletes the PDF and removes the data from our database. This is useful for invalidating sensitive documents after they've been downloaded. You can also [configure a data retention policy for your submissions](https://docspring.com/docs/template-editor/settings/#expire-submissions) so that they automatically expire. 
-
-
-### Parameters
-
-| Name | Type | Description | Notes |
-|------|------|-------------|-------|
-| **submissionId** | **string** |  |  |
-
-### Return type
-
-[**SubmissionPreview**](SubmissionPreview.md)
-
-### Authorization
-
-[api_token_basic](../README.md#api_token_basic)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | submission was expired |  -  |
-| **404** | submission not found |  -  |
-| **401** | authentication failed |  -  |
-| **403** | test API token used |  -  |
-
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
-
-<a id="generatepdf"></a>
-# **GeneratePdf**
-> CreateSubmissionResponse GeneratePdf (string templateId, CreatePdfSubmissionData submission, bool wait = null)
-
-Generate a PDF
-
-Creates a PDF submission by filling in a template with data. Supports both synchronous (default) and asynchronous processing. Add the `wait=false` query parameter to return immediately.  Live PDFs use credits; test PDFs (`test: true`) are free and watermarked. If your balance can't cover a live PDF, the API returns 402 and the submission waits in the `insufficient_credits` state until you add credits. See [Credits & Rate Limits](https://docspring.com/docs/api-guide/credits-and-rate-limits/).  See also: - [Customize the PDF Title and Filename](https://docspring.com/docs/api-guide/generate-pdfs/customize-pdf-title-and-filename/) - Set custom metadata - [Handling Truncated Text](https://docspring.com/docs/api-guide/generate-pdfs/handle-truncated-text/) - Handle text that doesn't fit in fields 
+Deletes a submission's data and PDF now, and returns the expired submission.
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **templateId** | **string** |  |  |
-| **submission** | [**CreatePdfSubmissionData**](CreatePdfSubmissionData.md) |  |  |
-| **wait** | **bool** | Wait for submission to be processed before returning. Set to false to return immediately. Default: true (on sync.* subdomain) | [optional] [default to true] |
-
-### Return type
-
-[**CreateSubmissionResponse**](CreateSubmissionResponse.md)
-
-### Authorization
-
-[api_token_basic](../README.md#api_token_basic)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **402** | insufficient credits |  -  |
-| **201** | submission created |  -  |
-| **422** | invalid request |  -  |
-| **403** | live data requests need Starter or higher |  -  |
-| **401** | authentication failed |  -  |
-
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
-
-<a id="generatepreview"></a>
-# **GeneratePreview**
-> SuccessErrorResponse GeneratePreview (string submissionId)
-
-Generate a preview PDF for partially completed data requests
-
-Generates a preview PDF for a submission with partially completed data requests. Useful for showing users what the final document will look like before all signatures or data have been collected. The preview includes any data collected so far. 
-
-
-### Parameters
-
-| Name | Type | Description | Notes |
-|------|------|-------------|-------|
-| **submissionId** | **string** |  |  |
-
-### Return type
-
-[**SuccessErrorResponse**](SuccessErrorResponse.md)
-
-### Authorization
-
-[api_token_basic](../README.md#api_token_basic)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | preview was successfully requested |  -  |
-| **404** | submission not found |  -  |
-| **422** | error requesting preview |  -  |
-
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
-
-<a id="getcombinedsubmission"></a>
-# **GetCombinedSubmission**
-> CombinedSubmission GetCombinedSubmission (string combinedSubmissionId)
-
-Check the status of a combined submission (merged PDFs)
-
-Retrieves the details and status of a combined submission. Returns processing state, download URL (if processed), metadata, and information about any integrated actions (e.g., S3 uploads).  `insufficient_credits` means the combined submission is waiting for credits and is processed once you add them. If it's still waiting after 30 days, it moves to `error`. 
-
-
-### Parameters
-
-| Name | Type | Description | Notes |
-|------|------|-------------|-------|
-| **combinedSubmissionId** | **string** |  |  |
-
-### Return type
-
-[**CombinedSubmission**](CombinedSubmission.md)
-
-### Authorization
-
-[api_token_basic](../README.md#api_token_basic)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | processed combined submission found |  -  |
-| **404** | combined submission not found |  -  |
-| **401** | authentication failed |  -  |
-
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
-
-<a id="getdatarequest"></a>
-# **GetDataRequest**
-> SubmissionDataRequestShow GetDataRequest (string dataRequestId)
-
-Look up a submission data request
-
-Retrieves the details and status of a data request. Returns information about the request state (pending, viewed, completed), authentication details, and metadata. Includes audit information like IP address, browseruser agent, and timestamps.  See also: - [Embedded Data Requests Guide](https://docspring.com/docs/guides/embedded-forms/embedded-data-requests/) - Complete guide to data request workflow 
-
-
-### Parameters
-
-| Name | Type | Description | Notes |
-|------|------|-------------|-------|
-| **dataRequestId** | **string** |  |  |
-
-### Return type
-
-[**SubmissionDataRequestShow**](SubmissionDataRequestShow.md)
-
-### Authorization
-
-[api_token_basic](../README.md#api_token_basic)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | completed submission data request found |  -  |
-| **404** | submission data request not found |  -  |
-| **401** | authentication failed |  -  |
-
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
-
-<a id="getfulltemplate"></a>
-# **GetFullTemplate**
-> Template GetFullTemplate (string templateId)
-
-Fetch the full attributes for a PDF template
-
-Retrieves complete template information including fields, defaults, settings, and HTML/SCSS content. Use this to get all template data needed for automated updates or analysis. Returns more detailed information than the basic `getTemplate` endpoint. 
-
-
-### Parameters
-
-| Name | Type | Description | Notes |
-|------|------|-------------|-------|
-| **templateId** | **string** |  |  |
-
-### Return type
-
-[**Template**](Template.md)
-
-### Authorization
-
-[api_token_basic](../README.md#api_token_basic)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | template found |  -  |
-| **404** | template not found |  -  |
-| **401** | authentication failed |  -  |
-
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
-
-<a id="getpresignurl"></a>
-# **GetPresignUrl**
-> UploadPresignResponse GetPresignUrl ()
-
-Get a presigned S3 URL for direct file upload
-
-Returns a presigned S3 URL for uploading files directly to our S3 bucket. Use this endpoint to upload large files before creating templates or custom files. S3 will respond with a JSON object that you can include in your DocSpring API request.  Uploaded files can be used to: - [Create templates](https://docspring.com/docs/api/#tag/templates/post/templates?endpoint_variant=create_template_from_cached_upload) - [Update templates](https://docspring.com/docs/api/#tag/templates/put/templates/{template_id}?endpoint_variant=update_template_pdf_with_cached_upload) - [Create custom files](https://docspring.com/docs/api/#tag/custom-files/post/custom_files) and then [merge them with other PDFs](https://docspring.com/docs/api/#tag/combine-pdfs/post/combined_submissions) 
-
-
-### Parameters
-This endpoint does not need any parameter.
-### Return type
-
-[**UploadPresignResponse**](UploadPresignResponse.md)
-
-### Authorization
-
-[api_token_basic](../README.md#api_token_basic)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | presign URL generated |  -  |
-| **401** | authentication failed |  -  |
-
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
-
-<a id="getsubmission"></a>
-# **GetSubmission**
-> Submission GetSubmission (string submissionId, bool includeData = null)
-
-Check the status of a PDF
-
-Retrieves the details and status of a PDF submission. Returns processing state, download URL (if processed), metadata, submission data (optional), and information about any integrated actions. Use this to poll for completion when using asynchronous processing.  `insufficient_credits` means the submission is waiting for credits and is processed once you add them. If it's still waiting after 30 days, it moves to `error`. 
-
-
-### Parameters
-
-| Name | Type | Description | Notes |
-|------|------|-------------|-------|
-| **submissionId** | **string** |  |  |
-| **includeData** | **bool** |  | [optional]  |
+| **submissionId** | **string** | The submission's ID. |  |
 
 ### Return type
 
@@ -976,7 +683,270 @@ Retrieves the details and status of a PDF submission. Returns processing state, 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | processed submission found with data |  -  |
+| **200** | submission expired |  -  |
+| **403** | test API token |  -  |
+| **404** | submission not found |  -  |
+| **401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+<a id="generatesubmissionpreview"></a>
+# **GenerateSubmissionPreview**
+> Submission GenerateSubmissionPreview (string submissionId)
+
+Generate a preview PDF
+
+Generates a preview of a submission's PDF in the background, such as for a submission still waiting for its signature requests. It's in `files.preview` once `preview_generated_at` changes. 
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **submissionId** | **string** | The submission's ID. |  |
+
+### Return type
+
+[**Submission**](Submission.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | preview requested |  -  |
+| **409** | preview not possible |  -  |
+| **404** | submission not found |  -  |
+| **401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+<a id="getcombinedpdf"></a>
+# **GetCombinedPdf**
+> CombinedPdf GetCombinedPdf (string combinedPdfId)
+
+Get a combined PDF
+
+Returns a combined PDF, with a temporary link to download it once it has been generated.
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **combinedPdfId** | **string** | The combined PDF's ID. |  |
+
+### Return type
+
+[**CombinedPdf**](CombinedPdf.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | combined PDF |  -  |
+| **404** | combined PDF not found |  -  |
+| **401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+<a id="getcustomfile"></a>
+# **GetCustomFile**
+> CustomFile GetCustomFile (string customFileId)
+
+Get a custom file
+
+Returns a custom file, with a temporary URL to download it.
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **customFileId** | **string** | The custom file's ID. |  |
+
+### Return type
+
+[**CustomFile**](CustomFile.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | custom file found |  -  |
+| **404** | custom file not found |  -  |
+| **401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+<a id="getfolder"></a>
+# **GetFolder**
+> Folder GetFolder (string folderId)
+
+Get a folder
+
+Returns a folder.
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **folderId** | **string** | The folder's ID. |  |
+
+### Return type
+
+[**Folder**](Folder.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | folder found |  -  |
+| **404** | folder not found |  -  |
+| **401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+<a id="getpresignurl"></a>
+# **GetPresignUrl**
+> UploadPresign GetPresignUrl ()
+
+Get a presigned URL to upload a file
+
+Returns a presigned S3 form for uploading a file directly to DocSpring, for files too large to send in a request body. POST the `fields` and the file (as `file`) to `url` as multipart/form-data, then pass `fields.key` as the `cache_id` when you create a custom file. 
+
+
+### Parameters
+This endpoint does not need any parameter.
+### Return type
+
+[**UploadPresign**](UploadPresign.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | presigned URL created |  -  |
+| **401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+<a id="getsignaturerequest"></a>
+# **GetSignatureRequest**
+> SignatureRequest GetSignatureRequest (string signatureRequestId)
+
+Get a signature request
+
+Returns a signature request, with the values the person has entered so far.
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **signatureRequestId** | **string** | The signature request's ID. |  |
+
+### Return type
+
+[**SignatureRequest**](SignatureRequest.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | signature request |  -  |
+| **404** | signature request not found |  -  |
+| **401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+<a id="getsubmission"></a>
+# **GetSubmission**
+> Submission GetSubmission (string submissionId)
+
+Get a submission
+
+Returns a submission, with its data and links to download its PDF.
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **submissionId** | **string** | The submission's ID. |  |
+
+### Return type
+
+[**Submission**](Submission.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | processed submission |  -  |
 | **404** | submission not found |  -  |
 | **401** | authentication failed |  -  |
 
@@ -984,23 +954,23 @@ Retrieves the details and status of a PDF submission. Returns processing state, 
 
 <a id="getsubmissionbatch"></a>
 # **GetSubmissionBatch**
-> SubmissionBatchWithSubmissions GetSubmissionBatch (string submissionBatchId, bool includeSubmissions = null)
+> SubmissionBatch GetSubmissionBatch (string submissionBatchId, bool includeData = null)
 
-Check the status of a submission batch job
+Get a batch
 
-Retrieves the status and results of a batch PDF generation job. Returns processing state, completion statistics, and optionally includes all individual submission details. Use this to poll for completion when using asynchronous batch processing.  Submissions waiting for credits are in the `insufficient_credits` state and count as pending, so the batch stays `pending` until you add credits or they stop waiting after 30 days. 
+Returns a batch with its submissions. The batch has finished once `processed_at` is set: its `state` is `processed` when every PDF was generated, or `error` when any submission failed. 
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **submissionBatchId** | **string** |  |  |
-| **includeSubmissions** | **bool** |  | [optional]  |
+| **submissionBatchId** | **string** | The batch's ID. |  |
+| **includeData** | **bool** | Include each submission's `data` (null without it). | [optional]  |
 
 ### Return type
 
-[**SubmissionBatchWithSubmissions**](SubmissionBatchWithSubmissions.md)
+[**SubmissionBatch**](SubmissionBatch.md)
 
 ### Authorization
 
@@ -1015,30 +985,31 @@ Retrieves the status and results of a batch PDF generation job. Returns processi
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | processed submission batch found |  -  |
-| **404** | submission batch not found |  -  |
+| **200** | batch |  -  |
+| **404** | batch not found |  -  |
 | **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 <a id="gettemplate"></a>
 # **GetTemplate**
-> TemplatePreview GetTemplate (string templateId)
+> Template GetTemplate (string templateId, string version = null)
 
-Check the status of an uploaded template
+Get a template
 
-Retrieves information about a template including processing status and document URL. Use this to check if template is ready to view in the template editor or generate PDFs. 
+Returns a template: its draft, or one of its published versions.
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **templateId** | **string** |  |  |
+| **templateId** | **string** | The template's ID. |  |
+| **version** | **string** | A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`. | [optional]  |
 
 ### Return type
 
-[**TemplatePreview**](TemplatePreview.md)
+[**Template**](Template.md)
 
 ### Authorization
 
@@ -1053,31 +1024,33 @@ Retrieves information about a template including processing status and document 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | template found |  -  |
+| **200** | PDF template |  -  |
 | **404** | template not found |  -  |
+| **422** | invalid version |  -  |
 | **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 <a id="gettemplatemodelcode"></a>
 # **GetTemplateModelCode**
-> TemplateModelCodeResponse GetTemplateModelCode (string templateId, string lang)
+> TemplateModelCode GetTemplateModelCode (string templateId, ModelCodeLanguage lang, string version = null)
 
-Generate typed model code for a template
+Generate typed code for a template's submission data
 
-Generates typed model code for a template's submission data from its JSON schema, in TypeScript, JavaScript, Ruby, Python, PHP, Java, C#, Elixir or Go. Build your submission data with the generated types so your app catches mistakes before it calls the API.  `root_type_name` is the type that describes the whole submission data object, qualified with its namespace or package where there is one. Java returns every class in `code`, each under a `// ClassName.java` comment: split them into one file per class.  A template with no named fields returns 422, since there are no types to generate.  See also: - [Generate Model Code](https://docspring.com/docs/template-editor/generate-model-code/) - Use the generated types 
+Generates types for a template's submission data in TypeScript, JavaScript, Ruby, Python, PHP, Java, C#, Elixir or Go, so your app catches mistakes before it calls the API. `root_type_name` is the type of the whole `data` object. Java returns every class in `code`, each under a `// ClassName.java` comment. A template with no named fields returns 422. 
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **templateId** | **string** |  |  |
-| **lang** | **string** | The language to generate code for |  |
+| **templateId** | **string** | The template's ID. |  |
+| **lang** | **ModelCodeLanguage** | The language to generate the code in. |  |
+| **version** | **string** | The template version: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published), the version a submission uses by default. | [optional]  |
 
 ### Return type
 
-[**TemplateModelCodeResponse**](TemplateModelCodeResponse.md)
+[**TemplateModelCode**](TemplateModelCode.md)
 
 ### Authorization
 
@@ -1092,31 +1065,32 @@ Generates typed model code for a template's submission data from its JSON schema
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | model code generated |  -  |
-| **404** | template not found |  -  |
+| **200** | model code |  -  |
 | **422** | unknown language |  -  |
+| **404** | template not found |  -  |
 | **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 <a id="gettemplateschema"></a>
 # **GetTemplateSchema**
-> JsonSchema GetTemplateSchema (string templateId)
+> Dictionary&lt;string, Object&gt; GetTemplateSchema (string templateId, string version = null)
 
-Fetch the JSON schema for a template
+Get the JSON Schema of a template's submission data
 
-Retrieves the JSON Schema definition for a template's fields. Use this to validate data before submitting it for PDF generation, or to build dynamic forms that match the template's field structure and validation requirements.  See also: - [Generate PDFs Guide](https://docspring.com/docs/api-guide/generate-pdfs/generate-pdfs-via-api/) - Use schema to validate submission data 
+Returns the JSON Schema that a submission's `data` must match. Use it to check data before you create submissions, or to build a form for the template's fields. 
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **templateId** | **string** |  |  |
+| **templateId** | **string** | The template's ID. |  |
+| **version** | **string** | The template version: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published), the version a submission uses by default. | [optional]  |
 
 ### Return type
 
-[**JsonSchema**](JsonSchema.md)
+**Dictionary<string, Object>**
 
 ### Authorization
 
@@ -1131,7 +1105,7 @@ Retrieves the JSON Schema definition for a template's fields. Use this to valida
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | template found |  -  |
+| **200** | template schema |  -  |
 | **404** | template not found |  -  |
 | **401** | authentication failed |  -  |
 
@@ -1143,14 +1117,14 @@ Retrieves the JSON Schema definition for a template's fields. Use this to valida
 
 Get a webhook
 
-Retrieves a single webhook by its ID.
+Returns a webhook.
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **webhookId** | **string** |  |  |
+| **webhookId** | **string** | The webhook's ID. |  |
 
 ### Return type
 
@@ -1175,25 +1149,25 @@ Retrieves a single webhook by its ID.
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
-<a id="listcombinedsubmissions"></a>
-# **ListCombinedSubmissions**
-> List&lt;CombinedSubmission&gt; ListCombinedSubmissions (int page = null, int perPage = null)
+<a id="listcombinedpdfs"></a>
+# **ListCombinedPdfs**
+> CombinedPdfList ListCombinedPdfs (int limit = null, string cursor = null)
 
-Get a list of all combined submissions
+List combined PDFs
 
-Returns a paginated list of combined submissions (merged PDFs) for your account. Includes processing status, expiration details, and download URLs for processed PDFs. 
+Returns the combined PDFs in your account, newest first, one page at a time.
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **page** | **int** | Default: 1 | [optional]  |
-| **perPage** | **int** | Default: 50 | [optional]  |
+| **limit** | **int** | How many items to return (1-100, default 50). | [optional] [default to 50] |
+| **cursor** | **string** | The previous page's `next_cursor`, to get the next page. It's the ID of that page's last item, so get the next page before you delete or change the items on this one. | [optional]  |
 
 ### Return type
 
-[**List&lt;CombinedSubmission&gt;**](CombinedSubmission.md)
+[**CombinedPdfList**](CombinedPdfList.md)
 
 ### Authorization
 
@@ -1208,29 +1182,71 @@ Returns a paginated list of combined submissions (merged PDFs) for your account.
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | enumerate all combined submissions |  -  |
+| **200** | combined PDFs |  -  |
+| **422** | invalid query parameters |  -  |
+| **401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+<a id="listcustomfiles"></a>
+# **ListCustomFiles**
+> CustomFileList ListCustomFiles (int limit = null, string cursor = null)
+
+List custom files
+
+Returns the custom files in your account, newest first, one page at a time.
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **limit** | **int** | How many items to return (1-100, default 50). | [optional] [default to 50] |
+| **cursor** | **string** | The previous page's `next_cursor`, to get the next page. It's the ID of that page's last item, so get the next page before you delete or change the items on this one. | [optional]  |
+
+### Return type
+
+[**CustomFileList**](CustomFileList.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | custom files |  -  |
+| **422** | invalid query parameters |  -  |
 | **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 <a id="listfolders"></a>
 # **ListFolders**
-> List&lt;Folder&gt; ListFolders (string parentFolderId = null)
+> FolderList ListFolders (string parentFolderId = null, int limit = null, string cursor = null)
 
-Get a list of all folders
+List folders
 
-Returns a list of folders in your account. Can be filtered by parent folder ID to retrieve subfolders. Folders help organize templates and maintain a hierarchical structure. 
+Returns the folders in your account, newest first, one page at a time. Pass `parent_folder_id` to list the folders in one folder. 
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **parentFolderId** | **string** | Filter By Folder Id | [optional]  |
+| **parentFolderId** | **string** | Only list the folders in this folder. Without it, the list has every folder, at any depth. | [optional]  |
+| **limit** | **int** | How many items to return (1-100, default 50). | [optional] [default to 50] |
+| **cursor** | **string** | The previous page's `next_cursor`, to get the next page. It's the ID of that page's last item, so get the next page before you delete or change the items on this one. | [optional]  |
 
 ### Return type
 
-[**List&lt;Folder&gt;**](Folder.md)
+[**FolderList**](FolderList.md)
 
 ### Authorization
 
@@ -1245,34 +1261,36 @@ Returns a list of folders in your account. Can be filtered by parent folder ID t
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | enumerate all folders |  -  |
+| **200** | folders in a folder |  -  |
+| **422** | invalid query parameters |  -  |
 | **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 <a id="listsubmissions"></a>
 # **ListSubmissions**
-> ListSubmissionsResponse ListSubmissions (string cursor = null, int limit = null, string createdAfter = null, string createdBefore = null, string type = null, bool includeData = null)
+> SubmissionList ListSubmissions (string templateId = null, bool test = null, DateTime createdAfter = null, DateTime createdBefore = null, bool includeData = null, int limit = null, string cursor = null)
 
-List all submissions
+List submissions
 
-Returns a paginated list of all PDF submissions across all templates in your account. Can be filtered by date range and submission type (test/live). Supports cursor-based pagination and optionally includes submission data for each result. 
+Returns the submissions in your account, newest first, one page at a time. Lists leave out each submission's `data` unless you pass `include_data=true`. 
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **cursor** | **string** |  | [optional]  |
-| **limit** | **int** |  | [optional]  |
-| **createdAfter** | **string** |  | [optional]  |
-| **createdBefore** | **string** |  | [optional]  |
-| **type** | **string** |  | [optional]  |
-| **includeData** | **bool** |  | [optional]  |
+| **templateId** | **string** | Only list this template's submissions. | [optional]  |
+| **test** | **bool** | Only list test submissions (true) or live submissions (false). | [optional]  |
+| **createdAfter** | **DateTime** | Only list submissions created after this time (RFC 3339, such as `2025-01-31T09:00:00Z`). | [optional]  |
+| **createdBefore** | **DateTime** | Only list submissions created before this time. | [optional]  |
+| **includeData** | **bool** | Include each submission's `data` (null without it). | [optional]  |
+| **limit** | **int** | How many items to return (1-100, default 50). | [optional] [default to 50] |
+| **cursor** | **string** | The previous page's `next_cursor`, to get the next page. It's the ID of that page's last item, so get the next page before you delete or change the items on this one. | [optional]  |
 
 ### Return type
 
-[**ListSubmissionsResponse**](ListSubmissionsResponse.md)
+[**SubmissionList**](SubmissionList.md)
 
 ### Authorization
 
@@ -1287,36 +1305,36 @@ Returns a paginated list of all PDF submissions across all templates in your acc
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | listing submissions |  -  |
-| **422** | invalid type |  -  |
+| **200** | submissions |  -  |
+| **422** | invalid query parameters |  -  |
 | **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 <a id="listtemplatesubmissions"></a>
 # **ListTemplateSubmissions**
-> ListSubmissionsResponse ListTemplateSubmissions (string templateId, string cursor = null, int limit = null, string createdAfter = null, string createdBefore = null, string type = null, bool includeData = null)
+> SubmissionList ListTemplateSubmissions (string templateId, bool test = null, DateTime createdAfter = null, DateTime createdBefore = null, bool includeData = null, int limit = null, string cursor = null)
 
-List all submissions for a given template
+List a template's submissions
 
-Returns a paginated list of all submissions for a specific template. Can be filtered by date range, submission type (test/live), and optionally include submission data. Supports cursor-based pagination for efficient retrieval of large result sets. 
+Returns a template's submissions (from every version of the template), newest first.
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **templateId** | **string** |  |  |
-| **cursor** | **string** |  | [optional]  |
-| **limit** | **int** |  | [optional]  |
-| **createdAfter** | **string** |  | [optional]  |
-| **createdBefore** | **string** |  | [optional]  |
-| **type** | **string** |  | [optional]  |
-| **includeData** | **bool** |  | [optional]  |
+| **templateId** | **string** | The template's ID. |  |
+| **test** | **bool** | Only list test submissions (true) or live submissions (false). | [optional]  |
+| **createdAfter** | **DateTime** | Only list submissions created after this time (RFC 3339, such as `2025-01-31T09:00:00Z`). | [optional]  |
+| **createdBefore** | **DateTime** | Only list submissions created before this time. | [optional]  |
+| **includeData** | **bool** | Include each submission's `data` (null without it). | [optional]  |
+| **limit** | **int** | How many items to return (1-100, default 50). | [optional] [default to 50] |
+| **cursor** | **string** | The previous page's `next_cursor`, to get the next page. It's the ID of that page's last item, so get the next page before you delete or change the items on this one. | [optional]  |
 
 ### Return type
 
-[**ListSubmissionsResponse**](ListSubmissionsResponse.md)
+[**SubmissionList**](SubmissionList.md)
 
 ### Authorization
 
@@ -1331,32 +1349,34 @@ Returns a paginated list of all submissions for a specific template. Can be filt
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | listing submissions |  -  |
-| **404** | invalid template id |  -  |
+| **200** | template's submissions |  -  |
+| **404** | template not found |  -  |
+| **422** | invalid query parameters |  -  |
+| **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 <a id="listtemplates"></a>
 # **ListTemplates**
-> List&lt;TemplatePreview&gt; ListTemplates (string query = null, string parentFolderId = null, int page = null, int perPage = null)
+> TemplateSummaryList ListTemplates (string query = null, string parentFolderId = null, int limit = null, string cursor = null)
 
-Get a list of all templates
+List templates
 
-Retrieves a list of your templates with search, filtering, and pagination options. Returns basic template information including ID, name, type (PDF or HTML), and folder location. Supports text search by name and filtering by parent folder. 
+Returns the templates in your account (their drafts), newest first, one page at a time. Get a template by its ID for its HTML, defaults and published versions. 
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **query** | **string** | Search By Name | [optional]  |
-| **parentFolderId** | **string** | Filter By Folder Id | [optional]  |
-| **page** | **int** | Default: 1 | [optional]  |
-| **perPage** | **int** | Default: 50 | [optional]  |
+| **query** | **string** | Only list templates whose name contains this text (ignoring case). | [optional]  |
+| **parentFolderId** | **string** | Only list the templates in this folder (not in its subfolders). | [optional]  |
+| **limit** | **int** | How many items to return (1-100, default 50). | [optional] [default to 50] |
+| **cursor** | **string** | The previous page's `next_cursor`, to get the next page. It's the ID of that page's last item, so get the next page before you delete or change the items on this one. | [optional]  |
 
 ### Return type
 
-[**List&lt;TemplatePreview&gt;**](TemplatePreview.md)
+[**TemplateSummaryList**](TemplateSummaryList.md)
 
 ### Authorization
 
@@ -1371,36 +1391,36 @@ Retrieves a list of your templates with search, filtering, and pagination option
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | enumerate all templates |  -  |
-| **404** | filter templates by invalid folder id |  -  |
+| **200** | templates |  -  |
+| **422** | invalid query parameters |  -  |
 | **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 <a id="listwebhooks"></a>
 # **ListWebhooks**
-> List&lt;Webhook&gt; ListWebhooks (int page = null, int perPage = null, string eventType = null, string mode = null, string templateId = null, string folderId = null, string apiTokenId = null)
+> WebhookList ListWebhooks (WebhookEventType eventType = null, WebhookMode mode = null, string templateId = null, string folderId = null, string apiTokenId = null, int limit = null, string cursor = null)
 
-Get a list of all webhooks
+List webhooks
 
-Returns a list of the webhooks configured for your account. Supports pagination and filtering by event type, mode, and the API token, template, or folder a webhook is scoped to. 
+Returns the webhooks in your account, newest first, one page at a time. Filter them by event type, mode, or the API token, template or folder they're scoped to. 
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **page** | **int** | Default: 1 | [optional]  |
-| **perPage** | **int** | Default: 50 | [optional]  |
-| **eventType** | **string** | Filter by a subscribed event type | [optional]  |
-| **mode** | **string** | Filter by mode (test or live) | [optional]  |
-| **templateId** | **string** | Filter by a scoped template ID | [optional]  |
-| **folderId** | **string** | Filter by a scoped folder ID | [optional]  |
-| **apiTokenId** | **string** | Filter by a scoped API token ID | [optional]  |
+| **eventType** | **WebhookEventType** | Only list webhooks that subscribe to this event. | [optional]  |
+| **mode** | **WebhookMode** | Only list webhooks set to this mode. | [optional]  |
+| **templateId** | **string** | Only list webhooks scoped to this template. | [optional]  |
+| **folderId** | **string** | Only list webhooks scoped to this folder. | [optional]  |
+| **apiTokenId** | **string** | Only list webhooks scoped to this API token. | [optional]  |
+| **limit** | **int** | How many items to return (1-100, default 50). | [optional] [default to 50] |
+| **cursor** | **string** | The previous page's `next_cursor`, to get the next page. It's the ID of that page's last item, so get the next page before you delete or change the items on this one. | [optional]  |
 
 ### Return type
 
-[**List&lt;Webhook&gt;**](Webhook.md)
+[**WebhookList**](WebhookList.md)
 
 ### Authorization
 
@@ -1415,26 +1435,27 @@ Returns a list of the webhooks configured for your account. Supports pagination 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | filter webhooks by scope and event type |  -  |
+| **200** | webhooks for a template and event |  -  |
+| **422** | unknown event type |  -  |
 | **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
-<a id="movefoldertofolder"></a>
-# **MoveFolderToFolder**
-> Folder MoveFolderToFolder (string folderId, MoveFolderData data)
+<a id="movefolder"></a>
+# **MoveFolder**
+> Folder MoveFolder (string folderId, MoveFolderRequest body)
 
 Move a folder
 
-Moves a folder to a new parent folder or to the root level. All templates and subfolders within the folder are moved together. Cannot move a folder into one of its own subfolders. 
+Moves a folder into another folder, or to the root with `parent_folder_id: null`. Its templates and folders move with it. A folder can't move into itself or one of its own folders. 
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **folderId** | **string** |  |  |
-| **data** | [**MoveFolderData**](MoveFolderData.md) |  |  |
+| **folderId** | **string** | The folder's ID. |  |
+| **body** | [**MoveFolderRequest**](MoveFolderRequest.md) | Where to move the folder. |  |
 
 ### Return type
 
@@ -1453,31 +1474,32 @@ Moves a folder to a new parent folder or to the root level. All templates and su
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **404** | parent folder doesn&#39;t exist |  -  |
-| **200** | move to root folder |  -  |
+| **200** | folder moved into another folder |  -  |
+| **422** | invalid move |  -  |
+| **404** | folder not found |  -  |
 | **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
-<a id="movetemplatetofolder"></a>
-# **MoveTemplateToFolder**
-> TemplatePreview MoveTemplateToFolder (string templateId, MoveTemplateData data)
+<a id="movetemplate"></a>
+# **MoveTemplate**
+> Template MoveTemplate (string templateId, MoveTemplateRequest body)
 
-Move Template to folder
+Move a template to a folder
 
-Moves a template to a different folder or to the root level. Use this to organize templates within your folders. Provide a folder ID to move to a specific folder, or `null` to move to the root level. 
+Moves a template and all of its published versions to a folder, or to the root (`null`).
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **templateId** | **string** |  |  |
-| **data** | [**MoveTemplateData**](MoveTemplateData.md) |  |  |
+| **templateId** | **string** | The template's ID. |  |
+| **body** | [**MoveTemplateRequest**](MoveTemplateRequest.md) | Where to move the template. |  |
 
 ### Return type
 
-[**TemplatePreview**](TemplatePreview.md)
+[**Template**](Template.md)
 
 ### Authorization
 
@@ -1492,30 +1514,32 @@ Moves a template to a different folder or to the root level. Use this to organiz
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | move template success |  -  |
-| **404** | folder not found |  -  |
+| **200** | template moved |  -  |
+| **422** | invalid move |  -  |
+| **404** | template not found |  -  |
+| **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 <a id="publishtemplateversion"></a>
 # **PublishTemplateVersion**
-> TemplatePublishVersionResponse PublishTemplateVersion (string templateId, PublishVersionData data)
+> TemplateVersion PublishTemplateVersion (string templateId, PublishTemplateVersionRequest body)
 
 Publish a template version
 
-Publishes the current draft version of a template and creates a new immutable version with semantic versioning (major.minor.patch). 
+Publishes the template's draft as a new version that doesn't change. `version_type` says which part of the latest version number goes up. 
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **templateId** | **string** |  |  |
-| **data** | [**PublishVersionData**](PublishVersionData.md) |  |  |
+| **templateId** | **string** | The template's ID. |  |
+| **body** | [**PublishTemplateVersionRequest**](PublishTemplateVersionRequest.md) | The version to publish. |  |
 
 ### Return type
 
-[**TemplatePublishVersionResponse**](TemplatePublishVersionResponse.md)
+[**TemplateVersion**](TemplateVersion.md)
 
 ### Authorization
 
@@ -1530,28 +1554,29 @@ Publishes the current draft version of a template and creates a new immutable ve
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | version published successfully |  -  |
+| **201** | version published |  -  |
 | **422** | invalid version type |  -  |
 | **404** | template not found |  -  |
+| **409** | published at the same time |  -  |
 | **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 <a id="renamefolder"></a>
 # **RenameFolder**
-> Folder RenameFolder (string folderId, RenameFolderData data)
+> Folder RenameFolder (string folderId, RenameFolderRequest body)
 
 Rename a folder
 
-Renames an existing folder. The new name must be unique within the same parent folder. This operation only changes the folder name, not its location or contents. 
+Renames a folder. The name must be unique within its parent folder. 
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **folderId** | **string** |  |  |
-| **data** | [**RenameFolderData**](RenameFolderData.md) |  |  |
+| **folderId** | **string** | The folder's ID. |  |
+| **body** | [**RenameFolderRequest**](RenameFolderRequest.md) | The folder's new name. |  |
 
 ### Return type
 
@@ -1570,32 +1595,32 @@ Renames an existing folder. The new name must be unique within the same parent f
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **422** | name already exist |  -  |
-| **404** | folder doesn&#39;t belong to me |  -  |
-| **200** | successful rename |  -  |
+| **200** | folder renamed |  -  |
+| **422** | name already exists |  -  |
+| **404** | folder not found |  -  |
 | **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 <a id="restoretemplateversion"></a>
 # **RestoreTemplateVersion**
-> SuccessErrorResponse RestoreTemplateVersion (string templateId, RestoreVersionData data)
+> Template RestoreTemplateVersion (string templateId, RestoreTemplateVersionRequest body)
 
 Restore a template version
 
-Restores your template to a previously published version, copying that version's content and configuration to the current draft. Use this to revert changes or recover from an unwanted modification. 
+Replaces the template's draft with a copy of one of its published versions.
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **templateId** | **string** |  |  |
-| **data** | [**RestoreVersionData**](RestoreVersionData.md) |  |  |
+| **templateId** | **string** | The template's ID. |  |
+| **body** | [**RestoreTemplateVersionRequest**](RestoreTemplateVersionRequest.md) | The version to restore. |  |
 
 ### Return type
 
-[**SuccessErrorResponse**](SuccessErrorResponse.md)
+[**Template**](Template.md)
 
 ### Authorization
 
@@ -1610,27 +1635,28 @@ Restores your template to a previously published version, copying that version's
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | version restored successfully |  -  |
-| **422** | draft version not allowed |  -  |
-| **404** | template version not found |  -  |
+| **200** | version restored |  -  |
+| **409** | template is locked |  -  |
+| **422** | unknown version |  -  |
+| **404** | template not found |  -  |
 | **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 <a id="testauthentication"></a>
 # **TestAuthentication**
-> SuccessErrorResponse TestAuthentication ()
+> AuthenticationCheck TestAuthentication ()
 
 Test authentication
 
-Checks whether your API token is valid by making an authenticated request. Returns a success response if authentication passes. This endpoint is useful for verifying credentials during setup or troubleshooting issues. 
+Checks whether your API token is valid by making an authenticated request. This endpoint is useful for verifying credentials during setup or troubleshooting issues. 
 
 
 ### Parameters
 This endpoint does not need any parameter.
 ### Return type
 
-[**SuccessErrorResponse**](SuccessErrorResponse.md)
+[**AuthenticationCheck**](AuthenticationCheck.md)
 
 ### Authorization
 
@@ -1650,25 +1676,25 @@ This endpoint does not need any parameter.
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
-<a id="updatedatarequest"></a>
-# **UpdateDataRequest**
-> CreateSubmissionDataRequestResponse UpdateDataRequest (string dataRequestId, UpdateSubmissionDataRequestData data)
+<a id="updatesignaturerequest"></a>
+# **UpdateSignatureRequest**
+> SignatureRequest UpdateSignatureRequest (string signatureRequestId, UpdateSignatureRequestRequest body)
 
-Update a submission data request
+Update a signature request
 
-Updates authentication details for a data request. Use this when a user logs in to record their authentication method, provider, session information, and hashed identifiers. Updates metadata and tracks authentication state changes for auditing and compliance. 
+Changes a pending signature request's metadata, or how your app authenticated the person (for the audit trail). Once the person has opened it, only its metadata can be changed, and a completed or declined signature request can't be changed. 
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **dataRequestId** | **string** |  |  |
-| **data** | [**UpdateSubmissionDataRequestData**](UpdateSubmissionDataRequestData.md) |  |  |
+| **signatureRequestId** | **string** | The signature request's ID. |  |
+| **body** | [**UpdateSignatureRequestRequest**](UpdateSignatureRequestRequest.md) | The settings to change. Properties left out keep their values. |  |
 
 ### Return type
 
-[**CreateSubmissionDataRequestResponse**](CreateSubmissionDataRequestResponse.md)
+[**SignatureRequest**](SignatureRequest.md)
 
 ### Authorization
 
@@ -1683,32 +1709,33 @@ Updates authentication details for a data request. Use this when a user logs in 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | submission data request updated |  -  |
+| **200** | signature request updated |  -  |
+| **409** | signature request completed |  -  |
 | **422** | invalid request |  -  |
-| **404** | submission data request not found |  -  |
+| **404** | signature request not found |  -  |
 | **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 <a id="updatetemplate"></a>
 # **UpdateTemplate**
-> SuccessMultipleErrorsResponse UpdateTemplate (string templateId, UpdateHtmlTemplate data)
+> Template UpdateTemplate (string templateId, UpdateTemplateRequest body)
 
-Update a Template
+Update a template
 
-Updates template content and properties. For HTML templates, you can modify the HTML, SCSS, headers, footers, name, and description. Changes are applied to your draft template and do not affect published template versions. The exception is `parent_folder_id`: moving the template to another folder moves its published versions too. 
+Changes a template's draft. Properties left out keep their values. `defaults` and `html_engine_options` replace the whole object. Setting `parent_folder_id` moves the template and all of its published versions. 
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **templateId** | **string** |  |  |
-| **data** | [**UpdateHtmlTemplate**](UpdateHtmlTemplate.md) |  |  |
+| **templateId** | **string** | The template's ID. |  |
+| **body** | [**UpdateTemplateRequest**](UpdateTemplateRequest.md) | The settings to change. Properties left out keep their values. |  |
 
 ### Return type
 
-[**SuccessMultipleErrorsResponse**](SuccessMultipleErrorsResponse.md)
+[**Template**](Template.md)
 
 ### Authorization
 
@@ -1723,69 +1750,34 @@ Updates template content and properties. For HTML templates, you can modify the 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | update template success |  -  |
-| **404** | folder not found |  -  |
+| **200** | template updated |  -  |
+| **409** | template is locked |  -  |
+| **404** | template not found |  -  |
+| **422** | invalid update |  -  |
+| **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 <a id="updatetemplatedocument"></a>
 # **UpdateTemplateDocument**
-> SuccessMultipleErrorsResponse UpdateTemplateDocument (string templateId, System.IO.Stream templateDocument, string templateName = null)
+> Template UpdateTemplateDocument (string templateId, UpdateTemplateDocumentRequest body, bool wait = null)
 
-Update a template's document with a form POST file upload
+Replace a template's PDF
 
-Upload a new PDF file to update a PDF template's document. This replaces the template's PDF while preserving all of the existing fields. If you upload a PDF with fewer pages than the current document, any fields on the removed pages will be deleted. 
-
-
-### Parameters
-
-| Name | Type | Description | Notes |
-|------|------|-------------|-------|
-| **templateId** | **string** |  |  |
-| **templateDocument** | **System.IO.Stream****System.IO.Stream** |  |  |
-| **templateName** | **string** |  | [optional]  |
-
-### Return type
-
-[**SuccessMultipleErrorsResponse**](SuccessMultipleErrorsResponse.md)
-
-### Authorization
-
-[api_token_basic](../README.md#api_token_basic)
-
-### HTTP request headers
-
- - **Content-Type**: multipart/form-data
- - **Accept**: application/json
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | returns a template with updated document |  -  |
-| **401** | authentication failed |  -  |
-
-[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
-
-<a id="updatetemplatedocumentfromupload"></a>
-# **UpdateTemplateDocumentFromUpload**
-> SuccessMultipleErrorsResponse UpdateTemplateDocumentFromUpload (string templateId, UpdatePdfTemplate data)
-
-Update a template's document with a cached S3 file upload
-
-Updates a PDF template's document using a cached file upload. This is a three-step process: First, request a presigned URL to upload your PDF file to our S3 bucket. Then, use that URL to upload your PDF file. Finally, submit the ID of the uploaded file to replace the template's document. 
+Replaces a PDF template's PDF with one you uploaded with the presigned upload (GET /uploads/presign). The fields stay where they are, unless `reimport_fields` replaces them with the new PDF's fillable fields. To send the PDF with the request instead, use PUT /templates/{template_id}/document/upload. 
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **templateId** | **string** |  |  |
-| **data** | [**UpdatePdfTemplate**](UpdatePdfTemplate.md) |  |  |
+| **templateId** | **string** | The template's ID. |  |
+| **body** | [**UpdateTemplateDocumentRequest**](UpdateTemplateDocumentRequest.md) | The new PDF. |  |
+| **wait** | **bool** | Wait until the PDF has been processed before responding. Default true on sync.api hosts. | [optional]  |
 
 ### Return type
 
-[**SuccessMultipleErrorsResponse**](SuccessMultipleErrorsResponse.md)
+[**Template**](Template.md)
 
 ### Authorization
 
@@ -1800,26 +1792,29 @@ Updates a PDF template's document using a cached file upload. This is a three-st
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | returns a template with updated document |  -  |
+| **200** | PDF replaced |  -  |
+| **409** | template is locked, so its fields can't be re-imported |  -  |
+| **422** | not a PDF template |  -  |
+| **404** | template not found |  -  |
 | **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 <a id="updatewebhook"></a>
 # **UpdateWebhook**
-> Webhook UpdateWebhook (string webhookId, UpdateWebhookData data)
+> Webhook UpdateWebhook (string webhookId, UpdateWebhookRequest body)
 
 Update a webhook
 
-Updates the configuration of an existing webhook.
+Updates a webhook. Only the properties you send change.
 
 
 ### Parameters
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
-| **webhookId** | **string** |  |  |
-| **data** | [**UpdateWebhookData**](UpdateWebhookData.md) |  |  |
+| **webhookId** | **string** | The webhook's ID. |  |
+| **body** | [**UpdateWebhookRequest**](UpdateWebhookRequest.md) | The settings to change. Properties left out keep their values. |  |
 
 ### Return type
 
@@ -1840,6 +1835,97 @@ Updates the configuration of an existing webhook.
 |-------------|-------------|------------------|
 | **200** | webhook updated |  -  |
 | **404** | webhook not found |  -  |
+| **422** | invalid webhook |  -  |
+| **401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+<a id="uploadtemplate"></a>
+# **UploadTemplate**
+> Template UploadTemplate (System.IO.Stream document, bool wait = null, string name = null, string description = null, string parentFolderId = null, AiFieldNamingLanguage aiFieldNamingLanguage = null, bool detectFields = null, FieldSetupSource fieldSource = null, FieldSetupNaming fieldNaming = null, FieldSetupLogic fieldLogic = null)
+
+Create a PDF template from an uploaded PDF
+
+Creates a PDF template from a PDF sent with the request (`multipart/form-data`). For large files, upload the PDF with the presigned upload (GET /uploads/presign) and create the template with POST /templates. 
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **document** | **System.IO.Stream****System.IO.Stream** | The PDF. |  |
+| **wait** | **bool** | Wait until the PDF has been processed before responding. Default true on sync.api hosts. | [optional]  |
+| **name** | **string** | The template's name. | [optional]  |
+| **description** | **string** | The template's description. | [optional]  |
+| **parentFolderId** | **string** | The folder to put the template in. Left out, it's created at the root. | [optional]  |
+| **aiFieldNamingLanguage** | **AiFieldNamingLanguage** | The language AI field setup names fields in: `auto` uses the form's language when it's written in the Latin alphabet without accents, and English otherwise; `english` always uses English; `form_language` uses the form's language and script. Default: your account's template settings. | [optional]  |
+| **detectFields** | **bool** | Set up the PDF's fields as DocSpring's "Automatically detect fields" upload option does: import or detect the fields, name them with AI, and set up conditional logic. `field_source`, `field_naming` and `field_logic` choose how. Default false. `document.page_processing_statuses` and `document.field_logic_status` show how it's going, and `document.state` becomes `processed` once every page's fields are set up. | [optional]  |
+| **fieldSource** | **FieldSetupSource** | With `detect_fields`, where the fields come from. `auto` (the default) imports the form fields of a fillable PDF and detects the fields of a PDF without them; `pdf_detection` detects the fields from the page layout, even on a fillable PDF; `pdf_form_fields` only imports the PDF's form fields. | [optional]  |
+| **fieldNaming** | **FieldSetupNaming** | With `detect_fields`, how the fields are named. `ai` (the default) names them and sets their types and settings with AI; `preserve` keeps the names of the PDF's form fields, and AI only names the fields it detected. `preserve` needs `field_source` `auto` or `pdf_form_fields`. | [optional]  |
+| **fieldLogic** | **FieldSetupLogic** | With `detect_fields`, whether AI reads the whole form once the fields are named and sets up conditional logic and required fields (`ai`) or not (`none`). Default: your account's template settings. | [optional]  |
+
+### Return type
+
+[**Template**](Template.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **201** | PDF template created |  -  |
+| **422** | invalid upload |  -  |
+| **403** | the plan's template limit is reached |  -  |
+| **401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+<a id="uploadtemplatedocument"></a>
+# **UploadTemplateDocument**
+> Template UploadTemplateDocument (string templateId, System.IO.Stream document, bool wait = null, bool reimportFields = null)
+
+Replace a template's PDF with an uploaded PDF
+
+Replaces a PDF template's PDF with one sent with the request (`multipart/form-data`). The fields stay where they are, unless `reimport_fields` replaces them with the new PDF's fillable fields. 
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **templateId** | **string** | The template's ID. |  |
+| **document** | **System.IO.Stream****System.IO.Stream** | The new PDF. |  |
+| **wait** | **bool** | Wait until the PDF has been processed before responding. Default true on sync.api hosts. | [optional]  |
+| **reimportFields** | **bool** | Replace all of the template's fields with the fillable fields in the new PDF, once DocSpring has processed it (`document.field_reimport_state`). As on a first upload, the default typeface, font size, bold and color are taken from the PDF's fields; the template's other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can't re-import its fields. | [optional]  |
+
+### Return type
+
+[**Template**](Template.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | PDF replaced |  -  |
+| **422** | not a PDF template |  -  |
+| **404** | template not found |  -  |
 | **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
