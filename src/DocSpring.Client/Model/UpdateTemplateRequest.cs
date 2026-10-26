@@ -58,13 +58,16 @@ namespace DocSpring.Client.Model
         /// <param name="slackWebhookUrl">A Slack incoming webhook URL that is notified about the template&#39;s submissions. It&#39;s never returned; &#x60;has_slack_webhook_url&#x60; says if it&#39;s set.</param>
         /// <param name="defaults">The default style of the template&#39;s fields. Setting it replaces the whole object.</param>
         /// <param name="fieldDependencies">The template&#39;s conditional logic rules. Setting them replaces all of the rules.</param>
+        /// <param name="fieldGroups">Changes to the settings of the template&#39;s field groups, each with the &#x60;name&#x60; of the group it changes. Settings left out keep their values, and groups left out are unchanged.</param>
+        /// <param name="predefinedFields">The field names that people using the embedded template editor choose from, each with the data type and settings a field gets when it&#39;s given that name. Setting it replaces the whole list; an empty list turns them off.</param>
+        /// <param name="predefinedFieldsSampleData">Sample submission data that sets &#x60;predefined_fields&#x60;: each value becomes a predefined field, with a type that fits it (&#x60;string&#x60;, &#x60;number&#x60;, &#x60;boolean&#x60;, &#x60;date&#x60;, &#x60;email&#x60; or &#x60;url&#x60;) and &#x60;required_in_template&#x60; true. Nested objects and arrays become names with &#x60;/&#x60;, such as &#x60;customer/email&#x60;. Without &#x60;predefined_fields&#x60; in the same request, it replaces them; with them, it adds to them and sets the types of the ones it has values for.</param>
         /// <param name="html">The HTML of an HTML template, as a Liquid template. Null for PDF templates.</param>
         /// <param name="scss">The SCSS of an HTML template.</param>
         /// <param name="headerHtml">The HTML printed at the top of each page of an HTML template.</param>
         /// <param name="footerHtml">The HTML printed at the bottom of each page of an HTML template.</param>
         /// <param name="htmlEngineOptions">Null resets the options to their defaults.</param>
         [JsonConstructor]
-        public UpdateTemplateRequest(Option<string> name = default, Option<string> description = default, Option<string> parentFolderId = default, Option<bool?> locked = default, Option<bool?> addSignatureRequestSubmissionIdFooters = default, Option<AiFieldNamingLanguage?> aiFieldNamingLanguage = default, Option<bool?> allowAdditionalProperties = default, Option<bool?> allowSkippingOptionalFields = default, Option<TemplateFormMode?> defaultFormMode = default, Option<bool?> editableSubmissions = default, Option<List<string>> embedDomains = default, Option<bool?> embedEditAllowSettings = default, Option<bool?> embedEditAllowVersioning = default, Option<bool?> embedEditAllowDocumentReplacement = default, Option<bool?> encryptPdfs = default, Option<string> encryptPdfsPassword = default, Option<bool?> expireSubmissions = default, Option<int?> expireAfter = default, Option<ExpirationInterval?> expirationInterval = default, Option<bool?> mergeAuditTrailPdf = default, Option<bool?> parseDatesUsingTemplateDateFormat = default, Option<bool?> publicSubmissions = default, Option<bool?> publicWebForm = default, Option<string> redirectUrl = default, Option<string> slackWebhookUrl = default, Option<TemplateDefaultsInput> defaults = default, Option<List<TemplateFieldDependencyInput>> fieldDependencies = default, Option<string> html = default, Option<string> scss = default, Option<string> headerHtml = default, Option<string> footerHtml = default, Option<HtmlEngineOptionsInput> htmlEngineOptions = default)
+        public UpdateTemplateRequest(Option<string> name = default, Option<string> description = default, Option<string> parentFolderId = default, Option<bool?> locked = default, Option<bool?> addSignatureRequestSubmissionIdFooters = default, Option<AiFieldNamingLanguage?> aiFieldNamingLanguage = default, Option<bool?> allowAdditionalProperties = default, Option<bool?> allowSkippingOptionalFields = default, Option<TemplateFormMode?> defaultFormMode = default, Option<bool?> editableSubmissions = default, Option<List<string>> embedDomains = default, Option<bool?> embedEditAllowSettings = default, Option<bool?> embedEditAllowVersioning = default, Option<bool?> embedEditAllowDocumentReplacement = default, Option<bool?> encryptPdfs = default, Option<string> encryptPdfsPassword = default, Option<bool?> expireSubmissions = default, Option<int?> expireAfter = default, Option<ExpirationInterval?> expirationInterval = default, Option<bool?> mergeAuditTrailPdf = default, Option<bool?> parseDatesUsingTemplateDateFormat = default, Option<bool?> publicSubmissions = default, Option<bool?> publicWebForm = default, Option<string> redirectUrl = default, Option<string> slackWebhookUrl = default, Option<TemplateDefaultsInput> defaults = default, Option<List<TemplateFieldDependencyInput>> fieldDependencies = default, Option<List<FieldGroupInput>> fieldGroups = default, Option<List<PredefinedFieldInput>> predefinedFields = default, Option<Dictionary<string, Object>> predefinedFieldsSampleData = default, Option<string> html = default, Option<string> scss = default, Option<string> headerHtml = default, Option<string> footerHtml = default, Option<HtmlEngineOptionsInput> htmlEngineOptions = default)
         {
             NameOption = name;
             DescriptionOption = description;
@@ -93,6 +96,9 @@ namespace DocSpring.Client.Model
             SlackWebhookUrlOption = slackWebhookUrl;
             DefaultsOption = defaults;
             FieldDependenciesOption = fieldDependencies;
+            FieldGroupsOption = fieldGroups;
+            PredefinedFieldsOption = predefinedFields;
+            PredefinedFieldsSampleDataOption = predefinedFieldsSampleData;
             HtmlOption = html;
             ScssOption = scss;
             HeaderHtmlOption = headerHtml;
@@ -482,6 +488,48 @@ namespace DocSpring.Client.Model
         public List<TemplateFieldDependencyInput> FieldDependencies { get { return this.FieldDependenciesOption.Value; } set { this.FieldDependenciesOption = new Option<List<TemplateFieldDependencyInput>>(value); } }
 
         /// <summary>
+        /// Used to track the state of FieldGroups
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<List<FieldGroupInput>> FieldGroupsOption { get; private set; }
+
+        /// <summary>
+        /// Changes to the settings of the template&#39;s field groups, each with the &#x60;name&#x60; of the group it changes. Settings left out keep their values, and groups left out are unchanged.
+        /// </summary>
+        /// <value>Changes to the settings of the template&#39;s field groups, each with the &#x60;name&#x60; of the group it changes. Settings left out keep their values, and groups left out are unchanged.</value>
+        [JsonPropertyName("field_groups")]
+        public List<FieldGroupInput> FieldGroups { get { return this.FieldGroupsOption.Value; } set { this.FieldGroupsOption = new Option<List<FieldGroupInput>>(value); } }
+
+        /// <summary>
+        /// Used to track the state of PredefinedFields
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<List<PredefinedFieldInput>> PredefinedFieldsOption { get; private set; }
+
+        /// <summary>
+        /// The field names that people using the embedded template editor choose from, each with the data type and settings a field gets when it&#39;s given that name. Setting it replaces the whole list; an empty list turns them off.
+        /// </summary>
+        /// <value>The field names that people using the embedded template editor choose from, each with the data type and settings a field gets when it&#39;s given that name. Setting it replaces the whole list; an empty list turns them off.</value>
+        [JsonPropertyName("predefined_fields")]
+        public List<PredefinedFieldInput> PredefinedFields { get { return this.PredefinedFieldsOption.Value; } set { this.PredefinedFieldsOption = new Option<List<PredefinedFieldInput>>(value); } }
+
+        /// <summary>
+        /// Used to track the state of PredefinedFieldsSampleData
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<Dictionary<string, Object>> PredefinedFieldsSampleDataOption { get; private set; }
+
+        /// <summary>
+        /// Sample submission data that sets &#x60;predefined_fields&#x60;: each value becomes a predefined field, with a type that fits it (&#x60;string&#x60;, &#x60;number&#x60;, &#x60;boolean&#x60;, &#x60;date&#x60;, &#x60;email&#x60; or &#x60;url&#x60;) and &#x60;required_in_template&#x60; true. Nested objects and arrays become names with &#x60;/&#x60;, such as &#x60;customer/email&#x60;. Without &#x60;predefined_fields&#x60; in the same request, it replaces them; with them, it adds to them and sets the types of the ones it has values for.
+        /// </summary>
+        /// <value>Sample submission data that sets &#x60;predefined_fields&#x60;: each value becomes a predefined field, with a type that fits it (&#x60;string&#x60;, &#x60;number&#x60;, &#x60;boolean&#x60;, &#x60;date&#x60;, &#x60;email&#x60; or &#x60;url&#x60;) and &#x60;required_in_template&#x60; true. Nested objects and arrays become names with &#x60;/&#x60;, such as &#x60;customer/email&#x60;. Without &#x60;predefined_fields&#x60; in the same request, it replaces them; with them, it adds to them and sets the types of the ones it has values for.</value>
+        [JsonPropertyName("predefined_fields_sample_data")]
+        public Dictionary<string, Object> PredefinedFieldsSampleData { get { return this.PredefinedFieldsSampleDataOption.Value; } set { this.PredefinedFieldsSampleDataOption = new Option<Dictionary<string, Object>>(value); } }
+
+        /// <summary>
         /// Used to track the state of Html
         /// </summary>
         [JsonIgnore]
@@ -552,6 +600,12 @@ namespace DocSpring.Client.Model
         public HtmlEngineOptionsInput HtmlEngineOptions { get { return this.HtmlEngineOptionsOption.Value; } set { this.HtmlEngineOptionsOption = new Option<HtmlEngineOptionsInput>(value); } }
 
         /// <summary>
+        /// Gets or Sets additional properties
+        /// </summary>
+        [JsonExtensionData]
+        public Dictionary<string, JsonElement> AdditionalProperties { get; } = new Dictionary<string, JsonElement>();
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -586,11 +640,15 @@ namespace DocSpring.Client.Model
             sb.Append("  SlackWebhookUrl: ").Append(SlackWebhookUrl).Append("\n");
             sb.Append("  Defaults: ").Append(Defaults).Append("\n");
             sb.Append("  FieldDependencies: ").Append(FieldDependencies).Append("\n");
+            sb.Append("  FieldGroups: ").Append(FieldGroups).Append("\n");
+            sb.Append("  PredefinedFields: ").Append(PredefinedFields).Append("\n");
+            sb.Append("  PredefinedFieldsSampleData: ").Append(PredefinedFieldsSampleData).Append("\n");
             sb.Append("  Html: ").Append(Html).Append("\n");
             sb.Append("  Scss: ").Append(Scss).Append("\n");
             sb.Append("  HeaderHtml: ").Append(HeaderHtml).Append("\n");
             sb.Append("  FooterHtml: ").Append(FooterHtml).Append("\n");
             sb.Append("  HtmlEngineOptions: ").Append(HtmlEngineOptions).Append("\n");
+            sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -665,6 +723,9 @@ namespace DocSpring.Client.Model
             Option<string> slackWebhookUrl = default;
             Option<TemplateDefaultsInput> defaults = default;
             Option<List<TemplateFieldDependencyInput>> fieldDependencies = default;
+            Option<List<FieldGroupInput>> fieldGroups = default;
+            Option<List<PredefinedFieldInput>> predefinedFields = default;
+            Option<Dictionary<string, Object>> predefinedFieldsSampleData = default;
             Option<string> html = default;
             Option<string> scss = default;
             Option<string> headerHtml = default;
@@ -767,6 +828,15 @@ namespace DocSpring.Client.Model
                         case "field_dependencies":
                             fieldDependencies = new Option<List<TemplateFieldDependencyInput>>(JsonSerializer.Deserialize<List<TemplateFieldDependencyInput>>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
+                        case "field_groups":
+                            fieldGroups = new Option<List<FieldGroupInput>>(JsonSerializer.Deserialize<List<FieldGroupInput>>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
+                        case "predefined_fields":
+                            predefinedFields = new Option<List<PredefinedFieldInput>>(JsonSerializer.Deserialize<List<PredefinedFieldInput>>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
+                        case "predefined_fields_sample_data":
+                            predefinedFieldsSampleData = new Option<Dictionary<string, Object>>(JsonSerializer.Deserialize<Dictionary<string, Object>>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
                         case "html":
                             html = new Option<string>(utf8JsonReader.GetString());
                             break;
@@ -854,7 +924,13 @@ namespace DocSpring.Client.Model
             if (fieldDependencies.IsSet && fieldDependencies.Value == null)
                 throw new JsonException("Property is not nullable for class UpdateTemplateRequest: field_dependencies.");
 
-            return new UpdateTemplateRequest(name, description, parentFolderId, locked, addSignatureRequestSubmissionIdFooters, aiFieldNamingLanguage, allowAdditionalProperties, allowSkippingOptionalFields, defaultFormMode, editableSubmissions, embedDomains, embedEditAllowSettings, embedEditAllowVersioning, embedEditAllowDocumentReplacement, encryptPdfs, encryptPdfsPassword, expireSubmissions, expireAfter, expirationInterval, mergeAuditTrailPdf, parseDatesUsingTemplateDateFormat, publicSubmissions, publicWebForm, redirectUrl, slackWebhookUrl, defaults, fieldDependencies, html, scss, headerHtml, footerHtml, htmlEngineOptions);
+            if (fieldGroups.IsSet && fieldGroups.Value == null)
+                throw new JsonException("Property is not nullable for class UpdateTemplateRequest: field_groups.");
+
+            if (predefinedFields.IsSet && predefinedFields.Value == null)
+                throw new JsonException("Property is not nullable for class UpdateTemplateRequest: predefined_fields.");
+
+            return new UpdateTemplateRequest(name, description, parentFolderId, locked, addSignatureRequestSubmissionIdFooters, aiFieldNamingLanguage, allowAdditionalProperties, allowSkippingOptionalFields, defaultFormMode, editableSubmissions, embedDomains, embedEditAllowSettings, embedEditAllowVersioning, embedEditAllowDocumentReplacement, encryptPdfs, encryptPdfsPassword, expireSubmissions, expireAfter, expirationInterval, mergeAuditTrailPdf, parseDatesUsingTemplateDateFormat, publicSubmissions, publicWebForm, redirectUrl, slackWebhookUrl, defaults, fieldDependencies, fieldGroups, predefinedFields, predefinedFieldsSampleData, html, scss, headerHtml, footerHtml, htmlEngineOptions);
         }
 
         /// <summary>
@@ -944,6 +1020,12 @@ namespace DocSpring.Client.Model
 
             if (updateTemplateRequest.FieldDependenciesOption.IsSet && updateTemplateRequest.FieldDependencies == null)
                 throw new JsonException("Cannot write null property UpdateTemplateRequest.FieldDependencies to non-nullable JSON property 'field_dependencies'.");
+
+            if (updateTemplateRequest.FieldGroupsOption.IsSet && updateTemplateRequest.FieldGroups == null)
+                throw new JsonException("Cannot write null property UpdateTemplateRequest.FieldGroups to non-nullable JSON property 'field_groups'.");
+
+            if (updateTemplateRequest.PredefinedFieldsOption.IsSet && updateTemplateRequest.PredefinedFields == null)
+                throw new JsonException("Cannot write null property UpdateTemplateRequest.PredefinedFields to non-nullable JSON property 'predefined_fields'.");
 
             if (updateTemplateRequest.NameOption.IsSet)
                 writer.WriteString("name", updateTemplateRequest.Name);
@@ -1053,6 +1135,24 @@ namespace DocSpring.Client.Model
                 writer.WritePropertyName("field_dependencies");
                 JsonSerializer.Serialize(writer, updateTemplateRequest.FieldDependenciesOption.Value, jsonSerializerOptions);
             }
+            if (updateTemplateRequest.FieldGroupsOption.IsSet)
+            {
+                writer.WritePropertyName("field_groups");
+                JsonSerializer.Serialize(writer, updateTemplateRequest.FieldGroupsOption.Value, jsonSerializerOptions);
+            }
+            if (updateTemplateRequest.PredefinedFieldsOption.IsSet)
+            {
+                writer.WritePropertyName("predefined_fields");
+                JsonSerializer.Serialize(writer, updateTemplateRequest.PredefinedFieldsOption.Value, jsonSerializerOptions);
+            }
+            if (updateTemplateRequest.PredefinedFieldsSampleDataOption.IsSet)
+                if (updateTemplateRequest.PredefinedFieldsSampleDataOption.Value != null)
+                {
+                    writer.WritePropertyName("predefined_fields_sample_data");
+                    JsonSerializer.Serialize(writer, updateTemplateRequest.PredefinedFieldsSampleDataOption.Value, jsonSerializerOptions);
+                }
+                else
+                    writer.WriteNull("predefined_fields_sample_data");
             if (updateTemplateRequest.HtmlOption.IsSet)
                 if (updateTemplateRequest.HtmlOption.Value != null)
                     writer.WriteString("html", updateTemplateRequest.Html);

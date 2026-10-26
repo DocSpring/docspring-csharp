@@ -42,7 +42,8 @@ namespace DocSpring.Client.Model
         /// <param name="hasPassword">Whether the PDF needs a password to open (&#x60;password&#x60;).</param>
         /// <param name="signatureRequests">The people asked to sign the submission (and fill in their fields), in order.</param>
         /// <param name="actions">The uploads of the submission&#39;s PDF to your storage (account integrations).</param>
-        /// <param name="files">The generated files: &#x60;pdf&#x60; once the submission has been processed, &#x60;audit_trail&#x60; once its signature requests are completed, and &#x60;preview&#x60; once a preview PDF has been generated. Empty once the submission has expired.</param>
+        /// <param name="outputFormats">What the submission makes: &#x60;pdf&#x60;, and &#x60;png&#x60; (an image of each page of the PDF, up to 100 pages) when you ask for it. Default &#x60;[\&quot;pdf\&quot;]&#x60;. POST /submissions/{submission_id}/generate_files adds &#x60;png&#x60; to a processed submission.</param>
+        /// <param name="files">The generated files: &#x60;pdf&#x60; once the submission has been processed, &#x60;png&#x60; (the images of the PDF&#39;s pages, when &#x60;output_formats&#x60; has it: &#x60;files.png.pages[0]&#x60; is page 1), &#x60;audit_trail&#x60; once its signature requests are completed, and &#x60;preview&#x60; once a preview PDF has been generated. Empty once the submission has expired.</param>
         /// <param name="expired">An expired submission&#39;s data, metadata, password and PDF have been deleted.</param>
         /// <param name="createdAt">When the submission was created.</param>
         /// <param name="updatedAt">When the submission was last updated.</param>
@@ -56,7 +57,7 @@ namespace DocSpring.Client.Model
         /// <param name="expiresAt">When the submission expires. Null if it&#39;s kept until you delete it.</param>
         /// <param name="processedAt">When the PDF was generated. Null until then.</param>
         [JsonConstructor]
-        public Submission(string id, TemplateType templateType, SubmissionSource source, SubmissionState state, bool test, bool editable, List<ErrorDetail> dataErrors, Dictionary<string, Object> metadata, bool hasPassword, List<SignatureRequest> signatureRequests, List<SubmissionAction> actions, SubmissionFiles files, bool expired, DateTime createdAt, DateTime updatedAt, string templateId = default, string templateVersion = default, string batchId = default, Dictionary<string, Object> data = default, string errorMessage = default, Dictionary<string, List<string>> truncatedText = default, DateTime? previewGeneratedAt = default, DateTime? expiresAt = default, DateTime? processedAt = default)
+        public Submission(string id, TemplateType templateType, SubmissionSource source, SubmissionState state, bool test, bool editable, List<ErrorDetail> dataErrors, Dictionary<string, Object> metadata, bool hasPassword, List<SignatureRequest> signatureRequests, List<SubmissionAction> actions, List<OutputFormat> outputFormats, SubmissionFiles files, bool expired, DateTime createdAt, DateTime updatedAt, string templateId = default, string templateVersion = default, string batchId = default, Dictionary<string, Object> data = default, string errorMessage = default, Dictionary<string, List<string>> truncatedText = default, DateTime? previewGeneratedAt = default, DateTime? expiresAt = default, DateTime? processedAt = default)
         {
             Id = id;
             TemplateType = templateType;
@@ -69,6 +70,7 @@ namespace DocSpring.Client.Model
             HasPassword = hasPassword;
             SignatureRequests = signatureRequests;
             Actions = actions;
+            OutputFormats = outputFormats;
             Files = files;
             Expired = expired;
             CreatedAt = createdAt;
@@ -165,9 +167,16 @@ namespace DocSpring.Client.Model
         public List<SubmissionAction> Actions { get; set; }
 
         /// <summary>
-        /// The generated files: &#x60;pdf&#x60; once the submission has been processed, &#x60;audit_trail&#x60; once its signature requests are completed, and &#x60;preview&#x60; once a preview PDF has been generated. Empty once the submission has expired.
+        /// What the submission makes: &#x60;pdf&#x60;, and &#x60;png&#x60; (an image of each page of the PDF, up to 100 pages) when you ask for it. Default &#x60;[\&quot;pdf\&quot;]&#x60;. POST /submissions/{submission_id}/generate_files adds &#x60;png&#x60; to a processed submission.
         /// </summary>
-        /// <value>The generated files: &#x60;pdf&#x60; once the submission has been processed, &#x60;audit_trail&#x60; once its signature requests are completed, and &#x60;preview&#x60; once a preview PDF has been generated. Empty once the submission has expired.</value>
+        /// <value>What the submission makes: &#x60;pdf&#x60;, and &#x60;png&#x60; (an image of each page of the PDF, up to 100 pages) when you ask for it. Default &#x60;[\&quot;pdf\&quot;]&#x60;. POST /submissions/{submission_id}/generate_files adds &#x60;png&#x60; to a processed submission.</value>
+        [JsonPropertyName("output_formats")]
+        public List<OutputFormat> OutputFormats { get; set; }
+
+        /// <summary>
+        /// The generated files: &#x60;pdf&#x60; once the submission has been processed, &#x60;png&#x60; (the images of the PDF&#39;s pages, when &#x60;output_formats&#x60; has it: &#x60;files.png.pages[0]&#x60; is page 1), &#x60;audit_trail&#x60; once its signature requests are completed, and &#x60;preview&#x60; once a preview PDF has been generated. Empty once the submission has expired.
+        /// </summary>
+        /// <value>The generated files: &#x60;pdf&#x60; once the submission has been processed, &#x60;png&#x60; (the images of the PDF&#39;s pages, when &#x60;output_formats&#x60; has it: &#x60;files.png.pages[0]&#x60; is page 1), &#x60;audit_trail&#x60; once its signature requests are completed, and &#x60;preview&#x60; once a preview PDF has been generated. Empty once the submission has expired.</value>
         [JsonPropertyName("files")]
         public SubmissionFiles Files { get; set; }
 
@@ -280,6 +289,7 @@ namespace DocSpring.Client.Model
             sb.Append("  HasPassword: ").Append(HasPassword).Append("\n");
             sb.Append("  SignatureRequests: ").Append(SignatureRequests).Append("\n");
             sb.Append("  Actions: ").Append(Actions).Append("\n");
+            sb.Append("  OutputFormats: ").Append(OutputFormats).Append("\n");
             sb.Append("  Files: ").Append(Files).Append("\n");
             sb.Append("  Expired: ").Append(Expired).Append("\n");
             sb.Append("  CreatedAt: ").Append(CreatedAt).Append("\n");
@@ -377,6 +387,7 @@ namespace DocSpring.Client.Model
             Option<bool?> hasPassword = default;
             Option<List<SignatureRequest>> signatureRequests = default;
             Option<List<SubmissionAction>> actions = default;
+            Option<List<OutputFormat>> outputFormats = default;
             Option<SubmissionFiles> files = default;
             Option<bool?> expired = default;
             Option<DateTime?> createdAt = default;
@@ -438,6 +449,9 @@ namespace DocSpring.Client.Model
                             break;
                         case "actions":
                             actions = new Option<List<SubmissionAction>>(JsonSerializer.Deserialize<List<SubmissionAction>>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
+                        case "output_formats":
+                            outputFormats = new Option<List<OutputFormat>>(JsonSerializer.Deserialize<List<OutputFormat>>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "files":
                             files = new Option<SubmissionFiles>(JsonSerializer.Deserialize<SubmissionFiles>(ref utf8JsonReader, jsonSerializerOptions));
@@ -517,6 +531,9 @@ namespace DocSpring.Client.Model
             if (!actions.IsSet)
                 throw new JsonException("Property is required for class Submission: actions.");
 
+            if (!outputFormats.IsSet)
+                throw new JsonException("Property is required for class Submission: output_formats.");
+
             if (!files.IsSet)
                 throw new JsonException("Property is required for class Submission: files.");
 
@@ -589,6 +606,9 @@ namespace DocSpring.Client.Model
             if (actions.IsSet && actions.Value == null)
                 throw new JsonException("Property is not nullable for class Submission: actions.");
 
+            if (outputFormats.IsSet && outputFormats.Value == null)
+                throw new JsonException("Property is not nullable for class Submission: output_formats.");
+
             if (files.IsSet && files.Value == null)
                 throw new JsonException("Property is not nullable for class Submission: files.");
 
@@ -601,7 +621,7 @@ namespace DocSpring.Client.Model
             if (updatedAt.IsSet && updatedAt.Value == null)
                 throw new JsonException("Property is not nullable for class Submission: updated_at.");
 
-            return new Submission(id.Value, templateType.Value.Value, source.Value.Value, state.Value.Value, test.Value.Value, editable.Value.Value, dataErrors.Value, metadata.Value, hasPassword.Value.Value, signatureRequests.Value, actions.Value, files.Value, expired.Value.Value, createdAt.Value.Value, updatedAt.Value.Value, templateId.Value, templateVersion.Value, batchId.Value, data.Value, errorMessage.Value, truncatedText.Value, previewGeneratedAt.Value, expiresAt.Value, processedAt.Value);
+            return new Submission(id.Value, templateType.Value.Value, source.Value.Value, state.Value.Value, test.Value.Value, editable.Value.Value, dataErrors.Value, metadata.Value, hasPassword.Value.Value, signatureRequests.Value, actions.Value, outputFormats.Value, files.Value, expired.Value.Value, createdAt.Value.Value, updatedAt.Value.Value, templateId.Value, templateVersion.Value, batchId.Value, data.Value, errorMessage.Value, truncatedText.Value, previewGeneratedAt.Value, expiresAt.Value, processedAt.Value);
         }
 
         /// <summary>
@@ -651,6 +671,8 @@ namespace DocSpring.Client.Model
             JsonSerializer.Serialize(writer, submission.SignatureRequests, jsonSerializerOptions);
             writer.WritePropertyName("actions");
             JsonSerializer.Serialize(writer, submission.Actions, jsonSerializerOptions);
+            writer.WritePropertyName("output_formats");
+            JsonSerializer.Serialize(writer, submission.OutputFormats, jsonSerializerOptions);
             writer.WritePropertyName("files");
             JsonSerializer.Serialize(writer, submission.Files, jsonSerializerOptions);
             writer.WriteBoolean("expired", submission.Expired);

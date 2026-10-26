@@ -42,6 +42,31 @@ namespace DocSpring.Client.Api
         bool ValidateRequests { get; set; }
 
         /// <summary>
+        /// Add fields to a template
+        /// </summary>
+        /// <remarks>
+        /// Adds fields to a template&#39;s draft and returns all of its fields. Publish a version for submissions of published versions to have them. 
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="body">The fields to add to the template&#39;s draft.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IAddTemplateFieldsApiResponse"/>&gt;</returns>
+        Task<IAddTemplateFieldsApiResponse> AddTemplateFieldsAsync(string templateId, AddTemplateFieldsRequest body, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Add fields to a template
+        /// </summary>
+        /// <remarks>
+        /// Adds fields to a template&#39;s draft and returns all of its fields. Publish a version for submissions of published versions to have them. 
+        /// </remarks>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="body">The fields to add to the template&#39;s draft.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IAddTemplateFieldsApiResponse"/>&gt;</returns>
+        Task<IAddTemplateFieldsApiResponse> AddTemplateFieldsOrDefaultAsync(string templateId, AddTemplateFieldsRequest body, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Copy a template
         /// </summary>
         /// <remarks>
@@ -197,7 +222,7 @@ namespace DocSpring.Client.Api
         /// <param name="templateId">The template&#39;s ID.</param>
         /// <param name="body">The submission&#39;s data and settings.</param>
         /// <param name="version">The template version to use: a published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;latest&#x60; (the draft when no version has been published). (optional)</param>
-        /// <param name="wait">Wait until the PDF has been generated before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="wait">Wait until the files have been generated before responding. Default true on sync.api hosts. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICreateSubmissionApiResponse"/>&gt;</returns>
         Task<ICreateSubmissionApiResponse> CreateSubmissionAsync(string templateId, CreateSubmissionRequest body, Option<string> version = default, Option<bool> wait = default, System.Threading.CancellationToken cancellationToken = default);
@@ -211,7 +236,7 @@ namespace DocSpring.Client.Api
         /// <param name="templateId">The template&#39;s ID.</param>
         /// <param name="body">The submission&#39;s data and settings.</param>
         /// <param name="version">The template version to use: a published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;latest&#x60; (the draft when no version has been published). (optional)</param>
-        /// <param name="wait">Wait until the PDF has been generated before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="wait">Wait until the files have been generated before responding. Default true on sync.api hosts. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICreateSubmissionApiResponse"/>&gt;</returns>
         Task<ICreateSubmissionApiResponse> CreateSubmissionOrDefaultAsync(string templateId, CreateSubmissionRequest body, Option<string> version = default, Option<bool> wait = default, System.Threading.CancellationToken cancellationToken = default);
@@ -249,7 +274,7 @@ namespace DocSpring.Client.Api
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">The template to create.</param>
-        /// <param name="wait">Wait until the PDF has been processed before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="wait">Wait until the PDF has been processed, and a &#x60;document_url&#x60; downloaded, before responding. Default true on sync.api hosts. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICreateTemplateApiResponse"/>&gt;</returns>
         Task<ICreateTemplateApiResponse> CreateTemplateAsync(CreateTemplateRequest body, Option<bool> wait = default, System.Threading.CancellationToken cancellationToken = default);
@@ -261,7 +286,7 @@ namespace DocSpring.Client.Api
         /// Creates an HTML template, or a PDF template from a PDF you uploaded with the presigned upload (GET /uploads/presign): pass its &#x60;fields.key&#x60; as &#x60;cache_id&#x60;. To send the PDF with the request instead, use POST /templates/upload.  A PDF template is ready to generate PDFs once DocSpring has processed its PDF (&#x60;ready&#x60; is true). On sync.api hosts the request waits for that unless you pass &#x60;wait&#x3D;false&#x60;. 
         /// </remarks>
         /// <param name="body">The template to create.</param>
-        /// <param name="wait">Wait until the PDF has been processed before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="wait">Wait until the PDF has been processed, and a &#x60;document_url&#x60; downloaded, before responding. Default true on sync.api hosts. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICreateTemplateApiResponse"/>&gt;</returns>
         Task<ICreateTemplateApiResponse> CreateTemplateOrDefaultAsync(CreateTemplateRequest body, Option<bool> wait = default, System.Threading.CancellationToken cancellationToken = default);
@@ -428,6 +453,33 @@ namespace DocSpring.Client.Api
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IExpireSubmissionApiResponse"/>&gt;</returns>
         Task<IExpireSubmissionApiResponse> ExpireSubmissionOrDefaultAsync(string submissionId, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Generate more files
+        /// </summary>
+        /// <remarks>
+        /// Adds formats to a processed submission&#39;s files, in the background: &#x60;png&#x60;, a PNG image of each page of the PDF (up to 100 pages). To make them with the submission, add them to &#x60;output_formats&#x60; when you create it.  Each new file is listed in &#x60;files&#x60; while it&#39;s made: on sync.api hosts the request waits for them (unless you pass &#x60;wait&#x3D;false&#x60;), otherwise poll GET /submissions/{submission_id} until none of their &#x60;state&#x60; is &#x60;pending&#x60;. A file that couldn&#39;t be made has the state &#x60;error&#x60; and an &#x60;error_message&#x60;, and the submission stays processed. Asking for a format the submission already has (or is making) changes nothing. 
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="submissionId">The submission&#39;s ID.</param>
+        /// <param name="body">The formats to make.</param>
+        /// <param name="wait">Wait until the files have been generated before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGenerateSubmissionFilesApiResponse"/>&gt;</returns>
+        Task<IGenerateSubmissionFilesApiResponse> GenerateSubmissionFilesAsync(string submissionId, GenerateSubmissionFilesRequest body, Option<bool> wait = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Generate more files
+        /// </summary>
+        /// <remarks>
+        /// Adds formats to a processed submission&#39;s files, in the background: &#x60;png&#x60;, a PNG image of each page of the PDF (up to 100 pages). To make them with the submission, add them to &#x60;output_formats&#x60; when you create it.  Each new file is listed in &#x60;files&#x60; while it&#39;s made: on sync.api hosts the request waits for them (unless you pass &#x60;wait&#x3D;false&#x60;), otherwise poll GET /submissions/{submission_id} until none of their &#x60;state&#x60; is &#x60;pending&#x60;. A file that couldn&#39;t be made has the state &#x60;error&#x60; and an &#x60;error_message&#x60;, and the submission stays processed. Asking for a format the submission already has (or is making) changes nothing. 
+        /// </remarks>
+        /// <param name="submissionId">The submission&#39;s ID.</param>
+        /// <param name="body">The formats to make.</param>
+        /// <param name="wait">Wait until the files have been generated before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGenerateSubmissionFilesApiResponse"/>&gt;</returns>
+        Task<IGenerateSubmissionFilesApiResponse> GenerateSubmissionFilesOrDefaultAsync(string submissionId, GenerateSubmissionFilesRequest body, Option<bool> wait = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Generate a preview PDF
@@ -639,6 +691,31 @@ namespace DocSpring.Client.Api
         Task<IGetTemplateApiResponse> GetTemplateOrDefaultAsync(string templateId, Option<string> version = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Compare a version of a template with the one before it
+        /// </summary>
+        /// <remarks>
+        /// Returns what changed in the template&#39;s draft since its latest published version (or in a published version since the one before it): fields added, removed, changed and moved, the settings that changed, and whether the document was replaced. Check it before you publish a version. 
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="version">A published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;draft&#x60;. (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetTemplateDiffApiResponse"/>&gt;</returns>
+        Task<IGetTemplateDiffApiResponse> GetTemplateDiffAsync(string templateId, Option<string> version = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Compare a version of a template with the one before it
+        /// </summary>
+        /// <remarks>
+        /// Returns what changed in the template&#39;s draft since its latest published version (or in a published version since the one before it): fields added, removed, changed and moved, the settings that changed, and whether the document was replaced. Check it before you publish a version. 
+        /// </remarks>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="version">A published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;draft&#x60;. (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetTemplateDiffApiResponse"/>&gt;</returns>
+        Task<IGetTemplateDiffApiResponse> GetTemplateDiffOrDefaultAsync(string templateId, Option<string> version = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// Generate typed code for a template&#39;s submission data
         /// </summary>
         /// <remarks>
@@ -664,6 +741,31 @@ namespace DocSpring.Client.Api
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IGetTemplateModelCodeApiResponse"/>&gt;</returns>
         Task<IGetTemplateModelCodeApiResponse> GetTemplateModelCodeOrDefaultAsync(string templateId, ModelCodeLanguage lang, Option<string> version = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Get images of a template&#39;s pages
+        /// </summary>
+        /// <remarks>
+        /// Returns a JPEG image of each page of a PDF template&#39;s PDF, with temporary links to download them: the draft&#39;s PDF, or a published version&#39;s. Use them to see the pages that fields are placed on. 
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="version">A published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;draft&#x60;. (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetTemplatePageImagesApiResponse"/>&gt;</returns>
+        Task<IGetTemplatePageImagesApiResponse> GetTemplatePageImagesAsync(string templateId, Option<string> version = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Get images of a template&#39;s pages
+        /// </summary>
+        /// <remarks>
+        /// Returns a JPEG image of each page of a PDF template&#39;s PDF, with temporary links to download them: the draft&#39;s PDF, or a published version&#39;s. Use them to see the pages that fields are placed on. 
+        /// </remarks>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="version">A published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;draft&#x60;. (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetTemplatePageImagesApiResponse"/>&gt;</returns>
+        Task<IGetTemplatePageImagesApiResponse> GetTemplatePageImagesOrDefaultAsync(string templateId, Option<string> version = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get the JSON Schema of a template&#39;s submission data
@@ -826,6 +928,31 @@ namespace DocSpring.Client.Api
         Task<IListSubmissionsApiResponse> ListSubmissionsOrDefaultAsync(Option<string> templateId = default, Option<bool> test = default, Option<DateTime> createdAfter = default, Option<DateTime> createdBefore = default, Option<bool> includeData = default, Option<int> limit = default, Option<string> cursor = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// List a template&#39;s fields
+        /// </summary>
+        /// <remarks>
+        /// Returns a template&#39;s fields with all of their settings, page by page: the draft&#39;s fields, or a published version&#39;s. A PDF template&#39;s fields are placed on its pages: GET /templates/{template_id}/page_images has images of the pages. 
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="version">A published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;draft&#x60;. (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IListTemplateFieldsApiResponse"/>&gt;</returns>
+        Task<IListTemplateFieldsApiResponse> ListTemplateFieldsAsync(string templateId, Option<string> version = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// List a template&#39;s fields
+        /// </summary>
+        /// <remarks>
+        /// Returns a template&#39;s fields with all of their settings, page by page: the draft&#39;s fields, or a published version&#39;s. A PDF template&#39;s fields are placed on its pages: GET /templates/{template_id}/page_images has images of the pages. 
+        /// </remarks>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="version">A published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;draft&#x60;. (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IListTemplateFieldsApiResponse"/>&gt;</returns>
+        Task<IListTemplateFieldsApiResponse> ListTemplateFieldsOrDefaultAsync(string templateId, Option<string> version = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// List a template&#39;s submissions
         /// </summary>
         /// <remarks>
@@ -978,7 +1105,7 @@ namespace DocSpring.Client.Api
         /// Publish a template version
         /// </summary>
         /// <remarks>
-        /// Publishes the template&#39;s draft as a new version that doesn&#39;t change. &#x60;version_type&#x60; says which part of the latest version number goes up. 
+        /// Publishes the template&#39;s draft as a new version that doesn&#39;t change. &#x60;version_type&#x60; says which part of the latest version number goes up. While the template&#39;s PDF is downloading or being processed, or DocSpring is setting up its fields, it returns a 409 that says so. 
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId">The template&#39;s ID.</param>
@@ -991,13 +1118,38 @@ namespace DocSpring.Client.Api
         /// Publish a template version
         /// </summary>
         /// <remarks>
-        /// Publishes the template&#39;s draft as a new version that doesn&#39;t change. &#x60;version_type&#x60; says which part of the latest version number goes up. 
+        /// Publishes the template&#39;s draft as a new version that doesn&#39;t change. &#x60;version_type&#x60; says which part of the latest version number goes up. While the template&#39;s PDF is downloading or being processed, or DocSpring is setting up its fields, it returns a 409 that says so. 
         /// </remarks>
         /// <param name="templateId">The template&#39;s ID.</param>
         /// <param name="body">The version to publish.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IPublishTemplateVersionApiResponse"/>&gt;</returns>
         Task<IPublishTemplateVersionApiResponse> PublishTemplateVersionOrDefaultAsync(string templateId, PublishTemplateVersionRequest body, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Remove fields from a template
+        /// </summary>
+        /// <remarks>
+        /// Removes fields from a template&#39;s draft and returns the fields that are left. Conditional logic that used only the removed fields is removed too. 
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="body">The fields to remove from the template&#39;s draft.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IRemoveTemplateFieldsApiResponse"/>&gt;</returns>
+        Task<IRemoveTemplateFieldsApiResponse> RemoveTemplateFieldsAsync(string templateId, RemoveTemplateFieldsRequest body, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Remove fields from a template
+        /// </summary>
+        /// <remarks>
+        /// Removes fields from a template&#39;s draft and returns the fields that are left. Conditional logic that used only the removed fields is removed too. 
+        /// </remarks>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="body">The fields to remove from the template&#39;s draft.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IRemoveTemplateFieldsApiResponse"/>&gt;</returns>
+        Task<IRemoveTemplateFieldsApiResponse> RemoveTemplateFieldsOrDefaultAsync(string templateId, RemoveTemplateFieldsRequest body, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Rename a folder
@@ -1023,6 +1175,31 @@ namespace DocSpring.Client.Api
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IRenameFolderApiResponse"/>&gt;</returns>
         Task<IRenameFolderApiResponse> RenameFolderOrDefaultAsync(string folderId, RenameFolderRequest body, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Reorder a template&#39;s fields
+        /// </summary>
+        /// <remarks>
+        /// Changes the order of the fields in a template&#39;s draft and returns them in their new order. Send every field&#39;s ID: each field stays on its page, and a page&#39;s fields are printed in this order, so a later field prints over an earlier one where they overlap. Their values are in this order in the template&#39;s data schema and forms. 
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="body">The new order of the fields in the template&#39;s draft.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IReorderTemplateFieldsApiResponse"/>&gt;</returns>
+        Task<IReorderTemplateFieldsApiResponse> ReorderTemplateFieldsAsync(string templateId, ReorderTemplateFieldsRequest body, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Reorder a template&#39;s fields
+        /// </summary>
+        /// <remarks>
+        /// Changes the order of the fields in a template&#39;s draft and returns them in their new order. Send every field&#39;s ID: each field stays on its page, and a page&#39;s fields are printed in this order, so a later field prints over an earlier one where they overlap. Their values are in this order in the template&#39;s data schema and forms. 
+        /// </remarks>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="body">The new order of the fields in the template&#39;s draft.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IReorderTemplateFieldsApiResponse"/>&gt;</returns>
+        Task<IReorderTemplateFieldsApiResponse> ReorderTemplateFieldsOrDefaultAsync(string templateId, ReorderTemplateFieldsRequest body, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Restore a template version
@@ -1099,7 +1276,7 @@ namespace DocSpring.Client.Api
         /// Update a template
         /// </summary>
         /// <remarks>
-        /// Changes a template&#39;s draft. Properties left out keep their values. &#x60;defaults&#x60; and &#x60;html_engine_options&#x60; replace the whole object. Setting &#x60;parent_folder_id&#x60; moves the template and all of its published versions. 
+        /// Changes a template&#39;s draft. Properties left out keep their values. &#x60;defaults&#x60; and &#x60;html_engine_options&#x60; replace the whole object, and &#x60;field_groups&#x60; changes only the groups it lists. Setting &#x60;parent_folder_id&#x60; moves the template and all of its published versions. 
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId">The template&#39;s ID.</param>
@@ -1112,7 +1289,7 @@ namespace DocSpring.Client.Api
         /// Update a template
         /// </summary>
         /// <remarks>
-        /// Changes a template&#39;s draft. Properties left out keep their values. &#x60;defaults&#x60; and &#x60;html_engine_options&#x60; replace the whole object. Setting &#x60;parent_folder_id&#x60; moves the template and all of its published versions. 
+        /// Changes a template&#39;s draft. Properties left out keep their values. &#x60;defaults&#x60; and &#x60;html_engine_options&#x60; replace the whole object, and &#x60;field_groups&#x60; changes only the groups it lists. Setting &#x60;parent_folder_id&#x60; moves the template and all of its published versions. 
         /// </remarks>
         /// <param name="templateId">The template&#39;s ID.</param>
         /// <param name="body">The settings to change. Properties left out keep their values.</param>
@@ -1124,12 +1301,12 @@ namespace DocSpring.Client.Api
         /// Replace a template&#39;s PDF
         /// </summary>
         /// <remarks>
-        /// Replaces a PDF template&#39;s PDF with one you uploaded with the presigned upload (GET /uploads/presign). The fields stay where they are, unless &#x60;reimport_fields&#x60; replaces them with the new PDF&#39;s fillable fields. To send the PDF with the request instead, use PUT /templates/{template_id}/document/upload. 
+        /// Replaces a PDF template&#39;s PDF with one you uploaded with the presigned upload (GET /uploads/presign) (&#x60;cache_id&#x60;), a link to download it from (&#x60;document_url&#x60;), or the file in base64 (&#x60;document_base64&#x60;). The fields stay where they are, unless &#x60;reimport_fields&#x60; replaces them with the new PDF&#39;s fillable fields. To send the PDF as &#x60;multipart/form-data&#x60; instead, use PUT /templates/{template_id}/document/upload. 
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId">The template&#39;s ID.</param>
-        /// <param name="body">The new PDF.</param>
-        /// <param name="wait">Wait until the PDF has been processed before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="body">The new PDF, as one of &#x60;cache_id&#x60;, &#x60;document_url&#x60; and &#x60;document_base64&#x60;.</param>
+        /// <param name="wait">Wait until the PDF has been processed, and a &#x60;document_url&#x60; downloaded, before responding. Default true on sync.api hosts. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IUpdateTemplateDocumentApiResponse"/>&gt;</returns>
         Task<IUpdateTemplateDocumentApiResponse> UpdateTemplateDocumentAsync(string templateId, UpdateTemplateDocumentRequest body, Option<bool> wait = default, System.Threading.CancellationToken cancellationToken = default);
@@ -1138,14 +1315,39 @@ namespace DocSpring.Client.Api
         /// Replace a template&#39;s PDF
         /// </summary>
         /// <remarks>
-        /// Replaces a PDF template&#39;s PDF with one you uploaded with the presigned upload (GET /uploads/presign). The fields stay where they are, unless &#x60;reimport_fields&#x60; replaces them with the new PDF&#39;s fillable fields. To send the PDF with the request instead, use PUT /templates/{template_id}/document/upload. 
+        /// Replaces a PDF template&#39;s PDF with one you uploaded with the presigned upload (GET /uploads/presign) (&#x60;cache_id&#x60;), a link to download it from (&#x60;document_url&#x60;), or the file in base64 (&#x60;document_base64&#x60;). The fields stay where they are, unless &#x60;reimport_fields&#x60; replaces them with the new PDF&#39;s fillable fields. To send the PDF as &#x60;multipart/form-data&#x60; instead, use PUT /templates/{template_id}/document/upload. 
         /// </remarks>
         /// <param name="templateId">The template&#39;s ID.</param>
-        /// <param name="body">The new PDF.</param>
-        /// <param name="wait">Wait until the PDF has been processed before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="body">The new PDF, as one of &#x60;cache_id&#x60;, &#x60;document_url&#x60; and &#x60;document_base64&#x60;.</param>
+        /// <param name="wait">Wait until the PDF has been processed, and a &#x60;document_url&#x60; downloaded, before responding. Default true on sync.api hosts. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IUpdateTemplateDocumentApiResponse"/>&gt;</returns>
         Task<IUpdateTemplateDocumentApiResponse> UpdateTemplateDocumentOrDefaultAsync(string templateId, UpdateTemplateDocumentRequest body, Option<bool> wait = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Update a template&#39;s fields
+        /// </summary>
+        /// <remarks>
+        /// Changes fields of a template&#39;s draft and returns all of its fields. Settings left out keep their values. A shared setting (&#x60;type&#x60;, &#x60;required&#x60;, &#x60;default&#x60;, ...) changes for every field with the same name. 
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="body">The fields to change in the template&#39;s draft.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IUpdateTemplateFieldsApiResponse"/>&gt;</returns>
+        Task<IUpdateTemplateFieldsApiResponse> UpdateTemplateFieldsAsync(string templateId, UpdateTemplateFieldsRequest body, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Update a template&#39;s fields
+        /// </summary>
+        /// <remarks>
+        /// Changes fields of a template&#39;s draft and returns all of its fields. Settings left out keep their values. A shared setting (&#x60;type&#x60;, &#x60;required&#x60;, &#x60;default&#x60;, ...) changes for every field with the same name. 
+        /// </remarks>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="body">The fields to change in the template&#39;s draft.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IUpdateTemplateFieldsApiResponse"/>&gt;</returns>
+        Task<IUpdateTemplateFieldsApiResponse> UpdateTemplateFieldsOrDefaultAsync(string templateId, UpdateTemplateFieldsRequest body, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update a webhook
@@ -1180,7 +1382,7 @@ namespace DocSpring.Client.Api
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="document">The PDF.</param>
-        /// <param name="wait">Wait until the PDF has been processed before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="wait">Wait until the PDF has been processed, and a &#x60;document_url&#x60; downloaded, before responding. Default true on sync.api hosts. (optional)</param>
         /// <param name="name">The template&#39;s name. (optional)</param>
         /// <param name="description">The template&#39;s description. (optional)</param>
         /// <param name="parentFolderId">The folder to put the template in. Left out, it&#39;s created at the root. (optional)</param>
@@ -1200,7 +1402,7 @@ namespace DocSpring.Client.Api
         /// Creates a PDF template from a PDF sent with the request (&#x60;multipart/form-data&#x60;). For large files, upload the PDF with the presigned upload (GET /uploads/presign) and create the template with POST /templates. 
         /// </remarks>
         /// <param name="document">The PDF.</param>
-        /// <param name="wait">Wait until the PDF has been processed before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="wait">Wait until the PDF has been processed, and a &#x60;document_url&#x60; downloaded, before responding. Default true on sync.api hosts. (optional)</param>
         /// <param name="name">The template&#39;s name. (optional)</param>
         /// <param name="description">The template&#39;s description. (optional)</param>
         /// <param name="parentFolderId">The folder to put the template in. Left out, it&#39;s created at the root. (optional)</param>
@@ -1222,7 +1424,7 @@ namespace DocSpring.Client.Api
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId">The template&#39;s ID.</param>
         /// <param name="document">The new PDF.</param>
-        /// <param name="wait">Wait until the PDF has been processed before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="wait">Wait until the PDF has been processed, and a &#x60;document_url&#x60; downloaded, before responding. Default true on sync.api hosts. (optional)</param>
         /// <param name="reimportFields">Replace all of the template&#39;s fields with the fillable fields in the new PDF, once DocSpring has processed it (&#x60;document.field_reimport_state&#x60;). As on a first upload, the default typeface, font size, bold and color are taken from the PDF&#39;s fields; the template&#39;s other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can&#39;t re-import its fields. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IUploadTemplateDocumentApiResponse"/>&gt;</returns>
@@ -1236,11 +1438,74 @@ namespace DocSpring.Client.Api
         /// </remarks>
         /// <param name="templateId">The template&#39;s ID.</param>
         /// <param name="document">The new PDF.</param>
-        /// <param name="wait">Wait until the PDF has been processed before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="wait">Wait until the PDF has been processed, and a &#x60;document_url&#x60; downloaded, before responding. Default true on sync.api hosts. (optional)</param>
         /// <param name="reimportFields">Replace all of the template&#39;s fields with the fillable fields in the new PDF, once DocSpring has processed it (&#x60;document.field_reimport_state&#x60;). As on a first upload, the default typeface, font size, bold and color are taken from the PDF&#39;s fields; the template&#39;s other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can&#39;t re-import its fields. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IUploadTemplateDocumentApiResponse"/>&gt;</returns>
         Task<IUploadTemplateDocumentApiResponse> UploadTemplateDocumentOrDefaultAsync(string templateId, DocSpring.Client.Client.FileParameter document, Option<bool> wait = default, Option<bool> reimportFields = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Check a submission without creating it
+        /// </summary>
+        /// <remarks>
+        /// Checks a submission as creating it would (its data against the template&#39;s fields, its settings and signature requests) without saving it, generating anything or using credits. It doesn&#39;t check your account&#39;s credits. The response says whether the submission is valid, and if not, has the error that creating it would return. 
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="body">The submission&#39;s data and settings.</param>
+        /// <param name="version">The template version to use: a published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;latest&#x60; (the draft when no version has been published). (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IValidateSubmissionApiResponse"/>&gt;</returns>
+        Task<IValidateSubmissionApiResponse> ValidateSubmissionAsync(string templateId, ValidateSubmissionRequest body, Option<string> version = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Check a submission without creating it
+        /// </summary>
+        /// <remarks>
+        /// Checks a submission as creating it would (its data against the template&#39;s fields, its settings and signature requests) without saving it, generating anything or using credits. It doesn&#39;t check your account&#39;s credits. The response says whether the submission is valid, and if not, has the error that creating it would return. 
+        /// </remarks>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="body">The submission&#39;s data and settings.</param>
+        /// <param name="version">The template version to use: a published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;latest&#x60; (the draft when no version has been published). (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IValidateSubmissionApiResponse"/>&gt;</returns>
+        Task<IValidateSubmissionApiResponse> ValidateSubmissionOrDefaultAsync(string templateId, ValidateSubmissionRequest body, Option<string> version = default, System.Threading.CancellationToken cancellationToken = default);
+    }
+
+    /// <summary>
+    /// The <see cref="IAddTemplateFieldsApiResponse"/>
+    /// </summary>
+    public interface IAddTemplateFieldsApiResponse : DocSpring.Client.Client.IApiResponse, ICreated<DocSpring.Client.Model.TemplateFields>, IConflict<DocSpring.Client.Model.ErrorResponse>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    {
+        /// <summary>
+        /// Returns true if the response is 201 Created
+        /// </summary>
+        /// <returns></returns>
+        bool IsCreated { get; }
+
+        /// <summary>
+        /// Returns true if the response is 409 Conflict
+        /// </summary>
+        /// <returns></returns>
+        bool IsConflict { get; }
+
+        /// <summary>
+        /// Returns true if the response is 422 UnprocessableContent
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnprocessableContent { get; }
+
+        /// <summary>
+        /// Returns true if the response is 404 NotFound
+        /// </summary>
+        /// <returns></returns>
+        bool IsNotFound { get; }
+
+        /// <summary>
+        /// Returns true if the response is 401 Unauthorized
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnauthorized { get; }
     }
 
     /// <summary>
@@ -1748,6 +2013,42 @@ namespace DocSpring.Client.Api
     }
 
     /// <summary>
+    /// The <see cref="IGenerateSubmissionFilesApiResponse"/>
+    /// </summary>
+    public interface IGenerateSubmissionFilesApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Submission>, IConflict<DocSpring.Client.Model.ErrorResponse>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    {
+        /// <summary>
+        /// Returns true if the response is 200 Ok
+        /// </summary>
+        /// <returns></returns>
+        bool IsOk { get; }
+
+        /// <summary>
+        /// Returns true if the response is 409 Conflict
+        /// </summary>
+        /// <returns></returns>
+        bool IsConflict { get; }
+
+        /// <summary>
+        /// Returns true if the response is 422 UnprocessableContent
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnprocessableContent { get; }
+
+        /// <summary>
+        /// Returns true if the response is 404 NotFound
+        /// </summary>
+        /// <returns></returns>
+        bool IsNotFound { get; }
+
+        /// <summary>
+        /// Returns true if the response is 401 Unauthorized
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnauthorized { get; }
+    }
+
+    /// <summary>
     /// The <see cref="IGenerateSubmissionPreviewApiResponse"/>
     /// </summary>
     public interface IGenerateSubmissionPreviewApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Submission>, IConflict<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
@@ -1970,6 +2271,36 @@ namespace DocSpring.Client.Api
     }
 
     /// <summary>
+    /// The <see cref="IGetTemplateDiffApiResponse"/>
+    /// </summary>
+    public interface IGetTemplateDiffApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.TemplateDiff>, IConflict<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    {
+        /// <summary>
+        /// Returns true if the response is 200 Ok
+        /// </summary>
+        /// <returns></returns>
+        bool IsOk { get; }
+
+        /// <summary>
+        /// Returns true if the response is 409 Conflict
+        /// </summary>
+        /// <returns></returns>
+        bool IsConflict { get; }
+
+        /// <summary>
+        /// Returns true if the response is 404 NotFound
+        /// </summary>
+        /// <returns></returns>
+        bool IsNotFound { get; }
+
+        /// <summary>
+        /// Returns true if the response is 401 Unauthorized
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnauthorized { get; }
+    }
+
+    /// <summary>
     /// The <see cref="IGetTemplateModelCodeApiResponse"/>
     /// </summary>
     public interface IGetTemplateModelCodeApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.TemplateModelCode>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
@@ -1985,6 +2316,36 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnprocessableContent { get; }
+
+        /// <summary>
+        /// Returns true if the response is 404 NotFound
+        /// </summary>
+        /// <returns></returns>
+        bool IsNotFound { get; }
+
+        /// <summary>
+        /// Returns true if the response is 401 Unauthorized
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnauthorized { get; }
+    }
+
+    /// <summary>
+    /// The <see cref="IGetTemplatePageImagesApiResponse"/>
+    /// </summary>
+    public interface IGetTemplatePageImagesApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.TemplatePageImages>, IConflict<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    {
+        /// <summary>
+        /// Returns true if the response is 200 Ok
+        /// </summary>
+        /// <returns></returns>
+        bool IsOk { get; }
+
+        /// <summary>
+        /// Returns true if the response is 409 Conflict
+        /// </summary>
+        /// <returns></returns>
+        bool IsConflict { get; }
 
         /// <summary>
         /// Returns true if the response is 404 NotFound
@@ -2135,6 +2496,36 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnprocessableContent { get; }
+
+        /// <summary>
+        /// Returns true if the response is 401 Unauthorized
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnauthorized { get; }
+    }
+
+    /// <summary>
+    /// The <see cref="IListTemplateFieldsApiResponse"/>
+    /// </summary>
+    public interface IListTemplateFieldsApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.TemplateFields>, IConflict<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    {
+        /// <summary>
+        /// Returns true if the response is 200 Ok
+        /// </summary>
+        /// <returns></returns>
+        bool IsOk { get; }
+
+        /// <summary>
+        /// Returns true if the response is 409 Conflict
+        /// </summary>
+        /// <returns></returns>
+        bool IsConflict { get; }
+
+        /// <summary>
+        /// Returns true if the response is 404 NotFound
+        /// </summary>
+        /// <returns></returns>
+        bool IsNotFound { get; }
 
         /// <summary>
         /// Returns true if the response is 401 Unauthorized
@@ -2318,9 +2709,69 @@ namespace DocSpring.Client.Api
     }
 
     /// <summary>
+    /// The <see cref="IRemoveTemplateFieldsApiResponse"/>
+    /// </summary>
+    public interface IRemoveTemplateFieldsApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.TemplateFields>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    {
+        /// <summary>
+        /// Returns true if the response is 200 Ok
+        /// </summary>
+        /// <returns></returns>
+        bool IsOk { get; }
+
+        /// <summary>
+        /// Returns true if the response is 422 UnprocessableContent
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnprocessableContent { get; }
+
+        /// <summary>
+        /// Returns true if the response is 404 NotFound
+        /// </summary>
+        /// <returns></returns>
+        bool IsNotFound { get; }
+
+        /// <summary>
+        /// Returns true if the response is 401 Unauthorized
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnauthorized { get; }
+    }
+
+    /// <summary>
     /// The <see cref="IRenameFolderApiResponse"/>
     /// </summary>
     public interface IRenameFolderApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Folder>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    {
+        /// <summary>
+        /// Returns true if the response is 200 Ok
+        /// </summary>
+        /// <returns></returns>
+        bool IsOk { get; }
+
+        /// <summary>
+        /// Returns true if the response is 422 UnprocessableContent
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnprocessableContent { get; }
+
+        /// <summary>
+        /// Returns true if the response is 404 NotFound
+        /// </summary>
+        /// <returns></returns>
+        bool IsNotFound { get; }
+
+        /// <summary>
+        /// Returns true if the response is 401 Unauthorized
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnauthorized { get; }
+    }
+
+    /// <summary>
+    /// The <see cref="IReorderTemplateFieldsApiResponse"/>
+    /// </summary>
+    public interface IReorderTemplateFieldsApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.TemplateFields>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2440,7 +2891,7 @@ namespace DocSpring.Client.Api
     /// <summary>
     /// The <see cref="IUpdateTemplateApiResponse"/>
     /// </summary>
-    public interface IUpdateTemplateApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Template>, IConflict<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IUpdateTemplateApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Template>, IConflict<DocSpring.Client.Model.ErrorResponse>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2455,16 +2906,16 @@ namespace DocSpring.Client.Api
         bool IsConflict { get; }
 
         /// <summary>
-        /// Returns true if the response is 404 NotFound
-        /// </summary>
-        /// <returns></returns>
-        bool IsNotFound { get; }
-
-        /// <summary>
         /// Returns true if the response is 422 UnprocessableContent
         /// </summary>
         /// <returns></returns>
         bool IsUnprocessableContent { get; }
+
+        /// <summary>
+        /// Returns true if the response is 404 NotFound
+        /// </summary>
+        /// <returns></returns>
+        bool IsNotFound { get; }
 
         /// <summary>
         /// Returns true if the response is 401 Unauthorized
@@ -2489,6 +2940,36 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsConflict { get; }
+
+        /// <summary>
+        /// Returns true if the response is 422 UnprocessableContent
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnprocessableContent { get; }
+
+        /// <summary>
+        /// Returns true if the response is 404 NotFound
+        /// </summary>
+        /// <returns></returns>
+        bool IsNotFound { get; }
+
+        /// <summary>
+        /// Returns true if the response is 401 Unauthorized
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnauthorized { get; }
+    }
+
+    /// <summary>
+    /// The <see cref="IUpdateTemplateFieldsApiResponse"/>
+    /// </summary>
+    public interface IUpdateTemplateFieldsApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.TemplateFields>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    {
+        /// <summary>
+        /// Returns true if the response is 200 Ok
+        /// </summary>
+        /// <returns></returns>
+        bool IsOk { get; }
 
         /// <summary>
         /// Returns true if the response is 422 UnprocessableContent
@@ -2600,10 +3081,60 @@ namespace DocSpring.Client.Api
     }
 
     /// <summary>
+    /// The <see cref="IValidateSubmissionApiResponse"/>
+    /// </summary>
+    public interface IValidateSubmissionApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.SubmissionValidation>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    {
+        /// <summary>
+        /// Returns true if the response is 200 Ok
+        /// </summary>
+        /// <returns></returns>
+        bool IsOk { get; }
+
+        /// <summary>
+        /// Returns true if the response is 404 NotFound
+        /// </summary>
+        /// <returns></returns>
+        bool IsNotFound { get; }
+
+        /// <summary>
+        /// Returns true if the response is 422 UnprocessableContent
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnprocessableContent { get; }
+
+        /// <summary>
+        /// Returns true if the response is 401 Unauthorized
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnauthorized { get; }
+    }
+
+    /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
     public class ClientEvents
     {
+        /// <summary>
+        /// The event raised after the server response
+        /// </summary>
+        public event EventHandler<ApiResponseEventArgs> OnAddTemplateFields;
+
+        /// <summary>
+        /// The event raised after an error querying the server
+        /// </summary>
+        public event EventHandler<ExceptionEventArgs> OnErrorAddTemplateFields;
+
+        internal void ExecuteOnAddTemplateFields(Client.AddTemplateFieldsApiResponse apiResponse)
+        {
+            OnAddTemplateFields?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+        }
+
+        internal void ExecuteOnErrorAddTemplateFields(Exception exception)
+        {
+            OnErrorAddTemplateFields?.Invoke(this, new ExceptionEventArgs(exception));
+        }
+
         /// <summary>
         /// The event raised after the server response
         /// </summary>
@@ -2927,6 +3458,26 @@ namespace DocSpring.Client.Api
         /// <summary>
         /// The event raised after the server response
         /// </summary>
+        public event EventHandler<ApiResponseEventArgs> OnGenerateSubmissionFiles;
+
+        /// <summary>
+        /// The event raised after an error querying the server
+        /// </summary>
+        public event EventHandler<ExceptionEventArgs> OnErrorGenerateSubmissionFiles;
+
+        internal void ExecuteOnGenerateSubmissionFiles(Client.GenerateSubmissionFilesApiResponse apiResponse)
+        {
+            OnGenerateSubmissionFiles?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+        }
+
+        internal void ExecuteOnErrorGenerateSubmissionFiles(Exception exception)
+        {
+            OnErrorGenerateSubmissionFiles?.Invoke(this, new ExceptionEventArgs(exception));
+        }
+
+        /// <summary>
+        /// The event raised after the server response
+        /// </summary>
         public event EventHandler<ApiResponseEventArgs> OnGenerateSubmissionPreview;
 
         /// <summary>
@@ -3107,6 +3658,26 @@ namespace DocSpring.Client.Api
         /// <summary>
         /// The event raised after the server response
         /// </summary>
+        public event EventHandler<ApiResponseEventArgs> OnGetTemplateDiff;
+
+        /// <summary>
+        /// The event raised after an error querying the server
+        /// </summary>
+        public event EventHandler<ExceptionEventArgs> OnErrorGetTemplateDiff;
+
+        internal void ExecuteOnGetTemplateDiff(Client.GetTemplateDiffApiResponse apiResponse)
+        {
+            OnGetTemplateDiff?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+        }
+
+        internal void ExecuteOnErrorGetTemplateDiff(Exception exception)
+        {
+            OnErrorGetTemplateDiff?.Invoke(this, new ExceptionEventArgs(exception));
+        }
+
+        /// <summary>
+        /// The event raised after the server response
+        /// </summary>
         public event EventHandler<ApiResponseEventArgs> OnGetTemplateModelCode;
 
         /// <summary>
@@ -3122,6 +3693,26 @@ namespace DocSpring.Client.Api
         internal void ExecuteOnErrorGetTemplateModelCode(Exception exception)
         {
             OnErrorGetTemplateModelCode?.Invoke(this, new ExceptionEventArgs(exception));
+        }
+
+        /// <summary>
+        /// The event raised after the server response
+        /// </summary>
+        public event EventHandler<ApiResponseEventArgs> OnGetTemplatePageImages;
+
+        /// <summary>
+        /// The event raised after an error querying the server
+        /// </summary>
+        public event EventHandler<ExceptionEventArgs> OnErrorGetTemplatePageImages;
+
+        internal void ExecuteOnGetTemplatePageImages(Client.GetTemplatePageImagesApiResponse apiResponse)
+        {
+            OnGetTemplatePageImages?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+        }
+
+        internal void ExecuteOnErrorGetTemplatePageImages(Exception exception)
+        {
+            OnErrorGetTemplatePageImages?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
@@ -3247,6 +3838,26 @@ namespace DocSpring.Client.Api
         /// <summary>
         /// The event raised after the server response
         /// </summary>
+        public event EventHandler<ApiResponseEventArgs> OnListTemplateFields;
+
+        /// <summary>
+        /// The event raised after an error querying the server
+        /// </summary>
+        public event EventHandler<ExceptionEventArgs> OnErrorListTemplateFields;
+
+        internal void ExecuteOnListTemplateFields(Client.ListTemplateFieldsApiResponse apiResponse)
+        {
+            OnListTemplateFields?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+        }
+
+        internal void ExecuteOnErrorListTemplateFields(Exception exception)
+        {
+            OnErrorListTemplateFields?.Invoke(this, new ExceptionEventArgs(exception));
+        }
+
+        /// <summary>
+        /// The event raised after the server response
+        /// </summary>
         public event EventHandler<ApiResponseEventArgs> OnListTemplateSubmissions;
 
         /// <summary>
@@ -3367,6 +3978,26 @@ namespace DocSpring.Client.Api
         /// <summary>
         /// The event raised after the server response
         /// </summary>
+        public event EventHandler<ApiResponseEventArgs> OnRemoveTemplateFields;
+
+        /// <summary>
+        /// The event raised after an error querying the server
+        /// </summary>
+        public event EventHandler<ExceptionEventArgs> OnErrorRemoveTemplateFields;
+
+        internal void ExecuteOnRemoveTemplateFields(Client.RemoveTemplateFieldsApiResponse apiResponse)
+        {
+            OnRemoveTemplateFields?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+        }
+
+        internal void ExecuteOnErrorRemoveTemplateFields(Exception exception)
+        {
+            OnErrorRemoveTemplateFields?.Invoke(this, new ExceptionEventArgs(exception));
+        }
+
+        /// <summary>
+        /// The event raised after the server response
+        /// </summary>
         public event EventHandler<ApiResponseEventArgs> OnRenameFolder;
 
         /// <summary>
@@ -3382,6 +4013,26 @@ namespace DocSpring.Client.Api
         internal void ExecuteOnErrorRenameFolder(Exception exception)
         {
             OnErrorRenameFolder?.Invoke(this, new ExceptionEventArgs(exception));
+        }
+
+        /// <summary>
+        /// The event raised after the server response
+        /// </summary>
+        public event EventHandler<ApiResponseEventArgs> OnReorderTemplateFields;
+
+        /// <summary>
+        /// The event raised after an error querying the server
+        /// </summary>
+        public event EventHandler<ExceptionEventArgs> OnErrorReorderTemplateFields;
+
+        internal void ExecuteOnReorderTemplateFields(Client.ReorderTemplateFieldsApiResponse apiResponse)
+        {
+            OnReorderTemplateFields?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+        }
+
+        internal void ExecuteOnErrorReorderTemplateFields(Exception exception)
+        {
+            OnErrorReorderTemplateFields?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
@@ -3487,6 +4138,26 @@ namespace DocSpring.Client.Api
         /// <summary>
         /// The event raised after the server response
         /// </summary>
+        public event EventHandler<ApiResponseEventArgs> OnUpdateTemplateFields;
+
+        /// <summary>
+        /// The event raised after an error querying the server
+        /// </summary>
+        public event EventHandler<ExceptionEventArgs> OnErrorUpdateTemplateFields;
+
+        internal void ExecuteOnUpdateTemplateFields(Client.UpdateTemplateFieldsApiResponse apiResponse)
+        {
+            OnUpdateTemplateFields?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+        }
+
+        internal void ExecuteOnErrorUpdateTemplateFields(Exception exception)
+        {
+            OnErrorUpdateTemplateFields?.Invoke(this, new ExceptionEventArgs(exception));
+        }
+
+        /// <summary>
+        /// The event raised after the server response
+        /// </summary>
         public event EventHandler<ApiResponseEventArgs> OnUpdateWebhook;
 
         /// <summary>
@@ -3543,6 +4214,26 @@ namespace DocSpring.Client.Api
         {
             OnErrorUploadTemplateDocument?.Invoke(this, new ExceptionEventArgs(exception));
         }
+
+        /// <summary>
+        /// The event raised after the server response
+        /// </summary>
+        public event EventHandler<ApiResponseEventArgs> OnValidateSubmission;
+
+        /// <summary>
+        /// The event raised after an error querying the server
+        /// </summary>
+        public event EventHandler<ExceptionEventArgs> OnErrorValidateSubmission;
+
+        internal void ExecuteOnValidateSubmission(Client.ValidateSubmissionApiResponse apiResponse)
+        {
+            OnValidateSubmission?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+        }
+
+        internal void ExecuteOnErrorValidateSubmission(Exception exception)
+        {
+            OnErrorValidateSubmission?.Invoke(this, new ExceptionEventArgs(exception));
+        }
     }
 
     /// <summary>
@@ -3590,6 +4281,495 @@ namespace DocSpring.Client.Api
             HttpClient = httpClient;
             Events = clientEvents;
             BasicTokenProvider = basicTokenProvider;
+        }
+
+        partial void FormatAddTemplateFields(ref string templateId, AddTemplateFieldsRequest body);
+
+        /// <summary>
+        /// Validates the request parameters
+        /// </summary>
+        /// <param name="templateId"></param>
+        /// <param name="body"></param>
+        /// <returns></returns>
+        private void ValidateAddTemplateFields(string templateId, AddTemplateFieldsRequest body)
+        {
+            if (templateId == null)
+                throw new ArgumentNullException(nameof(templateId));
+
+            if (body == null)
+                throw new ArgumentNullException(nameof(body));
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="body"></param>
+        private void AfterAddTemplateFieldsDefaultImplementation(IAddTemplateFieldsApiResponse apiResponseLocalVar, string templateId, AddTemplateFieldsRequest body)
+        {
+            bool suppressDefaultLog = false;
+            AfterAddTemplateFields(ref suppressDefaultLog, apiResponseLocalVar, templateId, body);
+            if (!suppressDefaultLog)
+                Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="suppressDefaultLog"></param>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="body"></param>
+        partial void AfterAddTemplateFields(ref bool suppressDefaultLog, IAddTemplateFieldsApiResponse apiResponseLocalVar, string templateId, AddTemplateFieldsRequest body);
+
+        /// <summary>
+        /// Logs exceptions that occur while retrieving the server response
+        /// </summary>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="body"></param>
+        private void OnErrorAddTemplateFieldsDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, AddTemplateFieldsRequest body)
+        {
+            bool suppressDefaultLogLocalVar = false;
+            OnErrorAddTemplateFields(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, templateId, body);
+            if (!suppressDefaultLogLocalVar)
+                Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
+        }
+
+        /// <summary>
+        /// A partial method that gives developers a way to provide customized exception handling
+        /// </summary>
+        /// <param name="suppressDefaultLogLocalVar"></param>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="body"></param>
+        partial void OnErrorAddTemplateFields(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, AddTemplateFieldsRequest body);
+
+        /// <summary>
+        /// Add fields to a template Adds fields to a template&#39;s draft and returns all of its fields. Publish a version for submissions of published versions to have them. 
+        /// </summary>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="body">The fields to add to the template&#39;s draft.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IAddTemplateFieldsApiResponse"/>&gt;</returns>
+        public async Task<IAddTemplateFieldsApiResponse> AddTemplateFieldsOrDefaultAsync(string templateId, AddTemplateFieldsRequest body, System.Threading.CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await AddTemplateFieldsAsync(templateId, body, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Add fields to a template Adds fields to a template&#39;s draft and returns all of its fields. Publish a version for submissions of published versions to have them. 
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="body">The fields to add to the template&#39;s draft.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IAddTemplateFieldsApiResponse"/>&gt;</returns>
+        public async Task<IAddTemplateFieldsApiResponse> AddTemplateFieldsAsync(string templateId, AddTemplateFieldsRequest body, System.Threading.CancellationToken cancellationToken = default)
+        {
+            UriBuilder uriBuilderLocalVar = new UriBuilder();
+
+            try
+            {
+                ValidateAddTemplateFields(templateId, body);
+
+                FormatAddTemplateFields(ref templateId, body);
+
+                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
+                {
+                    uriBuilderLocalVar.Host = HttpClient.BaseAddress.Host;
+                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
+                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
+                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
+                        ? "/templates/{template_id}/fields"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/templates/{template_id}/fields");
+                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Btemplate_id%7D", Uri.EscapeDataString(templateId.ToString()));
+
+                    httpRequestMessageLocalVar.Content = (body as object) is DocSpring.Client.Client.FileParameter fileParameterLocalVar
+                        ? httpRequestMessageLocalVar.Content = new StreamContent(fileParameterLocalVar.Content)
+                        : httpRequestMessageLocalVar.Content = new StringContent(JsonSerializer.Serialize(body, _jsonSerializerOptions));
+
+                    List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
+                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
+
+                    BasicToken basicTokenLocalVar1 = (BasicToken) await BasicTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
+
+                    tokenBaseLocalVars.Add(basicTokenLocalVar1);
+
+                    basicTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    string[] contentTypes = new string[] {
+                        "application/json"
+                    };
+
+                    string contentTypeLocalVar = ClientUtils.SelectHeaderContentType(contentTypes);
+
+                    if (contentTypeLocalVar != null && httpRequestMessageLocalVar.Content != null)
+                        httpRequestMessageLocalVar.Content.Headers.ContentType = new MediaTypeHeaderValue(contentTypeLocalVar);
+
+                    string[] acceptLocalVars = new string[] {
+                        "application/json"
+                    };
+
+                    IEnumerable<MediaTypeWithQualityHeaderValue> acceptHeaderValuesLocalVar = ClientUtils.SelectHeaderAcceptArray(acceptLocalVars);
+
+                    foreach (var acceptLocalVar in acceptHeaderValuesLocalVar)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(acceptLocalVar);
+                    httpRequestMessageLocalVar.Method = new HttpMethod("POST");
+
+                    DateTime requestedAtLocalVar = DateTime.UtcNow;
+
+                    if (ValidateRequests)
+                        await DocSpring.Client.Client.RequestValidator.ValidateRequestAsync("addTemplateFields", httpRequestMessageLocalVar).ConfigureAwait(false);
+
+                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
+                    {
+                        AddTemplateFieldsApiResponse apiResponseLocalVar;
+
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                apiResponseLocalVar = new AddTemplateFieldsApiResponse(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/templates/{template_id}/fields", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
+
+                        AfterAddTemplateFieldsDefaultImplementation(apiResponseLocalVar, templateId, body);
+
+                        Events.ExecuteOnAddTemplateFields(apiResponseLocalVar);
+
+                        if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
+                            foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
+                                tokenBaseLocalVar.BeginRateLimit();
+
+                        return apiResponseLocalVar;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                OnErrorAddTemplateFieldsDefaultImplementation(e, "/templates/{template_id}/fields", uriBuilderLocalVar.Path, templateId, body);
+                Events.ExecuteOnErrorAddTemplateFields(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="AddTemplateFieldsApiResponse"/>
+        /// </summary>
+        public partial class AddTemplateFieldsApiResponse : DocSpring.Client.Client.ApiResponse, IAddTemplateFieldsApiResponse
+        {
+            /// <summary>
+            /// The logger
+            /// </summary>
+            public ILogger<Client> Logger { get; }
+
+            /// <summary>
+            /// The <see cref="AddTemplateFieldsApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="rawContent"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public AddTemplateFieldsApiResponse(ILogger<Client> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="AddTemplateFieldsApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public AddTemplateFieldsApiResponse(ILogger<Client> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 201 Created
+            /// </summary>
+            /// <returns></returns>
+            public bool IsCreated => 201 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 201 Created
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.TemplateFields Created()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.TemplateFields result = default;
+                OnCreated(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultCreated();
+                return result;
+            }
+
+            private DocSpring.Client.Model.TemplateFields DefaultCreated()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsCreated
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.TemplateFields>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnCreated(ref bool suppressDefault, ref DocSpring.Client.Model.TemplateFields result);
+
+            /// <summary>
+            /// Returns true if the response is 201 Created and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryCreated(out DocSpring.Client.Model.TemplateFields result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Created();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)201);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 409 Conflict
+            /// </summary>
+            /// <returns></returns>
+            public bool IsConflict => 409 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 409 Conflict
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse Conflict()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnConflict(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultConflict();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultConflict()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsConflict
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnConflict(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 409 Conflict and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryConflict(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Conflict();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)409);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnprocessableContent => 422 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse UnprocessableContent()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnUnprocessableContent(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultUnprocessableContent();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultUnprocessableContent()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsUnprocessableContent
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnUnprocessableContent(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnprocessableContent(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = UnprocessableContent();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)422);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public bool IsNotFound => 404 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse NotFound()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnNotFound(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultNotFound();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultNotFound()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsNotFound
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnNotFound(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryNotFound(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = NotFound();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)404);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnauthorized => 401 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse Unauthorized()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnUnauthorized(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultUnauthorized();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultUnauthorized()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsUnauthorized
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnUnauthorized(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnauthorized(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Unauthorized();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
+            {
+                bool suppressDefaultLog = false;
+                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
+                if (!suppressDefaultLog)
+                    Logger.LogError(RestLogEvents.ApiDeserializationFailed, exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+            }
+
+            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
         partial void FormatCopyTemplate(ref string templateId, Option<CopyTemplateRequest> body);
@@ -6397,7 +7577,7 @@ namespace DocSpring.Client.Api
         /// <param name="templateId">The template&#39;s ID.</param>
         /// <param name="body">The submission&#39;s data and settings.</param>
         /// <param name="version">The template version to use: a published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;latest&#x60; (the draft when no version has been published). (optional)</param>
-        /// <param name="wait">Wait until the PDF has been generated before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="wait">Wait until the files have been generated before responding. Default true on sync.api hosts. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICreateSubmissionApiResponse"/>&gt;</returns>
         public async Task<ICreateSubmissionApiResponse> CreateSubmissionOrDefaultAsync(string templateId, CreateSubmissionRequest body, Option<string> version = default, Option<bool> wait = default, System.Threading.CancellationToken cancellationToken = default)
@@ -6419,7 +7599,7 @@ namespace DocSpring.Client.Api
         /// <param name="templateId">The template&#39;s ID.</param>
         /// <param name="body">The submission&#39;s data and settings.</param>
         /// <param name="version">The template version to use: a published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;latest&#x60; (the draft when no version has been published). (optional)</param>
-        /// <param name="wait">Wait until the PDF has been generated before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="wait">Wait until the files have been generated before responding. Default true on sync.api hosts. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICreateSubmissionApiResponse"/>&gt;</returns>
         public async Task<ICreateSubmissionApiResponse> CreateSubmissionAsync(string templateId, CreateSubmissionRequest body, Option<string> version = default, Option<bool> wait = default, System.Threading.CancellationToken cancellationToken = default)
@@ -7435,7 +8615,7 @@ namespace DocSpring.Client.Api
         /// Create a template Creates an HTML template, or a PDF template from a PDF you uploaded with the presigned upload (GET /uploads/presign): pass its &#x60;fields.key&#x60; as &#x60;cache_id&#x60;. To send the PDF with the request instead, use POST /templates/upload.  A PDF template is ready to generate PDFs once DocSpring has processed its PDF (&#x60;ready&#x60; is true). On sync.api hosts the request waits for that unless you pass &#x60;wait&#x3D;false&#x60;. 
         /// </summary>
         /// <param name="body">The template to create.</param>
-        /// <param name="wait">Wait until the PDF has been processed before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="wait">Wait until the PDF has been processed, and a &#x60;document_url&#x60; downloaded, before responding. Default true on sync.api hosts. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICreateTemplateApiResponse"/>&gt;</returns>
         public async Task<ICreateTemplateApiResponse> CreateTemplateOrDefaultAsync(CreateTemplateRequest body, Option<bool> wait = default, System.Threading.CancellationToken cancellationToken = default)
@@ -7455,7 +8635,7 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">The template to create.</param>
-        /// <param name="wait">Wait until the PDF has been processed before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="wait">Wait until the PDF has been processed, and a &#x60;document_url&#x60; downloaded, before responding. Default true on sync.api hosts. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICreateTemplateApiResponse"/>&gt;</returns>
         public async Task<ICreateTemplateApiResponse> CreateTemplateAsync(CreateTemplateRequest body, Option<bool> wait = default, System.Threading.CancellationToken cancellationToken = default)
@@ -10584,6 +11764,508 @@ namespace DocSpring.Client.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)403);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public bool IsNotFound => 404 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse NotFound()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnNotFound(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultNotFound();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultNotFound()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsNotFound
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnNotFound(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryNotFound(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = NotFound();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)404);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnauthorized => 401 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse Unauthorized()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnUnauthorized(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultUnauthorized();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultUnauthorized()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsUnauthorized
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnUnauthorized(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnauthorized(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Unauthorized();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
+            {
+                bool suppressDefaultLog = false;
+                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
+                if (!suppressDefaultLog)
+                    Logger.LogError(RestLogEvents.ApiDeserializationFailed, exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+            }
+
+            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
+        }
+
+        partial void FormatGenerateSubmissionFiles(ref string submissionId, GenerateSubmissionFilesRequest body, ref Option<bool> wait);
+
+        /// <summary>
+        /// Validates the request parameters
+        /// </summary>
+        /// <param name="submissionId"></param>
+        /// <param name="body"></param>
+        /// <returns></returns>
+        private void ValidateGenerateSubmissionFiles(string submissionId, GenerateSubmissionFilesRequest body)
+        {
+            if (submissionId == null)
+                throw new ArgumentNullException(nameof(submissionId));
+
+            if (body == null)
+                throw new ArgumentNullException(nameof(body));
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="submissionId"></param>
+        /// <param name="body"></param>
+        /// <param name="wait"></param>
+        private void AfterGenerateSubmissionFilesDefaultImplementation(IGenerateSubmissionFilesApiResponse apiResponseLocalVar, string submissionId, GenerateSubmissionFilesRequest body, Option<bool> wait)
+        {
+            bool suppressDefaultLog = false;
+            AfterGenerateSubmissionFiles(ref suppressDefaultLog, apiResponseLocalVar, submissionId, body, wait);
+            if (!suppressDefaultLog)
+                Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="suppressDefaultLog"></param>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="submissionId"></param>
+        /// <param name="body"></param>
+        /// <param name="wait"></param>
+        partial void AfterGenerateSubmissionFiles(ref bool suppressDefaultLog, IGenerateSubmissionFilesApiResponse apiResponseLocalVar, string submissionId, GenerateSubmissionFilesRequest body, Option<bool> wait);
+
+        /// <summary>
+        /// Logs exceptions that occur while retrieving the server response
+        /// </summary>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="submissionId"></param>
+        /// <param name="body"></param>
+        /// <param name="wait"></param>
+        private void OnErrorGenerateSubmissionFilesDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string submissionId, GenerateSubmissionFilesRequest body, Option<bool> wait)
+        {
+            bool suppressDefaultLogLocalVar = false;
+            OnErrorGenerateSubmissionFiles(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, submissionId, body, wait);
+            if (!suppressDefaultLogLocalVar)
+                Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
+        }
+
+        /// <summary>
+        /// A partial method that gives developers a way to provide customized exception handling
+        /// </summary>
+        /// <param name="suppressDefaultLogLocalVar"></param>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="submissionId"></param>
+        /// <param name="body"></param>
+        /// <param name="wait"></param>
+        partial void OnErrorGenerateSubmissionFiles(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string submissionId, GenerateSubmissionFilesRequest body, Option<bool> wait);
+
+        /// <summary>
+        /// Generate more files Adds formats to a processed submission&#39;s files, in the background: &#x60;png&#x60;, a PNG image of each page of the PDF (up to 100 pages). To make them with the submission, add them to &#x60;output_formats&#x60; when you create it.  Each new file is listed in &#x60;files&#x60; while it&#39;s made: on sync.api hosts the request waits for them (unless you pass &#x60;wait&#x3D;false&#x60;), otherwise poll GET /submissions/{submission_id} until none of their &#x60;state&#x60; is &#x60;pending&#x60;. A file that couldn&#39;t be made has the state &#x60;error&#x60; and an &#x60;error_message&#x60;, and the submission stays processed. Asking for a format the submission already has (or is making) changes nothing. 
+        /// </summary>
+        /// <param name="submissionId">The submission&#39;s ID.</param>
+        /// <param name="body">The formats to make.</param>
+        /// <param name="wait">Wait until the files have been generated before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGenerateSubmissionFilesApiResponse"/>&gt;</returns>
+        public async Task<IGenerateSubmissionFilesApiResponse> GenerateSubmissionFilesOrDefaultAsync(string submissionId, GenerateSubmissionFilesRequest body, Option<bool> wait = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await GenerateSubmissionFilesAsync(submissionId, body, wait, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Generate more files Adds formats to a processed submission&#39;s files, in the background: &#x60;png&#x60;, a PNG image of each page of the PDF (up to 100 pages). To make them with the submission, add them to &#x60;output_formats&#x60; when you create it.  Each new file is listed in &#x60;files&#x60; while it&#39;s made: on sync.api hosts the request waits for them (unless you pass &#x60;wait&#x3D;false&#x60;), otherwise poll GET /submissions/{submission_id} until none of their &#x60;state&#x60; is &#x60;pending&#x60;. A file that couldn&#39;t be made has the state &#x60;error&#x60; and an &#x60;error_message&#x60;, and the submission stays processed. Asking for a format the submission already has (or is making) changes nothing. 
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="submissionId">The submission&#39;s ID.</param>
+        /// <param name="body">The formats to make.</param>
+        /// <param name="wait">Wait until the files have been generated before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGenerateSubmissionFilesApiResponse"/>&gt;</returns>
+        public async Task<IGenerateSubmissionFilesApiResponse> GenerateSubmissionFilesAsync(string submissionId, GenerateSubmissionFilesRequest body, Option<bool> wait = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            UriBuilder uriBuilderLocalVar = new UriBuilder();
+
+            try
+            {
+                ValidateGenerateSubmissionFiles(submissionId, body);
+
+                FormatGenerateSubmissionFiles(ref submissionId, body, ref wait);
+
+                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
+                {
+                    uriBuilderLocalVar.Host = HttpClient.BaseAddress.Host;
+                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
+                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
+                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
+                        ? "/submissions/{submission_id}/generate_files"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/submissions/{submission_id}/generate_files");
+                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bsubmission_id%7D", Uri.EscapeDataString(submissionId.ToString()));
+
+                    System.Collections.Specialized.NameValueCollection parseQueryStringLocalVar = System.Web.HttpUtility.ParseQueryString(string.Empty);
+
+                    if (wait.IsSet)
+                        parseQueryStringLocalVar["wait"] = ClientUtils.ParameterToString(wait.Value);
+
+                    uriBuilderLocalVar.Query = parseQueryStringLocalVar.ToString();
+
+                    httpRequestMessageLocalVar.Content = (body as object) is DocSpring.Client.Client.FileParameter fileParameterLocalVar
+                        ? httpRequestMessageLocalVar.Content = new StreamContent(fileParameterLocalVar.Content)
+                        : httpRequestMessageLocalVar.Content = new StringContent(JsonSerializer.Serialize(body, _jsonSerializerOptions));
+
+                    List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
+                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
+
+                    BasicToken basicTokenLocalVar1 = (BasicToken) await BasicTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
+
+                    tokenBaseLocalVars.Add(basicTokenLocalVar1);
+
+                    basicTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    string[] contentTypes = new string[] {
+                        "application/json"
+                    };
+
+                    string contentTypeLocalVar = ClientUtils.SelectHeaderContentType(contentTypes);
+
+                    if (contentTypeLocalVar != null && httpRequestMessageLocalVar.Content != null)
+                        httpRequestMessageLocalVar.Content.Headers.ContentType = new MediaTypeHeaderValue(contentTypeLocalVar);
+
+                    string[] acceptLocalVars = new string[] {
+                        "application/json"
+                    };
+
+                    IEnumerable<MediaTypeWithQualityHeaderValue> acceptHeaderValuesLocalVar = ClientUtils.SelectHeaderAcceptArray(acceptLocalVars);
+
+                    foreach (var acceptLocalVar in acceptHeaderValuesLocalVar)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(acceptLocalVar);
+                    httpRequestMessageLocalVar.Method = new HttpMethod("POST");
+
+                    DateTime requestedAtLocalVar = DateTime.UtcNow;
+
+                    if (ValidateRequests)
+                        await DocSpring.Client.Client.RequestValidator.ValidateRequestAsync("generateSubmissionFiles", httpRequestMessageLocalVar).ConfigureAwait(false);
+
+                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
+                    {
+                        GenerateSubmissionFilesApiResponse apiResponseLocalVar;
+
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                apiResponseLocalVar = new GenerateSubmissionFilesApiResponse(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/submissions/{submission_id}/generate_files", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
+
+                        AfterGenerateSubmissionFilesDefaultImplementation(apiResponseLocalVar, submissionId, body, wait);
+
+                        Events.ExecuteOnGenerateSubmissionFiles(apiResponseLocalVar);
+
+                        if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
+                            foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
+                                tokenBaseLocalVar.BeginRateLimit();
+
+                        return apiResponseLocalVar;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                OnErrorGenerateSubmissionFilesDefaultImplementation(e, "/submissions/{submission_id}/generate_files", uriBuilderLocalVar.Path, submissionId, body, wait);
+                Events.ExecuteOnErrorGenerateSubmissionFiles(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="GenerateSubmissionFilesApiResponse"/>
+        /// </summary>
+        public partial class GenerateSubmissionFilesApiResponse : DocSpring.Client.Client.ApiResponse, IGenerateSubmissionFilesApiResponse
+        {
+            /// <summary>
+            /// The logger
+            /// </summary>
+            public ILogger<Client> Logger { get; }
+
+            /// <summary>
+            /// The <see cref="GenerateSubmissionFilesApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="rawContent"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GenerateSubmissionFilesApiResponse(ILogger<Client> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="GenerateSubmissionFilesApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GenerateSubmissionFilesApiResponse(ILogger<Client> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public bool IsOk => 200 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.Submission Ok()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.Submission result = default;
+                OnOk(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultOk();
+                return result;
+            }
+
+            private DocSpring.Client.Model.Submission DefaultOk()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsOk
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.Submission>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnOk(ref bool suppressDefault, ref DocSpring.Client.Model.Submission result);
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryOk(out DocSpring.Client.Model.Submission result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Ok();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 409 Conflict
+            /// </summary>
+            /// <returns></returns>
+            public bool IsConflict => 409 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 409 Conflict
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse Conflict()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnConflict(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultConflict();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultConflict()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsConflict
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnConflict(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 409 Conflict and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryConflict(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Conflict();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)409);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnprocessableContent => 422 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse UnprocessableContent()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnUnprocessableContent(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultUnprocessableContent();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultUnprocessableContent()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsUnprocessableContent
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnUnprocessableContent(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnprocessableContent(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = UnprocessableContent();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)422);
                 }
 
                 return result != null;
@@ -14050,6 +15732,439 @@ namespace DocSpring.Client.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
+        partial void FormatGetTemplateDiff(ref string templateId, ref Option<string> version);
+
+        /// <summary>
+        /// Validates the request parameters
+        /// </summary>
+        /// <param name="templateId"></param>
+        /// <param name="version"></param>
+        /// <returns></returns>
+        private void ValidateGetTemplateDiff(string templateId, Option<string> version)
+        {
+            if (templateId == null)
+                throw new ArgumentNullException(nameof(templateId));
+
+            if (version.IsSet && version.Value == null)
+                throw new ArgumentNullException(nameof(version));
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="version"></param>
+        private void AfterGetTemplateDiffDefaultImplementation(IGetTemplateDiffApiResponse apiResponseLocalVar, string templateId, Option<string> version)
+        {
+            bool suppressDefaultLog = false;
+            AfterGetTemplateDiff(ref suppressDefaultLog, apiResponseLocalVar, templateId, version);
+            if (!suppressDefaultLog)
+                Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="suppressDefaultLog"></param>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="version"></param>
+        partial void AfterGetTemplateDiff(ref bool suppressDefaultLog, IGetTemplateDiffApiResponse apiResponseLocalVar, string templateId, Option<string> version);
+
+        /// <summary>
+        /// Logs exceptions that occur while retrieving the server response
+        /// </summary>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="version"></param>
+        private void OnErrorGetTemplateDiffDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, Option<string> version)
+        {
+            bool suppressDefaultLogLocalVar = false;
+            OnErrorGetTemplateDiff(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, templateId, version);
+            if (!suppressDefaultLogLocalVar)
+                Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
+        }
+
+        /// <summary>
+        /// A partial method that gives developers a way to provide customized exception handling
+        /// </summary>
+        /// <param name="suppressDefaultLogLocalVar"></param>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="version"></param>
+        partial void OnErrorGetTemplateDiff(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, Option<string> version);
+
+        /// <summary>
+        /// Compare a version of a template with the one before it Returns what changed in the template&#39;s draft since its latest published version (or in a published version since the one before it): fields added, removed, changed and moved, the settings that changed, and whether the document was replaced. Check it before you publish a version. 
+        /// </summary>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="version">A published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;draft&#x60;. (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetTemplateDiffApiResponse"/>&gt;</returns>
+        public async Task<IGetTemplateDiffApiResponse> GetTemplateDiffOrDefaultAsync(string templateId, Option<string> version = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await GetTemplateDiffAsync(templateId, version, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Compare a version of a template with the one before it Returns what changed in the template&#39;s draft since its latest published version (or in a published version since the one before it): fields added, removed, changed and moved, the settings that changed, and whether the document was replaced. Check it before you publish a version. 
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="version">A published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;draft&#x60;. (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetTemplateDiffApiResponse"/>&gt;</returns>
+        public async Task<IGetTemplateDiffApiResponse> GetTemplateDiffAsync(string templateId, Option<string> version = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            UriBuilder uriBuilderLocalVar = new UriBuilder();
+
+            try
+            {
+                ValidateGetTemplateDiff(templateId, version);
+
+                FormatGetTemplateDiff(ref templateId, ref version);
+
+                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
+                {
+                    uriBuilderLocalVar.Host = HttpClient.BaseAddress.Host;
+                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
+                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
+                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
+                        ? "/templates/{template_id}/diff"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/templates/{template_id}/diff");
+                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Btemplate_id%7D", Uri.EscapeDataString(templateId.ToString()));
+
+                    System.Collections.Specialized.NameValueCollection parseQueryStringLocalVar = System.Web.HttpUtility.ParseQueryString(string.Empty);
+
+                    if (version.IsSet)
+                        parseQueryStringLocalVar["version"] = ClientUtils.ParameterToString(version.Value);
+
+                    uriBuilderLocalVar.Query = parseQueryStringLocalVar.ToString();
+
+                    List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
+                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
+
+                    BasicToken basicTokenLocalVar1 = (BasicToken) await BasicTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
+
+                    tokenBaseLocalVars.Add(basicTokenLocalVar1);
+
+                    basicTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    string[] acceptLocalVars = new string[] {
+                        "application/json"
+                    };
+
+                    IEnumerable<MediaTypeWithQualityHeaderValue> acceptHeaderValuesLocalVar = ClientUtils.SelectHeaderAcceptArray(acceptLocalVars);
+
+                    foreach (var acceptLocalVar in acceptHeaderValuesLocalVar)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(acceptLocalVar);
+                    httpRequestMessageLocalVar.Method = new HttpMethod("GET");
+
+                    DateTime requestedAtLocalVar = DateTime.UtcNow;
+
+                    if (ValidateRequests)
+                        await DocSpring.Client.Client.RequestValidator.ValidateRequestAsync("getTemplateDiff", httpRequestMessageLocalVar).ConfigureAwait(false);
+
+                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
+                    {
+                        GetTemplateDiffApiResponse apiResponseLocalVar;
+
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                apiResponseLocalVar = new GetTemplateDiffApiResponse(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/templates/{template_id}/diff", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
+
+                        AfterGetTemplateDiffDefaultImplementation(apiResponseLocalVar, templateId, version);
+
+                        Events.ExecuteOnGetTemplateDiff(apiResponseLocalVar);
+
+                        if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
+                            foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
+                                tokenBaseLocalVar.BeginRateLimit();
+
+                        return apiResponseLocalVar;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                OnErrorGetTemplateDiffDefaultImplementation(e, "/templates/{template_id}/diff", uriBuilderLocalVar.Path, templateId, version);
+                Events.ExecuteOnErrorGetTemplateDiff(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="GetTemplateDiffApiResponse"/>
+        /// </summary>
+        public partial class GetTemplateDiffApiResponse : DocSpring.Client.Client.ApiResponse, IGetTemplateDiffApiResponse
+        {
+            /// <summary>
+            /// The logger
+            /// </summary>
+            public ILogger<Client> Logger { get; }
+
+            /// <summary>
+            /// The <see cref="GetTemplateDiffApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="rawContent"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetTemplateDiffApiResponse(ILogger<Client> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="GetTemplateDiffApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetTemplateDiffApiResponse(ILogger<Client> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public bool IsOk => 200 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.TemplateDiff Ok()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.TemplateDiff result = default;
+                OnOk(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultOk();
+                return result;
+            }
+
+            private DocSpring.Client.Model.TemplateDiff DefaultOk()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsOk
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.TemplateDiff>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnOk(ref bool suppressDefault, ref DocSpring.Client.Model.TemplateDiff result);
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryOk(out DocSpring.Client.Model.TemplateDiff result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Ok();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 409 Conflict
+            /// </summary>
+            /// <returns></returns>
+            public bool IsConflict => 409 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 409 Conflict
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse Conflict()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnConflict(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultConflict();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultConflict()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsConflict
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnConflict(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 409 Conflict and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryConflict(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Conflict();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)409);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public bool IsNotFound => 404 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse NotFound()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnNotFound(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultNotFound();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultNotFound()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsNotFound
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnNotFound(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryNotFound(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = NotFound();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)404);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnauthorized => 401 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse Unauthorized()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnUnauthorized(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultUnauthorized();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultUnauthorized()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsUnauthorized
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnUnauthorized(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnauthorized(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Unauthorized();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
+            {
+                bool suppressDefaultLog = false;
+                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
+                if (!suppressDefaultLog)
+                    Logger.LogError(RestLogEvents.ApiDeserializationFailed, exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+            }
+
+            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
+        }
+
         partial void FormatGetTemplateModelCode(ref string templateId, ref ModelCodeLanguage lang, ref Option<string> version);
 
         /// <summary>
@@ -14375,6 +16490,439 @@ namespace DocSpring.Client.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)422);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public bool IsNotFound => 404 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse NotFound()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnNotFound(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultNotFound();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultNotFound()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsNotFound
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnNotFound(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryNotFound(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = NotFound();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)404);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnauthorized => 401 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse Unauthorized()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnUnauthorized(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultUnauthorized();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultUnauthorized()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsUnauthorized
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnUnauthorized(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnauthorized(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Unauthorized();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
+            {
+                bool suppressDefaultLog = false;
+                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
+                if (!suppressDefaultLog)
+                    Logger.LogError(RestLogEvents.ApiDeserializationFailed, exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+            }
+
+            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
+        }
+
+        partial void FormatGetTemplatePageImages(ref string templateId, ref Option<string> version);
+
+        /// <summary>
+        /// Validates the request parameters
+        /// </summary>
+        /// <param name="templateId"></param>
+        /// <param name="version"></param>
+        /// <returns></returns>
+        private void ValidateGetTemplatePageImages(string templateId, Option<string> version)
+        {
+            if (templateId == null)
+                throw new ArgumentNullException(nameof(templateId));
+
+            if (version.IsSet && version.Value == null)
+                throw new ArgumentNullException(nameof(version));
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="version"></param>
+        private void AfterGetTemplatePageImagesDefaultImplementation(IGetTemplatePageImagesApiResponse apiResponseLocalVar, string templateId, Option<string> version)
+        {
+            bool suppressDefaultLog = false;
+            AfterGetTemplatePageImages(ref suppressDefaultLog, apiResponseLocalVar, templateId, version);
+            if (!suppressDefaultLog)
+                Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="suppressDefaultLog"></param>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="version"></param>
+        partial void AfterGetTemplatePageImages(ref bool suppressDefaultLog, IGetTemplatePageImagesApiResponse apiResponseLocalVar, string templateId, Option<string> version);
+
+        /// <summary>
+        /// Logs exceptions that occur while retrieving the server response
+        /// </summary>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="version"></param>
+        private void OnErrorGetTemplatePageImagesDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, Option<string> version)
+        {
+            bool suppressDefaultLogLocalVar = false;
+            OnErrorGetTemplatePageImages(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, templateId, version);
+            if (!suppressDefaultLogLocalVar)
+                Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
+        }
+
+        /// <summary>
+        /// A partial method that gives developers a way to provide customized exception handling
+        /// </summary>
+        /// <param name="suppressDefaultLogLocalVar"></param>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="version"></param>
+        partial void OnErrorGetTemplatePageImages(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, Option<string> version);
+
+        /// <summary>
+        /// Get images of a template&#39;s pages Returns a JPEG image of each page of a PDF template&#39;s PDF, with temporary links to download them: the draft&#39;s PDF, or a published version&#39;s. Use them to see the pages that fields are placed on. 
+        /// </summary>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="version">A published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;draft&#x60;. (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetTemplatePageImagesApiResponse"/>&gt;</returns>
+        public async Task<IGetTemplatePageImagesApiResponse> GetTemplatePageImagesOrDefaultAsync(string templateId, Option<string> version = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await GetTemplatePageImagesAsync(templateId, version, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Get images of a template&#39;s pages Returns a JPEG image of each page of a PDF template&#39;s PDF, with temporary links to download them: the draft&#39;s PDF, or a published version&#39;s. Use them to see the pages that fields are placed on. 
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="version">A published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;draft&#x60;. (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetTemplatePageImagesApiResponse"/>&gt;</returns>
+        public async Task<IGetTemplatePageImagesApiResponse> GetTemplatePageImagesAsync(string templateId, Option<string> version = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            UriBuilder uriBuilderLocalVar = new UriBuilder();
+
+            try
+            {
+                ValidateGetTemplatePageImages(templateId, version);
+
+                FormatGetTemplatePageImages(ref templateId, ref version);
+
+                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
+                {
+                    uriBuilderLocalVar.Host = HttpClient.BaseAddress.Host;
+                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
+                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
+                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
+                        ? "/templates/{template_id}/page_images"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/templates/{template_id}/page_images");
+                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Btemplate_id%7D", Uri.EscapeDataString(templateId.ToString()));
+
+                    System.Collections.Specialized.NameValueCollection parseQueryStringLocalVar = System.Web.HttpUtility.ParseQueryString(string.Empty);
+
+                    if (version.IsSet)
+                        parseQueryStringLocalVar["version"] = ClientUtils.ParameterToString(version.Value);
+
+                    uriBuilderLocalVar.Query = parseQueryStringLocalVar.ToString();
+
+                    List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
+                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
+
+                    BasicToken basicTokenLocalVar1 = (BasicToken) await BasicTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
+
+                    tokenBaseLocalVars.Add(basicTokenLocalVar1);
+
+                    basicTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    string[] acceptLocalVars = new string[] {
+                        "application/json"
+                    };
+
+                    IEnumerable<MediaTypeWithQualityHeaderValue> acceptHeaderValuesLocalVar = ClientUtils.SelectHeaderAcceptArray(acceptLocalVars);
+
+                    foreach (var acceptLocalVar in acceptHeaderValuesLocalVar)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(acceptLocalVar);
+                    httpRequestMessageLocalVar.Method = new HttpMethod("GET");
+
+                    DateTime requestedAtLocalVar = DateTime.UtcNow;
+
+                    if (ValidateRequests)
+                        await DocSpring.Client.Client.RequestValidator.ValidateRequestAsync("getTemplatePageImages", httpRequestMessageLocalVar).ConfigureAwait(false);
+
+                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
+                    {
+                        GetTemplatePageImagesApiResponse apiResponseLocalVar;
+
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                apiResponseLocalVar = new GetTemplatePageImagesApiResponse(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/templates/{template_id}/page_images", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
+
+                        AfterGetTemplatePageImagesDefaultImplementation(apiResponseLocalVar, templateId, version);
+
+                        Events.ExecuteOnGetTemplatePageImages(apiResponseLocalVar);
+
+                        if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
+                            foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
+                                tokenBaseLocalVar.BeginRateLimit();
+
+                        return apiResponseLocalVar;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                OnErrorGetTemplatePageImagesDefaultImplementation(e, "/templates/{template_id}/page_images", uriBuilderLocalVar.Path, templateId, version);
+                Events.ExecuteOnErrorGetTemplatePageImages(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="GetTemplatePageImagesApiResponse"/>
+        /// </summary>
+        public partial class GetTemplatePageImagesApiResponse : DocSpring.Client.Client.ApiResponse, IGetTemplatePageImagesApiResponse
+        {
+            /// <summary>
+            /// The logger
+            /// </summary>
+            public ILogger<Client> Logger { get; }
+
+            /// <summary>
+            /// The <see cref="GetTemplatePageImagesApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="rawContent"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetTemplatePageImagesApiResponse(ILogger<Client> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="GetTemplatePageImagesApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetTemplatePageImagesApiResponse(ILogger<Client> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public bool IsOk => 200 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.TemplatePageImages Ok()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.TemplatePageImages result = default;
+                OnOk(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultOk();
+                return result;
+            }
+
+            private DocSpring.Client.Model.TemplatePageImages DefaultOk()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsOk
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.TemplatePageImages>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnOk(ref bool suppressDefault, ref DocSpring.Client.Model.TemplatePageImages result);
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryOk(out DocSpring.Client.Model.TemplatePageImages result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Ok();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 409 Conflict
+            /// </summary>
+            /// <returns></returns>
+            public bool IsConflict => 409 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 409 Conflict
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse Conflict()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnConflict(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultConflict();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultConflict()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsConflict
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnConflict(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 409 Conflict and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryConflict(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Conflict();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)409);
                 }
 
                 return result != null;
@@ -16826,6 +19374,439 @@ namespace DocSpring.Client.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
+        partial void FormatListTemplateFields(ref string templateId, ref Option<string> version);
+
+        /// <summary>
+        /// Validates the request parameters
+        /// </summary>
+        /// <param name="templateId"></param>
+        /// <param name="version"></param>
+        /// <returns></returns>
+        private void ValidateListTemplateFields(string templateId, Option<string> version)
+        {
+            if (templateId == null)
+                throw new ArgumentNullException(nameof(templateId));
+
+            if (version.IsSet && version.Value == null)
+                throw new ArgumentNullException(nameof(version));
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="version"></param>
+        private void AfterListTemplateFieldsDefaultImplementation(IListTemplateFieldsApiResponse apiResponseLocalVar, string templateId, Option<string> version)
+        {
+            bool suppressDefaultLog = false;
+            AfterListTemplateFields(ref suppressDefaultLog, apiResponseLocalVar, templateId, version);
+            if (!suppressDefaultLog)
+                Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="suppressDefaultLog"></param>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="version"></param>
+        partial void AfterListTemplateFields(ref bool suppressDefaultLog, IListTemplateFieldsApiResponse apiResponseLocalVar, string templateId, Option<string> version);
+
+        /// <summary>
+        /// Logs exceptions that occur while retrieving the server response
+        /// </summary>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="version"></param>
+        private void OnErrorListTemplateFieldsDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, Option<string> version)
+        {
+            bool suppressDefaultLogLocalVar = false;
+            OnErrorListTemplateFields(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, templateId, version);
+            if (!suppressDefaultLogLocalVar)
+                Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
+        }
+
+        /// <summary>
+        /// A partial method that gives developers a way to provide customized exception handling
+        /// </summary>
+        /// <param name="suppressDefaultLogLocalVar"></param>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="version"></param>
+        partial void OnErrorListTemplateFields(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, Option<string> version);
+
+        /// <summary>
+        /// List a template&#39;s fields Returns a template&#39;s fields with all of their settings, page by page: the draft&#39;s fields, or a published version&#39;s. A PDF template&#39;s fields are placed on its pages: GET /templates/{template_id}/page_images has images of the pages. 
+        /// </summary>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="version">A published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;draft&#x60;. (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IListTemplateFieldsApiResponse"/>&gt;</returns>
+        public async Task<IListTemplateFieldsApiResponse> ListTemplateFieldsOrDefaultAsync(string templateId, Option<string> version = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await ListTemplateFieldsAsync(templateId, version, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// List a template&#39;s fields Returns a template&#39;s fields with all of their settings, page by page: the draft&#39;s fields, or a published version&#39;s. A PDF template&#39;s fields are placed on its pages: GET /templates/{template_id}/page_images has images of the pages. 
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="version">A published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;draft&#x60;. (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IListTemplateFieldsApiResponse"/>&gt;</returns>
+        public async Task<IListTemplateFieldsApiResponse> ListTemplateFieldsAsync(string templateId, Option<string> version = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            UriBuilder uriBuilderLocalVar = new UriBuilder();
+
+            try
+            {
+                ValidateListTemplateFields(templateId, version);
+
+                FormatListTemplateFields(ref templateId, ref version);
+
+                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
+                {
+                    uriBuilderLocalVar.Host = HttpClient.BaseAddress.Host;
+                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
+                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
+                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
+                        ? "/templates/{template_id}/fields"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/templates/{template_id}/fields");
+                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Btemplate_id%7D", Uri.EscapeDataString(templateId.ToString()));
+
+                    System.Collections.Specialized.NameValueCollection parseQueryStringLocalVar = System.Web.HttpUtility.ParseQueryString(string.Empty);
+
+                    if (version.IsSet)
+                        parseQueryStringLocalVar["version"] = ClientUtils.ParameterToString(version.Value);
+
+                    uriBuilderLocalVar.Query = parseQueryStringLocalVar.ToString();
+
+                    List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
+                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
+
+                    BasicToken basicTokenLocalVar1 = (BasicToken) await BasicTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
+
+                    tokenBaseLocalVars.Add(basicTokenLocalVar1);
+
+                    basicTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    string[] acceptLocalVars = new string[] {
+                        "application/json"
+                    };
+
+                    IEnumerable<MediaTypeWithQualityHeaderValue> acceptHeaderValuesLocalVar = ClientUtils.SelectHeaderAcceptArray(acceptLocalVars);
+
+                    foreach (var acceptLocalVar in acceptHeaderValuesLocalVar)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(acceptLocalVar);
+                    httpRequestMessageLocalVar.Method = new HttpMethod("GET");
+
+                    DateTime requestedAtLocalVar = DateTime.UtcNow;
+
+                    if (ValidateRequests)
+                        await DocSpring.Client.Client.RequestValidator.ValidateRequestAsync("listTemplateFields", httpRequestMessageLocalVar).ConfigureAwait(false);
+
+                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
+                    {
+                        ListTemplateFieldsApiResponse apiResponseLocalVar;
+
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                apiResponseLocalVar = new ListTemplateFieldsApiResponse(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/templates/{template_id}/fields", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
+
+                        AfterListTemplateFieldsDefaultImplementation(apiResponseLocalVar, templateId, version);
+
+                        Events.ExecuteOnListTemplateFields(apiResponseLocalVar);
+
+                        if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
+                            foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
+                                tokenBaseLocalVar.BeginRateLimit();
+
+                        return apiResponseLocalVar;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                OnErrorListTemplateFieldsDefaultImplementation(e, "/templates/{template_id}/fields", uriBuilderLocalVar.Path, templateId, version);
+                Events.ExecuteOnErrorListTemplateFields(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ListTemplateFieldsApiResponse"/>
+        /// </summary>
+        public partial class ListTemplateFieldsApiResponse : DocSpring.Client.Client.ApiResponse, IListTemplateFieldsApiResponse
+        {
+            /// <summary>
+            /// The logger
+            /// </summary>
+            public ILogger<Client> Logger { get; }
+
+            /// <summary>
+            /// The <see cref="ListTemplateFieldsApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="rawContent"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public ListTemplateFieldsApiResponse(ILogger<Client> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="ListTemplateFieldsApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public ListTemplateFieldsApiResponse(ILogger<Client> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public bool IsOk => 200 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.TemplateFields Ok()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.TemplateFields result = default;
+                OnOk(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultOk();
+                return result;
+            }
+
+            private DocSpring.Client.Model.TemplateFields DefaultOk()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsOk
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.TemplateFields>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnOk(ref bool suppressDefault, ref DocSpring.Client.Model.TemplateFields result);
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryOk(out DocSpring.Client.Model.TemplateFields result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Ok();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 409 Conflict
+            /// </summary>
+            /// <returns></returns>
+            public bool IsConflict => 409 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 409 Conflict
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse Conflict()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnConflict(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultConflict();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultConflict()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsConflict
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnConflict(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 409 Conflict and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryConflict(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Conflict();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)409);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public bool IsNotFound => 404 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse NotFound()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnNotFound(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultNotFound();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultNotFound()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsNotFound
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnNotFound(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryNotFound(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = NotFound();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)404);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnauthorized => 401 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse Unauthorized()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnUnauthorized(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultUnauthorized();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultUnauthorized()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsUnauthorized
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnUnauthorized(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnauthorized(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Unauthorized();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
+            {
+                bool suppressDefaultLog = false;
+                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
+                if (!suppressDefaultLog)
+                    Logger.LogError(RestLogEvents.ApiDeserializationFailed, exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+            }
+
+            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
+        }
+
         partial void FormatListTemplateSubmissions(ref string templateId, ref Option<bool> test, ref Option<DateTime> createdAfter, ref Option<DateTime> createdBefore, ref Option<bool> includeData, ref Option<int> limit, ref Option<string> cursor);
 
         /// <summary>
@@ -19095,7 +22076,7 @@ namespace DocSpring.Client.Api
         partial void OnErrorPublishTemplateVersion(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, PublishTemplateVersionRequest body);
 
         /// <summary>
-        /// Publish a template version Publishes the template&#39;s draft as a new version that doesn&#39;t change. &#x60;version_type&#x60; says which part of the latest version number goes up. 
+        /// Publish a template version Publishes the template&#39;s draft as a new version that doesn&#39;t change. &#x60;version_type&#x60; says which part of the latest version number goes up. While the template&#39;s PDF is downloading or being processed, or DocSpring is setting up its fields, it returns a 409 that says so. 
         /// </summary>
         /// <param name="templateId">The template&#39;s ID.</param>
         /// <param name="body">The version to publish.</param>
@@ -19114,7 +22095,7 @@ namespace DocSpring.Client.Api
         }
 
         /// <summary>
-        /// Publish a template version Publishes the template&#39;s draft as a new version that doesn&#39;t change. &#x60;version_type&#x60; says which part of the latest version number goes up. 
+        /// Publish a template version Publishes the template&#39;s draft as a new version that doesn&#39;t change. &#x60;version_type&#x60; says which part of the latest version number goes up. While the template&#39;s PDF is downloading or being processed, or DocSpring is setting up its fields, it returns a 409 that says so. 
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId">The template&#39;s ID.</param>
@@ -19516,6 +22497,445 @@ namespace DocSpring.Client.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
+        partial void FormatRemoveTemplateFields(ref string templateId, RemoveTemplateFieldsRequest body);
+
+        /// <summary>
+        /// Validates the request parameters
+        /// </summary>
+        /// <param name="templateId"></param>
+        /// <param name="body"></param>
+        /// <returns></returns>
+        private void ValidateRemoveTemplateFields(string templateId, RemoveTemplateFieldsRequest body)
+        {
+            if (templateId == null)
+                throw new ArgumentNullException(nameof(templateId));
+
+            if (body == null)
+                throw new ArgumentNullException(nameof(body));
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="body"></param>
+        private void AfterRemoveTemplateFieldsDefaultImplementation(IRemoveTemplateFieldsApiResponse apiResponseLocalVar, string templateId, RemoveTemplateFieldsRequest body)
+        {
+            bool suppressDefaultLog = false;
+            AfterRemoveTemplateFields(ref suppressDefaultLog, apiResponseLocalVar, templateId, body);
+            if (!suppressDefaultLog)
+                Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="suppressDefaultLog"></param>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="body"></param>
+        partial void AfterRemoveTemplateFields(ref bool suppressDefaultLog, IRemoveTemplateFieldsApiResponse apiResponseLocalVar, string templateId, RemoveTemplateFieldsRequest body);
+
+        /// <summary>
+        /// Logs exceptions that occur while retrieving the server response
+        /// </summary>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="body"></param>
+        private void OnErrorRemoveTemplateFieldsDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, RemoveTemplateFieldsRequest body)
+        {
+            bool suppressDefaultLogLocalVar = false;
+            OnErrorRemoveTemplateFields(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, templateId, body);
+            if (!suppressDefaultLogLocalVar)
+                Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
+        }
+
+        /// <summary>
+        /// A partial method that gives developers a way to provide customized exception handling
+        /// </summary>
+        /// <param name="suppressDefaultLogLocalVar"></param>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="body"></param>
+        partial void OnErrorRemoveTemplateFields(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, RemoveTemplateFieldsRequest body);
+
+        /// <summary>
+        /// Remove fields from a template Removes fields from a template&#39;s draft and returns the fields that are left. Conditional logic that used only the removed fields is removed too. 
+        /// </summary>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="body">The fields to remove from the template&#39;s draft.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IRemoveTemplateFieldsApiResponse"/>&gt;</returns>
+        public async Task<IRemoveTemplateFieldsApiResponse> RemoveTemplateFieldsOrDefaultAsync(string templateId, RemoveTemplateFieldsRequest body, System.Threading.CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await RemoveTemplateFieldsAsync(templateId, body, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Remove fields from a template Removes fields from a template&#39;s draft and returns the fields that are left. Conditional logic that used only the removed fields is removed too. 
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="body">The fields to remove from the template&#39;s draft.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IRemoveTemplateFieldsApiResponse"/>&gt;</returns>
+        public async Task<IRemoveTemplateFieldsApiResponse> RemoveTemplateFieldsAsync(string templateId, RemoveTemplateFieldsRequest body, System.Threading.CancellationToken cancellationToken = default)
+        {
+            UriBuilder uriBuilderLocalVar = new UriBuilder();
+
+            try
+            {
+                ValidateRemoveTemplateFields(templateId, body);
+
+                FormatRemoveTemplateFields(ref templateId, body);
+
+                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
+                {
+                    uriBuilderLocalVar.Host = HttpClient.BaseAddress.Host;
+                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
+                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
+                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
+                        ? "/templates/{template_id}/fields/remove"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/templates/{template_id}/fields/remove");
+                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Btemplate_id%7D", Uri.EscapeDataString(templateId.ToString()));
+
+                    httpRequestMessageLocalVar.Content = (body as object) is DocSpring.Client.Client.FileParameter fileParameterLocalVar
+                        ? httpRequestMessageLocalVar.Content = new StreamContent(fileParameterLocalVar.Content)
+                        : httpRequestMessageLocalVar.Content = new StringContent(JsonSerializer.Serialize(body, _jsonSerializerOptions));
+
+                    List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
+                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
+
+                    BasicToken basicTokenLocalVar1 = (BasicToken) await BasicTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
+
+                    tokenBaseLocalVars.Add(basicTokenLocalVar1);
+
+                    basicTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    string[] contentTypes = new string[] {
+                        "application/json"
+                    };
+
+                    string contentTypeLocalVar = ClientUtils.SelectHeaderContentType(contentTypes);
+
+                    if (contentTypeLocalVar != null && httpRequestMessageLocalVar.Content != null)
+                        httpRequestMessageLocalVar.Content.Headers.ContentType = new MediaTypeHeaderValue(contentTypeLocalVar);
+
+                    string[] acceptLocalVars = new string[] {
+                        "application/json"
+                    };
+
+                    IEnumerable<MediaTypeWithQualityHeaderValue> acceptHeaderValuesLocalVar = ClientUtils.SelectHeaderAcceptArray(acceptLocalVars);
+
+                    foreach (var acceptLocalVar in acceptHeaderValuesLocalVar)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(acceptLocalVar);
+                    httpRequestMessageLocalVar.Method = new HttpMethod("POST");
+
+                    DateTime requestedAtLocalVar = DateTime.UtcNow;
+
+                    if (ValidateRequests)
+                        await DocSpring.Client.Client.RequestValidator.ValidateRequestAsync("removeTemplateFields", httpRequestMessageLocalVar).ConfigureAwait(false);
+
+                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
+                    {
+                        RemoveTemplateFieldsApiResponse apiResponseLocalVar;
+
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                apiResponseLocalVar = new RemoveTemplateFieldsApiResponse(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/templates/{template_id}/fields/remove", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
+
+                        AfterRemoveTemplateFieldsDefaultImplementation(apiResponseLocalVar, templateId, body);
+
+                        Events.ExecuteOnRemoveTemplateFields(apiResponseLocalVar);
+
+                        if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
+                            foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
+                                tokenBaseLocalVar.BeginRateLimit();
+
+                        return apiResponseLocalVar;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                OnErrorRemoveTemplateFieldsDefaultImplementation(e, "/templates/{template_id}/fields/remove", uriBuilderLocalVar.Path, templateId, body);
+                Events.ExecuteOnErrorRemoveTemplateFields(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="RemoveTemplateFieldsApiResponse"/>
+        /// </summary>
+        public partial class RemoveTemplateFieldsApiResponse : DocSpring.Client.Client.ApiResponse, IRemoveTemplateFieldsApiResponse
+        {
+            /// <summary>
+            /// The logger
+            /// </summary>
+            public ILogger<Client> Logger { get; }
+
+            /// <summary>
+            /// The <see cref="RemoveTemplateFieldsApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="rawContent"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public RemoveTemplateFieldsApiResponse(ILogger<Client> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="RemoveTemplateFieldsApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public RemoveTemplateFieldsApiResponse(ILogger<Client> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public bool IsOk => 200 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.TemplateFields Ok()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.TemplateFields result = default;
+                OnOk(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultOk();
+                return result;
+            }
+
+            private DocSpring.Client.Model.TemplateFields DefaultOk()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsOk
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.TemplateFields>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnOk(ref bool suppressDefault, ref DocSpring.Client.Model.TemplateFields result);
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryOk(out DocSpring.Client.Model.TemplateFields result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Ok();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnprocessableContent => 422 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse UnprocessableContent()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnUnprocessableContent(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultUnprocessableContent();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultUnprocessableContent()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsUnprocessableContent
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnUnprocessableContent(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnprocessableContent(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = UnprocessableContent();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)422);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public bool IsNotFound => 404 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse NotFound()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnNotFound(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultNotFound();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultNotFound()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsNotFound
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnNotFound(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryNotFound(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = NotFound();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)404);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnauthorized => 401 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse Unauthorized()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnUnauthorized(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultUnauthorized();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultUnauthorized()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsUnauthorized
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnUnauthorized(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnauthorized(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Unauthorized();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
+            {
+                bool suppressDefaultLog = false;
+                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
+                if (!suppressDefaultLog)
+                    Logger.LogError(RestLogEvents.ApiDeserializationFailed, exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+            }
+
+            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
+        }
+
         partial void FormatRenameFolder(ref string folderId, RenameFolderRequest body);
 
         /// <summary>
@@ -19780,6 +23200,445 @@ namespace DocSpring.Client.Api
             /// <param name="result"></param>
             /// <returns></returns>
             public bool TryOk(out DocSpring.Client.Model.Folder result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Ok();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnprocessableContent => 422 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse UnprocessableContent()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnUnprocessableContent(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultUnprocessableContent();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultUnprocessableContent()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsUnprocessableContent
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnUnprocessableContent(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnprocessableContent(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = UnprocessableContent();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)422);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public bool IsNotFound => 404 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse NotFound()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnNotFound(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultNotFound();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultNotFound()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsNotFound
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnNotFound(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryNotFound(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = NotFound();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)404);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnauthorized => 401 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse Unauthorized()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnUnauthorized(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultUnauthorized();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultUnauthorized()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsUnauthorized
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnUnauthorized(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnauthorized(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Unauthorized();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
+            {
+                bool suppressDefaultLog = false;
+                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
+                if (!suppressDefaultLog)
+                    Logger.LogError(RestLogEvents.ApiDeserializationFailed, exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+            }
+
+            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
+        }
+
+        partial void FormatReorderTemplateFields(ref string templateId, ReorderTemplateFieldsRequest body);
+
+        /// <summary>
+        /// Validates the request parameters
+        /// </summary>
+        /// <param name="templateId"></param>
+        /// <param name="body"></param>
+        /// <returns></returns>
+        private void ValidateReorderTemplateFields(string templateId, ReorderTemplateFieldsRequest body)
+        {
+            if (templateId == null)
+                throw new ArgumentNullException(nameof(templateId));
+
+            if (body == null)
+                throw new ArgumentNullException(nameof(body));
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="body"></param>
+        private void AfterReorderTemplateFieldsDefaultImplementation(IReorderTemplateFieldsApiResponse apiResponseLocalVar, string templateId, ReorderTemplateFieldsRequest body)
+        {
+            bool suppressDefaultLog = false;
+            AfterReorderTemplateFields(ref suppressDefaultLog, apiResponseLocalVar, templateId, body);
+            if (!suppressDefaultLog)
+                Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="suppressDefaultLog"></param>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="body"></param>
+        partial void AfterReorderTemplateFields(ref bool suppressDefaultLog, IReorderTemplateFieldsApiResponse apiResponseLocalVar, string templateId, ReorderTemplateFieldsRequest body);
+
+        /// <summary>
+        /// Logs exceptions that occur while retrieving the server response
+        /// </summary>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="body"></param>
+        private void OnErrorReorderTemplateFieldsDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, ReorderTemplateFieldsRequest body)
+        {
+            bool suppressDefaultLogLocalVar = false;
+            OnErrorReorderTemplateFields(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, templateId, body);
+            if (!suppressDefaultLogLocalVar)
+                Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
+        }
+
+        /// <summary>
+        /// A partial method that gives developers a way to provide customized exception handling
+        /// </summary>
+        /// <param name="suppressDefaultLogLocalVar"></param>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="body"></param>
+        partial void OnErrorReorderTemplateFields(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, ReorderTemplateFieldsRequest body);
+
+        /// <summary>
+        /// Reorder a template&#39;s fields Changes the order of the fields in a template&#39;s draft and returns them in their new order. Send every field&#39;s ID: each field stays on its page, and a page&#39;s fields are printed in this order, so a later field prints over an earlier one where they overlap. Their values are in this order in the template&#39;s data schema and forms. 
+        /// </summary>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="body">The new order of the fields in the template&#39;s draft.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IReorderTemplateFieldsApiResponse"/>&gt;</returns>
+        public async Task<IReorderTemplateFieldsApiResponse> ReorderTemplateFieldsOrDefaultAsync(string templateId, ReorderTemplateFieldsRequest body, System.Threading.CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await ReorderTemplateFieldsAsync(templateId, body, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Reorder a template&#39;s fields Changes the order of the fields in a template&#39;s draft and returns them in their new order. Send every field&#39;s ID: each field stays on its page, and a page&#39;s fields are printed in this order, so a later field prints over an earlier one where they overlap. Their values are in this order in the template&#39;s data schema and forms. 
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="body">The new order of the fields in the template&#39;s draft.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IReorderTemplateFieldsApiResponse"/>&gt;</returns>
+        public async Task<IReorderTemplateFieldsApiResponse> ReorderTemplateFieldsAsync(string templateId, ReorderTemplateFieldsRequest body, System.Threading.CancellationToken cancellationToken = default)
+        {
+            UriBuilder uriBuilderLocalVar = new UriBuilder();
+
+            try
+            {
+                ValidateReorderTemplateFields(templateId, body);
+
+                FormatReorderTemplateFields(ref templateId, body);
+
+                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
+                {
+                    uriBuilderLocalVar.Host = HttpClient.BaseAddress.Host;
+                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
+                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
+                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
+                        ? "/templates/{template_id}/fields/reorder"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/templates/{template_id}/fields/reorder");
+                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Btemplate_id%7D", Uri.EscapeDataString(templateId.ToString()));
+
+                    httpRequestMessageLocalVar.Content = (body as object) is DocSpring.Client.Client.FileParameter fileParameterLocalVar
+                        ? httpRequestMessageLocalVar.Content = new StreamContent(fileParameterLocalVar.Content)
+                        : httpRequestMessageLocalVar.Content = new StringContent(JsonSerializer.Serialize(body, _jsonSerializerOptions));
+
+                    List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
+                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
+
+                    BasicToken basicTokenLocalVar1 = (BasicToken) await BasicTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
+
+                    tokenBaseLocalVars.Add(basicTokenLocalVar1);
+
+                    basicTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    string[] contentTypes = new string[] {
+                        "application/json"
+                    };
+
+                    string contentTypeLocalVar = ClientUtils.SelectHeaderContentType(contentTypes);
+
+                    if (contentTypeLocalVar != null && httpRequestMessageLocalVar.Content != null)
+                        httpRequestMessageLocalVar.Content.Headers.ContentType = new MediaTypeHeaderValue(contentTypeLocalVar);
+
+                    string[] acceptLocalVars = new string[] {
+                        "application/json"
+                    };
+
+                    IEnumerable<MediaTypeWithQualityHeaderValue> acceptHeaderValuesLocalVar = ClientUtils.SelectHeaderAcceptArray(acceptLocalVars);
+
+                    foreach (var acceptLocalVar in acceptHeaderValuesLocalVar)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(acceptLocalVar);
+                    httpRequestMessageLocalVar.Method = new HttpMethod("POST");
+
+                    DateTime requestedAtLocalVar = DateTime.UtcNow;
+
+                    if (ValidateRequests)
+                        await DocSpring.Client.Client.RequestValidator.ValidateRequestAsync("reorderTemplateFields", httpRequestMessageLocalVar).ConfigureAwait(false);
+
+                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
+                    {
+                        ReorderTemplateFieldsApiResponse apiResponseLocalVar;
+
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                apiResponseLocalVar = new ReorderTemplateFieldsApiResponse(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/templates/{template_id}/fields/reorder", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
+
+                        AfterReorderTemplateFieldsDefaultImplementation(apiResponseLocalVar, templateId, body);
+
+                        Events.ExecuteOnReorderTemplateFields(apiResponseLocalVar);
+
+                        if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
+                            foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
+                                tokenBaseLocalVar.BeginRateLimit();
+
+                        return apiResponseLocalVar;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                OnErrorReorderTemplateFieldsDefaultImplementation(e, "/templates/{template_id}/fields/reorder", uriBuilderLocalVar.Path, templateId, body);
+                Events.ExecuteOnErrorReorderTemplateFields(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ReorderTemplateFieldsApiResponse"/>
+        /// </summary>
+        public partial class ReorderTemplateFieldsApiResponse : DocSpring.Client.Client.ApiResponse, IReorderTemplateFieldsApiResponse
+        {
+            /// <summary>
+            /// The logger
+            /// </summary>
+            public ILogger<Client> Logger { get; }
+
+            /// <summary>
+            /// The <see cref="ReorderTemplateFieldsApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="rawContent"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public ReorderTemplateFieldsApiResponse(ILogger<Client> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="ReorderTemplateFieldsApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public ReorderTemplateFieldsApiResponse(ILogger<Client> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public bool IsOk => 200 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.TemplateFields Ok()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.TemplateFields result = default;
+                OnOk(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultOk();
+                return result;
+            }
+
+            private DocSpring.Client.Model.TemplateFields DefaultOk()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsOk
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.TemplateFields>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnOk(ref bool suppressDefault, ref DocSpring.Client.Model.TemplateFields result);
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryOk(out DocSpring.Client.Model.TemplateFields result)
             {
                 result = null;
 
@@ -21293,7 +25152,7 @@ namespace DocSpring.Client.Api
         partial void OnErrorUpdateTemplate(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, UpdateTemplateRequest body);
 
         /// <summary>
-        /// Update a template Changes a template&#39;s draft. Properties left out keep their values. &#x60;defaults&#x60; and &#x60;html_engine_options&#x60; replace the whole object. Setting &#x60;parent_folder_id&#x60; moves the template and all of its published versions. 
+        /// Update a template Changes a template&#39;s draft. Properties left out keep their values. &#x60;defaults&#x60; and &#x60;html_engine_options&#x60; replace the whole object, and &#x60;field_groups&#x60; changes only the groups it lists. Setting &#x60;parent_folder_id&#x60; moves the template and all of its published versions. 
         /// </summary>
         /// <param name="templateId">The template&#39;s ID.</param>
         /// <param name="body">The settings to change. Properties left out keep their values.</param>
@@ -21312,7 +25171,7 @@ namespace DocSpring.Client.Api
         }
 
         /// <summary>
-        /// Update a template Changes a template&#39;s draft. Properties left out keep their values. &#x60;defaults&#x60; and &#x60;html_engine_options&#x60; replace the whole object. Setting &#x60;parent_folder_id&#x60; moves the template and all of its published versions. 
+        /// Update a template Changes a template&#39;s draft. Properties left out keep their values. &#x60;defaults&#x60; and &#x60;html_engine_options&#x60; replace the whole object, and &#x60;field_groups&#x60; changes only the groups it lists. Setting &#x60;parent_folder_id&#x60; moves the template and all of its published versions. 
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId">The template&#39;s ID.</param>
@@ -21554,56 +25413,6 @@ namespace DocSpring.Client.Api
             }
 
             /// <summary>
-            /// Returns true if the response is 404 NotFound
-            /// </summary>
-            /// <returns></returns>
-            public bool IsNotFound => 404 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 404 NotFound
-            /// </summary>
-            /// <returns></returns>
-            public DocSpring.Client.Model.ErrorResponse NotFound()
-            {
-                bool suppressDefault = false;
-                DocSpring.Client.Model.ErrorResponse result = default;
-                OnNotFound(ref suppressDefault, ref result);
-                if (!suppressDefault)
-                    result = DefaultNotFound();
-                return result;
-            }
-
-            private DocSpring.Client.Model.ErrorResponse DefaultNotFound()
-            {
-                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
-                return IsNotFound
-                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
-                    : default;
-            }
-
-            partial void OnNotFound(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
-
-            /// <summary>
-            /// Returns true if the response is 404 NotFound and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryNotFound(out DocSpring.Client.Model.ErrorResponse result)
-            {
-                result = null;
-
-                try
-                {
-                    result = NotFound();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)404);
-                }
-
-                return result != null;
-            }
-
-            /// <summary>
             /// Returns true if the response is 422 UnprocessableContent
             /// </summary>
             /// <returns></returns>
@@ -21648,6 +25457,56 @@ namespace DocSpring.Client.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)422);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public bool IsNotFound => 404 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse NotFound()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnNotFound(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultNotFound();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultNotFound()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsNotFound
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnNotFound(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryNotFound(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = NotFound();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)404);
                 }
 
                 return result != null;
@@ -21786,11 +25645,11 @@ namespace DocSpring.Client.Api
         partial void OnErrorUpdateTemplateDocument(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, UpdateTemplateDocumentRequest body, Option<bool> wait);
 
         /// <summary>
-        /// Replace a template&#39;s PDF Replaces a PDF template&#39;s PDF with one you uploaded with the presigned upload (GET /uploads/presign). The fields stay where they are, unless &#x60;reimport_fields&#x60; replaces them with the new PDF&#39;s fillable fields. To send the PDF with the request instead, use PUT /templates/{template_id}/document/upload. 
+        /// Replace a template&#39;s PDF Replaces a PDF template&#39;s PDF with one you uploaded with the presigned upload (GET /uploads/presign) (&#x60;cache_id&#x60;), a link to download it from (&#x60;document_url&#x60;), or the file in base64 (&#x60;document_base64&#x60;). The fields stay where they are, unless &#x60;reimport_fields&#x60; replaces them with the new PDF&#39;s fillable fields. To send the PDF as &#x60;multipart/form-data&#x60; instead, use PUT /templates/{template_id}/document/upload. 
         /// </summary>
         /// <param name="templateId">The template&#39;s ID.</param>
-        /// <param name="body">The new PDF.</param>
-        /// <param name="wait">Wait until the PDF has been processed before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="body">The new PDF, as one of &#x60;cache_id&#x60;, &#x60;document_url&#x60; and &#x60;document_base64&#x60;.</param>
+        /// <param name="wait">Wait until the PDF has been processed, and a &#x60;document_url&#x60; downloaded, before responding. Default true on sync.api hosts. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IUpdateTemplateDocumentApiResponse"/>&gt;</returns>
         public async Task<IUpdateTemplateDocumentApiResponse> UpdateTemplateDocumentOrDefaultAsync(string templateId, UpdateTemplateDocumentRequest body, Option<bool> wait = default, System.Threading.CancellationToken cancellationToken = default)
@@ -21806,12 +25665,12 @@ namespace DocSpring.Client.Api
         }
 
         /// <summary>
-        /// Replace a template&#39;s PDF Replaces a PDF template&#39;s PDF with one you uploaded with the presigned upload (GET /uploads/presign). The fields stay where they are, unless &#x60;reimport_fields&#x60; replaces them with the new PDF&#39;s fillable fields. To send the PDF with the request instead, use PUT /templates/{template_id}/document/upload. 
+        /// Replace a template&#39;s PDF Replaces a PDF template&#39;s PDF with one you uploaded with the presigned upload (GET /uploads/presign) (&#x60;cache_id&#x60;), a link to download it from (&#x60;document_url&#x60;), or the file in base64 (&#x60;document_base64&#x60;). The fields stay where they are, unless &#x60;reimport_fields&#x60; replaces them with the new PDF&#39;s fillable fields. To send the PDF as &#x60;multipart/form-data&#x60; instead, use PUT /templates/{template_id}/document/upload. 
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId">The template&#39;s ID.</param>
-        /// <param name="body">The new PDF.</param>
-        /// <param name="wait">Wait until the PDF has been processed before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="body">The new PDF, as one of &#x60;cache_id&#x60;, &#x60;document_url&#x60; and &#x60;document_base64&#x60;.</param>
+        /// <param name="wait">Wait until the PDF has been processed, and a &#x60;document_url&#x60; downloaded, before responding. Default true on sync.api hosts. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IUpdateTemplateDocumentApiResponse"/>&gt;</returns>
         public async Task<IUpdateTemplateDocumentApiResponse> UpdateTemplateDocumentAsync(string templateId, UpdateTemplateDocumentRequest body, Option<bool> wait = default, System.Threading.CancellationToken cancellationToken = default)
@@ -22050,6 +25909,445 @@ namespace DocSpring.Client.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)409);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnprocessableContent => 422 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse UnprocessableContent()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnUnprocessableContent(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultUnprocessableContent();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultUnprocessableContent()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsUnprocessableContent
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnUnprocessableContent(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnprocessableContent(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = UnprocessableContent();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)422);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public bool IsNotFound => 404 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse NotFound()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnNotFound(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultNotFound();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultNotFound()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsNotFound
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnNotFound(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryNotFound(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = NotFound();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)404);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnauthorized => 401 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse Unauthorized()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnUnauthorized(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultUnauthorized();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultUnauthorized()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsUnauthorized
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnUnauthorized(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnauthorized(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Unauthorized();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
+            {
+                bool suppressDefaultLog = false;
+                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
+                if (!suppressDefaultLog)
+                    Logger.LogError(RestLogEvents.ApiDeserializationFailed, exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+            }
+
+            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
+        }
+
+        partial void FormatUpdateTemplateFields(ref string templateId, UpdateTemplateFieldsRequest body);
+
+        /// <summary>
+        /// Validates the request parameters
+        /// </summary>
+        /// <param name="templateId"></param>
+        /// <param name="body"></param>
+        /// <returns></returns>
+        private void ValidateUpdateTemplateFields(string templateId, UpdateTemplateFieldsRequest body)
+        {
+            if (templateId == null)
+                throw new ArgumentNullException(nameof(templateId));
+
+            if (body == null)
+                throw new ArgumentNullException(nameof(body));
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="body"></param>
+        private void AfterUpdateTemplateFieldsDefaultImplementation(IUpdateTemplateFieldsApiResponse apiResponseLocalVar, string templateId, UpdateTemplateFieldsRequest body)
+        {
+            bool suppressDefaultLog = false;
+            AfterUpdateTemplateFields(ref suppressDefaultLog, apiResponseLocalVar, templateId, body);
+            if (!suppressDefaultLog)
+                Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="suppressDefaultLog"></param>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="body"></param>
+        partial void AfterUpdateTemplateFields(ref bool suppressDefaultLog, IUpdateTemplateFieldsApiResponse apiResponseLocalVar, string templateId, UpdateTemplateFieldsRequest body);
+
+        /// <summary>
+        /// Logs exceptions that occur while retrieving the server response
+        /// </summary>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="body"></param>
+        private void OnErrorUpdateTemplateFieldsDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, UpdateTemplateFieldsRequest body)
+        {
+            bool suppressDefaultLogLocalVar = false;
+            OnErrorUpdateTemplateFields(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, templateId, body);
+            if (!suppressDefaultLogLocalVar)
+                Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
+        }
+
+        /// <summary>
+        /// A partial method that gives developers a way to provide customized exception handling
+        /// </summary>
+        /// <param name="suppressDefaultLogLocalVar"></param>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="body"></param>
+        partial void OnErrorUpdateTemplateFields(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, UpdateTemplateFieldsRequest body);
+
+        /// <summary>
+        /// Update a template&#39;s fields Changes fields of a template&#39;s draft and returns all of its fields. Settings left out keep their values. A shared setting (&#x60;type&#x60;, &#x60;required&#x60;, &#x60;default&#x60;, ...) changes for every field with the same name. 
+        /// </summary>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="body">The fields to change in the template&#39;s draft.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IUpdateTemplateFieldsApiResponse"/>&gt;</returns>
+        public async Task<IUpdateTemplateFieldsApiResponse> UpdateTemplateFieldsOrDefaultAsync(string templateId, UpdateTemplateFieldsRequest body, System.Threading.CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await UpdateTemplateFieldsAsync(templateId, body, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Update a template&#39;s fields Changes fields of a template&#39;s draft and returns all of its fields. Settings left out keep their values. A shared setting (&#x60;type&#x60;, &#x60;required&#x60;, &#x60;default&#x60;, ...) changes for every field with the same name. 
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="body">The fields to change in the template&#39;s draft.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IUpdateTemplateFieldsApiResponse"/>&gt;</returns>
+        public async Task<IUpdateTemplateFieldsApiResponse> UpdateTemplateFieldsAsync(string templateId, UpdateTemplateFieldsRequest body, System.Threading.CancellationToken cancellationToken = default)
+        {
+            UriBuilder uriBuilderLocalVar = new UriBuilder();
+
+            try
+            {
+                ValidateUpdateTemplateFields(templateId, body);
+
+                FormatUpdateTemplateFields(ref templateId, body);
+
+                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
+                {
+                    uriBuilderLocalVar.Host = HttpClient.BaseAddress.Host;
+                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
+                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
+                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
+                        ? "/templates/{template_id}/fields"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/templates/{template_id}/fields");
+                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Btemplate_id%7D", Uri.EscapeDataString(templateId.ToString()));
+
+                    httpRequestMessageLocalVar.Content = (body as object) is DocSpring.Client.Client.FileParameter fileParameterLocalVar
+                        ? httpRequestMessageLocalVar.Content = new StreamContent(fileParameterLocalVar.Content)
+                        : httpRequestMessageLocalVar.Content = new StringContent(JsonSerializer.Serialize(body, _jsonSerializerOptions));
+
+                    List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
+                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
+
+                    BasicToken basicTokenLocalVar1 = (BasicToken) await BasicTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
+
+                    tokenBaseLocalVars.Add(basicTokenLocalVar1);
+
+                    basicTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    string[] contentTypes = new string[] {
+                        "application/json"
+                    };
+
+                    string contentTypeLocalVar = ClientUtils.SelectHeaderContentType(contentTypes);
+
+                    if (contentTypeLocalVar != null && httpRequestMessageLocalVar.Content != null)
+                        httpRequestMessageLocalVar.Content.Headers.ContentType = new MediaTypeHeaderValue(contentTypeLocalVar);
+
+                    string[] acceptLocalVars = new string[] {
+                        "application/json"
+                    };
+
+                    IEnumerable<MediaTypeWithQualityHeaderValue> acceptHeaderValuesLocalVar = ClientUtils.SelectHeaderAcceptArray(acceptLocalVars);
+
+                    foreach (var acceptLocalVar in acceptHeaderValuesLocalVar)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(acceptLocalVar);
+                    httpRequestMessageLocalVar.Method = new HttpMethod("PUT");
+
+                    DateTime requestedAtLocalVar = DateTime.UtcNow;
+
+                    if (ValidateRequests)
+                        await DocSpring.Client.Client.RequestValidator.ValidateRequestAsync("updateTemplateFields", httpRequestMessageLocalVar).ConfigureAwait(false);
+
+                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
+                    {
+                        UpdateTemplateFieldsApiResponse apiResponseLocalVar;
+
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                apiResponseLocalVar = new UpdateTemplateFieldsApiResponse(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/templates/{template_id}/fields", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
+
+                        AfterUpdateTemplateFieldsDefaultImplementation(apiResponseLocalVar, templateId, body);
+
+                        Events.ExecuteOnUpdateTemplateFields(apiResponseLocalVar);
+
+                        if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
+                            foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
+                                tokenBaseLocalVar.BeginRateLimit();
+
+                        return apiResponseLocalVar;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                OnErrorUpdateTemplateFieldsDefaultImplementation(e, "/templates/{template_id}/fields", uriBuilderLocalVar.Path, templateId, body);
+                Events.ExecuteOnErrorUpdateTemplateFields(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="UpdateTemplateFieldsApiResponse"/>
+        /// </summary>
+        public partial class UpdateTemplateFieldsApiResponse : DocSpring.Client.Client.ApiResponse, IUpdateTemplateFieldsApiResponse
+        {
+            /// <summary>
+            /// The logger
+            /// </summary>
+            public ILogger<Client> Logger { get; }
+
+            /// <summary>
+            /// The <see cref="UpdateTemplateFieldsApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="rawContent"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public UpdateTemplateFieldsApiResponse(ILogger<Client> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="UpdateTemplateFieldsApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public UpdateTemplateFieldsApiResponse(ILogger<Client> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public bool IsOk => 200 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.TemplateFields Ok()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.TemplateFields result = default;
+                OnOk(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultOk();
+                return result;
+            }
+
+            private DocSpring.Client.Model.TemplateFields DefaultOk()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsOk
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.TemplateFields>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnOk(ref bool suppressDefault, ref DocSpring.Client.Model.TemplateFields result);
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryOk(out DocSpring.Client.Model.TemplateFields result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Ok();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
                 }
 
                 return result != null;
@@ -22766,7 +27064,7 @@ namespace DocSpring.Client.Api
         /// Create a PDF template from an uploaded PDF Creates a PDF template from a PDF sent with the request (&#x60;multipart/form-data&#x60;). For large files, upload the PDF with the presigned upload (GET /uploads/presign) and create the template with POST /templates. 
         /// </summary>
         /// <param name="document">The PDF.</param>
-        /// <param name="wait">Wait until the PDF has been processed before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="wait">Wait until the PDF has been processed, and a &#x60;document_url&#x60; downloaded, before responding. Default true on sync.api hosts. (optional)</param>
         /// <param name="name">The template&#39;s name. (optional)</param>
         /// <param name="description">The template&#39;s description. (optional)</param>
         /// <param name="parentFolderId">The folder to put the template in. Left out, it&#39;s created at the root. (optional)</param>
@@ -22794,7 +27092,7 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="document">The PDF.</param>
-        /// <param name="wait">Wait until the PDF has been processed before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="wait">Wait until the PDF has been processed, and a &#x60;document_url&#x60; downloaded, before responding. Default true on sync.api hosts. (optional)</param>
         /// <param name="name">The template&#39;s name. (optional)</param>
         /// <param name="description">The template&#39;s description. (optional)</param>
         /// <param name="parentFolderId">The folder to put the template in. Left out, it&#39;s created at the root. (optional)</param>
@@ -23266,7 +27564,7 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <param name="templateId">The template&#39;s ID.</param>
         /// <param name="document">The new PDF.</param>
-        /// <param name="wait">Wait until the PDF has been processed before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="wait">Wait until the PDF has been processed, and a &#x60;document_url&#x60; downloaded, before responding. Default true on sync.api hosts. (optional)</param>
         /// <param name="reimportFields">Replace all of the template&#39;s fields with the fillable fields in the new PDF, once DocSpring has processed it (&#x60;document.field_reimport_state&#x60;). As on a first upload, the default typeface, font size, bold and color are taken from the PDF&#39;s fields; the template&#39;s other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can&#39;t re-import its fields. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IUploadTemplateDocumentApiResponse"/>&gt;</returns>
@@ -23288,7 +27586,7 @@ namespace DocSpring.Client.Api
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId">The template&#39;s ID.</param>
         /// <param name="document">The new PDF.</param>
-        /// <param name="wait">Wait until the PDF has been processed before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="wait">Wait until the PDF has been processed, and a &#x60;document_url&#x60; downloaded, before responding. Default true on sync.api hosts. (optional)</param>
         /// <param name="reimportFields">Replace all of the template&#39;s fields with the fillable fields in the new PDF, once DocSpring has processed it (&#x60;document.field_reimport_state&#x60;). As on a first upload, the default typeface, font size, bold and color are taken from the PDF&#39;s fields; the template&#39;s other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can&#39;t re-import its fields. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IUploadTemplateDocumentApiResponse"/>&gt;</returns>
@@ -23587,6 +27885,462 @@ namespace DocSpring.Client.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)404);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnauthorized => 401 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 401 Unauthorized
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse Unauthorized()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnUnauthorized(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultUnauthorized();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultUnauthorized()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsUnauthorized
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnUnauthorized(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 401 Unauthorized and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnauthorized(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Unauthorized();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
+            {
+                bool suppressDefaultLog = false;
+                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
+                if (!suppressDefaultLog)
+                    Logger.LogError(RestLogEvents.ApiDeserializationFailed, exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+            }
+
+            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
+        }
+
+        partial void FormatValidateSubmission(ref string templateId, ValidateSubmissionRequest body, ref Option<string> version);
+
+        /// <summary>
+        /// Validates the request parameters
+        /// </summary>
+        /// <param name="templateId"></param>
+        /// <param name="body"></param>
+        /// <param name="version"></param>
+        /// <returns></returns>
+        private void ValidateValidateSubmission(string templateId, ValidateSubmissionRequest body, Option<string> version)
+        {
+            if (templateId == null)
+                throw new ArgumentNullException(nameof(templateId));
+
+            if (body == null)
+                throw new ArgumentNullException(nameof(body));
+
+            if (version.IsSet && version.Value == null)
+                throw new ArgumentNullException(nameof(version));
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="body"></param>
+        /// <param name="version"></param>
+        private void AfterValidateSubmissionDefaultImplementation(IValidateSubmissionApiResponse apiResponseLocalVar, string templateId, ValidateSubmissionRequest body, Option<string> version)
+        {
+            bool suppressDefaultLog = false;
+            AfterValidateSubmission(ref suppressDefaultLog, apiResponseLocalVar, templateId, body, version);
+            if (!suppressDefaultLog)
+                Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="suppressDefaultLog"></param>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="body"></param>
+        /// <param name="version"></param>
+        partial void AfterValidateSubmission(ref bool suppressDefaultLog, IValidateSubmissionApiResponse apiResponseLocalVar, string templateId, ValidateSubmissionRequest body, Option<string> version);
+
+        /// <summary>
+        /// Logs exceptions that occur while retrieving the server response
+        /// </summary>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="body"></param>
+        /// <param name="version"></param>
+        private void OnErrorValidateSubmissionDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, ValidateSubmissionRequest body, Option<string> version)
+        {
+            bool suppressDefaultLogLocalVar = false;
+            OnErrorValidateSubmission(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, templateId, body, version);
+            if (!suppressDefaultLogLocalVar)
+                Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
+        }
+
+        /// <summary>
+        /// A partial method that gives developers a way to provide customized exception handling
+        /// </summary>
+        /// <param name="suppressDefaultLogLocalVar"></param>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="body"></param>
+        /// <param name="version"></param>
+        partial void OnErrorValidateSubmission(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, ValidateSubmissionRequest body, Option<string> version);
+
+        /// <summary>
+        /// Check a submission without creating it Checks a submission as creating it would (its data against the template&#39;s fields, its settings and signature requests) without saving it, generating anything or using credits. It doesn&#39;t check your account&#39;s credits. The response says whether the submission is valid, and if not, has the error that creating it would return. 
+        /// </summary>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="body">The submission&#39;s data and settings.</param>
+        /// <param name="version">The template version to use: a published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;latest&#x60; (the draft when no version has been published). (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IValidateSubmissionApiResponse"/>&gt;</returns>
+        public async Task<IValidateSubmissionApiResponse> ValidateSubmissionOrDefaultAsync(string templateId, ValidateSubmissionRequest body, Option<string> version = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await ValidateSubmissionAsync(templateId, body, version, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Check a submission without creating it Checks a submission as creating it would (its data against the template&#39;s fields, its settings and signature requests) without saving it, generating anything or using credits. It doesn&#39;t check your account&#39;s credits. The response says whether the submission is valid, and if not, has the error that creating it would return. 
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="body">The submission&#39;s data and settings.</param>
+        /// <param name="version">The template version to use: a published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;latest&#x60; (the draft when no version has been published). (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IValidateSubmissionApiResponse"/>&gt;</returns>
+        public async Task<IValidateSubmissionApiResponse> ValidateSubmissionAsync(string templateId, ValidateSubmissionRequest body, Option<string> version = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            UriBuilder uriBuilderLocalVar = new UriBuilder();
+
+            try
+            {
+                ValidateValidateSubmission(templateId, body, version);
+
+                FormatValidateSubmission(ref templateId, body, ref version);
+
+                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
+                {
+                    uriBuilderLocalVar.Host = HttpClient.BaseAddress.Host;
+                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
+                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
+                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
+                        ? "/templates/{template_id}/submissions/validate"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/templates/{template_id}/submissions/validate");
+                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Btemplate_id%7D", Uri.EscapeDataString(templateId.ToString()));
+
+                    System.Collections.Specialized.NameValueCollection parseQueryStringLocalVar = System.Web.HttpUtility.ParseQueryString(string.Empty);
+
+                    if (version.IsSet)
+                        parseQueryStringLocalVar["version"] = ClientUtils.ParameterToString(version.Value);
+
+                    uriBuilderLocalVar.Query = parseQueryStringLocalVar.ToString();
+
+                    httpRequestMessageLocalVar.Content = (body as object) is DocSpring.Client.Client.FileParameter fileParameterLocalVar
+                        ? httpRequestMessageLocalVar.Content = new StreamContent(fileParameterLocalVar.Content)
+                        : httpRequestMessageLocalVar.Content = new StringContent(JsonSerializer.Serialize(body, _jsonSerializerOptions));
+
+                    List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
+                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
+
+                    BasicToken basicTokenLocalVar1 = (BasicToken) await BasicTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
+
+                    tokenBaseLocalVars.Add(basicTokenLocalVar1);
+
+                    basicTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    string[] contentTypes = new string[] {
+                        "application/json"
+                    };
+
+                    string contentTypeLocalVar = ClientUtils.SelectHeaderContentType(contentTypes);
+
+                    if (contentTypeLocalVar != null && httpRequestMessageLocalVar.Content != null)
+                        httpRequestMessageLocalVar.Content.Headers.ContentType = new MediaTypeHeaderValue(contentTypeLocalVar);
+
+                    string[] acceptLocalVars = new string[] {
+                        "application/json"
+                    };
+
+                    IEnumerable<MediaTypeWithQualityHeaderValue> acceptHeaderValuesLocalVar = ClientUtils.SelectHeaderAcceptArray(acceptLocalVars);
+
+                    foreach (var acceptLocalVar in acceptHeaderValuesLocalVar)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(acceptLocalVar);
+                    httpRequestMessageLocalVar.Method = new HttpMethod("POST");
+
+                    DateTime requestedAtLocalVar = DateTime.UtcNow;
+
+                    if (ValidateRequests)
+                        await DocSpring.Client.Client.RequestValidator.ValidateRequestAsync("validateSubmission", httpRequestMessageLocalVar).ConfigureAwait(false);
+
+                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
+                    {
+                        ValidateSubmissionApiResponse apiResponseLocalVar;
+
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                apiResponseLocalVar = new ValidateSubmissionApiResponse(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/templates/{template_id}/submissions/validate", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
+
+                        AfterValidateSubmissionDefaultImplementation(apiResponseLocalVar, templateId, body, version);
+
+                        Events.ExecuteOnValidateSubmission(apiResponseLocalVar);
+
+                        if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
+                            foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
+                                tokenBaseLocalVar.BeginRateLimit();
+
+                        return apiResponseLocalVar;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                OnErrorValidateSubmissionDefaultImplementation(e, "/templates/{template_id}/submissions/validate", uriBuilderLocalVar.Path, templateId, body, version);
+                Events.ExecuteOnErrorValidateSubmission(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ValidateSubmissionApiResponse"/>
+        /// </summary>
+        public partial class ValidateSubmissionApiResponse : DocSpring.Client.Client.ApiResponse, IValidateSubmissionApiResponse
+        {
+            /// <summary>
+            /// The logger
+            /// </summary>
+            public ILogger<Client> Logger { get; }
+
+            /// <summary>
+            /// The <see cref="ValidateSubmissionApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="rawContent"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public ValidateSubmissionApiResponse(ILogger<Client> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="ValidateSubmissionApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public ValidateSubmissionApiResponse(ILogger<Client> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public bool IsOk => 200 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.SubmissionValidation Ok()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.SubmissionValidation result = default;
+                OnOk(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultOk();
+                return result;
+            }
+
+            private DocSpring.Client.Model.SubmissionValidation DefaultOk()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsOk
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.SubmissionValidation>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnOk(ref bool suppressDefault, ref DocSpring.Client.Model.SubmissionValidation result);
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryOk(out DocSpring.Client.Model.SubmissionValidation result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Ok();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public bool IsNotFound => 404 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse NotFound()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnNotFound(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultNotFound();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultNotFound()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsNotFound
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnNotFound(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryNotFound(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = NotFound();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)404);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnprocessableContent => 422 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse UnprocessableContent()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnUnprocessableContent(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultUnprocessableContent();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultUnprocessableContent()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsUnprocessableContent
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnUnprocessableContent(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnprocessableContent(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = UnprocessableContent();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)422);
                 }
 
                 return result != null;

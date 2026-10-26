@@ -4,6 +4,7 @@ All URIs are relative to *https://sync.api.docspring.com/api/v2*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
+| [**AddTemplateFields**](Client.md#addtemplatefields) | **POST** /templates/{template_id}/fields | Add fields to a template |
 | [**CopyTemplate**](Client.md#copytemplate) | **POST** /templates/{template_id}/copy | Copy a template |
 | [**CreateCombinedPdf**](Client.md#createcombinedpdf) | **POST** /combined_pdfs | Combine PDFs |
 | [**CreateCustomFileFromUpload**](Client.md#createcustomfilefromupload) | **POST** /custom_files | Create a custom file from an upload |
@@ -20,6 +21,7 @@ All URIs are relative to *https://sync.api.docspring.com/api/v2*
 | [**DeleteWebhook**](Client.md#deletewebhook) | **DELETE** /webhooks/{webhook_id} | Delete a webhook |
 | [**ExpireCombinedPdf**](Client.md#expirecombinedpdf) | **DELETE** /combined_pdfs/{combined_pdf_id} | Expire a combined PDF |
 | [**ExpireSubmission**](Client.md#expiresubmission) | **DELETE** /submissions/{submission_id} | Expire a submission |
+| [**GenerateSubmissionFiles**](Client.md#generatesubmissionfiles) | **POST** /submissions/{submission_id}/generate_files | Generate more files |
 | [**GenerateSubmissionPreview**](Client.md#generatesubmissionpreview) | **POST** /submissions/{submission_id}/generate_preview | Generate a preview PDF |
 | [**GetCombinedPdf**](Client.md#getcombinedpdf) | **GET** /combined_pdfs/{combined_pdf_id} | Get a combined PDF |
 | [**GetCustomFile**](Client.md#getcustomfile) | **GET** /custom_files/{custom_file_id} | Get a custom file |
@@ -29,28 +31,76 @@ All URIs are relative to *https://sync.api.docspring.com/api/v2*
 | [**GetSubmission**](Client.md#getsubmission) | **GET** /submissions/{submission_id} | Get a submission |
 | [**GetSubmissionBatch**](Client.md#getsubmissionbatch) | **GET** /submissions/batches/{submission_batch_id} | Get a batch |
 | [**GetTemplate**](Client.md#gettemplate) | **GET** /templates/{template_id} | Get a template |
+| [**GetTemplateDiff**](Client.md#gettemplatediff) | **GET** /templates/{template_id}/diff | Compare a version of a template with the one before it |
 | [**GetTemplateModelCode**](Client.md#gettemplatemodelcode) | **GET** /templates/{template_id}/model_code | Generate typed code for a template's submission data |
+| [**GetTemplatePageImages**](Client.md#gettemplatepageimages) | **GET** /templates/{template_id}/page_images | Get images of a template's pages |
 | [**GetTemplateSchema**](Client.md#gettemplateschema) | **GET** /templates/{template_id}/schema | Get the JSON Schema of a template's submission data |
 | [**GetWebhook**](Client.md#getwebhook) | **GET** /webhooks/{webhook_id} | Get a webhook |
 | [**ListCombinedPdfs**](Client.md#listcombinedpdfs) | **GET** /combined_pdfs | List combined PDFs |
 | [**ListCustomFiles**](Client.md#listcustomfiles) | **GET** /custom_files | List custom files |
 | [**ListFolders**](Client.md#listfolders) | **GET** /folders | List folders |
 | [**ListSubmissions**](Client.md#listsubmissions) | **GET** /submissions | List submissions |
+| [**ListTemplateFields**](Client.md#listtemplatefields) | **GET** /templates/{template_id}/fields | List a template's fields |
 | [**ListTemplateSubmissions**](Client.md#listtemplatesubmissions) | **GET** /templates/{template_id}/submissions | List a template's submissions |
 | [**ListTemplates**](Client.md#listtemplates) | **GET** /templates | List templates |
 | [**ListWebhooks**](Client.md#listwebhooks) | **GET** /webhooks | List webhooks |
 | [**MoveFolder**](Client.md#movefolder) | **POST** /folders/{folder_id}/move | Move a folder |
 | [**MoveTemplate**](Client.md#movetemplate) | **POST** /templates/{template_id}/move | Move a template to a folder |
 | [**PublishTemplateVersion**](Client.md#publishtemplateversion) | **POST** /templates/{template_id}/publish_version | Publish a template version |
+| [**RemoveTemplateFields**](Client.md#removetemplatefields) | **POST** /templates/{template_id}/fields/remove | Remove fields from a template |
 | [**RenameFolder**](Client.md#renamefolder) | **POST** /folders/{folder_id}/rename | Rename a folder |
+| [**ReorderTemplateFields**](Client.md#reordertemplatefields) | **POST** /templates/{template_id}/fields/reorder | Reorder a template's fields |
 | [**RestoreTemplateVersion**](Client.md#restoretemplateversion) | **POST** /templates/{template_id}/restore_version | Restore a template version |
 | [**TestAuthentication**](Client.md#testauthentication) | **GET** /authentication | Test authentication |
 | [**UpdateSignatureRequest**](Client.md#updatesignaturerequest) | **PUT** /signature_requests/{signature_request_id} | Update a signature request |
 | [**UpdateTemplate**](Client.md#updatetemplate) | **PUT** /templates/{template_id} | Update a template |
 | [**UpdateTemplateDocument**](Client.md#updatetemplatedocument) | **PUT** /templates/{template_id}/document | Replace a template's PDF |
+| [**UpdateTemplateFields**](Client.md#updatetemplatefields) | **PUT** /templates/{template_id}/fields | Update a template's fields |
 | [**UpdateWebhook**](Client.md#updatewebhook) | **PUT** /webhooks/{webhook_id} | Update a webhook |
 | [**UploadTemplate**](Client.md#uploadtemplate) | **POST** /templates/upload | Create a PDF template from an uploaded PDF |
 | [**UploadTemplateDocument**](Client.md#uploadtemplatedocument) | **PUT** /templates/{template_id}/document/upload | Replace a template's PDF with an uploaded PDF |
+| [**ValidateSubmission**](Client.md#validatesubmission) | **POST** /templates/{template_id}/submissions/validate | Check a submission without creating it |
+
+<a id="addtemplatefields"></a>
+# **AddTemplateFields**
+> TemplateFields AddTemplateFields (string templateId, AddTemplateFieldsRequest body)
+
+Add fields to a template
+
+Adds fields to a template's draft and returns all of its fields. Publish a version for submissions of published versions to have them. 
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **templateId** | **string** | The template's ID. |  |
+| **body** | [**AddTemplateFieldsRequest**](AddTemplateFieldsRequest.md) | The fields to add to the template's draft. |  |
+
+### Return type
+
+[**TemplateFields**](TemplateFields.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **201** | fields added |  -  |
+| **409** | the template's PDF hasn't been processed |  -  |
+| **422** | invalid fields |  -  |
+| **404** | template not found |  -  |
+| **401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 <a id="copytemplate"></a>
 # **CopyTemplate**
@@ -308,7 +358,7 @@ Creates a submission: fills in a template with your data and generates a PDF. Th
 | **templateId** | **string** | The template's ID. |  |
 | **body** | [**CreateSubmissionRequest**](CreateSubmissionRequest.md) | The submission's data and settings. |  |
 | **version** | **string** | The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published). | [optional]  |
-| **wait** | **bool** | Wait until the PDF has been generated before responding. Default true on sync.api hosts. | [optional]  |
+| **wait** | **bool** | Wait until the files have been generated before responding. Default true on sync.api hosts. | [optional]  |
 
 ### Return type
 
@@ -391,7 +441,7 @@ Creates an HTML template, or a PDF template from a PDF you uploaded with the pre
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **body** | [**CreateTemplateRequest**](CreateTemplateRequest.md) | The template to create. |  |
-| **wait** | **bool** | Wait until the PDF has been processed before responding. Default true on sync.api hosts. | [optional]  |
+| **wait** | **bool** | Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts. | [optional]  |
 
 ### Return type
 
@@ -685,6 +735,48 @@ Deletes a submission's data and PDF now, and returns the expired submission.
 |-------------|-------------|------------------|
 | **200** | submission expired |  -  |
 | **403** | test API token |  -  |
+| **404** | submission not found |  -  |
+| **401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+<a id="generatesubmissionfiles"></a>
+# **GenerateSubmissionFiles**
+> Submission GenerateSubmissionFiles (string submissionId, GenerateSubmissionFilesRequest body, bool wait = null)
+
+Generate more files
+
+Adds formats to a processed submission's files, in the background: `png`, a PNG image of each page of the PDF (up to 100 pages). To make them with the submission, add them to `output_formats` when you create it.  Each new file is listed in `files` while it's made: on sync.api hosts the request waits for them (unless you pass `wait=false`), otherwise poll GET /submissions/{submission_id} until none of their `state` is `pending`. A file that couldn't be made has the state `error` and an `error_message`, and the submission stays processed. Asking for a format the submission already has (or is making) changes nothing. 
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **submissionId** | **string** | The submission's ID. |  |
+| **body** | [**GenerateSubmissionFilesRequest**](GenerateSubmissionFilesRequest.md) | The formats to make. |  |
+| **wait** | **bool** | Wait until the files have been generated before responding. Default true on sync.api hosts. | [optional]  |
+
+### Return type
+
+[**Submission**](Submission.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | images of the pages requested |  -  |
+| **409** | files not possible |  -  |
+| **422** | invalid request |  -  |
 | **404** | submission not found |  -  |
 | **401** | authentication failed |  -  |
 
@@ -1031,6 +1123,46 @@ Returns a template: its draft, or one of its published versions.
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
+<a id="gettemplatediff"></a>
+# **GetTemplateDiff**
+> TemplateDiff GetTemplateDiff (string templateId, string version = null)
+
+Compare a version of a template with the one before it
+
+Returns what changed in the template's draft since its latest published version (or in a published version since the one before it): fields added, removed, changed and moved, the settings that changed, and whether the document was replaced. Check it before you publish a version. 
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **templateId** | **string** | The template's ID. |  |
+| **version** | **string** | A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`. | [optional]  |
+
+### Return type
+
+[**TemplateDiff**](TemplateDiff.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | the draft's changes since the latest published version |  -  |
+| **409** | the template's PDF hasn't been processed |  -  |
+| **404** | template not found |  -  |
+| **401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
 <a id="gettemplatemodelcode"></a>
 # **GetTemplateModelCode**
 > TemplateModelCode GetTemplateModelCode (string templateId, ModelCodeLanguage lang, string version = null)
@@ -1067,6 +1199,46 @@ Generates types for a template's submission data in TypeScript, JavaScript, Ruby
 |-------------|-------------|------------------|
 | **200** | model code |  -  |
 | **422** | unknown language |  -  |
+| **404** | template not found |  -  |
+| **401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+<a id="gettemplatepageimages"></a>
+# **GetTemplatePageImages**
+> TemplatePageImages GetTemplatePageImages (string templateId, string version = null)
+
+Get images of a template's pages
+
+Returns a JPEG image of each page of a PDF template's PDF, with temporary links to download them: the draft's PDF, or a published version's. Use them to see the pages that fields are placed on. 
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **templateId** | **string** | The template's ID. |  |
+| **version** | **string** | A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`. | [optional]  |
+
+### Return type
+
+[**TemplatePageImages**](TemplatePageImages.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | page images |  -  |
+| **409** | no page images |  -  |
 | **404** | template not found |  -  |
 | **401** | authentication failed |  -  |
 
@@ -1311,6 +1483,46 @@ Returns the submissions in your account, newest first, one page at a time. Lists
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
+<a id="listtemplatefields"></a>
+# **ListTemplateFields**
+> TemplateFields ListTemplateFields (string templateId, string version = null)
+
+List a template's fields
+
+Returns a template's fields with all of their settings, page by page: the draft's fields, or a published version's. A PDF template's fields are placed on its pages: GET /templates/{template_id}/page_images has images of the pages. 
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **templateId** | **string** | The template's ID. |  |
+| **version** | **string** | A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`. | [optional]  |
+
+### Return type
+
+[**TemplateFields**](TemplateFields.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | fields |  -  |
+| **409** | the template's PDF hasn't been processed |  -  |
+| **404** | template not found |  -  |
+| **401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
 <a id="listtemplatesubmissions"></a>
 # **ListTemplateSubmissions**
 > SubmissionList ListTemplateSubmissions (string templateId, bool test = null, DateTime createdAfter = null, DateTime createdBefore = null, bool includeData = null, int limit = null, string cursor = null)
@@ -1527,7 +1739,7 @@ Moves a template and all of its published versions to a folder, or to the root (
 
 Publish a template version
 
-Publishes the template's draft as a new version that doesn't change. `version_type` says which part of the latest version number goes up. 
+Publishes the template's draft as a new version that doesn't change. `version_type` says which part of the latest version number goes up. While the template's PDF is downloading or being processed, or DocSpring is setting up its fields, it returns a 409 that says so. 
 
 
 ### Parameters
@@ -1558,6 +1770,46 @@ Publishes the template's draft as a new version that doesn't change. `version_ty
 | **422** | invalid version type |  -  |
 | **404** | template not found |  -  |
 | **409** | published at the same time |  -  |
+| **401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+<a id="removetemplatefields"></a>
+# **RemoveTemplateFields**
+> TemplateFields RemoveTemplateFields (string templateId, RemoveTemplateFieldsRequest body)
+
+Remove fields from a template
+
+Removes fields from a template's draft and returns the fields that are left. Conditional logic that used only the removed fields is removed too. 
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **templateId** | **string** | The template's ID. |  |
+| **body** | [**RemoveTemplateFieldsRequest**](RemoveTemplateFieldsRequest.md) | The fields to remove from the template's draft. |  |
+
+### Return type
+
+[**TemplateFields**](TemplateFields.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | fields removed |  -  |
+| **422** | a field the template does not have |  -  |
+| **404** | template not found |  -  |
 | **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
@@ -1598,6 +1850,46 @@ Renames a folder. The name must be unique within its parent folder.
 | **200** | folder renamed |  -  |
 | **422** | name already exists |  -  |
 | **404** | folder not found |  -  |
+| **401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+<a id="reordertemplatefields"></a>
+# **ReorderTemplateFields**
+> TemplateFields ReorderTemplateFields (string templateId, ReorderTemplateFieldsRequest body)
+
+Reorder a template's fields
+
+Changes the order of the fields in a template's draft and returns them in their new order. Send every field's ID: each field stays on its page, and a page's fields are printed in this order, so a later field prints over an earlier one where they overlap. Their values are in this order in the template's data schema and forms. 
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **templateId** | **string** | The template's ID. |  |
+| **body** | [**ReorderTemplateFieldsRequest**](ReorderTemplateFieldsRequest.md) | The new order of the fields in the template's draft. |  |
+
+### Return type
+
+[**TemplateFields**](TemplateFields.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | fields reordered |  -  |
+| **422** | a field missing from the order |  -  |
+| **404** | template not found |  -  |
 | **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
@@ -1723,7 +2015,7 @@ Changes a pending signature request's metadata, or how your app authenticated th
 
 Update a template
 
-Changes a template's draft. Properties left out keep their values. `defaults` and `html_engine_options` replace the whole object. Setting `parent_folder_id` moves the template and all of its published versions. 
+Changes a template's draft. Properties left out keep their values. `defaults` and `html_engine_options` replace the whole object, and `field_groups` changes only the groups it lists. Setting `parent_folder_id` moves the template and all of its published versions. 
 
 
 ### Parameters
@@ -1752,8 +2044,8 @@ Changes a template's draft. Properties left out keep their values. `defaults` an
 |-------------|-------------|------------------|
 | **200** | template updated |  -  |
 | **409** | template is locked |  -  |
+| **422** | invalid field group changes |  -  |
 | **404** | template not found |  -  |
-| **422** | invalid update |  -  |
 | **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
@@ -1764,7 +2056,7 @@ Changes a template's draft. Properties left out keep their values. `defaults` an
 
 Replace a template's PDF
 
-Replaces a PDF template's PDF with one you uploaded with the presigned upload (GET /uploads/presign). The fields stay where they are, unless `reimport_fields` replaces them with the new PDF's fillable fields. To send the PDF with the request instead, use PUT /templates/{template_id}/document/upload. 
+Replaces a PDF template's PDF with one you uploaded with the presigned upload (GET /uploads/presign) (`cache_id`), a link to download it from (`document_url`), or the file in base64 (`document_base64`). The fields stay where they are, unless `reimport_fields` replaces them with the new PDF's fillable fields. To send the PDF as `multipart/form-data` instead, use PUT /templates/{template_id}/document/upload. 
 
 
 ### Parameters
@@ -1772,8 +2064,8 @@ Replaces a PDF template's PDF with one you uploaded with the presigned upload (G
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **templateId** | **string** | The template's ID. |  |
-| **body** | [**UpdateTemplateDocumentRequest**](UpdateTemplateDocumentRequest.md) | The new PDF. |  |
-| **wait** | **bool** | Wait until the PDF has been processed before responding. Default true on sync.api hosts. | [optional]  |
+| **body** | [**UpdateTemplateDocumentRequest**](UpdateTemplateDocumentRequest.md) | The new PDF, as one of `cache_id`, `document_url` and `document_base64`. |  |
+| **wait** | **bool** | Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts. | [optional]  |
 
 ### Return type
 
@@ -1794,7 +2086,47 @@ Replaces a PDF template's PDF with one you uploaded with the presigned upload (G
 |-------------|-------------|------------------|
 | **200** | PDF replaced |  -  |
 | **409** | template is locked, so its fields can't be re-imported |  -  |
-| **422** | not a PDF template |  -  |
+| **422** | no document, or more than one |  -  |
+| **404** | template not found |  -  |
+| **401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+<a id="updatetemplatefields"></a>
+# **UpdateTemplateFields**
+> TemplateFields UpdateTemplateFields (string templateId, UpdateTemplateFieldsRequest body)
+
+Update a template's fields
+
+Changes fields of a template's draft and returns all of its fields. Settings left out keep their values. A shared setting (`type`, `required`, `default`, ...) changes for every field with the same name. 
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **templateId** | **string** | The template's ID. |  |
+| **body** | [**UpdateTemplateFieldsRequest**](UpdateTemplateFieldsRequest.md) | The fields to change in the template's draft. |  |
+
+### Return type
+
+[**TemplateFields**](TemplateFields.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | fields updated |  -  |
+| **422** | invalid changes |  -  |
 | **404** | template not found |  -  |
 | **401** | authentication failed |  -  |
 
@@ -1854,7 +2186,7 @@ Creates a PDF template from a PDF sent with the request (`multipart/form-data`).
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **document** | **System.IO.Stream****System.IO.Stream** | The PDF. |  |
-| **wait** | **bool** | Wait until the PDF has been processed before responding. Default true on sync.api hosts. | [optional]  |
+| **wait** | **bool** | Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts. | [optional]  |
 | **name** | **string** | The template's name. | [optional]  |
 | **description** | **string** | The template's description. | [optional]  |
 | **parentFolderId** | **string** | The folder to put the template in. Left out, it's created at the root. | [optional]  |
@@ -1903,7 +2235,7 @@ Replaces a PDF template's PDF with one sent with the request (`multipart/form-da
 |------|------|-------------|-------|
 | **templateId** | **string** | The template's ID. |  |
 | **document** | **System.IO.Stream****System.IO.Stream** | The new PDF. |  |
-| **wait** | **bool** | Wait until the PDF has been processed before responding. Default true on sync.api hosts. | [optional]  |
+| **wait** | **bool** | Wait until the PDF has been processed, and a `document_url` downloaded, before responding. Default true on sync.api hosts. | [optional]  |
 | **reimportFields** | **bool** | Replace all of the template's fields with the fillable fields in the new PDF, once DocSpring has processed it (`document.field_reimport_state`). As on a first upload, the default typeface, font size, bold and color are taken from the PDF's fields; the template's other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can't re-import its fields. | [optional]  |
 
 ### Return type
@@ -1926,6 +2258,47 @@ Replaces a PDF template's PDF with one sent with the request (`multipart/form-da
 | **200** | PDF replaced |  -  |
 | **422** | not a PDF template |  -  |
 | **404** | template not found |  -  |
+| **401** | authentication failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+<a id="validatesubmission"></a>
+# **ValidateSubmission**
+> SubmissionValidation ValidateSubmission (string templateId, ValidateSubmissionRequest body, string version = null)
+
+Check a submission without creating it
+
+Checks a submission as creating it would (its data against the template's fields, its settings and signature requests) without saving it, generating anything or using credits. It doesn't check your account's credits. The response says whether the submission is valid, and if not, has the error that creating it would return. 
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **templateId** | **string** | The template's ID. |  |
+| **body** | [**ValidateSubmissionRequest**](ValidateSubmissionRequest.md) | The submission's data and settings. |  |
+| **version** | **string** | The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published). | [optional]  |
+
+### Return type
+
+[**SubmissionValidation**](SubmissionValidation.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | valid submission |  -  |
+| **404** | template not found |  -  |
+| **422** | invalid request |  -  |
 | **401** | authentication failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)

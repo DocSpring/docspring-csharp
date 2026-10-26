@@ -31,13 +31,13 @@ namespace DocSpring.Client.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="TemplateDocument" /> class.
         /// </summary>
-        /// <param name="state">&#x60;pending&#x60; while DocSpring processes the PDF, then &#x60;processed&#x60;. &#x60;password_required&#x60;, &#x60;malformed_pdf&#x60; and &#x60;unknown_error&#x60; mean the PDF couldn&#39;t be processed, and &#x60;error_message&#x60; says why: upload it again or upload another one.</param>
+        /// <param name="state">&#x60;pending&#x60; while DocSpring processes the PDF, then &#x60;processed&#x60;. &#x60;password_required&#x60;, &#x60;malformed_pdf&#x60; and &#x60;unknown_error&#x60; mean the PDF couldn&#39;t be processed, and &#x60;error_message&#x60; says why: upload it again or upload another one. &#x60;downloading&#x60; while DocSpring downloads a &#x60;document_url&#x60;, then as for an upload. &#x60;download_failed&#x60; means it couldn&#39;t be downloaded, and &#x60;error_message&#x60; says why. A template keeps its PDF while a new one is downloaded, and when it couldn&#39;t be.</param>
         /// <param name="fieldReimportState">Whether the fields are being re-imported from this PDF (&#x60;reimport_fields&#x60; when the PDF was replaced): &#x60;requested&#x60; while DocSpring processes the PDF, then &#x60;imported&#x60;, or &#x60;no_fields&#x60; when the PDF had no fillable fields and the template kept its fields. &#x60;none&#x60; when no re-import was asked for, or when it couldn&#39;t run (the PDF couldn&#39;t be processed, or the template was locked or published while it was).</param>
         /// <param name="pageCount">0 until the PDF has been processed.</param>
         /// <param name="pageProcessingStatuses">How processing is going on each page, in page order: its image, and its fields when DocSpring sets them up (&#x60;detect_fields&#x60; when the template was created). &#x60;state&#x60; becomes &#x60;processed&#x60; once every page is done. Empty until DocSpring has read the PDF, and for PDFs uploaded before DocSpring recorded page statuses.</param>
-        /// <param name="filename">The PDF&#39;s file name.</param>
+        /// <param name="filename">The PDF&#39;s file name. Null until a &#x60;document_url&#x60; has been downloaded.</param>
         /// <param name="md5">The MD5 hash of the PDF.</param>
-        /// <param name="errorMessage">Why the PDF couldn&#39;t be processed, and how to fix it. Null unless &#x60;state&#x60; is an error.</param>
+        /// <param name="errorMessage">Why the PDF couldn&#39;t be processed or downloaded, and how to fix it. Null unless &#x60;state&#x60; is an error.</param>
         /// <param name="pageDimensions">Each page&#39;s width and height in PDF points. Null until the PDF has been processed.</param>
         /// <param name="hasFillableFields">Whether the PDF has fillable form fields. Null until DocSpring has read the PDF.</param>
         /// <param name="fieldLogicStatus">AI field setup&#39;s last step, which reads the whole form once every page is done and can still rename fields and add conditional logic and required fields: &#x60;pending&#x60; or &#x60;processing&#x60; until it finishes, then &#x60;processed&#x60;, &#x60;failed&#x60; or &#x60;skipped&#x60;. Null until every page is done, and when there&#39;s no logic step to run (&#x60;field_logic&#x60; is &#x60;none&#x60;, or the PDF has no fields).</param>
@@ -64,9 +64,9 @@ namespace DocSpring.Client.Model
         partial void OnCreated();
 
         /// <summary>
-        /// &#x60;pending&#x60; while DocSpring processes the PDF, then &#x60;processed&#x60;. &#x60;password_required&#x60;, &#x60;malformed_pdf&#x60; and &#x60;unknown_error&#x60; mean the PDF couldn&#39;t be processed, and &#x60;error_message&#x60; says why: upload it again or upload another one.
+        /// &#x60;pending&#x60; while DocSpring processes the PDF, then &#x60;processed&#x60;. &#x60;password_required&#x60;, &#x60;malformed_pdf&#x60; and &#x60;unknown_error&#x60; mean the PDF couldn&#39;t be processed, and &#x60;error_message&#x60; says why: upload it again or upload another one. &#x60;downloading&#x60; while DocSpring downloads a &#x60;document_url&#x60;, then as for an upload. &#x60;download_failed&#x60; means it couldn&#39;t be downloaded, and &#x60;error_message&#x60; says why. A template keeps its PDF while a new one is downloaded, and when it couldn&#39;t be.
         /// </summary>
-        /// <value>&#x60;pending&#x60; while DocSpring processes the PDF, then &#x60;processed&#x60;. &#x60;password_required&#x60;, &#x60;malformed_pdf&#x60; and &#x60;unknown_error&#x60; mean the PDF couldn&#39;t be processed, and &#x60;error_message&#x60; says why: upload it again or upload another one.</value>
+        /// <value>&#x60;pending&#x60; while DocSpring processes the PDF, then &#x60;processed&#x60;. &#x60;password_required&#x60;, &#x60;malformed_pdf&#x60; and &#x60;unknown_error&#x60; mean the PDF couldn&#39;t be processed, and &#x60;error_message&#x60; says why: upload it again or upload another one. &#x60;downloading&#x60; while DocSpring downloads a &#x60;document_url&#x60;, then as for an upload. &#x60;download_failed&#x60; means it couldn&#39;t be downloaded, and &#x60;error_message&#x60; says why. A template keeps its PDF while a new one is downloaded, and when it couldn&#39;t be.</value>
         [JsonPropertyName("state")]
         public TemplateDocumentState State { get; set; }
 
@@ -99,9 +99,9 @@ namespace DocSpring.Client.Model
         public List<TemplatePageProcessingStatus> PageProcessingStatuses { get; set; }
 
         /// <summary>
-        /// The PDF&#39;s file name.
+        /// The PDF&#39;s file name. Null until a &#x60;document_url&#x60; has been downloaded.
         /// </summary>
-        /// <value>The PDF&#39;s file name.</value>
+        /// <value>The PDF&#39;s file name. Null until a &#x60;document_url&#x60; has been downloaded.</value>
         [JsonPropertyName("filename")]
         public string Filename { get; set; }
 
@@ -113,9 +113,9 @@ namespace DocSpring.Client.Model
         public string Md5 { get; set; }
 
         /// <summary>
-        /// Why the PDF couldn&#39;t be processed, and how to fix it. Null unless &#x60;state&#x60; is an error.
+        /// Why the PDF couldn&#39;t be processed or downloaded, and how to fix it. Null unless &#x60;state&#x60; is an error.
         /// </summary>
-        /// <value>Why the PDF couldn&#39;t be processed, and how to fix it. Null unless &#x60;state&#x60; is an error.</value>
+        /// <value>Why the PDF couldn&#39;t be processed or downloaded, and how to fix it. Null unless &#x60;state&#x60; is an error.</value>
         [JsonPropertyName("error_message")]
         public string ErrorMessage { get; set; }
 

@@ -36,14 +36,16 @@ namespace DocSpring.Client.Model
         /// <param name="templateId">The template for each submission that doesn&#39;t name its own &#x60;template_id&#x60;.</param>
         /// <param name="templateVersion">The template version to use: a published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;latest&#x60; (the draft when no version has been published).</param>
         /// <param name="test">The default &#x60;test&#x60; for each submission that doesn&#39;t set its own.</param>
+        /// <param name="outputFormats">The default &#x60;output_formats&#x60; for each submission that doesn&#39;t set its own.</param>
         [JsonConstructor]
-        public CreateSubmissionBatchRequest(List<SubmissionInput> submissions, Option<Dictionary<string, Object>> metadata = default, Option<string> templateId = default, Option<string> templateVersion = default, Option<bool?> test = default)
+        public CreateSubmissionBatchRequest(List<SubmissionInput> submissions, Option<Dictionary<string, Object>> metadata = default, Option<string> templateId = default, Option<string> templateVersion = default, Option<bool?> test = default, Option<List<OutputFormat>> outputFormats = default)
         {
             Submissions = submissions;
             MetadataOption = metadata;
             TemplateIdOption = templateId;
             TemplateVersionOption = templateVersion;
             TestOption = test;
+            OutputFormatsOption = outputFormats;
             OnCreated();
         }
 
@@ -113,6 +115,20 @@ namespace DocSpring.Client.Model
         public bool? Test { get { return this.TestOption.Value; } set { this.TestOption = new Option<bool?>(value); } }
 
         /// <summary>
+        /// Used to track the state of OutputFormats
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<List<OutputFormat>> OutputFormatsOption { get; private set; }
+
+        /// <summary>
+        /// The default &#x60;output_formats&#x60; for each submission that doesn&#39;t set its own.
+        /// </summary>
+        /// <value>The default &#x60;output_formats&#x60; for each submission that doesn&#39;t set its own.</value>
+        [JsonPropertyName("output_formats")]
+        public List<OutputFormat> OutputFormats { get { return this.OutputFormatsOption.Value; } set { this.OutputFormatsOption = new Option<List<OutputFormat>>(value); } }
+
+        /// <summary>
         /// Gets or Sets additional properties
         /// </summary>
         [JsonExtensionData]
@@ -131,6 +147,7 @@ namespace DocSpring.Client.Model
             sb.Append("  TemplateId: ").Append(TemplateId).Append("\n");
             sb.Append("  TemplateVersion: ").Append(TemplateVersion).Append("\n");
             sb.Append("  Test: ").Append(Test).Append("\n");
+            sb.Append("  OutputFormats: ").Append(OutputFormats).Append("\n");
             sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -184,6 +201,7 @@ namespace DocSpring.Client.Model
             Option<string> templateId = default;
             Option<string> templateVersion = default;
             Option<bool?> test = default;
+            Option<List<OutputFormat>> outputFormats = default;
 
             while (utf8JsonReader.Read())
             {
@@ -215,6 +233,9 @@ namespace DocSpring.Client.Model
                         case "test":
                             test = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
                             break;
+                        case "output_formats":
+                            outputFormats = new Option<List<OutputFormat>>(JsonSerializer.Deserialize<List<OutputFormat>>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
                         default:
                             break;
                     }
@@ -239,7 +260,10 @@ namespace DocSpring.Client.Model
             if (test.IsSet && test.Value == null)
                 throw new JsonException("Property is not nullable for class CreateSubmissionBatchRequest: test.");
 
-            return new CreateSubmissionBatchRequest(submissions.Value, metadata, templateId, templateVersion, test);
+            if (outputFormats.IsSet && outputFormats.Value == null)
+                throw new JsonException("Property is not nullable for class CreateSubmissionBatchRequest: output_formats.");
+
+            return new CreateSubmissionBatchRequest(submissions.Value, metadata, templateId, templateVersion, test, outputFormats);
         }
 
         /// <summary>
@@ -276,6 +300,9 @@ namespace DocSpring.Client.Model
             if (createSubmissionBatchRequest.TestOption.IsSet && createSubmissionBatchRequest.Test == null)
                 throw new JsonException("Cannot write null property CreateSubmissionBatchRequest.Test to non-nullable JSON property 'test'.");
 
+            if (createSubmissionBatchRequest.OutputFormatsOption.IsSet && createSubmissionBatchRequest.OutputFormats == null)
+                throw new JsonException("Cannot write null property CreateSubmissionBatchRequest.OutputFormats to non-nullable JSON property 'output_formats'.");
+
             writer.WritePropertyName("submissions");
             JsonSerializer.Serialize(writer, createSubmissionBatchRequest.Submissions, jsonSerializerOptions);
             if (createSubmissionBatchRequest.MetadataOption.IsSet)
@@ -291,6 +318,12 @@ namespace DocSpring.Client.Model
 
             if (createSubmissionBatchRequest.TestOption.IsSet)
                 writer.WriteBoolean("test", createSubmissionBatchRequest.TestOption.Value.Value);
+
+            if (createSubmissionBatchRequest.OutputFormatsOption.IsSet)
+            {
+                writer.WritePropertyName("output_formats");
+                JsonSerializer.Serialize(writer, createSubmissionBatchRequest.OutputFormatsOption.Value, jsonSerializerOptions);
+            }
         }
     }
 }

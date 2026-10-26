@@ -306,6 +306,24 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'PredefinedFields'
+        /// </summary>
+        [Fact]
+        public void PredefinedFieldsTest()
+        {
+            // TODO unit test for the property 'PredefinedFields'
+        }
+
+        /// <summary>
+        /// Test the property 'PredefinedFieldsSampleData'
+        /// </summary>
+        [Fact]
+        public void PredefinedFieldsSampleDataTest()
+        {
+            // TODO unit test for the property 'PredefinedFieldsSampleData'
+        }
+
+        /// <summary>
         /// Test the property 'Html'
         /// </summary>
         [Fact]
@@ -357,6 +375,24 @@ namespace DocSpring.Client.Test.Model
         public void CacheIdTest()
         {
             // TODO unit test for the property 'CacheId'
+        }
+
+        /// <summary>
+        /// Test the property 'DocumentUrl'
+        /// </summary>
+        [Fact]
+        public void DocumentUrlTest()
+        {
+            // TODO unit test for the property 'DocumentUrl'
+        }
+
+        /// <summary>
+        /// Test the property 'DocumentBase64'
+        /// </summary>
+        [Fact]
+        public void DocumentBase64Test()
+        {
+            // TODO unit test for the property 'DocumentBase64'
         }
 
         /// <summary>

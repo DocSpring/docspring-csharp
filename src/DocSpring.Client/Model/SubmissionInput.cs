@@ -36,6 +36,7 @@ namespace DocSpring.Client.Model
         /// <param name="data">The values of the template&#39;s fields, by field name. Required for a PDF template.</param>
         /// <param name="metadata">Your own data about the submission, such as an ID from your app. It isn&#39;t printed on the PDF.</param>
         /// <param name="password">A password that the PDF needs to be opened with. It&#39;s never returned; &#x60;has_password&#x60; says if it&#39;s set.</param>
+        /// <param name="outputFormats">What the submission makes: &#x60;pdf&#x60;, and &#x60;png&#x60; (an image of each page of the PDF, up to 100 pages) when you ask for it. Default &#x60;[\&quot;pdf\&quot;]&#x60;. POST /submissions/{submission_id}/generate_files adds &#x60;png&#x60; to a processed submission.</param>
         /// <param name="expiresIn">Seconds after the PDF is generated until the submission expires, up to 10 years (315360000). Default the template&#39;s expiration setting. A submission that isn&#39;t processed, such as one with invalid data, is kept for at least 48 hours.</param>
         /// <param name="fieldOverrides">Changes to field settings for this submission only, by field name, such as &#x60;{\&quot;name\&quot;: {\&quot;required\&quot;: false, \&quot;font_size\&quot;: 9}}&#x60;. A setting that identifies the field (&#x60;id&#x60;, &#x60;name&#x60;, &#x60;type&#x60;), that only the template sets (such as &#x60;description&#x60;), or that doesn&#39;t apply to the field&#39;s type and display type (such as &#x60;check_character&#x60; on a field displayed as text) is a 422. With &#x60;signature_requests&#x60;, &#x60;editable: true&#x60; is a 422, and a &#x60;default&#x60; for a signature or initials field makes the submission &#x60;invalid_data&#x60;.</param>
         /// <param name="html">For an HTML template, HTML to use instead of the template&#39;s.</param>
@@ -43,13 +44,14 @@ namespace DocSpring.Client.Model
         /// <param name="templateId">The submission&#39;s template. Default the batch&#39;s &#x60;template_id&#x60;.</param>
         /// <param name="templateVersion">The version of the submission&#39;s template. Default the batch&#39;s &#x60;template_version&#x60;.</param>
         [JsonConstructor]
-        public SubmissionInput(Option<bool?> test = default, Option<bool?> editable = default, Option<Dictionary<string, Object>> data = default, Option<Dictionary<string, Object>> metadata = default, Option<string> password = default, Option<int?> expiresIn = default, Option<Dictionary<string, FieldOverride>> fieldOverrides = default, Option<string> html = default, Option<string> css = default, Option<string> templateId = default, Option<string> templateVersion = default)
+        public SubmissionInput(Option<bool?> test = default, Option<bool?> editable = default, Option<Dictionary<string, Object>> data = default, Option<Dictionary<string, Object>> metadata = default, Option<string> password = default, Option<List<OutputFormat>> outputFormats = default, Option<int?> expiresIn = default, Option<Dictionary<string, FieldOverride>> fieldOverrides = default, Option<string> html = default, Option<string> css = default, Option<string> templateId = default, Option<string> templateVersion = default)
         {
             TestOption = test;
             EditableOption = editable;
             DataOption = data;
             MetadataOption = metadata;
             PasswordOption = password;
+            OutputFormatsOption = outputFormats;
             ExpiresInOption = expiresIn;
             FieldOverridesOption = fieldOverrides;
             HtmlOption = html;
@@ -130,6 +132,20 @@ namespace DocSpring.Client.Model
         /// <value>A password that the PDF needs to be opened with. It&#39;s never returned; &#x60;has_password&#x60; says if it&#39;s set.</value>
         [JsonPropertyName("password")]
         public string Password { get { return this.PasswordOption.Value; } set { this.PasswordOption = new Option<string>(value); } }
+
+        /// <summary>
+        /// Used to track the state of OutputFormats
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<List<OutputFormat>> OutputFormatsOption { get; private set; }
+
+        /// <summary>
+        /// What the submission makes: &#x60;pdf&#x60;, and &#x60;png&#x60; (an image of each page of the PDF, up to 100 pages) when you ask for it. Default &#x60;[\&quot;pdf\&quot;]&#x60;. POST /submissions/{submission_id}/generate_files adds &#x60;png&#x60; to a processed submission.
+        /// </summary>
+        /// <value>What the submission makes: &#x60;pdf&#x60;, and &#x60;png&#x60; (an image of each page of the PDF, up to 100 pages) when you ask for it. Default &#x60;[\&quot;pdf\&quot;]&#x60;. POST /submissions/{submission_id}/generate_files adds &#x60;png&#x60; to a processed submission.</value>
+        [JsonPropertyName("output_formats")]
+        public List<OutputFormat> OutputFormats { get { return this.OutputFormatsOption.Value; } set { this.OutputFormatsOption = new Option<List<OutputFormat>>(value); } }
 
         /// <summary>
         /// Used to track the state of ExpiresIn
@@ -234,6 +250,7 @@ namespace DocSpring.Client.Model
             sb.Append("  Data: ").Append(Data).Append("\n");
             sb.Append("  Metadata: ").Append(Metadata).Append("\n");
             sb.Append("  Password: ").Append(Password).Append("\n");
+            sb.Append("  OutputFormats: ").Append(OutputFormats).Append("\n");
             sb.Append("  ExpiresIn: ").Append(ExpiresIn).Append("\n");
             sb.Append("  FieldOverrides: ").Append(FieldOverrides).Append("\n");
             sb.Append("  Html: ").Append(Html).Append("\n");
@@ -293,6 +310,7 @@ namespace DocSpring.Client.Model
             Option<Dictionary<string, Object>> data = default;
             Option<Dictionary<string, Object>> metadata = default;
             Option<string> password = default;
+            Option<List<OutputFormat>> outputFormats = default;
             Option<int?> expiresIn = default;
             Option<Dictionary<string, FieldOverride>> fieldOverrides = default;
             Option<string> html = default;
@@ -329,6 +347,9 @@ namespace DocSpring.Client.Model
                             break;
                         case "password":
                             password = new Option<string>(utf8JsonReader.GetString());
+                            break;
+                        case "output_formats":
+                            outputFormats = new Option<List<OutputFormat>>(JsonSerializer.Deserialize<List<OutputFormat>>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "expires_in":
                             expiresIn = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
@@ -369,6 +390,9 @@ namespace DocSpring.Client.Model
             if (password.IsSet && password.Value == null)
                 throw new JsonException("Property is not nullable for class SubmissionInput: password.");
 
+            if (outputFormats.IsSet && outputFormats.Value == null)
+                throw new JsonException("Property is not nullable for class SubmissionInput: output_formats.");
+
             if (expiresIn.IsSet && expiresIn.Value == null)
                 throw new JsonException("Property is not nullable for class SubmissionInput: expires_in.");
 
@@ -387,7 +411,7 @@ namespace DocSpring.Client.Model
             if (templateVersion.IsSet && templateVersion.Value == null)
                 throw new JsonException("Property is not nullable for class SubmissionInput: template_version.");
 
-            return new SubmissionInput(test, editable, data, metadata, password, expiresIn, fieldOverrides, html, css, templateId, templateVersion);
+            return new SubmissionInput(test, editable, data, metadata, password, outputFormats, expiresIn, fieldOverrides, html, css, templateId, templateVersion);
         }
 
         /// <summary>
@@ -427,6 +451,9 @@ namespace DocSpring.Client.Model
             if (submissionInput.PasswordOption.IsSet && submissionInput.Password == null)
                 throw new JsonException("Cannot write null property SubmissionInput.Password to non-nullable JSON property 'password'.");
 
+            if (submissionInput.OutputFormatsOption.IsSet && submissionInput.OutputFormats == null)
+                throw new JsonException("Cannot write null property SubmissionInput.OutputFormats to non-nullable JSON property 'output_formats'.");
+
             if (submissionInput.ExpiresInOption.IsSet && submissionInput.ExpiresIn == null)
                 throw new JsonException("Cannot write null property SubmissionInput.ExpiresIn to non-nullable JSON property 'expires_in'.");
 
@@ -464,6 +491,11 @@ namespace DocSpring.Client.Model
             if (submissionInput.PasswordOption.IsSet)
                 writer.WriteString("password", submissionInput.Password);
 
+            if (submissionInput.OutputFormatsOption.IsSet)
+            {
+                writer.WritePropertyName("output_formats");
+                JsonSerializer.Serialize(writer, submissionInput.OutputFormatsOption.Value, jsonSerializerOptions);
+            }
             if (submissionInput.ExpiresInOption.IsSet)
                 writer.WriteNumber("expires_in", submissionInput.ExpiresInOption.Value.Value);
 

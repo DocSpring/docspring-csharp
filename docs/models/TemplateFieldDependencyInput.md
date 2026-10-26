@@ -5,7 +5,7 @@ A conditional logic rule: when other fields' values meet its conditions, it show
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Action** | **TemplateFieldDependencyAction** | What the rule does to its targets when its conditions are met. | 
+**Action** | **TemplateFieldDependencyAction** | What the rule does to the fields it applies to when its conditions are met. | 
 **Conditions** | [**List&lt;TemplateFieldDependencyConditionInput&gt;**](TemplateFieldDependencyConditionInput.md) | The conditions on other fields' values. | 
 **Targets** | **List&lt;string&gt;** | The names of the fields the rule shows or makes required. | 
 **Match** | **TemplateFieldDependencyMatch** | Whether all of the conditions (the default) or any of them must be met. | [optional] 

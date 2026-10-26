@@ -33,6 +33,8 @@ Name | Type | Description | Notes
 **UpdatedAt** | **DateTime** | When the template was last updated. | 
 **Defaults** | [**TemplateDefaults**](TemplateDefaults.md) |  | 
 **FieldDependencies** | [**List&lt;TemplateFieldDependency&gt;**](TemplateFieldDependency.md) | Conditional logic: each rule shows or hides its target fields, or makes them required, depending on the values of other fields. | 
+**FieldGroups** | [**List&lt;FieldGroup&gt;**](FieldGroup.md) | The groups of the template's fields, with their settings. A field's name puts it in groups: `address/city` is in the group `address`, and `items/0/price` is in the list `items` and its items' group `items/~`. | 
+**PredefinedFields** | [**List&lt;PredefinedField&gt;**](PredefinedField.md) | The field names that people using the embedded template editor choose from, each with the data type and settings a field gets when it's given that name. Setting it replaces the whole list; an empty list turns them off. | 
 **Versions** | [**List&lt;TemplateVersion&gt;**](TemplateVersion.md) | The template's published versions, newest first (up to 100). | 
 **Name** | **string** | The template's name. | 
 **Description** | **string** | Shown under the template's name at the top of its hosted forms, and used as their meta description. Not shown on embedded forms or signature requests. | 
@@ -45,6 +47,7 @@ Name | Type | Description | Notes
 **RedirectUrl** | **string** | Where the web form sends people after they submit it. | 
 **LastChangedAt** | **DateTime** | When the draft was last changed. | 
 **LastChangedBy** | [**TemplateActor**](TemplateActor.md) | Who last changed the draft: a user in your account, an API token, or someone using the embedded template editor. Null if no change has been recorded. | 
+**PredefinedFieldsSampleData** | **Dictionary&lt;string, Object&gt;** | Sample submission data that sets `predefined_fields`: each value becomes a predefined field, with a type that fits it (`string`, `number`, `boolean`, `date`, `email` or `url`) and `required_in_template` true. Nested objects and arrays become names with `/`, such as `customer/email`. Without `predefined_fields` in the same request, it replaces them; with them, it adds to them and sets the types of the ones it has values for. | 
 **Html** | **string** | The HTML of an HTML template, as a Liquid template. Null for PDF templates. | 
 **Scss** | **string** | The SCSS of an HTML template. | 
 **HeaderHtml** | **string** | The HTML printed at the top of each page of an HTML template. | 

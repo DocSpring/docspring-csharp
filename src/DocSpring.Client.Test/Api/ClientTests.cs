@@ -51,6 +51,19 @@ namespace DocSpring.Client.Test.Api
         }
 
         /// <summary>
+        /// Test AddTemplateFields
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task AddTemplateFieldsAsyncTest()
+        {
+            string templateId = default;
+            AddTemplateFieldsRequest body = default;
+            var response = await _instance.AddTemplateFieldsAsync(templateId, body);
+            var model = response.Created();
+            Assert.IsType<DocSpring.Client.Model.TemplateFields>(model);
+        }
+
+        /// <summary>
         /// Test CopyTemplate
         /// </summary>
         [Fact (Skip = "not implemented")]
@@ -253,6 +266,20 @@ namespace DocSpring.Client.Test.Api
         }
 
         /// <summary>
+        /// Test GenerateSubmissionFiles
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task GenerateSubmissionFilesAsyncTest()
+        {
+            string submissionId = default;
+            GenerateSubmissionFilesRequest body = default;
+            Client.Option<bool> wait = default;
+            var response = await _instance.GenerateSubmissionFilesAsync(submissionId, body, wait);
+            var model = response.Ok();
+            Assert.IsType<DocSpring.Client.Model.Submission>(model);
+        }
+
+        /// <summary>
         /// Test GenerateSubmissionPreview
         /// </summary>
         [Fact (Skip = "not implemented")]
@@ -362,6 +389,19 @@ namespace DocSpring.Client.Test.Api
         }
 
         /// <summary>
+        /// Test GetTemplateDiff
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task GetTemplateDiffAsyncTest()
+        {
+            string templateId = default;
+            Client.Option<string> version = default;
+            var response = await _instance.GetTemplateDiffAsync(templateId, version);
+            var model = response.Ok();
+            Assert.IsType<DocSpring.Client.Model.TemplateDiff>(model);
+        }
+
+        /// <summary>
         /// Test GetTemplateModelCode
         /// </summary>
         [Fact (Skip = "not implemented")]
@@ -373,6 +413,19 @@ namespace DocSpring.Client.Test.Api
             var response = await _instance.GetTemplateModelCodeAsync(templateId, lang, version);
             var model = response.Ok();
             Assert.IsType<DocSpring.Client.Model.TemplateModelCode>(model);
+        }
+
+        /// <summary>
+        /// Test GetTemplatePageImages
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task GetTemplatePageImagesAsyncTest()
+        {
+            string templateId = default;
+            Client.Option<string> version = default;
+            var response = await _instance.GetTemplatePageImagesAsync(templateId, version);
+            var model = response.Ok();
+            Assert.IsType<DocSpring.Client.Model.TemplatePageImages>(model);
         }
 
         /// <summary>
@@ -456,6 +509,19 @@ namespace DocSpring.Client.Test.Api
             var response = await _instance.ListSubmissionsAsync(templateId, test, createdAfter, createdBefore, includeData, limit, cursor);
             var model = response.Ok();
             Assert.IsType<DocSpring.Client.Model.SubmissionList>(model);
+        }
+
+        /// <summary>
+        /// Test ListTemplateFields
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task ListTemplateFieldsAsyncTest()
+        {
+            string templateId = default;
+            Client.Option<string> version = default;
+            var response = await _instance.ListTemplateFieldsAsync(templateId, version);
+            var model = response.Ok();
+            Assert.IsType<DocSpring.Client.Model.TemplateFields>(model);
         }
 
         /// <summary>
@@ -549,6 +615,19 @@ namespace DocSpring.Client.Test.Api
         }
 
         /// <summary>
+        /// Test RemoveTemplateFields
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task RemoveTemplateFieldsAsyncTest()
+        {
+            string templateId = default;
+            RemoveTemplateFieldsRequest body = default;
+            var response = await _instance.RemoveTemplateFieldsAsync(templateId, body);
+            var model = response.Ok();
+            Assert.IsType<DocSpring.Client.Model.TemplateFields>(model);
+        }
+
+        /// <summary>
         /// Test RenameFolder
         /// </summary>
         [Fact (Skip = "not implemented")]
@@ -559,6 +638,19 @@ namespace DocSpring.Client.Test.Api
             var response = await _instance.RenameFolderAsync(folderId, body);
             var model = response.Ok();
             Assert.IsType<DocSpring.Client.Model.Folder>(model);
+        }
+
+        /// <summary>
+        /// Test ReorderTemplateFields
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task ReorderTemplateFieldsAsyncTest()
+        {
+            string templateId = default;
+            ReorderTemplateFieldsRequest body = default;
+            var response = await _instance.ReorderTemplateFieldsAsync(templateId, body);
+            var model = response.Ok();
+            Assert.IsType<DocSpring.Client.Model.TemplateFields>(model);
         }
 
         /// <summary>
@@ -626,6 +718,19 @@ namespace DocSpring.Client.Test.Api
         }
 
         /// <summary>
+        /// Test UpdateTemplateFields
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task UpdateTemplateFieldsAsyncTest()
+        {
+            string templateId = default;
+            UpdateTemplateFieldsRequest body = default;
+            var response = await _instance.UpdateTemplateFieldsAsync(templateId, body);
+            var model = response.Ok();
+            Assert.IsType<DocSpring.Client.Model.TemplateFields>(model);
+        }
+
+        /// <summary>
         /// Test UpdateWebhook
         /// </summary>
         [Fact (Skip = "not implemented")]
@@ -672,6 +777,20 @@ namespace DocSpring.Client.Test.Api
             var response = await _instance.UploadTemplateDocumentAsync(templateId, document, wait, reimportFields);
             var model = response.Ok();
             Assert.IsType<DocSpring.Client.Model.Template>(model);
+        }
+
+        /// <summary>
+        /// Test ValidateSubmission
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task ValidateSubmissionAsyncTest()
+        {
+            string templateId = default;
+            ValidateSubmissionRequest body = default;
+            Client.Option<string> version = default;
+            var response = await _instance.ValidateSubmissionAsync(templateId, body, version);
+            var model = response.Ok();
+            Assert.IsType<DocSpring.Client.Model.SubmissionValidation>(model);
         }
     }
 }

@@ -59,19 +59,23 @@ namespace DocSpring.Client.Model
         /// <param name="slackWebhookUrl">A Slack incoming webhook URL that is notified about the template&#39;s submissions. It&#39;s never returned; &#x60;has_slack_webhook_url&#x60; says if it&#39;s set.</param>
         /// <param name="defaults">The default style of the template&#39;s fields. Setting it replaces the whole object.</param>
         /// <param name="fieldDependencies">The template&#39;s conditional logic rules. Setting them replaces all of the rules.</param>
+        /// <param name="predefinedFields">The field names that people using the embedded template editor choose from, each with the data type and settings a field gets when it&#39;s given that name. Setting it replaces the whole list; an empty list turns them off.</param>
+        /// <param name="predefinedFieldsSampleData">Sample submission data that sets &#x60;predefined_fields&#x60;: each value becomes a predefined field, with a type that fits it (&#x60;string&#x60;, &#x60;number&#x60;, &#x60;boolean&#x60;, &#x60;date&#x60;, &#x60;email&#x60; or &#x60;url&#x60;) and &#x60;required_in_template&#x60; true. Nested objects and arrays become names with &#x60;/&#x60;, such as &#x60;customer/email&#x60;. Without &#x60;predefined_fields&#x60; in the same request, it replaces them; with them, it adds to them and sets the types of the ones it has values for.</param>
         /// <param name="html">The HTML of an HTML template, as a Liquid template. Null for PDF templates.</param>
         /// <param name="scss">The SCSS of an HTML template.</param>
         /// <param name="headerHtml">The HTML printed at the top of each page of an HTML template.</param>
         /// <param name="footerHtml">The HTML printed at the bottom of each page of an HTML template.</param>
         /// <param name="htmlEngineOptions">Null resets the options to their defaults.</param>
-        /// <param name="cacheId">A PDF template&#39;s document: the &#x60;fields.key&#x60; of a file you uploaded with the presigned upload (GET /uploads/presign). Required for a PDF template. To upload the PDF with the request, use POST /templates/upload.</param>
-        /// <param name="filename">The PDF&#39;s file name, for a &#x60;cache_id&#x60; (presigned uploads don&#39;t send one).</param>
+        /// <param name="cacheId">A PDF template&#39;s document: the &#x60;fields.key&#x60; of a file you uploaded with the presigned upload (GET /uploads/presign). A PDF template needs one of &#x60;cache_id&#x60;, &#x60;document_url&#x60; and &#x60;document_base64&#x60;. To upload the PDF with the request, use POST /templates/upload.</param>
+        /// <param name="documentUrl">An https:// link to the template&#39;s PDF (up to 100 MB), instead of &#x60;cache_id&#x60;. DocSpring downloads it after responding, following redirects to other https:// links: the template&#39;s &#x60;document.state&#x60; is &#x60;downloading&#x60; until then (sync.api hosts wait for it). If it can&#39;t be downloaded, the state is &#x60;download_failed&#x60; and &#x60;document.error_message&#x60; says why.</param>
+        /// <param name="documentBase64">The template&#39;s PDF, encoded as base64 (a &#x60;data:&#x60; URI works too), instead of &#x60;cache_id&#x60;. Up to 7 MB before it&#39;s encoded: send a larger file with &#x60;cache_id&#x60; or &#x60;document_url&#x60;.</param>
+        /// <param name="filename">The PDF&#39;s file name, for a &#x60;cache_id&#x60; (presigned uploads don&#39;t send one) or &#x60;document_base64&#x60;. A &#x60;document_url&#x60;&#39;s is the last part of its path unless you set it.</param>
         /// <param name="detectFields">Set up the PDF&#39;s fields as DocSpring&#39;s \&quot;Automatically detect fields\&quot; upload option does: import or detect the fields, name them with AI, and set up conditional logic. &#x60;field_source&#x60;, &#x60;field_naming&#x60; and &#x60;field_logic&#x60; choose how. Default false. &#x60;document.page_processing_statuses&#x60; and &#x60;document.field_logic_status&#x60; show how it&#39;s going, and &#x60;document.state&#x60; becomes &#x60;processed&#x60; once every page&#39;s fields are set up.</param>
         /// <param name="fieldSource">With &#x60;detect_fields&#x60;, where the fields come from. &#x60;auto&#x60; (the default) imports the form fields of a fillable PDF and detects the fields of a PDF without them; &#x60;pdf_detection&#x60; detects the fields from the page layout, even on a fillable PDF; &#x60;pdf_form_fields&#x60; only imports the PDF&#39;s form fields.</param>
         /// <param name="fieldNaming">With &#x60;detect_fields&#x60;, how the fields are named. &#x60;ai&#x60; (the default) names them and sets their types and settings with AI; &#x60;preserve&#x60; keeps the names of the PDF&#39;s form fields, and AI only names the fields it detected. &#x60;preserve&#x60; needs &#x60;field_source&#x60; &#x60;auto&#x60; or &#x60;pdf_form_fields&#x60;.</param>
         /// <param name="fieldLogic">With &#x60;detect_fields&#x60;, whether AI reads the whole form once the fields are named and sets up conditional logic and required fields (&#x60;ai&#x60;) or not (&#x60;none&#x60;). Default: your account&#39;s template settings.</param>
         [JsonConstructor]
-        public CreateTemplateRequest(TemplateType templateType, Option<string> name = default, Option<string> description = default, Option<string> parentFolderId = default, Option<bool?> locked = default, Option<bool?> addSignatureRequestSubmissionIdFooters = default, Option<AiFieldNamingLanguage?> aiFieldNamingLanguage = default, Option<bool?> allowAdditionalProperties = default, Option<bool?> allowSkippingOptionalFields = default, Option<TemplateFormMode?> defaultFormMode = default, Option<bool?> editableSubmissions = default, Option<List<string>> embedDomains = default, Option<bool?> embedEditAllowSettings = default, Option<bool?> embedEditAllowVersioning = default, Option<bool?> embedEditAllowDocumentReplacement = default, Option<bool?> encryptPdfs = default, Option<string> encryptPdfsPassword = default, Option<bool?> expireSubmissions = default, Option<int?> expireAfter = default, Option<ExpirationInterval?> expirationInterval = default, Option<bool?> mergeAuditTrailPdf = default, Option<bool?> parseDatesUsingTemplateDateFormat = default, Option<bool?> publicSubmissions = default, Option<bool?> publicWebForm = default, Option<string> redirectUrl = default, Option<string> slackWebhookUrl = default, Option<TemplateDefaultsInput> defaults = default, Option<List<TemplateFieldDependencyInput>> fieldDependencies = default, Option<string> html = default, Option<string> scss = default, Option<string> headerHtml = default, Option<string> footerHtml = default, Option<HtmlEngineOptionsInput> htmlEngineOptions = default, Option<string> cacheId = default, Option<string> filename = default, Option<bool?> detectFields = default, Option<FieldSetupSource?> fieldSource = default, Option<FieldSetupNaming?> fieldNaming = default, Option<FieldSetupLogic?> fieldLogic = default)
+        public CreateTemplateRequest(TemplateType templateType, Option<string> name = default, Option<string> description = default, Option<string> parentFolderId = default, Option<bool?> locked = default, Option<bool?> addSignatureRequestSubmissionIdFooters = default, Option<AiFieldNamingLanguage?> aiFieldNamingLanguage = default, Option<bool?> allowAdditionalProperties = default, Option<bool?> allowSkippingOptionalFields = default, Option<TemplateFormMode?> defaultFormMode = default, Option<bool?> editableSubmissions = default, Option<List<string>> embedDomains = default, Option<bool?> embedEditAllowSettings = default, Option<bool?> embedEditAllowVersioning = default, Option<bool?> embedEditAllowDocumentReplacement = default, Option<bool?> encryptPdfs = default, Option<string> encryptPdfsPassword = default, Option<bool?> expireSubmissions = default, Option<int?> expireAfter = default, Option<ExpirationInterval?> expirationInterval = default, Option<bool?> mergeAuditTrailPdf = default, Option<bool?> parseDatesUsingTemplateDateFormat = default, Option<bool?> publicSubmissions = default, Option<bool?> publicWebForm = default, Option<string> redirectUrl = default, Option<string> slackWebhookUrl = default, Option<TemplateDefaultsInput> defaults = default, Option<List<TemplateFieldDependencyInput>> fieldDependencies = default, Option<List<PredefinedFieldInput>> predefinedFields = default, Option<Dictionary<string, Object>> predefinedFieldsSampleData = default, Option<string> html = default, Option<string> scss = default, Option<string> headerHtml = default, Option<string> footerHtml = default, Option<HtmlEngineOptionsInput> htmlEngineOptions = default, Option<string> cacheId = default, Option<string> documentUrl = default, Option<string> documentBase64 = default, Option<string> filename = default, Option<bool?> detectFields = default, Option<FieldSetupSource?> fieldSource = default, Option<FieldSetupNaming?> fieldNaming = default, Option<FieldSetupLogic?> fieldLogic = default)
         {
             TemplateType = templateType;
             NameOption = name;
@@ -101,12 +105,16 @@ namespace DocSpring.Client.Model
             SlackWebhookUrlOption = slackWebhookUrl;
             DefaultsOption = defaults;
             FieldDependenciesOption = fieldDependencies;
+            PredefinedFieldsOption = predefinedFields;
+            PredefinedFieldsSampleDataOption = predefinedFieldsSampleData;
             HtmlOption = html;
             ScssOption = scss;
             HeaderHtmlOption = headerHtml;
             FooterHtmlOption = footerHtml;
             HtmlEngineOptionsOption = htmlEngineOptions;
             CacheIdOption = cacheId;
+            DocumentUrlOption = documentUrl;
+            DocumentBase64Option = documentBase64;
             FilenameOption = filename;
             DetectFieldsOption = detectFields;
             FieldSourceOption = fieldSource;
@@ -545,6 +553,34 @@ namespace DocSpring.Client.Model
         public List<TemplateFieldDependencyInput> FieldDependencies { get { return this.FieldDependenciesOption.Value; } set { this.FieldDependenciesOption = new Option<List<TemplateFieldDependencyInput>>(value); } }
 
         /// <summary>
+        /// Used to track the state of PredefinedFields
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<List<PredefinedFieldInput>> PredefinedFieldsOption { get; private set; }
+
+        /// <summary>
+        /// The field names that people using the embedded template editor choose from, each with the data type and settings a field gets when it&#39;s given that name. Setting it replaces the whole list; an empty list turns them off.
+        /// </summary>
+        /// <value>The field names that people using the embedded template editor choose from, each with the data type and settings a field gets when it&#39;s given that name. Setting it replaces the whole list; an empty list turns them off.</value>
+        [JsonPropertyName("predefined_fields")]
+        public List<PredefinedFieldInput> PredefinedFields { get { return this.PredefinedFieldsOption.Value; } set { this.PredefinedFieldsOption = new Option<List<PredefinedFieldInput>>(value); } }
+
+        /// <summary>
+        /// Used to track the state of PredefinedFieldsSampleData
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<Dictionary<string, Object>> PredefinedFieldsSampleDataOption { get; private set; }
+
+        /// <summary>
+        /// Sample submission data that sets &#x60;predefined_fields&#x60;: each value becomes a predefined field, with a type that fits it (&#x60;string&#x60;, &#x60;number&#x60;, &#x60;boolean&#x60;, &#x60;date&#x60;, &#x60;email&#x60; or &#x60;url&#x60;) and &#x60;required_in_template&#x60; true. Nested objects and arrays become names with &#x60;/&#x60;, such as &#x60;customer/email&#x60;. Without &#x60;predefined_fields&#x60; in the same request, it replaces them; with them, it adds to them and sets the types of the ones it has values for.
+        /// </summary>
+        /// <value>Sample submission data that sets &#x60;predefined_fields&#x60;: each value becomes a predefined field, with a type that fits it (&#x60;string&#x60;, &#x60;number&#x60;, &#x60;boolean&#x60;, &#x60;date&#x60;, &#x60;email&#x60; or &#x60;url&#x60;) and &#x60;required_in_template&#x60; true. Nested objects and arrays become names with &#x60;/&#x60;, such as &#x60;customer/email&#x60;. Without &#x60;predefined_fields&#x60; in the same request, it replaces them; with them, it adds to them and sets the types of the ones it has values for.</value>
+        [JsonPropertyName("predefined_fields_sample_data")]
+        public Dictionary<string, Object> PredefinedFieldsSampleData { get { return this.PredefinedFieldsSampleDataOption.Value; } set { this.PredefinedFieldsSampleDataOption = new Option<Dictionary<string, Object>>(value); } }
+
+        /// <summary>
         /// Used to track the state of Html
         /// </summary>
         [JsonIgnore]
@@ -622,11 +658,39 @@ namespace DocSpring.Client.Model
         public Option<string> CacheIdOption { get; private set; }
 
         /// <summary>
-        /// A PDF template&#39;s document: the &#x60;fields.key&#x60; of a file you uploaded with the presigned upload (GET /uploads/presign). Required for a PDF template. To upload the PDF with the request, use POST /templates/upload.
+        /// A PDF template&#39;s document: the &#x60;fields.key&#x60; of a file you uploaded with the presigned upload (GET /uploads/presign). A PDF template needs one of &#x60;cache_id&#x60;, &#x60;document_url&#x60; and &#x60;document_base64&#x60;. To upload the PDF with the request, use POST /templates/upload.
         /// </summary>
-        /// <value>A PDF template&#39;s document: the &#x60;fields.key&#x60; of a file you uploaded with the presigned upload (GET /uploads/presign). Required for a PDF template. To upload the PDF with the request, use POST /templates/upload.</value>
+        /// <value>A PDF template&#39;s document: the &#x60;fields.key&#x60; of a file you uploaded with the presigned upload (GET /uploads/presign). A PDF template needs one of &#x60;cache_id&#x60;, &#x60;document_url&#x60; and &#x60;document_base64&#x60;. To upload the PDF with the request, use POST /templates/upload.</value>
         [JsonPropertyName("cache_id")]
         public string CacheId { get { return this.CacheIdOption.Value; } set { this.CacheIdOption = new Option<string>(value); } }
+
+        /// <summary>
+        /// Used to track the state of DocumentUrl
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string> DocumentUrlOption { get; private set; }
+
+        /// <summary>
+        /// An https:// link to the template&#39;s PDF (up to 100 MB), instead of &#x60;cache_id&#x60;. DocSpring downloads it after responding, following redirects to other https:// links: the template&#39;s &#x60;document.state&#x60; is &#x60;downloading&#x60; until then (sync.api hosts wait for it). If it can&#39;t be downloaded, the state is &#x60;download_failed&#x60; and &#x60;document.error_message&#x60; says why.
+        /// </summary>
+        /// <value>An https:// link to the template&#39;s PDF (up to 100 MB), instead of &#x60;cache_id&#x60;. DocSpring downloads it after responding, following redirects to other https:// links: the template&#39;s &#x60;document.state&#x60; is &#x60;downloading&#x60; until then (sync.api hosts wait for it). If it can&#39;t be downloaded, the state is &#x60;download_failed&#x60; and &#x60;document.error_message&#x60; says why.</value>
+        [JsonPropertyName("document_url")]
+        public string DocumentUrl { get { return this.DocumentUrlOption.Value; } set { this.DocumentUrlOption = new Option<string>(value); } }
+
+        /// <summary>
+        /// Used to track the state of DocumentBase64
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string> DocumentBase64Option { get; private set; }
+
+        /// <summary>
+        /// The template&#39;s PDF, encoded as base64 (a &#x60;data:&#x60; URI works too), instead of &#x60;cache_id&#x60;. Up to 7 MB before it&#39;s encoded: send a larger file with &#x60;cache_id&#x60; or &#x60;document_url&#x60;.
+        /// </summary>
+        /// <value>The template&#39;s PDF, encoded as base64 (a &#x60;data:&#x60; URI works too), instead of &#x60;cache_id&#x60;. Up to 7 MB before it&#39;s encoded: send a larger file with &#x60;cache_id&#x60; or &#x60;document_url&#x60;.</value>
+        [JsonPropertyName("document_base64")]
+        public string DocumentBase64 { get { return this.DocumentBase64Option.Value; } set { this.DocumentBase64Option = new Option<string>(value); } }
 
         /// <summary>
         /// Used to track the state of Filename
@@ -636,9 +700,9 @@ namespace DocSpring.Client.Model
         public Option<string> FilenameOption { get; private set; }
 
         /// <summary>
-        /// The PDF&#39;s file name, for a &#x60;cache_id&#x60; (presigned uploads don&#39;t send one).
+        /// The PDF&#39;s file name, for a &#x60;cache_id&#x60; (presigned uploads don&#39;t send one) or &#x60;document_base64&#x60;. A &#x60;document_url&#x60;&#39;s is the last part of its path unless you set it.
         /// </summary>
-        /// <value>The PDF&#39;s file name, for a &#x60;cache_id&#x60; (presigned uploads don&#39;t send one).</value>
+        /// <value>The PDF&#39;s file name, for a &#x60;cache_id&#x60; (presigned uploads don&#39;t send one) or &#x60;document_base64&#x60;. A &#x60;document_url&#x60;&#39;s is the last part of its path unless you set it.</value>
         [JsonPropertyName("filename")]
         public string Filename { get { return this.FilenameOption.Value; } set { this.FilenameOption = new Option<string>(value); } }
 
@@ -655,6 +719,12 @@ namespace DocSpring.Client.Model
         /// <value>Set up the PDF&#39;s fields as DocSpring&#39;s \&quot;Automatically detect fields\&quot; upload option does: import or detect the fields, name them with AI, and set up conditional logic. &#x60;field_source&#x60;, &#x60;field_naming&#x60; and &#x60;field_logic&#x60; choose how. Default false. &#x60;document.page_processing_statuses&#x60; and &#x60;document.field_logic_status&#x60; show how it&#39;s going, and &#x60;document.state&#x60; becomes &#x60;processed&#x60; once every page&#39;s fields are set up.</value>
         [JsonPropertyName("detect_fields")]
         public bool? DetectFields { get { return this.DetectFieldsOption.Value; } set { this.DetectFieldsOption = new Option<bool?>(value); } }
+
+        /// <summary>
+        /// Gets or Sets additional properties
+        /// </summary>
+        [JsonExtensionData]
+        public Dictionary<string, JsonElement> AdditionalProperties { get; } = new Dictionary<string, JsonElement>();
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -692,17 +762,22 @@ namespace DocSpring.Client.Model
             sb.Append("  SlackWebhookUrl: ").Append(SlackWebhookUrl).Append("\n");
             sb.Append("  Defaults: ").Append(Defaults).Append("\n");
             sb.Append("  FieldDependencies: ").Append(FieldDependencies).Append("\n");
+            sb.Append("  PredefinedFields: ").Append(PredefinedFields).Append("\n");
+            sb.Append("  PredefinedFieldsSampleData: ").Append(PredefinedFieldsSampleData).Append("\n");
             sb.Append("  Html: ").Append(Html).Append("\n");
             sb.Append("  Scss: ").Append(Scss).Append("\n");
             sb.Append("  HeaderHtml: ").Append(HeaderHtml).Append("\n");
             sb.Append("  FooterHtml: ").Append(FooterHtml).Append("\n");
             sb.Append("  HtmlEngineOptions: ").Append(HtmlEngineOptions).Append("\n");
             sb.Append("  CacheId: ").Append(CacheId).Append("\n");
+            sb.Append("  DocumentUrl: ").Append(DocumentUrl).Append("\n");
+            sb.Append("  DocumentBase64: ").Append(DocumentBase64).Append("\n");
             sb.Append("  Filename: ").Append(Filename).Append("\n");
             sb.Append("  DetectFields: ").Append(DetectFields).Append("\n");
             sb.Append("  FieldSource: ").Append(FieldSource).Append("\n");
             sb.Append("  FieldNaming: ").Append(FieldNaming).Append("\n");
             sb.Append("  FieldLogic: ").Append(FieldLogic).Append("\n");
+            sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -778,12 +853,16 @@ namespace DocSpring.Client.Model
             Option<string> slackWebhookUrl = default;
             Option<TemplateDefaultsInput> defaults = default;
             Option<List<TemplateFieldDependencyInput>> fieldDependencies = default;
+            Option<List<PredefinedFieldInput>> predefinedFields = default;
+            Option<Dictionary<string, Object>> predefinedFieldsSampleData = default;
             Option<string> html = default;
             Option<string> scss = default;
             Option<string> headerHtml = default;
             Option<string> footerHtml = default;
             Option<HtmlEngineOptionsInput> htmlEngineOptions = default;
             Option<string> cacheId = default;
+            Option<string> documentUrl = default;
+            Option<string> documentBase64 = default;
             Option<string> filename = default;
             Option<bool?> detectFields = default;
             Option<FieldSetupSource?> fieldSource = default;
@@ -889,6 +968,12 @@ namespace DocSpring.Client.Model
                         case "field_dependencies":
                             fieldDependencies = new Option<List<TemplateFieldDependencyInput>>(JsonSerializer.Deserialize<List<TemplateFieldDependencyInput>>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
+                        case "predefined_fields":
+                            predefinedFields = new Option<List<PredefinedFieldInput>>(JsonSerializer.Deserialize<List<PredefinedFieldInput>>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
+                        case "predefined_fields_sample_data":
+                            predefinedFieldsSampleData = new Option<Dictionary<string, Object>>(JsonSerializer.Deserialize<Dictionary<string, Object>>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
                         case "html":
                             html = new Option<string>(utf8JsonReader.GetString());
                             break;
@@ -906,6 +991,12 @@ namespace DocSpring.Client.Model
                             break;
                         case "cache_id":
                             cacheId = new Option<string>(utf8JsonReader.GetString());
+                            break;
+                        case "document_url":
+                            documentUrl = new Option<string>(utf8JsonReader.GetString());
+                            break;
+                        case "document_base64":
+                            documentBase64 = new Option<string>(utf8JsonReader.GetString());
                             break;
                         case "filename":
                             filename = new Option<string>(utf8JsonReader.GetString());
@@ -1000,8 +1091,17 @@ namespace DocSpring.Client.Model
             if (fieldDependencies.IsSet && fieldDependencies.Value == null)
                 throw new JsonException("Property is not nullable for class CreateTemplateRequest: field_dependencies.");
 
+            if (predefinedFields.IsSet && predefinedFields.Value == null)
+                throw new JsonException("Property is not nullable for class CreateTemplateRequest: predefined_fields.");
+
             if (cacheId.IsSet && cacheId.Value == null)
                 throw new JsonException("Property is not nullable for class CreateTemplateRequest: cache_id.");
+
+            if (documentUrl.IsSet && documentUrl.Value == null)
+                throw new JsonException("Property is not nullable for class CreateTemplateRequest: document_url.");
+
+            if (documentBase64.IsSet && documentBase64.Value == null)
+                throw new JsonException("Property is not nullable for class CreateTemplateRequest: document_base64.");
 
             if (filename.IsSet && filename.Value == null)
                 throw new JsonException("Property is not nullable for class CreateTemplateRequest: filename.");
@@ -1018,7 +1118,7 @@ namespace DocSpring.Client.Model
             if (fieldLogic.IsSet && fieldLogic.Value == null)
                 throw new JsonException("Property is not nullable for class CreateTemplateRequest: field_logic.");
 
-            return new CreateTemplateRequest(templateType.Value.Value, name, description, parentFolderId, locked, addSignatureRequestSubmissionIdFooters, aiFieldNamingLanguage, allowAdditionalProperties, allowSkippingOptionalFields, defaultFormMode, editableSubmissions, embedDomains, embedEditAllowSettings, embedEditAllowVersioning, embedEditAllowDocumentReplacement, encryptPdfs, encryptPdfsPassword, expireSubmissions, expireAfter, expirationInterval, mergeAuditTrailPdf, parseDatesUsingTemplateDateFormat, publicSubmissions, publicWebForm, redirectUrl, slackWebhookUrl, defaults, fieldDependencies, html, scss, headerHtml, footerHtml, htmlEngineOptions, cacheId, filename, detectFields, fieldSource, fieldNaming, fieldLogic);
+            return new CreateTemplateRequest(templateType.Value.Value, name, description, parentFolderId, locked, addSignatureRequestSubmissionIdFooters, aiFieldNamingLanguage, allowAdditionalProperties, allowSkippingOptionalFields, defaultFormMode, editableSubmissions, embedDomains, embedEditAllowSettings, embedEditAllowVersioning, embedEditAllowDocumentReplacement, encryptPdfs, encryptPdfsPassword, expireSubmissions, expireAfter, expirationInterval, mergeAuditTrailPdf, parseDatesUsingTemplateDateFormat, publicSubmissions, publicWebForm, redirectUrl, slackWebhookUrl, defaults, fieldDependencies, predefinedFields, predefinedFieldsSampleData, html, scss, headerHtml, footerHtml, htmlEngineOptions, cacheId, documentUrl, documentBase64, filename, detectFields, fieldSource, fieldNaming, fieldLogic);
         }
 
         /// <summary>
@@ -1109,8 +1209,17 @@ namespace DocSpring.Client.Model
             if (createTemplateRequest.FieldDependenciesOption.IsSet && createTemplateRequest.FieldDependencies == null)
                 throw new JsonException("Cannot write null property CreateTemplateRequest.FieldDependencies to non-nullable JSON property 'field_dependencies'.");
 
+            if (createTemplateRequest.PredefinedFieldsOption.IsSet && createTemplateRequest.PredefinedFields == null)
+                throw new JsonException("Cannot write null property CreateTemplateRequest.PredefinedFields to non-nullable JSON property 'predefined_fields'.");
+
             if (createTemplateRequest.CacheIdOption.IsSet && createTemplateRequest.CacheId == null)
                 throw new JsonException("Cannot write null property CreateTemplateRequest.CacheId to non-nullable JSON property 'cache_id'.");
+
+            if (createTemplateRequest.DocumentUrlOption.IsSet && createTemplateRequest.DocumentUrl == null)
+                throw new JsonException("Cannot write null property CreateTemplateRequest.DocumentUrl to non-nullable JSON property 'document_url'.");
+
+            if (createTemplateRequest.DocumentBase64Option.IsSet && createTemplateRequest.DocumentBase64 == null)
+                throw new JsonException("Cannot write null property CreateTemplateRequest.DocumentBase64 to non-nullable JSON property 'document_base64'.");
 
             if (createTemplateRequest.FilenameOption.IsSet && createTemplateRequest.Filename == null)
                 throw new JsonException("Cannot write null property CreateTemplateRequest.Filename to non-nullable JSON property 'filename'.");
@@ -1238,6 +1347,19 @@ namespace DocSpring.Client.Model
                 writer.WritePropertyName("field_dependencies");
                 JsonSerializer.Serialize(writer, createTemplateRequest.FieldDependenciesOption.Value, jsonSerializerOptions);
             }
+            if (createTemplateRequest.PredefinedFieldsOption.IsSet)
+            {
+                writer.WritePropertyName("predefined_fields");
+                JsonSerializer.Serialize(writer, createTemplateRequest.PredefinedFieldsOption.Value, jsonSerializerOptions);
+            }
+            if (createTemplateRequest.PredefinedFieldsSampleDataOption.IsSet)
+                if (createTemplateRequest.PredefinedFieldsSampleDataOption.Value != null)
+                {
+                    writer.WritePropertyName("predefined_fields_sample_data");
+                    JsonSerializer.Serialize(writer, createTemplateRequest.PredefinedFieldsSampleDataOption.Value, jsonSerializerOptions);
+                }
+                else
+                    writer.WriteNull("predefined_fields_sample_data");
             if (createTemplateRequest.HtmlOption.IsSet)
                 if (createTemplateRequest.HtmlOption.Value != null)
                     writer.WriteString("html", createTemplateRequest.Html);
@@ -1272,6 +1394,12 @@ namespace DocSpring.Client.Model
                     writer.WriteNull("html_engine_options");
             if (createTemplateRequest.CacheIdOption.IsSet)
                 writer.WriteString("cache_id", createTemplateRequest.CacheId);
+
+            if (createTemplateRequest.DocumentUrlOption.IsSet)
+                writer.WriteString("document_url", createTemplateRequest.DocumentUrl);
+
+            if (createTemplateRequest.DocumentBase64Option.IsSet)
+                writer.WriteString("document_base64", createTemplateRequest.DocumentBase64);
 
             if (createTemplateRequest.FilenameOption.IsSet)
                 writer.WriteString("filename", createTemplateRequest.Filename);

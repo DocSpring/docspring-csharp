@@ -130,6 +130,8 @@ namespace DocSpring.Client.Client
                 return FieldDisplayTypeValueConverter.ToJsonValue(fieldDisplayType);
             if (obj is FieldEqualsOperator fieldEqualsOperator)
                 return FieldEqualsOperatorValueConverter.ToJsonValue(fieldEqualsOperator);
+            if (obj is FieldGroupType fieldGroupType)
+                return FieldGroupTypeValueConverter.ToJsonValue(fieldGroupType);
             if (obj is FieldPresenceOperator fieldPresenceOperator)
                 return FieldPresenceOperatorValueConverter.ToJsonValue(fieldPresenceOperator);
             if (obj is FieldReimportState fieldReimportState)
@@ -140,6 +142,10 @@ namespace DocSpring.Client.Client
                 return FieldSetupNamingValueConverter.ToJsonValue(fieldSetupNaming);
             if (obj is FieldSetupSource fieldSetupSource)
                 return FieldSetupSourceValueConverter.ToJsonValue(fieldSetupSource);
+            if (obj is FieldType fieldType)
+                return FieldTypeValueConverter.ToJsonValue(fieldType);
+            if (obj is GenerateFilesFormat generateFilesFormat)
+                return GenerateFilesFormatValueConverter.ToJsonValue(generateFilesFormat);
             if (obj is GeneratedFileState generatedFileState)
                 return GeneratedFileStateValueConverter.ToJsonValue(generatedFileState);
             if (obj is ImageGravity imageGravity)
@@ -150,6 +156,8 @@ namespace DocSpring.Client.Client
                 return ModelCodeLanguageValueConverter.ToJsonValue(modelCodeLanguage);
             if (obj is NumberConditionType numberConditionType)
                 return NumberConditionTypeValueConverter.ToJsonValue(numberConditionType);
+            if (obj is OutputFormat outputFormat)
+                return OutputFormatValueConverter.ToJsonValue(outputFormat);
             if (obj is PageFormat pageFormat)
                 return PageFormatValueConverter.ToJsonValue(pageFormat);
             if (obj is ShapeType shapeType)

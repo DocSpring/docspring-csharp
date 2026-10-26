@@ -1,5 +1,5 @@
 # DocSpring.Client.Model.TemplateFieldDependencyAction
-What a conditional logic rule does to its target fields.
+What a conditional logic rule does to the fields it applies to.
 
 ## Properties
 

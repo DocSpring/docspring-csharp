@@ -16,7 +16,8 @@ Name | Type | Description | Notes
 **HasPassword** | **bool** | Whether the PDF needs a password to open (`password`). | 
 **SignatureRequests** | [**List&lt;SignatureRequest&gt;**](SignatureRequest.md) | The people asked to sign the submission (and fill in their fields), in order. | 
 **Actions** | [**List&lt;SubmissionAction&gt;**](SubmissionAction.md) | The uploads of the submission's PDF to your storage (account integrations). | 
-**Files** | [**SubmissionFiles**](SubmissionFiles.md) | The generated files: `pdf` once the submission has been processed, `audit_trail` once its signature requests are completed, and `preview` once a preview PDF has been generated. Empty once the submission has expired. | 
+**OutputFormats** | [**List&lt;OutputFormat&gt;**](OutputFormat.md) | What the submission makes: `pdf`, and `png` (an image of each page of the PDF, up to 100 pages) when you ask for it. Default `["pdf"]`. POST /submissions/{submission_id}/generate_files adds `png` to a processed submission. | 
+**Files** | [**SubmissionFiles**](SubmissionFiles.md) | The generated files: `pdf` once the submission has been processed, `png` (the images of the PDF's pages, when `output_formats` has it: `files.png.pages[0]` is page 1), `audit_trail` once its signature requests are completed, and `preview` once a preview PDF has been generated. Empty once the submission has expired. | 
 **Expired** | **bool** | An expired submission's data, metadata, password and PDF have been deleted. | 
 **CreatedAt** | **DateTime** | When the submission was created. | 
 **UpdatedAt** | **DateTime** | When the submission was last updated. | 

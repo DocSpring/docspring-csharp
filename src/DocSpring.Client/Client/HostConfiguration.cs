@@ -38,6 +38,7 @@ namespace DocSpring.Client.Client
             _services = services;
             _jsonOptions.Converters.Add(new DateTimeJsonConverter());
             _jsonOptions.Converters.Add(new DateTimeNullableJsonConverter());
+            _jsonOptions.Converters.Add(new AddTemplateFieldsRequestJsonConverter());
             _jsonOptions.Converters.Add(new AiFieldNamingLanguageJsonConverter());
             _jsonOptions.Converters.Add(new AiFieldNamingLanguageNullableJsonConverter());
             _jsonOptions.Converters.Add(new AuthenticationCheckJsonConverter());
@@ -77,15 +78,23 @@ namespace DocSpring.Client.Client
             _jsonOptions.Converters.Add(new ErrorResponseJsonConverter());
             _jsonOptions.Converters.Add(new ExpirationIntervalJsonConverter());
             _jsonOptions.Converters.Add(new ExpirationIntervalNullableJsonConverter());
+            _jsonOptions.Converters.Add(new FieldJsonConverter());
             _jsonOptions.Converters.Add(new FieldComparisonConditionJsonConverter());
             _jsonOptions.Converters.Add(new FieldComparisonOperatorJsonConverter());
             _jsonOptions.Converters.Add(new FieldComparisonOperatorNullableJsonConverter());
+            _jsonOptions.Converters.Add(new FieldDependencyJsonConverter());
+            _jsonOptions.Converters.Add(new FieldDependencyInputJsonConverter());
             _jsonOptions.Converters.Add(new FieldDisplayTypeJsonConverter());
             _jsonOptions.Converters.Add(new FieldDisplayTypeNullableJsonConverter());
             _jsonOptions.Converters.Add(new FieldEqualsConditionJsonConverter());
             _jsonOptions.Converters.Add(new FieldEqualsOperatorJsonConverter());
             _jsonOptions.Converters.Add(new FieldEqualsOperatorNullableJsonConverter());
+            _jsonOptions.Converters.Add(new FieldGroupJsonConverter());
+            _jsonOptions.Converters.Add(new FieldGroupInputJsonConverter());
+            _jsonOptions.Converters.Add(new FieldGroupTypeJsonConverter());
+            _jsonOptions.Converters.Add(new FieldGroupTypeNullableJsonConverter());
             _jsonOptions.Converters.Add(new FieldInConditionJsonConverter());
+            _jsonOptions.Converters.Add(new FieldInputJsonConverter());
             _jsonOptions.Converters.Add(new FieldOverrideJsonConverter());
             _jsonOptions.Converters.Add(new FieldPresenceConditionJsonConverter());
             _jsonOptions.Converters.Add(new FieldPresenceOperatorJsonConverter());
@@ -99,8 +108,13 @@ namespace DocSpring.Client.Client
             _jsonOptions.Converters.Add(new FieldSetupNamingNullableJsonConverter());
             _jsonOptions.Converters.Add(new FieldSetupSourceJsonConverter());
             _jsonOptions.Converters.Add(new FieldSetupSourceNullableJsonConverter());
+            _jsonOptions.Converters.Add(new FieldTypeJsonConverter());
+            _jsonOptions.Converters.Add(new FieldTypeNullableJsonConverter());
             _jsonOptions.Converters.Add(new FolderJsonConverter());
             _jsonOptions.Converters.Add(new FolderListJsonConverter());
+            _jsonOptions.Converters.Add(new GenerateFilesFormatJsonConverter());
+            _jsonOptions.Converters.Add(new GenerateFilesFormatNullableJsonConverter());
+            _jsonOptions.Converters.Add(new GenerateSubmissionFilesRequestJsonConverter());
             _jsonOptions.Converters.Add(new GeneratedFileJsonConverter());
             _jsonOptions.Converters.Add(new GeneratedFileStateJsonConverter());
             _jsonOptions.Converters.Add(new GeneratedFileStateNullableJsonConverter());
@@ -116,10 +130,18 @@ namespace DocSpring.Client.Client
             _jsonOptions.Converters.Add(new MoveTemplateRequestJsonConverter());
             _jsonOptions.Converters.Add(new NumberConditionTypeJsonConverter());
             _jsonOptions.Converters.Add(new NumberConditionTypeNullableJsonConverter());
+            _jsonOptions.Converters.Add(new OutputFormatJsonConverter());
+            _jsonOptions.Converters.Add(new OutputFormatNullableJsonConverter());
             _jsonOptions.Converters.Add(new PageFormatJsonConverter());
             _jsonOptions.Converters.Add(new PageFormatNullableJsonConverter());
+            _jsonOptions.Converters.Add(new PageImageJsonConverter());
+            _jsonOptions.Converters.Add(new PageImagesJsonConverter());
+            _jsonOptions.Converters.Add(new PredefinedFieldJsonConverter());
+            _jsonOptions.Converters.Add(new PredefinedFieldInputJsonConverter());
             _jsonOptions.Converters.Add(new PublishTemplateVersionRequestJsonConverter());
+            _jsonOptions.Converters.Add(new RemoveTemplateFieldsRequestJsonConverter());
             _jsonOptions.Converters.Add(new RenameFolderRequestJsonConverter());
+            _jsonOptions.Converters.Add(new ReorderTemplateFieldsRequestJsonConverter());
             _jsonOptions.Converters.Add(new RestoreTemplateVersionRequestJsonConverter());
             _jsonOptions.Converters.Add(new ShapeTypeJsonConverter());
             _jsonOptions.Converters.Add(new ShapeTypeNullableJsonConverter());
@@ -158,15 +180,20 @@ namespace DocSpring.Client.Client
             _jsonOptions.Converters.Add(new SubmissionSourcePdfJsonConverter());
             _jsonOptions.Converters.Add(new SubmissionStateJsonConverter());
             _jsonOptions.Converters.Add(new SubmissionStateNullableJsonConverter());
+            _jsonOptions.Converters.Add(new SubmissionValidationJsonConverter());
             _jsonOptions.Converters.Add(new TemplateJsonConverter());
             _jsonOptions.Converters.Add(new TemplateActorJsonConverter());
             _jsonOptions.Converters.Add(new TemplateActorTypeJsonConverter());
             _jsonOptions.Converters.Add(new TemplateActorTypeNullableJsonConverter());
             _jsonOptions.Converters.Add(new TemplateDefaultsJsonConverter());
             _jsonOptions.Converters.Add(new TemplateDefaultsInputJsonConverter());
+            _jsonOptions.Converters.Add(new TemplateDiffJsonConverter());
+            _jsonOptions.Converters.Add(new TemplateDiffSummaryJsonConverter());
             _jsonOptions.Converters.Add(new TemplateDocumentJsonConverter());
             _jsonOptions.Converters.Add(new TemplateDocumentStateJsonConverter());
             _jsonOptions.Converters.Add(new TemplateDocumentStateNullableJsonConverter());
+            _jsonOptions.Converters.Add(new TemplateFieldChangeJsonConverter());
+            _jsonOptions.Converters.Add(new TemplateFieldChangesJsonConverter());
             _jsonOptions.Converters.Add(new TemplateFieldDependencyJsonConverter());
             _jsonOptions.Converters.Add(new TemplateFieldDependencyActionJsonConverter());
             _jsonOptions.Converters.Add(new TemplateFieldDependencyActionNullableJsonConverter());
@@ -179,6 +206,8 @@ namespace DocSpring.Client.Client
             _jsonOptions.Converters.Add(new TemplateFieldDependencyOperatorNullableJsonConverter());
             _jsonOptions.Converters.Add(new TemplateFieldLogicStatusJsonConverter());
             _jsonOptions.Converters.Add(new TemplateFieldLogicStatusNullableJsonConverter());
+            _jsonOptions.Converters.Add(new TemplateFieldMoveJsonConverter());
+            _jsonOptions.Converters.Add(new TemplateFieldsJsonConverter());
             _jsonOptions.Converters.Add(new TemplateFormModeJsonConverter());
             _jsonOptions.Converters.Add(new TemplateFormModeNullableJsonConverter());
             _jsonOptions.Converters.Add(new TemplateModelCodeJsonConverter());
@@ -190,6 +219,7 @@ namespace DocSpring.Client.Client
             _jsonOptions.Converters.Add(new TemplatePageFieldsStatusNullableJsonConverter());
             _jsonOptions.Converters.Add(new TemplatePageImageStatusJsonConverter());
             _jsonOptions.Converters.Add(new TemplatePageImageStatusNullableJsonConverter());
+            _jsonOptions.Converters.Add(new TemplatePageImagesJsonConverter());
             _jsonOptions.Converters.Add(new TemplatePageProcessingStatusJsonConverter());
             _jsonOptions.Converters.Add(new TemplateSourcePdfJsonConverter());
             _jsonOptions.Converters.Add(new TemplateSummaryJsonConverter());
@@ -209,12 +239,14 @@ namespace DocSpring.Client.Client
             _jsonOptions.Converters.Add(new TypefaceNullableJsonConverter());
             _jsonOptions.Converters.Add(new UpdateSignatureRequestRequestJsonConverter());
             _jsonOptions.Converters.Add(new UpdateTemplateDocumentRequestJsonConverter());
+            _jsonOptions.Converters.Add(new UpdateTemplateFieldsRequestJsonConverter());
             _jsonOptions.Converters.Add(new UpdateTemplateRequestJsonConverter());
             _jsonOptions.Converters.Add(new UpdateWebhookRequestJsonConverter());
             _jsonOptions.Converters.Add(new UploadMethodJsonConverter());
             _jsonOptions.Converters.Add(new UploadMethodNullableJsonConverter());
             _jsonOptions.Converters.Add(new UploadPresignJsonConverter());
             _jsonOptions.Converters.Add(new UrlSourcePdfJsonConverter());
+            _jsonOptions.Converters.Add(new ValidateSubmissionRequestJsonConverter());
             _jsonOptions.Converters.Add(new WebhookJsonConverter());
             _jsonOptions.Converters.Add(new WebhookEventTypeJsonConverter());
             _jsonOptions.Converters.Add(new WebhookEventTypeNullableJsonConverter());
@@ -271,7 +303,7 @@ namespace DocSpring.Client.Client
 
             List<IHttpClientBuilder> builders = new List<IHttpClientBuilder>();
 
-            builders.Add(_services.AddHttpClient<DocSpring.Client.Api.IClient, DocSpring.Client.Api.Client>("DocSpring.Client.Api.IClient", (serviceProvider, c) => { c.DefaultRequestHeaders.UserAgent.ParseAdd("docspring-csharp-4.0.0"); client(serviceProvider, c); }));
+            builders.Add(_services.AddHttpClient<DocSpring.Client.Api.IClient, DocSpring.Client.Api.Client>("DocSpring.Client.Api.IClient", (serviceProvider, c) => { c.DefaultRequestHeaders.UserAgent.ParseAdd("docspring-csharp-4.1.0"); client(serviceProvider, c); }));
 
             foreach (IHttpClientBuilder instance in builders)
             {

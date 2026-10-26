@@ -9,7 +9,7 @@ templates with your data, generates PDFs from HTML templates, combines PDFs and 
 The code in this repository is generated from DocSpring's OpenAPI spec ([About this SDK](#about-this-sdk)). Issues and
 pull requests are welcome.
 
-Version 4.0.0. Requires .NET Standard 2.0 (.NET 6 or later, or .NET Framework 4.6.2 or later).
+Version 4.1.0. Requires .NET Standard 2.0 (.NET 6 or later, or .NET Framework 4.6.2 or later).
 
 ## Install and configure
 
@@ -95,6 +95,7 @@ C# code for every method.
 
 | Method | Description |
 | ------ | ----------- |
+| [`AddTemplateFields`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#addtemplatefields) | Add fields to a template |
 | [`CopyTemplate`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#copytemplate) | Copy a template |
 | [`CreateCombinedPdf`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#createcombinedpdf) | Combine PDFs |
 | [`CreateCustomFileFromUpload`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#createcustomfilefromupload) | Create a custom file from an upload |
@@ -111,6 +112,7 @@ C# code for every method.
 | [`DeleteWebhook`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#deletewebhook) | Delete a webhook |
 | [`ExpireCombinedPdf`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#expirecombinedpdf) | Expire a combined PDF |
 | [`ExpireSubmission`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#expiresubmission) | Expire a submission |
+| [`GenerateSubmissionFiles`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#generatesubmissionfiles) | Generate more files |
 | [`GenerateSubmissionPreview`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#generatesubmissionpreview) | Generate a preview PDF |
 | [`GetCombinedPdf`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#getcombinedpdf) | Get a combined PDF |
 | [`GetCustomFile`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#getcustomfile) | Get a custom file |
@@ -120,28 +122,35 @@ C# code for every method.
 | [`GetSubmission`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#getsubmission) | Get a submission |
 | [`GetSubmissionBatch`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#getsubmissionbatch) | Get a batch |
 | [`GetTemplate`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#gettemplate) | Get a template |
+| [`GetTemplateDiff`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#gettemplatediff) | Compare a version of a template with the one before it |
 | [`GetTemplateModelCode`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#gettemplatemodelcode) | Generate typed code for a template's submission data |
+| [`GetTemplatePageImages`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#gettemplatepageimages) | Get images of a template's pages |
 | [`GetTemplateSchema`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#gettemplateschema) | Get the JSON Schema of a template's submission data |
 | [`GetWebhook`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#getwebhook) | Get a webhook |
 | [`ListCombinedPdfs`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#listcombinedpdfs) | List combined PDFs |
 | [`ListCustomFiles`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#listcustomfiles) | List custom files |
 | [`ListFolders`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#listfolders) | List folders |
 | [`ListSubmissions`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#listsubmissions) | List submissions |
+| [`ListTemplateFields`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#listtemplatefields) | List a template's fields |
 | [`ListTemplates`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#listtemplates) | List templates |
 | [`ListTemplateSubmissions`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#listtemplatesubmissions) | List a template's submissions |
 | [`ListWebhooks`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#listwebhooks) | List webhooks |
 | [`MoveFolder`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#movefolder) | Move a folder |
 | [`MoveTemplate`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#movetemplate) | Move a template to a folder |
 | [`PublishTemplateVersion`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#publishtemplateversion) | Publish a template version |
+| [`RemoveTemplateFields`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#removetemplatefields) | Remove fields from a template |
 | [`RenameFolder`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#renamefolder) | Rename a folder |
+| [`ReorderTemplateFields`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#reordertemplatefields) | Reorder a template's fields |
 | [`RestoreTemplateVersion`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#restoretemplateversion) | Restore a template version |
 | [`TestAuthentication`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#testauthentication) | Test authentication |
 | [`UpdateSignatureRequest`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#updatesignaturerequest) | Update a signature request |
 | [`UpdateTemplate`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#updatetemplate) | Update a template |
 | [`UpdateTemplateDocument`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#updatetemplatedocument) | Replace a template's PDF |
+| [`UpdateTemplateFields`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#updatetemplatefields) | Update a template's fields |
 | [`UpdateWebhook`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#updatewebhook) | Update a webhook |
 | [`UploadTemplate`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#uploadtemplate) | Create a PDF template from an uploaded PDF |
 | [`UploadTemplateDocument`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#uploadtemplatedocument) | Replace a template's PDF with an uploaded PDF |
+| [`ValidateSubmission`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#validatesubmission) | Check a submission without creating it |
 
 ## Errors
 

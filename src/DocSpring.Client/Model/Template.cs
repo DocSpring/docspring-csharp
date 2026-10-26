@@ -59,6 +59,8 @@ namespace DocSpring.Client.Model
         /// <param name="updatedAt">When the template was last updated.</param>
         /// <param name="defaults">defaults</param>
         /// <param name="fieldDependencies">Conditional logic: each rule shows or hides its target fields, or makes them required, depending on the values of other fields.</param>
+        /// <param name="fieldGroups">The groups of the template&#39;s fields, with their settings. A field&#39;s name puts it in groups: &#x60;address/city&#x60; is in the group &#x60;address&#x60;, and &#x60;items/0/price&#x60; is in the list &#x60;items&#x60; and its items&#39; group &#x60;items/~&#x60;.</param>
+        /// <param name="predefinedFields">The field names that people using the embedded template editor choose from, each with the data type and settings a field gets when it&#39;s given that name. Setting it replaces the whole list; an empty list turns them off.</param>
         /// <param name="versions">The template&#39;s published versions, newest first (up to 100).</param>
         /// <param name="name">The template&#39;s name.</param>
         /// <param name="description">Shown under the template&#39;s name at the top of its hosted forms, and used as their meta description. Not shown on embedded forms or signature requests.</param>
@@ -71,6 +73,7 @@ namespace DocSpring.Client.Model
         /// <param name="redirectUrl">Where the web form sends people after they submit it.</param>
         /// <param name="lastChangedAt">When the draft was last changed.</param>
         /// <param name="lastChangedBy">Who last changed the draft: a user in your account, an API token, or someone using the embedded template editor. Null if no change has been recorded.</param>
+        /// <param name="predefinedFieldsSampleData">Sample submission data that sets &#x60;predefined_fields&#x60;: each value becomes a predefined field, with a type that fits it (&#x60;string&#x60;, &#x60;number&#x60;, &#x60;boolean&#x60;, &#x60;date&#x60;, &#x60;email&#x60; or &#x60;url&#x60;) and &#x60;required_in_template&#x60; true. Nested objects and arrays become names with &#x60;/&#x60;, such as &#x60;customer/email&#x60;. Without &#x60;predefined_fields&#x60; in the same request, it replaces them; with them, it adds to them and sets the types of the ones it has values for.</param>
         /// <param name="html">The HTML of an HTML template, as a Liquid template. Null for PDF templates.</param>
         /// <param name="scss">The SCSS of an HTML template.</param>
         /// <param name="headerHtml">The HTML printed at the top of each page of an HTML template.</param>
@@ -78,7 +81,7 @@ namespace DocSpring.Client.Model
         /// <param name="htmlEngineOptions">How an HTML template&#39;s PDFs are printed. Null for PDF templates. Setting it replaces the whole object: options left out use their defaults.</param>
         /// <param name="embedEditToken">The token that opens the template in the embedded template editor.</param>
         [JsonConstructor]
-        public Template(string id, TemplateType templateType, bool ready, string path, bool locked, bool addSignatureRequestSubmissionIdFooters, bool allowAdditionalProperties, bool allowSkippingOptionalFields, TemplateFormMode defaultFormMode, bool editableSubmissions, List<string> embedDomains, bool embedEditAllowSettings, bool embedEditAllowVersioning, bool embedEditAllowDocumentReplacement, bool encryptPdfs, bool hasEncryptPdfsPassword, bool expireSubmissions, int expireAfter, ExpirationInterval expirationInterval, bool mergeAuditTrailPdf, bool parseDatesUsingTemplateDateFormat, bool publicSubmissions, bool publicWebForm, bool hasSlackWebhookUrl, DateTime createdAt, DateTime updatedAt, TemplateDefaults defaults, List<TemplateFieldDependency> fieldDependencies, List<TemplateVersion> versions, string name = default, string description = default, TemplateDocument document = default, string parentFolderId = default, string varVersion = default, string latestVersion = default, DateTime? versionPublishedAt = default, AiFieldNamingLanguage? aiFieldNamingLanguage = default, string redirectUrl = default, DateTime? lastChangedAt = default, TemplateActor lastChangedBy = default, string html = default, string scss = default, string headerHtml = default, string footerHtml = default, HtmlEngineOptions htmlEngineOptions = default, string embedEditToken = default)
+        public Template(string id, TemplateType templateType, bool ready, string path, bool locked, bool addSignatureRequestSubmissionIdFooters, bool allowAdditionalProperties, bool allowSkippingOptionalFields, TemplateFormMode defaultFormMode, bool editableSubmissions, List<string> embedDomains, bool embedEditAllowSettings, bool embedEditAllowVersioning, bool embedEditAllowDocumentReplacement, bool encryptPdfs, bool hasEncryptPdfsPassword, bool expireSubmissions, int expireAfter, ExpirationInterval expirationInterval, bool mergeAuditTrailPdf, bool parseDatesUsingTemplateDateFormat, bool publicSubmissions, bool publicWebForm, bool hasSlackWebhookUrl, DateTime createdAt, DateTime updatedAt, TemplateDefaults defaults, List<TemplateFieldDependency> fieldDependencies, List<FieldGroup> fieldGroups, List<PredefinedField> predefinedFields, List<TemplateVersion> versions, string name = default, string description = default, TemplateDocument document = default, string parentFolderId = default, string varVersion = default, string latestVersion = default, DateTime? versionPublishedAt = default, AiFieldNamingLanguage? aiFieldNamingLanguage = default, string redirectUrl = default, DateTime? lastChangedAt = default, TemplateActor lastChangedBy = default, Dictionary<string, Object> predefinedFieldsSampleData = default, string html = default, string scss = default, string headerHtml = default, string footerHtml = default, HtmlEngineOptions htmlEngineOptions = default, string embedEditToken = default)
         {
             Id = id;
             TemplateType = templateType;
@@ -108,6 +111,8 @@ namespace DocSpring.Client.Model
             UpdatedAt = updatedAt;
             Defaults = defaults;
             FieldDependencies = fieldDependencies;
+            FieldGroups = fieldGroups;
+            PredefinedFields = predefinedFields;
             Versions = versions;
             Name = name;
             Description = description;
@@ -120,6 +125,7 @@ namespace DocSpring.Client.Model
             RedirectUrl = redirectUrl;
             LastChangedAt = lastChangedAt;
             LastChangedBy = lastChangedBy;
+            PredefinedFieldsSampleData = predefinedFieldsSampleData;
             Html = html;
             Scss = scss;
             HeaderHtml = headerHtml;
@@ -334,6 +340,20 @@ namespace DocSpring.Client.Model
         public List<TemplateFieldDependency> FieldDependencies { get; set; }
 
         /// <summary>
+        /// The groups of the template&#39;s fields, with their settings. A field&#39;s name puts it in groups: &#x60;address/city&#x60; is in the group &#x60;address&#x60;, and &#x60;items/0/price&#x60; is in the list &#x60;items&#x60; and its items&#39; group &#x60;items/~&#x60;.
+        /// </summary>
+        /// <value>The groups of the template&#39;s fields, with their settings. A field&#39;s name puts it in groups: &#x60;address/city&#x60; is in the group &#x60;address&#x60;, and &#x60;items/0/price&#x60; is in the list &#x60;items&#x60; and its items&#39; group &#x60;items/~&#x60;.</value>
+        [JsonPropertyName("field_groups")]
+        public List<FieldGroup> FieldGroups { get; set; }
+
+        /// <summary>
+        /// The field names that people using the embedded template editor choose from, each with the data type and settings a field gets when it&#39;s given that name. Setting it replaces the whole list; an empty list turns them off.
+        /// </summary>
+        /// <value>The field names that people using the embedded template editor choose from, each with the data type and settings a field gets when it&#39;s given that name. Setting it replaces the whole list; an empty list turns them off.</value>
+        [JsonPropertyName("predefined_fields")]
+        public List<PredefinedField> PredefinedFields { get; set; }
+
+        /// <summary>
         /// The template&#39;s published versions, newest first (up to 100).
         /// </summary>
         /// <value>The template&#39;s published versions, newest first (up to 100).</value>
@@ -409,6 +429,13 @@ namespace DocSpring.Client.Model
         /// <value>Who last changed the draft: a user in your account, an API token, or someone using the embedded template editor. Null if no change has been recorded.</value>
         [JsonPropertyName("last_changed_by")]
         public TemplateActor LastChangedBy { get; set; }
+
+        /// <summary>
+        /// Sample submission data that sets &#x60;predefined_fields&#x60;: each value becomes a predefined field, with a type that fits it (&#x60;string&#x60;, &#x60;number&#x60;, &#x60;boolean&#x60;, &#x60;date&#x60;, &#x60;email&#x60; or &#x60;url&#x60;) and &#x60;required_in_template&#x60; true. Nested objects and arrays become names with &#x60;/&#x60;, such as &#x60;customer/email&#x60;. Without &#x60;predefined_fields&#x60; in the same request, it replaces them; with them, it adds to them and sets the types of the ones it has values for.
+        /// </summary>
+        /// <value>Sample submission data that sets &#x60;predefined_fields&#x60;: each value becomes a predefined field, with a type that fits it (&#x60;string&#x60;, &#x60;number&#x60;, &#x60;boolean&#x60;, &#x60;date&#x60;, &#x60;email&#x60; or &#x60;url&#x60;) and &#x60;required_in_template&#x60; true. Nested objects and arrays become names with &#x60;/&#x60;, such as &#x60;customer/email&#x60;. Without &#x60;predefined_fields&#x60; in the same request, it replaces them; with them, it adds to them and sets the types of the ones it has values for.</value>
+        [JsonPropertyName("predefined_fields_sample_data")]
+        public Dictionary<string, Object> PredefinedFieldsSampleData { get; set; }
 
         /// <summary>
         /// The HTML of an HTML template, as a Liquid template. Null for PDF templates.
@@ -494,6 +521,8 @@ namespace DocSpring.Client.Model
             sb.Append("  UpdatedAt: ").Append(UpdatedAt).Append("\n");
             sb.Append("  Defaults: ").Append(Defaults).Append("\n");
             sb.Append("  FieldDependencies: ").Append(FieldDependencies).Append("\n");
+            sb.Append("  FieldGroups: ").Append(FieldGroups).Append("\n");
+            sb.Append("  PredefinedFields: ").Append(PredefinedFields).Append("\n");
             sb.Append("  Versions: ").Append(Versions).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
@@ -506,6 +535,7 @@ namespace DocSpring.Client.Model
             sb.Append("  RedirectUrl: ").Append(RedirectUrl).Append("\n");
             sb.Append("  LastChangedAt: ").Append(LastChangedAt).Append("\n");
             sb.Append("  LastChangedBy: ").Append(LastChangedBy).Append("\n");
+            sb.Append("  PredefinedFieldsSampleData: ").Append(PredefinedFieldsSampleData).Append("\n");
             sb.Append("  Html: ").Append(Html).Append("\n");
             sb.Append("  Scss: ").Append(Scss).Append("\n");
             sb.Append("  HeaderHtml: ").Append(HeaderHtml).Append("\n");
@@ -608,6 +638,8 @@ namespace DocSpring.Client.Model
             Option<DateTime?> updatedAt = default;
             Option<TemplateDefaults> defaults = default;
             Option<List<TemplateFieldDependency>> fieldDependencies = default;
+            Option<List<FieldGroup>> fieldGroups = default;
+            Option<List<PredefinedField>> predefinedFields = default;
             Option<List<TemplateVersion>> versions = default;
             Option<string> name = default;
             Option<string> description = default;
@@ -620,6 +652,7 @@ namespace DocSpring.Client.Model
             Option<string> redirectUrl = default;
             Option<DateTime?> lastChangedAt = default;
             Option<TemplateActor> lastChangedBy = default;
+            Option<Dictionary<string, Object>> predefinedFieldsSampleData = default;
             Option<string> html = default;
             Option<string> scss = default;
             Option<string> headerHtml = default;
@@ -726,6 +759,12 @@ namespace DocSpring.Client.Model
                         case "field_dependencies":
                             fieldDependencies = new Option<List<TemplateFieldDependency>>(JsonSerializer.Deserialize<List<TemplateFieldDependency>>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
+                        case "field_groups":
+                            fieldGroups = new Option<List<FieldGroup>>(JsonSerializer.Deserialize<List<FieldGroup>>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
+                        case "predefined_fields":
+                            predefinedFields = new Option<List<PredefinedField>>(JsonSerializer.Deserialize<List<PredefinedField>>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
                         case "versions":
                             versions = new Option<List<TemplateVersion>>(JsonSerializer.Deserialize<List<TemplateVersion>>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
@@ -761,6 +800,9 @@ namespace DocSpring.Client.Model
                             break;
                         case "last_changed_by":
                             lastChangedBy = new Option<TemplateActor>(JsonSerializer.Deserialize<TemplateActor>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
+                        case "predefined_fields_sample_data":
+                            predefinedFieldsSampleData = new Option<Dictionary<string, Object>>(JsonSerializer.Deserialize<Dictionary<string, Object>>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "html":
                             html = new Option<string>(utf8JsonReader.GetString());
@@ -870,6 +912,12 @@ namespace DocSpring.Client.Model
             if (!fieldDependencies.IsSet)
                 throw new JsonException("Property is required for class Template: field_dependencies.");
 
+            if (!fieldGroups.IsSet)
+                throw new JsonException("Property is required for class Template: field_groups.");
+
+            if (!predefinedFields.IsSet)
+                throw new JsonException("Property is required for class Template: predefined_fields.");
+
             if (!versions.IsSet)
                 throw new JsonException("Property is required for class Template: versions.");
 
@@ -905,6 +953,9 @@ namespace DocSpring.Client.Model
 
             if (!lastChangedBy.IsSet)
                 throw new JsonException("Property is required for class Template: last_changed_by.");
+
+            if (!predefinedFieldsSampleData.IsSet)
+                throw new JsonException("Property is required for class Template: predefined_fields_sample_data.");
 
             if (!html.IsSet)
                 throw new JsonException("Property is required for class Template: html.");
@@ -1008,10 +1059,16 @@ namespace DocSpring.Client.Model
             if (fieldDependencies.IsSet && fieldDependencies.Value == null)
                 throw new JsonException("Property is not nullable for class Template: field_dependencies.");
 
+            if (fieldGroups.IsSet && fieldGroups.Value == null)
+                throw new JsonException("Property is not nullable for class Template: field_groups.");
+
+            if (predefinedFields.IsSet && predefinedFields.Value == null)
+                throw new JsonException("Property is not nullable for class Template: predefined_fields.");
+
             if (versions.IsSet && versions.Value == null)
                 throw new JsonException("Property is not nullable for class Template: versions.");
 
-            return new Template(id.Value, templateType.Value.Value, ready.Value.Value, path.Value, locked.Value.Value, addSignatureRequestSubmissionIdFooters.Value.Value, allowAdditionalProperties.Value.Value, allowSkippingOptionalFields.Value.Value, defaultFormMode.Value.Value, editableSubmissions.Value.Value, embedDomains.Value, embedEditAllowSettings.Value.Value, embedEditAllowVersioning.Value.Value, embedEditAllowDocumentReplacement.Value.Value, encryptPdfs.Value.Value, hasEncryptPdfsPassword.Value.Value, expireSubmissions.Value.Value, expireAfter.Value.Value, expirationInterval.Value.Value, mergeAuditTrailPdf.Value.Value, parseDatesUsingTemplateDateFormat.Value.Value, publicSubmissions.Value.Value, publicWebForm.Value.Value, hasSlackWebhookUrl.Value.Value, createdAt.Value.Value, updatedAt.Value.Value, defaults.Value, fieldDependencies.Value, versions.Value, name.Value, description.Value, document.Value, parentFolderId.Value, varVersion.Value, latestVersion.Value, versionPublishedAt.Value, aiFieldNamingLanguage.Value, redirectUrl.Value, lastChangedAt.Value, lastChangedBy.Value, html.Value, scss.Value, headerHtml.Value, footerHtml.Value, htmlEngineOptions.Value, embedEditToken.Value);
+            return new Template(id.Value, templateType.Value.Value, ready.Value.Value, path.Value, locked.Value.Value, addSignatureRequestSubmissionIdFooters.Value.Value, allowAdditionalProperties.Value.Value, allowSkippingOptionalFields.Value.Value, defaultFormMode.Value.Value, editableSubmissions.Value.Value, embedDomains.Value, embedEditAllowSettings.Value.Value, embedEditAllowVersioning.Value.Value, embedEditAllowDocumentReplacement.Value.Value, encryptPdfs.Value.Value, hasEncryptPdfsPassword.Value.Value, expireSubmissions.Value.Value, expireAfter.Value.Value, expirationInterval.Value.Value, mergeAuditTrailPdf.Value.Value, parseDatesUsingTemplateDateFormat.Value.Value, publicSubmissions.Value.Value, publicWebForm.Value.Value, hasSlackWebhookUrl.Value.Value, createdAt.Value.Value, updatedAt.Value.Value, defaults.Value, fieldDependencies.Value, fieldGroups.Value, predefinedFields.Value, versions.Value, name.Value, description.Value, document.Value, parentFolderId.Value, varVersion.Value, latestVersion.Value, versionPublishedAt.Value, aiFieldNamingLanguage.Value, redirectUrl.Value, lastChangedAt.Value, lastChangedBy.Value, predefinedFieldsSampleData.Value, html.Value, scss.Value, headerHtml.Value, footerHtml.Value, htmlEngineOptions.Value, embedEditToken.Value);
         }
 
         /// <summary>
@@ -1095,6 +1152,10 @@ namespace DocSpring.Client.Model
             JsonSerializer.Serialize(writer, template.Defaults, jsonSerializerOptions);
             writer.WritePropertyName("field_dependencies");
             JsonSerializer.Serialize(writer, template.FieldDependencies, jsonSerializerOptions);
+            writer.WritePropertyName("field_groups");
+            JsonSerializer.Serialize(writer, template.FieldGroups, jsonSerializerOptions);
+            writer.WritePropertyName("predefined_fields");
+            JsonSerializer.Serialize(writer, template.PredefinedFields, jsonSerializerOptions);
             writer.WritePropertyName("versions");
             JsonSerializer.Serialize(writer, template.Versions, jsonSerializerOptions);
             if (template.Name != null)
@@ -1162,6 +1223,13 @@ namespace DocSpring.Client.Model
             }
             else
                 writer.WriteNull("last_changed_by");
+            if (template.PredefinedFieldsSampleData != null)
+            {
+                writer.WritePropertyName("predefined_fields_sample_data");
+                JsonSerializer.Serialize(writer, template.PredefinedFieldsSampleData, jsonSerializerOptions);
+            }
+            else
+                writer.WriteNull("predefined_fields_sample_data");
             if (template.Html != null)
                 writer.WriteString("html", template.Html);
             else

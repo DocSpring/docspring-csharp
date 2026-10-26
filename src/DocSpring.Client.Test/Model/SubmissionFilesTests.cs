@@ -79,5 +79,14 @@ namespace DocSpring.Client.Test.Model
         {
             // TODO unit test for the property 'Preview'
         }
+
+        /// <summary>
+        /// Test the property 'Png'
+        /// </summary>
+        [Fact]
+        public void PngTest()
+        {
+            // TODO unit test for the property 'Png'
+        }
     }
 }

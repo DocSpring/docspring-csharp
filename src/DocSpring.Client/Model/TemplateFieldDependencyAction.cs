@@ -24,7 +24,7 @@ using DocSpring.Client.Client;
 namespace DocSpring.Client.Model
 {
     /// <summary>
-    /// What a conditional logic rule does to its target fields.
+    /// What a conditional logic rule does to the fields it applies to.
     /// </summary>
     /// <remarks>
     /// The static properties are the values this client knows. A response can have a value added to the API after this

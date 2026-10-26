@@ -99,6 +99,15 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'OutputFormats'
+        /// </summary>
+        [Fact]
+        public void OutputFormatsTest()
+        {
+            // TODO unit test for the property 'OutputFormats'
+        }
+
+        /// <summary>
         /// Test the property 'ExpiresIn'
         /// </summary>
         [Fact]

@@ -69,9 +69,19 @@ namespace DocSpring.Client.Model
         public static TemplateDocumentState UnknownError { get; } = new TemplateDocumentState("unknown_error");
 
         /// <summary>
+        /// downloading
+        /// </summary>
+        public static TemplateDocumentState Downloading { get; } = new TemplateDocumentState("downloading");
+
+        /// <summary>
+        /// download_failed
+        /// </summary>
+        public static TemplateDocumentState DownloadFailed { get; } = new TemplateDocumentState("download_failed");
+
+        /// <summary>
         /// The values this client knows
         /// </summary>
-        public static IReadOnlyList<TemplateDocumentState> Values { get; } = new[] { Pending, Processed, PasswordRequired, MalformedPdf, UnknownError };
+        public static IReadOnlyList<TemplateDocumentState> Values { get; } = new[] { Pending, Processed, PasswordRequired, MalformedPdf, UnknownError, Downloading, DownloadFailed };
 
         /// <summary>
         /// Whether the value is one this client knows: a newer API can return values added after it was released

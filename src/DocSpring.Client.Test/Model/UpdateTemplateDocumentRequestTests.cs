@@ -63,6 +63,24 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'DocumentUrl'
+        /// </summary>
+        [Fact]
+        public void DocumentUrlTest()
+        {
+            // TODO unit test for the property 'DocumentUrl'
+        }
+
+        /// <summary>
+        /// Test the property 'DocumentBase64'
+        /// </summary>
+        [Fact]
+        public void DocumentBase64Test()
+        {
+            // TODO unit test for the property 'DocumentBase64'
+        }
+
+        /// <summary>
         /// Test the property 'Filename'
         /// </summary>
         [Fact]

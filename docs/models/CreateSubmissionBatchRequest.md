@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **TemplateId** | **string** | The template for each submission that doesn't name its own `template_id`. | [optional] 
 **TemplateVersion** | **string** | The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published). | [optional] 
 **Test** | **bool** | The default `test` for each submission that doesn't set its own. | [optional] 
+**OutputFormats** | [**List&lt;OutputFormat&gt;**](OutputFormat.md) | The default `output_formats` for each submission that doesn't set its own. | [optional] 
 
 [[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 

@@ -31,7 +31,7 @@ namespace DocSpring.Client.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="TemplateFieldDependency" /> class.
         /// </summary>
-        /// <param name="action">What the rule does to its targets when its conditions are met.</param>
+        /// <param name="action">What the rule does to the fields it applies to when its conditions are met.</param>
         /// <param name="conditions">The conditions on other fields&#39; values.</param>
         /// <param name="targets">The names of the fields the rule shows or makes required.</param>
         /// <param name="match">Whether all of the conditions (the default) or any of them must be met.</param>
@@ -50,9 +50,9 @@ namespace DocSpring.Client.Model
         partial void OnCreated();
 
         /// <summary>
-        /// What the rule does to its targets when its conditions are met.
+        /// What the rule does to the fields it applies to when its conditions are met.
         /// </summary>
-        /// <value>What the rule does to its targets when its conditions are met.</value>
+        /// <value>What the rule does to the fields it applies to when its conditions are met.</value>
         [JsonPropertyName("action")]
         public TemplateFieldDependencyAction Action { get; set; }
 

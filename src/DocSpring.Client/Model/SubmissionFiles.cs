@@ -34,12 +34,14 @@ namespace DocSpring.Client.Model
         /// <param name="pdf">The submission&#39;s PDF.</param>
         /// <param name="auditTrail">The audit trail of a submission with signature requests: who signed, when and how. It&#39;s also added to the end of the PDF when the template&#39;s &#x60;merge_audit_trail_pdf&#x60; is on.</param>
         /// <param name="preview">The preview PDF from POST /submissions/{submission_id}/generate_preview, such as for a submission still waiting for its signature requests.</param>
+        /// <param name="png">png</param>
         [JsonConstructor]
-        public SubmissionFiles(Option<GeneratedFile> pdf = default, Option<GeneratedFile> auditTrail = default, Option<GeneratedFile> preview = default)
+        public SubmissionFiles(Option<GeneratedFile> pdf = default, Option<GeneratedFile> auditTrail = default, Option<GeneratedFile> preview = default, Option<PageImages> png = default)
         {
             PdfOption = pdf;
             AuditTrailOption = auditTrail;
             PreviewOption = preview;
+            PngOption = png;
             OnCreated();
         }
 
@@ -88,6 +90,19 @@ namespace DocSpring.Client.Model
         public GeneratedFile Preview { get { return this.PreviewOption.Value; } set { this.PreviewOption = new Option<GeneratedFile>(value); } }
 
         /// <summary>
+        /// Used to track the state of Png
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<PageImages> PngOption { get; private set; }
+
+        /// <summary>
+        /// Gets or Sets Png
+        /// </summary>
+        [JsonPropertyName("png")]
+        public PageImages Png { get { return this.PngOption.Value; } set { this.PngOption = new Option<PageImages>(value); } }
+
+        /// <summary>
         /// Gets or Sets additional properties
         /// </summary>
         [JsonExtensionData]
@@ -104,6 +119,7 @@ namespace DocSpring.Client.Model
             sb.Append("  Pdf: ").Append(Pdf).Append("\n");
             sb.Append("  AuditTrail: ").Append(AuditTrail).Append("\n");
             sb.Append("  Preview: ").Append(Preview).Append("\n");
+            sb.Append("  Png: ").Append(Png).Append("\n");
             sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -155,6 +171,7 @@ namespace DocSpring.Client.Model
             Option<GeneratedFile> pdf = default;
             Option<GeneratedFile> auditTrail = default;
             Option<GeneratedFile> preview = default;
+            Option<PageImages> png = default;
 
             while (utf8JsonReader.Read())
             {
@@ -180,6 +197,9 @@ namespace DocSpring.Client.Model
                         case "preview":
                             preview = new Option<GeneratedFile>(JsonSerializer.Deserialize<GeneratedFile>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
+                        case "png":
+                            png = new Option<PageImages>(JsonSerializer.Deserialize<PageImages>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
                         default:
                             break;
                     }
@@ -195,7 +215,10 @@ namespace DocSpring.Client.Model
             if (preview.IsSet && preview.Value == null)
                 throw new JsonException("Property is not nullable for class SubmissionFiles: preview.");
 
-            return new SubmissionFiles(pdf, auditTrail, preview);
+            if (png.IsSet && png.Value == null)
+                throw new JsonException("Property is not nullable for class SubmissionFiles: png.");
+
+            return new SubmissionFiles(pdf, auditTrail, preview, png);
         }
 
         /// <summary>
@@ -229,6 +252,9 @@ namespace DocSpring.Client.Model
             if (submissionFiles.PreviewOption.IsSet && submissionFiles.Preview == null)
                 throw new JsonException("Cannot write null property SubmissionFiles.Preview to non-nullable JSON property 'preview'.");
 
+            if (submissionFiles.PngOption.IsSet && submissionFiles.Png == null)
+                throw new JsonException("Cannot write null property SubmissionFiles.Png to non-nullable JSON property 'png'.");
+
             if (submissionFiles.PdfOption.IsSet)
             {
                 writer.WritePropertyName("pdf");
@@ -243,6 +269,11 @@ namespace DocSpring.Client.Model
             {
                 writer.WritePropertyName("preview");
                 JsonSerializer.Serialize(writer, submissionFiles.PreviewOption.Value, jsonSerializerOptions);
+            }
+            if (submissionFiles.PngOption.IsSet)
+            {
+                writer.WritePropertyName("png");
+                JsonSerializer.Serialize(writer, submissionFiles.PngOption.Value, jsonSerializerOptions);
             }
         }
     }

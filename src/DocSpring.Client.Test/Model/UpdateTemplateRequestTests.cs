@@ -297,6 +297,33 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'FieldGroups'
+        /// </summary>
+        [Fact]
+        public void FieldGroupsTest()
+        {
+            // TODO unit test for the property 'FieldGroups'
+        }
+
+        /// <summary>
+        /// Test the property 'PredefinedFields'
+        /// </summary>
+        [Fact]
+        public void PredefinedFieldsTest()
+        {
+            // TODO unit test for the property 'PredefinedFields'
+        }
+
+        /// <summary>
+        /// Test the property 'PredefinedFieldsSampleData'
+        /// </summary>
+        [Fact]
+        public void PredefinedFieldsSampleDataTest()
+        {
+            // TODO unit test for the property 'PredefinedFieldsSampleData'
+        }
+
+        /// <summary>
         /// Test the property 'Html'
         /// </summary>
         [Fact]
