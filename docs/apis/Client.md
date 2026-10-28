@@ -14,6 +14,7 @@ All URIs are relative to *https://sync.api.docspring.com/api/v2*
 | [**CreateSubmission**](Client.md#createsubmission) | **POST** /templates/{template_id}/submissions | Generate a PDF |
 | [**CreateSubmissionBatch**](Client.md#createsubmissionbatch) | **POST** /submissions/batches | Generate PDFs in a batch |
 | [**CreateTemplate**](Client.md#createtemplate) | **POST** /templates | Create a template |
+| [**CreateTemplatePreview**](Client.md#createtemplatepreview) | **POST** /templates/{template_id}/previews | Preview a template with data |
 | [**CreateWebhook**](Client.md#createwebhook) | **POST** /webhooks | Create a webhook |
 | [**DeleteCustomFile**](Client.md#deletecustomfile) | **DELETE** /custom_files/{custom_file_id} | Delete a custom file |
 | [**DeleteFolder**](Client.md#deletefolder) | **DELETE** /folders/{folder_id} | Delete a folder |
@@ -34,6 +35,7 @@ All URIs are relative to *https://sync.api.docspring.com/api/v2*
 | [**GetTemplateDiff**](Client.md#gettemplatediff) | **GET** /templates/{template_id}/diff | Compare a version of a template with the one before it |
 | [**GetTemplateModelCode**](Client.md#gettemplatemodelcode) | **GET** /templates/{template_id}/model_code | Generate typed code for a template's submission data |
 | [**GetTemplatePageImages**](Client.md#gettemplatepageimages) | **GET** /templates/{template_id}/page_images | Get images of a template's pages |
+| [**GetTemplatePreview**](Client.md#gettemplatepreview) | **GET** /templates/{template_id}/previews/{preview_id} | Get a template preview |
 | [**GetTemplateSchema**](Client.md#gettemplateschema) | **GET** /templates/{template_id}/schema | Get the JSON Schema of a template's submission data |
 | [**GetWebhook**](Client.md#getwebhook) | **GET** /webhooks/{webhook_id} | Get a webhook |
 | [**ListCombinedPdfs**](Client.md#listcombinedpdfs) | **GET** /combined_pdfs | List combined PDFs |
@@ -99,6 +101,7 @@ Adds fields to a template's draft and returns all of its fields. Publish a versi
 | **422** | invalid fields |  -  |
 | **404** | template not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -140,12 +143,13 @@ Copies a template (its draft, or a published version) into a new template.
 | **403** | the plan's template limit is reached |  -  |
 | **404** | template not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 <a id="createcombinedpdf"></a>
 # **CreateCombinedPdf**
-> CombinedPdf CreateCombinedPdf (CreateCombinedPdfRequest body, bool wait = null)
+> CombinedPdf CreateCombinedPdf (CreateCombinedPdfRequest body, bool wait = null, string idempotencyKey = null)
 
 Combine PDFs
 
@@ -158,6 +162,7 @@ Merges PDFs into one: submissions, other combined PDFs, templates, custom files 
 |------|------|-------------|-------|
 | **body** | [**CreateCombinedPdfRequest**](CreateCombinedPdfRequest.md) | The PDFs to merge, and the combined PDF's settings. |  |
 | **wait** | **bool** | Wait until the PDF has been generated before responding. Default true on sync.api hosts. | [optional]  |
+| **idempotencyKey** | **string** | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of creating another combined PDF. Send a new key with each new combined PDF, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` means the first request is still being processed: send the request again in a few seconds. | [optional]  |
 
 ### Return type
 
@@ -180,7 +185,10 @@ Merges PDFs into one: submissions, other combined PDFs, templates, custom files 
 | **422** | invalid source PDFs |  -  |
 | **403** | not allowed |  -  |
 | **402** | not enough credits |  -  |
+| **409** | a request with the same Idempotency-Key is still being processed |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
+| **504** | On a sync.api host, the wait ran out: the record was saved and is still being processed. Get it by the ID in the error's combined_pdf_id instead of sending the request again. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -219,6 +227,7 @@ Creates a custom file from a PDF you uploaded, so you can merge it with other PD
 | **201** | custom file created |  -  |
 | **422** | invalid custom file |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -257,6 +266,7 @@ Creates a folder for organizing templates. Pass `parent_folder_id` to create it 
 | **201** | folder created inside another folder |  -  |
 | **422** | invalid folder |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -266,7 +276,7 @@ Creates a folder for organizing templates. Pass `parent_folder_id` to create it 
 
 Record a signature request event
 
-Records something that happened outside DocSpring in the signature request's audit trail: you sent the request to the person (`send_request`). The audit trail shows it as reported by your account. 
+Records something that happened outside DocSpring in the signature request's audit trail: you sent the request to the person (`send_request`). The audit trail shows it as reported by your account. A finished (completed, declined or expired) signature request's audit trail takes no more events, and a test API token can't record one for a live signature request. 
 
 
 ### Parameters
@@ -294,9 +304,12 @@ Records something that happened outside DocSpring in the signature request's aud
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | event recorded |  -  |
+| **403** | test API token on a live signature request |  -  |
+| **409** | signature request finished |  -  |
 | **422** | invalid event |  -  |
 | **404** | signature request not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -339,12 +352,13 @@ Creates a token that opens the signature request without signing in, in a form e
 | **422** | invalid token request |  -  |
 | **404** | signature request not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 <a id="createsubmission"></a>
 # **CreateSubmission**
-> Submission CreateSubmission (string templateId, CreateSubmissionRequest body, string version = null, bool wait = null)
+> Submission CreateSubmission (string templateId, CreateSubmissionRequest body, string version = null, bool wait = null, string idempotencyKey = null)
 
 Generate a PDF
 
@@ -359,6 +373,7 @@ Creates a submission: fills in a template with your data and generates a PDF. Th
 | **body** | [**CreateSubmissionRequest**](CreateSubmissionRequest.md) | The submission's data and settings. |  |
 | **version** | **string** | The template version to use: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published). | [optional]  |
 | **wait** | **bool** | Wait until the files have been generated before responding. Default true on sync.api hosts. | [optional]  |
+| **idempotencyKey** | **string** | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of creating another submission. Send a new key with each new submission, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` means the first request is still being processed: send the request again in a few seconds. | [optional]  |
 
 ### Return type
 
@@ -382,13 +397,16 @@ Creates a submission: fills in a template with your data and generates a PDF. Th
 | **402** | not enough credits |  -  |
 | **403** | the account is suspended |  -  |
 | **404** | template not found |  -  |
+| **409** | a request with the same Idempotency-Key is still being processed |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
+| **504** | On a sync.api host, the wait ran out: the record was saved and is still being processed. Get it by the ID in the error's submission_id instead of sending the request again. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 <a id="createsubmissionbatch"></a>
 # **CreateSubmissionBatch**
-> SubmissionBatch CreateSubmissionBatch (CreateSubmissionBatchRequest body, bool wait = null)
+> SubmissionBatch CreateSubmissionBatch (CreateSubmissionBatchRequest body, bool wait = null, string idempotencyKey = null)
 
 Generate PDFs in a batch
 
@@ -401,6 +419,7 @@ Creates up to 50 submissions in one request, from one template or several. The P
 |------|------|-------------|-------|
 | **body** | [**CreateSubmissionBatchRequest**](CreateSubmissionBatchRequest.md) | The submissions to create, and the settings they share. |  |
 | **wait** | **bool** | Wait until every PDF in the batch has been generated before responding. Default true on sync.api hosts. | [optional]  |
+| **idempotencyKey** | **string** | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of creating another batch. Send a new key with each new batch, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` means the first request is still being processed: send the request again in a few seconds. | [optional]  |
 
 ### Return type
 
@@ -423,7 +442,10 @@ Creates up to 50 submissions in one request, from one template or several. The P
 | **422** | invalid data |  -  |
 | **402** | not enough credits |  -  |
 | **403** | account suspended |  -  |
+| **409** | a request with the same Idempotency-Key is still being processed |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
+| **504** | On a sync.api host, the wait ran out: the record was saved and is still being processed. Get it by the ID in the error's submission_batch_id instead of sending the request again. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -464,6 +486,49 @@ Creates an HTML template, or a PDF template from a PDF you uploaded with the pre
 | **422** | invalid template |  -  |
 | **403** | the plan's template limit is reached |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
+| **504** | On a sync.api host, the wait ran out: the record was saved and is still being processed. Get it by the ID in the error's template_id instead of sending the request again. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+<a id="createtemplatepreview"></a>
+# **CreateTemplatePreview**
+> TemplatePreview CreateTemplatePreview (string templateId, CreateTemplatePreviewRequest body, string version = null)
+
+Preview a template with data
+
+Makes PNG images of a template's pages filled in with the data you send (not a PDF), so you can check how an HTML or PDF template prints with your data before you publish a version or send live data. It renders the template's draft, or the published `version` you ask for. A preview makes no submission and uses no credits, and its pages are watermarked like a test submission's PDF. It's `pending` while it renders: get it with GET /templates/{template_id}/previews/{preview_id} until it's `processed`, with an image of each page, or `error`. 
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **templateId** | **string** | The template's ID. |  |
+| **body** | [**CreateTemplatePreviewRequest**](CreateTemplatePreviewRequest.md) | The data to render the template with. |  |
+| **version** | **string** | A published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `draft`. | [optional]  |
+
+### Return type
+
+[**TemplatePreview**](TemplatePreview.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **201** | preview created |  -  |
+| **409** | the template's PDF hasn't been processed |  -  |
+| **422** | no data |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -502,6 +567,7 @@ Creates a webhook that sends a POST request to your endpoint whenever a subscrib
 | **201** | webhook created |  -  |
 | **422** | invalid webhook |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -541,6 +607,7 @@ Deletes a custom file and returns it. Use a live API token: test tokens can't de
 | **403** | test API token |  -  |
 | **404** | custom file not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -580,6 +647,7 @@ Deletes an empty folder and returns it. A folder that still has templates or fol
 | **409** | folder is not empty |  -  |
 | **404** | folder not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -621,6 +689,7 @@ Deletes a template's draft and all of its published versions, or one published v
 | **404** | template not found |  -  |
 | **422** | invalid version |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -659,6 +728,7 @@ Deletes a webhook so it stops receiving events, and returns it.
 | **200** | webhook deleted |  -  |
 | **404** | webhook not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -698,6 +768,7 @@ Deletes a combined PDF's PDF and returns the expired combined PDF.
 | **403** | test API token |  -  |
 | **404** | combined PDF not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -737,6 +808,7 @@ Deletes a submission's data and PDF now, and returns the expired submission.
 | **403** | test API token |  -  |
 | **404** | submission not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -779,6 +851,8 @@ Adds formats to a processed submission's files, in the background: `png`, a PNG 
 | **422** | invalid request |  -  |
 | **404** | submission not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
+| **504** | On a sync.api host, the wait ran out: the record was saved and is still being processed. Get it by the ID in the error's submission_id instead of sending the request again. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -818,6 +892,7 @@ Generates a preview of a submission's PDF in the background, such as for a submi
 | **409** | preview not possible |  -  |
 | **404** | submission not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -856,6 +931,7 @@ Returns a combined PDF, with a temporary link to download it once it has been ge
 | **200** | combined PDF |  -  |
 | **404** | combined PDF not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -894,6 +970,7 @@ Returns a custom file, with a temporary URL to download it.
 | **200** | custom file found |  -  |
 | **404** | custom file not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -932,6 +1009,7 @@ Returns a folder.
 | **200** | folder found |  -  |
 | **404** | folder not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -965,6 +1043,7 @@ This endpoint does not need any parameter.
 |-------------|-------------|------------------|
 | **200** | presigned URL created |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -1003,6 +1082,7 @@ Returns a signature request, with the values the person has entered so far.
 | **200** | signature request |  -  |
 | **404** | signature request not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -1041,6 +1121,7 @@ Returns a submission, with its data and links to download its PDF.
 | **200** | processed submission |  -  |
 | **404** | submission not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -1080,6 +1161,7 @@ Returns a batch with its submissions. The batch has finished once `processed_at`
 | **200** | batch |  -  |
 | **404** | batch not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -1120,6 +1202,7 @@ Returns a template: its draft, or one of its published versions.
 | **404** | template not found |  -  |
 | **422** | invalid version |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -1160,16 +1243,17 @@ Returns what changed in the template's draft since its latest published version 
 | **409** | the template's PDF hasn't been processed |  -  |
 | **404** | template not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 <a id="gettemplatemodelcode"></a>
 # **GetTemplateModelCode**
-> TemplateModelCode GetTemplateModelCode (string templateId, ModelCodeLanguage lang, string version = null)
+> TemplateModelCode GetTemplateModelCode (string templateId, ModelCodeLanguage lang, string version = null, bool justTypes = null)
 
 Generate typed code for a template's submission data
 
-Generates types for a template's submission data in TypeScript, JavaScript, Ruby, Python, PHP, Java, C#, Elixir or Go, so your app catches mistakes before it calls the API. `root_type_name` is the type of the whole `data` object. Java returns every class in `code`, each under a `// ClassName.java` comment. A template with no named fields returns 422. 
+Generates types for a template's submission data in TypeScript, JavaScript, Ruby, Python, PHP, Java, C#, Elixir or Go, so your app catches mistakes before it calls the API. `root_type_name` is the type of the whole `data` object, and `just_types=true` leaves out the code that converts JSON to and from the types. Java returns every class in `code`, each under a `// ClassName.java` comment. A template with no named fields returns 422. 
 
 
 ### Parameters
@@ -1179,6 +1263,7 @@ Generates types for a template's submission data in TypeScript, JavaScript, Ruby
 | **templateId** | **string** | The template's ID. |  |
 | **lang** | **ModelCodeLanguage** | The language to generate the code in. |  |
 | **version** | **string** | The template version: a published version (`1.2.0`, or `1` for the latest 1.x.x), `latest` or `draft`. Default `latest` (the draft when no version has been published), the version a submission uses by default. | [optional]  |
+| **justTypes** | **bool** | Return only the types (interfaces, classes or structs), without the code that converts JSON to and from them. Default false. JavaScript has no types and PHP no types-only code, so theirs is the same either way. | [optional]  |
 
 ### Return type
 
@@ -1201,6 +1286,7 @@ Generates types for a template's submission data in TypeScript, JavaScript, Ruby
 | **422** | unknown language |  -  |
 | **404** | template not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -1241,6 +1327,46 @@ Returns a JPEG image of each page of a PDF template's PDF, with temporary links 
 | **409** | no page images |  -  |
 | **404** | template not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+<a id="gettemplatepreview"></a>
+# **GetTemplatePreview**
+> TemplatePreview GetTemplatePreview (string templateId, string previewId)
+
+Get a template preview
+
+Returns a preview made with POST /templates/{template_id}/previews. Once it's `processed`, `pages` has a PNG image of each page with a temporary link to download it: a preview has no PDF. Previews are deleted an hour after they're created. 
+
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **templateId** | **string** | The template's ID. |  |
+| **previewId** | **string** | The preview's ID. |  |
+
+### Return type
+
+[**TemplatePreview**](TemplatePreview.md)
+
+### Authorization
+
+[api_token_basic](../README.md#api_token_basic)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | preview |  -  |
+| **404** | preview not found |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -1280,6 +1406,7 @@ Returns the JSON Schema that a submission's `data` must match. Use it to check d
 | **200** | template schema |  -  |
 | **404** | template not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -1318,6 +1445,7 @@ Returns a webhook.
 | **200** | webhook found |  -  |
 | **404** | webhook not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -1357,6 +1485,7 @@ Returns the combined PDFs in your account, newest first, one page at a time.
 | **200** | combined PDFs |  -  |
 | **422** | invalid query parameters |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -1396,6 +1525,7 @@ Returns the custom files in your account, newest first, one page at a time.
 | **200** | custom files |  -  |
 | **422** | invalid query parameters |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -1436,16 +1566,17 @@ Returns the folders in your account, newest first, one page at a time. Pass `par
 | **200** | folders in a folder |  -  |
 | **422** | invalid query parameters |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 <a id="listsubmissions"></a>
 # **ListSubmissions**
-> SubmissionList ListSubmissions (string templateId = null, bool test = null, DateTime createdAfter = null, DateTime createdBefore = null, bool includeData = null, int limit = null, string cursor = null)
+> SubmissionList ListSubmissions (string templateId = null, bool test = null, DateTime createdAfter = null, DateTime createdBefore = null, bool includeData = null, int limit = null, string cursor = null, SubmissionState state = null, bool includeFiles = null)
 
 List submissions
 
-Returns the submissions in your account, newest first, one page at a time. Lists leave out each submission's `data` unless you pass `include_data=true`. 
+Returns the submissions in your account, newest first, one page at a time. Each one is a summary: its `data` is null unless you pass `include_data=true`, and its `files` are empty unless you pass `include_files=true`. Get a submission by its ID for its signature requests, uploads and page images. 
 
 
 ### Parameters
@@ -1459,6 +1590,8 @@ Returns the submissions in your account, newest first, one page at a time. Lists
 | **includeData** | **bool** | Include each submission's `data` (null without it). | [optional]  |
 | **limit** | **int** | How many items to return (1-100, default 50). | [optional] [default to 50] |
 | **cursor** | **string** | The previous page's `next_cursor`, to get the next page. It's the ID of that page's last item, so get the next page before you delete or change the items on this one. | [optional]  |
+| **state** | **SubmissionState** | Only list submissions in this state (one state per request). The ones that failed are `invalid_data`, `error`, `syntax_error`, `image_download_failed` and `image_processing_failed`, and one still `pending` an hour after it was created is stuck. | [optional]  |
+| **includeFiles** | **bool** | Include each submission's generated files and their download links (`files`, empty without it), without the page images' links. | [optional]  |
 
 ### Return type
 
@@ -1480,6 +1613,7 @@ Returns the submissions in your account, newest first, one page at a time. Lists
 | **200** | submissions |  -  |
 | **422** | invalid query parameters |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -1520,12 +1654,13 @@ Returns a template's fields with all of their settings, page by page: the draft'
 | **409** | the template's PDF hasn't been processed |  -  |
 | **404** | template not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 <a id="listtemplatesubmissions"></a>
 # **ListTemplateSubmissions**
-> SubmissionList ListTemplateSubmissions (string templateId, bool test = null, DateTime createdAfter = null, DateTime createdBefore = null, bool includeData = null, int limit = null, string cursor = null)
+> SubmissionList ListTemplateSubmissions (string templateId, bool test = null, DateTime createdAfter = null, DateTime createdBefore = null, bool includeData = null, int limit = null, string cursor = null, SubmissionState state = null, bool includeFiles = null)
 
 List a template's submissions
 
@@ -1543,6 +1678,8 @@ Returns a template's submissions (from every version of the template), newest fi
 | **includeData** | **bool** | Include each submission's `data` (null without it). | [optional]  |
 | **limit** | **int** | How many items to return (1-100, default 50). | [optional] [default to 50] |
 | **cursor** | **string** | The previous page's `next_cursor`, to get the next page. It's the ID of that page's last item, so get the next page before you delete or change the items on this one. | [optional]  |
+| **state** | **SubmissionState** | Only list submissions in this state (one state per request). The ones that failed are `invalid_data`, `error`, `syntax_error`, `image_download_failed` and `image_processing_failed`, and one still `pending` an hour after it was created is stuck. | [optional]  |
+| **includeFiles** | **bool** | Include each submission's generated files and their download links (`files`, empty without it), without the page images' links. | [optional]  |
 
 ### Return type
 
@@ -1565,6 +1702,7 @@ Returns a template's submissions (from every version of the template), newest fi
 | **404** | template not found |  -  |
 | **422** | invalid query parameters |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -1574,7 +1712,7 @@ Returns a template's submissions (from every version of the template), newest fi
 
 List templates
 
-Returns the templates in your account (their drafts), newest first, one page at a time. Get a template by its ID for its HTML, defaults and published versions. 
+Returns the templates in your account (their drafts), newest first, one page at a time. Each one is a summary: get a template by its ID for its settings, its PDF in full, its HTML, defaults and published versions. 
 
 
 ### Parameters
@@ -1606,6 +1744,7 @@ Returns the templates in your account (their drafts), newest first, one page at 
 | **200** | templates |  -  |
 | **422** | invalid query parameters |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -1650,6 +1789,7 @@ Returns the webhooks in your account, newest first, one page at a time. Filter t
 | **200** | webhooks for a template and event |  -  |
 | **422** | unknown event type |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -1690,6 +1830,7 @@ Moves a folder into another folder, or to the root with `parent_folder_id: null`
 | **422** | invalid move |  -  |
 | **404** | folder not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -1730,6 +1871,7 @@ Moves a template and all of its published versions to a folder, or to the root (
 | **422** | invalid move |  -  |
 | **404** | template not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -1769,8 +1911,9 @@ Publishes the template's draft as a new version that doesn't change. `version_ty
 | **201** | version published |  -  |
 | **422** | invalid version type |  -  |
 | **404** | template not found |  -  |
-| **409** | published at the same time |  -  |
+| **409** | no changes to publish |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -1811,6 +1954,7 @@ Removes fields from a template's draft and returns the fields that are left. Con
 | **422** | a field the template does not have |  -  |
 | **404** | template not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -1851,6 +1995,7 @@ Renames a folder. The name must be unique within its parent folder.
 | **422** | name already exists |  -  |
 | **404** | folder not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -1891,6 +2036,7 @@ Changes the order of the fields in a template's draft and returns them in their 
 | **422** | a field missing from the order |  -  |
 | **404** | template not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -1932,6 +2078,7 @@ Replaces the template's draft with a copy of one of its published versions.
 | **422** | unknown version |  -  |
 | **404** | template not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -1965,6 +2112,7 @@ This endpoint does not need any parameter.
 |-------------|-------------|------------------|
 | **200** | authentication succeeded |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -2006,6 +2154,7 @@ Changes a pending signature request's metadata, or how your app authenticated th
 | **422** | invalid request |  -  |
 | **404** | signature request not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -2047,6 +2196,7 @@ Changes a template's draft. Properties left out keep their values. `defaults` an
 | **422** | invalid field group changes |  -  |
 | **404** | template not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -2089,6 +2239,8 @@ Replaces a PDF template's PDF with one you uploaded with the presigned upload (G
 | **422** | no document, or more than one |  -  |
 | **404** | template not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
+| **504** | On a sync.api host, the wait ran out: the record was saved and is still being processed. Get it by the ID in the error's template_id instead of sending the request again. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -2129,6 +2281,7 @@ Changes fields of a template's draft and returns all of its fields. Settings lef
 | **422** | invalid changes |  -  |
 | **404** | template not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -2169,6 +2322,7 @@ Updates a webhook. Only the properties you send change.
 | **404** | webhook not found |  -  |
 | **422** | invalid webhook |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -2217,6 +2371,8 @@ Creates a PDF template from a PDF sent with the request (`multipart/form-data`).
 | **422** | invalid upload |  -  |
 | **403** | the plan's template limit is reached |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
+| **504** | On a sync.api host, the wait ran out: the record was saved and is still being processed. Get it by the ID in the error's template_id instead of sending the request again. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -2259,6 +2415,8 @@ Replaces a PDF template's PDF with one sent with the request (`multipart/form-da
 | **422** | not a PDF template |  -  |
 | **404** | template not found |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
+| **504** | On a sync.api host, the wait ran out: the record was saved and is still being processed. Get it by the ID in the error's template_id instead of sending the request again. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
@@ -2300,6 +2458,7 @@ Checks a submission as creating it would (its data against the template's fields
 | **404** | template not found |  -  |
 | **422** | invalid request |  -  |
 | **401** | authentication failed |  -  |
+| **429** | Too many requests: wait the number of seconds in the Retry-After header, then send the request again. |  * Retry-After - Seconds until you can send the request again. <br>  |
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 

@@ -31,7 +31,7 @@ namespace DocSpring.Client.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="TemplateActor" /> class.
         /// </summary>
-        /// <param name="type">&#x60;user&#x60;: a user in your account. &#x60;api&#x60;: an API token. &#x60;external_user&#x60;: someone using the embedded template editor, as identified by your app.</param>
+        /// <param name="type">&#x60;user&#x60;: a user in your account, also when they make the change with an app they connected (an OAuth access token). &#x60;api&#x60;: an API token. &#x60;external_user&#x60;: someone using the embedded template editor, as identified by your app.</param>
         /// <param name="userId">The user&#39;s ID, for &#x60;user&#x60;.</param>
         /// <param name="externalId">The ID your app gave the embedded editor&#39;s user, for &#x60;external_user&#x60;.</param>
         /// <param name="name">The user&#39;s name, or the name your app gave the embedded editor&#39;s user.</param>
@@ -50,9 +50,9 @@ namespace DocSpring.Client.Model
         partial void OnCreated();
 
         /// <summary>
-        /// &#x60;user&#x60;: a user in your account. &#x60;api&#x60;: an API token. &#x60;external_user&#x60;: someone using the embedded template editor, as identified by your app.
+        /// &#x60;user&#x60;: a user in your account, also when they make the change with an app they connected (an OAuth access token). &#x60;api&#x60;: an API token. &#x60;external_user&#x60;: someone using the embedded template editor, as identified by your app.
         /// </summary>
-        /// <value>&#x60;user&#x60;: a user in your account. &#x60;api&#x60;: an API token. &#x60;external_user&#x60;: someone using the embedded template editor, as identified by your app.</value>
+        /// <value>&#x60;user&#x60;: a user in your account, also when they make the change with an app they connected (an OAuth access token). &#x60;api&#x60;: an API token. &#x60;external_user&#x60;: someone using the embedded template editor, as identified by your app.</value>
         [JsonPropertyName("type")]
         public TemplateActorType Type { get; set; }
 

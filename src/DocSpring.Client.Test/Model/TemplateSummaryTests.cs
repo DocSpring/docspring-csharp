@@ -99,177 +99,6 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
-        /// Test the property 'AddSignatureRequestSubmissionIdFooters'
-        /// </summary>
-        [Fact]
-        public void AddSignatureRequestSubmissionIdFootersTest()
-        {
-            // TODO unit test for the property 'AddSignatureRequestSubmissionIdFooters'
-        }
-
-        /// <summary>
-        /// Test the property 'AllowAdditionalProperties'
-        /// </summary>
-        [Fact]
-        public void AllowAdditionalPropertiesTest()
-        {
-            // TODO unit test for the property 'AllowAdditionalProperties'
-        }
-
-        /// <summary>
-        /// Test the property 'AllowSkippingOptionalFields'
-        /// </summary>
-        [Fact]
-        public void AllowSkippingOptionalFieldsTest()
-        {
-            // TODO unit test for the property 'AllowSkippingOptionalFields'
-        }
-
-        /// <summary>
-        /// Test the property 'DefaultFormMode'
-        /// </summary>
-        [Fact]
-        public void DefaultFormModeTest()
-        {
-            // TODO unit test for the property 'DefaultFormMode'
-        }
-
-        /// <summary>
-        /// Test the property 'EditableSubmissions'
-        /// </summary>
-        [Fact]
-        public void EditableSubmissionsTest()
-        {
-            // TODO unit test for the property 'EditableSubmissions'
-        }
-
-        /// <summary>
-        /// Test the property 'EmbedDomains'
-        /// </summary>
-        [Fact]
-        public void EmbedDomainsTest()
-        {
-            // TODO unit test for the property 'EmbedDomains'
-        }
-
-        /// <summary>
-        /// Test the property 'EmbedEditAllowSettings'
-        /// </summary>
-        [Fact]
-        public void EmbedEditAllowSettingsTest()
-        {
-            // TODO unit test for the property 'EmbedEditAllowSettings'
-        }
-
-        /// <summary>
-        /// Test the property 'EmbedEditAllowVersioning'
-        /// </summary>
-        [Fact]
-        public void EmbedEditAllowVersioningTest()
-        {
-            // TODO unit test for the property 'EmbedEditAllowVersioning'
-        }
-
-        /// <summary>
-        /// Test the property 'EmbedEditAllowDocumentReplacement'
-        /// </summary>
-        [Fact]
-        public void EmbedEditAllowDocumentReplacementTest()
-        {
-            // TODO unit test for the property 'EmbedEditAllowDocumentReplacement'
-        }
-
-        /// <summary>
-        /// Test the property 'EncryptPdfs'
-        /// </summary>
-        [Fact]
-        public void EncryptPdfsTest()
-        {
-            // TODO unit test for the property 'EncryptPdfs'
-        }
-
-        /// <summary>
-        /// Test the property 'HasEncryptPdfsPassword'
-        /// </summary>
-        [Fact]
-        public void HasEncryptPdfsPasswordTest()
-        {
-            // TODO unit test for the property 'HasEncryptPdfsPassword'
-        }
-
-        /// <summary>
-        /// Test the property 'ExpireSubmissions'
-        /// </summary>
-        [Fact]
-        public void ExpireSubmissionsTest()
-        {
-            // TODO unit test for the property 'ExpireSubmissions'
-        }
-
-        /// <summary>
-        /// Test the property 'ExpireAfter'
-        /// </summary>
-        [Fact]
-        public void ExpireAfterTest()
-        {
-            // TODO unit test for the property 'ExpireAfter'
-        }
-
-        /// <summary>
-        /// Test the property 'ExpirationInterval'
-        /// </summary>
-        [Fact]
-        public void ExpirationIntervalTest()
-        {
-            // TODO unit test for the property 'ExpirationInterval'
-        }
-
-        /// <summary>
-        /// Test the property 'MergeAuditTrailPdf'
-        /// </summary>
-        [Fact]
-        public void MergeAuditTrailPdfTest()
-        {
-            // TODO unit test for the property 'MergeAuditTrailPdf'
-        }
-
-        /// <summary>
-        /// Test the property 'ParseDatesUsingTemplateDateFormat'
-        /// </summary>
-        [Fact]
-        public void ParseDatesUsingTemplateDateFormatTest()
-        {
-            // TODO unit test for the property 'ParseDatesUsingTemplateDateFormat'
-        }
-
-        /// <summary>
-        /// Test the property 'PublicSubmissions'
-        /// </summary>
-        [Fact]
-        public void PublicSubmissionsTest()
-        {
-            // TODO unit test for the property 'PublicSubmissions'
-        }
-
-        /// <summary>
-        /// Test the property 'PublicWebForm'
-        /// </summary>
-        [Fact]
-        public void PublicWebFormTest()
-        {
-            // TODO unit test for the property 'PublicWebForm'
-        }
-
-        /// <summary>
-        /// Test the property 'HasSlackWebhookUrl'
-        /// </summary>
-        [Fact]
-        public void HasSlackWebhookUrlTest()
-        {
-            // TODO unit test for the property 'HasSlackWebhookUrl'
-        }
-
-        /// <summary>
         /// Test the property 'CreatedAt'
         /// </summary>
         [Fact]
@@ -324,15 +153,6 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
-        /// Test the property 'VarVersion'
-        /// </summary>
-        [Fact]
-        public void VarVersionTest()
-        {
-            // TODO unit test for the property 'VarVersion'
-        }
-
-        /// <summary>
         /// Test the property 'LatestVersion'
         /// </summary>
         [Fact]
@@ -351,39 +171,12 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
-        /// Test the property 'AiFieldNamingLanguage'
-        /// </summary>
-        [Fact]
-        public void AiFieldNamingLanguageTest()
-        {
-            // TODO unit test for the property 'AiFieldNamingLanguage'
-        }
-
-        /// <summary>
-        /// Test the property 'RedirectUrl'
-        /// </summary>
-        [Fact]
-        public void RedirectUrlTest()
-        {
-            // TODO unit test for the property 'RedirectUrl'
-        }
-
-        /// <summary>
         /// Test the property 'LastChangedAt'
         /// </summary>
         [Fact]
         public void LastChangedAtTest()
         {
             // TODO unit test for the property 'LastChangedAt'
-        }
-
-        /// <summary>
-        /// Test the property 'LastChangedBy'
-        /// </summary>
-        [Fact]
-        public void LastChangedByTest()
-        {
-            // TODO unit test for the property 'LastChangedBy'
         }
     }
 }

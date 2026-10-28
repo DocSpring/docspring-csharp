@@ -9,7 +9,7 @@ templates with your data, generates PDFs from HTML templates, combines PDFs and 
 The code in this repository is generated from DocSpring's OpenAPI spec ([About this SDK](#about-this-sdk)). Issues and
 pull requests are welcome.
 
-Version 4.1.0. Requires .NET Standard 2.0 (.NET 6 or later, or .NET Framework 4.6.2 or later).
+Version 4.2.0. Requires .NET Standard 2.0 (.NET 6 or later, or .NET Framework 4.6.2 or later).
 
 ## Install and configure
 
@@ -105,6 +105,7 @@ C# code for every method.
 | [`CreateSubmission`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#createsubmission) | Generate a PDF |
 | [`CreateSubmissionBatch`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#createsubmissionbatch) | Generate PDFs in a batch |
 | [`CreateTemplate`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#createtemplate) | Create a template |
+| [`CreateTemplatePreview`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#createtemplatepreview) | Preview a template with data |
 | [`CreateWebhook`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#createwebhook) | Create a webhook |
 | [`DeleteCustomFile`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#deletecustomfile) | Delete a custom file |
 | [`DeleteFolder`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#deletefolder) | Delete a folder |
@@ -125,6 +126,7 @@ C# code for every method.
 | [`GetTemplateDiff`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#gettemplatediff) | Compare a version of a template with the one before it |
 | [`GetTemplateModelCode`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#gettemplatemodelcode) | Generate typed code for a template's submission data |
 | [`GetTemplatePageImages`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#gettemplatepageimages) | Get images of a template's pages |
+| [`GetTemplatePreview`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#gettemplatepreview) | Get a template preview |
 | [`GetTemplateSchema`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#gettemplateschema) | Get the JSON Schema of a template's submission data |
 | [`GetWebhook`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#getwebhook) | Get a webhook |
 | [`ListCombinedPdfs`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#listcombinedpdfs) | List combined PDFs |
@@ -187,6 +189,7 @@ On top of the generated code, we add:
 
 - A client constructor that reads your credentials, region and host from the environment.
 - `DocSpring.Sdk.NewClient(...)` and `DocSpring.Sdk.NewClientFromEnv()`, which build a client without a .NET host builder.
+- `DocSpring.Webhooks.VerifyWebhookSignature(payload, signatureHeader, secret)` checks a webhook request's `X-DocSpring-Signature` header, with `toleranceSeconds` and `now` arguments.
 
 Each release regenerates every file, so a change made only here would be lost in the next one. Issues and pull
 requests are welcome all the same: [open an issue](https://github.com/DocSpring/docspring-csharp/issues) or a pull request, or email

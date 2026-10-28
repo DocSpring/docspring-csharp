@@ -100,9 +100,10 @@ namespace DocSpring.Client.Api
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">The PDFs to merge, and the combined PDF&#39;s settings.</param>
         /// <param name="wait">Wait until the PDF has been generated before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="idempotencyKey">A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request&#39;s response (and an &#x60;Idempotent-Replayed: true&#x60; header) instead of creating another combined PDF. Send a new key with each new combined PDF, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 &#x60;idempotency_key_reused&#x60;. A 409 &#x60;idempotency_key_in_use&#x60; means the first request is still being processed: send the request again in a few seconds. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICreateCombinedPdfApiResponse"/>&gt;</returns>
-        Task<ICreateCombinedPdfApiResponse> CreateCombinedPdfAsync(CreateCombinedPdfRequest body, Option<bool> wait = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<ICreateCombinedPdfApiResponse> CreateCombinedPdfAsync(CreateCombinedPdfRequest body, Option<bool> wait = default, Option<string> idempotencyKey = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Combine PDFs
@@ -112,9 +113,10 @@ namespace DocSpring.Client.Api
         /// </remarks>
         /// <param name="body">The PDFs to merge, and the combined PDF&#39;s settings.</param>
         /// <param name="wait">Wait until the PDF has been generated before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="idempotencyKey">A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request&#39;s response (and an &#x60;Idempotent-Replayed: true&#x60; header) instead of creating another combined PDF. Send a new key with each new combined PDF, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 &#x60;idempotency_key_reused&#x60;. A 409 &#x60;idempotency_key_in_use&#x60; means the first request is still being processed: send the request again in a few seconds. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICreateCombinedPdfApiResponse"/>&gt;</returns>
-        Task<ICreateCombinedPdfApiResponse> CreateCombinedPdfOrDefaultAsync(CreateCombinedPdfRequest body, Option<bool> wait = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<ICreateCombinedPdfApiResponse> CreateCombinedPdfOrDefaultAsync(CreateCombinedPdfRequest body, Option<bool> wait = default, Option<string> idempotencyKey = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a custom file from an upload
@@ -166,7 +168,7 @@ namespace DocSpring.Client.Api
         /// Record a signature request event
         /// </summary>
         /// <remarks>
-        /// Records something that happened outside DocSpring in the signature request&#39;s audit trail: you sent the request to the person (&#x60;send_request&#x60;). The audit trail shows it as reported by your account. 
+        /// Records something that happened outside DocSpring in the signature request&#39;s audit trail: you sent the request to the person (&#x60;send_request&#x60;). The audit trail shows it as reported by your account. A finished (completed, declined or expired) signature request&#39;s audit trail takes no more events, and a test API token can&#39;t record one for a live signature request. 
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="signatureRequestId">The signature request&#39;s ID.</param>
@@ -179,7 +181,7 @@ namespace DocSpring.Client.Api
         /// Record a signature request event
         /// </summary>
         /// <remarks>
-        /// Records something that happened outside DocSpring in the signature request&#39;s audit trail: you sent the request to the person (&#x60;send_request&#x60;). The audit trail shows it as reported by your account. 
+        /// Records something that happened outside DocSpring in the signature request&#39;s audit trail: you sent the request to the person (&#x60;send_request&#x60;). The audit trail shows it as reported by your account. A finished (completed, declined or expired) signature request&#39;s audit trail takes no more events, and a test API token can&#39;t record one for a live signature request. 
         /// </remarks>
         /// <param name="signatureRequestId">The signature request&#39;s ID.</param>
         /// <param name="body">The event to record.</param>
@@ -223,9 +225,10 @@ namespace DocSpring.Client.Api
         /// <param name="body">The submission&#39;s data and settings.</param>
         /// <param name="version">The template version to use: a published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;latest&#x60; (the draft when no version has been published). (optional)</param>
         /// <param name="wait">Wait until the files have been generated before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="idempotencyKey">A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request&#39;s response (and an &#x60;Idempotent-Replayed: true&#x60; header) instead of creating another submission. Send a new key with each new submission, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 &#x60;idempotency_key_reused&#x60;. A 409 &#x60;idempotency_key_in_use&#x60; means the first request is still being processed: send the request again in a few seconds. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICreateSubmissionApiResponse"/>&gt;</returns>
-        Task<ICreateSubmissionApiResponse> CreateSubmissionAsync(string templateId, CreateSubmissionRequest body, Option<string> version = default, Option<bool> wait = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<ICreateSubmissionApiResponse> CreateSubmissionAsync(string templateId, CreateSubmissionRequest body, Option<string> version = default, Option<bool> wait = default, Option<string> idempotencyKey = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Generate a PDF
@@ -237,9 +240,10 @@ namespace DocSpring.Client.Api
         /// <param name="body">The submission&#39;s data and settings.</param>
         /// <param name="version">The template version to use: a published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;latest&#x60; (the draft when no version has been published). (optional)</param>
         /// <param name="wait">Wait until the files have been generated before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="idempotencyKey">A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request&#39;s response (and an &#x60;Idempotent-Replayed: true&#x60; header) instead of creating another submission. Send a new key with each new submission, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 &#x60;idempotency_key_reused&#x60;. A 409 &#x60;idempotency_key_in_use&#x60; means the first request is still being processed: send the request again in a few seconds. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICreateSubmissionApiResponse"/>&gt;</returns>
-        Task<ICreateSubmissionApiResponse> CreateSubmissionOrDefaultAsync(string templateId, CreateSubmissionRequest body, Option<string> version = default, Option<bool> wait = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<ICreateSubmissionApiResponse> CreateSubmissionOrDefaultAsync(string templateId, CreateSubmissionRequest body, Option<string> version = default, Option<bool> wait = default, Option<string> idempotencyKey = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Generate PDFs in a batch
@@ -250,9 +254,10 @@ namespace DocSpring.Client.Api
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">The submissions to create, and the settings they share.</param>
         /// <param name="wait">Wait until every PDF in the batch has been generated before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="idempotencyKey">A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request&#39;s response (and an &#x60;Idempotent-Replayed: true&#x60; header) instead of creating another batch. Send a new key with each new batch, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 &#x60;idempotency_key_reused&#x60;. A 409 &#x60;idempotency_key_in_use&#x60; means the first request is still being processed: send the request again in a few seconds. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICreateSubmissionBatchApiResponse"/>&gt;</returns>
-        Task<ICreateSubmissionBatchApiResponse> CreateSubmissionBatchAsync(CreateSubmissionBatchRequest body, Option<bool> wait = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<ICreateSubmissionBatchApiResponse> CreateSubmissionBatchAsync(CreateSubmissionBatchRequest body, Option<bool> wait = default, Option<string> idempotencyKey = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Generate PDFs in a batch
@@ -262,9 +267,10 @@ namespace DocSpring.Client.Api
         /// </remarks>
         /// <param name="body">The submissions to create, and the settings they share.</param>
         /// <param name="wait">Wait until every PDF in the batch has been generated before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="idempotencyKey">A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request&#39;s response (and an &#x60;Idempotent-Replayed: true&#x60; header) instead of creating another batch. Send a new key with each new batch, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 &#x60;idempotency_key_reused&#x60;. A 409 &#x60;idempotency_key_in_use&#x60; means the first request is still being processed: send the request again in a few seconds. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICreateSubmissionBatchApiResponse"/>&gt;</returns>
-        Task<ICreateSubmissionBatchApiResponse> CreateSubmissionBatchOrDefaultAsync(CreateSubmissionBatchRequest body, Option<bool> wait = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<ICreateSubmissionBatchApiResponse> CreateSubmissionBatchOrDefaultAsync(CreateSubmissionBatchRequest body, Option<bool> wait = default, Option<string> idempotencyKey = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a template
@@ -290,6 +296,33 @@ namespace DocSpring.Client.Api
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICreateTemplateApiResponse"/>&gt;</returns>
         Task<ICreateTemplateApiResponse> CreateTemplateOrDefaultAsync(CreateTemplateRequest body, Option<bool> wait = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Preview a template with data
+        /// </summary>
+        /// <remarks>
+        /// Makes PNG images of a template&#39;s pages filled in with the data you send (not a PDF), so you can check how an HTML or PDF template prints with your data before you publish a version or send live data. It renders the template&#39;s draft, or the published &#x60;version&#x60; you ask for. A preview makes no submission and uses no credits, and its pages are watermarked like a test submission&#39;s PDF. It&#39;s &#x60;pending&#x60; while it renders: get it with GET /templates/{template_id}/previews/{preview_id} until it&#39;s &#x60;processed&#x60;, with an image of each page, or &#x60;error&#x60;. 
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="body">The data to render the template with.</param>
+        /// <param name="version">A published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;draft&#x60;. (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="ICreateTemplatePreviewApiResponse"/>&gt;</returns>
+        Task<ICreateTemplatePreviewApiResponse> CreateTemplatePreviewAsync(string templateId, CreateTemplatePreviewRequest body, Option<string> version = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Preview a template with data
+        /// </summary>
+        /// <remarks>
+        /// Makes PNG images of a template&#39;s pages filled in with the data you send (not a PDF), so you can check how an HTML or PDF template prints with your data before you publish a version or send live data. It renders the template&#39;s draft, or the published &#x60;version&#x60; you ask for. A preview makes no submission and uses no credits, and its pages are watermarked like a test submission&#39;s PDF. It&#39;s &#x60;pending&#x60; while it renders: get it with GET /templates/{template_id}/previews/{preview_id} until it&#39;s &#x60;processed&#x60;, with an image of each page, or &#x60;error&#x60;. 
+        /// </remarks>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="body">The data to render the template with.</param>
+        /// <param name="version">A published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;draft&#x60;. (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="ICreateTemplatePreviewApiResponse"/>&gt;</returns>
+        Task<ICreateTemplatePreviewApiResponse> CreateTemplatePreviewOrDefaultAsync(string templateId, CreateTemplatePreviewRequest body, Option<string> version = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a webhook
@@ -719,28 +752,30 @@ namespace DocSpring.Client.Api
         /// Generate typed code for a template&#39;s submission data
         /// </summary>
         /// <remarks>
-        /// Generates types for a template&#39;s submission data in TypeScript, JavaScript, Ruby, Python, PHP, Java, C#, Elixir or Go, so your app catches mistakes before it calls the API. &#x60;root_type_name&#x60; is the type of the whole &#x60;data&#x60; object. Java returns every class in &#x60;code&#x60;, each under a &#x60;// ClassName.java&#x60; comment. A template with no named fields returns 422. 
+        /// Generates types for a template&#39;s submission data in TypeScript, JavaScript, Ruby, Python, PHP, Java, C#, Elixir or Go, so your app catches mistakes before it calls the API. &#x60;root_type_name&#x60; is the type of the whole &#x60;data&#x60; object, and &#x60;just_types&#x3D;true&#x60; leaves out the code that converts JSON to and from the types. Java returns every class in &#x60;code&#x60;, each under a &#x60;// ClassName.java&#x60; comment. A template with no named fields returns 422. 
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId">The template&#39;s ID.</param>
         /// <param name="lang">The language to generate the code in.</param>
         /// <param name="version">The template version: a published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;latest&#x60; (the draft when no version has been published), the version a submission uses by default. (optional)</param>
+        /// <param name="justTypes">Return only the types (interfaces, classes or structs), without the code that converts JSON to and from them. Default false. JavaScript has no types and PHP no types-only code, so theirs is the same either way. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IGetTemplateModelCodeApiResponse"/>&gt;</returns>
-        Task<IGetTemplateModelCodeApiResponse> GetTemplateModelCodeAsync(string templateId, ModelCodeLanguage lang, Option<string> version = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<IGetTemplateModelCodeApiResponse> GetTemplateModelCodeAsync(string templateId, ModelCodeLanguage lang, Option<string> version = default, Option<bool> justTypes = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Generate typed code for a template&#39;s submission data
         /// </summary>
         /// <remarks>
-        /// Generates types for a template&#39;s submission data in TypeScript, JavaScript, Ruby, Python, PHP, Java, C#, Elixir or Go, so your app catches mistakes before it calls the API. &#x60;root_type_name&#x60; is the type of the whole &#x60;data&#x60; object. Java returns every class in &#x60;code&#x60;, each under a &#x60;// ClassName.java&#x60; comment. A template with no named fields returns 422. 
+        /// Generates types for a template&#39;s submission data in TypeScript, JavaScript, Ruby, Python, PHP, Java, C#, Elixir or Go, so your app catches mistakes before it calls the API. &#x60;root_type_name&#x60; is the type of the whole &#x60;data&#x60; object, and &#x60;just_types&#x3D;true&#x60; leaves out the code that converts JSON to and from the types. Java returns every class in &#x60;code&#x60;, each under a &#x60;// ClassName.java&#x60; comment. A template with no named fields returns 422. 
         /// </remarks>
         /// <param name="templateId">The template&#39;s ID.</param>
         /// <param name="lang">The language to generate the code in.</param>
         /// <param name="version">The template version: a published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;latest&#x60; (the draft when no version has been published), the version a submission uses by default. (optional)</param>
+        /// <param name="justTypes">Return only the types (interfaces, classes or structs), without the code that converts JSON to and from them. Default false. JavaScript has no types and PHP no types-only code, so theirs is the same either way. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IGetTemplateModelCodeApiResponse"/>&gt;</returns>
-        Task<IGetTemplateModelCodeApiResponse> GetTemplateModelCodeOrDefaultAsync(string templateId, ModelCodeLanguage lang, Option<string> version = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<IGetTemplateModelCodeApiResponse> GetTemplateModelCodeOrDefaultAsync(string templateId, ModelCodeLanguage lang, Option<string> version = default, Option<bool> justTypes = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get images of a template&#39;s pages
@@ -766,6 +801,31 @@ namespace DocSpring.Client.Api
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IGetTemplatePageImagesApiResponse"/>&gt;</returns>
         Task<IGetTemplatePageImagesApiResponse> GetTemplatePageImagesOrDefaultAsync(string templateId, Option<string> version = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Get a template preview
+        /// </summary>
+        /// <remarks>
+        /// Returns a preview made with POST /templates/{template_id}/previews. Once it&#39;s &#x60;processed&#x60;, &#x60;pages&#x60; has a PNG image of each page with a temporary link to download it: a preview has no PDF. Previews are deleted an hour after they&#39;re created. 
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="previewId">The preview&#39;s ID.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetTemplatePreviewApiResponse"/>&gt;</returns>
+        Task<IGetTemplatePreviewApiResponse> GetTemplatePreviewAsync(string templateId, string previewId, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Get a template preview
+        /// </summary>
+        /// <remarks>
+        /// Returns a preview made with POST /templates/{template_id}/previews. Once it&#39;s &#x60;processed&#x60;, &#x60;pages&#x60; has a PNG image of each page with a temporary link to download it: a preview has no PDF. Previews are deleted an hour after they&#39;re created. 
+        /// </remarks>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="previewId">The preview&#39;s ID.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetTemplatePreviewApiResponse"/>&gt;</returns>
+        Task<IGetTemplatePreviewApiResponse> GetTemplatePreviewOrDefaultAsync(string templateId, string previewId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get the JSON Schema of a template&#39;s submission data
@@ -896,7 +956,7 @@ namespace DocSpring.Client.Api
         /// List submissions
         /// </summary>
         /// <remarks>
-        /// Returns the submissions in your account, newest first, one page at a time. Lists leave out each submission&#39;s &#x60;data&#x60; unless you pass &#x60;include_data&#x3D;true&#x60;. 
+        /// Returns the submissions in your account, newest first, one page at a time. Each one is a summary: its &#x60;data&#x60; is null unless you pass &#x60;include_data&#x3D;true&#x60;, and its &#x60;files&#x60; are empty unless you pass &#x60;include_files&#x3D;true&#x60;. Get a submission by its ID for its signature requests, uploads and page images. 
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId">Only list this template&#39;s submissions. (optional)</param>
@@ -906,15 +966,17 @@ namespace DocSpring.Client.Api
         /// <param name="includeData">Include each submission&#39;s &#x60;data&#x60; (null without it). (optional)</param>
         /// <param name="limit">How many items to return (1-100, default 50). (optional, default to 50)</param>
         /// <param name="cursor">The previous page&#39;s &#x60;next_cursor&#x60;, to get the next page. It&#39;s the ID of that page&#39;s last item, so get the next page before you delete or change the items on this one. (optional)</param>
+        /// <param name="state">Only list submissions in this state (one state per request). The ones that failed are &#x60;invalid_data&#x60;, &#x60;error&#x60;, &#x60;syntax_error&#x60;, &#x60;image_download_failed&#x60; and &#x60;image_processing_failed&#x60;, and one still &#x60;pending&#x60; an hour after it was created is stuck. (optional)</param>
+        /// <param name="includeFiles">Include each submission&#39;s generated files and their download links (&#x60;files&#x60;, empty without it), without the page images&#39; links. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IListSubmissionsApiResponse"/>&gt;</returns>
-        Task<IListSubmissionsApiResponse> ListSubmissionsAsync(Option<string> templateId = default, Option<bool> test = default, Option<DateTime> createdAfter = default, Option<DateTime> createdBefore = default, Option<bool> includeData = default, Option<int> limit = default, Option<string> cursor = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<IListSubmissionsApiResponse> ListSubmissionsAsync(Option<string> templateId = default, Option<bool> test = default, Option<DateTime> createdAfter = default, Option<DateTime> createdBefore = default, Option<bool> includeData = default, Option<int> limit = default, Option<string> cursor = default, Option<SubmissionState> state = default, Option<bool> includeFiles = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List submissions
         /// </summary>
         /// <remarks>
-        /// Returns the submissions in your account, newest first, one page at a time. Lists leave out each submission&#39;s &#x60;data&#x60; unless you pass &#x60;include_data&#x3D;true&#x60;. 
+        /// Returns the submissions in your account, newest first, one page at a time. Each one is a summary: its &#x60;data&#x60; is null unless you pass &#x60;include_data&#x3D;true&#x60;, and its &#x60;files&#x60; are empty unless you pass &#x60;include_files&#x3D;true&#x60;. Get a submission by its ID for its signature requests, uploads and page images. 
         /// </remarks>
         /// <param name="templateId">Only list this template&#39;s submissions. (optional)</param>
         /// <param name="test">Only list test submissions (true) or live submissions (false). (optional)</param>
@@ -923,9 +985,11 @@ namespace DocSpring.Client.Api
         /// <param name="includeData">Include each submission&#39;s &#x60;data&#x60; (null without it). (optional)</param>
         /// <param name="limit">How many items to return (1-100, default 50). (optional, default to 50)</param>
         /// <param name="cursor">The previous page&#39;s &#x60;next_cursor&#x60;, to get the next page. It&#39;s the ID of that page&#39;s last item, so get the next page before you delete or change the items on this one. (optional)</param>
+        /// <param name="state">Only list submissions in this state (one state per request). The ones that failed are &#x60;invalid_data&#x60;, &#x60;error&#x60;, &#x60;syntax_error&#x60;, &#x60;image_download_failed&#x60; and &#x60;image_processing_failed&#x60;, and one still &#x60;pending&#x60; an hour after it was created is stuck. (optional)</param>
+        /// <param name="includeFiles">Include each submission&#39;s generated files and their download links (&#x60;files&#x60;, empty without it), without the page images&#39; links. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IListSubmissionsApiResponse"/>&gt;</returns>
-        Task<IListSubmissionsApiResponse> ListSubmissionsOrDefaultAsync(Option<string> templateId = default, Option<bool> test = default, Option<DateTime> createdAfter = default, Option<DateTime> createdBefore = default, Option<bool> includeData = default, Option<int> limit = default, Option<string> cursor = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<IListSubmissionsApiResponse> ListSubmissionsOrDefaultAsync(Option<string> templateId = default, Option<bool> test = default, Option<DateTime> createdAfter = default, Option<DateTime> createdBefore = default, Option<bool> includeData = default, Option<int> limit = default, Option<string> cursor = default, Option<SubmissionState> state = default, Option<bool> includeFiles = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List a template&#39;s fields
@@ -966,9 +1030,11 @@ namespace DocSpring.Client.Api
         /// <param name="includeData">Include each submission&#39;s &#x60;data&#x60; (null without it). (optional)</param>
         /// <param name="limit">How many items to return (1-100, default 50). (optional, default to 50)</param>
         /// <param name="cursor">The previous page&#39;s &#x60;next_cursor&#x60;, to get the next page. It&#39;s the ID of that page&#39;s last item, so get the next page before you delete or change the items on this one. (optional)</param>
+        /// <param name="state">Only list submissions in this state (one state per request). The ones that failed are &#x60;invalid_data&#x60;, &#x60;error&#x60;, &#x60;syntax_error&#x60;, &#x60;image_download_failed&#x60; and &#x60;image_processing_failed&#x60;, and one still &#x60;pending&#x60; an hour after it was created is stuck. (optional)</param>
+        /// <param name="includeFiles">Include each submission&#39;s generated files and their download links (&#x60;files&#x60;, empty without it), without the page images&#39; links. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IListTemplateSubmissionsApiResponse"/>&gt;</returns>
-        Task<IListTemplateSubmissionsApiResponse> ListTemplateSubmissionsAsync(string templateId, Option<bool> test = default, Option<DateTime> createdAfter = default, Option<DateTime> createdBefore = default, Option<bool> includeData = default, Option<int> limit = default, Option<string> cursor = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<IListTemplateSubmissionsApiResponse> ListTemplateSubmissionsAsync(string templateId, Option<bool> test = default, Option<DateTime> createdAfter = default, Option<DateTime> createdBefore = default, Option<bool> includeData = default, Option<int> limit = default, Option<string> cursor = default, Option<SubmissionState> state = default, Option<bool> includeFiles = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List a template&#39;s submissions
@@ -983,15 +1049,17 @@ namespace DocSpring.Client.Api
         /// <param name="includeData">Include each submission&#39;s &#x60;data&#x60; (null without it). (optional)</param>
         /// <param name="limit">How many items to return (1-100, default 50). (optional, default to 50)</param>
         /// <param name="cursor">The previous page&#39;s &#x60;next_cursor&#x60;, to get the next page. It&#39;s the ID of that page&#39;s last item, so get the next page before you delete or change the items on this one. (optional)</param>
+        /// <param name="state">Only list submissions in this state (one state per request). The ones that failed are &#x60;invalid_data&#x60;, &#x60;error&#x60;, &#x60;syntax_error&#x60;, &#x60;image_download_failed&#x60; and &#x60;image_processing_failed&#x60;, and one still &#x60;pending&#x60; an hour after it was created is stuck. (optional)</param>
+        /// <param name="includeFiles">Include each submission&#39;s generated files and their download links (&#x60;files&#x60;, empty without it), without the page images&#39; links. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IListTemplateSubmissionsApiResponse"/>&gt;</returns>
-        Task<IListTemplateSubmissionsApiResponse> ListTemplateSubmissionsOrDefaultAsync(string templateId, Option<bool> test = default, Option<DateTime> createdAfter = default, Option<DateTime> createdBefore = default, Option<bool> includeData = default, Option<int> limit = default, Option<string> cursor = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<IListTemplateSubmissionsApiResponse> ListTemplateSubmissionsOrDefaultAsync(string templateId, Option<bool> test = default, Option<DateTime> createdAfter = default, Option<DateTime> createdBefore = default, Option<bool> includeData = default, Option<int> limit = default, Option<string> cursor = default, Option<SubmissionState> state = default, Option<bool> includeFiles = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List templates
         /// </summary>
         /// <remarks>
-        /// Returns the templates in your account (their drafts), newest first, one page at a time. Get a template by its ID for its HTML, defaults and published versions. 
+        /// Returns the templates in your account (their drafts), newest first, one page at a time. Each one is a summary: get a template by its ID for its settings, its PDF in full, its HTML, defaults and published versions. 
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="query">Only list templates whose name contains this text (ignoring case). (optional)</param>
@@ -1006,7 +1074,7 @@ namespace DocSpring.Client.Api
         /// List templates
         /// </summary>
         /// <remarks>
-        /// Returns the templates in your account (their drafts), newest first, one page at a time. Get a template by its ID for its HTML, defaults and published versions. 
+        /// Returns the templates in your account (their drafts), newest first, one page at a time. Each one is a summary: get a template by its ID for its settings, its PDF in full, its HTML, defaults and published versions. 
         /// </remarks>
         /// <param name="query">Only list templates whose name contains this text (ignoring case). (optional)</param>
         /// <param name="parentFolderId">Only list the templates in this folder (not in its subfolders). (optional)</param>
@@ -1475,7 +1543,7 @@ namespace DocSpring.Client.Api
     /// <summary>
     /// The <see cref="IAddTemplateFieldsApiResponse"/>
     /// </summary>
-    public interface IAddTemplateFieldsApiResponse : DocSpring.Client.Client.IApiResponse, ICreated<DocSpring.Client.Model.TemplateFields>, IConflict<DocSpring.Client.Model.ErrorResponse>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IAddTemplateFieldsApiResponse : DocSpring.Client.Client.IApiResponse, ICreated<DocSpring.Client.Model.TemplateFields>, IConflict<DocSpring.Client.Model.ErrorResponse>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 201 Created
@@ -1506,12 +1574,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="ICopyTemplateApiResponse"/>
     /// </summary>
-    public interface ICopyTemplateApiResponse : DocSpring.Client.Client.IApiResponse, ICreated<DocSpring.Client.Model.Template>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IForbidden<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface ICopyTemplateApiResponse : DocSpring.Client.Client.IApiResponse, ICreated<DocSpring.Client.Model.Template>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IForbidden<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 201 Created
@@ -1542,12 +1616,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="ICreateCombinedPdfApiResponse"/>
     /// </summary>
-    public interface ICreateCombinedPdfApiResponse : DocSpring.Client.Client.IApiResponse, ICreated<DocSpring.Client.Model.CombinedPdf>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IForbidden<DocSpring.Client.Model.ErrorResponse>, IPaymentRequired<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface ICreateCombinedPdfApiResponse : DocSpring.Client.Client.IApiResponse, ICreated<DocSpring.Client.Model.CombinedPdf>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IForbidden<DocSpring.Client.Model.ErrorResponse>, IPaymentRequired<DocSpring.Client.Model.ErrorResponse>, IConflict<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>, IGatewayTimeout<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 201 Created
@@ -1574,16 +1654,34 @@ namespace DocSpring.Client.Api
         bool IsPaymentRequired { get; }
 
         /// <summary>
+        /// Returns true if the response is 409 Conflict
+        /// </summary>
+        /// <returns></returns>
+        bool IsConflict { get; }
+
+        /// <summary>
         /// Returns true if the response is 401 Unauthorized
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
+
+        /// <summary>
+        /// Returns true if the response is 504 GatewayTimeout
+        /// </summary>
+        /// <returns></returns>
+        bool IsGatewayTimeout { get; }
     }
 
     /// <summary>
     /// The <see cref="ICreateCustomFileFromUploadApiResponse"/>
     /// </summary>
-    public interface ICreateCustomFileFromUploadApiResponse : DocSpring.Client.Client.IApiResponse, ICreated<DocSpring.Client.Model.CustomFile>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface ICreateCustomFileFromUploadApiResponse : DocSpring.Client.Client.IApiResponse, ICreated<DocSpring.Client.Model.CustomFile>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 201 Created
@@ -1602,12 +1700,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="ICreateFolderApiResponse"/>
     /// </summary>
-    public interface ICreateFolderApiResponse : DocSpring.Client.Client.IApiResponse, ICreated<DocSpring.Client.Model.Folder>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface ICreateFolderApiResponse : DocSpring.Client.Client.IApiResponse, ICreated<DocSpring.Client.Model.Folder>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 201 Created
@@ -1626,18 +1730,36 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="ICreateSignatureRequestEventApiResponse"/>
     /// </summary>
-    public interface ICreateSignatureRequestEventApiResponse : DocSpring.Client.Client.IApiResponse, ICreated<DocSpring.Client.Model.SignatureRequestEvent>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface ICreateSignatureRequestEventApiResponse : DocSpring.Client.Client.IApiResponse, ICreated<DocSpring.Client.Model.SignatureRequestEvent>, IForbidden<DocSpring.Client.Model.ErrorResponse>, IConflict<DocSpring.Client.Model.ErrorResponse>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 201 Created
         /// </summary>
         /// <returns></returns>
         bool IsCreated { get; }
+
+        /// <summary>
+        /// Returns true if the response is 403 Forbidden
+        /// </summary>
+        /// <returns></returns>
+        bool IsForbidden { get; }
+
+        /// <summary>
+        /// Returns true if the response is 409 Conflict
+        /// </summary>
+        /// <returns></returns>
+        bool IsConflict { get; }
 
         /// <summary>
         /// Returns true if the response is 422 UnprocessableContent
@@ -1656,12 +1778,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="ICreateSignatureRequestTokenApiResponse"/>
     /// </summary>
-    public interface ICreateSignatureRequestTokenApiResponse : DocSpring.Client.Client.IApiResponse, ICreated<DocSpring.Client.Model.SignatureRequestToken>, IForbidden<DocSpring.Client.Model.ErrorResponse>, IConflict<DocSpring.Client.Model.ErrorResponse>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface ICreateSignatureRequestTokenApiResponse : DocSpring.Client.Client.IApiResponse, ICreated<DocSpring.Client.Model.SignatureRequestToken>, IForbidden<DocSpring.Client.Model.ErrorResponse>, IConflict<DocSpring.Client.Model.ErrorResponse>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 201 Created
@@ -1698,12 +1826,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="ICreateSubmissionApiResponse"/>
     /// </summary>
-    public interface ICreateSubmissionApiResponse : DocSpring.Client.Client.IApiResponse, ICreated<DocSpring.Client.Model.Submission>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IPaymentRequired<DocSpring.Client.Model.ErrorResponse>, IForbidden<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface ICreateSubmissionApiResponse : DocSpring.Client.Client.IApiResponse, ICreated<DocSpring.Client.Model.Submission>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IPaymentRequired<DocSpring.Client.Model.ErrorResponse>, IForbidden<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IConflict<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>, IGatewayTimeout<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 201 Created
@@ -1736,16 +1870,34 @@ namespace DocSpring.Client.Api
         bool IsNotFound { get; }
 
         /// <summary>
+        /// Returns true if the response is 409 Conflict
+        /// </summary>
+        /// <returns></returns>
+        bool IsConflict { get; }
+
+        /// <summary>
         /// Returns true if the response is 401 Unauthorized
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
+
+        /// <summary>
+        /// Returns true if the response is 504 GatewayTimeout
+        /// </summary>
+        /// <returns></returns>
+        bool IsGatewayTimeout { get; }
     }
 
     /// <summary>
     /// The <see cref="ICreateSubmissionBatchApiResponse"/>
     /// </summary>
-    public interface ICreateSubmissionBatchApiResponse : DocSpring.Client.Client.IApiResponse, ICreated<DocSpring.Client.Model.SubmissionBatch>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IPaymentRequired<DocSpring.Client.Model.ErrorResponse>, IForbidden<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface ICreateSubmissionBatchApiResponse : DocSpring.Client.Client.IApiResponse, ICreated<DocSpring.Client.Model.SubmissionBatch>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IPaymentRequired<DocSpring.Client.Model.ErrorResponse>, IForbidden<DocSpring.Client.Model.ErrorResponse>, IConflict<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>, IGatewayTimeout<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 201 Created
@@ -1772,16 +1924,34 @@ namespace DocSpring.Client.Api
         bool IsForbidden { get; }
 
         /// <summary>
+        /// Returns true if the response is 409 Conflict
+        /// </summary>
+        /// <returns></returns>
+        bool IsConflict { get; }
+
+        /// <summary>
         /// Returns true if the response is 401 Unauthorized
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
+
+        /// <summary>
+        /// Returns true if the response is 504 GatewayTimeout
+        /// </summary>
+        /// <returns></returns>
+        bool IsGatewayTimeout { get; }
     }
 
     /// <summary>
     /// The <see cref="ICreateTemplateApiResponse"/>
     /// </summary>
-    public interface ICreateTemplateApiResponse : DocSpring.Client.Client.IApiResponse, ICreated<DocSpring.Client.Model.Template>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IForbidden<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface ICreateTemplateApiResponse : DocSpring.Client.Client.IApiResponse, ICreated<DocSpring.Client.Model.Template>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IForbidden<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>, IGatewayTimeout<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 201 Created
@@ -1806,12 +1976,54 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
+
+        /// <summary>
+        /// Returns true if the response is 504 GatewayTimeout
+        /// </summary>
+        /// <returns></returns>
+        bool IsGatewayTimeout { get; }
+    }
+
+    /// <summary>
+    /// The <see cref="ICreateTemplatePreviewApiResponse"/>
+    /// </summary>
+    public interface ICreateTemplatePreviewApiResponse : DocSpring.Client.Client.IApiResponse, ICreated<DocSpring.Client.Model.TemplatePreview>, IConflict<DocSpring.Client.Model.ErrorResponse>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
+    {
+        /// <summary>
+        /// Returns true if the response is 201 Created
+        /// </summary>
+        /// <returns></returns>
+        bool IsCreated { get; }
+
+        /// <summary>
+        /// Returns true if the response is 409 Conflict
+        /// </summary>
+        /// <returns></returns>
+        bool IsConflict { get; }
+
+        /// <summary>
+        /// Returns true if the response is 422 UnprocessableContent
+        /// </summary>
+        /// <returns></returns>
+        bool IsUnprocessableContent { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="ICreateWebhookApiResponse"/>
     /// </summary>
-    public interface ICreateWebhookApiResponse : DocSpring.Client.Client.IApiResponse, ICreated<DocSpring.Client.Model.Webhook>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface ICreateWebhookApiResponse : DocSpring.Client.Client.IApiResponse, ICreated<DocSpring.Client.Model.Webhook>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 201 Created
@@ -1830,12 +2042,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IDeleteCustomFileApiResponse"/>
     /// </summary>
-    public interface IDeleteCustomFileApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.CustomFile>, IForbidden<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IDeleteCustomFileApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.CustomFile>, IForbidden<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -1860,12 +2078,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IDeleteFolderApiResponse"/>
     /// </summary>
-    public interface IDeleteFolderApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Folder>, IConflict<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IDeleteFolderApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Folder>, IConflict<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -1890,12 +2114,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IDeleteTemplateApiResponse"/>
     /// </summary>
-    public interface IDeleteTemplateApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Template>, IConflict<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IDeleteTemplateApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Template>, IConflict<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -1926,12 +2156,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IDeleteWebhookApiResponse"/>
     /// </summary>
-    public interface IDeleteWebhookApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Webhook>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IDeleteWebhookApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Webhook>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -1950,12 +2186,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IExpireCombinedPdfApiResponse"/>
     /// </summary>
-    public interface IExpireCombinedPdfApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.CombinedPdf>, IForbidden<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IExpireCombinedPdfApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.CombinedPdf>, IForbidden<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -1980,12 +2222,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IExpireSubmissionApiResponse"/>
     /// </summary>
-    public interface IExpireSubmissionApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Submission>, IForbidden<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IExpireSubmissionApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Submission>, IForbidden<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2010,12 +2258,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IGenerateSubmissionFilesApiResponse"/>
     /// </summary>
-    public interface IGenerateSubmissionFilesApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Submission>, IConflict<DocSpring.Client.Model.ErrorResponse>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IGenerateSubmissionFilesApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Submission>, IConflict<DocSpring.Client.Model.ErrorResponse>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>, IGatewayTimeout<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2046,12 +2300,24 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
+
+        /// <summary>
+        /// Returns true if the response is 504 GatewayTimeout
+        /// </summary>
+        /// <returns></returns>
+        bool IsGatewayTimeout { get; }
     }
 
     /// <summary>
     /// The <see cref="IGenerateSubmissionPreviewApiResponse"/>
     /// </summary>
-    public interface IGenerateSubmissionPreviewApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Submission>, IConflict<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IGenerateSubmissionPreviewApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Submission>, IConflict<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2076,12 +2342,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IGetCombinedPdfApiResponse"/>
     /// </summary>
-    public interface IGetCombinedPdfApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.CombinedPdf>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IGetCombinedPdfApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.CombinedPdf>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2100,12 +2372,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IGetCustomFileApiResponse"/>
     /// </summary>
-    public interface IGetCustomFileApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.CustomFile>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IGetCustomFileApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.CustomFile>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2124,12 +2402,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IGetFolderApiResponse"/>
     /// </summary>
-    public interface IGetFolderApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Folder>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IGetFolderApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Folder>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2148,12 +2432,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IGetPresignUrlApiResponse"/>
     /// </summary>
-    public interface IGetPresignUrlApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.UploadPresign>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IGetPresignUrlApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.UploadPresign>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2166,12 +2456,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IGetSignatureRequestApiResponse"/>
     /// </summary>
-    public interface IGetSignatureRequestApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.SignatureRequest>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IGetSignatureRequestApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.SignatureRequest>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2190,12 +2486,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IGetSubmissionApiResponse"/>
     /// </summary>
-    public interface IGetSubmissionApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Submission>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IGetSubmissionApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Submission>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2214,12 +2516,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IGetSubmissionBatchApiResponse"/>
     /// </summary>
-    public interface IGetSubmissionBatchApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.SubmissionBatch>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IGetSubmissionBatchApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.SubmissionBatch>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2238,12 +2546,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IGetTemplateApiResponse"/>
     /// </summary>
-    public interface IGetTemplateApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Template>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IGetTemplateApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Template>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2268,12 +2582,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IGetTemplateDiffApiResponse"/>
     /// </summary>
-    public interface IGetTemplateDiffApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.TemplateDiff>, IConflict<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IGetTemplateDiffApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.TemplateDiff>, IConflict<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2298,12 +2618,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IGetTemplateModelCodeApiResponse"/>
     /// </summary>
-    public interface IGetTemplateModelCodeApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.TemplateModelCode>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IGetTemplateModelCodeApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.TemplateModelCode>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2328,12 +2654,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IGetTemplatePageImagesApiResponse"/>
     /// </summary>
-    public interface IGetTemplatePageImagesApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.TemplatePageImages>, IConflict<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IGetTemplatePageImagesApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.TemplatePageImages>, IConflict<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2358,12 +2690,42 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
+    }
+
+    /// <summary>
+    /// The <see cref="IGetTemplatePreviewApiResponse"/>
+    /// </summary>
+    public interface IGetTemplatePreviewApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.TemplatePreview>, INotFound<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
+    {
+        /// <summary>
+        /// Returns true if the response is 200 Ok
+        /// </summary>
+        /// <returns></returns>
+        bool IsOk { get; }
+
+        /// <summary>
+        /// Returns true if the response is 404 NotFound
+        /// </summary>
+        /// <returns></returns>
+        bool IsNotFound { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IGetTemplateSchemaApiResponse"/>
     /// </summary>
-    public interface IGetTemplateSchemaApiResponse : DocSpring.Client.Client.IApiResponse, IOk<Dictionary<string, Object>>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IGetTemplateSchemaApiResponse : DocSpring.Client.Client.IApiResponse, IOk<Dictionary<string, Object>>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2382,12 +2744,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IGetWebhookApiResponse"/>
     /// </summary>
-    public interface IGetWebhookApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Webhook>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IGetWebhookApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Webhook>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2406,12 +2774,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IListCombinedPdfsApiResponse"/>
     /// </summary>
-    public interface IListCombinedPdfsApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.CombinedPdfList>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IListCombinedPdfsApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.CombinedPdfList>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2430,12 +2804,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IListCustomFilesApiResponse"/>
     /// </summary>
-    public interface IListCustomFilesApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.CustomFileList>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IListCustomFilesApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.CustomFileList>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2454,12 +2834,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IListFoldersApiResponse"/>
     /// </summary>
-    public interface IListFoldersApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.FolderList>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IListFoldersApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.FolderList>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2478,12 +2864,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IListSubmissionsApiResponse"/>
     /// </summary>
-    public interface IListSubmissionsApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.SubmissionList>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IListSubmissionsApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.SubmissionList>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2502,12 +2894,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IListTemplateFieldsApiResponse"/>
     /// </summary>
-    public interface IListTemplateFieldsApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.TemplateFields>, IConflict<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IListTemplateFieldsApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.TemplateFields>, IConflict<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2532,12 +2930,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IListTemplateSubmissionsApiResponse"/>
     /// </summary>
-    public interface IListTemplateSubmissionsApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.SubmissionList>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IListTemplateSubmissionsApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.SubmissionList>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2562,12 +2966,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IListTemplatesApiResponse"/>
     /// </summary>
-    public interface IListTemplatesApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.TemplateSummaryList>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IListTemplatesApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.TemplateSummaryList>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2586,12 +2996,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IListWebhooksApiResponse"/>
     /// </summary>
-    public interface IListWebhooksApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.WebhookList>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IListWebhooksApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.WebhookList>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2610,12 +3026,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IMoveFolderApiResponse"/>
     /// </summary>
-    public interface IMoveFolderApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Folder>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IMoveFolderApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Folder>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2640,12 +3062,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IMoveTemplateApiResponse"/>
     /// </summary>
-    public interface IMoveTemplateApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Template>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IMoveTemplateApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Template>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2670,12 +3098,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IPublishTemplateVersionApiResponse"/>
     /// </summary>
-    public interface IPublishTemplateVersionApiResponse : DocSpring.Client.Client.IApiResponse, ICreated<DocSpring.Client.Model.TemplateVersion>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IConflict<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IPublishTemplateVersionApiResponse : DocSpring.Client.Client.IApiResponse, ICreated<DocSpring.Client.Model.TemplateVersion>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IConflict<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 201 Created
@@ -2706,12 +3140,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IRemoveTemplateFieldsApiResponse"/>
     /// </summary>
-    public interface IRemoveTemplateFieldsApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.TemplateFields>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IRemoveTemplateFieldsApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.TemplateFields>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2736,12 +3176,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IRenameFolderApiResponse"/>
     /// </summary>
-    public interface IRenameFolderApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Folder>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IRenameFolderApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Folder>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2766,12 +3212,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IReorderTemplateFieldsApiResponse"/>
     /// </summary>
-    public interface IReorderTemplateFieldsApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.TemplateFields>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IReorderTemplateFieldsApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.TemplateFields>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2796,12 +3248,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IRestoreTemplateVersionApiResponse"/>
     /// </summary>
-    public interface IRestoreTemplateVersionApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Template>, IConflict<DocSpring.Client.Model.ErrorResponse>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IRestoreTemplateVersionApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Template>, IConflict<DocSpring.Client.Model.ErrorResponse>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2832,12 +3290,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="ITestAuthenticationApiResponse"/>
     /// </summary>
-    public interface ITestAuthenticationApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.AuthenticationCheck>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface ITestAuthenticationApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.AuthenticationCheck>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2850,12 +3314,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IUpdateSignatureRequestApiResponse"/>
     /// </summary>
-    public interface IUpdateSignatureRequestApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.SignatureRequest>, IConflict<DocSpring.Client.Model.ErrorResponse>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IUpdateSignatureRequestApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.SignatureRequest>, IConflict<DocSpring.Client.Model.ErrorResponse>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2886,12 +3356,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IUpdateTemplateApiResponse"/>
     /// </summary>
-    public interface IUpdateTemplateApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Template>, IConflict<DocSpring.Client.Model.ErrorResponse>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IUpdateTemplateApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Template>, IConflict<DocSpring.Client.Model.ErrorResponse>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2922,12 +3398,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IUpdateTemplateDocumentApiResponse"/>
     /// </summary>
-    public interface IUpdateTemplateDocumentApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Template>, IConflict<DocSpring.Client.Model.ErrorResponse>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IUpdateTemplateDocumentApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Template>, IConflict<DocSpring.Client.Model.ErrorResponse>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>, IGatewayTimeout<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2958,12 +3440,24 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
+
+        /// <summary>
+        /// Returns true if the response is 504 GatewayTimeout
+        /// </summary>
+        /// <returns></returns>
+        bool IsGatewayTimeout { get; }
     }
 
     /// <summary>
     /// The <see cref="IUpdateTemplateFieldsApiResponse"/>
     /// </summary>
-    public interface IUpdateTemplateFieldsApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.TemplateFields>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IUpdateTemplateFieldsApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.TemplateFields>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -2988,12 +3482,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IUpdateWebhookApiResponse"/>
     /// </summary>
-    public interface IUpdateWebhookApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Webhook>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IUpdateWebhookApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Webhook>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -3018,12 +3518,18 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
     /// The <see cref="IUploadTemplateApiResponse"/>
     /// </summary>
-    public interface IUploadTemplateApiResponse : DocSpring.Client.Client.IApiResponse, ICreated<DocSpring.Client.Model.Template>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IForbidden<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IUploadTemplateApiResponse : DocSpring.Client.Client.IApiResponse, ICreated<DocSpring.Client.Model.Template>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IForbidden<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>, IGatewayTimeout<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 201 Created
@@ -3048,12 +3554,24 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
+
+        /// <summary>
+        /// Returns true if the response is 504 GatewayTimeout
+        /// </summary>
+        /// <returns></returns>
+        bool IsGatewayTimeout { get; }
     }
 
     /// <summary>
     /// The <see cref="IUploadTemplateDocumentApiResponse"/>
     /// </summary>
-    public interface IUploadTemplateDocumentApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Template>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IUploadTemplateDocumentApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.Template>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>, IGatewayTimeout<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -3078,12 +3596,24 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
+
+        /// <summary>
+        /// Returns true if the response is 504 GatewayTimeout
+        /// </summary>
+        /// <returns></returns>
+        bool IsGatewayTimeout { get; }
     }
 
     /// <summary>
     /// The <see cref="IValidateSubmissionApiResponse"/>
     /// </summary>
-    public interface IValidateSubmissionApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.SubmissionValidation>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>
+    public interface IValidateSubmissionApiResponse : DocSpring.Client.Client.IApiResponse, IOk<DocSpring.Client.Model.SubmissionValidation>, INotFound<DocSpring.Client.Model.ErrorResponse>, IUnprocessableContent<DocSpring.Client.Model.ErrorResponse>, IUnauthorized<DocSpring.Client.Model.ErrorResponse>, ITooManyRequests<DocSpring.Client.Model.ErrorResponse>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -3108,6 +3638,12 @@ namespace DocSpring.Client.Api
         /// </summary>
         /// <returns></returns>
         bool IsUnauthorized { get; }
+
+        /// <summary>
+        /// Returns true if the response is 429 TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        bool IsTooManyRequests { get; }
     }
 
     /// <summary>
@@ -3313,6 +3849,26 @@ namespace DocSpring.Client.Api
         internal void ExecuteOnErrorCreateTemplate(Exception exception)
         {
             OnErrorCreateTemplate?.Invoke(this, new ExceptionEventArgs(exception));
+        }
+
+        /// <summary>
+        /// The event raised after the server response
+        /// </summary>
+        public event EventHandler<ApiResponseEventArgs> OnCreateTemplatePreview;
+
+        /// <summary>
+        /// The event raised after an error querying the server
+        /// </summary>
+        public event EventHandler<ExceptionEventArgs> OnErrorCreateTemplatePreview;
+
+        internal void ExecuteOnCreateTemplatePreview(Client.CreateTemplatePreviewApiResponse apiResponse)
+        {
+            OnCreateTemplatePreview?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+        }
+
+        internal void ExecuteOnErrorCreateTemplatePreview(Exception exception)
+        {
+            OnErrorCreateTemplatePreview?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
@@ -3713,6 +4269,26 @@ namespace DocSpring.Client.Api
         internal void ExecuteOnErrorGetTemplatePageImages(Exception exception)
         {
             OnErrorGetTemplatePageImages?.Invoke(this, new ExceptionEventArgs(exception));
+        }
+
+        /// <summary>
+        /// The event raised after the server response
+        /// </summary>
+        public event EventHandler<ApiResponseEventArgs> OnGetTemplatePreview;
+
+        /// <summary>
+        /// The event raised after an error querying the server
+        /// </summary>
+        public event EventHandler<ExceptionEventArgs> OnErrorGetTemplatePreview;
+
+        internal void ExecuteOnGetTemplatePreview(Client.GetTemplatePreviewApiResponse apiResponse)
+        {
+            OnGetTemplatePreview?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+        }
+
+        internal void ExecuteOnErrorGetTemplatePreview(Exception exception)
+        {
+            OnErrorGetTemplatePreview?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
@@ -4761,6 +5337,56 @@ namespace DocSpring.Client.Api
                 return result != null;
             }
 
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
             private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
             {
                 bool suppressDefaultLog = false;
@@ -5253,6 +5879,56 @@ namespace DocSpring.Client.Api
                 return result != null;
             }
 
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
             private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
             {
                 bool suppressDefaultLog = false;
@@ -5264,17 +5940,21 @@ namespace DocSpring.Client.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
-        partial void FormatCreateCombinedPdf(CreateCombinedPdfRequest body, ref Option<bool> wait);
+        partial void FormatCreateCombinedPdf(CreateCombinedPdfRequest body, ref Option<bool> wait, ref Option<string> idempotencyKey);
 
         /// <summary>
         /// Validates the request parameters
         /// </summary>
         /// <param name="body"></param>
+        /// <param name="idempotencyKey"></param>
         /// <returns></returns>
-        private void ValidateCreateCombinedPdf(CreateCombinedPdfRequest body)
+        private void ValidateCreateCombinedPdf(CreateCombinedPdfRequest body, Option<string> idempotencyKey)
         {
             if (body == null)
                 throw new ArgumentNullException(nameof(body));
+
+            if (idempotencyKey.IsSet && idempotencyKey.Value == null)
+                throw new ArgumentNullException(nameof(idempotencyKey));
         }
 
         /// <summary>
@@ -5283,10 +5963,11 @@ namespace DocSpring.Client.Api
         /// <param name="apiResponseLocalVar"></param>
         /// <param name="body"></param>
         /// <param name="wait"></param>
-        private void AfterCreateCombinedPdfDefaultImplementation(ICreateCombinedPdfApiResponse apiResponseLocalVar, CreateCombinedPdfRequest body, Option<bool> wait)
+        /// <param name="idempotencyKey"></param>
+        private void AfterCreateCombinedPdfDefaultImplementation(ICreateCombinedPdfApiResponse apiResponseLocalVar, CreateCombinedPdfRequest body, Option<bool> wait, Option<string> idempotencyKey)
         {
             bool suppressDefaultLog = false;
-            AfterCreateCombinedPdf(ref suppressDefaultLog, apiResponseLocalVar, body, wait);
+            AfterCreateCombinedPdf(ref suppressDefaultLog, apiResponseLocalVar, body, wait, idempotencyKey);
             if (!suppressDefaultLog)
                 Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -5298,7 +5979,8 @@ namespace DocSpring.Client.Api
         /// <param name="apiResponseLocalVar"></param>
         /// <param name="body"></param>
         /// <param name="wait"></param>
-        partial void AfterCreateCombinedPdf(ref bool suppressDefaultLog, ICreateCombinedPdfApiResponse apiResponseLocalVar, CreateCombinedPdfRequest body, Option<bool> wait);
+        /// <param name="idempotencyKey"></param>
+        partial void AfterCreateCombinedPdf(ref bool suppressDefaultLog, ICreateCombinedPdfApiResponse apiResponseLocalVar, CreateCombinedPdfRequest body, Option<bool> wait, Option<string> idempotencyKey);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -5308,10 +5990,11 @@ namespace DocSpring.Client.Api
         /// <param name="pathLocalVar"></param>
         /// <param name="body"></param>
         /// <param name="wait"></param>
-        private void OnErrorCreateCombinedPdfDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, CreateCombinedPdfRequest body, Option<bool> wait)
+        /// <param name="idempotencyKey"></param>
+        private void OnErrorCreateCombinedPdfDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, CreateCombinedPdfRequest body, Option<bool> wait, Option<string> idempotencyKey)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorCreateCombinedPdf(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, body, wait);
+            OnErrorCreateCombinedPdf(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, body, wait, idempotencyKey);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -5325,20 +6008,22 @@ namespace DocSpring.Client.Api
         /// <param name="pathLocalVar"></param>
         /// <param name="body"></param>
         /// <param name="wait"></param>
-        partial void OnErrorCreateCombinedPdf(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, CreateCombinedPdfRequest body, Option<bool> wait);
+        /// <param name="idempotencyKey"></param>
+        partial void OnErrorCreateCombinedPdf(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, CreateCombinedPdfRequest body, Option<bool> wait, Option<string> idempotencyKey);
 
         /// <summary>
         /// Combine PDFs Merges PDFs into one: submissions, other combined PDFs, templates, custom files (POST /custom_files) and PDFs from URLs, in the order of &#x60;source_pdfs&#x60;. The PDF is generated in the background: on sync.api hosts the request waits for it (unless you pass &#x60;wait&#x3D;false&#x60;), otherwise poll GET /combined_pdfs/{combined_pdf_id} until &#x60;state&#x60; isn&#39;t &#x60;pending&#x60;.  A template source merges the template&#39;s processed PDF by default: the PDF submissions are filled in on, decrypted and with its form fields removed. Pass &#x60;processed: false&#x60; to merge the PDF as it was uploaded. 
         /// </summary>
         /// <param name="body">The PDFs to merge, and the combined PDF&#39;s settings.</param>
         /// <param name="wait">Wait until the PDF has been generated before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="idempotencyKey">A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request&#39;s response (and an &#x60;Idempotent-Replayed: true&#x60; header) instead of creating another combined PDF. Send a new key with each new combined PDF, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 &#x60;idempotency_key_reused&#x60;. A 409 &#x60;idempotency_key_in_use&#x60; means the first request is still being processed: send the request again in a few seconds. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICreateCombinedPdfApiResponse"/>&gt;</returns>
-        public async Task<ICreateCombinedPdfApiResponse> CreateCombinedPdfOrDefaultAsync(CreateCombinedPdfRequest body, Option<bool> wait = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<ICreateCombinedPdfApiResponse> CreateCombinedPdfOrDefaultAsync(CreateCombinedPdfRequest body, Option<bool> wait = default, Option<string> idempotencyKey = default, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await CreateCombinedPdfAsync(body, wait, cancellationToken).ConfigureAwait(false);
+                return await CreateCombinedPdfAsync(body, wait, idempotencyKey, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -5352,17 +6037,18 @@ namespace DocSpring.Client.Api
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">The PDFs to merge, and the combined PDF&#39;s settings.</param>
         /// <param name="wait">Wait until the PDF has been generated before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="idempotencyKey">A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request&#39;s response (and an &#x60;Idempotent-Replayed: true&#x60; header) instead of creating another combined PDF. Send a new key with each new combined PDF, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 &#x60;idempotency_key_reused&#x60;. A 409 &#x60;idempotency_key_in_use&#x60; means the first request is still being processed: send the request again in a few seconds. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICreateCombinedPdfApiResponse"/>&gt;</returns>
-        public async Task<ICreateCombinedPdfApiResponse> CreateCombinedPdfAsync(CreateCombinedPdfRequest body, Option<bool> wait = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<ICreateCombinedPdfApiResponse> CreateCombinedPdfAsync(CreateCombinedPdfRequest body, Option<bool> wait = default, Option<string> idempotencyKey = default, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
             {
-                ValidateCreateCombinedPdf(body);
+                ValidateCreateCombinedPdf(body, idempotencyKey);
 
-                FormatCreateCombinedPdf(body, ref wait);
+                FormatCreateCombinedPdf(body, ref wait, ref idempotencyKey);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -5383,6 +6069,19 @@ namespace DocSpring.Client.Api
                     httpRequestMessageLocalVar.Content = (body as object) is DocSpring.Client.Client.FileParameter fileParameterLocalVar
                         ? httpRequestMessageLocalVar.Content = new StreamContent(fileParameterLocalVar.Content)
                         : httpRequestMessageLocalVar.Content = new StringContent(JsonSerializer.Serialize(body, _jsonSerializerOptions));
+
+                    if (idempotencyKey.IsSet)
+                    {
+                      // Set client side default value of Header Param "Idempotency-Key".                    
+                      if (ClientUtils.IsContentHeader("Idempotency-Key"))
+                      {
+                          httpRequestMessageLocalVar.Content?.Headers.Add("Idempotency-Key", ClientUtils.ParameterToString(idempotencyKey.Value));
+                      }
+                      else
+                      {
+                          httpRequestMessageLocalVar.Headers.Add("Idempotency-Key", ClientUtils.ParameterToString(idempotencyKey.Value));
+                      }
+                    }
 
                     List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
                     httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
@@ -5430,7 +6129,7 @@ namespace DocSpring.Client.Api
                             }
                         }
 
-                        AfterCreateCombinedPdfDefaultImplementation(apiResponseLocalVar, body, wait);
+                        AfterCreateCombinedPdfDefaultImplementation(apiResponseLocalVar, body, wait, idempotencyKey);
 
                         Events.ExecuteOnCreateCombinedPdf(apiResponseLocalVar);
 
@@ -5444,7 +6143,7 @@ namespace DocSpring.Client.Api
             }
             catch(Exception e)
             {
-                OnErrorCreateCombinedPdfDefaultImplementation(e, "/combined_pdfs", uriBuilderLocalVar.Path, body, wait);
+                OnErrorCreateCombinedPdfDefaultImplementation(e, "/combined_pdfs", uriBuilderLocalVar.Path, body, wait, idempotencyKey);
                 Events.ExecuteOnErrorCreateCombinedPdf(e);
                 throw;
             }
@@ -5695,6 +6394,56 @@ namespace DocSpring.Client.Api
             }
 
             /// <summary>
+            /// Returns true if the response is 409 Conflict
+            /// </summary>
+            /// <returns></returns>
+            public bool IsConflict => 409 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 409 Conflict
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse Conflict()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnConflict(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultConflict();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultConflict()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsConflict
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnConflict(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 409 Conflict and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryConflict(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Conflict();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)409);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
             /// Returns true if the response is 401 Unauthorized
             /// </summary>
             /// <returns></returns>
@@ -5739,6 +6488,106 @@ namespace DocSpring.Client.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 504 GatewayTimeout
+            /// </summary>
+            /// <returns></returns>
+            public bool IsGatewayTimeout => 504 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 504 GatewayTimeout
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse GatewayTimeout()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnGatewayTimeout(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultGatewayTimeout();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultGatewayTimeout()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsGatewayTimeout
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnGatewayTimeout(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 504 GatewayTimeout and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryGatewayTimeout(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = GatewayTimeout();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)504);
                 }
 
                 return result != null;
@@ -6122,6 +6971,56 @@ namespace DocSpring.Client.Api
                 return result != null;
             }
 
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
             private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
             {
                 bool suppressDefaultLog = false;
@@ -6500,6 +7399,56 @@ namespace DocSpring.Client.Api
                 return result != null;
             }
 
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
             private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
             {
                 bool suppressDefaultLog = false;
@@ -6579,7 +7528,7 @@ namespace DocSpring.Client.Api
         partial void OnErrorCreateSignatureRequestEvent(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string signatureRequestId, CreateSignatureRequestEventRequest body);
 
         /// <summary>
-        /// Record a signature request event Records something that happened outside DocSpring in the signature request&#39;s audit trail: you sent the request to the person (&#x60;send_request&#x60;). The audit trail shows it as reported by your account. 
+        /// Record a signature request event Records something that happened outside DocSpring in the signature request&#39;s audit trail: you sent the request to the person (&#x60;send_request&#x60;). The audit trail shows it as reported by your account. A finished (completed, declined or expired) signature request&#39;s audit trail takes no more events, and a test API token can&#39;t record one for a live signature request. 
         /// </summary>
         /// <param name="signatureRequestId">The signature request&#39;s ID.</param>
         /// <param name="body">The event to record.</param>
@@ -6598,7 +7547,7 @@ namespace DocSpring.Client.Api
         }
 
         /// <summary>
-        /// Record a signature request event Records something that happened outside DocSpring in the signature request&#39;s audit trail: you sent the request to the person (&#x60;send_request&#x60;). The audit trail shows it as reported by your account. 
+        /// Record a signature request event Records something that happened outside DocSpring in the signature request&#39;s audit trail: you sent the request to the person (&#x60;send_request&#x60;). The audit trail shows it as reported by your account. A finished (completed, declined or expired) signature request&#39;s audit trail takes no more events, and a test API token can&#39;t record one for a live signature request. 
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="signatureRequestId">The signature request&#39;s ID.</param>
@@ -6790,6 +7739,106 @@ namespace DocSpring.Client.Api
             }
 
             /// <summary>
+            /// Returns true if the response is 403 Forbidden
+            /// </summary>
+            /// <returns></returns>
+            public bool IsForbidden => 403 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 403 Forbidden
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse Forbidden()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnForbidden(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultForbidden();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultForbidden()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsForbidden
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnForbidden(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 403 Forbidden and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryForbidden(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Forbidden();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)403);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 409 Conflict
+            /// </summary>
+            /// <returns></returns>
+            public bool IsConflict => 409 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 409 Conflict
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse Conflict()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnConflict(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultConflict();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultConflict()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsConflict
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnConflict(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 409 Conflict and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryConflict(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Conflict();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)409);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
             /// Returns true if the response is 422 UnprocessableContent
             /// </summary>
             /// <returns></returns>
@@ -6934,6 +7983,56 @@ namespace DocSpring.Client.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
                 }
 
                 return result != null;
@@ -7481,6 +8580,56 @@ namespace DocSpring.Client.Api
                 return result != null;
             }
 
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
             private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
             {
                 bool suppressDefaultLog = false;
@@ -7492,7 +8641,7 @@ namespace DocSpring.Client.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
-        partial void FormatCreateSubmission(ref string templateId, CreateSubmissionRequest body, ref Option<string> version, ref Option<bool> wait);
+        partial void FormatCreateSubmission(ref string templateId, CreateSubmissionRequest body, ref Option<string> version, ref Option<bool> wait, ref Option<string> idempotencyKey);
 
         /// <summary>
         /// Validates the request parameters
@@ -7500,8 +8649,9 @@ namespace DocSpring.Client.Api
         /// <param name="templateId"></param>
         /// <param name="body"></param>
         /// <param name="version"></param>
+        /// <param name="idempotencyKey"></param>
         /// <returns></returns>
-        private void ValidateCreateSubmission(string templateId, CreateSubmissionRequest body, Option<string> version)
+        private void ValidateCreateSubmission(string templateId, CreateSubmissionRequest body, Option<string> version, Option<string> idempotencyKey)
         {
             if (templateId == null)
                 throw new ArgumentNullException(nameof(templateId));
@@ -7511,6 +8661,9 @@ namespace DocSpring.Client.Api
 
             if (version.IsSet && version.Value == null)
                 throw new ArgumentNullException(nameof(version));
+
+            if (idempotencyKey.IsSet && idempotencyKey.Value == null)
+                throw new ArgumentNullException(nameof(idempotencyKey));
         }
 
         /// <summary>
@@ -7521,10 +8674,11 @@ namespace DocSpring.Client.Api
         /// <param name="body"></param>
         /// <param name="version"></param>
         /// <param name="wait"></param>
-        private void AfterCreateSubmissionDefaultImplementation(ICreateSubmissionApiResponse apiResponseLocalVar, string templateId, CreateSubmissionRequest body, Option<string> version, Option<bool> wait)
+        /// <param name="idempotencyKey"></param>
+        private void AfterCreateSubmissionDefaultImplementation(ICreateSubmissionApiResponse apiResponseLocalVar, string templateId, CreateSubmissionRequest body, Option<string> version, Option<bool> wait, Option<string> idempotencyKey)
         {
             bool suppressDefaultLog = false;
-            AfterCreateSubmission(ref suppressDefaultLog, apiResponseLocalVar, templateId, body, version, wait);
+            AfterCreateSubmission(ref suppressDefaultLog, apiResponseLocalVar, templateId, body, version, wait, idempotencyKey);
             if (!suppressDefaultLog)
                 Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -7538,7 +8692,8 @@ namespace DocSpring.Client.Api
         /// <param name="body"></param>
         /// <param name="version"></param>
         /// <param name="wait"></param>
-        partial void AfterCreateSubmission(ref bool suppressDefaultLog, ICreateSubmissionApiResponse apiResponseLocalVar, string templateId, CreateSubmissionRequest body, Option<string> version, Option<bool> wait);
+        /// <param name="idempotencyKey"></param>
+        partial void AfterCreateSubmission(ref bool suppressDefaultLog, ICreateSubmissionApiResponse apiResponseLocalVar, string templateId, CreateSubmissionRequest body, Option<string> version, Option<bool> wait, Option<string> idempotencyKey);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -7550,10 +8705,11 @@ namespace DocSpring.Client.Api
         /// <param name="body"></param>
         /// <param name="version"></param>
         /// <param name="wait"></param>
-        private void OnErrorCreateSubmissionDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, CreateSubmissionRequest body, Option<string> version, Option<bool> wait)
+        /// <param name="idempotencyKey"></param>
+        private void OnErrorCreateSubmissionDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, CreateSubmissionRequest body, Option<string> version, Option<bool> wait, Option<string> idempotencyKey)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorCreateSubmission(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, templateId, body, version, wait);
+            OnErrorCreateSubmission(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, templateId, body, version, wait, idempotencyKey);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -7569,7 +8725,8 @@ namespace DocSpring.Client.Api
         /// <param name="body"></param>
         /// <param name="version"></param>
         /// <param name="wait"></param>
-        partial void OnErrorCreateSubmission(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, CreateSubmissionRequest body, Option<string> version, Option<bool> wait);
+        /// <param name="idempotencyKey"></param>
+        partial void OnErrorCreateSubmission(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, CreateSubmissionRequest body, Option<string> version, Option<bool> wait, Option<string> idempotencyKey);
 
         /// <summary>
         /// Generate a PDF Creates a submission: fills in a template with your data and generates a PDF. The PDF is generated in the background: on sync.api hosts the request waits for it (unless you pass &#x60;wait&#x3D;false&#x60;), otherwise poll GET /submissions/{submission_id} until &#x60;state&#x60; isn&#39;t &#x60;pending&#x60;.  Data that doesn&#39;t match the template&#39;s fields returns a 422 with an &#x60;invalid_data&#x60; error. The submission is still saved, with its errors, so you can find it in DocSpring: the error&#39;s &#x60;submission_id&#x60; is its ID. 
@@ -7578,13 +8735,14 @@ namespace DocSpring.Client.Api
         /// <param name="body">The submission&#39;s data and settings.</param>
         /// <param name="version">The template version to use: a published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;latest&#x60; (the draft when no version has been published). (optional)</param>
         /// <param name="wait">Wait until the files have been generated before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="idempotencyKey">A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request&#39;s response (and an &#x60;Idempotent-Replayed: true&#x60; header) instead of creating another submission. Send a new key with each new submission, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 &#x60;idempotency_key_reused&#x60;. A 409 &#x60;idempotency_key_in_use&#x60; means the first request is still being processed: send the request again in a few seconds. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICreateSubmissionApiResponse"/>&gt;</returns>
-        public async Task<ICreateSubmissionApiResponse> CreateSubmissionOrDefaultAsync(string templateId, CreateSubmissionRequest body, Option<string> version = default, Option<bool> wait = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<ICreateSubmissionApiResponse> CreateSubmissionOrDefaultAsync(string templateId, CreateSubmissionRequest body, Option<string> version = default, Option<bool> wait = default, Option<string> idempotencyKey = default, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await CreateSubmissionAsync(templateId, body, version, wait, cancellationToken).ConfigureAwait(false);
+                return await CreateSubmissionAsync(templateId, body, version, wait, idempotencyKey, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -7600,17 +8758,18 @@ namespace DocSpring.Client.Api
         /// <param name="body">The submission&#39;s data and settings.</param>
         /// <param name="version">The template version to use: a published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;latest&#x60; (the draft when no version has been published). (optional)</param>
         /// <param name="wait">Wait until the files have been generated before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="idempotencyKey">A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request&#39;s response (and an &#x60;Idempotent-Replayed: true&#x60; header) instead of creating another submission. Send a new key with each new submission, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 &#x60;idempotency_key_reused&#x60;. A 409 &#x60;idempotency_key_in_use&#x60; means the first request is still being processed: send the request again in a few seconds. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICreateSubmissionApiResponse"/>&gt;</returns>
-        public async Task<ICreateSubmissionApiResponse> CreateSubmissionAsync(string templateId, CreateSubmissionRequest body, Option<string> version = default, Option<bool> wait = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<ICreateSubmissionApiResponse> CreateSubmissionAsync(string templateId, CreateSubmissionRequest body, Option<string> version = default, Option<bool> wait = default, Option<string> idempotencyKey = default, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
             {
-                ValidateCreateSubmission(templateId, body, version);
+                ValidateCreateSubmission(templateId, body, version, idempotencyKey);
 
-                FormatCreateSubmission(ref templateId, body, ref version, ref wait);
+                FormatCreateSubmission(ref templateId, body, ref version, ref wait, ref idempotencyKey);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -7635,6 +8794,19 @@ namespace DocSpring.Client.Api
                     httpRequestMessageLocalVar.Content = (body as object) is DocSpring.Client.Client.FileParameter fileParameterLocalVar
                         ? httpRequestMessageLocalVar.Content = new StreamContent(fileParameterLocalVar.Content)
                         : httpRequestMessageLocalVar.Content = new StringContent(JsonSerializer.Serialize(body, _jsonSerializerOptions));
+
+                    if (idempotencyKey.IsSet)
+                    {
+                      // Set client side default value of Header Param "Idempotency-Key".                    
+                      if (ClientUtils.IsContentHeader("Idempotency-Key"))
+                      {
+                          httpRequestMessageLocalVar.Content?.Headers.Add("Idempotency-Key", ClientUtils.ParameterToString(idempotencyKey.Value));
+                      }
+                      else
+                      {
+                          httpRequestMessageLocalVar.Headers.Add("Idempotency-Key", ClientUtils.ParameterToString(idempotencyKey.Value));
+                      }
+                    }
 
                     List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
                     httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
@@ -7682,7 +8854,7 @@ namespace DocSpring.Client.Api
                             }
                         }
 
-                        AfterCreateSubmissionDefaultImplementation(apiResponseLocalVar, templateId, body, version, wait);
+                        AfterCreateSubmissionDefaultImplementation(apiResponseLocalVar, templateId, body, version, wait, idempotencyKey);
 
                         Events.ExecuteOnCreateSubmission(apiResponseLocalVar);
 
@@ -7696,7 +8868,7 @@ namespace DocSpring.Client.Api
             }
             catch(Exception e)
             {
-                OnErrorCreateSubmissionDefaultImplementation(e, "/templates/{template_id}/submissions", uriBuilderLocalVar.Path, templateId, body, version, wait);
+                OnErrorCreateSubmissionDefaultImplementation(e, "/templates/{template_id}/submissions", uriBuilderLocalVar.Path, templateId, body, version, wait, idempotencyKey);
                 Events.ExecuteOnErrorCreateSubmission(e);
                 throw;
             }
@@ -7997,6 +9169,56 @@ namespace DocSpring.Client.Api
             }
 
             /// <summary>
+            /// Returns true if the response is 409 Conflict
+            /// </summary>
+            /// <returns></returns>
+            public bool IsConflict => 409 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 409 Conflict
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse Conflict()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnConflict(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultConflict();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultConflict()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsConflict
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnConflict(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 409 Conflict and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryConflict(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Conflict();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)409);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
             /// Returns true if the response is 401 Unauthorized
             /// </summary>
             /// <returns></returns>
@@ -8046,6 +9268,106 @@ namespace DocSpring.Client.Api
                 return result != null;
             }
 
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 504 GatewayTimeout
+            /// </summary>
+            /// <returns></returns>
+            public bool IsGatewayTimeout => 504 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 504 GatewayTimeout
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse GatewayTimeout()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnGatewayTimeout(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultGatewayTimeout();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultGatewayTimeout()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsGatewayTimeout
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnGatewayTimeout(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 504 GatewayTimeout and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryGatewayTimeout(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = GatewayTimeout();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)504);
+                }
+
+                return result != null;
+            }
+
             private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
             {
                 bool suppressDefaultLog = false;
@@ -8057,17 +9379,21 @@ namespace DocSpring.Client.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
-        partial void FormatCreateSubmissionBatch(CreateSubmissionBatchRequest body, ref Option<bool> wait);
+        partial void FormatCreateSubmissionBatch(CreateSubmissionBatchRequest body, ref Option<bool> wait, ref Option<string> idempotencyKey);
 
         /// <summary>
         /// Validates the request parameters
         /// </summary>
         /// <param name="body"></param>
+        /// <param name="idempotencyKey"></param>
         /// <returns></returns>
-        private void ValidateCreateSubmissionBatch(CreateSubmissionBatchRequest body)
+        private void ValidateCreateSubmissionBatch(CreateSubmissionBatchRequest body, Option<string> idempotencyKey)
         {
             if (body == null)
                 throw new ArgumentNullException(nameof(body));
+
+            if (idempotencyKey.IsSet && idempotencyKey.Value == null)
+                throw new ArgumentNullException(nameof(idempotencyKey));
         }
 
         /// <summary>
@@ -8076,10 +9402,11 @@ namespace DocSpring.Client.Api
         /// <param name="apiResponseLocalVar"></param>
         /// <param name="body"></param>
         /// <param name="wait"></param>
-        private void AfterCreateSubmissionBatchDefaultImplementation(ICreateSubmissionBatchApiResponse apiResponseLocalVar, CreateSubmissionBatchRequest body, Option<bool> wait)
+        /// <param name="idempotencyKey"></param>
+        private void AfterCreateSubmissionBatchDefaultImplementation(ICreateSubmissionBatchApiResponse apiResponseLocalVar, CreateSubmissionBatchRequest body, Option<bool> wait, Option<string> idempotencyKey)
         {
             bool suppressDefaultLog = false;
-            AfterCreateSubmissionBatch(ref suppressDefaultLog, apiResponseLocalVar, body, wait);
+            AfterCreateSubmissionBatch(ref suppressDefaultLog, apiResponseLocalVar, body, wait, idempotencyKey);
             if (!suppressDefaultLog)
                 Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -8091,7 +9418,8 @@ namespace DocSpring.Client.Api
         /// <param name="apiResponseLocalVar"></param>
         /// <param name="body"></param>
         /// <param name="wait"></param>
-        partial void AfterCreateSubmissionBatch(ref bool suppressDefaultLog, ICreateSubmissionBatchApiResponse apiResponseLocalVar, CreateSubmissionBatchRequest body, Option<bool> wait);
+        /// <param name="idempotencyKey"></param>
+        partial void AfterCreateSubmissionBatch(ref bool suppressDefaultLog, ICreateSubmissionBatchApiResponse apiResponseLocalVar, CreateSubmissionBatchRequest body, Option<bool> wait, Option<string> idempotencyKey);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -8101,10 +9429,11 @@ namespace DocSpring.Client.Api
         /// <param name="pathLocalVar"></param>
         /// <param name="body"></param>
         /// <param name="wait"></param>
-        private void OnErrorCreateSubmissionBatchDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, CreateSubmissionBatchRequest body, Option<bool> wait)
+        /// <param name="idempotencyKey"></param>
+        private void OnErrorCreateSubmissionBatchDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, CreateSubmissionBatchRequest body, Option<bool> wait, Option<string> idempotencyKey)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorCreateSubmissionBatch(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, body, wait);
+            OnErrorCreateSubmissionBatch(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, body, wait, idempotencyKey);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -8118,20 +9447,22 @@ namespace DocSpring.Client.Api
         /// <param name="pathLocalVar"></param>
         /// <param name="body"></param>
         /// <param name="wait"></param>
-        partial void OnErrorCreateSubmissionBatch(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, CreateSubmissionBatchRequest body, Option<bool> wait);
+        /// <param name="idempotencyKey"></param>
+        partial void OnErrorCreateSubmissionBatch(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, CreateSubmissionBatchRequest body, Option<bool> wait, Option<string> idempotencyKey);
 
         /// <summary>
         /// Generate PDFs in a batch Creates up to 50 submissions in one request, from one template or several. The PDFs are only generated when every submission is valid. On sync.api hosts the request waits until every PDF has been generated (unless you pass &#x60;wait&#x3D;false&#x60;), otherwise poll GET /submissions/batches/{submission_batch_id} until &#x60;processed_at&#x60; is set.  When any submission is invalid, nothing is generated and the request returns a 422. Submissions whose data doesn&#39;t match their template&#39;s fields are still saved with their errors (an &#x60;invalid_data&#x60; error, with each one&#39;s &#x60;submission_id&#x60; in its details), so you can find them in DocSpring. The other submissions aren&#39;t saved. 
         /// </summary>
         /// <param name="body">The submissions to create, and the settings they share.</param>
         /// <param name="wait">Wait until every PDF in the batch has been generated before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="idempotencyKey">A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request&#39;s response (and an &#x60;Idempotent-Replayed: true&#x60; header) instead of creating another batch. Send a new key with each new batch, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 &#x60;idempotency_key_reused&#x60;. A 409 &#x60;idempotency_key_in_use&#x60; means the first request is still being processed: send the request again in a few seconds. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICreateSubmissionBatchApiResponse"/>&gt;</returns>
-        public async Task<ICreateSubmissionBatchApiResponse> CreateSubmissionBatchOrDefaultAsync(CreateSubmissionBatchRequest body, Option<bool> wait = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<ICreateSubmissionBatchApiResponse> CreateSubmissionBatchOrDefaultAsync(CreateSubmissionBatchRequest body, Option<bool> wait = default, Option<string> idempotencyKey = default, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await CreateSubmissionBatchAsync(body, wait, cancellationToken).ConfigureAwait(false);
+                return await CreateSubmissionBatchAsync(body, wait, idempotencyKey, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -8145,17 +9476,18 @@ namespace DocSpring.Client.Api
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="body">The submissions to create, and the settings they share.</param>
         /// <param name="wait">Wait until every PDF in the batch has been generated before responding. Default true on sync.api hosts. (optional)</param>
+        /// <param name="idempotencyKey">A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request&#39;s response (and an &#x60;Idempotent-Replayed: true&#x60; header) instead of creating another batch. Send a new key with each new batch, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 &#x60;idempotency_key_reused&#x60;. A 409 &#x60;idempotency_key_in_use&#x60; means the first request is still being processed: send the request again in a few seconds. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="ICreateSubmissionBatchApiResponse"/>&gt;</returns>
-        public async Task<ICreateSubmissionBatchApiResponse> CreateSubmissionBatchAsync(CreateSubmissionBatchRequest body, Option<bool> wait = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<ICreateSubmissionBatchApiResponse> CreateSubmissionBatchAsync(CreateSubmissionBatchRequest body, Option<bool> wait = default, Option<string> idempotencyKey = default, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
             {
-                ValidateCreateSubmissionBatch(body);
+                ValidateCreateSubmissionBatch(body, idempotencyKey);
 
-                FormatCreateSubmissionBatch(body, ref wait);
+                FormatCreateSubmissionBatch(body, ref wait, ref idempotencyKey);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -8176,6 +9508,19 @@ namespace DocSpring.Client.Api
                     httpRequestMessageLocalVar.Content = (body as object) is DocSpring.Client.Client.FileParameter fileParameterLocalVar
                         ? httpRequestMessageLocalVar.Content = new StreamContent(fileParameterLocalVar.Content)
                         : httpRequestMessageLocalVar.Content = new StringContent(JsonSerializer.Serialize(body, _jsonSerializerOptions));
+
+                    if (idempotencyKey.IsSet)
+                    {
+                      // Set client side default value of Header Param "Idempotency-Key".                    
+                      if (ClientUtils.IsContentHeader("Idempotency-Key"))
+                      {
+                          httpRequestMessageLocalVar.Content?.Headers.Add("Idempotency-Key", ClientUtils.ParameterToString(idempotencyKey.Value));
+                      }
+                      else
+                      {
+                          httpRequestMessageLocalVar.Headers.Add("Idempotency-Key", ClientUtils.ParameterToString(idempotencyKey.Value));
+                      }
+                    }
 
                     List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
                     httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
@@ -8223,7 +9568,7 @@ namespace DocSpring.Client.Api
                             }
                         }
 
-                        AfterCreateSubmissionBatchDefaultImplementation(apiResponseLocalVar, body, wait);
+                        AfterCreateSubmissionBatchDefaultImplementation(apiResponseLocalVar, body, wait, idempotencyKey);
 
                         Events.ExecuteOnCreateSubmissionBatch(apiResponseLocalVar);
 
@@ -8237,7 +9582,7 @@ namespace DocSpring.Client.Api
             }
             catch(Exception e)
             {
-                OnErrorCreateSubmissionBatchDefaultImplementation(e, "/submissions/batches", uriBuilderLocalVar.Path, body, wait);
+                OnErrorCreateSubmissionBatchDefaultImplementation(e, "/submissions/batches", uriBuilderLocalVar.Path, body, wait, idempotencyKey);
                 Events.ExecuteOnErrorCreateSubmissionBatch(e);
                 throw;
             }
@@ -8488,6 +9833,56 @@ namespace DocSpring.Client.Api
             }
 
             /// <summary>
+            /// Returns true if the response is 409 Conflict
+            /// </summary>
+            /// <returns></returns>
+            public bool IsConflict => 409 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 409 Conflict
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse Conflict()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnConflict(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultConflict();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultConflict()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsConflict
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnConflict(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 409 Conflict and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryConflict(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Conflict();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)409);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
             /// Returns true if the response is 401 Unauthorized
             /// </summary>
             /// <returns></returns>
@@ -8532,6 +9927,106 @@ namespace DocSpring.Client.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 504 GatewayTimeout
+            /// </summary>
+            /// <returns></returns>
+            public bool IsGatewayTimeout => 504 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 504 GatewayTimeout
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse GatewayTimeout()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnGatewayTimeout(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultGatewayTimeout();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultGatewayTimeout()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsGatewayTimeout
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnGatewayTimeout(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 504 GatewayTimeout and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryGatewayTimeout(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = GatewayTimeout();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)504);
                 }
 
                 return result != null;
@@ -8978,6 +10473,562 @@ namespace DocSpring.Client.Api
                 return result != null;
             }
 
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 504 GatewayTimeout
+            /// </summary>
+            /// <returns></returns>
+            public bool IsGatewayTimeout => 504 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 504 GatewayTimeout
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse GatewayTimeout()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnGatewayTimeout(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultGatewayTimeout();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultGatewayTimeout()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsGatewayTimeout
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnGatewayTimeout(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 504 GatewayTimeout and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryGatewayTimeout(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = GatewayTimeout();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)504);
+                }
+
+                return result != null;
+            }
+
+            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
+            {
+                bool suppressDefaultLog = false;
+                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
+                if (!suppressDefaultLog)
+                    Logger.LogError(RestLogEvents.ApiDeserializationFailed, exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+            }
+
+            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
+        }
+
+        partial void FormatCreateTemplatePreview(ref string templateId, CreateTemplatePreviewRequest body, ref Option<string> version);
+
+        /// <summary>
+        /// Validates the request parameters
+        /// </summary>
+        /// <param name="templateId"></param>
+        /// <param name="body"></param>
+        /// <param name="version"></param>
+        /// <returns></returns>
+        private void ValidateCreateTemplatePreview(string templateId, CreateTemplatePreviewRequest body, Option<string> version)
+        {
+            if (templateId == null)
+                throw new ArgumentNullException(nameof(templateId));
+
+            if (body == null)
+                throw new ArgumentNullException(nameof(body));
+
+            if (version.IsSet && version.Value == null)
+                throw new ArgumentNullException(nameof(version));
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="body"></param>
+        /// <param name="version"></param>
+        private void AfterCreateTemplatePreviewDefaultImplementation(ICreateTemplatePreviewApiResponse apiResponseLocalVar, string templateId, CreateTemplatePreviewRequest body, Option<string> version)
+        {
+            bool suppressDefaultLog = false;
+            AfterCreateTemplatePreview(ref suppressDefaultLog, apiResponseLocalVar, templateId, body, version);
+            if (!suppressDefaultLog)
+                Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="suppressDefaultLog"></param>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="body"></param>
+        /// <param name="version"></param>
+        partial void AfterCreateTemplatePreview(ref bool suppressDefaultLog, ICreateTemplatePreviewApiResponse apiResponseLocalVar, string templateId, CreateTemplatePreviewRequest body, Option<string> version);
+
+        /// <summary>
+        /// Logs exceptions that occur while retrieving the server response
+        /// </summary>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="body"></param>
+        /// <param name="version"></param>
+        private void OnErrorCreateTemplatePreviewDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, CreateTemplatePreviewRequest body, Option<string> version)
+        {
+            bool suppressDefaultLogLocalVar = false;
+            OnErrorCreateTemplatePreview(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, templateId, body, version);
+            if (!suppressDefaultLogLocalVar)
+                Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
+        }
+
+        /// <summary>
+        /// A partial method that gives developers a way to provide customized exception handling
+        /// </summary>
+        /// <param name="suppressDefaultLogLocalVar"></param>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="body"></param>
+        /// <param name="version"></param>
+        partial void OnErrorCreateTemplatePreview(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, CreateTemplatePreviewRequest body, Option<string> version);
+
+        /// <summary>
+        /// Preview a template with data Makes PNG images of a template&#39;s pages filled in with the data you send (not a PDF), so you can check how an HTML or PDF template prints with your data before you publish a version or send live data. It renders the template&#39;s draft, or the published &#x60;version&#x60; you ask for. A preview makes no submission and uses no credits, and its pages are watermarked like a test submission&#39;s PDF. It&#39;s &#x60;pending&#x60; while it renders: get it with GET /templates/{template_id}/previews/{preview_id} until it&#39;s &#x60;processed&#x60;, with an image of each page, or &#x60;error&#x60;. 
+        /// </summary>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="body">The data to render the template with.</param>
+        /// <param name="version">A published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;draft&#x60;. (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="ICreateTemplatePreviewApiResponse"/>&gt;</returns>
+        public async Task<ICreateTemplatePreviewApiResponse> CreateTemplatePreviewOrDefaultAsync(string templateId, CreateTemplatePreviewRequest body, Option<string> version = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await CreateTemplatePreviewAsync(templateId, body, version, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Preview a template with data Makes PNG images of a template&#39;s pages filled in with the data you send (not a PDF), so you can check how an HTML or PDF template prints with your data before you publish a version or send live data. It renders the template&#39;s draft, or the published &#x60;version&#x60; you ask for. A preview makes no submission and uses no credits, and its pages are watermarked like a test submission&#39;s PDF. It&#39;s &#x60;pending&#x60; while it renders: get it with GET /templates/{template_id}/previews/{preview_id} until it&#39;s &#x60;processed&#x60;, with an image of each page, or &#x60;error&#x60;. 
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="body">The data to render the template with.</param>
+        /// <param name="version">A published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;draft&#x60;. (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="ICreateTemplatePreviewApiResponse"/>&gt;</returns>
+        public async Task<ICreateTemplatePreviewApiResponse> CreateTemplatePreviewAsync(string templateId, CreateTemplatePreviewRequest body, Option<string> version = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            UriBuilder uriBuilderLocalVar = new UriBuilder();
+
+            try
+            {
+                ValidateCreateTemplatePreview(templateId, body, version);
+
+                FormatCreateTemplatePreview(ref templateId, body, ref version);
+
+                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
+                {
+                    uriBuilderLocalVar.Host = HttpClient.BaseAddress.Host;
+                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
+                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
+                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
+                        ? "/templates/{template_id}/previews"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/templates/{template_id}/previews");
+                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Btemplate_id%7D", Uri.EscapeDataString(templateId.ToString()));
+
+                    System.Collections.Specialized.NameValueCollection parseQueryStringLocalVar = System.Web.HttpUtility.ParseQueryString(string.Empty);
+
+                    if (version.IsSet)
+                        parseQueryStringLocalVar["version"] = ClientUtils.ParameterToString(version.Value);
+
+                    uriBuilderLocalVar.Query = parseQueryStringLocalVar.ToString();
+
+                    httpRequestMessageLocalVar.Content = (body as object) is DocSpring.Client.Client.FileParameter fileParameterLocalVar
+                        ? httpRequestMessageLocalVar.Content = new StreamContent(fileParameterLocalVar.Content)
+                        : httpRequestMessageLocalVar.Content = new StringContent(JsonSerializer.Serialize(body, _jsonSerializerOptions));
+
+                    List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
+                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
+
+                    BasicToken basicTokenLocalVar1 = (BasicToken) await BasicTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
+
+                    tokenBaseLocalVars.Add(basicTokenLocalVar1);
+
+                    basicTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    string[] contentTypes = new string[] {
+                        "application/json"
+                    };
+
+                    string contentTypeLocalVar = ClientUtils.SelectHeaderContentType(contentTypes);
+
+                    if (contentTypeLocalVar != null && httpRequestMessageLocalVar.Content != null)
+                        httpRequestMessageLocalVar.Content.Headers.ContentType = new MediaTypeHeaderValue(contentTypeLocalVar);
+
+                    string[] acceptLocalVars = new string[] {
+                        "application/json"
+                    };
+
+                    IEnumerable<MediaTypeWithQualityHeaderValue> acceptHeaderValuesLocalVar = ClientUtils.SelectHeaderAcceptArray(acceptLocalVars);
+
+                    foreach (var acceptLocalVar in acceptHeaderValuesLocalVar)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(acceptLocalVar);
+                    httpRequestMessageLocalVar.Method = new HttpMethod("POST");
+
+                    DateTime requestedAtLocalVar = DateTime.UtcNow;
+
+                    if (ValidateRequests)
+                        await DocSpring.Client.Client.RequestValidator.ValidateRequestAsync("createTemplatePreview", httpRequestMessageLocalVar).ConfigureAwait(false);
+
+                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
+                    {
+                        CreateTemplatePreviewApiResponse apiResponseLocalVar;
+
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                apiResponseLocalVar = new CreateTemplatePreviewApiResponse(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/templates/{template_id}/previews", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
+
+                        AfterCreateTemplatePreviewDefaultImplementation(apiResponseLocalVar, templateId, body, version);
+
+                        Events.ExecuteOnCreateTemplatePreview(apiResponseLocalVar);
+
+                        if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
+                            foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
+                                tokenBaseLocalVar.BeginRateLimit();
+
+                        return apiResponseLocalVar;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                OnErrorCreateTemplatePreviewDefaultImplementation(e, "/templates/{template_id}/previews", uriBuilderLocalVar.Path, templateId, body, version);
+                Events.ExecuteOnErrorCreateTemplatePreview(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="CreateTemplatePreviewApiResponse"/>
+        /// </summary>
+        public partial class CreateTemplatePreviewApiResponse : DocSpring.Client.Client.ApiResponse, ICreateTemplatePreviewApiResponse
+        {
+            /// <summary>
+            /// The logger
+            /// </summary>
+            public ILogger<Client> Logger { get; }
+
+            /// <summary>
+            /// The <see cref="CreateTemplatePreviewApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="rawContent"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public CreateTemplatePreviewApiResponse(ILogger<Client> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="CreateTemplatePreviewApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public CreateTemplatePreviewApiResponse(ILogger<Client> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 201 Created
+            /// </summary>
+            /// <returns></returns>
+            public bool IsCreated => 201 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 201 Created
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.TemplatePreview Created()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.TemplatePreview result = default;
+                OnCreated(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultCreated();
+                return result;
+            }
+
+            private DocSpring.Client.Model.TemplatePreview DefaultCreated()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsCreated
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.TemplatePreview>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnCreated(ref bool suppressDefault, ref DocSpring.Client.Model.TemplatePreview result);
+
+            /// <summary>
+            /// Returns true if the response is 201 Created and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryCreated(out DocSpring.Client.Model.TemplatePreview result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Created();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)201);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 409 Conflict
+            /// </summary>
+            /// <returns></returns>
+            public bool IsConflict => 409 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 409 Conflict
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse Conflict()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnConflict(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultConflict();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultConflict()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsConflict
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnConflict(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 409 Conflict and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryConflict(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Conflict();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)409);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public bool IsUnprocessableContent => 422 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 422 UnprocessableContent
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse UnprocessableContent()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnUnprocessableContent(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultUnprocessableContent();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultUnprocessableContent()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsUnprocessableContent
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnUnprocessableContent(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 422 UnprocessableContent and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryUnprocessableContent(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = UnprocessableContent();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)422);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
             private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
             {
                 bool suppressDefaultLog = false;
@@ -9351,6 +11402,56 @@ namespace DocSpring.Client.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
                 }
 
                 return result != null;
@@ -9772,6 +11873,56 @@ namespace DocSpring.Client.Api
                 return result != null;
             }
 
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
             private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
             {
                 bool suppressDefaultLog = false;
@@ -10183,6 +12334,56 @@ namespace DocSpring.Client.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
                 }
 
                 return result != null;
@@ -10671,6 +12872,56 @@ namespace DocSpring.Client.Api
                 return result != null;
             }
 
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
             private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
             {
                 bool suppressDefaultLog = false;
@@ -11032,6 +13283,56 @@ namespace DocSpring.Client.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
                 }
 
                 return result != null;
@@ -11453,6 +13754,56 @@ namespace DocSpring.Client.Api
                 return result != null;
             }
 
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
             private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
             {
                 bool suppressDefaultLog = false;
@@ -11864,6 +14215,56 @@ namespace DocSpring.Client.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
                 }
 
                 return result != null;
@@ -12371,6 +14772,106 @@ namespace DocSpring.Client.Api
                 return result != null;
             }
 
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 504 GatewayTimeout
+            /// </summary>
+            /// <returns></returns>
+            public bool IsGatewayTimeout => 504 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 504 GatewayTimeout
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse GatewayTimeout()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnGatewayTimeout(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultGatewayTimeout();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultGatewayTimeout()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsGatewayTimeout
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnGatewayTimeout(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 504 GatewayTimeout and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryGatewayTimeout(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = GatewayTimeout();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)504);
+                }
+
+                return result != null;
+            }
+
             private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
             {
                 bool suppressDefaultLog = false;
@@ -12787,6 +15288,56 @@ namespace DocSpring.Client.Api
                 return result != null;
             }
 
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
             private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
             {
                 bool suppressDefaultLog = false;
@@ -13148,6 +15699,56 @@ namespace DocSpring.Client.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
                 }
 
                 return result != null;
@@ -13519,6 +16120,56 @@ namespace DocSpring.Client.Api
                 return result != null;
             }
 
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
             private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
             {
                 bool suppressDefaultLog = false;
@@ -13885,6 +16536,56 @@ namespace DocSpring.Client.Api
                 return result != null;
             }
 
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
             private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
             {
                 bool suppressDefaultLog = false;
@@ -14172,6 +16873,56 @@ namespace DocSpring.Client.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
                 }
 
                 return result != null;
@@ -14543,6 +17294,56 @@ namespace DocSpring.Client.Api
                 return result != null;
             }
 
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
             private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
             {
                 bool suppressDefaultLog = false;
@@ -14904,6 +17705,56 @@ namespace DocSpring.Client.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
                 }
 
                 return result != null;
@@ -15283,6 +18134,56 @@ namespace DocSpring.Client.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
                 }
 
                 return result != null;
@@ -15721,6 +18622,56 @@ namespace DocSpring.Client.Api
                 return result != null;
             }
 
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
             private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
             {
                 bool suppressDefaultLog = false;
@@ -16154,6 +19105,56 @@ namespace DocSpring.Client.Api
                 return result != null;
             }
 
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
             private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
             {
                 bool suppressDefaultLog = false;
@@ -16165,7 +19166,7 @@ namespace DocSpring.Client.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
-        partial void FormatGetTemplateModelCode(ref string templateId, ref ModelCodeLanguage lang, ref Option<string> version);
+        partial void FormatGetTemplateModelCode(ref string templateId, ref ModelCodeLanguage lang, ref Option<string> version, ref Option<bool> justTypes);
 
         /// <summary>
         /// Validates the request parameters
@@ -16189,10 +19190,11 @@ namespace DocSpring.Client.Api
         /// <param name="templateId"></param>
         /// <param name="lang"></param>
         /// <param name="version"></param>
-        private void AfterGetTemplateModelCodeDefaultImplementation(IGetTemplateModelCodeApiResponse apiResponseLocalVar, string templateId, ModelCodeLanguage lang, Option<string> version)
+        /// <param name="justTypes"></param>
+        private void AfterGetTemplateModelCodeDefaultImplementation(IGetTemplateModelCodeApiResponse apiResponseLocalVar, string templateId, ModelCodeLanguage lang, Option<string> version, Option<bool> justTypes)
         {
             bool suppressDefaultLog = false;
-            AfterGetTemplateModelCode(ref suppressDefaultLog, apiResponseLocalVar, templateId, lang, version);
+            AfterGetTemplateModelCode(ref suppressDefaultLog, apiResponseLocalVar, templateId, lang, version, justTypes);
             if (!suppressDefaultLog)
                 Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -16205,7 +19207,8 @@ namespace DocSpring.Client.Api
         /// <param name="templateId"></param>
         /// <param name="lang"></param>
         /// <param name="version"></param>
-        partial void AfterGetTemplateModelCode(ref bool suppressDefaultLog, IGetTemplateModelCodeApiResponse apiResponseLocalVar, string templateId, ModelCodeLanguage lang, Option<string> version);
+        /// <param name="justTypes"></param>
+        partial void AfterGetTemplateModelCode(ref bool suppressDefaultLog, IGetTemplateModelCodeApiResponse apiResponseLocalVar, string templateId, ModelCodeLanguage lang, Option<string> version, Option<bool> justTypes);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -16216,10 +19219,11 @@ namespace DocSpring.Client.Api
         /// <param name="templateId"></param>
         /// <param name="lang"></param>
         /// <param name="version"></param>
-        private void OnErrorGetTemplateModelCodeDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, ModelCodeLanguage lang, Option<string> version)
+        /// <param name="justTypes"></param>
+        private void OnErrorGetTemplateModelCodeDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, ModelCodeLanguage lang, Option<string> version, Option<bool> justTypes)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorGetTemplateModelCode(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, templateId, lang, version);
+            OnErrorGetTemplateModelCode(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, templateId, lang, version, justTypes);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -16234,21 +19238,23 @@ namespace DocSpring.Client.Api
         /// <param name="templateId"></param>
         /// <param name="lang"></param>
         /// <param name="version"></param>
-        partial void OnErrorGetTemplateModelCode(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, ModelCodeLanguage lang, Option<string> version);
+        /// <param name="justTypes"></param>
+        partial void OnErrorGetTemplateModelCode(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, ModelCodeLanguage lang, Option<string> version, Option<bool> justTypes);
 
         /// <summary>
-        /// Generate typed code for a template&#39;s submission data Generates types for a template&#39;s submission data in TypeScript, JavaScript, Ruby, Python, PHP, Java, C#, Elixir or Go, so your app catches mistakes before it calls the API. &#x60;root_type_name&#x60; is the type of the whole &#x60;data&#x60; object. Java returns every class in &#x60;code&#x60;, each under a &#x60;// ClassName.java&#x60; comment. A template with no named fields returns 422. 
+        /// Generate typed code for a template&#39;s submission data Generates types for a template&#39;s submission data in TypeScript, JavaScript, Ruby, Python, PHP, Java, C#, Elixir or Go, so your app catches mistakes before it calls the API. &#x60;root_type_name&#x60; is the type of the whole &#x60;data&#x60; object, and &#x60;just_types&#x3D;true&#x60; leaves out the code that converts JSON to and from the types. Java returns every class in &#x60;code&#x60;, each under a &#x60;// ClassName.java&#x60; comment. A template with no named fields returns 422. 
         /// </summary>
         /// <param name="templateId">The template&#39;s ID.</param>
         /// <param name="lang">The language to generate the code in.</param>
         /// <param name="version">The template version: a published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;latest&#x60; (the draft when no version has been published), the version a submission uses by default. (optional)</param>
+        /// <param name="justTypes">Return only the types (interfaces, classes or structs), without the code that converts JSON to and from them. Default false. JavaScript has no types and PHP no types-only code, so theirs is the same either way. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IGetTemplateModelCodeApiResponse"/>&gt;</returns>
-        public async Task<IGetTemplateModelCodeApiResponse> GetTemplateModelCodeOrDefaultAsync(string templateId, ModelCodeLanguage lang, Option<string> version = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<IGetTemplateModelCodeApiResponse> GetTemplateModelCodeOrDefaultAsync(string templateId, ModelCodeLanguage lang, Option<string> version = default, Option<bool> justTypes = default, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await GetTemplateModelCodeAsync(templateId, lang, version, cancellationToken).ConfigureAwait(false);
+                return await GetTemplateModelCodeAsync(templateId, lang, version, justTypes, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -16257,15 +19263,16 @@ namespace DocSpring.Client.Api
         }
 
         /// <summary>
-        /// Generate typed code for a template&#39;s submission data Generates types for a template&#39;s submission data in TypeScript, JavaScript, Ruby, Python, PHP, Java, C#, Elixir or Go, so your app catches mistakes before it calls the API. &#x60;root_type_name&#x60; is the type of the whole &#x60;data&#x60; object. Java returns every class in &#x60;code&#x60;, each under a &#x60;// ClassName.java&#x60; comment. A template with no named fields returns 422. 
+        /// Generate typed code for a template&#39;s submission data Generates types for a template&#39;s submission data in TypeScript, JavaScript, Ruby, Python, PHP, Java, C#, Elixir or Go, so your app catches mistakes before it calls the API. &#x60;root_type_name&#x60; is the type of the whole &#x60;data&#x60; object, and &#x60;just_types&#x3D;true&#x60; leaves out the code that converts JSON to and from the types. Java returns every class in &#x60;code&#x60;, each under a &#x60;// ClassName.java&#x60; comment. A template with no named fields returns 422. 
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId">The template&#39;s ID.</param>
         /// <param name="lang">The language to generate the code in.</param>
         /// <param name="version">The template version: a published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;latest&#x60; (the draft when no version has been published), the version a submission uses by default. (optional)</param>
+        /// <param name="justTypes">Return only the types (interfaces, classes or structs), without the code that converts JSON to and from them. Default false. JavaScript has no types and PHP no types-only code, so theirs is the same either way. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IGetTemplateModelCodeApiResponse"/>&gt;</returns>
-        public async Task<IGetTemplateModelCodeApiResponse> GetTemplateModelCodeAsync(string templateId, ModelCodeLanguage lang, Option<string> version = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<IGetTemplateModelCodeApiResponse> GetTemplateModelCodeAsync(string templateId, ModelCodeLanguage lang, Option<string> version = default, Option<bool> justTypes = default, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
@@ -16273,7 +19280,7 @@ namespace DocSpring.Client.Api
             {
                 ValidateGetTemplateModelCode(templateId, version);
 
-                FormatGetTemplateModelCode(ref templateId, ref lang, ref version);
+                FormatGetTemplateModelCode(ref templateId, ref lang, ref version, ref justTypes);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -16291,6 +19298,9 @@ namespace DocSpring.Client.Api
 
                     if (version.IsSet)
                         parseQueryStringLocalVar["version"] = ClientUtils.ParameterToString(version.Value);
+
+                    if (justTypes.IsSet)
+                        parseQueryStringLocalVar["just_types"] = ClientUtils.ParameterToString(justTypes.Value);
 
                     uriBuilderLocalVar.Query = parseQueryStringLocalVar.ToString();
 
@@ -16331,7 +19341,7 @@ namespace DocSpring.Client.Api
                             }
                         }
 
-                        AfterGetTemplateModelCodeDefaultImplementation(apiResponseLocalVar, templateId, lang, version);
+                        AfterGetTemplateModelCodeDefaultImplementation(apiResponseLocalVar, templateId, lang, version, justTypes);
 
                         Events.ExecuteOnGetTemplateModelCode(apiResponseLocalVar);
 
@@ -16345,7 +19355,7 @@ namespace DocSpring.Client.Api
             }
             catch(Exception e)
             {
-                OnErrorGetTemplateModelCodeDefaultImplementation(e, "/templates/{template_id}/model_code", uriBuilderLocalVar.Path, templateId, lang, version);
+                OnErrorGetTemplateModelCodeDefaultImplementation(e, "/templates/{template_id}/model_code", uriBuilderLocalVar.Path, templateId, lang, version, justTypes);
                 Events.ExecuteOnErrorGetTemplateModelCode(e);
                 throw;
             }
@@ -16590,6 +19600,56 @@ namespace DocSpring.Client.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
                 }
 
                 return result != null;
@@ -17028,6 +20088,433 @@ namespace DocSpring.Client.Api
                 return result != null;
             }
 
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
+            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
+            {
+                bool suppressDefaultLog = false;
+                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
+                if (!suppressDefaultLog)
+                    Logger.LogError(RestLogEvents.ApiDeserializationFailed, exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+            }
+
+            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
+        }
+
+        partial void FormatGetTemplatePreview(ref string templateId, ref string previewId);
+
+        /// <summary>
+        /// Validates the request parameters
+        /// </summary>
+        /// <param name="templateId"></param>
+        /// <param name="previewId"></param>
+        /// <returns></returns>
+        private void ValidateGetTemplatePreview(string templateId, string previewId)
+        {
+            if (templateId == null)
+                throw new ArgumentNullException(nameof(templateId));
+
+            if (previewId == null)
+                throw new ArgumentNullException(nameof(previewId));
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="previewId"></param>
+        private void AfterGetTemplatePreviewDefaultImplementation(IGetTemplatePreviewApiResponse apiResponseLocalVar, string templateId, string previewId)
+        {
+            bool suppressDefaultLog = false;
+            AfterGetTemplatePreview(ref suppressDefaultLog, apiResponseLocalVar, templateId, previewId);
+            if (!suppressDefaultLog)
+                Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="suppressDefaultLog"></param>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="previewId"></param>
+        partial void AfterGetTemplatePreview(ref bool suppressDefaultLog, IGetTemplatePreviewApiResponse apiResponseLocalVar, string templateId, string previewId);
+
+        /// <summary>
+        /// Logs exceptions that occur while retrieving the server response
+        /// </summary>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="previewId"></param>
+        private void OnErrorGetTemplatePreviewDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, string previewId)
+        {
+            bool suppressDefaultLogLocalVar = false;
+            OnErrorGetTemplatePreview(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, templateId, previewId);
+            if (!suppressDefaultLogLocalVar)
+                Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
+        }
+
+        /// <summary>
+        /// A partial method that gives developers a way to provide customized exception handling
+        /// </summary>
+        /// <param name="suppressDefaultLogLocalVar"></param>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="templateId"></param>
+        /// <param name="previewId"></param>
+        partial void OnErrorGetTemplatePreview(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, string previewId);
+
+        /// <summary>
+        /// Get a template preview Returns a preview made with POST /templates/{template_id}/previews. Once it&#39;s &#x60;processed&#x60;, &#x60;pages&#x60; has a PNG image of each page with a temporary link to download it: a preview has no PDF. Previews are deleted an hour after they&#39;re created. 
+        /// </summary>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="previewId">The preview&#39;s ID.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetTemplatePreviewApiResponse"/>&gt;</returns>
+        public async Task<IGetTemplatePreviewApiResponse> GetTemplatePreviewOrDefaultAsync(string templateId, string previewId, System.Threading.CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await GetTemplatePreviewAsync(templateId, previewId, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Get a template preview Returns a preview made with POST /templates/{template_id}/previews. Once it&#39;s &#x60;processed&#x60;, &#x60;pages&#x60; has a PNG image of each page with a temporary link to download it: a preview has no PDF. Previews are deleted an hour after they&#39;re created. 
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="templateId">The template&#39;s ID.</param>
+        /// <param name="previewId">The preview&#39;s ID.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetTemplatePreviewApiResponse"/>&gt;</returns>
+        public async Task<IGetTemplatePreviewApiResponse> GetTemplatePreviewAsync(string templateId, string previewId, System.Threading.CancellationToken cancellationToken = default)
+        {
+            UriBuilder uriBuilderLocalVar = new UriBuilder();
+
+            try
+            {
+                ValidateGetTemplatePreview(templateId, previewId);
+
+                FormatGetTemplatePreview(ref templateId, ref previewId);
+
+                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
+                {
+                    uriBuilderLocalVar.Host = HttpClient.BaseAddress.Host;
+                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
+                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
+                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
+                        ? "/templates/{template_id}/previews/{preview_id}"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/templates/{template_id}/previews/{preview_id}");
+                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Btemplate_id%7D", Uri.EscapeDataString(templateId.ToString()));
+                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bpreview_id%7D", Uri.EscapeDataString(previewId.ToString()));
+
+                    List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
+                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
+
+                    BasicToken basicTokenLocalVar1 = (BasicToken) await BasicTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
+
+                    tokenBaseLocalVars.Add(basicTokenLocalVar1);
+
+                    basicTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    string[] acceptLocalVars = new string[] {
+                        "application/json"
+                    };
+
+                    IEnumerable<MediaTypeWithQualityHeaderValue> acceptHeaderValuesLocalVar = ClientUtils.SelectHeaderAcceptArray(acceptLocalVars);
+
+                    foreach (var acceptLocalVar in acceptHeaderValuesLocalVar)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(acceptLocalVar);
+                    httpRequestMessageLocalVar.Method = new HttpMethod("GET");
+
+                    DateTime requestedAtLocalVar = DateTime.UtcNow;
+
+                    if (ValidateRequests)
+                        await DocSpring.Client.Client.RequestValidator.ValidateRequestAsync("getTemplatePreview", httpRequestMessageLocalVar).ConfigureAwait(false);
+
+                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
+                    {
+                        GetTemplatePreviewApiResponse apiResponseLocalVar;
+
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                apiResponseLocalVar = new GetTemplatePreviewApiResponse(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/templates/{template_id}/previews/{preview_id}", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
+
+                        AfterGetTemplatePreviewDefaultImplementation(apiResponseLocalVar, templateId, previewId);
+
+                        Events.ExecuteOnGetTemplatePreview(apiResponseLocalVar);
+
+                        if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
+                            foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
+                                tokenBaseLocalVar.BeginRateLimit();
+
+                        return apiResponseLocalVar;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                OnErrorGetTemplatePreviewDefaultImplementation(e, "/templates/{template_id}/previews/{preview_id}", uriBuilderLocalVar.Path, templateId, previewId);
+                Events.ExecuteOnErrorGetTemplatePreview(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="GetTemplatePreviewApiResponse"/>
+        /// </summary>
+        public partial class GetTemplatePreviewApiResponse : DocSpring.Client.Client.ApiResponse, IGetTemplatePreviewApiResponse
+        {
+            /// <summary>
+            /// The logger
+            /// </summary>
+            public ILogger<Client> Logger { get; }
+
+            /// <summary>
+            /// The <see cref="GetTemplatePreviewApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="rawContent"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetTemplatePreviewApiResponse(ILogger<Client> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="GetTemplatePreviewApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public GetTemplatePreviewApiResponse(ILogger<Client> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public bool IsOk => 200 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.TemplatePreview Ok()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.TemplatePreview result = default;
+                OnOk(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultOk();
+                return result;
+            }
+
+            private DocSpring.Client.Model.TemplatePreview DefaultOk()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsOk
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.TemplatePreview>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnOk(ref bool suppressDefault, ref DocSpring.Client.Model.TemplatePreview result);
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryOk(out DocSpring.Client.Model.TemplatePreview result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Ok();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public bool IsNotFound => 404 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse NotFound()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnNotFound(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultNotFound();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultNotFound()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsNotFound
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnNotFound(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryNotFound(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = NotFound();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)404);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
             private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
             {
                 bool suppressDefaultLog = false;
@@ -17411,6 +20898,56 @@ namespace DocSpring.Client.Api
                 return result != null;
             }
 
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
             private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
             {
                 bool suppressDefaultLog = false;
@@ -17772,6 +21309,56 @@ namespace DocSpring.Client.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
                 }
 
                 return result != null;
@@ -18158,6 +21745,56 @@ namespace DocSpring.Client.Api
                 return result != null;
             }
 
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
             private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
             {
                 bool suppressDefaultLog = false;
@@ -18534,6 +22171,56 @@ namespace DocSpring.Client.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
                 }
 
                 return result != null;
@@ -18933,6 +22620,56 @@ namespace DocSpring.Client.Api
                 return result != null;
             }
 
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
             private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
             {
                 bool suppressDefaultLog = false;
@@ -18944,7 +22681,7 @@ namespace DocSpring.Client.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
-        partial void FormatListSubmissions(ref Option<string> templateId, ref Option<bool> test, ref Option<DateTime> createdAfter, ref Option<DateTime> createdBefore, ref Option<bool> includeData, ref Option<int> limit, ref Option<string> cursor);
+        partial void FormatListSubmissions(ref Option<string> templateId, ref Option<bool> test, ref Option<DateTime> createdAfter, ref Option<DateTime> createdBefore, ref Option<bool> includeData, ref Option<int> limit, ref Option<string> cursor, ref Option<SubmissionState> state, ref Option<bool> includeFiles);
 
         /// <summary>
         /// Validates the request parameters
@@ -18972,10 +22709,12 @@ namespace DocSpring.Client.Api
         /// <param name="includeData"></param>
         /// <param name="limit"></param>
         /// <param name="cursor"></param>
-        private void AfterListSubmissionsDefaultImplementation(IListSubmissionsApiResponse apiResponseLocalVar, Option<string> templateId, Option<bool> test, Option<DateTime> createdAfter, Option<DateTime> createdBefore, Option<bool> includeData, Option<int> limit, Option<string> cursor)
+        /// <param name="state"></param>
+        /// <param name="includeFiles"></param>
+        private void AfterListSubmissionsDefaultImplementation(IListSubmissionsApiResponse apiResponseLocalVar, Option<string> templateId, Option<bool> test, Option<DateTime> createdAfter, Option<DateTime> createdBefore, Option<bool> includeData, Option<int> limit, Option<string> cursor, Option<SubmissionState> state, Option<bool> includeFiles)
         {
             bool suppressDefaultLog = false;
-            AfterListSubmissions(ref suppressDefaultLog, apiResponseLocalVar, templateId, test, createdAfter, createdBefore, includeData, limit, cursor);
+            AfterListSubmissions(ref suppressDefaultLog, apiResponseLocalVar, templateId, test, createdAfter, createdBefore, includeData, limit, cursor, state, includeFiles);
             if (!suppressDefaultLog)
                 Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -18992,7 +22731,9 @@ namespace DocSpring.Client.Api
         /// <param name="includeData"></param>
         /// <param name="limit"></param>
         /// <param name="cursor"></param>
-        partial void AfterListSubmissions(ref bool suppressDefaultLog, IListSubmissionsApiResponse apiResponseLocalVar, Option<string> templateId, Option<bool> test, Option<DateTime> createdAfter, Option<DateTime> createdBefore, Option<bool> includeData, Option<int> limit, Option<string> cursor);
+        /// <param name="state"></param>
+        /// <param name="includeFiles"></param>
+        partial void AfterListSubmissions(ref bool suppressDefaultLog, IListSubmissionsApiResponse apiResponseLocalVar, Option<string> templateId, Option<bool> test, Option<DateTime> createdAfter, Option<DateTime> createdBefore, Option<bool> includeData, Option<int> limit, Option<string> cursor, Option<SubmissionState> state, Option<bool> includeFiles);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -19007,10 +22748,12 @@ namespace DocSpring.Client.Api
         /// <param name="includeData"></param>
         /// <param name="limit"></param>
         /// <param name="cursor"></param>
-        private void OnErrorListSubmissionsDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<string> templateId, Option<bool> test, Option<DateTime> createdAfter, Option<DateTime> createdBefore, Option<bool> includeData, Option<int> limit, Option<string> cursor)
+        /// <param name="state"></param>
+        /// <param name="includeFiles"></param>
+        private void OnErrorListSubmissionsDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<string> templateId, Option<bool> test, Option<DateTime> createdAfter, Option<DateTime> createdBefore, Option<bool> includeData, Option<int> limit, Option<string> cursor, Option<SubmissionState> state, Option<bool> includeFiles)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorListSubmissions(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, templateId, test, createdAfter, createdBefore, includeData, limit, cursor);
+            OnErrorListSubmissions(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, templateId, test, createdAfter, createdBefore, includeData, limit, cursor, state, includeFiles);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -19029,10 +22772,12 @@ namespace DocSpring.Client.Api
         /// <param name="includeData"></param>
         /// <param name="limit"></param>
         /// <param name="cursor"></param>
-        partial void OnErrorListSubmissions(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<string> templateId, Option<bool> test, Option<DateTime> createdAfter, Option<DateTime> createdBefore, Option<bool> includeData, Option<int> limit, Option<string> cursor);
+        /// <param name="state"></param>
+        /// <param name="includeFiles"></param>
+        partial void OnErrorListSubmissions(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<string> templateId, Option<bool> test, Option<DateTime> createdAfter, Option<DateTime> createdBefore, Option<bool> includeData, Option<int> limit, Option<string> cursor, Option<SubmissionState> state, Option<bool> includeFiles);
 
         /// <summary>
-        /// List submissions Returns the submissions in your account, newest first, one page at a time. Lists leave out each submission&#39;s &#x60;data&#x60; unless you pass &#x60;include_data&#x3D;true&#x60;. 
+        /// List submissions Returns the submissions in your account, newest first, one page at a time. Each one is a summary: its &#x60;data&#x60; is null unless you pass &#x60;include_data&#x3D;true&#x60;, and its &#x60;files&#x60; are empty unless you pass &#x60;include_files&#x3D;true&#x60;. Get a submission by its ID for its signature requests, uploads and page images. 
         /// </summary>
         /// <param name="templateId">Only list this template&#39;s submissions. (optional)</param>
         /// <param name="test">Only list test submissions (true) or live submissions (false). (optional)</param>
@@ -19041,13 +22786,15 @@ namespace DocSpring.Client.Api
         /// <param name="includeData">Include each submission&#39;s &#x60;data&#x60; (null without it). (optional)</param>
         /// <param name="limit">How many items to return (1-100, default 50). (optional, default to 50)</param>
         /// <param name="cursor">The previous page&#39;s &#x60;next_cursor&#x60;, to get the next page. It&#39;s the ID of that page&#39;s last item, so get the next page before you delete or change the items on this one. (optional)</param>
+        /// <param name="state">Only list submissions in this state (one state per request). The ones that failed are &#x60;invalid_data&#x60;, &#x60;error&#x60;, &#x60;syntax_error&#x60;, &#x60;image_download_failed&#x60; and &#x60;image_processing_failed&#x60;, and one still &#x60;pending&#x60; an hour after it was created is stuck. (optional)</param>
+        /// <param name="includeFiles">Include each submission&#39;s generated files and their download links (&#x60;files&#x60;, empty without it), without the page images&#39; links. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IListSubmissionsApiResponse"/>&gt;</returns>
-        public async Task<IListSubmissionsApiResponse> ListSubmissionsOrDefaultAsync(Option<string> templateId = default, Option<bool> test = default, Option<DateTime> createdAfter = default, Option<DateTime> createdBefore = default, Option<bool> includeData = default, Option<int> limit = default, Option<string> cursor = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<IListSubmissionsApiResponse> ListSubmissionsOrDefaultAsync(Option<string> templateId = default, Option<bool> test = default, Option<DateTime> createdAfter = default, Option<DateTime> createdBefore = default, Option<bool> includeData = default, Option<int> limit = default, Option<string> cursor = default, Option<SubmissionState> state = default, Option<bool> includeFiles = default, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await ListSubmissionsAsync(templateId, test, createdAfter, createdBefore, includeData, limit, cursor, cancellationToken).ConfigureAwait(false);
+                return await ListSubmissionsAsync(templateId, test, createdAfter, createdBefore, includeData, limit, cursor, state, includeFiles, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -19056,7 +22803,7 @@ namespace DocSpring.Client.Api
         }
 
         /// <summary>
-        /// List submissions Returns the submissions in your account, newest first, one page at a time. Lists leave out each submission&#39;s &#x60;data&#x60; unless you pass &#x60;include_data&#x3D;true&#x60;. 
+        /// List submissions Returns the submissions in your account, newest first, one page at a time. Each one is a summary: its &#x60;data&#x60; is null unless you pass &#x60;include_data&#x3D;true&#x60;, and its &#x60;files&#x60; are empty unless you pass &#x60;include_files&#x3D;true&#x60;. Get a submission by its ID for its signature requests, uploads and page images. 
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId">Only list this template&#39;s submissions. (optional)</param>
@@ -19066,9 +22813,11 @@ namespace DocSpring.Client.Api
         /// <param name="includeData">Include each submission&#39;s &#x60;data&#x60; (null without it). (optional)</param>
         /// <param name="limit">How many items to return (1-100, default 50). (optional, default to 50)</param>
         /// <param name="cursor">The previous page&#39;s &#x60;next_cursor&#x60;, to get the next page. It&#39;s the ID of that page&#39;s last item, so get the next page before you delete or change the items on this one. (optional)</param>
+        /// <param name="state">Only list submissions in this state (one state per request). The ones that failed are &#x60;invalid_data&#x60;, &#x60;error&#x60;, &#x60;syntax_error&#x60;, &#x60;image_download_failed&#x60; and &#x60;image_processing_failed&#x60;, and one still &#x60;pending&#x60; an hour after it was created is stuck. (optional)</param>
+        /// <param name="includeFiles">Include each submission&#39;s generated files and their download links (&#x60;files&#x60;, empty without it), without the page images&#39; links. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IListSubmissionsApiResponse"/>&gt;</returns>
-        public async Task<IListSubmissionsApiResponse> ListSubmissionsAsync(Option<string> templateId = default, Option<bool> test = default, Option<DateTime> createdAfter = default, Option<DateTime> createdBefore = default, Option<bool> includeData = default, Option<int> limit = default, Option<string> cursor = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<IListSubmissionsApiResponse> ListSubmissionsAsync(Option<string> templateId = default, Option<bool> test = default, Option<DateTime> createdAfter = default, Option<DateTime> createdBefore = default, Option<bool> includeData = default, Option<int> limit = default, Option<string> cursor = default, Option<SubmissionState> state = default, Option<bool> includeFiles = default, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
@@ -19076,7 +22825,7 @@ namespace DocSpring.Client.Api
             {
                 ValidateListSubmissions(templateId, cursor);
 
-                FormatListSubmissions(ref templateId, ref test, ref createdAfter, ref createdBefore, ref includeData, ref limit, ref cursor);
+                FormatListSubmissions(ref templateId, ref test, ref createdAfter, ref createdBefore, ref includeData, ref limit, ref cursor, ref state, ref includeFiles);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -19109,6 +22858,12 @@ namespace DocSpring.Client.Api
 
                     if (cursor.IsSet)
                         parseQueryStringLocalVar["cursor"] = ClientUtils.ParameterToString(cursor.Value);
+
+                    if (state.IsSet)
+                        parseQueryStringLocalVar["state"] = ClientUtils.ParameterToString(state.Value);
+
+                    if (includeFiles.IsSet)
+                        parseQueryStringLocalVar["include_files"] = ClientUtils.ParameterToString(includeFiles.Value);
 
                     uriBuilderLocalVar.Query = parseQueryStringLocalVar.ToString();
 
@@ -19149,7 +22904,7 @@ namespace DocSpring.Client.Api
                             }
                         }
 
-                        AfterListSubmissionsDefaultImplementation(apiResponseLocalVar, templateId, test, createdAfter, createdBefore, includeData, limit, cursor);
+                        AfterListSubmissionsDefaultImplementation(apiResponseLocalVar, templateId, test, createdAfter, createdBefore, includeData, limit, cursor, state, includeFiles);
 
                         Events.ExecuteOnListSubmissions(apiResponseLocalVar);
 
@@ -19163,7 +22918,7 @@ namespace DocSpring.Client.Api
             }
             catch(Exception e)
             {
-                OnErrorListSubmissionsDefaultImplementation(e, "/submissions", uriBuilderLocalVar.Path, templateId, test, createdAfter, createdBefore, includeData, limit, cursor);
+                OnErrorListSubmissionsDefaultImplementation(e, "/submissions", uriBuilderLocalVar.Path, templateId, test, createdAfter, createdBefore, includeData, limit, cursor, state, includeFiles);
                 Events.ExecuteOnErrorListSubmissions(e);
                 throw;
             }
@@ -19358,6 +23113,56 @@ namespace DocSpring.Client.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
                 }
 
                 return result != null;
@@ -19796,6 +23601,56 @@ namespace DocSpring.Client.Api
                 return result != null;
             }
 
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
             private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
             {
                 bool suppressDefaultLog = false;
@@ -19807,7 +23662,7 @@ namespace DocSpring.Client.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
-        partial void FormatListTemplateSubmissions(ref string templateId, ref Option<bool> test, ref Option<DateTime> createdAfter, ref Option<DateTime> createdBefore, ref Option<bool> includeData, ref Option<int> limit, ref Option<string> cursor);
+        partial void FormatListTemplateSubmissions(ref string templateId, ref Option<bool> test, ref Option<DateTime> createdAfter, ref Option<DateTime> createdBefore, ref Option<bool> includeData, ref Option<int> limit, ref Option<string> cursor, ref Option<SubmissionState> state, ref Option<bool> includeFiles);
 
         /// <summary>
         /// Validates the request parameters
@@ -19835,10 +23690,12 @@ namespace DocSpring.Client.Api
         /// <param name="includeData"></param>
         /// <param name="limit"></param>
         /// <param name="cursor"></param>
-        private void AfterListTemplateSubmissionsDefaultImplementation(IListTemplateSubmissionsApiResponse apiResponseLocalVar, string templateId, Option<bool> test, Option<DateTime> createdAfter, Option<DateTime> createdBefore, Option<bool> includeData, Option<int> limit, Option<string> cursor)
+        /// <param name="state"></param>
+        /// <param name="includeFiles"></param>
+        private void AfterListTemplateSubmissionsDefaultImplementation(IListTemplateSubmissionsApiResponse apiResponseLocalVar, string templateId, Option<bool> test, Option<DateTime> createdAfter, Option<DateTime> createdBefore, Option<bool> includeData, Option<int> limit, Option<string> cursor, Option<SubmissionState> state, Option<bool> includeFiles)
         {
             bool suppressDefaultLog = false;
-            AfterListTemplateSubmissions(ref suppressDefaultLog, apiResponseLocalVar, templateId, test, createdAfter, createdBefore, includeData, limit, cursor);
+            AfterListTemplateSubmissions(ref suppressDefaultLog, apiResponseLocalVar, templateId, test, createdAfter, createdBefore, includeData, limit, cursor, state, includeFiles);
             if (!suppressDefaultLog)
                 Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -19855,7 +23712,9 @@ namespace DocSpring.Client.Api
         /// <param name="includeData"></param>
         /// <param name="limit"></param>
         /// <param name="cursor"></param>
-        partial void AfterListTemplateSubmissions(ref bool suppressDefaultLog, IListTemplateSubmissionsApiResponse apiResponseLocalVar, string templateId, Option<bool> test, Option<DateTime> createdAfter, Option<DateTime> createdBefore, Option<bool> includeData, Option<int> limit, Option<string> cursor);
+        /// <param name="state"></param>
+        /// <param name="includeFiles"></param>
+        partial void AfterListTemplateSubmissions(ref bool suppressDefaultLog, IListTemplateSubmissionsApiResponse apiResponseLocalVar, string templateId, Option<bool> test, Option<DateTime> createdAfter, Option<DateTime> createdBefore, Option<bool> includeData, Option<int> limit, Option<string> cursor, Option<SubmissionState> state, Option<bool> includeFiles);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -19870,10 +23729,12 @@ namespace DocSpring.Client.Api
         /// <param name="includeData"></param>
         /// <param name="limit"></param>
         /// <param name="cursor"></param>
-        private void OnErrorListTemplateSubmissionsDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, Option<bool> test, Option<DateTime> createdAfter, Option<DateTime> createdBefore, Option<bool> includeData, Option<int> limit, Option<string> cursor)
+        /// <param name="state"></param>
+        /// <param name="includeFiles"></param>
+        private void OnErrorListTemplateSubmissionsDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, Option<bool> test, Option<DateTime> createdAfter, Option<DateTime> createdBefore, Option<bool> includeData, Option<int> limit, Option<string> cursor, Option<SubmissionState> state, Option<bool> includeFiles)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorListTemplateSubmissions(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, templateId, test, createdAfter, createdBefore, includeData, limit, cursor);
+            OnErrorListTemplateSubmissions(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, templateId, test, createdAfter, createdBefore, includeData, limit, cursor, state, includeFiles);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -19892,7 +23753,9 @@ namespace DocSpring.Client.Api
         /// <param name="includeData"></param>
         /// <param name="limit"></param>
         /// <param name="cursor"></param>
-        partial void OnErrorListTemplateSubmissions(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, Option<bool> test, Option<DateTime> createdAfter, Option<DateTime> createdBefore, Option<bool> includeData, Option<int> limit, Option<string> cursor);
+        /// <param name="state"></param>
+        /// <param name="includeFiles"></param>
+        partial void OnErrorListTemplateSubmissions(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, Option<bool> test, Option<DateTime> createdAfter, Option<DateTime> createdBefore, Option<bool> includeData, Option<int> limit, Option<string> cursor, Option<SubmissionState> state, Option<bool> includeFiles);
 
         /// <summary>
         /// List a template&#39;s submissions Returns a template&#39;s submissions (from every version of the template), newest first.
@@ -19904,13 +23767,15 @@ namespace DocSpring.Client.Api
         /// <param name="includeData">Include each submission&#39;s &#x60;data&#x60; (null without it). (optional)</param>
         /// <param name="limit">How many items to return (1-100, default 50). (optional, default to 50)</param>
         /// <param name="cursor">The previous page&#39;s &#x60;next_cursor&#x60;, to get the next page. It&#39;s the ID of that page&#39;s last item, so get the next page before you delete or change the items on this one. (optional)</param>
+        /// <param name="state">Only list submissions in this state (one state per request). The ones that failed are &#x60;invalid_data&#x60;, &#x60;error&#x60;, &#x60;syntax_error&#x60;, &#x60;image_download_failed&#x60; and &#x60;image_processing_failed&#x60;, and one still &#x60;pending&#x60; an hour after it was created is stuck. (optional)</param>
+        /// <param name="includeFiles">Include each submission&#39;s generated files and their download links (&#x60;files&#x60;, empty without it), without the page images&#39; links. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IListTemplateSubmissionsApiResponse"/>&gt;</returns>
-        public async Task<IListTemplateSubmissionsApiResponse> ListTemplateSubmissionsOrDefaultAsync(string templateId, Option<bool> test = default, Option<DateTime> createdAfter = default, Option<DateTime> createdBefore = default, Option<bool> includeData = default, Option<int> limit = default, Option<string> cursor = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<IListTemplateSubmissionsApiResponse> ListTemplateSubmissionsOrDefaultAsync(string templateId, Option<bool> test = default, Option<DateTime> createdAfter = default, Option<DateTime> createdBefore = default, Option<bool> includeData = default, Option<int> limit = default, Option<string> cursor = default, Option<SubmissionState> state = default, Option<bool> includeFiles = default, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await ListTemplateSubmissionsAsync(templateId, test, createdAfter, createdBefore, includeData, limit, cursor, cancellationToken).ConfigureAwait(false);
+                return await ListTemplateSubmissionsAsync(templateId, test, createdAfter, createdBefore, includeData, limit, cursor, state, includeFiles, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -19929,9 +23794,11 @@ namespace DocSpring.Client.Api
         /// <param name="includeData">Include each submission&#39;s &#x60;data&#x60; (null without it). (optional)</param>
         /// <param name="limit">How many items to return (1-100, default 50). (optional, default to 50)</param>
         /// <param name="cursor">The previous page&#39;s &#x60;next_cursor&#x60;, to get the next page. It&#39;s the ID of that page&#39;s last item, so get the next page before you delete or change the items on this one. (optional)</param>
+        /// <param name="state">Only list submissions in this state (one state per request). The ones that failed are &#x60;invalid_data&#x60;, &#x60;error&#x60;, &#x60;syntax_error&#x60;, &#x60;image_download_failed&#x60; and &#x60;image_processing_failed&#x60;, and one still &#x60;pending&#x60; an hour after it was created is stuck. (optional)</param>
+        /// <param name="includeFiles">Include each submission&#39;s generated files and their download links (&#x60;files&#x60;, empty without it), without the page images&#39; links. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IListTemplateSubmissionsApiResponse"/>&gt;</returns>
-        public async Task<IListTemplateSubmissionsApiResponse> ListTemplateSubmissionsAsync(string templateId, Option<bool> test = default, Option<DateTime> createdAfter = default, Option<DateTime> createdBefore = default, Option<bool> includeData = default, Option<int> limit = default, Option<string> cursor = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<IListTemplateSubmissionsApiResponse> ListTemplateSubmissionsAsync(string templateId, Option<bool> test = default, Option<DateTime> createdAfter = default, Option<DateTime> createdBefore = default, Option<bool> includeData = default, Option<int> limit = default, Option<string> cursor = default, Option<SubmissionState> state = default, Option<bool> includeFiles = default, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
@@ -19939,7 +23806,7 @@ namespace DocSpring.Client.Api
             {
                 ValidateListTemplateSubmissions(templateId, cursor);
 
-                FormatListTemplateSubmissions(ref templateId, ref test, ref createdAfter, ref createdBefore, ref includeData, ref limit, ref cursor);
+                FormatListTemplateSubmissions(ref templateId, ref test, ref createdAfter, ref createdBefore, ref includeData, ref limit, ref cursor, ref state, ref includeFiles);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -19970,6 +23837,12 @@ namespace DocSpring.Client.Api
 
                     if (cursor.IsSet)
                         parseQueryStringLocalVar["cursor"] = ClientUtils.ParameterToString(cursor.Value);
+
+                    if (state.IsSet)
+                        parseQueryStringLocalVar["state"] = ClientUtils.ParameterToString(state.Value);
+
+                    if (includeFiles.IsSet)
+                        parseQueryStringLocalVar["include_files"] = ClientUtils.ParameterToString(includeFiles.Value);
 
                     uriBuilderLocalVar.Query = parseQueryStringLocalVar.ToString();
 
@@ -20010,7 +23883,7 @@ namespace DocSpring.Client.Api
                             }
                         }
 
-                        AfterListTemplateSubmissionsDefaultImplementation(apiResponseLocalVar, templateId, test, createdAfter, createdBefore, includeData, limit, cursor);
+                        AfterListTemplateSubmissionsDefaultImplementation(apiResponseLocalVar, templateId, test, createdAfter, createdBefore, includeData, limit, cursor, state, includeFiles);
 
                         Events.ExecuteOnListTemplateSubmissions(apiResponseLocalVar);
 
@@ -20024,7 +23897,7 @@ namespace DocSpring.Client.Api
             }
             catch(Exception e)
             {
-                OnErrorListTemplateSubmissionsDefaultImplementation(e, "/templates/{template_id}/submissions", uriBuilderLocalVar.Path, templateId, test, createdAfter, createdBefore, includeData, limit, cursor);
+                OnErrorListTemplateSubmissionsDefaultImplementation(e, "/templates/{template_id}/submissions", uriBuilderLocalVar.Path, templateId, test, createdAfter, createdBefore, includeData, limit, cursor, state, includeFiles);
                 Events.ExecuteOnErrorListTemplateSubmissions(e);
                 throw;
             }
@@ -20274,6 +24147,56 @@ namespace DocSpring.Client.Api
                 return result != null;
             }
 
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
             private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
             {
                 bool suppressDefaultLog = false;
@@ -20365,7 +24288,7 @@ namespace DocSpring.Client.Api
         partial void OnErrorListTemplates(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<string> query, Option<string> parentFolderId, Option<int> limit, Option<string> cursor);
 
         /// <summary>
-        /// List templates Returns the templates in your account (their drafts), newest first, one page at a time. Get a template by its ID for its HTML, defaults and published versions. 
+        /// List templates Returns the templates in your account (their drafts), newest first, one page at a time. Each one is a summary: get a template by its ID for its settings, its PDF in full, its HTML, defaults and published versions. 
         /// </summary>
         /// <param name="query">Only list templates whose name contains this text (ignoring case). (optional)</param>
         /// <param name="parentFolderId">Only list the templates in this folder (not in its subfolders). (optional)</param>
@@ -20386,7 +24309,7 @@ namespace DocSpring.Client.Api
         }
 
         /// <summary>
-        /// List templates Returns the templates in your account (their drafts), newest first, one page at a time. Get a template by its ID for its HTML, defaults and published versions. 
+        /// List templates Returns the templates in your account (their drafts), newest first, one page at a time. Each one is a summary: get a template by its ID for its settings, its PDF in full, its HTML, defaults and published versions. 
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="query">Only list templates whose name contains this text (ignoring case). (optional)</param>
@@ -20676,6 +24599,56 @@ namespace DocSpring.Client.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
                 }
 
                 return result != null;
@@ -21114,6 +25087,56 @@ namespace DocSpring.Client.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
                 }
 
                 return result != null;
@@ -21558,6 +25581,56 @@ namespace DocSpring.Client.Api
                 return result != null;
             }
 
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
             private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
             {
                 bool suppressDefaultLog = false;
@@ -21992,6 +26065,56 @@ namespace DocSpring.Client.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
                 }
 
                 return result != null;
@@ -22486,6 +26609,56 @@ namespace DocSpring.Client.Api
                 return result != null;
             }
 
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
             private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
             {
                 bool suppressDefaultLog = false;
@@ -22920,6 +27093,56 @@ namespace DocSpring.Client.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
                 }
 
                 return result != null;
@@ -23364,6 +27587,56 @@ namespace DocSpring.Client.Api
                 return result != null;
             }
 
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
             private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
             {
                 bool suppressDefaultLog = false;
@@ -23798,6 +28071,56 @@ namespace DocSpring.Client.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
                 }
 
                 return result != null;
@@ -24292,6 +28615,56 @@ namespace DocSpring.Client.Api
                 return result != null;
             }
 
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
             private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
             {
                 bool suppressDefaultLog = false;
@@ -24579,6 +28952,56 @@ namespace DocSpring.Client.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
                 }
 
                 return result != null;
@@ -25073,6 +29496,56 @@ namespace DocSpring.Client.Api
                 return result != null;
             }
 
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
             private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
             {
                 bool suppressDefaultLog = false;
@@ -25557,6 +30030,56 @@ namespace DocSpring.Client.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
                 }
 
                 return result != null;
@@ -26064,6 +30587,106 @@ namespace DocSpring.Client.Api
                 return result != null;
             }
 
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 504 GatewayTimeout
+            /// </summary>
+            /// <returns></returns>
+            public bool IsGatewayTimeout => 504 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 504 GatewayTimeout
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse GatewayTimeout()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnGatewayTimeout(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultGatewayTimeout();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultGatewayTimeout()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsGatewayTimeout
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnGatewayTimeout(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 504 GatewayTimeout and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryGatewayTimeout(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = GatewayTimeout();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)504);
+                }
+
+                return result != null;
+            }
+
             private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
             {
                 bool suppressDefaultLog = false;
@@ -26503,6 +31126,56 @@ namespace DocSpring.Client.Api
                 return result != null;
             }
 
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
             private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
             {
                 bool suppressDefaultLog = false;
@@ -26937,6 +31610,56 @@ namespace DocSpring.Client.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
                 }
 
                 return result != null;
@@ -27473,6 +32196,106 @@ namespace DocSpring.Client.Api
                 return result != null;
             }
 
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 504 GatewayTimeout
+            /// </summary>
+            /// <returns></returns>
+            public bool IsGatewayTimeout => 504 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 504 GatewayTimeout
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse GatewayTimeout()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnGatewayTimeout(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultGatewayTimeout();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultGatewayTimeout()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsGatewayTimeout
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnGatewayTimeout(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 504 GatewayTimeout and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryGatewayTimeout(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = GatewayTimeout();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)504);
+                }
+
+                return result != null;
+            }
+
             private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
             {
                 bool suppressDefaultLog = false;
@@ -27940,6 +32763,106 @@ namespace DocSpring.Client.Api
                 return result != null;
             }
 
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 504 GatewayTimeout
+            /// </summary>
+            /// <returns></returns>
+            public bool IsGatewayTimeout => 504 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 504 GatewayTimeout
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse GatewayTimeout()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnGatewayTimeout(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultGatewayTimeout();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultGatewayTimeout()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsGatewayTimeout
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnGatewayTimeout(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 504 GatewayTimeout and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryGatewayTimeout(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = GatewayTimeout();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)504);
+                }
+
+                return result != null;
+            }
+
             private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
             {
                 bool suppressDefaultLog = false;
@@ -28391,6 +33314,56 @@ namespace DocSpring.Client.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)401);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public bool IsTooManyRequests => 429 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 429 TooManyRequests
+            /// </summary>
+            /// <returns></returns>
+            public DocSpring.Client.Model.ErrorResponse TooManyRequests()
+            {
+                bool suppressDefault = false;
+                DocSpring.Client.Model.ErrorResponse result = default;
+                OnTooManyRequests(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultTooManyRequests();
+                return result;
+            }
+
+            private DocSpring.Client.Model.ErrorResponse DefaultTooManyRequests()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsTooManyRequests
+                    ? System.Text.Json.JsonSerializer.Deserialize<DocSpring.Client.Model.ErrorResponse>(RawContent, _jsonSerializerOptions)
+                    : default;
+            }
+
+            partial void OnTooManyRequests(ref bool suppressDefault, ref DocSpring.Client.Model.ErrorResponse result);
+
+            /// <summary>
+            /// Returns true if the response is 429 TooManyRequests and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryTooManyRequests(out DocSpring.Client.Model.ErrorResponse result)
+            {
+                result = null;
+
+                try
+                {
+                    result = TooManyRequests();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)429);
                 }
 
                 return result != null;

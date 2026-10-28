@@ -34,7 +34,7 @@ namespace DocSpring.Client.Model
         /// <param name="id">The combined PDF&#39;s ID.</param>
         /// <param name="state">&#x60;pending&#x60; until the PDF has been generated, then &#x60;processed&#x60;. &#x60;insufficient_credits&#x60;: waiting for credits; &#x60;error_message&#x60; says whether the PDF is generated once you add them. &#x60;account_suspended&#x60;: waiting for the account to be reactivated, for up to 30 days. &#x60;error&#x60;: the PDFs couldn&#39;t be merged (see &#x60;error_message&#x60;). Waiting ends in &#x60;error&#x60; if it&#39;s discarded or takes over 30 days.</param>
         /// <param name="sourcePdfs">The PDFs to merge, in order.</param>
-        /// <param name="metadata">Your own data about the combined PDF, such as an ID from your app.</param>
+        /// <param name="metadata">Your own data about the combined PDF, such as an ID from your app. Its &#x60;pdf_filename&#x60; key names the PDF&#39;s file (&#x60;files.pdf.filename&#x60;, and its download): a &#x60;.pdf&#x60; ending is removed, each run of characters other than letters, digits, &#x60;-&#x60;, &#x60;_&#x60; and &#x60;.&#x60; becomes one &#x60;_&#x60;, and the first 128 characters are kept, then &#x60;.pdf&#x60; is added. Without it, the file is named after the combined PDF&#39;s ID (&#x60;com_1234567890abcdef01.pdf&#x60;).</param>
         /// <param name="hasPassword">Whether the PDF needs a password to open (&#x60;password&#x60;).</param>
         /// <param name="deleteCustomFiles">Delete the custom files in &#x60;source_pdfs&#x60; once the combined PDF has been generated (they&#39;re kept if it fails). Other combined PDFs can&#39;t use them after that. A test API token can&#39;t delete custom files.</param>
         /// <param name="files">The generated files, by format. Empty until the PDF has been generated, and once it has expired.</param>
@@ -89,9 +89,9 @@ namespace DocSpring.Client.Model
         public List<CombinedPdfSource> SourcePdfs { get; set; }
 
         /// <summary>
-        /// Your own data about the combined PDF, such as an ID from your app.
+        /// Your own data about the combined PDF, such as an ID from your app. Its &#x60;pdf_filename&#x60; key names the PDF&#39;s file (&#x60;files.pdf.filename&#x60;, and its download): a &#x60;.pdf&#x60; ending is removed, each run of characters other than letters, digits, &#x60;-&#x60;, &#x60;_&#x60; and &#x60;.&#x60; becomes one &#x60;_&#x60;, and the first 128 characters are kept, then &#x60;.pdf&#x60; is added. Without it, the file is named after the combined PDF&#39;s ID (&#x60;com_1234567890abcdef01.pdf&#x60;).
         /// </summary>
-        /// <value>Your own data about the combined PDF, such as an ID from your app.</value>
+        /// <value>Your own data about the combined PDF, such as an ID from your app. Its &#x60;pdf_filename&#x60; key names the PDF&#39;s file (&#x60;files.pdf.filename&#x60;, and its download): a &#x60;.pdf&#x60; ending is removed, each run of characters other than letters, digits, &#x60;-&#x60;, &#x60;_&#x60; and &#x60;.&#x60; becomes one &#x60;_&#x60;, and the first 128 characters are kept, then &#x60;.pdf&#x60; is added. Without it, the file is named after the combined PDF&#39;s ID (&#x60;com_1234567890abcdef01.pdf&#x60;).</value>
         [JsonPropertyName("metadata")]
         public Dictionary<string, Object> Metadata { get; set; }
 

@@ -26,6 +26,7 @@ docs/models/CreateSignatureRequestEventRequest.md
 docs/models/CreateSignatureRequestTokenRequest.md
 docs/models/CreateSubmissionBatchRequest.md
 docs/models/CreateSubmissionRequest.md
+docs/models/CreateTemplatePreviewRequest.md
 docs/models/CreateTemplateRequest.md
 docs/models/CreateWebhookRequest.md
 docs/models/CustomFile.md
@@ -107,6 +108,7 @@ docs/models/SubmissionList.md
 docs/models/SubmissionSource.md
 docs/models/SubmissionSourcePdf.md
 docs/models/SubmissionState.md
+docs/models/SubmissionSummary.md
 docs/models/SubmissionValidation.md
 docs/models/Template.md
 docs/models/TemplateActor.md
@@ -117,6 +119,7 @@ docs/models/TemplateDiff.md
 docs/models/TemplateDiffSummary.md
 docs/models/TemplateDocument.md
 docs/models/TemplateDocumentState.md
+docs/models/TemplateDocumentSummary.md
 docs/models/TemplateFieldChange.md
 docs/models/TemplateFieldChanges.md
 docs/models/TemplateFieldDependency.md
@@ -137,6 +140,8 @@ docs/models/TemplatePageFieldsStatus.md
 docs/models/TemplatePageImageStatus.md
 docs/models/TemplatePageImages.md
 docs/models/TemplatePageProcessingStatus.md
+docs/models/TemplatePreview.md
+docs/models/TemplatePreviewState.md
 docs/models/TemplateSourcePdf.md
 docs/models/TemplateSummary.md
 docs/models/TemplateSummaryList.md
@@ -188,6 +193,7 @@ src/DocSpring.Client.Test/Model/CreateSignatureRequestEventRequestTests.cs
 src/DocSpring.Client.Test/Model/CreateSignatureRequestTokenRequestTests.cs
 src/DocSpring.Client.Test/Model/CreateSubmissionBatchRequestTests.cs
 src/DocSpring.Client.Test/Model/CreateSubmissionRequestTests.cs
+src/DocSpring.Client.Test/Model/CreateTemplatePreviewRequestTests.cs
 src/DocSpring.Client.Test/Model/CreateTemplateRequestTests.cs
 src/DocSpring.Client.Test/Model/CreateWebhookRequestTests.cs
 src/DocSpring.Client.Test/Model/CustomFileListTests.cs
@@ -268,6 +274,7 @@ src/DocSpring.Client.Test/Model/SubmissionListTests.cs
 src/DocSpring.Client.Test/Model/SubmissionSourcePdfTests.cs
 src/DocSpring.Client.Test/Model/SubmissionSourceTests.cs
 src/DocSpring.Client.Test/Model/SubmissionStateTests.cs
+src/DocSpring.Client.Test/Model/SubmissionSummaryTests.cs
 src/DocSpring.Client.Test/Model/SubmissionTests.cs
 src/DocSpring.Client.Test/Model/SubmissionValidationTests.cs
 src/DocSpring.Client.Test/Model/TemplateActorTests.cs
@@ -277,6 +284,7 @@ src/DocSpring.Client.Test/Model/TemplateDefaultsTests.cs
 src/DocSpring.Client.Test/Model/TemplateDiffSummaryTests.cs
 src/DocSpring.Client.Test/Model/TemplateDiffTests.cs
 src/DocSpring.Client.Test/Model/TemplateDocumentStateTests.cs
+src/DocSpring.Client.Test/Model/TemplateDocumentSummaryTests.cs
 src/DocSpring.Client.Test/Model/TemplateDocumentTests.cs
 src/DocSpring.Client.Test/Model/TemplateFieldChangeTests.cs
 src/DocSpring.Client.Test/Model/TemplateFieldChangesTests.cs
@@ -298,6 +306,8 @@ src/DocSpring.Client.Test/Model/TemplatePageFieldsStatusTests.cs
 src/DocSpring.Client.Test/Model/TemplatePageImageStatusTests.cs
 src/DocSpring.Client.Test/Model/TemplatePageImagesTests.cs
 src/DocSpring.Client.Test/Model/TemplatePageProcessingStatusTests.cs
+src/DocSpring.Client.Test/Model/TemplatePreviewStateTests.cs
+src/DocSpring.Client.Test/Model/TemplatePreviewTests.cs
 src/DocSpring.Client.Test/Model/TemplateSourcePdfTests.cs
 src/DocSpring.Client.Test/Model/TemplateSummaryListTests.cs
 src/DocSpring.Client.Test/Model/TemplateSummaryTests.cs
@@ -370,6 +380,7 @@ src/DocSpring.Client/Model/CreateSignatureRequestEventRequest.cs
 src/DocSpring.Client/Model/CreateSignatureRequestTokenRequest.cs
 src/DocSpring.Client/Model/CreateSubmissionBatchRequest.cs
 src/DocSpring.Client/Model/CreateSubmissionRequest.cs
+src/DocSpring.Client/Model/CreateTemplatePreviewRequest.cs
 src/DocSpring.Client/Model/CreateTemplateRequest.cs
 src/DocSpring.Client/Model/CreateWebhookRequest.cs
 src/DocSpring.Client/Model/CustomFile.cs
@@ -451,6 +462,7 @@ src/DocSpring.Client/Model/SubmissionList.cs
 src/DocSpring.Client/Model/SubmissionSource.cs
 src/DocSpring.Client/Model/SubmissionSourcePdf.cs
 src/DocSpring.Client/Model/SubmissionState.cs
+src/DocSpring.Client/Model/SubmissionSummary.cs
 src/DocSpring.Client/Model/SubmissionValidation.cs
 src/DocSpring.Client/Model/Template.cs
 src/DocSpring.Client/Model/TemplateActor.cs
@@ -461,6 +473,7 @@ src/DocSpring.Client/Model/TemplateDiff.cs
 src/DocSpring.Client/Model/TemplateDiffSummary.cs
 src/DocSpring.Client/Model/TemplateDocument.cs
 src/DocSpring.Client/Model/TemplateDocumentState.cs
+src/DocSpring.Client/Model/TemplateDocumentSummary.cs
 src/DocSpring.Client/Model/TemplateFieldChange.cs
 src/DocSpring.Client/Model/TemplateFieldChanges.cs
 src/DocSpring.Client/Model/TemplateFieldDependency.cs
@@ -481,6 +494,8 @@ src/DocSpring.Client/Model/TemplatePageFieldsStatus.cs
 src/DocSpring.Client/Model/TemplatePageImageStatus.cs
 src/DocSpring.Client/Model/TemplatePageImages.cs
 src/DocSpring.Client/Model/TemplatePageProcessingStatus.cs
+src/DocSpring.Client/Model/TemplatePreview.cs
+src/DocSpring.Client/Model/TemplatePreviewState.cs
 src/DocSpring.Client/Model/TemplateSourcePdf.cs
 src/DocSpring.Client/Model/TemplateSummary.cs
 src/DocSpring.Client/Model/TemplateSummaryList.cs

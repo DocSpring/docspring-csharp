@@ -84,7 +84,8 @@ namespace DocSpring.Client.Test.Api
         {
             CreateCombinedPdfRequest body = default;
             Client.Option<bool> wait = default;
-            var response = await _instance.CreateCombinedPdfAsync(body, wait);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.CreateCombinedPdfAsync(body, wait, idempotencyKey);
             var model = response.Created();
             Assert.IsType<DocSpring.Client.Model.CombinedPdf>(model);
         }
@@ -149,7 +150,8 @@ namespace DocSpring.Client.Test.Api
             CreateSubmissionRequest body = default;
             Client.Option<string> version = default;
             Client.Option<bool> wait = default;
-            var response = await _instance.CreateSubmissionAsync(templateId, body, version, wait);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.CreateSubmissionAsync(templateId, body, version, wait, idempotencyKey);
             var model = response.Created();
             Assert.IsType<DocSpring.Client.Model.Submission>(model);
         }
@@ -162,7 +164,8 @@ namespace DocSpring.Client.Test.Api
         {
             CreateSubmissionBatchRequest body = default;
             Client.Option<bool> wait = default;
-            var response = await _instance.CreateSubmissionBatchAsync(body, wait);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.CreateSubmissionBatchAsync(body, wait, idempotencyKey);
             var model = response.Created();
             Assert.IsType<DocSpring.Client.Model.SubmissionBatch>(model);
         }
@@ -178,6 +181,20 @@ namespace DocSpring.Client.Test.Api
             var response = await _instance.CreateTemplateAsync(body, wait);
             var model = response.Created();
             Assert.IsType<DocSpring.Client.Model.Template>(model);
+        }
+
+        /// <summary>
+        /// Test CreateTemplatePreview
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task CreateTemplatePreviewAsyncTest()
+        {
+            string templateId = default;
+            CreateTemplatePreviewRequest body = default;
+            Client.Option<string> version = default;
+            var response = await _instance.CreateTemplatePreviewAsync(templateId, body, version);
+            var model = response.Created();
+            Assert.IsType<DocSpring.Client.Model.TemplatePreview>(model);
         }
 
         /// <summary>
@@ -410,7 +427,8 @@ namespace DocSpring.Client.Test.Api
             string templateId = default;
             ModelCodeLanguage lang = default;
             Client.Option<string> version = default;
-            var response = await _instance.GetTemplateModelCodeAsync(templateId, lang, version);
+            Client.Option<bool> justTypes = default;
+            var response = await _instance.GetTemplateModelCodeAsync(templateId, lang, version, justTypes);
             var model = response.Ok();
             Assert.IsType<DocSpring.Client.Model.TemplateModelCode>(model);
         }
@@ -426,6 +444,19 @@ namespace DocSpring.Client.Test.Api
             var response = await _instance.GetTemplatePageImagesAsync(templateId, version);
             var model = response.Ok();
             Assert.IsType<DocSpring.Client.Model.TemplatePageImages>(model);
+        }
+
+        /// <summary>
+        /// Test GetTemplatePreview
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task GetTemplatePreviewAsyncTest()
+        {
+            string templateId = default;
+            string previewId = default;
+            var response = await _instance.GetTemplatePreviewAsync(templateId, previewId);
+            var model = response.Ok();
+            Assert.IsType<DocSpring.Client.Model.TemplatePreview>(model);
         }
 
         /// <summary>
@@ -506,7 +537,9 @@ namespace DocSpring.Client.Test.Api
             Client.Option<bool> includeData = default;
             Client.Option<int> limit = default;
             Client.Option<string> cursor = default;
-            var response = await _instance.ListSubmissionsAsync(templateId, test, createdAfter, createdBefore, includeData, limit, cursor);
+            Client.Option<SubmissionState> state = default;
+            Client.Option<bool> includeFiles = default;
+            var response = await _instance.ListSubmissionsAsync(templateId, test, createdAfter, createdBefore, includeData, limit, cursor, state, includeFiles);
             var model = response.Ok();
             Assert.IsType<DocSpring.Client.Model.SubmissionList>(model);
         }
@@ -537,7 +570,9 @@ namespace DocSpring.Client.Test.Api
             Client.Option<bool> includeData = default;
             Client.Option<int> limit = default;
             Client.Option<string> cursor = default;
-            var response = await _instance.ListTemplateSubmissionsAsync(templateId, test, createdAfter, createdBefore, includeData, limit, cursor);
+            Client.Option<SubmissionState> state = default;
+            Client.Option<bool> includeFiles = default;
+            var response = await _instance.ListTemplateSubmissionsAsync(templateId, test, createdAfter, createdBefore, includeData, limit, cursor, state, includeFiles);
             var model = response.Ok();
             Assert.IsType<DocSpring.Client.Model.SubmissionList>(model);
         }

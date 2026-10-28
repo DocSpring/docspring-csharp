@@ -33,15 +33,17 @@ namespace DocSpring.Client.Model
         /// </summary>
         /// <param name="id">The template&#39;s ID.</param>
         /// <param name="templateType">&#x60;pdf&#x60;: fields placed on an uploaded PDF. &#x60;html&#x60;: a PDF rendered from HTML and SCSS. It can&#39;t be changed after the template is created.</param>
-        /// <param name="ready">Whether the template can generate PDFs. HTML templates are always ready. A PDF template is ready once its document has been processed (&#x60;document.state&#x60; is &#x60;processed&#x60;).</param>
+        /// <param name="ready">Whether the template can generate PDFs. HTML templates are always ready. A PDF template is ready once DocSpring has stored its PDF, made an image of each page and finished looking for fields on each page, which can be after &#x60;document.state&#x60; becomes &#x60;processed&#x60;. A PDF template with no PDF (&#x60;document&#x60; is null) isn&#39;t ready.</param>
         /// <param name="path">The path of the folder the template is in, such as &#x60;/Contracts&#x60;. &#x60;/&#x60; for a template at the root.</param>
         /// <param name="locked">A locked template can&#39;t be changed or deleted until it&#39;s unlocked (&#x60;locked&#x60; can always be changed).</param>
+        /// <param name="createdAt">When the template was created.</param>
+        /// <param name="updatedAt">When the template was last updated.</param>
         /// <param name="addSignatureRequestSubmissionIdFooters">Print the submission ID in the footer of each page of PDFs signed through signature requests.</param>
         /// <param name="allowAdditionalProperties">Accept submission data with properties that aren&#39;t fields of the template.</param>
         /// <param name="allowSkippingOptionalFields">Visual forms and signature request forms show the Continue button as soon as the required fields are filled in, without visiting each optional field. The &#x60;allowSkippingOptionalFields&#x60; embed option overrides it.</param>
         /// <param name="defaultFormMode">The hosted form that /templates/{template_id}/form shows when its URL has no &#x60;mode&#x60; parameter: &#x60;web&#x60; (the web form), &#x60;visual&#x60; (the visual form, where fields are filled in on the PDF) or &#x60;dual&#x60; (both, in tabs). HTML templates have no visual form, so &#x60;web&#x60; is the only value they accept.</param>
         /// <param name="editableSubmissions">Generate PDFs whose text and check fields stay fillable (\&quot;Generate Editable PDFs\&quot;). A submission&#39;s &#x60;editable&#x60; overrides it.</param>
-        /// <param name="embedDomains">The sites where the template&#39;s signature requests, forms and embedded template editor can be loaded: a host such as &#x60;app.example.com&#x60;, with an optional leading wildcard (&#x60;*.example.com&#x60;), port (&#x60;localhost:3000&#x60;) or scheme (&#x60;https://app.example.com&#x60;; without one, &#x60;http&#x60; and &#x60;https&#x60; both work). When it&#39;s empty, live signature requests don&#39;t load on any site, and the embedded template editor loads on every site.</param>
+        /// <param name="embedDomains">The sites that can embed the template&#39;s live signature requests and its embedded template editor: a host such as &#x60;app.example.com&#x60;, with an optional leading wildcard (&#x60;*.example.com&#x60;), port (&#x60;localhost:3000&#x60;) or scheme (&#x60;https://app.example.com&#x60;; without one, &#x60;http&#x60; and &#x60;https&#x60; both work). Browsers open a live signature request in a frame only on these sites (and DocSpring&#39;s), so with an empty list it can&#39;t be embedded anywhere; a test signature request can be embedded on any site. The embedded template editor loads only for a page on one of these sites (by its Referer or Origin header), and on any site when the list is empty. Forms embedded on a page (Visual Forms JS and the simple form) aren&#39;t restricted.</param>
         /// <param name="embedEditAllowSettings">Allow the embedded template editor to change sensitive template settings (webhooks, redirect URL, encryption, public access, expiration and so on).</param>
         /// <param name="embedEditAllowVersioning">Allow the embedded template editor to publish, restore, compare and delete published versions.</param>
         /// <param name="embedEditAllowDocumentReplacement">Allow the embedded template editor to replace the template&#39;s PDF.</param>
@@ -55,8 +57,6 @@ namespace DocSpring.Client.Model
         /// <param name="publicSubmissions">Allow anyone with a submission&#39;s ID to download its PDF.</param>
         /// <param name="publicWebForm">Allow anyone to fill in the template&#39;s web form.</param>
         /// <param name="hasSlackWebhookUrl">Whether &#x60;slack_webhook_url&#x60; is set.</param>
-        /// <param name="createdAt">When the template was created.</param>
-        /// <param name="updatedAt">When the template was last updated.</param>
         /// <param name="defaults">defaults</param>
         /// <param name="fieldDependencies">Conditional logic: each rule shows or hides its target fields, or makes them required, depending on the values of other fields.</param>
         /// <param name="fieldGroups">The groups of the template&#39;s fields, with their settings. A field&#39;s name puts it in groups: &#x60;address/city&#x60; is in the group &#x60;address&#x60;, and &#x60;items/0/price&#x60; is in the list &#x60;items&#x60; and its items&#39; group &#x60;items/~&#x60;.</param>
@@ -66,12 +66,12 @@ namespace DocSpring.Client.Model
         /// <param name="description">Shown under the template&#39;s name at the top of its hosted forms, and used as their meta description. Not shown on embedded forms or signature requests.</param>
         /// <param name="document">The PDF of a PDF template. Null for HTML templates, and for a PDF template that has no PDF yet.</param>
         /// <param name="parentFolderId">The ID of the folder the template is in. Null for a template at the root. Setting it moves the template and all of its published versions.</param>
-        /// <param name="varVersion">The published version this is, such as &#x60;1.2.0&#x60;. Null for the draft.</param>
         /// <param name="latestVersion">The template&#39;s latest published version. Null if no version has been published.</param>
         /// <param name="versionPublishedAt">When this version was published. Null for the draft.</param>
+        /// <param name="lastChangedAt">When the draft was last changed.</param>
+        /// <param name="varVersion">The published version this is, such as &#x60;1.2.0&#x60;. Null for the draft.</param>
         /// <param name="aiFieldNamingLanguage">The language AI field setup names fields in: &#x60;auto&#x60; uses the form&#39;s language when it&#39;s written in the Latin alphabet without accents, and English otherwise; &#x60;english&#x60; always uses English; &#x60;form_language&#x60; uses the form&#39;s language and script. New templates take it from your account&#39;s template settings. Null for HTML templates.</param>
         /// <param name="redirectUrl">Where the web form sends people after they submit it.</param>
-        /// <param name="lastChangedAt">When the draft was last changed.</param>
         /// <param name="lastChangedBy">Who last changed the draft: a user in your account, an API token, or someone using the embedded template editor. Null if no change has been recorded.</param>
         /// <param name="predefinedFieldsSampleData">Sample submission data that sets &#x60;predefined_fields&#x60;: each value becomes a predefined field, with a type that fits it (&#x60;string&#x60;, &#x60;number&#x60;, &#x60;boolean&#x60;, &#x60;date&#x60;, &#x60;email&#x60; or &#x60;url&#x60;) and &#x60;required_in_template&#x60; true. Nested objects and arrays become names with &#x60;/&#x60;, such as &#x60;customer/email&#x60;. Without &#x60;predefined_fields&#x60; in the same request, it replaces them; with them, it adds to them and sets the types of the ones it has values for.</param>
         /// <param name="html">The HTML of an HTML template, as a Liquid template. Null for PDF templates.</param>
@@ -79,15 +79,18 @@ namespace DocSpring.Client.Model
         /// <param name="headerHtml">The HTML printed at the top of each page of an HTML template.</param>
         /// <param name="footerHtml">The HTML printed at the bottom of each page of an HTML template.</param>
         /// <param name="htmlEngineOptions">How an HTML template&#39;s PDFs are printed. Null for PDF templates. Setting it replaces the whole object: options left out use their defaults.</param>
+        /// <param name="htmlEscapeData">Whether an HTML template HTML-escapes the values it prints. When true, &#x60;{{ value }}&#x60; prints a value as text, so a &#x60;&lt;&#x60; or &#x60;&amp;&#x60; in it is printed as that character, and &#x60;{{ value | raw }}&#x60; prints a value as HTML. New HTML templates default to true. Templates created before October 2026, or with API v1, default to false, which prints every value as HTML. Null for PDF templates.</param>
         /// <param name="embedEditToken">The token that opens the template in the embedded template editor.</param>
         [JsonConstructor]
-        public Template(string id, TemplateType templateType, bool ready, string path, bool locked, bool addSignatureRequestSubmissionIdFooters, bool allowAdditionalProperties, bool allowSkippingOptionalFields, TemplateFormMode defaultFormMode, bool editableSubmissions, List<string> embedDomains, bool embedEditAllowSettings, bool embedEditAllowVersioning, bool embedEditAllowDocumentReplacement, bool encryptPdfs, bool hasEncryptPdfsPassword, bool expireSubmissions, int expireAfter, ExpirationInterval expirationInterval, bool mergeAuditTrailPdf, bool parseDatesUsingTemplateDateFormat, bool publicSubmissions, bool publicWebForm, bool hasSlackWebhookUrl, DateTime createdAt, DateTime updatedAt, TemplateDefaults defaults, List<TemplateFieldDependency> fieldDependencies, List<FieldGroup> fieldGroups, List<PredefinedField> predefinedFields, List<TemplateVersion> versions, string name = default, string description = default, TemplateDocument document = default, string parentFolderId = default, string varVersion = default, string latestVersion = default, DateTime? versionPublishedAt = default, AiFieldNamingLanguage? aiFieldNamingLanguage = default, string redirectUrl = default, DateTime? lastChangedAt = default, TemplateActor lastChangedBy = default, Dictionary<string, Object> predefinedFieldsSampleData = default, string html = default, string scss = default, string headerHtml = default, string footerHtml = default, HtmlEngineOptions htmlEngineOptions = default, string embedEditToken = default)
+        public Template(string id, TemplateType templateType, bool ready, string path, bool locked, DateTime createdAt, DateTime updatedAt, bool addSignatureRequestSubmissionIdFooters, bool allowAdditionalProperties, bool allowSkippingOptionalFields, TemplateFormMode defaultFormMode, bool editableSubmissions, List<string> embedDomains, bool embedEditAllowSettings, bool embedEditAllowVersioning, bool embedEditAllowDocumentReplacement, bool encryptPdfs, bool hasEncryptPdfsPassword, bool expireSubmissions, int expireAfter, ExpirationInterval expirationInterval, bool mergeAuditTrailPdf, bool parseDatesUsingTemplateDateFormat, bool publicSubmissions, bool publicWebForm, bool hasSlackWebhookUrl, TemplateDefaults defaults, List<TemplateFieldDependency> fieldDependencies, List<FieldGroup> fieldGroups, List<PredefinedField> predefinedFields, List<TemplateVersion> versions, string name = default, string description = default, TemplateDocument document = default, string parentFolderId = default, string latestVersion = default, DateTime? versionPublishedAt = default, DateTime? lastChangedAt = default, string varVersion = default, AiFieldNamingLanguage? aiFieldNamingLanguage = default, string redirectUrl = default, TemplateActor lastChangedBy = default, Dictionary<string, Object> predefinedFieldsSampleData = default, string html = default, string scss = default, string headerHtml = default, string footerHtml = default, HtmlEngineOptions htmlEngineOptions = default, bool? htmlEscapeData = default, string embedEditToken = default)
         {
             Id = id;
             TemplateType = templateType;
             Ready = ready;
             Path = path;
             Locked = locked;
+            CreatedAt = createdAt;
+            UpdatedAt = updatedAt;
             AddSignatureRequestSubmissionIdFooters = addSignatureRequestSubmissionIdFooters;
             AllowAdditionalProperties = allowAdditionalProperties;
             AllowSkippingOptionalFields = allowSkippingOptionalFields;
@@ -107,8 +110,6 @@ namespace DocSpring.Client.Model
             PublicSubmissions = publicSubmissions;
             PublicWebForm = publicWebForm;
             HasSlackWebhookUrl = hasSlackWebhookUrl;
-            CreatedAt = createdAt;
-            UpdatedAt = updatedAt;
             Defaults = defaults;
             FieldDependencies = fieldDependencies;
             FieldGroups = fieldGroups;
@@ -118,12 +119,12 @@ namespace DocSpring.Client.Model
             Description = description;
             Document = document;
             ParentFolderId = parentFolderId;
-            VarVersion = varVersion;
             LatestVersion = latestVersion;
             VersionPublishedAt = versionPublishedAt;
+            LastChangedAt = lastChangedAt;
+            VarVersion = varVersion;
             AiFieldNamingLanguage = aiFieldNamingLanguage;
             RedirectUrl = redirectUrl;
-            LastChangedAt = lastChangedAt;
             LastChangedBy = lastChangedBy;
             PredefinedFieldsSampleData = predefinedFieldsSampleData;
             Html = html;
@@ -131,6 +132,7 @@ namespace DocSpring.Client.Model
             HeaderHtml = headerHtml;
             FooterHtml = footerHtml;
             HtmlEngineOptions = htmlEngineOptions;
+            HtmlEscapeData = htmlEscapeData;
             EmbedEditToken = embedEditToken;
             OnCreated();
         }
@@ -173,9 +175,9 @@ namespace DocSpring.Client.Model
         public string Id { get; set; }
 
         /// <summary>
-        /// Whether the template can generate PDFs. HTML templates are always ready. A PDF template is ready once its document has been processed (&#x60;document.state&#x60; is &#x60;processed&#x60;).
+        /// Whether the template can generate PDFs. HTML templates are always ready. A PDF template is ready once DocSpring has stored its PDF, made an image of each page and finished looking for fields on each page, which can be after &#x60;document.state&#x60; becomes &#x60;processed&#x60;. A PDF template with no PDF (&#x60;document&#x60; is null) isn&#39;t ready.
         /// </summary>
-        /// <value>Whether the template can generate PDFs. HTML templates are always ready. A PDF template is ready once its document has been processed (&#x60;document.state&#x60; is &#x60;processed&#x60;).</value>
+        /// <value>Whether the template can generate PDFs. HTML templates are always ready. A PDF template is ready once DocSpring has stored its PDF, made an image of each page and finished looking for fields on each page, which can be after &#x60;document.state&#x60; becomes &#x60;processed&#x60;. A PDF template with no PDF (&#x60;document&#x60; is null) isn&#39;t ready.</value>
         [JsonPropertyName("ready")]
         public bool Ready { get; set; }
 
@@ -192,6 +194,20 @@ namespace DocSpring.Client.Model
         /// <value>A locked template can&#39;t be changed or deleted until it&#39;s unlocked (&#x60;locked&#x60; can always be changed).</value>
         [JsonPropertyName("locked")]
         public bool Locked { get; set; }
+
+        /// <summary>
+        /// When the template was created.
+        /// </summary>
+        /// <value>When the template was created.</value>
+        [JsonPropertyName("created_at")]
+        public DateTime CreatedAt { get; set; }
+
+        /// <summary>
+        /// When the template was last updated.
+        /// </summary>
+        /// <value>When the template was last updated.</value>
+        [JsonPropertyName("updated_at")]
+        public DateTime UpdatedAt { get; set; }
 
         /// <summary>
         /// Print the submission ID in the footer of each page of PDFs signed through signature requests.
@@ -222,9 +238,9 @@ namespace DocSpring.Client.Model
         public bool EditableSubmissions { get; set; }
 
         /// <summary>
-        /// The sites where the template&#39;s signature requests, forms and embedded template editor can be loaded: a host such as &#x60;app.example.com&#x60;, with an optional leading wildcard (&#x60;*.example.com&#x60;), port (&#x60;localhost:3000&#x60;) or scheme (&#x60;https://app.example.com&#x60;; without one, &#x60;http&#x60; and &#x60;https&#x60; both work). When it&#39;s empty, live signature requests don&#39;t load on any site, and the embedded template editor loads on every site.
+        /// The sites that can embed the template&#39;s live signature requests and its embedded template editor: a host such as &#x60;app.example.com&#x60;, with an optional leading wildcard (&#x60;*.example.com&#x60;), port (&#x60;localhost:3000&#x60;) or scheme (&#x60;https://app.example.com&#x60;; without one, &#x60;http&#x60; and &#x60;https&#x60; both work). Browsers open a live signature request in a frame only on these sites (and DocSpring&#39;s), so with an empty list it can&#39;t be embedded anywhere; a test signature request can be embedded on any site. The embedded template editor loads only for a page on one of these sites (by its Referer or Origin header), and on any site when the list is empty. Forms embedded on a page (Visual Forms JS and the simple form) aren&#39;t restricted.
         /// </summary>
-        /// <value>The sites where the template&#39;s signature requests, forms and embedded template editor can be loaded: a host such as &#x60;app.example.com&#x60;, with an optional leading wildcard (&#x60;*.example.com&#x60;), port (&#x60;localhost:3000&#x60;) or scheme (&#x60;https://app.example.com&#x60;; without one, &#x60;http&#x60; and &#x60;https&#x60; both work). When it&#39;s empty, live signature requests don&#39;t load on any site, and the embedded template editor loads on every site.</value>
+        /// <value>The sites that can embed the template&#39;s live signature requests and its embedded template editor: a host such as &#x60;app.example.com&#x60;, with an optional leading wildcard (&#x60;*.example.com&#x60;), port (&#x60;localhost:3000&#x60;) or scheme (&#x60;https://app.example.com&#x60;; without one, &#x60;http&#x60; and &#x60;https&#x60; both work). Browsers open a live signature request in a frame only on these sites (and DocSpring&#39;s), so with an empty list it can&#39;t be embedded anywhere; a test signature request can be embedded on any site. The embedded template editor loads only for a page on one of these sites (by its Referer or Origin header), and on any site when the list is empty. Forms embedded on a page (Visual Forms JS and the simple form) aren&#39;t restricted.</value>
         [JsonPropertyName("embed_domains")]
         public List<string> EmbedDomains { get; set; }
 
@@ -313,20 +329,6 @@ namespace DocSpring.Client.Model
         public bool HasSlackWebhookUrl { get; set; }
 
         /// <summary>
-        /// When the template was created.
-        /// </summary>
-        /// <value>When the template was created.</value>
-        [JsonPropertyName("created_at")]
-        public DateTime CreatedAt { get; set; }
-
-        /// <summary>
-        /// When the template was last updated.
-        /// </summary>
-        /// <value>When the template was last updated.</value>
-        [JsonPropertyName("updated_at")]
-        public DateTime UpdatedAt { get; set; }
-
-        /// <summary>
         /// Gets or Sets Defaults
         /// </summary>
         [JsonPropertyName("defaults")]
@@ -389,13 +391,6 @@ namespace DocSpring.Client.Model
         public string ParentFolderId { get; set; }
 
         /// <summary>
-        /// The published version this is, such as &#x60;1.2.0&#x60;. Null for the draft.
-        /// </summary>
-        /// <value>The published version this is, such as &#x60;1.2.0&#x60;. Null for the draft.</value>
-        [JsonPropertyName("version")]
-        public string VarVersion { get; set; }
-
-        /// <summary>
         /// The template&#39;s latest published version. Null if no version has been published.
         /// </summary>
         /// <value>The template&#39;s latest published version. Null if no version has been published.</value>
@@ -410,18 +405,25 @@ namespace DocSpring.Client.Model
         public DateTime? VersionPublishedAt { get; set; }
 
         /// <summary>
-        /// Where the web form sends people after they submit it.
-        /// </summary>
-        /// <value>Where the web form sends people after they submit it.</value>
-        [JsonPropertyName("redirect_url")]
-        public string RedirectUrl { get; set; }
-
-        /// <summary>
         /// When the draft was last changed.
         /// </summary>
         /// <value>When the draft was last changed.</value>
         [JsonPropertyName("last_changed_at")]
         public DateTime? LastChangedAt { get; set; }
+
+        /// <summary>
+        /// The published version this is, such as &#x60;1.2.0&#x60;. Null for the draft.
+        /// </summary>
+        /// <value>The published version this is, such as &#x60;1.2.0&#x60;. Null for the draft.</value>
+        [JsonPropertyName("version")]
+        public string VarVersion { get; set; }
+
+        /// <summary>
+        /// Where the web form sends people after they submit it.
+        /// </summary>
+        /// <value>Where the web form sends people after they submit it.</value>
+        [JsonPropertyName("redirect_url")]
+        public string RedirectUrl { get; set; }
 
         /// <summary>
         /// Who last changed the draft: a user in your account, an API token, or someone using the embedded template editor. Null if no change has been recorded.
@@ -473,6 +475,13 @@ namespace DocSpring.Client.Model
         public HtmlEngineOptions HtmlEngineOptions { get; set; }
 
         /// <summary>
+        /// Whether an HTML template HTML-escapes the values it prints. When true, &#x60;{{ value }}&#x60; prints a value as text, so a &#x60;&lt;&#x60; or &#x60;&amp;&#x60; in it is printed as that character, and &#x60;{{ value | raw }}&#x60; prints a value as HTML. New HTML templates default to true. Templates created before October 2026, or with API v1, default to false, which prints every value as HTML. Null for PDF templates.
+        /// </summary>
+        /// <value>Whether an HTML template HTML-escapes the values it prints. When true, &#x60;{{ value }}&#x60; prints a value as text, so a &#x60;&lt;&#x60; or &#x60;&amp;&#x60; in it is printed as that character, and &#x60;{{ value | raw }}&#x60; prints a value as HTML. New HTML templates default to true. Templates created before October 2026, or with API v1, default to false, which prints every value as HTML. Null for PDF templates.</value>
+        [JsonPropertyName("html_escape_data")]
+        public bool? HtmlEscapeData { get; set; }
+
+        /// <summary>
         /// The token that opens the template in the embedded template editor.
         /// </summary>
         /// <value>The token that opens the template in the embedded template editor.</value>
@@ -498,6 +507,8 @@ namespace DocSpring.Client.Model
             sb.Append("  Ready: ").Append(Ready).Append("\n");
             sb.Append("  Path: ").Append(Path).Append("\n");
             sb.Append("  Locked: ").Append(Locked).Append("\n");
+            sb.Append("  CreatedAt: ").Append(CreatedAt).Append("\n");
+            sb.Append("  UpdatedAt: ").Append(UpdatedAt).Append("\n");
             sb.Append("  AddSignatureRequestSubmissionIdFooters: ").Append(AddSignatureRequestSubmissionIdFooters).Append("\n");
             sb.Append("  AllowAdditionalProperties: ").Append(AllowAdditionalProperties).Append("\n");
             sb.Append("  AllowSkippingOptionalFields: ").Append(AllowSkippingOptionalFields).Append("\n");
@@ -517,8 +528,6 @@ namespace DocSpring.Client.Model
             sb.Append("  PublicSubmissions: ").Append(PublicSubmissions).Append("\n");
             sb.Append("  PublicWebForm: ").Append(PublicWebForm).Append("\n");
             sb.Append("  HasSlackWebhookUrl: ").Append(HasSlackWebhookUrl).Append("\n");
-            sb.Append("  CreatedAt: ").Append(CreatedAt).Append("\n");
-            sb.Append("  UpdatedAt: ").Append(UpdatedAt).Append("\n");
             sb.Append("  Defaults: ").Append(Defaults).Append("\n");
             sb.Append("  FieldDependencies: ").Append(FieldDependencies).Append("\n");
             sb.Append("  FieldGroups: ").Append(FieldGroups).Append("\n");
@@ -528,12 +537,12 @@ namespace DocSpring.Client.Model
             sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  Document: ").Append(Document).Append("\n");
             sb.Append("  ParentFolderId: ").Append(ParentFolderId).Append("\n");
-            sb.Append("  VarVersion: ").Append(VarVersion).Append("\n");
             sb.Append("  LatestVersion: ").Append(LatestVersion).Append("\n");
             sb.Append("  VersionPublishedAt: ").Append(VersionPublishedAt).Append("\n");
+            sb.Append("  LastChangedAt: ").Append(LastChangedAt).Append("\n");
+            sb.Append("  VarVersion: ").Append(VarVersion).Append("\n");
             sb.Append("  AiFieldNamingLanguage: ").Append(AiFieldNamingLanguage).Append("\n");
             sb.Append("  RedirectUrl: ").Append(RedirectUrl).Append("\n");
-            sb.Append("  LastChangedAt: ").Append(LastChangedAt).Append("\n");
             sb.Append("  LastChangedBy: ").Append(LastChangedBy).Append("\n");
             sb.Append("  PredefinedFieldsSampleData: ").Append(PredefinedFieldsSampleData).Append("\n");
             sb.Append("  Html: ").Append(Html).Append("\n");
@@ -541,6 +550,7 @@ namespace DocSpring.Client.Model
             sb.Append("  HeaderHtml: ").Append(HeaderHtml).Append("\n");
             sb.Append("  FooterHtml: ").Append(FooterHtml).Append("\n");
             sb.Append("  HtmlEngineOptions: ").Append(HtmlEngineOptions).Append("\n");
+            sb.Append("  HtmlEscapeData: ").Append(HtmlEscapeData).Append("\n");
             sb.Append("  EmbedEditToken: ").Append(EmbedEditToken).Append("\n");
             sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
@@ -615,6 +625,8 @@ namespace DocSpring.Client.Model
             Option<bool?> ready = default;
             Option<string> path = default;
             Option<bool?> locked = default;
+            Option<DateTime?> createdAt = default;
+            Option<DateTime?> updatedAt = default;
             Option<bool?> addSignatureRequestSubmissionIdFooters = default;
             Option<bool?> allowAdditionalProperties = default;
             Option<bool?> allowSkippingOptionalFields = default;
@@ -634,8 +646,6 @@ namespace DocSpring.Client.Model
             Option<bool?> publicSubmissions = default;
             Option<bool?> publicWebForm = default;
             Option<bool?> hasSlackWebhookUrl = default;
-            Option<DateTime?> createdAt = default;
-            Option<DateTime?> updatedAt = default;
             Option<TemplateDefaults> defaults = default;
             Option<List<TemplateFieldDependency>> fieldDependencies = default;
             Option<List<FieldGroup>> fieldGroups = default;
@@ -645,12 +655,12 @@ namespace DocSpring.Client.Model
             Option<string> description = default;
             Option<TemplateDocument> document = default;
             Option<string> parentFolderId = default;
-            Option<string> varVersion = default;
             Option<string> latestVersion = default;
             Option<DateTime?> versionPublishedAt = default;
+            Option<DateTime?> lastChangedAt = default;
+            Option<string> varVersion = default;
             Option<AiFieldNamingLanguage?> aiFieldNamingLanguage = default;
             Option<string> redirectUrl = default;
-            Option<DateTime?> lastChangedAt = default;
             Option<TemplateActor> lastChangedBy = default;
             Option<Dictionary<string, Object>> predefinedFieldsSampleData = default;
             Option<string> html = default;
@@ -658,6 +668,7 @@ namespace DocSpring.Client.Model
             Option<string> headerHtml = default;
             Option<string> footerHtml = default;
             Option<HtmlEngineOptions> htmlEngineOptions = default;
+            Option<bool?> htmlEscapeData = default;
             Option<string> embedEditToken = default;
 
             while (utf8JsonReader.Read())
@@ -689,6 +700,12 @@ namespace DocSpring.Client.Model
                             break;
                         case "locked":
                             locked = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
+                            break;
+                        case "created_at":
+                            createdAt = new Option<DateTime?>(JsonSerializer.Deserialize<DateTime>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
+                        case "updated_at":
+                            updatedAt = new Option<DateTime?>(JsonSerializer.Deserialize<DateTime>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "add_signature_request_submission_id_footers":
                             addSignatureRequestSubmissionIdFooters = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
@@ -747,12 +764,6 @@ namespace DocSpring.Client.Model
                         case "has_slack_webhook_url":
                             hasSlackWebhookUrl = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
                             break;
-                        case "created_at":
-                            createdAt = new Option<DateTime?>(JsonSerializer.Deserialize<DateTime>(ref utf8JsonReader, jsonSerializerOptions));
-                            break;
-                        case "updated_at":
-                            updatedAt = new Option<DateTime?>(JsonSerializer.Deserialize<DateTime>(ref utf8JsonReader, jsonSerializerOptions));
-                            break;
                         case "defaults":
                             defaults = new Option<TemplateDefaults>(JsonSerializer.Deserialize<TemplateDefaults>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
@@ -780,23 +791,23 @@ namespace DocSpring.Client.Model
                         case "parent_folder_id":
                             parentFolderId = new Option<string>(utf8JsonReader.GetString());
                             break;
-                        case "version":
-                            varVersion = new Option<string>(utf8JsonReader.GetString());
-                            break;
                         case "latest_version":
                             latestVersion = new Option<string>(utf8JsonReader.GetString());
                             break;
                         case "version_published_at":
                             versionPublishedAt = new Option<DateTime?>(JsonSerializer.Deserialize<DateTime?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
+                        case "last_changed_at":
+                            lastChangedAt = new Option<DateTime?>(JsonSerializer.Deserialize<DateTime?>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
+                        case "version":
+                            varVersion = new Option<string>(utf8JsonReader.GetString());
+                            break;
                         case "ai_field_naming_language":
                             aiFieldNamingLanguage = new Option<AiFieldNamingLanguage?>(JsonSerializer.Deserialize<AiFieldNamingLanguage?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "redirect_url":
                             redirectUrl = new Option<string>(utf8JsonReader.GetString());
-                            break;
-                        case "last_changed_at":
-                            lastChangedAt = new Option<DateTime?>(JsonSerializer.Deserialize<DateTime?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "last_changed_by":
                             lastChangedBy = new Option<TemplateActor>(JsonSerializer.Deserialize<TemplateActor>(ref utf8JsonReader, jsonSerializerOptions));
@@ -818,6 +829,9 @@ namespace DocSpring.Client.Model
                             break;
                         case "html_engine_options":
                             htmlEngineOptions = new Option<HtmlEngineOptions>(JsonSerializer.Deserialize<HtmlEngineOptions>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
+                        case "html_escape_data":
+                            htmlEscapeData = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
                             break;
                         case "embed_edit_token":
                             embedEditToken = new Option<string>(utf8JsonReader.GetString());
@@ -842,6 +856,12 @@ namespace DocSpring.Client.Model
 
             if (!locked.IsSet)
                 throw new JsonException("Property is required for class Template: locked.");
+
+            if (!createdAt.IsSet)
+                throw new JsonException("Property is required for class Template: created_at.");
+
+            if (!updatedAt.IsSet)
+                throw new JsonException("Property is required for class Template: updated_at.");
 
             if (!addSignatureRequestSubmissionIdFooters.IsSet)
                 throw new JsonException("Property is required for class Template: add_signature_request_submission_id_footers.");
@@ -900,12 +920,6 @@ namespace DocSpring.Client.Model
             if (!hasSlackWebhookUrl.IsSet)
                 throw new JsonException("Property is required for class Template: has_slack_webhook_url.");
 
-            if (!createdAt.IsSet)
-                throw new JsonException("Property is required for class Template: created_at.");
-
-            if (!updatedAt.IsSet)
-                throw new JsonException("Property is required for class Template: updated_at.");
-
             if (!defaults.IsSet)
                 throw new JsonException("Property is required for class Template: defaults.");
 
@@ -933,23 +947,23 @@ namespace DocSpring.Client.Model
             if (!parentFolderId.IsSet)
                 throw new JsonException("Property is required for class Template: parent_folder_id.");
 
-            if (!varVersion.IsSet)
-                throw new JsonException("Property is required for class Template: version.");
-
             if (!latestVersion.IsSet)
                 throw new JsonException("Property is required for class Template: latest_version.");
 
             if (!versionPublishedAt.IsSet)
                 throw new JsonException("Property is required for class Template: version_published_at.");
 
+            if (!lastChangedAt.IsSet)
+                throw new JsonException("Property is required for class Template: last_changed_at.");
+
+            if (!varVersion.IsSet)
+                throw new JsonException("Property is required for class Template: version.");
+
             if (!aiFieldNamingLanguage.IsSet)
                 throw new JsonException("Property is required for class Template: ai_field_naming_language.");
 
             if (!redirectUrl.IsSet)
                 throw new JsonException("Property is required for class Template: redirect_url.");
-
-            if (!lastChangedAt.IsSet)
-                throw new JsonException("Property is required for class Template: last_changed_at.");
 
             if (!lastChangedBy.IsSet)
                 throw new JsonException("Property is required for class Template: last_changed_by.");
@@ -972,6 +986,9 @@ namespace DocSpring.Client.Model
             if (!htmlEngineOptions.IsSet)
                 throw new JsonException("Property is required for class Template: html_engine_options.");
 
+            if (!htmlEscapeData.IsSet)
+                throw new JsonException("Property is required for class Template: html_escape_data.");
+
             if (!embedEditToken.IsSet)
                 throw new JsonException("Property is required for class Template: embed_edit_token.");
 
@@ -989,6 +1006,12 @@ namespace DocSpring.Client.Model
 
             if (locked.IsSet && locked.Value == null)
                 throw new JsonException("Property is not nullable for class Template: locked.");
+
+            if (createdAt.IsSet && createdAt.Value == null)
+                throw new JsonException("Property is not nullable for class Template: created_at.");
+
+            if (updatedAt.IsSet && updatedAt.Value == null)
+                throw new JsonException("Property is not nullable for class Template: updated_at.");
 
             if (addSignatureRequestSubmissionIdFooters.IsSet && addSignatureRequestSubmissionIdFooters.Value == null)
                 throw new JsonException("Property is not nullable for class Template: add_signature_request_submission_id_footers.");
@@ -1047,12 +1070,6 @@ namespace DocSpring.Client.Model
             if (hasSlackWebhookUrl.IsSet && hasSlackWebhookUrl.Value == null)
                 throw new JsonException("Property is not nullable for class Template: has_slack_webhook_url.");
 
-            if (createdAt.IsSet && createdAt.Value == null)
-                throw new JsonException("Property is not nullable for class Template: created_at.");
-
-            if (updatedAt.IsSet && updatedAt.Value == null)
-                throw new JsonException("Property is not nullable for class Template: updated_at.");
-
             if (defaults.IsSet && defaults.Value == null)
                 throw new JsonException("Property is not nullable for class Template: defaults.");
 
@@ -1068,7 +1085,7 @@ namespace DocSpring.Client.Model
             if (versions.IsSet && versions.Value == null)
                 throw new JsonException("Property is not nullable for class Template: versions.");
 
-            return new Template(id.Value, templateType.Value.Value, ready.Value.Value, path.Value, locked.Value.Value, addSignatureRequestSubmissionIdFooters.Value.Value, allowAdditionalProperties.Value.Value, allowSkippingOptionalFields.Value.Value, defaultFormMode.Value.Value, editableSubmissions.Value.Value, embedDomains.Value, embedEditAllowSettings.Value.Value, embedEditAllowVersioning.Value.Value, embedEditAllowDocumentReplacement.Value.Value, encryptPdfs.Value.Value, hasEncryptPdfsPassword.Value.Value, expireSubmissions.Value.Value, expireAfter.Value.Value, expirationInterval.Value.Value, mergeAuditTrailPdf.Value.Value, parseDatesUsingTemplateDateFormat.Value.Value, publicSubmissions.Value.Value, publicWebForm.Value.Value, hasSlackWebhookUrl.Value.Value, createdAt.Value.Value, updatedAt.Value.Value, defaults.Value, fieldDependencies.Value, fieldGroups.Value, predefinedFields.Value, versions.Value, name.Value, description.Value, document.Value, parentFolderId.Value, varVersion.Value, latestVersion.Value, versionPublishedAt.Value, aiFieldNamingLanguage.Value, redirectUrl.Value, lastChangedAt.Value, lastChangedBy.Value, predefinedFieldsSampleData.Value, html.Value, scss.Value, headerHtml.Value, footerHtml.Value, htmlEngineOptions.Value, embedEditToken.Value);
+            return new Template(id.Value, templateType.Value.Value, ready.Value.Value, path.Value, locked.Value.Value, createdAt.Value.Value, updatedAt.Value.Value, addSignatureRequestSubmissionIdFooters.Value.Value, allowAdditionalProperties.Value.Value, allowSkippingOptionalFields.Value.Value, defaultFormMode.Value.Value, editableSubmissions.Value.Value, embedDomains.Value, embedEditAllowSettings.Value.Value, embedEditAllowVersioning.Value.Value, embedEditAllowDocumentReplacement.Value.Value, encryptPdfs.Value.Value, hasEncryptPdfsPassword.Value.Value, expireSubmissions.Value.Value, expireAfter.Value.Value, expirationInterval.Value.Value, mergeAuditTrailPdf.Value.Value, parseDatesUsingTemplateDateFormat.Value.Value, publicSubmissions.Value.Value, publicWebForm.Value.Value, hasSlackWebhookUrl.Value.Value, defaults.Value, fieldDependencies.Value, fieldGroups.Value, predefinedFields.Value, versions.Value, name.Value, description.Value, document.Value, parentFolderId.Value, latestVersion.Value, versionPublishedAt.Value, lastChangedAt.Value, varVersion.Value, aiFieldNamingLanguage.Value, redirectUrl.Value, lastChangedBy.Value, predefinedFieldsSampleData.Value, html.Value, scss.Value, headerHtml.Value, footerHtml.Value, htmlEngineOptions.Value, htmlEscapeData.Value, embedEditToken.Value);
         }
 
         /// <summary>
@@ -1103,6 +1120,10 @@ namespace DocSpring.Client.Model
             writer.WriteString("path", template.Path);
 
             writer.WriteBoolean("locked", template.Locked);
+
+            writer.WriteString("created_at", template.CreatedAt.ToString(CreatedAtFormat));
+
+            writer.WriteString("updated_at", template.UpdatedAt.ToString(UpdatedAtFormat));
 
             writer.WriteBoolean("add_signature_request_submission_id_footers", template.AddSignatureRequestSubmissionIdFooters);
 
@@ -1144,10 +1165,6 @@ namespace DocSpring.Client.Model
 
             writer.WriteBoolean("has_slack_webhook_url", template.HasSlackWebhookUrl);
 
-            writer.WriteString("created_at", template.CreatedAt.ToString(CreatedAtFormat));
-
-            writer.WriteString("updated_at", template.UpdatedAt.ToString(UpdatedAtFormat));
-
             writer.WritePropertyName("defaults");
             JsonSerializer.Serialize(writer, template.Defaults, jsonSerializerOptions);
             writer.WritePropertyName("field_dependencies");
@@ -1180,11 +1197,6 @@ namespace DocSpring.Client.Model
             else
                 writer.WriteNull("parent_folder_id");
 
-            if (template.VarVersion != null)
-                writer.WriteString("version", template.VarVersion);
-            else
-                writer.WriteNull("version");
-
             if (template.LatestVersion != null)
                 writer.WriteString("latest_version", template.LatestVersion);
             else
@@ -1194,6 +1206,16 @@ namespace DocSpring.Client.Model
                 writer.WriteString("version_published_at", template.VersionPublishedAt.Value.ToString(VersionPublishedAtFormat));
             else
                 writer.WriteNull("version_published_at");
+
+            if (template.LastChangedAt != null)
+                writer.WriteString("last_changed_at", template.LastChangedAt.Value.ToString(LastChangedAtFormat));
+            else
+                writer.WriteNull("last_changed_at");
+
+            if (template.VarVersion != null)
+                writer.WriteString("version", template.VarVersion);
+            else
+                writer.WriteNull("version");
 
             if (template.AiFieldNamingLanguage == null)
                 writer.WriteNull("ai_field_naming_language");
@@ -1210,11 +1232,6 @@ namespace DocSpring.Client.Model
                 writer.WriteString("redirect_url", template.RedirectUrl);
             else
                 writer.WriteNull("redirect_url");
-
-            if (template.LastChangedAt != null)
-                writer.WriteString("last_changed_at", template.LastChangedAt.Value.ToString(LastChangedAtFormat));
-            else
-                writer.WriteNull("last_changed_at");
 
             if (template.LastChangedBy != null)
             {
@@ -1257,6 +1274,11 @@ namespace DocSpring.Client.Model
             }
             else
                 writer.WriteNull("html_engine_options");
+            if (template.HtmlEscapeData != null)
+                writer.WriteBoolean("html_escape_data", template.HtmlEscapeData.Value);
+            else
+                writer.WriteNull("html_escape_data");
+
             if (template.EmbedEditToken != null)
                 writer.WriteString("embed_edit_token", template.EmbedEditToken);
             else

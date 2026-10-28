@@ -99,6 +99,24 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'CreatedAt'
+        /// </summary>
+        [Fact]
+        public void CreatedAtTest()
+        {
+            // TODO unit test for the property 'CreatedAt'
+        }
+
+        /// <summary>
+        /// Test the property 'UpdatedAt'
+        /// </summary>
+        [Fact]
+        public void UpdatedAtTest()
+        {
+            // TODO unit test for the property 'UpdatedAt'
+        }
+
+        /// <summary>
         /// Test the property 'AddSignatureRequestSubmissionIdFooters'
         /// </summary>
         [Fact]
@@ -270,24 +288,6 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
-        /// Test the property 'CreatedAt'
-        /// </summary>
-        [Fact]
-        public void CreatedAtTest()
-        {
-            // TODO unit test for the property 'CreatedAt'
-        }
-
-        /// <summary>
-        /// Test the property 'UpdatedAt'
-        /// </summary>
-        [Fact]
-        public void UpdatedAtTest()
-        {
-            // TODO unit test for the property 'UpdatedAt'
-        }
-
-        /// <summary>
         /// Test the property 'Defaults'
         /// </summary>
         [Fact]
@@ -369,15 +369,6 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
-        /// Test the property 'VarVersion'
-        /// </summary>
-        [Fact]
-        public void VarVersionTest()
-        {
-            // TODO unit test for the property 'VarVersion'
-        }
-
-        /// <summary>
         /// Test the property 'LatestVersion'
         /// </summary>
         [Fact]
@@ -396,6 +387,24 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'LastChangedAt'
+        /// </summary>
+        [Fact]
+        public void LastChangedAtTest()
+        {
+            // TODO unit test for the property 'LastChangedAt'
+        }
+
+        /// <summary>
+        /// Test the property 'VarVersion'
+        /// </summary>
+        [Fact]
+        public void VarVersionTest()
+        {
+            // TODO unit test for the property 'VarVersion'
+        }
+
+        /// <summary>
         /// Test the property 'AiFieldNamingLanguage'
         /// </summary>
         [Fact]
@@ -411,15 +420,6 @@ namespace DocSpring.Client.Test.Model
         public void RedirectUrlTest()
         {
             // TODO unit test for the property 'RedirectUrl'
-        }
-
-        /// <summary>
-        /// Test the property 'LastChangedAt'
-        /// </summary>
-        [Fact]
-        public void LastChangedAtTest()
-        {
-            // TODO unit test for the property 'LastChangedAt'
         }
 
         /// <summary>
@@ -483,6 +483,15 @@ namespace DocSpring.Client.Test.Model
         public void HtmlEngineOptionsTest()
         {
             // TODO unit test for the property 'HtmlEngineOptions'
+        }
+
+        /// <summary>
+        /// Test the property 'HtmlEscapeData'
+        /// </summary>
+        [Fact]
+        public void HtmlEscapeDataTest()
+        {
+            // TODO unit test for the property 'HtmlEscapeData'
         }
 
         /// <summary>

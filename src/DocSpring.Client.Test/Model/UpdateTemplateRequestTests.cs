@@ -367,5 +367,14 @@ namespace DocSpring.Client.Test.Model
         {
             // TODO unit test for the property 'HtmlEngineOptions'
         }
+
+        /// <summary>
+        /// Test the property 'HtmlEscapeData'
+        /// </summary>
+        [Fact]
+        public void HtmlEscapeDataTest()
+        {
+            // TODO unit test for the property 'HtmlEscapeData'
+        }
     }
 }

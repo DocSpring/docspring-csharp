@@ -208,6 +208,8 @@ namespace DocSpring.Client.Client
                 return TemplatePageFieldsStatusValueConverter.ToJsonValue(templatePageFieldsStatus);
             if (obj is TemplatePageImageStatus templatePageImageStatus)
                 return TemplatePageImageStatusValueConverter.ToJsonValue(templatePageImageStatus);
+            if (obj is TemplatePreviewState templatePreviewState)
+                return TemplatePreviewStateValueConverter.ToJsonValue(templatePreviewState);
             if (obj is TemplateType templateType)
                 return TemplateTypeValueConverter.ToJsonValue(templateType);
             if (obj is TemplateVersionType templateVersionType)

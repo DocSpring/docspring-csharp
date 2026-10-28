@@ -24,7 +24,7 @@ using DocSpring.Client.Client;
 namespace DocSpring.Client.Model
 {
     /// <summary>
-    /// A template in a list. Get a template by its ID for its HTML, defaults, field dependency rules and published versions.
+    /// A template in a list: its name, type, folder, latest published version and whether it&#39;s ready. Get a template by its ID for its settings, its PDF in full, its HTML, defaults, field dependency rules and published versions.
     /// </summary>
     public partial class TemplateSummary : IValidatableObject
     {
@@ -33,81 +33,35 @@ namespace DocSpring.Client.Model
         /// </summary>
         /// <param name="id">The template&#39;s ID.</param>
         /// <param name="templateType">&#x60;pdf&#x60;: fields placed on an uploaded PDF. &#x60;html&#x60;: a PDF rendered from HTML and SCSS. It can&#39;t be changed after the template is created.</param>
-        /// <param name="ready">Whether the template can generate PDFs. HTML templates are always ready. A PDF template is ready once its document has been processed (&#x60;document.state&#x60; is &#x60;processed&#x60;).</param>
+        /// <param name="ready">Whether the template can generate PDFs. HTML templates are always ready. A PDF template is ready once DocSpring has stored its PDF, made an image of each page and finished looking for fields on each page, which can be after &#x60;document.state&#x60; becomes &#x60;processed&#x60;. A PDF template with no PDF (&#x60;document&#x60; is null) isn&#39;t ready.</param>
         /// <param name="path">The path of the folder the template is in, such as &#x60;/Contracts&#x60;. &#x60;/&#x60; for a template at the root.</param>
         /// <param name="locked">A locked template can&#39;t be changed or deleted until it&#39;s unlocked (&#x60;locked&#x60; can always be changed).</param>
-        /// <param name="addSignatureRequestSubmissionIdFooters">Print the submission ID in the footer of each page of PDFs signed through signature requests.</param>
-        /// <param name="allowAdditionalProperties">Accept submission data with properties that aren&#39;t fields of the template.</param>
-        /// <param name="allowSkippingOptionalFields">Visual forms and signature request forms show the Continue button as soon as the required fields are filled in, without visiting each optional field. The &#x60;allowSkippingOptionalFields&#x60; embed option overrides it.</param>
-        /// <param name="defaultFormMode">The hosted form that /templates/{template_id}/form shows when its URL has no &#x60;mode&#x60; parameter: &#x60;web&#x60; (the web form), &#x60;visual&#x60; (the visual form, where fields are filled in on the PDF) or &#x60;dual&#x60; (both, in tabs). HTML templates have no visual form, so &#x60;web&#x60; is the only value they accept.</param>
-        /// <param name="editableSubmissions">Generate PDFs whose text and check fields stay fillable (\&quot;Generate Editable PDFs\&quot;). A submission&#39;s &#x60;editable&#x60; overrides it.</param>
-        /// <param name="embedDomains">The sites where the template&#39;s signature requests, forms and embedded template editor can be loaded: a host such as &#x60;app.example.com&#x60;, with an optional leading wildcard (&#x60;*.example.com&#x60;), port (&#x60;localhost:3000&#x60;) or scheme (&#x60;https://app.example.com&#x60;; without one, &#x60;http&#x60; and &#x60;https&#x60; both work). When it&#39;s empty, live signature requests don&#39;t load on any site, and the embedded template editor loads on every site.</param>
-        /// <param name="embedEditAllowSettings">Allow the embedded template editor to change sensitive template settings (webhooks, redirect URL, encryption, public access, expiration and so on).</param>
-        /// <param name="embedEditAllowVersioning">Allow the embedded template editor to publish, restore, compare and delete published versions.</param>
-        /// <param name="embedEditAllowDocumentReplacement">Allow the embedded template editor to replace the template&#39;s PDF.</param>
-        /// <param name="encryptPdfs">Encrypt generated PDFs with &#x60;encrypt_pdfs_password&#x60;.</param>
-        /// <param name="hasEncryptPdfsPassword">Whether &#x60;encrypt_pdfs_password&#x60; is set.</param>
-        /// <param name="expireSubmissions">Delete each submission&#39;s data and PDF after &#x60;expire_after&#x60; &#x60;expiration_interval&#x60;.</param>
-        /// <param name="expireAfter">How many &#x60;expiration_interval&#x60;s a submission&#39;s data and PDF are kept for, when &#x60;expire_submissions&#x60; is on. At most 5256000 (10 years in minutes).</param>
-        /// <param name="expirationInterval">The unit of &#x60;expire_after&#x60;.</param>
-        /// <param name="mergeAuditTrailPdf">Add the audit trail to the end of PDFs signed through signature requests.</param>
-        /// <param name="parseDatesUsingTemplateDateFormat">Date fields also accept NN/NN/YYYY dates (with slashes, dashes or dots), read in the order of the template&#39;s default date format: month first for %m/%d/%Y, day first for %d/%m/%Y. When false, date fields only accept YYYY-MM-DD. Applies to PDF templates: an HTML template&#39;s date fields only accept YYYY-MM-DD. Date fields that include a time take RFC 3339 date-times either way.</param>
-        /// <param name="publicSubmissions">Allow anyone with a submission&#39;s ID to download its PDF.</param>
-        /// <param name="publicWebForm">Allow anyone to fill in the template&#39;s web form.</param>
-        /// <param name="hasSlackWebhookUrl">Whether &#x60;slack_webhook_url&#x60; is set.</param>
         /// <param name="createdAt">When the template was created.</param>
         /// <param name="updatedAt">When the template was last updated.</param>
         /// <param name="name">The template&#39;s name.</param>
         /// <param name="description">Shown under the template&#39;s name at the top of its hosted forms, and used as their meta description. Not shown on embedded forms or signature requests.</param>
-        /// <param name="document">The PDF of a PDF template. Null for HTML templates, and for a PDF template that has no PDF yet.</param>
+        /// <param name="document">The PDF of a PDF template: its file name, page count and processing state. Null for HTML templates, and for a PDF template that has no PDF yet.</param>
         /// <param name="parentFolderId">The ID of the folder the template is in. Null for a template at the root. Setting it moves the template and all of its published versions.</param>
-        /// <param name="varVersion">The published version this is, such as &#x60;1.2.0&#x60;. Null for the draft.</param>
         /// <param name="latestVersion">The template&#39;s latest published version. Null if no version has been published.</param>
         /// <param name="versionPublishedAt">When this version was published. Null for the draft.</param>
-        /// <param name="aiFieldNamingLanguage">The language AI field setup names fields in: &#x60;auto&#x60; uses the form&#39;s language when it&#39;s written in the Latin alphabet without accents, and English otherwise; &#x60;english&#x60; always uses English; &#x60;form_language&#x60; uses the form&#39;s language and script. New templates take it from your account&#39;s template settings. Null for HTML templates.</param>
-        /// <param name="redirectUrl">Where the web form sends people after they submit it.</param>
         /// <param name="lastChangedAt">When the draft was last changed.</param>
-        /// <param name="lastChangedBy">Who last changed the draft: a user in your account, an API token, or someone using the embedded template editor. Null if no change has been recorded.</param>
         [JsonConstructor]
-        public TemplateSummary(string id, TemplateType templateType, bool ready, string path, bool locked, bool addSignatureRequestSubmissionIdFooters, bool allowAdditionalProperties, bool allowSkippingOptionalFields, TemplateFormMode defaultFormMode, bool editableSubmissions, List<string> embedDomains, bool embedEditAllowSettings, bool embedEditAllowVersioning, bool embedEditAllowDocumentReplacement, bool encryptPdfs, bool hasEncryptPdfsPassword, bool expireSubmissions, int expireAfter, ExpirationInterval expirationInterval, bool mergeAuditTrailPdf, bool parseDatesUsingTemplateDateFormat, bool publicSubmissions, bool publicWebForm, bool hasSlackWebhookUrl, DateTime createdAt, DateTime updatedAt, string name = default, string description = default, TemplateDocument document = default, string parentFolderId = default, string varVersion = default, string latestVersion = default, DateTime? versionPublishedAt = default, AiFieldNamingLanguage? aiFieldNamingLanguage = default, string redirectUrl = default, DateTime? lastChangedAt = default, TemplateActor lastChangedBy = default)
+        public TemplateSummary(string id, TemplateType templateType, bool ready, string path, bool locked, DateTime createdAt, DateTime updatedAt, string name = default, string description = default, TemplateDocumentSummary document = default, string parentFolderId = default, string latestVersion = default, DateTime? versionPublishedAt = default, DateTime? lastChangedAt = default)
         {
             Id = id;
             TemplateType = templateType;
             Ready = ready;
             Path = path;
             Locked = locked;
-            AddSignatureRequestSubmissionIdFooters = addSignatureRequestSubmissionIdFooters;
-            AllowAdditionalProperties = allowAdditionalProperties;
-            AllowSkippingOptionalFields = allowSkippingOptionalFields;
-            DefaultFormMode = defaultFormMode;
-            EditableSubmissions = editableSubmissions;
-            EmbedDomains = embedDomains;
-            EmbedEditAllowSettings = embedEditAllowSettings;
-            EmbedEditAllowVersioning = embedEditAllowVersioning;
-            EmbedEditAllowDocumentReplacement = embedEditAllowDocumentReplacement;
-            EncryptPdfs = encryptPdfs;
-            HasEncryptPdfsPassword = hasEncryptPdfsPassword;
-            ExpireSubmissions = expireSubmissions;
-            ExpireAfter = expireAfter;
-            ExpirationInterval = expirationInterval;
-            MergeAuditTrailPdf = mergeAuditTrailPdf;
-            ParseDatesUsingTemplateDateFormat = parseDatesUsingTemplateDateFormat;
-            PublicSubmissions = publicSubmissions;
-            PublicWebForm = publicWebForm;
-            HasSlackWebhookUrl = hasSlackWebhookUrl;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
             Name = name;
             Description = description;
             Document = document;
             ParentFolderId = parentFolderId;
-            VarVersion = varVersion;
             LatestVersion = latestVersion;
             VersionPublishedAt = versionPublishedAt;
-            AiFieldNamingLanguage = aiFieldNamingLanguage;
-            RedirectUrl = redirectUrl;
             LastChangedAt = lastChangedAt;
-            LastChangedBy = lastChangedBy;
             OnCreated();
         }
 
@@ -121,27 +75,6 @@ namespace DocSpring.Client.Model
         public TemplateType TemplateType { get; set; }
 
         /// <summary>
-        /// The hosted form that /templates/{template_id}/form shows when its URL has no &#x60;mode&#x60; parameter: &#x60;web&#x60; (the web form), &#x60;visual&#x60; (the visual form, where fields are filled in on the PDF) or &#x60;dual&#x60; (both, in tabs). HTML templates have no visual form, so &#x60;web&#x60; is the only value they accept.
-        /// </summary>
-        /// <value>The hosted form that /templates/{template_id}/form shows when its URL has no &#x60;mode&#x60; parameter: &#x60;web&#x60; (the web form), &#x60;visual&#x60; (the visual form, where fields are filled in on the PDF) or &#x60;dual&#x60; (both, in tabs). HTML templates have no visual form, so &#x60;web&#x60; is the only value they accept.</value>
-        [JsonPropertyName("default_form_mode")]
-        public TemplateFormMode DefaultFormMode { get; set; }
-
-        /// <summary>
-        /// The unit of &#x60;expire_after&#x60;.
-        /// </summary>
-        /// <value>The unit of &#x60;expire_after&#x60;.</value>
-        [JsonPropertyName("expiration_interval")]
-        public ExpirationInterval ExpirationInterval { get; set; }
-
-        /// <summary>
-        /// The language AI field setup names fields in: &#x60;auto&#x60; uses the form&#39;s language when it&#39;s written in the Latin alphabet without accents, and English otherwise; &#x60;english&#x60; always uses English; &#x60;form_language&#x60; uses the form&#39;s language and script. New templates take it from your account&#39;s template settings. Null for HTML templates.
-        /// </summary>
-        /// <value>The language AI field setup names fields in: &#x60;auto&#x60; uses the form&#39;s language when it&#39;s written in the Latin alphabet without accents, and English otherwise; &#x60;english&#x60; always uses English; &#x60;form_language&#x60; uses the form&#39;s language and script. New templates take it from your account&#39;s template settings. Null for HTML templates.</value>
-        [JsonPropertyName("ai_field_naming_language")]
-        public AiFieldNamingLanguage? AiFieldNamingLanguage { get; set; }
-
-        /// <summary>
         /// The template&#39;s ID.
         /// </summary>
         /// <value>The template&#39;s ID.</value>
@@ -149,9 +82,9 @@ namespace DocSpring.Client.Model
         public string Id { get; set; }
 
         /// <summary>
-        /// Whether the template can generate PDFs. HTML templates are always ready. A PDF template is ready once its document has been processed (&#x60;document.state&#x60; is &#x60;processed&#x60;).
+        /// Whether the template can generate PDFs. HTML templates are always ready. A PDF template is ready once DocSpring has stored its PDF, made an image of each page and finished looking for fields on each page, which can be after &#x60;document.state&#x60; becomes &#x60;processed&#x60;. A PDF template with no PDF (&#x60;document&#x60; is null) isn&#39;t ready.
         /// </summary>
-        /// <value>Whether the template can generate PDFs. HTML templates are always ready. A PDF template is ready once its document has been processed (&#x60;document.state&#x60; is &#x60;processed&#x60;).</value>
+        /// <value>Whether the template can generate PDFs. HTML templates are always ready. A PDF template is ready once DocSpring has stored its PDF, made an image of each page and finished looking for fields on each page, which can be after &#x60;document.state&#x60; becomes &#x60;processed&#x60;. A PDF template with no PDF (&#x60;document&#x60; is null) isn&#39;t ready.</value>
         [JsonPropertyName("ready")]
         public bool Ready { get; set; }
 
@@ -168,125 +101,6 @@ namespace DocSpring.Client.Model
         /// <value>A locked template can&#39;t be changed or deleted until it&#39;s unlocked (&#x60;locked&#x60; can always be changed).</value>
         [JsonPropertyName("locked")]
         public bool Locked { get; set; }
-
-        /// <summary>
-        /// Print the submission ID in the footer of each page of PDFs signed through signature requests.
-        /// </summary>
-        /// <value>Print the submission ID in the footer of each page of PDFs signed through signature requests.</value>
-        [JsonPropertyName("add_signature_request_submission_id_footers")]
-        public bool AddSignatureRequestSubmissionIdFooters { get; set; }
-
-        /// <summary>
-        /// Accept submission data with properties that aren&#39;t fields of the template.
-        /// </summary>
-        /// <value>Accept submission data with properties that aren&#39;t fields of the template.</value>
-        [JsonPropertyName("allow_additional_properties")]
-        public bool AllowAdditionalProperties { get; set; }
-
-        /// <summary>
-        /// Visual forms and signature request forms show the Continue button as soon as the required fields are filled in, without visiting each optional field. The &#x60;allowSkippingOptionalFields&#x60; embed option overrides it.
-        /// </summary>
-        /// <value>Visual forms and signature request forms show the Continue button as soon as the required fields are filled in, without visiting each optional field. The &#x60;allowSkippingOptionalFields&#x60; embed option overrides it.</value>
-        [JsonPropertyName("allow_skipping_optional_fields")]
-        public bool AllowSkippingOptionalFields { get; set; }
-
-        /// <summary>
-        /// Generate PDFs whose text and check fields stay fillable (\&quot;Generate Editable PDFs\&quot;). A submission&#39;s &#x60;editable&#x60; overrides it.
-        /// </summary>
-        /// <value>Generate PDFs whose text and check fields stay fillable (\&quot;Generate Editable PDFs\&quot;). A submission&#39;s &#x60;editable&#x60; overrides it.</value>
-        [JsonPropertyName("editable_submissions")]
-        public bool EditableSubmissions { get; set; }
-
-        /// <summary>
-        /// The sites where the template&#39;s signature requests, forms and embedded template editor can be loaded: a host such as &#x60;app.example.com&#x60;, with an optional leading wildcard (&#x60;*.example.com&#x60;), port (&#x60;localhost:3000&#x60;) or scheme (&#x60;https://app.example.com&#x60;; without one, &#x60;http&#x60; and &#x60;https&#x60; both work). When it&#39;s empty, live signature requests don&#39;t load on any site, and the embedded template editor loads on every site.
-        /// </summary>
-        /// <value>The sites where the template&#39;s signature requests, forms and embedded template editor can be loaded: a host such as &#x60;app.example.com&#x60;, with an optional leading wildcard (&#x60;*.example.com&#x60;), port (&#x60;localhost:3000&#x60;) or scheme (&#x60;https://app.example.com&#x60;; without one, &#x60;http&#x60; and &#x60;https&#x60; both work). When it&#39;s empty, live signature requests don&#39;t load on any site, and the embedded template editor loads on every site.</value>
-        [JsonPropertyName("embed_domains")]
-        public List<string> EmbedDomains { get; set; }
-
-        /// <summary>
-        /// Allow the embedded template editor to change sensitive template settings (webhooks, redirect URL, encryption, public access, expiration and so on).
-        /// </summary>
-        /// <value>Allow the embedded template editor to change sensitive template settings (webhooks, redirect URL, encryption, public access, expiration and so on).</value>
-        [JsonPropertyName("embed_edit_allow_settings")]
-        public bool EmbedEditAllowSettings { get; set; }
-
-        /// <summary>
-        /// Allow the embedded template editor to publish, restore, compare and delete published versions.
-        /// </summary>
-        /// <value>Allow the embedded template editor to publish, restore, compare and delete published versions.</value>
-        [JsonPropertyName("embed_edit_allow_versioning")]
-        public bool EmbedEditAllowVersioning { get; set; }
-
-        /// <summary>
-        /// Allow the embedded template editor to replace the template&#39;s PDF.
-        /// </summary>
-        /// <value>Allow the embedded template editor to replace the template&#39;s PDF.</value>
-        [JsonPropertyName("embed_edit_allow_document_replacement")]
-        public bool EmbedEditAllowDocumentReplacement { get; set; }
-
-        /// <summary>
-        /// Encrypt generated PDFs with &#x60;encrypt_pdfs_password&#x60;.
-        /// </summary>
-        /// <value>Encrypt generated PDFs with &#x60;encrypt_pdfs_password&#x60;.</value>
-        [JsonPropertyName("encrypt_pdfs")]
-        public bool EncryptPdfs { get; set; }
-
-        /// <summary>
-        /// Whether &#x60;encrypt_pdfs_password&#x60; is set.
-        /// </summary>
-        /// <value>Whether &#x60;encrypt_pdfs_password&#x60; is set.</value>
-        [JsonPropertyName("has_encrypt_pdfs_password")]
-        public bool HasEncryptPdfsPassword { get; set; }
-
-        /// <summary>
-        /// Delete each submission&#39;s data and PDF after &#x60;expire_after&#x60; &#x60;expiration_interval&#x60;.
-        /// </summary>
-        /// <value>Delete each submission&#39;s data and PDF after &#x60;expire_after&#x60; &#x60;expiration_interval&#x60;.</value>
-        [JsonPropertyName("expire_submissions")]
-        public bool ExpireSubmissions { get; set; }
-
-        /// <summary>
-        /// How many &#x60;expiration_interval&#x60;s a submission&#39;s data and PDF are kept for, when &#x60;expire_submissions&#x60; is on. At most 5256000 (10 years in minutes).
-        /// </summary>
-        /// <value>How many &#x60;expiration_interval&#x60;s a submission&#39;s data and PDF are kept for, when &#x60;expire_submissions&#x60; is on. At most 5256000 (10 years in minutes).</value>
-        [JsonPropertyName("expire_after")]
-        public int ExpireAfter { get; set; }
-
-        /// <summary>
-        /// Add the audit trail to the end of PDFs signed through signature requests.
-        /// </summary>
-        /// <value>Add the audit trail to the end of PDFs signed through signature requests.</value>
-        [JsonPropertyName("merge_audit_trail_pdf")]
-        public bool MergeAuditTrailPdf { get; set; }
-
-        /// <summary>
-        /// Date fields also accept NN/NN/YYYY dates (with slashes, dashes or dots), read in the order of the template&#39;s default date format: month first for %m/%d/%Y, day first for %d/%m/%Y. When false, date fields only accept YYYY-MM-DD. Applies to PDF templates: an HTML template&#39;s date fields only accept YYYY-MM-DD. Date fields that include a time take RFC 3339 date-times either way.
-        /// </summary>
-        /// <value>Date fields also accept NN/NN/YYYY dates (with slashes, dashes or dots), read in the order of the template&#39;s default date format: month first for %m/%d/%Y, day first for %d/%m/%Y. When false, date fields only accept YYYY-MM-DD. Applies to PDF templates: an HTML template&#39;s date fields only accept YYYY-MM-DD. Date fields that include a time take RFC 3339 date-times either way.</value>
-        [JsonPropertyName("parse_dates_using_template_date_format")]
-        public bool ParseDatesUsingTemplateDateFormat { get; set; }
-
-        /// <summary>
-        /// Allow anyone with a submission&#39;s ID to download its PDF.
-        /// </summary>
-        /// <value>Allow anyone with a submission&#39;s ID to download its PDF.</value>
-        [JsonPropertyName("public_submissions")]
-        public bool PublicSubmissions { get; set; }
-
-        /// <summary>
-        /// Allow anyone to fill in the template&#39;s web form.
-        /// </summary>
-        /// <value>Allow anyone to fill in the template&#39;s web form.</value>
-        [JsonPropertyName("public_web_form")]
-        public bool PublicWebForm { get; set; }
-
-        /// <summary>
-        /// Whether &#x60;slack_webhook_url&#x60; is set.
-        /// </summary>
-        /// <value>Whether &#x60;slack_webhook_url&#x60; is set.</value>
-        [JsonPropertyName("has_slack_webhook_url")]
-        public bool HasSlackWebhookUrl { get; set; }
 
         /// <summary>
         /// When the template was created.
@@ -317,11 +131,11 @@ namespace DocSpring.Client.Model
         public string Description { get; set; }
 
         /// <summary>
-        /// The PDF of a PDF template. Null for HTML templates, and for a PDF template that has no PDF yet.
+        /// The PDF of a PDF template: its file name, page count and processing state. Null for HTML templates, and for a PDF template that has no PDF yet.
         /// </summary>
-        /// <value>The PDF of a PDF template. Null for HTML templates, and for a PDF template that has no PDF yet.</value>
+        /// <value>The PDF of a PDF template: its file name, page count and processing state. Null for HTML templates, and for a PDF template that has no PDF yet.</value>
         [JsonPropertyName("document")]
-        public TemplateDocument Document { get; set; }
+        public TemplateDocumentSummary Document { get; set; }
 
         /// <summary>
         /// The ID of the folder the template is in. Null for a template at the root. Setting it moves the template and all of its published versions.
@@ -329,13 +143,6 @@ namespace DocSpring.Client.Model
         /// <value>The ID of the folder the template is in. Null for a template at the root. Setting it moves the template and all of its published versions.</value>
         [JsonPropertyName("parent_folder_id")]
         public string ParentFolderId { get; set; }
-
-        /// <summary>
-        /// The published version this is, such as &#x60;1.2.0&#x60;. Null for the draft.
-        /// </summary>
-        /// <value>The published version this is, such as &#x60;1.2.0&#x60;. Null for the draft.</value>
-        [JsonPropertyName("version")]
-        public string VarVersion { get; set; }
 
         /// <summary>
         /// The template&#39;s latest published version. Null if no version has been published.
@@ -352,25 +159,11 @@ namespace DocSpring.Client.Model
         public DateTime? VersionPublishedAt { get; set; }
 
         /// <summary>
-        /// Where the web form sends people after they submit it.
-        /// </summary>
-        /// <value>Where the web form sends people after they submit it.</value>
-        [JsonPropertyName("redirect_url")]
-        public string RedirectUrl { get; set; }
-
-        /// <summary>
         /// When the draft was last changed.
         /// </summary>
         /// <value>When the draft was last changed.</value>
         [JsonPropertyName("last_changed_at")]
         public DateTime? LastChangedAt { get; set; }
-
-        /// <summary>
-        /// Who last changed the draft: a user in your account, an API token, or someone using the embedded template editor. Null if no change has been recorded.
-        /// </summary>
-        /// <value>Who last changed the draft: a user in your account, an API token, or someone using the embedded template editor. Null if no change has been recorded.</value>
-        [JsonPropertyName("last_changed_by")]
-        public TemplateActor LastChangedBy { get; set; }
 
         /// <summary>
         /// Gets or Sets additional properties
@@ -391,38 +184,15 @@ namespace DocSpring.Client.Model
             sb.Append("  Ready: ").Append(Ready).Append("\n");
             sb.Append("  Path: ").Append(Path).Append("\n");
             sb.Append("  Locked: ").Append(Locked).Append("\n");
-            sb.Append("  AddSignatureRequestSubmissionIdFooters: ").Append(AddSignatureRequestSubmissionIdFooters).Append("\n");
-            sb.Append("  AllowAdditionalProperties: ").Append(AllowAdditionalProperties).Append("\n");
-            sb.Append("  AllowSkippingOptionalFields: ").Append(AllowSkippingOptionalFields).Append("\n");
-            sb.Append("  DefaultFormMode: ").Append(DefaultFormMode).Append("\n");
-            sb.Append("  EditableSubmissions: ").Append(EditableSubmissions).Append("\n");
-            sb.Append("  EmbedDomains: ").Append(EmbedDomains).Append("\n");
-            sb.Append("  EmbedEditAllowSettings: ").Append(EmbedEditAllowSettings).Append("\n");
-            sb.Append("  EmbedEditAllowVersioning: ").Append(EmbedEditAllowVersioning).Append("\n");
-            sb.Append("  EmbedEditAllowDocumentReplacement: ").Append(EmbedEditAllowDocumentReplacement).Append("\n");
-            sb.Append("  EncryptPdfs: ").Append(EncryptPdfs).Append("\n");
-            sb.Append("  HasEncryptPdfsPassword: ").Append(HasEncryptPdfsPassword).Append("\n");
-            sb.Append("  ExpireSubmissions: ").Append(ExpireSubmissions).Append("\n");
-            sb.Append("  ExpireAfter: ").Append(ExpireAfter).Append("\n");
-            sb.Append("  ExpirationInterval: ").Append(ExpirationInterval).Append("\n");
-            sb.Append("  MergeAuditTrailPdf: ").Append(MergeAuditTrailPdf).Append("\n");
-            sb.Append("  ParseDatesUsingTemplateDateFormat: ").Append(ParseDatesUsingTemplateDateFormat).Append("\n");
-            sb.Append("  PublicSubmissions: ").Append(PublicSubmissions).Append("\n");
-            sb.Append("  PublicWebForm: ").Append(PublicWebForm).Append("\n");
-            sb.Append("  HasSlackWebhookUrl: ").Append(HasSlackWebhookUrl).Append("\n");
             sb.Append("  CreatedAt: ").Append(CreatedAt).Append("\n");
             sb.Append("  UpdatedAt: ").Append(UpdatedAt).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  Document: ").Append(Document).Append("\n");
             sb.Append("  ParentFolderId: ").Append(ParentFolderId).Append("\n");
-            sb.Append("  VarVersion: ").Append(VarVersion).Append("\n");
             sb.Append("  LatestVersion: ").Append(LatestVersion).Append("\n");
             sb.Append("  VersionPublishedAt: ").Append(VersionPublishedAt).Append("\n");
-            sb.Append("  AiFieldNamingLanguage: ").Append(AiFieldNamingLanguage).Append("\n");
-            sb.Append("  RedirectUrl: ").Append(RedirectUrl).Append("\n");
             sb.Append("  LastChangedAt: ").Append(LastChangedAt).Append("\n");
-            sb.Append("  LastChangedBy: ").Append(LastChangedBy).Append("\n");
             sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -496,38 +266,15 @@ namespace DocSpring.Client.Model
             Option<bool?> ready = default;
             Option<string> path = default;
             Option<bool?> locked = default;
-            Option<bool?> addSignatureRequestSubmissionIdFooters = default;
-            Option<bool?> allowAdditionalProperties = default;
-            Option<bool?> allowSkippingOptionalFields = default;
-            Option<TemplateFormMode?> defaultFormMode = default;
-            Option<bool?> editableSubmissions = default;
-            Option<List<string>> embedDomains = default;
-            Option<bool?> embedEditAllowSettings = default;
-            Option<bool?> embedEditAllowVersioning = default;
-            Option<bool?> embedEditAllowDocumentReplacement = default;
-            Option<bool?> encryptPdfs = default;
-            Option<bool?> hasEncryptPdfsPassword = default;
-            Option<bool?> expireSubmissions = default;
-            Option<int?> expireAfter = default;
-            Option<ExpirationInterval?> expirationInterval = default;
-            Option<bool?> mergeAuditTrailPdf = default;
-            Option<bool?> parseDatesUsingTemplateDateFormat = default;
-            Option<bool?> publicSubmissions = default;
-            Option<bool?> publicWebForm = default;
-            Option<bool?> hasSlackWebhookUrl = default;
             Option<DateTime?> createdAt = default;
             Option<DateTime?> updatedAt = default;
             Option<string> name = default;
             Option<string> description = default;
-            Option<TemplateDocument> document = default;
+            Option<TemplateDocumentSummary> document = default;
             Option<string> parentFolderId = default;
-            Option<string> varVersion = default;
             Option<string> latestVersion = default;
             Option<DateTime?> versionPublishedAt = default;
-            Option<AiFieldNamingLanguage?> aiFieldNamingLanguage = default;
-            Option<string> redirectUrl = default;
             Option<DateTime?> lastChangedAt = default;
-            Option<TemplateActor> lastChangedBy = default;
 
             while (utf8JsonReader.Read())
             {
@@ -559,63 +306,6 @@ namespace DocSpring.Client.Model
                         case "locked":
                             locked = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
                             break;
-                        case "add_signature_request_submission_id_footers":
-                            addSignatureRequestSubmissionIdFooters = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
-                            break;
-                        case "allow_additional_properties":
-                            allowAdditionalProperties = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
-                            break;
-                        case "allow_skipping_optional_fields":
-                            allowSkippingOptionalFields = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
-                            break;
-                        case "default_form_mode":
-                            defaultFormMode = new Option<TemplateFormMode?>(JsonSerializer.Deserialize<TemplateFormMode?>(ref utf8JsonReader, jsonSerializerOptions));
-                            break;
-                        case "editable_submissions":
-                            editableSubmissions = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
-                            break;
-                        case "embed_domains":
-                            embedDomains = new Option<List<string>>(JsonSerializer.Deserialize<List<string>>(ref utf8JsonReader, jsonSerializerOptions));
-                            break;
-                        case "embed_edit_allow_settings":
-                            embedEditAllowSettings = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
-                            break;
-                        case "embed_edit_allow_versioning":
-                            embedEditAllowVersioning = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
-                            break;
-                        case "embed_edit_allow_document_replacement":
-                            embedEditAllowDocumentReplacement = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
-                            break;
-                        case "encrypt_pdfs":
-                            encryptPdfs = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
-                            break;
-                        case "has_encrypt_pdfs_password":
-                            hasEncryptPdfsPassword = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
-                            break;
-                        case "expire_submissions":
-                            expireSubmissions = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
-                            break;
-                        case "expire_after":
-                            expireAfter = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
-                            break;
-                        case "expiration_interval":
-                            expirationInterval = new Option<ExpirationInterval?>(JsonSerializer.Deserialize<ExpirationInterval?>(ref utf8JsonReader, jsonSerializerOptions));
-                            break;
-                        case "merge_audit_trail_pdf":
-                            mergeAuditTrailPdf = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
-                            break;
-                        case "parse_dates_using_template_date_format":
-                            parseDatesUsingTemplateDateFormat = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
-                            break;
-                        case "public_submissions":
-                            publicSubmissions = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
-                            break;
-                        case "public_web_form":
-                            publicWebForm = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
-                            break;
-                        case "has_slack_webhook_url":
-                            hasSlackWebhookUrl = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
-                            break;
                         case "created_at":
                             createdAt = new Option<DateTime?>(JsonSerializer.Deserialize<DateTime>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
@@ -629,13 +319,10 @@ namespace DocSpring.Client.Model
                             description = new Option<string>(utf8JsonReader.GetString());
                             break;
                         case "document":
-                            document = new Option<TemplateDocument>(JsonSerializer.Deserialize<TemplateDocument>(ref utf8JsonReader, jsonSerializerOptions));
+                            document = new Option<TemplateDocumentSummary>(JsonSerializer.Deserialize<TemplateDocumentSummary>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "parent_folder_id":
                             parentFolderId = new Option<string>(utf8JsonReader.GetString());
-                            break;
-                        case "version":
-                            varVersion = new Option<string>(utf8JsonReader.GetString());
                             break;
                         case "latest_version":
                             latestVersion = new Option<string>(utf8JsonReader.GetString());
@@ -643,17 +330,8 @@ namespace DocSpring.Client.Model
                         case "version_published_at":
                             versionPublishedAt = new Option<DateTime?>(JsonSerializer.Deserialize<DateTime?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
-                        case "ai_field_naming_language":
-                            aiFieldNamingLanguage = new Option<AiFieldNamingLanguage?>(JsonSerializer.Deserialize<AiFieldNamingLanguage?>(ref utf8JsonReader, jsonSerializerOptions));
-                            break;
-                        case "redirect_url":
-                            redirectUrl = new Option<string>(utf8JsonReader.GetString());
-                            break;
                         case "last_changed_at":
                             lastChangedAt = new Option<DateTime?>(JsonSerializer.Deserialize<DateTime?>(ref utf8JsonReader, jsonSerializerOptions));
-                            break;
-                        case "last_changed_by":
-                            lastChangedBy = new Option<TemplateActor>(JsonSerializer.Deserialize<TemplateActor>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         default:
                             break;
@@ -676,63 +354,6 @@ namespace DocSpring.Client.Model
             if (!locked.IsSet)
                 throw new JsonException("Property is required for class TemplateSummary: locked.");
 
-            if (!addSignatureRequestSubmissionIdFooters.IsSet)
-                throw new JsonException("Property is required for class TemplateSummary: add_signature_request_submission_id_footers.");
-
-            if (!allowAdditionalProperties.IsSet)
-                throw new JsonException("Property is required for class TemplateSummary: allow_additional_properties.");
-
-            if (!allowSkippingOptionalFields.IsSet)
-                throw new JsonException("Property is required for class TemplateSummary: allow_skipping_optional_fields.");
-
-            if (!defaultFormMode.IsSet)
-                throw new JsonException("Property is required for class TemplateSummary: default_form_mode.");
-
-            if (!editableSubmissions.IsSet)
-                throw new JsonException("Property is required for class TemplateSummary: editable_submissions.");
-
-            if (!embedDomains.IsSet)
-                throw new JsonException("Property is required for class TemplateSummary: embed_domains.");
-
-            if (!embedEditAllowSettings.IsSet)
-                throw new JsonException("Property is required for class TemplateSummary: embed_edit_allow_settings.");
-
-            if (!embedEditAllowVersioning.IsSet)
-                throw new JsonException("Property is required for class TemplateSummary: embed_edit_allow_versioning.");
-
-            if (!embedEditAllowDocumentReplacement.IsSet)
-                throw new JsonException("Property is required for class TemplateSummary: embed_edit_allow_document_replacement.");
-
-            if (!encryptPdfs.IsSet)
-                throw new JsonException("Property is required for class TemplateSummary: encrypt_pdfs.");
-
-            if (!hasEncryptPdfsPassword.IsSet)
-                throw new JsonException("Property is required for class TemplateSummary: has_encrypt_pdfs_password.");
-
-            if (!expireSubmissions.IsSet)
-                throw new JsonException("Property is required for class TemplateSummary: expire_submissions.");
-
-            if (!expireAfter.IsSet)
-                throw new JsonException("Property is required for class TemplateSummary: expire_after.");
-
-            if (!expirationInterval.IsSet)
-                throw new JsonException("Property is required for class TemplateSummary: expiration_interval.");
-
-            if (!mergeAuditTrailPdf.IsSet)
-                throw new JsonException("Property is required for class TemplateSummary: merge_audit_trail_pdf.");
-
-            if (!parseDatesUsingTemplateDateFormat.IsSet)
-                throw new JsonException("Property is required for class TemplateSummary: parse_dates_using_template_date_format.");
-
-            if (!publicSubmissions.IsSet)
-                throw new JsonException("Property is required for class TemplateSummary: public_submissions.");
-
-            if (!publicWebForm.IsSet)
-                throw new JsonException("Property is required for class TemplateSummary: public_web_form.");
-
-            if (!hasSlackWebhookUrl.IsSet)
-                throw new JsonException("Property is required for class TemplateSummary: has_slack_webhook_url.");
-
             if (!createdAt.IsSet)
                 throw new JsonException("Property is required for class TemplateSummary: created_at.");
 
@@ -751,26 +372,14 @@ namespace DocSpring.Client.Model
             if (!parentFolderId.IsSet)
                 throw new JsonException("Property is required for class TemplateSummary: parent_folder_id.");
 
-            if (!varVersion.IsSet)
-                throw new JsonException("Property is required for class TemplateSummary: version.");
-
             if (!latestVersion.IsSet)
                 throw new JsonException("Property is required for class TemplateSummary: latest_version.");
 
             if (!versionPublishedAt.IsSet)
                 throw new JsonException("Property is required for class TemplateSummary: version_published_at.");
 
-            if (!aiFieldNamingLanguage.IsSet)
-                throw new JsonException("Property is required for class TemplateSummary: ai_field_naming_language.");
-
-            if (!redirectUrl.IsSet)
-                throw new JsonException("Property is required for class TemplateSummary: redirect_url.");
-
             if (!lastChangedAt.IsSet)
                 throw new JsonException("Property is required for class TemplateSummary: last_changed_at.");
-
-            if (!lastChangedBy.IsSet)
-                throw new JsonException("Property is required for class TemplateSummary: last_changed_by.");
 
             if (id.IsSet && id.Value == null)
                 throw new JsonException("Property is not nullable for class TemplateSummary: id.");
@@ -787,70 +396,13 @@ namespace DocSpring.Client.Model
             if (locked.IsSet && locked.Value == null)
                 throw new JsonException("Property is not nullable for class TemplateSummary: locked.");
 
-            if (addSignatureRequestSubmissionIdFooters.IsSet && addSignatureRequestSubmissionIdFooters.Value == null)
-                throw new JsonException("Property is not nullable for class TemplateSummary: add_signature_request_submission_id_footers.");
-
-            if (allowAdditionalProperties.IsSet && allowAdditionalProperties.Value == null)
-                throw new JsonException("Property is not nullable for class TemplateSummary: allow_additional_properties.");
-
-            if (allowSkippingOptionalFields.IsSet && allowSkippingOptionalFields.Value == null)
-                throw new JsonException("Property is not nullable for class TemplateSummary: allow_skipping_optional_fields.");
-
-            if (defaultFormMode.IsSet && defaultFormMode.Value == null)
-                throw new JsonException("Property is not nullable for class TemplateSummary: default_form_mode.");
-
-            if (editableSubmissions.IsSet && editableSubmissions.Value == null)
-                throw new JsonException("Property is not nullable for class TemplateSummary: editable_submissions.");
-
-            if (embedDomains.IsSet && embedDomains.Value == null)
-                throw new JsonException("Property is not nullable for class TemplateSummary: embed_domains.");
-
-            if (embedEditAllowSettings.IsSet && embedEditAllowSettings.Value == null)
-                throw new JsonException("Property is not nullable for class TemplateSummary: embed_edit_allow_settings.");
-
-            if (embedEditAllowVersioning.IsSet && embedEditAllowVersioning.Value == null)
-                throw new JsonException("Property is not nullable for class TemplateSummary: embed_edit_allow_versioning.");
-
-            if (embedEditAllowDocumentReplacement.IsSet && embedEditAllowDocumentReplacement.Value == null)
-                throw new JsonException("Property is not nullable for class TemplateSummary: embed_edit_allow_document_replacement.");
-
-            if (encryptPdfs.IsSet && encryptPdfs.Value == null)
-                throw new JsonException("Property is not nullable for class TemplateSummary: encrypt_pdfs.");
-
-            if (hasEncryptPdfsPassword.IsSet && hasEncryptPdfsPassword.Value == null)
-                throw new JsonException("Property is not nullable for class TemplateSummary: has_encrypt_pdfs_password.");
-
-            if (expireSubmissions.IsSet && expireSubmissions.Value == null)
-                throw new JsonException("Property is not nullable for class TemplateSummary: expire_submissions.");
-
-            if (expireAfter.IsSet && expireAfter.Value == null)
-                throw new JsonException("Property is not nullable for class TemplateSummary: expire_after.");
-
-            if (expirationInterval.IsSet && expirationInterval.Value == null)
-                throw new JsonException("Property is not nullable for class TemplateSummary: expiration_interval.");
-
-            if (mergeAuditTrailPdf.IsSet && mergeAuditTrailPdf.Value == null)
-                throw new JsonException("Property is not nullable for class TemplateSummary: merge_audit_trail_pdf.");
-
-            if (parseDatesUsingTemplateDateFormat.IsSet && parseDatesUsingTemplateDateFormat.Value == null)
-                throw new JsonException("Property is not nullable for class TemplateSummary: parse_dates_using_template_date_format.");
-
-            if (publicSubmissions.IsSet && publicSubmissions.Value == null)
-                throw new JsonException("Property is not nullable for class TemplateSummary: public_submissions.");
-
-            if (publicWebForm.IsSet && publicWebForm.Value == null)
-                throw new JsonException("Property is not nullable for class TemplateSummary: public_web_form.");
-
-            if (hasSlackWebhookUrl.IsSet && hasSlackWebhookUrl.Value == null)
-                throw new JsonException("Property is not nullable for class TemplateSummary: has_slack_webhook_url.");
-
             if (createdAt.IsSet && createdAt.Value == null)
                 throw new JsonException("Property is not nullable for class TemplateSummary: created_at.");
 
             if (updatedAt.IsSet && updatedAt.Value == null)
                 throw new JsonException("Property is not nullable for class TemplateSummary: updated_at.");
 
-            return new TemplateSummary(id.Value, templateType.Value.Value, ready.Value.Value, path.Value, locked.Value.Value, addSignatureRequestSubmissionIdFooters.Value.Value, allowAdditionalProperties.Value.Value, allowSkippingOptionalFields.Value.Value, defaultFormMode.Value.Value, editableSubmissions.Value.Value, embedDomains.Value, embedEditAllowSettings.Value.Value, embedEditAllowVersioning.Value.Value, embedEditAllowDocumentReplacement.Value.Value, encryptPdfs.Value.Value, hasEncryptPdfsPassword.Value.Value, expireSubmissions.Value.Value, expireAfter.Value.Value, expirationInterval.Value.Value, mergeAuditTrailPdf.Value.Value, parseDatesUsingTemplateDateFormat.Value.Value, publicSubmissions.Value.Value, publicWebForm.Value.Value, hasSlackWebhookUrl.Value.Value, createdAt.Value.Value, updatedAt.Value.Value, name.Value, description.Value, document.Value, parentFolderId.Value, varVersion.Value, latestVersion.Value, versionPublishedAt.Value, aiFieldNamingLanguage.Value, redirectUrl.Value, lastChangedAt.Value, lastChangedBy.Value);
+            return new TemplateSummary(id.Value, templateType.Value.Value, ready.Value.Value, path.Value, locked.Value.Value, createdAt.Value.Value, updatedAt.Value.Value, name.Value, description.Value, document.Value, parentFolderId.Value, latestVersion.Value, versionPublishedAt.Value, lastChangedAt.Value);
         }
 
         /// <summary>
@@ -886,46 +438,6 @@ namespace DocSpring.Client.Model
 
             writer.WriteBoolean("locked", templateSummary.Locked);
 
-            writer.WriteBoolean("add_signature_request_submission_id_footers", templateSummary.AddSignatureRequestSubmissionIdFooters);
-
-            writer.WriteBoolean("allow_additional_properties", templateSummary.AllowAdditionalProperties);
-
-            writer.WriteBoolean("allow_skipping_optional_fields", templateSummary.AllowSkippingOptionalFields);
-
-            var defaultFormModeRawValue = TemplateFormModeValueConverter.ToJsonValue(templateSummary.DefaultFormMode);
-            writer.WriteString("default_form_mode", defaultFormModeRawValue);
-
-            writer.WriteBoolean("editable_submissions", templateSummary.EditableSubmissions);
-
-            writer.WritePropertyName("embed_domains");
-            JsonSerializer.Serialize(writer, templateSummary.EmbedDomains, jsonSerializerOptions);
-            writer.WriteBoolean("embed_edit_allow_settings", templateSummary.EmbedEditAllowSettings);
-
-            writer.WriteBoolean("embed_edit_allow_versioning", templateSummary.EmbedEditAllowVersioning);
-
-            writer.WriteBoolean("embed_edit_allow_document_replacement", templateSummary.EmbedEditAllowDocumentReplacement);
-
-            writer.WriteBoolean("encrypt_pdfs", templateSummary.EncryptPdfs);
-
-            writer.WriteBoolean("has_encrypt_pdfs_password", templateSummary.HasEncryptPdfsPassword);
-
-            writer.WriteBoolean("expire_submissions", templateSummary.ExpireSubmissions);
-
-            writer.WriteNumber("expire_after", templateSummary.ExpireAfter);
-
-            var expirationIntervalRawValue = ExpirationIntervalValueConverter.ToJsonValue(templateSummary.ExpirationInterval);
-            writer.WriteString("expiration_interval", expirationIntervalRawValue);
-
-            writer.WriteBoolean("merge_audit_trail_pdf", templateSummary.MergeAuditTrailPdf);
-
-            writer.WriteBoolean("parse_dates_using_template_date_format", templateSummary.ParseDatesUsingTemplateDateFormat);
-
-            writer.WriteBoolean("public_submissions", templateSummary.PublicSubmissions);
-
-            writer.WriteBoolean("public_web_form", templateSummary.PublicWebForm);
-
-            writer.WriteBoolean("has_slack_webhook_url", templateSummary.HasSlackWebhookUrl);
-
             writer.WriteString("created_at", templateSummary.CreatedAt.ToString(CreatedAtFormat));
 
             writer.WriteString("updated_at", templateSummary.UpdatedAt.ToString(UpdatedAtFormat));
@@ -952,11 +464,6 @@ namespace DocSpring.Client.Model
             else
                 writer.WriteNull("parent_folder_id");
 
-            if (templateSummary.VarVersion != null)
-                writer.WriteString("version", templateSummary.VarVersion);
-            else
-                writer.WriteNull("version");
-
             if (templateSummary.LatestVersion != null)
                 writer.WriteString("latest_version", templateSummary.LatestVersion);
             else
@@ -967,34 +474,10 @@ namespace DocSpring.Client.Model
             else
                 writer.WriteNull("version_published_at");
 
-            if (templateSummary.AiFieldNamingLanguage == null)
-                writer.WriteNull("ai_field_naming_language");
-            else
-            {
-                var aiFieldNamingLanguageRawValue = AiFieldNamingLanguageValueConverter.ToJsonValue(templateSummary.AiFieldNamingLanguage.Value);
-                if (aiFieldNamingLanguageRawValue != null)
-                    writer.WriteString("ai_field_naming_language", aiFieldNamingLanguageRawValue);
-                else
-                    writer.WriteNull("ai_field_naming_language");
-            }
-
-            if (templateSummary.RedirectUrl != null)
-                writer.WriteString("redirect_url", templateSummary.RedirectUrl);
-            else
-                writer.WriteNull("redirect_url");
-
             if (templateSummary.LastChangedAt != null)
                 writer.WriteString("last_changed_at", templateSummary.LastChangedAt.Value.ToString(LastChangedAtFormat));
             else
                 writer.WriteNull("last_changed_at");
-
-            if (templateSummary.LastChangedBy != null)
-            {
-                writer.WritePropertyName("last_changed_by");
-                JsonSerializer.Serialize(writer, templateSummary.LastChangedBy, jsonSerializerOptions);
-            }
-            else
-                writer.WriteNull("last_changed_by");
         }
     }
 }

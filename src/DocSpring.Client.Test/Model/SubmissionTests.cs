@@ -126,42 +126,6 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
-        /// Test the property 'HasPassword'
-        /// </summary>
-        [Fact]
-        public void HasPasswordTest()
-        {
-            // TODO unit test for the property 'HasPassword'
-        }
-
-        /// <summary>
-        /// Test the property 'SignatureRequests'
-        /// </summary>
-        [Fact]
-        public void SignatureRequestsTest()
-        {
-            // TODO unit test for the property 'SignatureRequests'
-        }
-
-        /// <summary>
-        /// Test the property 'Actions'
-        /// </summary>
-        [Fact]
-        public void ActionsTest()
-        {
-            // TODO unit test for the property 'Actions'
-        }
-
-        /// <summary>
-        /// Test the property 'OutputFormats'
-        /// </summary>
-        [Fact]
-        public void OutputFormatsTest()
-        {
-            // TODO unit test for the property 'OutputFormats'
-        }
-
-        /// <summary>
         /// Test the property 'Files'
         /// </summary>
         [Fact]
@@ -195,6 +159,42 @@ namespace DocSpring.Client.Test.Model
         public void UpdatedAtTest()
         {
             // TODO unit test for the property 'UpdatedAt'
+        }
+
+        /// <summary>
+        /// Test the property 'HasPassword'
+        /// </summary>
+        [Fact]
+        public void HasPasswordTest()
+        {
+            // TODO unit test for the property 'HasPassword'
+        }
+
+        /// <summary>
+        /// Test the property 'SignatureRequests'
+        /// </summary>
+        [Fact]
+        public void SignatureRequestsTest()
+        {
+            // TODO unit test for the property 'SignatureRequests'
+        }
+
+        /// <summary>
+        /// Test the property 'Actions'
+        /// </summary>
+        [Fact]
+        public void ActionsTest()
+        {
+            // TODO unit test for the property 'Actions'
+        }
+
+        /// <summary>
+        /// Test the property 'OutputFormats'
+        /// </summary>
+        [Fact]
+        public void OutputFormatsTest()
+        {
+            // TODO unit test for the property 'OutputFormats'
         }
 
         /// <summary>
@@ -243,24 +243,6 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
-        /// Test the property 'TruncatedText'
-        /// </summary>
-        [Fact]
-        public void TruncatedTextTest()
-        {
-            // TODO unit test for the property 'TruncatedText'
-        }
-
-        /// <summary>
-        /// Test the property 'PreviewGeneratedAt'
-        /// </summary>
-        [Fact]
-        public void PreviewGeneratedAtTest()
-        {
-            // TODO unit test for the property 'PreviewGeneratedAt'
-        }
-
-        /// <summary>
         /// Test the property 'ExpiresAt'
         /// </summary>
         [Fact]
@@ -276,6 +258,24 @@ namespace DocSpring.Client.Test.Model
         public void ProcessedAtTest()
         {
             // TODO unit test for the property 'ProcessedAt'
+        }
+
+        /// <summary>
+        /// Test the property 'TruncatedText'
+        /// </summary>
+        [Fact]
+        public void TruncatedTextTest()
+        {
+            // TODO unit test for the property 'TruncatedText'
+        }
+
+        /// <summary>
+        /// Test the property 'PreviewGeneratedAt'
+        /// </summary>
+        [Fact]
+        public void PreviewGeneratedAtTest()
+        {
+            // TODO unit test for the property 'PreviewGeneratedAt'
         }
     }
 }

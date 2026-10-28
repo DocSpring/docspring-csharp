@@ -63,21 +63,21 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
-        /// Test the property 'FieldReimportState'
-        /// </summary>
-        [Fact]
-        public void FieldReimportStateTest()
-        {
-            // TODO unit test for the property 'FieldReimportState'
-        }
-
-        /// <summary>
         /// Test the property 'PageCount'
         /// </summary>
         [Fact]
         public void PageCountTest()
         {
             // TODO unit test for the property 'PageCount'
+        }
+
+        /// <summary>
+        /// Test the property 'FieldReimportState'
+        /// </summary>
+        [Fact]
+        public void FieldReimportStateTest()
+        {
+            // TODO unit test for the property 'FieldReimportState'
         }
 
         /// <summary>
@@ -99,21 +99,21 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
-        /// Test the property 'Md5'
-        /// </summary>
-        [Fact]
-        public void Md5Test()
-        {
-            // TODO unit test for the property 'Md5'
-        }
-
-        /// <summary>
         /// Test the property 'ErrorMessage'
         /// </summary>
         [Fact]
         public void ErrorMessageTest()
         {
             // TODO unit test for the property 'ErrorMessage'
+        }
+
+        /// <summary>
+        /// Test the property 'Md5'
+        /// </summary>
+        [Fact]
+        public void Md5Test()
+        {
+            // TODO unit test for the property 'Md5'
         }
 
         /// <summary>

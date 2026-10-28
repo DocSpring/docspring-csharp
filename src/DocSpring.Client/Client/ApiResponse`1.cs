@@ -198,6 +198,26 @@ namespace DocSpring.Client.Client
     /// An interface for responses of type 
     /// </summary>
     /// <typeparam name="TType"></typeparam>
+    public interface IGatewayTimeout<TType> : IApiResponse
+    {
+        /// <summary>
+        /// Deserializes the response if the response is GatewayTimeout
+        /// </summary>
+        /// <returns></returns>
+        TType GatewayTimeout();
+
+        /// <summary>
+        /// Returns true if the response is GatewayTimeout and the deserialized response is not null
+        /// </summary>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        bool TryGatewayTimeout(out TType result);
+    }
+
+    /// <summary>
+    /// An interface for responses of type 
+    /// </summary>
+    /// <typeparam name="TType"></typeparam>
     public interface IConflict<TType> : IApiResponse
     {
         /// <summary>
@@ -232,6 +252,26 @@ namespace DocSpring.Client.Client
         /// <param name="result"></param>
         /// <returns></returns>
         bool TryPaymentRequired(out TType result);
+    }
+
+    /// <summary>
+    /// An interface for responses of type 
+    /// </summary>
+    /// <typeparam name="TType"></typeparam>
+    public interface ITooManyRequests<TType> : IApiResponse
+    {
+        /// <summary>
+        /// Deserializes the response if the response is TooManyRequests
+        /// </summary>
+        /// <returns></returns>
+        TType TooManyRequests();
+
+        /// <summary>
+        /// Returns true if the response is TooManyRequests and the deserialized response is not null
+        /// </summary>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        bool TryTooManyRequests(out TType result);
     }
 
     /// <summary>

@@ -149,9 +149,19 @@ namespace DocSpring.Client.Model
         public static ErrorCode PollingTimeout { get; } = new ErrorCode("polling_timeout");
 
         /// <summary>
+        /// idempotency_key_in_use
+        /// </summary>
+        public static ErrorCode IdempotencyKeyInUse { get; } = new ErrorCode("idempotency_key_in_use");
+
+        /// <summary>
+        /// idempotency_key_reused
+        /// </summary>
+        public static ErrorCode IdempotencyKeyReused { get; } = new ErrorCode("idempotency_key_reused");
+
+        /// <summary>
         /// The values this client knows
         /// </summary>
-        public static IReadOnlyList<ErrorCode> Values { get; } = new[] { InvalidRequest, Unauthorized, PaymentRequired, InsufficientCredits, Forbidden, UpgradeRequired, AccountSuspended, NotFound, MethodNotAllowed, Conflict, Gone, RequestTooLarge, UnsupportedMediaType, ValidationFailed, InvalidData, RateLimited, InternalError, BadGateway, ServiceUnavailable, UpstreamTimeout, PollingTimeout };
+        public static IReadOnlyList<ErrorCode> Values { get; } = new[] { InvalidRequest, Unauthorized, PaymentRequired, InsufficientCredits, Forbidden, UpgradeRequired, AccountSuspended, NotFound, MethodNotAllowed, Conflict, Gone, RequestTooLarge, UnsupportedMediaType, ValidationFailed, InvalidData, RateLimited, InternalError, BadGateway, ServiceUnavailable, UpstreamTimeout, PollingTimeout, IdempotencyKeyInUse, IdempotencyKeyReused };
 
         /// <summary>
         /// Whether the value is one this client knows: a newer API can return values added after it was released

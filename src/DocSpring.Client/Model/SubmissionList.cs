@@ -34,7 +34,7 @@ namespace DocSpring.Client.Model
         /// <param name="data">The items on this page.</param>
         /// <param name="nextCursor">Pass it as &#x60;cursor&#x60; to get the next page. Null on the last page.</param>
         [JsonConstructor]
-        public SubmissionList(List<Submission> data, string nextCursor = default)
+        public SubmissionList(List<SubmissionSummary> data, string nextCursor = default)
         {
             Data = data;
             NextCursor = nextCursor;
@@ -48,7 +48,7 @@ namespace DocSpring.Client.Model
         /// </summary>
         /// <value>The items on this page.</value>
         [JsonPropertyName("data")]
-        public List<Submission> Data { get; set; }
+        public List<SubmissionSummary> Data { get; set; }
 
         /// <summary>
         /// Pass it as &#x60;cursor&#x60; to get the next page. Null on the last page.
@@ -121,7 +121,7 @@ namespace DocSpring.Client.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
-            Option<List<Submission>> data = default;
+            Option<List<SubmissionSummary>> data = default;
             Option<string> nextCursor = default;
 
             while (utf8JsonReader.Read())
@@ -140,7 +140,7 @@ namespace DocSpring.Client.Model
                     switch (localVarJsonPropertyName)
                     {
                         case "data":
-                            data = new Option<List<Submission>>(JsonSerializer.Deserialize<List<Submission>>(ref utf8JsonReader, jsonSerializerOptions));
+                            data = new Option<List<SubmissionSummary>>(JsonSerializer.Deserialize<List<SubmissionSummary>>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "next_cursor":
                             nextCursor = new Option<string>(utf8JsonReader.GetString());

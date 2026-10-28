@@ -34,7 +34,7 @@ namespace DocSpring.Client.Model
         /// <param name="code">What&#39;s wrong: &#x60;required&#x60;, &#x60;unknown_property&#x60;, &#x60;type&#x60;, &#x60;enum&#x60;, &#x60;format&#x60;, a JSON Schema keyword such as &#x60;minLength&#x60;, or a DocSpring code. New codes can be added.</param>
         /// <param name="message">A human-readable explanation of the problem.</param>
         /// <param name="pointer">A JSON pointer to the value in the request body (RFC 6901). An empty string means the whole body. In a submission&#39;s &#x60;data_errors&#x60;, it points into the request that created the submission.</param>
-        /// <param name="parameter">The query parameter the detail is about.</param>
+        /// <param name="parameter">The query parameter or header the detail is about.</param>
         /// <param name="submissionId">For a batch item that failed validation, the ID of the submission recorded for it.</param>
         [JsonConstructor]
         public ErrorDetail(string code, string message, Option<string> pointer = default, Option<string> @parameter = default, Option<string> submissionId = default)
@@ -85,9 +85,9 @@ namespace DocSpring.Client.Model
         public Option<string> ParameterOption { get; private set; }
 
         /// <summary>
-        /// The query parameter the detail is about.
+        /// The query parameter or header the detail is about.
         /// </summary>
-        /// <value>The query parameter the detail is about.</value>
+        /// <value>The query parameter or header the detail is about.</value>
         [JsonPropertyName("parameter")]
         public string Parameter { get { return this.ParameterOption.Value; } set { this.ParameterOption = new Option<string>(value); } }
 

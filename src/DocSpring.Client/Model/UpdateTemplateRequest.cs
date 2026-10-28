@@ -41,7 +41,7 @@ namespace DocSpring.Client.Model
         /// <param name="allowSkippingOptionalFields">Visual forms and signature request forms show the Continue button as soon as the required fields are filled in, without visiting each optional field. The &#x60;allowSkippingOptionalFields&#x60; embed option overrides it.</param>
         /// <param name="defaultFormMode">The hosted form that /templates/{template_id}/form shows when its URL has no &#x60;mode&#x60; parameter: &#x60;web&#x60; (the web form), &#x60;visual&#x60; (the visual form, where fields are filled in on the PDF) or &#x60;dual&#x60; (both, in tabs). HTML templates have no visual form, so &#x60;web&#x60; is the only value they accept.</param>
         /// <param name="editableSubmissions">Generate PDFs whose text and check fields stay fillable (\&quot;Generate Editable PDFs\&quot;). A submission&#39;s &#x60;editable&#x60; overrides it.</param>
-        /// <param name="embedDomains">The sites where the template&#39;s signature requests, forms and embedded template editor can be loaded: a host such as &#x60;app.example.com&#x60;, with an optional leading wildcard (&#x60;*.example.com&#x60;), port (&#x60;localhost:3000&#x60;) or scheme (&#x60;https://app.example.com&#x60;; without one, &#x60;http&#x60; and &#x60;https&#x60; both work). When it&#39;s empty, live signature requests don&#39;t load on any site, and the embedded template editor loads on every site.</param>
+        /// <param name="embedDomains">The sites that can embed the template&#39;s live signature requests and its embedded template editor: a host such as &#x60;app.example.com&#x60;, with an optional leading wildcard (&#x60;*.example.com&#x60;), port (&#x60;localhost:3000&#x60;) or scheme (&#x60;https://app.example.com&#x60;; without one, &#x60;http&#x60; and &#x60;https&#x60; both work). Browsers open a live signature request in a frame only on these sites (and DocSpring&#39;s), so with an empty list it can&#39;t be embedded anywhere; a test signature request can be embedded on any site. The embedded template editor loads only for a page on one of these sites (by its Referer or Origin header), and on any site when the list is empty. Forms embedded on a page (Visual Forms JS and the simple form) aren&#39;t restricted.</param>
         /// <param name="embedEditAllowSettings">Allow the embedded template editor to change sensitive template settings (webhooks, redirect URL, encryption, public access, expiration and so on).</param>
         /// <param name="embedEditAllowVersioning">Allow the embedded template editor to publish, restore, compare and delete published versions.</param>
         /// <param name="embedEditAllowDocumentReplacement">Allow the embedded template editor to replace the template&#39;s PDF.</param>
@@ -66,8 +66,9 @@ namespace DocSpring.Client.Model
         /// <param name="headerHtml">The HTML printed at the top of each page of an HTML template.</param>
         /// <param name="footerHtml">The HTML printed at the bottom of each page of an HTML template.</param>
         /// <param name="htmlEngineOptions">Null resets the options to their defaults.</param>
+        /// <param name="htmlEscapeData">Whether an HTML template HTML-escapes the values it prints. When true, &#x60;{{ value }}&#x60; prints a value as text, so a &#x60;&lt;&#x60; or &#x60;&amp;&#x60; in it is printed as that character, and &#x60;{{ value | raw }}&#x60; prints a value as HTML. New HTML templates default to true. Templates created before October 2026, or with API v1, default to false, which prints every value as HTML. Null for PDF templates.</param>
         [JsonConstructor]
-        public UpdateTemplateRequest(Option<string> name = default, Option<string> description = default, Option<string> parentFolderId = default, Option<bool?> locked = default, Option<bool?> addSignatureRequestSubmissionIdFooters = default, Option<AiFieldNamingLanguage?> aiFieldNamingLanguage = default, Option<bool?> allowAdditionalProperties = default, Option<bool?> allowSkippingOptionalFields = default, Option<TemplateFormMode?> defaultFormMode = default, Option<bool?> editableSubmissions = default, Option<List<string>> embedDomains = default, Option<bool?> embedEditAllowSettings = default, Option<bool?> embedEditAllowVersioning = default, Option<bool?> embedEditAllowDocumentReplacement = default, Option<bool?> encryptPdfs = default, Option<string> encryptPdfsPassword = default, Option<bool?> expireSubmissions = default, Option<int?> expireAfter = default, Option<ExpirationInterval?> expirationInterval = default, Option<bool?> mergeAuditTrailPdf = default, Option<bool?> parseDatesUsingTemplateDateFormat = default, Option<bool?> publicSubmissions = default, Option<bool?> publicWebForm = default, Option<string> redirectUrl = default, Option<string> slackWebhookUrl = default, Option<TemplateDefaultsInput> defaults = default, Option<List<TemplateFieldDependencyInput>> fieldDependencies = default, Option<List<FieldGroupInput>> fieldGroups = default, Option<List<PredefinedFieldInput>> predefinedFields = default, Option<Dictionary<string, Object>> predefinedFieldsSampleData = default, Option<string> html = default, Option<string> scss = default, Option<string> headerHtml = default, Option<string> footerHtml = default, Option<HtmlEngineOptionsInput> htmlEngineOptions = default)
+        public UpdateTemplateRequest(Option<string> name = default, Option<string> description = default, Option<string> parentFolderId = default, Option<bool?> locked = default, Option<bool?> addSignatureRequestSubmissionIdFooters = default, Option<AiFieldNamingLanguage?> aiFieldNamingLanguage = default, Option<bool?> allowAdditionalProperties = default, Option<bool?> allowSkippingOptionalFields = default, Option<TemplateFormMode?> defaultFormMode = default, Option<bool?> editableSubmissions = default, Option<List<string>> embedDomains = default, Option<bool?> embedEditAllowSettings = default, Option<bool?> embedEditAllowVersioning = default, Option<bool?> embedEditAllowDocumentReplacement = default, Option<bool?> encryptPdfs = default, Option<string> encryptPdfsPassword = default, Option<bool?> expireSubmissions = default, Option<int?> expireAfter = default, Option<ExpirationInterval?> expirationInterval = default, Option<bool?> mergeAuditTrailPdf = default, Option<bool?> parseDatesUsingTemplateDateFormat = default, Option<bool?> publicSubmissions = default, Option<bool?> publicWebForm = default, Option<string> redirectUrl = default, Option<string> slackWebhookUrl = default, Option<TemplateDefaultsInput> defaults = default, Option<List<TemplateFieldDependencyInput>> fieldDependencies = default, Option<List<FieldGroupInput>> fieldGroups = default, Option<List<PredefinedFieldInput>> predefinedFields = default, Option<Dictionary<string, Object>> predefinedFieldsSampleData = default, Option<string> html = default, Option<string> scss = default, Option<string> headerHtml = default, Option<string> footerHtml = default, Option<HtmlEngineOptionsInput> htmlEngineOptions = default, Option<bool?> htmlEscapeData = default)
         {
             NameOption = name;
             DescriptionOption = description;
@@ -104,6 +105,7 @@ namespace DocSpring.Client.Model
             HeaderHtmlOption = headerHtml;
             FooterHtmlOption = footerHtml;
             HtmlEngineOptionsOption = htmlEngineOptions;
+            HtmlEscapeDataOption = htmlEscapeData;
             OnCreated();
         }
 
@@ -271,9 +273,9 @@ namespace DocSpring.Client.Model
         public Option<List<string>> EmbedDomainsOption { get; private set; }
 
         /// <summary>
-        /// The sites where the template&#39;s signature requests, forms and embedded template editor can be loaded: a host such as &#x60;app.example.com&#x60;, with an optional leading wildcard (&#x60;*.example.com&#x60;), port (&#x60;localhost:3000&#x60;) or scheme (&#x60;https://app.example.com&#x60;; without one, &#x60;http&#x60; and &#x60;https&#x60; both work). When it&#39;s empty, live signature requests don&#39;t load on any site, and the embedded template editor loads on every site.
+        /// The sites that can embed the template&#39;s live signature requests and its embedded template editor: a host such as &#x60;app.example.com&#x60;, with an optional leading wildcard (&#x60;*.example.com&#x60;), port (&#x60;localhost:3000&#x60;) or scheme (&#x60;https://app.example.com&#x60;; without one, &#x60;http&#x60; and &#x60;https&#x60; both work). Browsers open a live signature request in a frame only on these sites (and DocSpring&#39;s), so with an empty list it can&#39;t be embedded anywhere; a test signature request can be embedded on any site. The embedded template editor loads only for a page on one of these sites (by its Referer or Origin header), and on any site when the list is empty. Forms embedded on a page (Visual Forms JS and the simple form) aren&#39;t restricted.
         /// </summary>
-        /// <value>The sites where the template&#39;s signature requests, forms and embedded template editor can be loaded: a host such as &#x60;app.example.com&#x60;, with an optional leading wildcard (&#x60;*.example.com&#x60;), port (&#x60;localhost:3000&#x60;) or scheme (&#x60;https://app.example.com&#x60;; without one, &#x60;http&#x60; and &#x60;https&#x60; both work). When it&#39;s empty, live signature requests don&#39;t load on any site, and the embedded template editor loads on every site.</value>
+        /// <value>The sites that can embed the template&#39;s live signature requests and its embedded template editor: a host such as &#x60;app.example.com&#x60;, with an optional leading wildcard (&#x60;*.example.com&#x60;), port (&#x60;localhost:3000&#x60;) or scheme (&#x60;https://app.example.com&#x60;; without one, &#x60;http&#x60; and &#x60;https&#x60; both work). Browsers open a live signature request in a frame only on these sites (and DocSpring&#39;s), so with an empty list it can&#39;t be embedded anywhere; a test signature request can be embedded on any site. The embedded template editor loads only for a page on one of these sites (by its Referer or Origin header), and on any site when the list is empty. Forms embedded on a page (Visual Forms JS and the simple form) aren&#39;t restricted.</value>
         [JsonPropertyName("embed_domains")]
         public List<string> EmbedDomains { get { return this.EmbedDomainsOption.Value; } set { this.EmbedDomainsOption = new Option<List<string>>(value); } }
 
@@ -600,6 +602,20 @@ namespace DocSpring.Client.Model
         public HtmlEngineOptionsInput HtmlEngineOptions { get { return this.HtmlEngineOptionsOption.Value; } set { this.HtmlEngineOptionsOption = new Option<HtmlEngineOptionsInput>(value); } }
 
         /// <summary>
+        /// Used to track the state of HtmlEscapeData
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<bool?> HtmlEscapeDataOption { get; private set; }
+
+        /// <summary>
+        /// Whether an HTML template HTML-escapes the values it prints. When true, &#x60;{{ value }}&#x60; prints a value as text, so a &#x60;&lt;&#x60; or &#x60;&amp;&#x60; in it is printed as that character, and &#x60;{{ value | raw }}&#x60; prints a value as HTML. New HTML templates default to true. Templates created before October 2026, or with API v1, default to false, which prints every value as HTML. Null for PDF templates.
+        /// </summary>
+        /// <value>Whether an HTML template HTML-escapes the values it prints. When true, &#x60;{{ value }}&#x60; prints a value as text, so a &#x60;&lt;&#x60; or &#x60;&amp;&#x60; in it is printed as that character, and &#x60;{{ value | raw }}&#x60; prints a value as HTML. New HTML templates default to true. Templates created before October 2026, or with API v1, default to false, which prints every value as HTML. Null for PDF templates.</value>
+        [JsonPropertyName("html_escape_data")]
+        public bool? HtmlEscapeData { get { return this.HtmlEscapeDataOption.Value; } set { this.HtmlEscapeDataOption = new Option<bool?>(value); } }
+
+        /// <summary>
         /// Gets or Sets additional properties
         /// </summary>
         [JsonExtensionData]
@@ -648,6 +664,7 @@ namespace DocSpring.Client.Model
             sb.Append("  HeaderHtml: ").Append(HeaderHtml).Append("\n");
             sb.Append("  FooterHtml: ").Append(FooterHtml).Append("\n");
             sb.Append("  HtmlEngineOptions: ").Append(HtmlEngineOptions).Append("\n");
+            sb.Append("  HtmlEscapeData: ").Append(HtmlEscapeData).Append("\n");
             sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -731,6 +748,7 @@ namespace DocSpring.Client.Model
             Option<string> headerHtml = default;
             Option<string> footerHtml = default;
             Option<HtmlEngineOptionsInput> htmlEngineOptions = default;
+            Option<bool?> htmlEscapeData = default;
 
             while (utf8JsonReader.Read())
             {
@@ -852,6 +870,9 @@ namespace DocSpring.Client.Model
                         case "html_engine_options":
                             htmlEngineOptions = new Option<HtmlEngineOptionsInput>(JsonSerializer.Deserialize<HtmlEngineOptionsInput>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
+                        case "html_escape_data":
+                            htmlEscapeData = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
+                            break;
                         default:
                             break;
                     }
@@ -930,7 +951,10 @@ namespace DocSpring.Client.Model
             if (predefinedFields.IsSet && predefinedFields.Value == null)
                 throw new JsonException("Property is not nullable for class UpdateTemplateRequest: predefined_fields.");
 
-            return new UpdateTemplateRequest(name, description, parentFolderId, locked, addSignatureRequestSubmissionIdFooters, aiFieldNamingLanguage, allowAdditionalProperties, allowSkippingOptionalFields, defaultFormMode, editableSubmissions, embedDomains, embedEditAllowSettings, embedEditAllowVersioning, embedEditAllowDocumentReplacement, encryptPdfs, encryptPdfsPassword, expireSubmissions, expireAfter, expirationInterval, mergeAuditTrailPdf, parseDatesUsingTemplateDateFormat, publicSubmissions, publicWebForm, redirectUrl, slackWebhookUrl, defaults, fieldDependencies, fieldGroups, predefinedFields, predefinedFieldsSampleData, html, scss, headerHtml, footerHtml, htmlEngineOptions);
+            if (htmlEscapeData.IsSet && htmlEscapeData.Value == null)
+                throw new JsonException("Property is not nullable for class UpdateTemplateRequest: html_escape_data.");
+
+            return new UpdateTemplateRequest(name, description, parentFolderId, locked, addSignatureRequestSubmissionIdFooters, aiFieldNamingLanguage, allowAdditionalProperties, allowSkippingOptionalFields, defaultFormMode, editableSubmissions, embedDomains, embedEditAllowSettings, embedEditAllowVersioning, embedEditAllowDocumentReplacement, encryptPdfs, encryptPdfsPassword, expireSubmissions, expireAfter, expirationInterval, mergeAuditTrailPdf, parseDatesUsingTemplateDateFormat, publicSubmissions, publicWebForm, redirectUrl, slackWebhookUrl, defaults, fieldDependencies, fieldGroups, predefinedFields, predefinedFieldsSampleData, html, scss, headerHtml, footerHtml, htmlEngineOptions, htmlEscapeData);
         }
 
         /// <summary>
@@ -1026,6 +1050,9 @@ namespace DocSpring.Client.Model
 
             if (updateTemplateRequest.PredefinedFieldsOption.IsSet && updateTemplateRequest.PredefinedFields == null)
                 throw new JsonException("Cannot write null property UpdateTemplateRequest.PredefinedFields to non-nullable JSON property 'predefined_fields'.");
+
+            if (updateTemplateRequest.HtmlEscapeDataOption.IsSet && updateTemplateRequest.HtmlEscapeData == null)
+                throw new JsonException("Cannot write null property UpdateTemplateRequest.HtmlEscapeData to non-nullable JSON property 'html_escape_data'.");
 
             if (updateTemplateRequest.NameOption.IsSet)
                 writer.WriteString("name", updateTemplateRequest.Name);
@@ -1185,6 +1212,8 @@ namespace DocSpring.Client.Model
                 }
                 else
                     writer.WriteNull("html_engine_options");
+            if (updateTemplateRequest.HtmlEscapeDataOption.IsSet)
+                writer.WriteBoolean("html_escape_data", updateTemplateRequest.HtmlEscapeDataOption.Value.Value);
         }
     }
 }

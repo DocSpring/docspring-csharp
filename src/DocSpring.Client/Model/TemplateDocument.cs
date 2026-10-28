@@ -31,28 +31,28 @@ namespace DocSpring.Client.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="TemplateDocument" /> class.
         /// </summary>
-        /// <param name="state">&#x60;pending&#x60; while DocSpring processes the PDF, then &#x60;processed&#x60;. &#x60;password_required&#x60;, &#x60;malformed_pdf&#x60; and &#x60;unknown_error&#x60; mean the PDF couldn&#39;t be processed, and &#x60;error_message&#x60; says why: upload it again or upload another one. &#x60;downloading&#x60; while DocSpring downloads a &#x60;document_url&#x60;, then as for an upload. &#x60;download_failed&#x60; means it couldn&#39;t be downloaded, and &#x60;error_message&#x60; says why. A template keeps its PDF while a new one is downloaded, and when it couldn&#39;t be.</param>
-        /// <param name="fieldReimportState">Whether the fields are being re-imported from this PDF (&#x60;reimport_fields&#x60; when the PDF was replaced): &#x60;requested&#x60; while DocSpring processes the PDF, then &#x60;imported&#x60;, or &#x60;no_fields&#x60; when the PDF had no fillable fields and the template kept its fields. &#x60;none&#x60; when no re-import was asked for, or when it couldn&#39;t run (the PDF couldn&#39;t be processed, or the template was locked or published while it was).</param>
+        /// <param name="state">&#x60;pending&#x60; while DocSpring processes the PDF, then &#x60;processed&#x60; (&#x60;ready&#x60; says when its pages are done too). &#x60;password_required&#x60;, &#x60;malformed_pdf&#x60; and &#x60;unknown_error&#x60; mean the PDF couldn&#39;t be processed, and &#x60;error_message&#x60; says why: upload it again or upload another one. &#x60;downloading&#x60; while DocSpring downloads a &#x60;document_url&#x60;, then as for an upload. &#x60;download_failed&#x60; means it couldn&#39;t be downloaded, and &#x60;error_message&#x60; says why. A template keeps its PDF while a new one is downloaded, and when it couldn&#39;t be.</param>
         /// <param name="pageCount">0 until the PDF has been processed.</param>
+        /// <param name="fieldReimportState">Whether the fields are being re-imported from this PDF (&#x60;reimport_fields&#x60; when the PDF was replaced): &#x60;requested&#x60; while DocSpring processes the PDF, then &#x60;imported&#x60;, or &#x60;no_fields&#x60; when the PDF had no fillable fields and the template kept its fields. &#x60;none&#x60; when no re-import was asked for, or when it couldn&#39;t run (the PDF couldn&#39;t be processed, or the template was locked or published while it was).</param>
         /// <param name="pageProcessingStatuses">How processing is going on each page, in page order: its image, and its fields when DocSpring sets them up (&#x60;detect_fields&#x60; when the template was created). &#x60;state&#x60; becomes &#x60;processed&#x60; once every page is done. Empty until DocSpring has read the PDF, and for PDFs uploaded before DocSpring recorded page statuses.</param>
         /// <param name="filename">The PDF&#39;s file name. Null until a &#x60;document_url&#x60; has been downloaded.</param>
-        /// <param name="md5">The MD5 hash of the PDF.</param>
         /// <param name="errorMessage">Why the PDF couldn&#39;t be processed or downloaded, and how to fix it. Null unless &#x60;state&#x60; is an error.</param>
+        /// <param name="md5">The MD5 hash of the PDF.</param>
         /// <param name="pageDimensions">Each page&#39;s width and height in PDF points. Null until the PDF has been processed.</param>
         /// <param name="hasFillableFields">Whether the PDF has fillable form fields. Null until DocSpring has read the PDF.</param>
         /// <param name="fieldLogicStatus">AI field setup&#39;s last step, which reads the whole form once every page is done and can still rename fields and add conditional logic and required fields: &#x60;pending&#x60; or &#x60;processing&#x60; until it finishes, then &#x60;processed&#x60;, &#x60;failed&#x60; or &#x60;skipped&#x60;. Null until every page is done, and when there&#39;s no logic step to run (&#x60;field_logic&#x60; is &#x60;none&#x60;, or the PDF has no fields).</param>
         /// <param name="downloadUrl">A temporary link to download the PDF.</param>
         /// <param name="permanentUrl">A link to download the PDF that doesn&#39;t expire. Null until the PDF has been processed.</param>
         [JsonConstructor]
-        public TemplateDocument(TemplateDocumentState state, FieldReimportState fieldReimportState, int pageCount, List<TemplatePageProcessingStatus> pageProcessingStatuses, string filename = default, string md5 = default, string errorMessage = default, List<List<decimal>> pageDimensions = default, bool? hasFillableFields = default, TemplateFieldLogicStatus? fieldLogicStatus = default, string downloadUrl = default, string permanentUrl = default)
+        public TemplateDocument(TemplateDocumentState state, int pageCount, FieldReimportState fieldReimportState, List<TemplatePageProcessingStatus> pageProcessingStatuses, string filename = default, string errorMessage = default, string md5 = default, List<List<decimal>> pageDimensions = default, bool? hasFillableFields = default, TemplateFieldLogicStatus? fieldLogicStatus = default, string downloadUrl = default, string permanentUrl = default)
         {
             State = state;
-            FieldReimportState = fieldReimportState;
             PageCount = pageCount;
+            FieldReimportState = fieldReimportState;
             PageProcessingStatuses = pageProcessingStatuses;
             Filename = filename;
-            Md5 = md5;
             ErrorMessage = errorMessage;
+            Md5 = md5;
             PageDimensions = pageDimensions;
             HasFillableFields = hasFillableFields;
             FieldLogicStatus = fieldLogicStatus;
@@ -64,9 +64,9 @@ namespace DocSpring.Client.Model
         partial void OnCreated();
 
         /// <summary>
-        /// &#x60;pending&#x60; while DocSpring processes the PDF, then &#x60;processed&#x60;. &#x60;password_required&#x60;, &#x60;malformed_pdf&#x60; and &#x60;unknown_error&#x60; mean the PDF couldn&#39;t be processed, and &#x60;error_message&#x60; says why: upload it again or upload another one. &#x60;downloading&#x60; while DocSpring downloads a &#x60;document_url&#x60;, then as for an upload. &#x60;download_failed&#x60; means it couldn&#39;t be downloaded, and &#x60;error_message&#x60; says why. A template keeps its PDF while a new one is downloaded, and when it couldn&#39;t be.
+        /// &#x60;pending&#x60; while DocSpring processes the PDF, then &#x60;processed&#x60; (&#x60;ready&#x60; says when its pages are done too). &#x60;password_required&#x60;, &#x60;malformed_pdf&#x60; and &#x60;unknown_error&#x60; mean the PDF couldn&#39;t be processed, and &#x60;error_message&#x60; says why: upload it again or upload another one. &#x60;downloading&#x60; while DocSpring downloads a &#x60;document_url&#x60;, then as for an upload. &#x60;download_failed&#x60; means it couldn&#39;t be downloaded, and &#x60;error_message&#x60; says why. A template keeps its PDF while a new one is downloaded, and when it couldn&#39;t be.
         /// </summary>
-        /// <value>&#x60;pending&#x60; while DocSpring processes the PDF, then &#x60;processed&#x60;. &#x60;password_required&#x60;, &#x60;malformed_pdf&#x60; and &#x60;unknown_error&#x60; mean the PDF couldn&#39;t be processed, and &#x60;error_message&#x60; says why: upload it again or upload another one. &#x60;downloading&#x60; while DocSpring downloads a &#x60;document_url&#x60;, then as for an upload. &#x60;download_failed&#x60; means it couldn&#39;t be downloaded, and &#x60;error_message&#x60; says why. A template keeps its PDF while a new one is downloaded, and when it couldn&#39;t be.</value>
+        /// <value>&#x60;pending&#x60; while DocSpring processes the PDF, then &#x60;processed&#x60; (&#x60;ready&#x60; says when its pages are done too). &#x60;password_required&#x60;, &#x60;malformed_pdf&#x60; and &#x60;unknown_error&#x60; mean the PDF couldn&#39;t be processed, and &#x60;error_message&#x60; says why: upload it again or upload another one. &#x60;downloading&#x60; while DocSpring downloads a &#x60;document_url&#x60;, then as for an upload. &#x60;download_failed&#x60; means it couldn&#39;t be downloaded, and &#x60;error_message&#x60; says why. A template keeps its PDF while a new one is downloaded, and when it couldn&#39;t be.</value>
         [JsonPropertyName("state")]
         public TemplateDocumentState State { get; set; }
 
@@ -106,18 +106,18 @@ namespace DocSpring.Client.Model
         public string Filename { get; set; }
 
         /// <summary>
-        /// The MD5 hash of the PDF.
-        /// </summary>
-        /// <value>The MD5 hash of the PDF.</value>
-        [JsonPropertyName("md5")]
-        public string Md5 { get; set; }
-
-        /// <summary>
         /// Why the PDF couldn&#39;t be processed or downloaded, and how to fix it. Null unless &#x60;state&#x60; is an error.
         /// </summary>
         /// <value>Why the PDF couldn&#39;t be processed or downloaded, and how to fix it. Null unless &#x60;state&#x60; is an error.</value>
         [JsonPropertyName("error_message")]
         public string ErrorMessage { get; set; }
+
+        /// <summary>
+        /// The MD5 hash of the PDF.
+        /// </summary>
+        /// <value>The MD5 hash of the PDF.</value>
+        [JsonPropertyName("md5")]
+        public string Md5 { get; set; }
 
         /// <summary>
         /// Each page&#39;s width and height in PDF points. Null until the PDF has been processed.
@@ -156,12 +156,12 @@ namespace DocSpring.Client.Model
             StringBuilder sb = new StringBuilder();
             sb.Append("class TemplateDocument {\n");
             sb.Append("  State: ").Append(State).Append("\n");
-            sb.Append("  FieldReimportState: ").Append(FieldReimportState).Append("\n");
             sb.Append("  PageCount: ").Append(PageCount).Append("\n");
+            sb.Append("  FieldReimportState: ").Append(FieldReimportState).Append("\n");
             sb.Append("  PageProcessingStatuses: ").Append(PageProcessingStatuses).Append("\n");
             sb.Append("  Filename: ").Append(Filename).Append("\n");
-            sb.Append("  Md5: ").Append(Md5).Append("\n");
             sb.Append("  ErrorMessage: ").Append(ErrorMessage).Append("\n");
+            sb.Append("  Md5: ").Append(Md5).Append("\n");
             sb.Append("  PageDimensions: ").Append(PageDimensions).Append("\n");
             sb.Append("  HasFillableFields: ").Append(HasFillableFields).Append("\n");
             sb.Append("  FieldLogicStatus: ").Append(FieldLogicStatus).Append("\n");
@@ -215,12 +215,12 @@ namespace DocSpring.Client.Model
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
             Option<TemplateDocumentState?> state = default;
-            Option<FieldReimportState?> fieldReimportState = default;
             Option<int?> pageCount = default;
+            Option<FieldReimportState?> fieldReimportState = default;
             Option<List<TemplatePageProcessingStatus>> pageProcessingStatuses = default;
             Option<string> filename = default;
-            Option<string> md5 = default;
             Option<string> errorMessage = default;
+            Option<string> md5 = default;
             Option<List<List<decimal>>> pageDimensions = default;
             Option<bool?> hasFillableFields = default;
             Option<TemplateFieldLogicStatus?> fieldLogicStatus = default;
@@ -245,11 +245,11 @@ namespace DocSpring.Client.Model
                         case "state":
                             state = new Option<TemplateDocumentState?>(JsonSerializer.Deserialize<TemplateDocumentState?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
-                        case "field_reimport_state":
-                            fieldReimportState = new Option<FieldReimportState?>(JsonSerializer.Deserialize<FieldReimportState?>(ref utf8JsonReader, jsonSerializerOptions));
-                            break;
                         case "page_count":
                             pageCount = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
+                            break;
+                        case "field_reimport_state":
+                            fieldReimportState = new Option<FieldReimportState?>(JsonSerializer.Deserialize<FieldReimportState?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "page_processing_statuses":
                             pageProcessingStatuses = new Option<List<TemplatePageProcessingStatus>>(JsonSerializer.Deserialize<List<TemplatePageProcessingStatus>>(ref utf8JsonReader, jsonSerializerOptions));
@@ -257,11 +257,11 @@ namespace DocSpring.Client.Model
                         case "filename":
                             filename = new Option<string>(utf8JsonReader.GetString());
                             break;
-                        case "md5":
-                            md5 = new Option<string>(utf8JsonReader.GetString());
-                            break;
                         case "error_message":
                             errorMessage = new Option<string>(utf8JsonReader.GetString());
+                            break;
+                        case "md5":
+                            md5 = new Option<string>(utf8JsonReader.GetString());
                             break;
                         case "page_dimensions":
                             pageDimensions = new Option<List<List<decimal>>>(JsonSerializer.Deserialize<List<List<decimal>>>(ref utf8JsonReader, jsonSerializerOptions));
@@ -287,11 +287,11 @@ namespace DocSpring.Client.Model
             if (!state.IsSet)
                 throw new JsonException("Property is required for class TemplateDocument: state.");
 
-            if (!fieldReimportState.IsSet)
-                throw new JsonException("Property is required for class TemplateDocument: field_reimport_state.");
-
             if (!pageCount.IsSet)
                 throw new JsonException("Property is required for class TemplateDocument: page_count.");
+
+            if (!fieldReimportState.IsSet)
+                throw new JsonException("Property is required for class TemplateDocument: field_reimport_state.");
 
             if (!pageProcessingStatuses.IsSet)
                 throw new JsonException("Property is required for class TemplateDocument: page_processing_statuses.");
@@ -299,11 +299,11 @@ namespace DocSpring.Client.Model
             if (!filename.IsSet)
                 throw new JsonException("Property is required for class TemplateDocument: filename.");
 
-            if (!md5.IsSet)
-                throw new JsonException("Property is required for class TemplateDocument: md5.");
-
             if (!errorMessage.IsSet)
                 throw new JsonException("Property is required for class TemplateDocument: error_message.");
+
+            if (!md5.IsSet)
+                throw new JsonException("Property is required for class TemplateDocument: md5.");
 
             if (!pageDimensions.IsSet)
                 throw new JsonException("Property is required for class TemplateDocument: page_dimensions.");
@@ -323,16 +323,16 @@ namespace DocSpring.Client.Model
             if (state.IsSet && state.Value == null)
                 throw new JsonException("Property is not nullable for class TemplateDocument: state.");
 
-            if (fieldReimportState.IsSet && fieldReimportState.Value == null)
-                throw new JsonException("Property is not nullable for class TemplateDocument: field_reimport_state.");
-
             if (pageCount.IsSet && pageCount.Value == null)
                 throw new JsonException("Property is not nullable for class TemplateDocument: page_count.");
+
+            if (fieldReimportState.IsSet && fieldReimportState.Value == null)
+                throw new JsonException("Property is not nullable for class TemplateDocument: field_reimport_state.");
 
             if (pageProcessingStatuses.IsSet && pageProcessingStatuses.Value == null)
                 throw new JsonException("Property is not nullable for class TemplateDocument: page_processing_statuses.");
 
-            return new TemplateDocument(state.Value.Value, fieldReimportState.Value.Value, pageCount.Value.Value, pageProcessingStatuses.Value, filename.Value, md5.Value, errorMessage.Value, pageDimensions.Value, hasFillableFields.Value, fieldLogicStatus.Value, downloadUrl.Value, permanentUrl.Value);
+            return new TemplateDocument(state.Value.Value, pageCount.Value.Value, fieldReimportState.Value.Value, pageProcessingStatuses.Value, filename.Value, errorMessage.Value, md5.Value, pageDimensions.Value, hasFillableFields.Value, fieldLogicStatus.Value, downloadUrl.Value, permanentUrl.Value);
         }
 
         /// <summary>
@@ -360,10 +360,10 @@ namespace DocSpring.Client.Model
             var stateRawValue = TemplateDocumentStateValueConverter.ToJsonValue(templateDocument.State);
             writer.WriteString("state", stateRawValue);
 
+            writer.WriteNumber("page_count", templateDocument.PageCount);
+
             var fieldReimportStateRawValue = FieldReimportStateValueConverter.ToJsonValue(templateDocument.FieldReimportState);
             writer.WriteString("field_reimport_state", fieldReimportStateRawValue);
-
-            writer.WriteNumber("page_count", templateDocument.PageCount);
 
             writer.WritePropertyName("page_processing_statuses");
             JsonSerializer.Serialize(writer, templateDocument.PageProcessingStatuses, jsonSerializerOptions);
@@ -372,15 +372,15 @@ namespace DocSpring.Client.Model
             else
                 writer.WriteNull("filename");
 
-            if (templateDocument.Md5 != null)
-                writer.WriteString("md5", templateDocument.Md5);
-            else
-                writer.WriteNull("md5");
-
             if (templateDocument.ErrorMessage != null)
                 writer.WriteString("error_message", templateDocument.ErrorMessage);
             else
                 writer.WriteNull("error_message");
+
+            if (templateDocument.Md5 != null)
+                writer.WriteString("md5", templateDocument.Md5);
+            else
+                writer.WriteNull("md5");
 
             if (templateDocument.PageDimensions != null)
             {

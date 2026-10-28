@@ -38,26 +38,26 @@ namespace DocSpring.Client.Model
         /// <param name="test">Test PDFs have a watermark and are free. Live PDFs use credits. Submissions made with a test API token are always test submissions.</param>
         /// <param name="editable">&#x60;true&#x60; keeps the PDF&#39;s text and check fields fillable, and &#x60;false&#x60; flattens every field. Left out, the template decides: its &#x60;editable_submissions&#x60; setting, or each field&#39;s own Editable option. A response shows the template&#39;s setting when the request left this out. Can&#39;t be &#x60;true&#x60; with &#x60;signature_requests&#x60;.</param>
         /// <param name="dataErrors">Why the data doesn&#39;t match the template&#39;s fields, when &#x60;state&#x60; is &#x60;invalid_data&#x60;: the same details as the 422 response that recorded it, with pointers into the request that created the submission (&#x60;/data/name&#x60;). Cleared once the submission has expired.</param>
-        /// <param name="metadata">Your own data about the submission, such as an ID from your app. It isn&#39;t printed on the PDF.</param>
-        /// <param name="hasPassword">Whether the PDF needs a password to open (&#x60;password&#x60;).</param>
-        /// <param name="signatureRequests">The people asked to sign the submission (and fill in their fields), in order.</param>
-        /// <param name="actions">The uploads of the submission&#39;s PDF to your storage (account integrations).</param>
-        /// <param name="outputFormats">What the submission makes: &#x60;pdf&#x60;, and &#x60;png&#x60; (an image of each page of the PDF, up to 100 pages) when you ask for it. Default &#x60;[\&quot;pdf\&quot;]&#x60;. POST /submissions/{submission_id}/generate_files adds &#x60;png&#x60; to a processed submission.</param>
+        /// <param name="metadata">Your own data about the submission, such as an ID from your app. It isn&#39;t printed on the PDF. Two keys also change the PDF: &#x60;pdf_filename&#x60; names its file (&#x60;files.pdf.filename&#x60;, and its download), and &#x60;pdf_title&#x60; is its title in the PDF&#39;s document properties (and an HTML template&#39;s &#x60;&lt;title&gt;&#x60;, unless its HTML has one). Without &#x60;pdf_title&#x60;, the title is the template&#39;s name. In &#x60;pdf_filename&#x60;, a &#x60;.pdf&#x60; ending is removed, each run of characters other than letters, digits, &#x60;-&#x60;, &#x60;_&#x60; and &#x60;.&#x60; becomes one &#x60;_&#x60;, and the first 128 characters are kept, then &#x60;.pdf&#x60; is added. Without it, the file is named after the submission&#39;s ID (&#x60;sub_1234567890abcdef01.pdf&#x60;).</param>
         /// <param name="files">The generated files: &#x60;pdf&#x60; once the submission has been processed, &#x60;png&#x60; (the images of the PDF&#39;s pages, when &#x60;output_formats&#x60; has it: &#x60;files.png.pages[0]&#x60; is page 1), &#x60;audit_trail&#x60; once its signature requests are completed, and &#x60;preview&#x60; once a preview PDF has been generated. Empty once the submission has expired.</param>
         /// <param name="expired">An expired submission&#39;s data, metadata, password and PDF have been deleted.</param>
         /// <param name="createdAt">When the submission was created.</param>
         /// <param name="updatedAt">When the submission was last updated.</param>
+        /// <param name="hasPassword">Whether the PDF needs a password to open (&#x60;password&#x60;).</param>
+        /// <param name="signatureRequests">The people asked to sign the submission (and fill in their fields), in order.</param>
+        /// <param name="actions">The uploads of the submission&#39;s PDF to your storage (account integrations).</param>
+        /// <param name="outputFormats">What the submission makes: &#x60;pdf&#x60;, and &#x60;png&#x60; (an image of each page of the PDF, up to 100 pages) when you ask for it. Default &#x60;[\&quot;pdf\&quot;]&#x60;. POST /submissions/{submission_id}/generate_files adds &#x60;png&#x60; to a processed submission.</param>
         /// <param name="templateId">Null once the template has been permanently deleted.</param>
         /// <param name="templateVersion">The published version of the template the submission used. Null for the draft.</param>
         /// <param name="batchId">The ID of the batch the submission was created in.</param>
-        /// <param name="data">The submission&#39;s data, with the values entered in completed signature requests. Lists leave it out (null) unless you pass &#x60;include_data&#x3D;true&#x60;. Empty once the submission has expired.</param>
+        /// <param name="data">The submission&#39;s data, with the values entered in completed signature requests. Empty once the submission has expired. Null in a batch&#39;s submissions unless you pass &#x60;include_data&#x3D;true&#x60;, and in the events of a webhook that leaves out submission data.</param>
         /// <param name="errorMessage">Why the PDF couldn&#39;t be generated, when &#x60;state&#x60; is &#x60;error&#x60;.</param>
-        /// <param name="truncatedText">The text of each field that didn&#39;t fit in it, by field name. Left out (null) with &#x60;data&#x60;, and empty once the submission has expired.</param>
-        /// <param name="previewGeneratedAt">When the preview PDF was generated. Null if there is no preview.</param>
         /// <param name="expiresAt">When the submission expires. Null if it&#39;s kept until you delete it.</param>
         /// <param name="processedAt">When the PDF was generated. Null until then.</param>
+        /// <param name="truncatedText">The text of each field that didn&#39;t fit in it, by field name. Left out (null) with &#x60;data&#x60;, and empty once the submission has expired.</param>
+        /// <param name="previewGeneratedAt">When the preview PDF was generated. Null if there is no preview.</param>
         [JsonConstructor]
-        public Submission(string id, TemplateType templateType, SubmissionSource source, SubmissionState state, bool test, bool editable, List<ErrorDetail> dataErrors, Dictionary<string, Object> metadata, bool hasPassword, List<SignatureRequest> signatureRequests, List<SubmissionAction> actions, List<OutputFormat> outputFormats, SubmissionFiles files, bool expired, DateTime createdAt, DateTime updatedAt, string templateId = default, string templateVersion = default, string batchId = default, Dictionary<string, Object> data = default, string errorMessage = default, Dictionary<string, List<string>> truncatedText = default, DateTime? previewGeneratedAt = default, DateTime? expiresAt = default, DateTime? processedAt = default)
+        public Submission(string id, TemplateType templateType, SubmissionSource source, SubmissionState state, bool test, bool editable, List<ErrorDetail> dataErrors, Dictionary<string, Object> metadata, SubmissionFiles files, bool expired, DateTime createdAt, DateTime updatedAt, bool hasPassword, List<SignatureRequest> signatureRequests, List<SubmissionAction> actions, List<OutputFormat> outputFormats, string templateId = default, string templateVersion = default, string batchId = default, Dictionary<string, Object> data = default, string errorMessage = default, DateTime? expiresAt = default, DateTime? processedAt = default, Dictionary<string, List<string>> truncatedText = default, DateTime? previewGeneratedAt = default)
         {
             Id = id;
             TemplateType = templateType;
@@ -67,23 +67,23 @@ namespace DocSpring.Client.Model
             Editable = editable;
             DataErrors = dataErrors;
             Metadata = metadata;
-            HasPassword = hasPassword;
-            SignatureRequests = signatureRequests;
-            Actions = actions;
-            OutputFormats = outputFormats;
             Files = files;
             Expired = expired;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
+            HasPassword = hasPassword;
+            SignatureRequests = signatureRequests;
+            Actions = actions;
+            OutputFormats = outputFormats;
             TemplateId = templateId;
             TemplateVersion = templateVersion;
             BatchId = batchId;
             Data = data;
             ErrorMessage = errorMessage;
-            TruncatedText = truncatedText;
-            PreviewGeneratedAt = previewGeneratedAt;
             ExpiresAt = expiresAt;
             ProcessedAt = processedAt;
+            TruncatedText = truncatedText;
+            PreviewGeneratedAt = previewGeneratedAt;
             OnCreated();
         }
 
@@ -139,39 +139,11 @@ namespace DocSpring.Client.Model
         public List<ErrorDetail> DataErrors { get; set; }
 
         /// <summary>
-        /// Your own data about the submission, such as an ID from your app. It isn&#39;t printed on the PDF.
+        /// Your own data about the submission, such as an ID from your app. It isn&#39;t printed on the PDF. Two keys also change the PDF: &#x60;pdf_filename&#x60; names its file (&#x60;files.pdf.filename&#x60;, and its download), and &#x60;pdf_title&#x60; is its title in the PDF&#39;s document properties (and an HTML template&#39;s &#x60;&lt;title&gt;&#x60;, unless its HTML has one). Without &#x60;pdf_title&#x60;, the title is the template&#39;s name. In &#x60;pdf_filename&#x60;, a &#x60;.pdf&#x60; ending is removed, each run of characters other than letters, digits, &#x60;-&#x60;, &#x60;_&#x60; and &#x60;.&#x60; becomes one &#x60;_&#x60;, and the first 128 characters are kept, then &#x60;.pdf&#x60; is added. Without it, the file is named after the submission&#39;s ID (&#x60;sub_1234567890abcdef01.pdf&#x60;).
         /// </summary>
-        /// <value>Your own data about the submission, such as an ID from your app. It isn&#39;t printed on the PDF.</value>
+        /// <value>Your own data about the submission, such as an ID from your app. It isn&#39;t printed on the PDF. Two keys also change the PDF: &#x60;pdf_filename&#x60; names its file (&#x60;files.pdf.filename&#x60;, and its download), and &#x60;pdf_title&#x60; is its title in the PDF&#39;s document properties (and an HTML template&#39;s &#x60;&lt;title&gt;&#x60;, unless its HTML has one). Without &#x60;pdf_title&#x60;, the title is the template&#39;s name. In &#x60;pdf_filename&#x60;, a &#x60;.pdf&#x60; ending is removed, each run of characters other than letters, digits, &#x60;-&#x60;, &#x60;_&#x60; and &#x60;.&#x60; becomes one &#x60;_&#x60;, and the first 128 characters are kept, then &#x60;.pdf&#x60; is added. Without it, the file is named after the submission&#39;s ID (&#x60;sub_1234567890abcdef01.pdf&#x60;).</value>
         [JsonPropertyName("metadata")]
         public Dictionary<string, Object> Metadata { get; set; }
-
-        /// <summary>
-        /// Whether the PDF needs a password to open (&#x60;password&#x60;).
-        /// </summary>
-        /// <value>Whether the PDF needs a password to open (&#x60;password&#x60;).</value>
-        [JsonPropertyName("has_password")]
-        public bool HasPassword { get; set; }
-
-        /// <summary>
-        /// The people asked to sign the submission (and fill in their fields), in order.
-        /// </summary>
-        /// <value>The people asked to sign the submission (and fill in their fields), in order.</value>
-        [JsonPropertyName("signature_requests")]
-        public List<SignatureRequest> SignatureRequests { get; set; }
-
-        /// <summary>
-        /// The uploads of the submission&#39;s PDF to your storage (account integrations).
-        /// </summary>
-        /// <value>The uploads of the submission&#39;s PDF to your storage (account integrations).</value>
-        [JsonPropertyName("actions")]
-        public List<SubmissionAction> Actions { get; set; }
-
-        /// <summary>
-        /// What the submission makes: &#x60;pdf&#x60;, and &#x60;png&#x60; (an image of each page of the PDF, up to 100 pages) when you ask for it. Default &#x60;[\&quot;pdf\&quot;]&#x60;. POST /submissions/{submission_id}/generate_files adds &#x60;png&#x60; to a processed submission.
-        /// </summary>
-        /// <value>What the submission makes: &#x60;pdf&#x60;, and &#x60;png&#x60; (an image of each page of the PDF, up to 100 pages) when you ask for it. Default &#x60;[\&quot;pdf\&quot;]&#x60;. POST /submissions/{submission_id}/generate_files adds &#x60;png&#x60; to a processed submission.</value>
-        [JsonPropertyName("output_formats")]
-        public List<OutputFormat> OutputFormats { get; set; }
 
         /// <summary>
         /// The generated files: &#x60;pdf&#x60; once the submission has been processed, &#x60;png&#x60; (the images of the PDF&#39;s pages, when &#x60;output_formats&#x60; has it: &#x60;files.png.pages[0]&#x60; is page 1), &#x60;audit_trail&#x60; once its signature requests are completed, and &#x60;preview&#x60; once a preview PDF has been generated. Empty once the submission has expired.
@@ -202,6 +174,34 @@ namespace DocSpring.Client.Model
         public DateTime UpdatedAt { get; set; }
 
         /// <summary>
+        /// Whether the PDF needs a password to open (&#x60;password&#x60;).
+        /// </summary>
+        /// <value>Whether the PDF needs a password to open (&#x60;password&#x60;).</value>
+        [JsonPropertyName("has_password")]
+        public bool HasPassword { get; set; }
+
+        /// <summary>
+        /// The people asked to sign the submission (and fill in their fields), in order.
+        /// </summary>
+        /// <value>The people asked to sign the submission (and fill in their fields), in order.</value>
+        [JsonPropertyName("signature_requests")]
+        public List<SignatureRequest> SignatureRequests { get; set; }
+
+        /// <summary>
+        /// The uploads of the submission&#39;s PDF to your storage (account integrations).
+        /// </summary>
+        /// <value>The uploads of the submission&#39;s PDF to your storage (account integrations).</value>
+        [JsonPropertyName("actions")]
+        public List<SubmissionAction> Actions { get; set; }
+
+        /// <summary>
+        /// What the submission makes: &#x60;pdf&#x60;, and &#x60;png&#x60; (an image of each page of the PDF, up to 100 pages) when you ask for it. Default &#x60;[\&quot;pdf\&quot;]&#x60;. POST /submissions/{submission_id}/generate_files adds &#x60;png&#x60; to a processed submission.
+        /// </summary>
+        /// <value>What the submission makes: &#x60;pdf&#x60;, and &#x60;png&#x60; (an image of each page of the PDF, up to 100 pages) when you ask for it. Default &#x60;[\&quot;pdf\&quot;]&#x60;. POST /submissions/{submission_id}/generate_files adds &#x60;png&#x60; to a processed submission.</value>
+        [JsonPropertyName("output_formats")]
+        public List<OutputFormat> OutputFormats { get; set; }
+
+        /// <summary>
         /// Null once the template has been permanently deleted.
         /// </summary>
         /// <value>Null once the template has been permanently deleted.</value>
@@ -223,9 +223,9 @@ namespace DocSpring.Client.Model
         public string BatchId { get; set; }
 
         /// <summary>
-        /// The submission&#39;s data, with the values entered in completed signature requests. Lists leave it out (null) unless you pass &#x60;include_data&#x3D;true&#x60;. Empty once the submission has expired.
+        /// The submission&#39;s data, with the values entered in completed signature requests. Empty once the submission has expired. Null in a batch&#39;s submissions unless you pass &#x60;include_data&#x3D;true&#x60;, and in the events of a webhook that leaves out submission data.
         /// </summary>
-        /// <value>The submission&#39;s data, with the values entered in completed signature requests. Lists leave it out (null) unless you pass &#x60;include_data&#x3D;true&#x60;. Empty once the submission has expired.</value>
+        /// <value>The submission&#39;s data, with the values entered in completed signature requests. Empty once the submission has expired. Null in a batch&#39;s submissions unless you pass &#x60;include_data&#x3D;true&#x60;, and in the events of a webhook that leaves out submission data.</value>
         [JsonPropertyName("data")]
         public Dictionary<string, Object> Data { get; set; }
 
@@ -235,20 +235,6 @@ namespace DocSpring.Client.Model
         /// <value>Why the PDF couldn&#39;t be generated, when &#x60;state&#x60; is &#x60;error&#x60;.</value>
         [JsonPropertyName("error_message")]
         public string ErrorMessage { get; set; }
-
-        /// <summary>
-        /// The text of each field that didn&#39;t fit in it, by field name. Left out (null) with &#x60;data&#x60;, and empty once the submission has expired.
-        /// </summary>
-        /// <value>The text of each field that didn&#39;t fit in it, by field name. Left out (null) with &#x60;data&#x60;, and empty once the submission has expired.</value>
-        [JsonPropertyName("truncated_text")]
-        public Dictionary<string, List<string>> TruncatedText { get; set; }
-
-        /// <summary>
-        /// When the preview PDF was generated. Null if there is no preview.
-        /// </summary>
-        /// <value>When the preview PDF was generated. Null if there is no preview.</value>
-        [JsonPropertyName("preview_generated_at")]
-        public DateTime? PreviewGeneratedAt { get; set; }
 
         /// <summary>
         /// When the submission expires. Null if it&#39;s kept until you delete it.
@@ -263,6 +249,20 @@ namespace DocSpring.Client.Model
         /// <value>When the PDF was generated. Null until then.</value>
         [JsonPropertyName("processed_at")]
         public DateTime? ProcessedAt { get; set; }
+
+        /// <summary>
+        /// The text of each field that didn&#39;t fit in it, by field name. Left out (null) with &#x60;data&#x60;, and empty once the submission has expired.
+        /// </summary>
+        /// <value>The text of each field that didn&#39;t fit in it, by field name. Left out (null) with &#x60;data&#x60;, and empty once the submission has expired.</value>
+        [JsonPropertyName("truncated_text")]
+        public Dictionary<string, List<string>> TruncatedText { get; set; }
+
+        /// <summary>
+        /// When the preview PDF was generated. Null if there is no preview.
+        /// </summary>
+        /// <value>When the preview PDF was generated. Null if there is no preview.</value>
+        [JsonPropertyName("preview_generated_at")]
+        public DateTime? PreviewGeneratedAt { get; set; }
 
         /// <summary>
         /// Gets or Sets additional properties
@@ -286,23 +286,23 @@ namespace DocSpring.Client.Model
             sb.Append("  Editable: ").Append(Editable).Append("\n");
             sb.Append("  DataErrors: ").Append(DataErrors).Append("\n");
             sb.Append("  Metadata: ").Append(Metadata).Append("\n");
-            sb.Append("  HasPassword: ").Append(HasPassword).Append("\n");
-            sb.Append("  SignatureRequests: ").Append(SignatureRequests).Append("\n");
-            sb.Append("  Actions: ").Append(Actions).Append("\n");
-            sb.Append("  OutputFormats: ").Append(OutputFormats).Append("\n");
             sb.Append("  Files: ").Append(Files).Append("\n");
             sb.Append("  Expired: ").Append(Expired).Append("\n");
             sb.Append("  CreatedAt: ").Append(CreatedAt).Append("\n");
             sb.Append("  UpdatedAt: ").Append(UpdatedAt).Append("\n");
+            sb.Append("  HasPassword: ").Append(HasPassword).Append("\n");
+            sb.Append("  SignatureRequests: ").Append(SignatureRequests).Append("\n");
+            sb.Append("  Actions: ").Append(Actions).Append("\n");
+            sb.Append("  OutputFormats: ").Append(OutputFormats).Append("\n");
             sb.Append("  TemplateId: ").Append(TemplateId).Append("\n");
             sb.Append("  TemplateVersion: ").Append(TemplateVersion).Append("\n");
             sb.Append("  BatchId: ").Append(BatchId).Append("\n");
             sb.Append("  Data: ").Append(Data).Append("\n");
             sb.Append("  ErrorMessage: ").Append(ErrorMessage).Append("\n");
-            sb.Append("  TruncatedText: ").Append(TruncatedText).Append("\n");
-            sb.Append("  PreviewGeneratedAt: ").Append(PreviewGeneratedAt).Append("\n");
             sb.Append("  ExpiresAt: ").Append(ExpiresAt).Append("\n");
             sb.Append("  ProcessedAt: ").Append(ProcessedAt).Append("\n");
+            sb.Append("  TruncatedText: ").Append(TruncatedText).Append("\n");
+            sb.Append("  PreviewGeneratedAt: ").Append(PreviewGeneratedAt).Append("\n");
             sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -345,11 +345,6 @@ namespace DocSpring.Client.Model
         public string UpdatedAtFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
-        /// The format to use to serialize PreviewGeneratedAt
-        /// </summary>
-        public string PreviewGeneratedAtFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
-
-        /// <summary>
         /// The format to use to serialize ExpiresAt
         /// </summary>
         public string ExpiresAtFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
@@ -358,6 +353,11 @@ namespace DocSpring.Client.Model
         /// The format to use to serialize ProcessedAt
         /// </summary>
         public string ProcessedAtFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
+
+        /// <summary>
+        /// The format to use to serialize PreviewGeneratedAt
+        /// </summary>
+        public string PreviewGeneratedAtFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// Deserializes json to <see cref="Submission" />
@@ -384,23 +384,23 @@ namespace DocSpring.Client.Model
             Option<bool?> editable = default;
             Option<List<ErrorDetail>> dataErrors = default;
             Option<Dictionary<string, Object>> metadata = default;
-            Option<bool?> hasPassword = default;
-            Option<List<SignatureRequest>> signatureRequests = default;
-            Option<List<SubmissionAction>> actions = default;
-            Option<List<OutputFormat>> outputFormats = default;
             Option<SubmissionFiles> files = default;
             Option<bool?> expired = default;
             Option<DateTime?> createdAt = default;
             Option<DateTime?> updatedAt = default;
+            Option<bool?> hasPassword = default;
+            Option<List<SignatureRequest>> signatureRequests = default;
+            Option<List<SubmissionAction>> actions = default;
+            Option<List<OutputFormat>> outputFormats = default;
             Option<string> templateId = default;
             Option<string> templateVersion = default;
             Option<string> batchId = default;
             Option<Dictionary<string, Object>> data = default;
             Option<string> errorMessage = default;
-            Option<Dictionary<string, List<string>>> truncatedText = default;
-            Option<DateTime?> previewGeneratedAt = default;
             Option<DateTime?> expiresAt = default;
             Option<DateTime?> processedAt = default;
+            Option<Dictionary<string, List<string>>> truncatedText = default;
+            Option<DateTime?> previewGeneratedAt = default;
 
             while (utf8JsonReader.Read())
             {
@@ -441,18 +441,6 @@ namespace DocSpring.Client.Model
                         case "metadata":
                             metadata = new Option<Dictionary<string, Object>>(JsonSerializer.Deserialize<Dictionary<string, Object>>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
-                        case "has_password":
-                            hasPassword = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
-                            break;
-                        case "signature_requests":
-                            signatureRequests = new Option<List<SignatureRequest>>(JsonSerializer.Deserialize<List<SignatureRequest>>(ref utf8JsonReader, jsonSerializerOptions));
-                            break;
-                        case "actions":
-                            actions = new Option<List<SubmissionAction>>(JsonSerializer.Deserialize<List<SubmissionAction>>(ref utf8JsonReader, jsonSerializerOptions));
-                            break;
-                        case "output_formats":
-                            outputFormats = new Option<List<OutputFormat>>(JsonSerializer.Deserialize<List<OutputFormat>>(ref utf8JsonReader, jsonSerializerOptions));
-                            break;
                         case "files":
                             files = new Option<SubmissionFiles>(JsonSerializer.Deserialize<SubmissionFiles>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
@@ -464,6 +452,18 @@ namespace DocSpring.Client.Model
                             break;
                         case "updated_at":
                             updatedAt = new Option<DateTime?>(JsonSerializer.Deserialize<DateTime>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
+                        case "has_password":
+                            hasPassword = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
+                            break;
+                        case "signature_requests":
+                            signatureRequests = new Option<List<SignatureRequest>>(JsonSerializer.Deserialize<List<SignatureRequest>>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
+                        case "actions":
+                            actions = new Option<List<SubmissionAction>>(JsonSerializer.Deserialize<List<SubmissionAction>>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
+                        case "output_formats":
+                            outputFormats = new Option<List<OutputFormat>>(JsonSerializer.Deserialize<List<OutputFormat>>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "template_id":
                             templateId = new Option<string>(utf8JsonReader.GetString());
@@ -480,17 +480,17 @@ namespace DocSpring.Client.Model
                         case "error_message":
                             errorMessage = new Option<string>(utf8JsonReader.GetString());
                             break;
-                        case "truncated_text":
-                            truncatedText = new Option<Dictionary<string, List<string>>>(JsonSerializer.Deserialize<Dictionary<string, List<string>>>(ref utf8JsonReader, jsonSerializerOptions));
-                            break;
-                        case "preview_generated_at":
-                            previewGeneratedAt = new Option<DateTime?>(JsonSerializer.Deserialize<DateTime?>(ref utf8JsonReader, jsonSerializerOptions));
-                            break;
                         case "expires_at":
                             expiresAt = new Option<DateTime?>(JsonSerializer.Deserialize<DateTime?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "processed_at":
                             processedAt = new Option<DateTime?>(JsonSerializer.Deserialize<DateTime?>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
+                        case "truncated_text":
+                            truncatedText = new Option<Dictionary<string, List<string>>>(JsonSerializer.Deserialize<Dictionary<string, List<string>>>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
+                        case "preview_generated_at":
+                            previewGeneratedAt = new Option<DateTime?>(JsonSerializer.Deserialize<DateTime?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         default:
                             break;
@@ -522,18 +522,6 @@ namespace DocSpring.Client.Model
             if (!metadata.IsSet)
                 throw new JsonException("Property is required for class Submission: metadata.");
 
-            if (!hasPassword.IsSet)
-                throw new JsonException("Property is required for class Submission: has_password.");
-
-            if (!signatureRequests.IsSet)
-                throw new JsonException("Property is required for class Submission: signature_requests.");
-
-            if (!actions.IsSet)
-                throw new JsonException("Property is required for class Submission: actions.");
-
-            if (!outputFormats.IsSet)
-                throw new JsonException("Property is required for class Submission: output_formats.");
-
             if (!files.IsSet)
                 throw new JsonException("Property is required for class Submission: files.");
 
@@ -545,6 +533,18 @@ namespace DocSpring.Client.Model
 
             if (!updatedAt.IsSet)
                 throw new JsonException("Property is required for class Submission: updated_at.");
+
+            if (!hasPassword.IsSet)
+                throw new JsonException("Property is required for class Submission: has_password.");
+
+            if (!signatureRequests.IsSet)
+                throw new JsonException("Property is required for class Submission: signature_requests.");
+
+            if (!actions.IsSet)
+                throw new JsonException("Property is required for class Submission: actions.");
+
+            if (!outputFormats.IsSet)
+                throw new JsonException("Property is required for class Submission: output_formats.");
 
             if (!templateId.IsSet)
                 throw new JsonException("Property is required for class Submission: template_id.");
@@ -561,17 +561,17 @@ namespace DocSpring.Client.Model
             if (!errorMessage.IsSet)
                 throw new JsonException("Property is required for class Submission: error_message.");
 
-            if (!truncatedText.IsSet)
-                throw new JsonException("Property is required for class Submission: truncated_text.");
-
-            if (!previewGeneratedAt.IsSet)
-                throw new JsonException("Property is required for class Submission: preview_generated_at.");
-
             if (!expiresAt.IsSet)
                 throw new JsonException("Property is required for class Submission: expires_at.");
 
             if (!processedAt.IsSet)
                 throw new JsonException("Property is required for class Submission: processed_at.");
+
+            if (!truncatedText.IsSet)
+                throw new JsonException("Property is required for class Submission: truncated_text.");
+
+            if (!previewGeneratedAt.IsSet)
+                throw new JsonException("Property is required for class Submission: preview_generated_at.");
 
             if (id.IsSet && id.Value == null)
                 throw new JsonException("Property is not nullable for class Submission: id.");
@@ -597,18 +597,6 @@ namespace DocSpring.Client.Model
             if (metadata.IsSet && metadata.Value == null)
                 throw new JsonException("Property is not nullable for class Submission: metadata.");
 
-            if (hasPassword.IsSet && hasPassword.Value == null)
-                throw new JsonException("Property is not nullable for class Submission: has_password.");
-
-            if (signatureRequests.IsSet && signatureRequests.Value == null)
-                throw new JsonException("Property is not nullable for class Submission: signature_requests.");
-
-            if (actions.IsSet && actions.Value == null)
-                throw new JsonException("Property is not nullable for class Submission: actions.");
-
-            if (outputFormats.IsSet && outputFormats.Value == null)
-                throw new JsonException("Property is not nullable for class Submission: output_formats.");
-
             if (files.IsSet && files.Value == null)
                 throw new JsonException("Property is not nullable for class Submission: files.");
 
@@ -621,7 +609,19 @@ namespace DocSpring.Client.Model
             if (updatedAt.IsSet && updatedAt.Value == null)
                 throw new JsonException("Property is not nullable for class Submission: updated_at.");
 
-            return new Submission(id.Value, templateType.Value.Value, source.Value.Value, state.Value.Value, test.Value.Value, editable.Value.Value, dataErrors.Value, metadata.Value, hasPassword.Value.Value, signatureRequests.Value, actions.Value, outputFormats.Value, files.Value, expired.Value.Value, createdAt.Value.Value, updatedAt.Value.Value, templateId.Value, templateVersion.Value, batchId.Value, data.Value, errorMessage.Value, truncatedText.Value, previewGeneratedAt.Value, expiresAt.Value, processedAt.Value);
+            if (hasPassword.IsSet && hasPassword.Value == null)
+                throw new JsonException("Property is not nullable for class Submission: has_password.");
+
+            if (signatureRequests.IsSet && signatureRequests.Value == null)
+                throw new JsonException("Property is not nullable for class Submission: signature_requests.");
+
+            if (actions.IsSet && actions.Value == null)
+                throw new JsonException("Property is not nullable for class Submission: actions.");
+
+            if (outputFormats.IsSet && outputFormats.Value == null)
+                throw new JsonException("Property is not nullable for class Submission: output_formats.");
+
+            return new Submission(id.Value, templateType.Value.Value, source.Value.Value, state.Value.Value, test.Value.Value, editable.Value.Value, dataErrors.Value, metadata.Value, files.Value, expired.Value.Value, createdAt.Value.Value, updatedAt.Value.Value, hasPassword.Value.Value, signatureRequests.Value, actions.Value, outputFormats.Value, templateId.Value, templateVersion.Value, batchId.Value, data.Value, errorMessage.Value, expiresAt.Value, processedAt.Value, truncatedText.Value, previewGeneratedAt.Value);
         }
 
         /// <summary>
@@ -665,14 +665,6 @@ namespace DocSpring.Client.Model
             JsonSerializer.Serialize(writer, submission.DataErrors, jsonSerializerOptions);
             writer.WritePropertyName("metadata");
             JsonSerializer.Serialize(writer, submission.Metadata, jsonSerializerOptions);
-            writer.WriteBoolean("has_password", submission.HasPassword);
-
-            writer.WritePropertyName("signature_requests");
-            JsonSerializer.Serialize(writer, submission.SignatureRequests, jsonSerializerOptions);
-            writer.WritePropertyName("actions");
-            JsonSerializer.Serialize(writer, submission.Actions, jsonSerializerOptions);
-            writer.WritePropertyName("output_formats");
-            JsonSerializer.Serialize(writer, submission.OutputFormats, jsonSerializerOptions);
             writer.WritePropertyName("files");
             JsonSerializer.Serialize(writer, submission.Files, jsonSerializerOptions);
             writer.WriteBoolean("expired", submission.Expired);
@@ -681,6 +673,14 @@ namespace DocSpring.Client.Model
 
             writer.WriteString("updated_at", submission.UpdatedAt.ToString(UpdatedAtFormat));
 
+            writer.WriteBoolean("has_password", submission.HasPassword);
+
+            writer.WritePropertyName("signature_requests");
+            JsonSerializer.Serialize(writer, submission.SignatureRequests, jsonSerializerOptions);
+            writer.WritePropertyName("actions");
+            JsonSerializer.Serialize(writer, submission.Actions, jsonSerializerOptions);
+            writer.WritePropertyName("output_formats");
+            JsonSerializer.Serialize(writer, submission.OutputFormats, jsonSerializerOptions);
             if (submission.TemplateId != null)
                 writer.WriteString("template_id", submission.TemplateId);
             else
@@ -708,6 +708,16 @@ namespace DocSpring.Client.Model
             else
                 writer.WriteNull("error_message");
 
+            if (submission.ExpiresAt != null)
+                writer.WriteString("expires_at", submission.ExpiresAt.Value.ToString(ExpiresAtFormat));
+            else
+                writer.WriteNull("expires_at");
+
+            if (submission.ProcessedAt != null)
+                writer.WriteString("processed_at", submission.ProcessedAt.Value.ToString(ProcessedAtFormat));
+            else
+                writer.WriteNull("processed_at");
+
             if (submission.TruncatedText != null)
             {
                 writer.WritePropertyName("truncated_text");
@@ -719,16 +729,6 @@ namespace DocSpring.Client.Model
                 writer.WriteString("preview_generated_at", submission.PreviewGeneratedAt.Value.ToString(PreviewGeneratedAtFormat));
             else
                 writer.WriteNull("preview_generated_at");
-
-            if (submission.ExpiresAt != null)
-                writer.WriteString("expires_at", submission.ExpiresAt.Value.ToString(ExpiresAtFormat));
-            else
-                writer.WriteNull("expires_at");
-
-            if (submission.ProcessedAt != null)
-                writer.WriteString("processed_at", submission.ProcessedAt.Value.ToString(ProcessedAtFormat));
-            else
-                writer.WriteNull("processed_at");
         }
     }
 }
