@@ -6,5 +6,5 @@ Who changed a template (a user in your account, an API token, or someone using t
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 
-[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+[[Back to Model list]](../../README.md#methods) [[Back to API list]](../../README.md#methods) [[Back to README]](../../README.md)
 

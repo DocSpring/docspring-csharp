@@ -15,5 +15,5 @@ Name | Type | Description | Notes
 **AuthUsernameHash** | **string** | Their username in your app, or a SHA-256 hash of a salt and the username. | [optional] 
 **AuthPhoneNumberHash** | **string** | The phone number they authenticated with, or a SHA-256 hash of a salt and the phone number. | [optional] 
 
-[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+[[Back to Model list]](../../README.md#methods) [[Back to API list]](../../README.md#methods) [[Back to README]](../../README.md)
 

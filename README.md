@@ -1,7 +1,8 @@
 # DocSpring C# SDK
 
 The official C# client for the [DocSpring API](https://docspring.com/docs/api/). DocSpring fills PDF
-templates with your data, generates PDFs from HTML templates, combines PDFs and collects e-signatures.
+forms with your data, generates PDFs and Word documents from HTML and Word templates, combines PDFs and collects
+e-signatures.
 
 [Documentation](https://docspring.com/docs/) · [API reference](https://docspring.com/docs/api/) ·
 [NuGet](https://www.nuget.org/packages/DocSpring.Client/) · [Changelog](https://github.com/DocSpring/docspring-csharp/blob/main/CHANGELOG.md)
@@ -9,7 +10,7 @@ templates with your data, generates PDFs from HTML templates, combines PDFs and 
 The code in this repository is generated from DocSpring's OpenAPI spec ([About this SDK](#about-this-sdk)). Issues and
 pull requests are welcome.
 
-Version 4.2.0. Requires .NET Standard 2.0 (.NET 6 or later, or .NET Framework 4.6.2 or later).
+Version 4.3.0. Requires .NET Standard 2.0 (.NET 6 or later, or .NET Framework 4.6.2 or later).
 
 ## Install and configure
 
@@ -147,11 +148,11 @@ C# code for every method.
 | [`TestAuthentication`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#testauthentication) | Test authentication |
 | [`UpdateSignatureRequest`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#updatesignaturerequest) | Update a signature request |
 | [`UpdateTemplate`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#updatetemplate) | Update a template |
-| [`UpdateTemplateDocument`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#updatetemplatedocument) | Replace a template's PDF |
+| [`UpdateTemplateDocument`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#updatetemplatedocument) | Replace a template's document |
 | [`UpdateTemplateFields`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#updatetemplatefields) | Update a template's fields |
 | [`UpdateWebhook`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#updatewebhook) | Update a webhook |
-| [`UploadTemplate`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#uploadtemplate) | Create a PDF template from an uploaded PDF |
-| [`UploadTemplateDocument`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#uploadtemplatedocument) | Replace a template's PDF with an uploaded PDF |
+| [`UploadTemplate`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#uploadtemplate) | Create a template from an uploaded PDF or Word document |
+| [`UploadTemplateDocument`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#uploadtemplatedocument) | Replace a template's document with an uploaded file |
 | [`ValidateSubmission`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#validatesubmission) | Check a submission without creating it |
 
 ## Errors
@@ -169,7 +170,7 @@ existing code, such as removing or renaming a field, go in a new API version
 responses that are newer than it is:
 
 - The model leaves out a response field added to the API after this release (models have an `AdditionalProperties` dictionary, but the generated JSON converters don't fill it).
-- Enum values in responses are strings, so a value added to the API after this release comes back as it is: handle values you don't recognize.
+- An enum value added to the API after this release comes back as the API sent it: handle values you don't recognize.
 
 Upgrade the SDK to read new fields and enum values. The [changelog](https://github.com/DocSpring/docspring-csharp/blob/main/CHANGELOG.md) lists
 what each release adds.

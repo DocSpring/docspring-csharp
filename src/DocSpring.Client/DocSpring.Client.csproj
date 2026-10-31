@@ -9,10 +9,10 @@
     <Authors>DocSpring</Authors>
     <Company>DocSpring, Inc.</Company>
     <AssemblyTitle>DocSpring API client</AssemblyTitle>
-    <Description>C# client for the DocSpring API: fill PDF templates, generate PDFs from HTML, combine PDFs and collect e-signatures.</Description>
+    <Description>C# client for the DocSpring API: fill PDF forms, generate PDFs and Word documents from templates, combine PDFs and collect e-signatures.</Description>
     <Copyright>Copyright © DocSpring, Inc.</Copyright>
     <RootNamespace>DocSpring.Client</RootNamespace>
-    <Version>4.2.0</Version>
+    <Version>4.3.0</Version>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\DocSpring.Client.xml</DocumentationFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/DocSpring/docspring-csharp.git</RepositoryUrl>
@@ -20,7 +20,7 @@
     <PackageProjectUrl>https://github.com/DocSpring/docspring-csharp</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageReleaseNotes>https://github.com/DocSpring/docspring-csharp/blob/main/CHANGELOG.md</PackageReleaseNotes>
-    <PackageTags>docspring;pdf;pdf-generation;e-signature;api-client</PackageTags>
+    <PackageTags>docspring;pdf;pdf-generation;word;docx;document-generation;e-signature;api-client</PackageTags>
     <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
   </PropertyGroup>
 

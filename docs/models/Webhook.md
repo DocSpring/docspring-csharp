@@ -26,5 +26,5 @@ Name | Type | Description | Notes
 **DisabledReason** | **string** | Why the webhook was disabled, such as after repeated failures. | 
 **Secret** | **string** | The key that signs each request (the X-DocSpring-Signature header), so you can check that a request came from DocSpring. Null for some webhooks created before signing existed. | 
 
-[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+[[Back to Model list]](../../README.md#methods) [[Back to API list]](../../README.md#methods) [[Back to README]](../../README.md)
 

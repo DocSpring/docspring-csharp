@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
-  description: "Use DocSpring's API to programmatically fill out PDF forms, convert\
-    \ HTML to PDFs, merge PDFs, or request legally binding e-signatures."
+  description: "Use DocSpring's API to fill PDF forms, generate PDFs and Word documents\
+    \ from HTML or Word templates, merge PDFs, and request legally binding e-signatures."
   title: DocSpring API
   version: v2
 servers:
@@ -2551,8 +2551,8 @@ paths:
         one's `submission_id` in its details), so you can find them in DocSpring. The other submissions aren't saved.
       operationId: createSubmissionBatch
       parameters:
-      - description: Wait until every PDF in the batch has been generated before responding.
-          Default true on sync.api hosts.
+      - description: Wait until every file in the batch has been generated before
+          responding. Default true on sync.api hosts.
         explode: true
         in: query
         name: wait
@@ -3884,6 +3884,15 @@ paths:
                   output_formats:
                   - png
                   test: true
+              Word document submission created:
+                summary: Word document submission created
+                value:
+                  data:
+                    name: Jane Doe
+                  output_formats:
+                  - docx
+                  - pdf
+                  test: true
               submission with field settings overridden:
                 summary: submission with field settings overridden
                 value:
@@ -4003,6 +4012,37 @@ paths:
                     truncated_text: {}
                     output_formats:
                     - pdf
+                    preview_generated_at: null
+                Word document submission created:
+                  summary: Word document submission created
+                  value:
+                    id: sub_1234567890abcdef04
+                    template_id: tpl_1234567890abcdef03
+                    template_type: docx
+                    template_version: null
+                    batch_id: null
+                    source: api
+                    state: pending
+                    test: true
+                    editable: false
+                    data:
+                      name: Jane Doe
+                    data_errors: []
+                    error_message: null
+                    metadata: {}
+                    files: {}
+                    expired: false
+                    expires_at: null
+                    processed_at: null
+                    created_at: 2018-10-20T09:00:00Z
+                    updated_at: 2018-10-20T09:00:00Z
+                    has_password: false
+                    signature_requests: []
+                    actions: []
+                    truncated_text: {}
+                    output_formats:
+                    - pdf
+                    - docx
                     preview_generated_at: null
                 submission with signature requests created:
                   summary: submission with signature requests created
@@ -4825,6 +4865,45 @@ paths:
                     - pdf
                     - png
                     preview_generated_at: null
+                processed Word document submission:
+                  summary: processed Word document submission
+                  value:
+                    id: sub_1234567890abcdef03
+                    template_id: tpl_1234567890abcdef03
+                    template_type: docx
+                    template_version: null
+                    batch_id: null
+                    source: api
+                    state: processed
+                    test: false
+                    editable: false
+                    data:
+                      name: Jane Doe
+                    data_errors: []
+                    error_message: null
+                    metadata: {}
+                    files:
+                      docx:
+                        state: processed
+                        error_message: null
+                        download_url: https://example.com/submissions/submission.docx
+                        permanent_url: https://app.docspring.com/submissions/sub_1234567890abcdef03/files/docx
+                        filename: sub_1234567890abcdef03.docx
+                        content_type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+                        size: 1458
+                        sha256: a82be2ac1c56d32f41f9d788b1ee965749afe88b8bbfbfd7a3c776ca53ed9e97
+                    expired: false
+                    expires_at: 2018-10-27T09:00:00Z
+                    processed_at: 2018-10-20T08:50:05Z
+                    created_at: 2018-10-20T08:50:00Z
+                    updated_at: 2018-10-20T09:00:00Z
+                    has_password: false
+                    signature_requests: []
+                    actions: []
+                    truncated_text: {}
+                    output_formats:
+                    - docx
+                    preview_generated_at: null
               schema:
                 $ref: "#/components/schemas/Submission"
           description: processed submission
@@ -5046,8 +5125,13 @@ paths:
   /submissions/{submission_id}/generate_files:
     post:
       description: |
-        Adds formats to a processed submission's files, in the background: `png`, a PNG image of each page of the
-        PDF (up to 100 pages). To make them with the submission, add them to `output_formats` when you create it.
+        Adds formats to a processed submission's files, in the background, without using credits again: `pdf`, the
+        PDF of a Word template's submission that made only its Word document (converted from that document), `docx`,
+        the Word document of a Word template's submission that made only its PDF (made again from its data and the
+        template version it used), `odt`, a Word template's submission's OpenDocument file (converted from its Word
+        document, or from one made again when it didn't keep one), and `png`, a PNG image of each page of the PDF (up
+        to 100 pages), which makes the PDF first when the submission doesn't have one. To make them with the submission, add them to
+        `output_formats` when you create it.
 
         Each new file is listed in `files` while it's made: on sync.api hosts the request waits for them (unless you
         pass `wait=false`), otherwise poll GET /submissions/{submission_id} until none of their `state` is `pending`.
@@ -5082,6 +5166,11 @@ paths:
                 value:
                   formats:
                   - png
+              a Word template's submission's PDF requested:
+                summary: a Word template's submission's PDF requested
+                value:
+                  formats:
+                  - pdf
             schema:
               $ref: "#/components/schemas/GenerateSubmissionFilesRequest"
         description: The formats to make.
@@ -5167,10 +5256,11 @@ paths:
                   value:
                     error:
                       code: validation_failed
-                      message: "Invalid request: /formats/0 must be one of: \"png\""
+                      message: "Invalid request: /formats/0 must be one of: \"pdf\"\
+                        , \"docx\", \"odt\", \"png\""
                       details:
                       - code: enum
-                        message: "must be one of: \"png\""
+                        message: "must be one of: \"pdf\", \"docx\", \"odt\", \"png\""
                         pointer: /formats/0
                       request_id: req_1234567890abcdef01
               schema:
@@ -5315,6 +5405,7 @@ paths:
                       name: Invoice
                       description: null
                       template_type: html
+                      output_format: pdf
                       ready: true
                       document: null
                       parent_folder_id: null
@@ -5329,6 +5420,7 @@ paths:
                       name: Rental Contract
                       description: null
                       template_type: pdf
+                      output_format: pdf
                       ready: true
                       document:
                         filename: blank_pdf.pdf
@@ -5352,6 +5444,7 @@ paths:
                       name: Rental Contract
                       description: null
                       template_type: pdf
+                      output_format: pdf
                       ready: true
                       document:
                         filename: blank_pdf.pdf
@@ -5375,6 +5468,7 @@ paths:
                       name: Rental Contract
                       description: null
                       template_type: pdf
+                      output_format: pdf
                       ready: true
                       document:
                         filename: blank_pdf.pdf
@@ -5457,16 +5551,21 @@ paths:
       - Client
     post:
       description: |
-        Creates an HTML template, or a PDF template from a PDF you uploaded with the presigned upload (GET
-        /uploads/presign): pass its `fields.key` as `cache_id`. To send the PDF with the request instead, use POST
-        /templates/upload.
+        Creates an HTML template, or a PDF or Word template from a file you uploaded with the presigned upload (GET
+        /uploads/presign): pass its `fields.key` as `cache_id`. You can send a link to the file (`document_url`) or
+        the file in base64 (`document_base64`) instead, or send the file with the request with POST
+        /templates/upload. A Word template is made from a Word document (.docx) or an OpenDocument text file (.odt),
+        which DocSpring converts to a Word document. It needs its `output_format`: what each submission makes, a Word
+        document (`docx`), an OpenDocument file (`odt`) or a PDF.
 
-        A PDF template is ready to generate PDFs once DocSpring has processed its PDF (`ready` is true). On sync.api
-        hosts the request waits for that unless you pass `wait=false`.
+        A PDF template is ready to generate PDFs once DocSpring has processed its PDF, a template created from a
+        `document_url` once its document has been downloaded, and one created from an .odt once it has been converted
+        (`ready` is true). On sync.api hosts the request waits for that unless you pass `wait=false`.
       operationId: createTemplate
       parameters:
-      - description: "Wait until the PDF has been processed, and a `document_url`\
-          \ downloaded, before responding. Default true on sync.api hosts."
+      - description: "Wait until the PDF has been processed, a `document_url`'s PDF\
+          \ or Word document downloaded, and an OpenDocument file converted, before\
+          \ responding. Default true on sync.api hosts."
         explode: true
         in: query
         name: wait
@@ -5514,6 +5613,14 @@ paths:
                   template_type: pdf
                   name: W-8BEN
                   document_url: https://example.com/forms/fw8ben.pdf
+              Word template created from an upload:
+                summary: Word template created from an upload
+                value:
+                  template_type: docx
+                  name: Welcome Letter
+                  cache_id: cache/original-0000000000
+                  filename: Welcome Letter.docx
+                  output_format: docx
             schema:
               $ref: "#/components/schemas/CreateTemplateRequest"
         description: The template to create.
@@ -5530,6 +5637,7 @@ paths:
                     name: Receipt
                     description: null
                     template_type: html
+                    output_format: pdf
                     ready: true
                     document: null
                     parent_folder_id: fld_1234567890abcdef01
@@ -5605,6 +5713,7 @@ paths:
                     name: W-8BEN
                     description: null
                     template_type: pdf
+                    output_format: pdf
                     ready: false
                     document:
                       filename: fw8ben.pdf
@@ -5684,6 +5793,7 @@ paths:
                     name: W-8BEN
                     description: null
                     template_type: pdf
+                    output_format: pdf
                     ready: false
                     document:
                       filename: fw8ben.pdf
@@ -5763,6 +5873,7 @@ paths:
                     name: W-8BEN
                     description: null
                     template_type: pdf
+                    output_format: pdf
                     ready: false
                     document:
                       filename: null
@@ -5842,6 +5953,7 @@ paths:
                     name: null
                     description: null
                     template_type: pdf
+                    output_format: pdf
                     ready: false
                     document:
                       filename: application.pdf
@@ -5904,6 +6016,94 @@ paths:
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
+                    predefined_fields: []
+                    predefined_fields_sample_data: null
+                    html: null
+                    scss: null
+                    header_html: null
+                    footer_html: null
+                    html_engine_options: null
+                    html_escape_data: null
+                    embed_edit_token: exampleEmbedEditTokenGenerated001
+                    versions: []
+                Word template created from an upload:
+                  summary: Word template created from an upload
+                  value:
+                    id: tpl_1234567890abcdef04
+                    name: Welcome Letter
+                    description: null
+                    template_type: docx
+                    output_format: docx
+                    ready: true
+                    document:
+                      filename: Welcome Letter.docx
+                      state: processed
+                      error_message: null
+                      page_count: 0
+                      md5: null
+                      field_reimport_state: none
+                      page_dimensions: null
+                      has_fillable_fields: null
+                      page_processing_statuses: []
+                      field_logic_status: null
+                      download_url: null
+                      permanent_url: https://app.docspring.com/templates/tpl_1234567890abcdef04/docx?token=exampleDocumentDownloadToken0001
+                    parent_folder_id: null
+                    path: /
+                    latest_version: null
+                    version_published_at: null
+                    locked: false
+                    last_changed_at: 2018-10-20T09:00:00Z
+                    created_at: 2018-10-20T09:00:00Z
+                    updated_at: 2018-10-20T09:00:00Z
+                    version: null
+                    add_signature_request_submission_id_footers: true
+                    ai_field_naming_language: null
+                    allow_additional_properties: false
+                    allow_skipping_optional_fields: false
+                    default_form_mode: web
+                    editable_submissions: false
+                    embed_domains: []
+                    embed_edit_allow_settings: false
+                    embed_edit_allow_versioning: false
+                    embed_edit_allow_document_replacement: false
+                    encrypt_pdfs: false
+                    has_encrypt_pdfs_password: false
+                    expire_submissions: false
+                    expire_after: 7
+                    expiration_interval: days
+                    merge_audit_trail_pdf: true
+                    parse_dates_using_template_date_format: false
+                    public_submissions: false
+                    public_web_form: false
+                    redirect_url: null
+                    has_slack_webhook_url: false
+                    last_changed_by:
+                      type: api
+                      user_id: null
+                      external_id: null
+                      name: null
+                      email: null
+                    defaults:
+                      typeface: Helvetica
+                      font_size: 11
+                      character_spacing: 0
+                      color: "444444"
+                      opacity: 1
+                      date_format: '%m/%d/%Y'
+                      date_time_format: '%m/%d/%Y %H:%M:%S'
+                      check_color: "444444"
+                      shape_border_color: 4A90E2
+                    field_dependencies: []
+                    field_groups:
+                    - name: customer
+                      type: object
+                      title: ""
+                      description: ""
+                      metadata: ""
+                      min_items: null
+                      max_items: null
+                      allow_additional_items: false
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -6006,9 +6206,9 @@ paths:
                     error:
                       code: polling_timeout
                       message: "Template tpl_1234567890abcdef01 was created, but its\
-                        \ PDF wasn't processed within 95 seconds. Don't send the request\
-                        \ again: get it with GET /api/v2/templates/tpl_1234567890abcdef01\
-                        \ until document.state isn't pending or downloading."
+                        \ document wasn't ready within 95 seconds. Don't send the\
+                        \ request again: get it with GET /api/v2/templates/tpl_1234567890abcdef01\
+                        \ until document.state isn't pending, downloading or converting."
                       details: []
                       request_id: req_1234567890abcdef01
                       template_id: tpl_1234567890abcdef01
@@ -6024,12 +6224,15 @@ paths:
   /templates/upload:
     post:
       description: |
-        Creates a PDF template from a PDF sent with the request (`multipart/form-data`). For large files, upload the
-        PDF with the presigned upload (GET /uploads/presign) and create the template with POST /templates.
+        Creates a PDF template from a PDF, or a Word template from a Word document (.docx) or an OpenDocument text
+        file (.odt), sent with the request (`multipart/form-data`). A Word template needs its `output_format`. For
+        large files, upload the file with the presigned upload (GET /uploads/presign) and create the template with
+        POST /templates.
       operationId: uploadTemplate
       parameters:
-      - description: "Wait until the PDF has been processed, and a `document_url`\
-          \ downloaded, before responding. Default true on sync.api hosts."
+      - description: "Wait until the PDF has been processed, a `document_url`'s PDF\
+          \ or Word document downloaded, and an OpenDocument file converted, before\
+          \ responding. Default true on sync.api hosts."
         explode: true
         in: query
         name: wait
@@ -6042,7 +6245,7 @@ paths:
           multipart/form-data:
             schema:
               $ref: "#/components/schemas/UploadTemplateRequest"
-        description: "The PDF, and the new template's settings."
+        description: "The PDF or Word document, and the new template's settings."
         required: true
       responses:
         "201":
@@ -6056,6 +6259,7 @@ paths:
                     name: W-8BEN
                     description: null
                     template_type: pdf
+                    output_format: pdf
                     ready: false
                     document:
                       filename: fw8ben.pdf
@@ -6118,6 +6322,94 @@ paths:
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
+                    predefined_fields: []
+                    predefined_fields_sample_data: null
+                    html: null
+                    scss: null
+                    header_html: null
+                    footer_html: null
+                    html_engine_options: null
+                    html_escape_data: null
+                    embed_edit_token: exampleEmbedEditTokenGenerated001
+                    versions: []
+                Word template created:
+                  summary: Word template created
+                  value:
+                    id: tpl_1234567890abcdef04
+                    name: Welcome Letter
+                    description: null
+                    template_type: docx
+                    output_format: pdf
+                    ready: true
+                    document:
+                      filename: Welcome Letter.docx
+                      state: processed
+                      error_message: null
+                      page_count: 0
+                      md5: null
+                      field_reimport_state: none
+                      page_dimensions: null
+                      has_fillable_fields: null
+                      page_processing_statuses: []
+                      field_logic_status: null
+                      download_url: null
+                      permanent_url: https://app.docspring.com/templates/tpl_1234567890abcdef04/docx?token=exampleDocumentDownloadToken0001
+                    parent_folder_id: null
+                    path: /
+                    latest_version: null
+                    version_published_at: null
+                    locked: false
+                    last_changed_at: 2018-10-20T09:00:00Z
+                    created_at: 2018-10-20T09:00:00Z
+                    updated_at: 2018-10-20T09:00:00Z
+                    version: null
+                    add_signature_request_submission_id_footers: true
+                    ai_field_naming_language: null
+                    allow_additional_properties: false
+                    allow_skipping_optional_fields: false
+                    default_form_mode: web
+                    editable_submissions: false
+                    embed_domains: []
+                    embed_edit_allow_settings: false
+                    embed_edit_allow_versioning: false
+                    embed_edit_allow_document_replacement: false
+                    encrypt_pdfs: false
+                    has_encrypt_pdfs_password: false
+                    expire_submissions: false
+                    expire_after: 7
+                    expiration_interval: days
+                    merge_audit_trail_pdf: true
+                    parse_dates_using_template_date_format: false
+                    public_submissions: false
+                    public_web_form: false
+                    redirect_url: null
+                    has_slack_webhook_url: false
+                    last_changed_by:
+                      type: api
+                      user_id: null
+                      external_id: null
+                      name: null
+                      email: null
+                    defaults:
+                      typeface: Helvetica
+                      font_size: 11
+                      character_spacing: 0
+                      color: "444444"
+                      opacity: 1
+                      date_format: '%m/%d/%Y'
+                      date_time_format: '%m/%d/%Y %H:%M:%S'
+                      check_color: "444444"
+                      shape_border_color: 4A90E2
+                    field_dependencies: []
+                    field_groups:
+                    - name: customer
+                      type: object
+                      title: ""
+                      description: ""
+                      metadata: ""
+                      min_items: null
+                      max_items: null
+                      allow_additional_items: false
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -6216,9 +6508,9 @@ paths:
                     error:
                       code: polling_timeout
                       message: "Template tpl_1234567890abcdef01 was created, but its\
-                        \ PDF wasn't processed within 95 seconds. Don't send the request\
-                        \ again: get it with GET /api/v2/templates/tpl_1234567890abcdef01\
-                        \ until document.state isn't pending or downloading."
+                        \ document wasn't ready within 95 seconds. Don't send the\
+                        \ request again: get it with GET /api/v2/templates/tpl_1234567890abcdef01\
+                        \ until document.state isn't pending, downloading or converting."
                       details: []
                       request_id: req_1234567890abcdef01
                       template_id: tpl_1234567890abcdef01
@@ -6227,7 +6519,7 @@ paths:
           description: "On a sync.api host, the wait ran out: the record was saved\
             \ and is still being processed. Get it by the ID in the error's template_id\
             \ instead of sending the request again."
-      summary: Create a PDF template from an uploaded PDF
+      summary: Create a template from an uploaded PDF or Word document
       tags:
       - Client
   /templates/{template_id}:
@@ -6269,6 +6561,7 @@ paths:
                     name: Invoice
                     description: null
                     template_type: html
+                    output_format: pdf
                     ready: true
                     document: null
                     parent_folder_id: null
@@ -6466,6 +6759,7 @@ paths:
                     name: Rental Contract
                     description: null
                     template_type: pdf
+                    output_format: pdf
                     ready: true
                     document:
                       filename: blank_pdf.pdf
@@ -6545,6 +6839,89 @@ paths:
                     html_escape_data: null
                     embed_edit_token: exampleEmbedEditTokenForTemplate1
                     versions: []
+                Word template:
+                  summary: Word template
+                  value:
+                    id: tpl_1234567890abcdef03
+                    name: Welcome Letter
+                    description: null
+                    template_type: docx
+                    output_format: docx
+                    ready: true
+                    document:
+                      filename: Welcome Letter.docx
+                      state: processed
+                      error_message: null
+                      page_count: 0
+                      md5: null
+                      field_reimport_state: none
+                      page_dimensions: null
+                      has_fillable_fields: null
+                      page_processing_statuses: []
+                      field_logic_status: null
+                      download_url: null
+                      permanent_url: https://app.docspring.com/templates/tpl_1234567890abcdef03/docx?token=123456789abcdef03
+                    parent_folder_id: null
+                    path: /
+                    latest_version: null
+                    version_published_at: null
+                    locked: false
+                    last_changed_at: null
+                    created_at: 2018-10-20T08:00:03Z
+                    updated_at: 2018-10-20T09:00:00Z
+                    version: null
+                    add_signature_request_submission_id_footers: true
+                    ai_field_naming_language: null
+                    allow_additional_properties: false
+                    allow_skipping_optional_fields: false
+                    default_form_mode: web
+                    editable_submissions: false
+                    embed_domains: []
+                    embed_edit_allow_settings: false
+                    embed_edit_allow_versioning: false
+                    embed_edit_allow_document_replacement: false
+                    encrypt_pdfs: false
+                    has_encrypt_pdfs_password: false
+                    expire_submissions: true
+                    expire_after: 7
+                    expiration_interval: days
+                    merge_audit_trail_pdf: true
+                    parse_dates_using_template_date_format: false
+                    public_submissions: false
+                    public_web_form: false
+                    redirect_url: null
+                    has_slack_webhook_url: false
+                    last_changed_by: null
+                    defaults:
+                      typeface: Helvetica
+                      font_size: 11
+                      character_spacing: 0
+                      color: "444444"
+                      opacity: 1
+                      date_format: '%m/%d/%Y'
+                      date_time_format: '%m/%d/%Y %H:%M:%S'
+                      check_color: "444444"
+                      shape_border_color: 4A90E2
+                    field_dependencies: []
+                    field_groups:
+                    - name: customer
+                      type: object
+                      title: ""
+                      description: ""
+                      metadata: ""
+                      min_items: null
+                      max_items: null
+                      allow_additional_items: false
+                    predefined_fields: []
+                    predefined_fields_sample_data: null
+                    html: null
+                    scss: null
+                    header_html: null
+                    footer_html: null
+                    html_engine_options: null
+                    html_escape_data: null
+                    embed_edit_token: exampleEmbedEditTokenForTemplate3
+                    versions: []
                 HTML template:
                   summary: HTML template
                   value:
@@ -6552,6 +6929,7 @@ paths:
                     name: Invoice
                     description: null
                     template_type: html
+                    output_format: pdf
                     ready: true
                     document: null
                     parent_folder_id: null
@@ -6622,6 +7000,7 @@ paths:
                     name: Rental Contract
                     description: null
                     template_type: pdf
+                    output_format: pdf
                     ready: true
                     document:
                       filename: blank_pdf.pdf
@@ -6796,8 +7175,9 @@ paths:
     put:
       description: |
         Changes a template's draft. Properties left out keep their values. `defaults` and `html_engine_options`
-        replace the whole object, and `field_groups` changes only the groups it lists. Setting `parent_folder_id`
-        moves the template and all of its published versions.
+        replace the whole object, and `field_groups` changes only the groups it lists. Settings such as
+        `webhook_url`, `public_submissions` and `expire_after` apply to every published version too, and setting
+        `parent_folder_id` moves the template and all of its published versions.
       operationId: updateTemplate
       parameters:
       - description: The template's ID.
@@ -6930,6 +7310,7 @@ paths:
                     name: Rental Contract 2025
                     description: null
                     template_type: pdf
+                    output_format: pdf
                     ready: true
                     document:
                       filename: blank_pdf.pdf
@@ -7036,9 +7417,9 @@ paths:
                         \ for lists: groups whose fields number their items, such\
                         \ as items/0/price; /field_groups/1/name isn't a group of\
                         \ the template's fields (contacts); /field_groups/2/max_items\
-                        \ is only for HTML templates' lists. A PDF template's list\
-                        \ takes as many items as its fields are numbered for, or more\
-                        \ with allow_additional_items"
+                        \ is only for HTML and Word templates' lists. A PDF template's\
+                        \ list takes as many items as its fields are numbered for,\
+                        \ or more with allow_additional_items"
                       details:
                       - code: not_allowed
                         message: "is only for lists: groups whose fields number their\
@@ -7048,9 +7429,9 @@ paths:
                         message: isn't a group of the template's fields (contacts)
                         pointer: /field_groups/1/name
                       - code: not_allowed
-                        message: "is only for HTML templates' lists. A PDF template's\
-                          \ list takes as many items as its fields are numbered for,\
-                          \ or more with allow_additional_items"
+                        message: "is only for HTML and Word templates' lists. A PDF\
+                          \ template's list takes as many items as its fields are\
+                          \ numbered for, or more with allow_additional_items"
                         pointer: /field_groups/2/max_items
                       request_id: req_1234567890abcdef01
                 invalid update:
@@ -7131,10 +7512,12 @@ paths:
   /templates/{template_id}/document:
     put:
       description: |
-        Replaces a PDF template's PDF with one you uploaded with the presigned upload (GET /uploads/presign)
-        (`cache_id`), a link to download it from (`document_url`), or the file in base64 (`document_base64`). The
-        fields stay where they are, unless `reimport_fields` replaces them with the new PDF's fillable fields. To send
-        the PDF as `multipart/form-data` instead, use PUT /templates/{template_id}/document/upload.
+        Replaces a PDF template's PDF, or a Word template's Word document (from a .docx or an .odt), with one you
+        uploaded with the presigned upload (GET /uploads/presign) (`cache_id`), a link to download it from
+        (`document_url`), or the file in base64 (`document_base64`). A PDF template's fields stay where they are,
+        unless `reimport_fields` replaces them with the new PDF's fillable fields, and a Word template gets a field
+        for each new tag. To send the file as `multipart/form-data` instead, use PUT
+        /templates/{template_id}/document/upload.
       operationId: updateTemplateDocument
       parameters:
       - description: The template's ID.
@@ -7146,8 +7529,9 @@ paths:
         schema:
           type: string
         style: simple
-      - description: "Wait until the PDF has been processed, and a `document_url`\
-          \ downloaded, before responding. Default true on sync.api hosts."
+      - description: "Wait until the PDF has been processed, a `document_url`'s PDF\
+          \ or Word document downloaded, and an OpenDocument file converted, before\
+          \ responding. Default true on sync.api hosts."
         explode: true
         in: query
         name: wait
@@ -7171,7 +7555,8 @@ paths:
                   document_url: https://example.com/forms/fw8ben.pdf?token=abc
             schema:
               $ref: "#/components/schemas/UpdateTemplateDocumentRequest"
-        description: "The new PDF, as one of `cache_id`, `document_url` and `document_base64`."
+        description: "The new PDF, or a Word template's new Word document, as one\
+          \ of `cache_id`, `document_url` and `document_base64`."
         required: true
       responses:
         "200":
@@ -7185,6 +7570,7 @@ paths:
                     name: Rental Contract
                     description: null
                     template_type: pdf
+                    output_format: pdf
                     ready: false
                     document:
                       filename: fw8ben.pdf
@@ -7264,6 +7650,7 @@ paths:
                     name: Rental Contract
                     description: null
                     template_type: pdf
+                    output_format: pdf
                     ready: true
                     document:
                       filename: blank_pdf.pdf
@@ -7382,15 +7769,16 @@ paths:
                           \ with GET /uploads/presign, or use PUT /templates/{template_id}/document/upload"
                         pointer: /cache_id
                       request_id: req_1234567890abcdef01
-                not a PDF template:
-                  summary: not a PDF template
+                an HTML template:
+                  summary: an HTML template
                   value:
                     error:
                       code: validation_failed
-                      message: "Invalid request: /cache_id is only for PDF templates"
+                      message: "Invalid request: /cache_id is only for PDF and Word\
+                        \ templates"
                       details:
                       - code: not_allowed
-                        message: is only for PDF templates
+                        message: is only for PDF and Word templates
                         pointer: /cache_id
                       request_id: req_1234567890abcdef01
               schema:
@@ -7463,9 +7851,9 @@ paths:
                     error:
                       code: polling_timeout
                       message: "Template tpl_1234567890abcdef01 was updated, but its\
-                        \ new PDF wasn't processed within 95 seconds. Don't send the\
-                        \ request again: get it with GET /api/v2/templates/tpl_1234567890abcdef01\
-                        \ until document.state isn't pending or downloading."
+                        \ new document wasn't ready within 95 seconds. Don't send\
+                        \ the request again: get it with GET /api/v2/templates/tpl_1234567890abcdef01\
+                        \ until document.state isn't pending, downloading or converting."
                       details: []
                       request_id: req_1234567890abcdef01
                       template_id: tpl_1234567890abcdef01
@@ -7474,15 +7862,16 @@ paths:
           description: "On a sync.api host, the wait ran out: the record was saved\
             \ and is still being processed. Get it by the ID in the error's template_id\
             \ instead of sending the request again."
-      summary: Replace a template's PDF
+      summary: Replace a template's document
       tags:
       - Client
       x-codegen-request-body-name: body
   /templates/{template_id}/document/upload:
     put:
       description: |
-        Replaces a PDF template's PDF with one sent with the request (`multipart/form-data`). The fields stay where
-        they are, unless `reimport_fields` replaces them with the new PDF's fillable fields.
+        Replaces a PDF template's PDF, or a Word template's Word document, with one sent with the request
+        (`multipart/form-data`). A PDF template's fields stay where they are, unless `reimport_fields` replaces them
+        with the new PDF's fillable fields, and a Word template gets a field for each new tag.
       operationId: uploadTemplateDocument
       parameters:
       - description: The template's ID.
@@ -7494,8 +7883,9 @@ paths:
         schema:
           type: string
         style: simple
-      - description: "Wait until the PDF has been processed, and a `document_url`\
-          \ downloaded, before responding. Default true on sync.api hosts."
+      - description: "Wait until the PDF has been processed, a `document_url`'s PDF\
+          \ or Word document downloaded, and an OpenDocument file converted, before\
+          \ responding. Default true on sync.api hosts."
         explode: true
         in: query
         name: wait
@@ -7508,7 +7898,7 @@ paths:
           multipart/form-data:
             schema:
               $ref: "#/components/schemas/UploadTemplateDocumentRequest"
-        description: The new PDF.
+        description: "The new PDF, or the new Word document of a Word template."
         required: true
       responses:
         "200":
@@ -7522,6 +7912,7 @@ paths:
                     name: Rental Contract
                     description: null
                     template_type: pdf
+                    output_format: pdf
                     ready: false
                     document:
                       filename: fw8ben.pdf
@@ -7601,20 +7992,21 @@ paths:
           content:
             application/json:
               examples:
-                not a PDF template:
-                  summary: not a PDF template
+                an HTML template:
+                  summary: an HTML template
                   value:
                     error:
                       code: validation_failed
-                      message: "Invalid request: /document is only for PDF templates"
+                      message: "Invalid request: /document is only for PDF and Word\
+                        \ templates"
                       details:
                       - code: not_allowed
-                        message: is only for PDF templates
+                        message: is only for PDF and Word templates
                         pointer: /document
                       request_id: req_1234567890abcdef01
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-          description: not a PDF template
+          description: an HTML template
         "404":
           content:
             application/json:
@@ -7682,9 +8074,9 @@ paths:
                     error:
                       code: polling_timeout
                       message: "Template tpl_1234567890abcdef01 was updated, but its\
-                        \ new PDF wasn't processed within 95 seconds. Don't send the\
-                        \ request again: get it with GET /api/v2/templates/tpl_1234567890abcdef01\
-                        \ until document.state isn't pending or downloading."
+                        \ new document wasn't ready within 95 seconds. Don't send\
+                        \ the request again: get it with GET /api/v2/templates/tpl_1234567890abcdef01\
+                        \ until document.state isn't pending, downloading or converting."
                       details: []
                       request_id: req_1234567890abcdef01
                       template_id: tpl_1234567890abcdef01
@@ -7693,7 +8085,7 @@ paths:
           description: "On a sync.api host, the wait ran out: the record was saved\
             \ and is still being processed. Get it by the ID in the error's template_id\
             \ instead of sending the request again."
-      summary: Replace a template's PDF with an uploaded PDF
+      summary: Replace a template's document with an uploaded file
       tags:
       - Client
   /templates/{template_id}/copy:
@@ -7741,6 +8133,7 @@ paths:
                     name: Rental Contract (2)
                     description: null
                     template_type: pdf
+                    output_format: pdf
                     ready: true
                     document:
                       filename: blank_pdf.pdf
@@ -7958,6 +8351,7 @@ paths:
                     name: Rental Contract
                     description: null
                     template_type: pdf
+                    output_format: pdf
                     ready: true
                     document:
                       filename: blank_pdf.pdf
@@ -8127,9 +8521,10 @@ paths:
   /templates/{template_id}/publish_version:
     post:
       description: |
-        Publishes the template's draft as a new version that doesn't change. `version_type` says which part of the
-        latest version number goes up. While the template's PDF is downloading or being processed, or DocSpring is
-        setting up its fields, it returns a 409 that says so.
+        Publishes the template's draft as a new version. Its content (the PDF or HTML, fields, name and description)
+        never changes, while settings such as `webhook_url` and `public_submissions` keep following the draft.
+        `version_type` says which part of the latest version number goes up. While the template's PDF is downloading
+        or being processed, or DocSpring is setting up its fields, it returns a 409 that says so.
       operationId: publishTemplateVersion
       parameters:
       - description: The template's ID.
@@ -8287,8 +8682,9 @@ paths:
       x-codegen-request-body-name: body
   /templates/{template_id}/restore_version:
     post:
-      description: Replaces the template's draft with a copy of one of its published
-        versions.
+      description: "Replaces the template's draft with a copy of one of its published\
+        \ versions. The draft keeps its settings that apply to every version, such\
+        \ as `webhook_url`."
       operationId: restoreTemplateVersion
       parameters:
       - description: The template's ID.
@@ -8324,6 +8720,7 @@ paths:
                     name: Rental Contract
                     description: null
                     template_type: pdf
+                    output_format: pdf
                     ready: true
                     document:
                       filename: blank_pdf.pdf
@@ -8766,9 +9163,10 @@ paths:
     post:
       description: |
         Makes PNG images of a template's pages filled in with the data you send (not a PDF), so you can check how an
-        HTML or PDF template prints with your data before you publish a version or send live data. It renders the
-        template's draft, or the published `version` you ask for. A preview makes no submission and uses no credits,
-        and its pages are watermarked like a test submission's PDF. It's `pending` while it renders: get it with GET
+        HTML, PDF or Word template prints with your data before you publish a version or send live data. A Word
+        template's pages are its PDF's, whatever its `output_format`. It renders the template's draft, or the
+        published `version` you ask for. A preview makes no submission and uses no credits, and its pages are
+        watermarked like a test submission's PDF. It's `pending` while it renders: get it with GET
         /templates/{template_id}/previews/{preview_id} until it's `processed`, with an image of each page, or `error`.
       operationId: createTemplatePreview
       parameters:
@@ -8805,6 +9203,12 @@ paths:
                 value:
                   data:
                     first_name: Jane
+              Word template preview created:
+                summary: Word template preview created
+                value:
+                  data:
+                    customer:
+                      name: Jane Example
             schema:
               $ref: "#/components/schemas/CreateTemplatePreviewRequest"
         description: The data to render the template with.
@@ -8843,7 +9247,7 @@ paths:
                       request_id: req_1234567890abcdef01
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-          description: the template's PDF hasn't been processed
+          description: this server can't convert Word documents to PDF
         "422":
           content:
             application/json:
@@ -9411,7 +9815,7 @@ paths:
                       reordered: []
                     changed_settings:
                     - name
-                    - expire_after
+                    - description
                     document_changed: false
               schema:
                 $ref: "#/components/schemas/TemplateDiff"
@@ -11633,8 +12037,8 @@ paths:
     get:
       description: |
         Generates types for a template's submission data in TypeScript, JavaScript, Ruby, Python, PHP, Java, C#,
-        Elixir or Go, so your app catches mistakes before it calls the API. `root_type_name` is the type of the whole
-        `data` object, and `just_types=true` leaves out the code that converts JSON to and from the types. Java
+        Elixir, Go or Rust, so your app catches mistakes before it calls the API. `root_type_name` is the type of the
+        whole `data` object, and `just_types=true` leaves out the code that converts JSON to and from the types. Java
         returns every class in `code`, each under a `// ClassName.java` comment. A template with no named fields
         returns 422.
       operationId: getTemplateModelCode
@@ -11671,8 +12075,8 @@ paths:
         style: form
       - description: "Return only the types (interfaces, classes or structs), without\
           \ the code that converts JSON to and from them. Default false. JavaScript\
-          \ has no types and PHP no types-only code, so theirs is the same either\
-          \ way."
+          \ has no types, PHP has no types-only code, and Rust's code is only types\
+          \ (serde converts the JSON), so theirs is the same either way."
         example: true
         explode: true
         in: query
@@ -11909,12 +12313,12 @@ paths:
                       code: validation_failed
                       message: "Invalid request: lang must be one of: \"typescript\"\
                         , \"javascript\", \"ruby\", \"python\", \"php\", \"java\"\
-                        , \"csharp\", \"elixir\", \"go\""
+                        , \"csharp\", \"elixir\", \"go\", \"rust\""
                       details:
                       - code: enum
                         message: "must be one of: \"typescript\", \"javascript\",\
                           \ \"ruby\", \"python\", \"php\", \"java\", \"csharp\", \"\
-                          elixir\", \"go\""
+                          elixir\", \"go\", \"rust\""
                         parameter: lang
                       request_id: req_1234567890abcdef01
               schema:
@@ -12364,6 +12768,25 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
           description: invalid webhook
+        "403":
+          content:
+            application/json:
+              examples:
+                the plan's integration limit is reached:
+                  summary: the plan's integration limit is reached
+                  value:
+                    error:
+                      code: upgrade_required
+                      message: "Your Developer plan includes 2 active integrations\
+                        \ (storage destinations, webhooks and Slack notifications),\
+                        \ and this account has 2: 1 storage destination and 1 webhook.\
+                        \ To add another, turn one off or upgrade to Starter or higher.\
+                        \ You can try Starter free for 14 days from the Billing page."
+                      details: []
+                      request_id: req_1234567890abcdef01
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: the plan's integration limit is reached
         "401":
           content:
             application/json:
@@ -12681,6 +13104,27 @@ paths:
               schema:
                 $ref: "#/components/schemas/Webhook"
           description: webhook updated
+        "403":
+          content:
+            application/json:
+              examples:
+                turning the webhook on would go over the plan's integration limit:
+                  summary: turning the webhook on would go over the plan's integration
+                    limit
+                  value:
+                    error:
+                      code: upgrade_required
+                      message: "Your Developer plan includes 2 active integrations\
+                        \ (storage destinations, webhooks and Slack notifications),\
+                        \ and this account has 2: 2 webhooks. To add another, turn\
+                        \ one off or upgrade to Starter or higher. You can try Starter\
+                        \ free for 14 days from the Billing page."
+                      details: []
+                      request_id: req_1234567890abcdef01
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: turning the webhook on would go over the plan's integration
+            limit
         "404":
           content:
             application/json:
@@ -13148,10 +13592,11 @@ components:
             \ PDF. The record was saved and waits for credits in the `insufficient_credits`\
             \ state: its ID is in `submission_id`, `submission_batch_id` or `combined_pdf_id`.\
             \ `upgrade_required` (403): your plan doesn't include this, such as more\
-            \ templates or the embedded template editor. `account_suspended` (403):\
-            \ the account is suspended, so it can't create submissions. `polling_timeout`:\
-            \ on a sync.api host, the PDF wasn't ready in time. The record was created\
-            \ and is still being processed: its ID is in `submission_id`, `submission_batch_id`,\
+            \ templates, another active integration (webhooks count) or the embedded\
+            \ template editor. `account_suspended` (403): the account is suspended,\
+            \ so it can't create submissions. `polling_timeout`: on a sync.api host,\
+            \ the files weren't ready in time. The record was created and is still\
+            \ being processed: its ID is in `submission_id`, `submission_batch_id`,\
             \ `combined_pdf_id` or `template_id`. Without one of these IDs, the request\
             \ itself got no answer in time, and the record may or may not have been\
             \ created. `idempotency_key_in_use` (409): a request with the same Idempotency-Key\
@@ -13244,9 +13689,9 @@ components:
         \ are placed on its pages: `x`, `y`, `width` and `height` are in units where\
         \ every page is 2480 wide, measured from the top-left corner of the field's\
         \ `page`. To convert from PDF points, multiply by 2480 and divide by the page's\
-        \ width in points (`document.page_dimensions` on the template). An HTML template's\
-        \ fields are all on page 1, and their placement and style settings aren't\
-        \ used."
+        \ width in points (`document.page_dimensions` on the template). An HTML or\
+        \ Word template's fields are all on page 1, and their placement and style\
+        \ settings aren't used: its HTML or Word document places and styles each value."
       example:
         id: 0
         name: name
@@ -14252,9 +14697,9 @@ components:
       title: FolderList
     GeneratedFile:
       additionalProperties: true
-      description: "A file that DocSpring generated, such as a submission's PDF. A\
-        \ file made after its submission was processed is listed while it's being\
-        \ made: check its `state` before using its links."
+      description: "A file that DocSpring generated, such as a submission's PDF or\
+        \ Word document. A file made after its submission was processed is listed\
+        \ while it's being made: check its `state` before using its links."
       properties:
         state:
           allOf:
@@ -14279,10 +14724,13 @@ components:
           type: string
           x-nullable: true
         filename:
-          description: "The file's name, such as `sub_123.pdf`."
+          description: "The file's name, such as `sub_123.pdf`, `sub_123.docx` or\
+            \ `sub_123.odt`."
           type: string
         content_type:
-          description: "The file's media type, such as `application/pdf`."
+          description: "The file's media type: `application/pdf`, `application/vnd.openxmlformats-officedocument.wordprocessingml.document`\
+            \ for a Word document, or `application/vnd.oasis.opendocument.text` for\
+            \ an OpenDocument file."
           type: string
         size:
           description: The file's size in bytes. Null until the file has been made.
@@ -14322,6 +14770,17 @@ components:
           - $ref: "#/components/schemas/GeneratedFile"
           description: "The preview PDF from POST /submissions/{submission_id}/generate_preview,\
             \ such as for a submission still waiting for its signature requests."
+        docx:
+          allOf:
+          - $ref: "#/components/schemas/GeneratedFile"
+          description: "The Word document of a Word template's submission, when the\
+            \ submission makes one (`output_formats`)."
+        odt:
+          allOf:
+          - $ref: "#/components/schemas/GeneratedFile"
+          description: "The OpenDocument file (.odt, the format LibreOffice uses)\
+            \ of a Word template's submission, converted from its Word document, when\
+            \ the submission makes one (`output_formats`)."
         png:
           $ref: "#/components/schemas/PageImages"
       title: SubmissionFiles
@@ -14731,7 +15190,7 @@ components:
       title: SignatureRequestEvent
     SubmissionBatch:
       additionalProperties: {}
-      description: Submissions created together in one request. Their PDFs are only
+      description: Submissions created together in one request. Their files are only
         generated when every submission in the batch is valid.
       example:
         id: id
@@ -14981,7 +15440,7 @@ components:
         state:
           allOf:
           - $ref: "#/components/schemas/SubmissionBatchState"
-          description: "`pending` while the PDFs are being generated, then `processed`.\
+          description: "`pending` while the files are being generated, then `processed`.\
             \ `error` as soon as a submission fails, while the others can still be\
             \ pending: the batch has finished once `processed_at` is set."
           x-open-enum: true
@@ -14993,10 +15452,10 @@ components:
           description: The number of submissions in the request.
           type: integer
         pending_count:
-          description: The submissions whose PDFs haven't been generated yet.
+          description: The submissions whose files haven't been generated yet.
           type: integer
         error_count:
-          description: The submissions that were invalid or whose PDFs couldn't be
+          description: The submissions that were invalid or whose files couldn't be
             generated.
           type: integer
         completion_percentage:
@@ -15085,7 +15544,7 @@ components:
         template_type:
           allOf:
           - $ref: "#/components/schemas/TemplateType"
-          description: "The template's type: `pdf` or `html`."
+          description: "The template's type: `pdf`, `html` or `docx`."
           x-open-enum: true
         template_version:
           description: The published version of the template the submission used.
@@ -15105,19 +15564,20 @@ components:
         state:
           allOf:
           - $ref: "#/components/schemas/SubmissionState"
-          description: "`pending` until the PDF has been generated, then `processed`.\
+          description: "`pending` until the files have been generated, then `processed`.\
             \ `waiting_for_signature_requests` until every signature request is completed.\
             \ `insufficient_credits`: waiting for credits; `error_message` says whether\
-            \ the PDF is generated once you add them. `account_suspended`: waiting\
+            \ the files are generated once you add them. `account_suspended`: waiting\
             \ for the account to be reactivated, for up to 30 days. Waiting ends in\
             \ `error` if it's discarded or takes over 30 days. Every other state is\
-            \ final, with no PDF: `invalid_data` (the data doesn't match the template's\
+            \ final, with no files: `invalid_data` (the data doesn't match the template's\
             \ fields: see `data_errors`), `declined` (a signature request was declined),\
-            \ and the states where generating the PDF failed, which have an `error_message`:\
-            \ `syntax_error` (a mistake in an HTML template's Liquid or SCSS), `image_download_failed`\
-            \ or `image_processing_failed` (an image in the data or the template couldn't\
-            \ be downloaded or read) and `error` (anything else). Older submissions\
-            \ can also be `license_revoked` or `accidental`."
+            \ and the states where generating the files failed, which have an `error_message`:\
+            \ `syntax_error` (a mistake in an HTML template's Liquid or SCSS, or in\
+            \ a Word template's tags), `image_download_failed` or `image_processing_failed`\
+            \ (an image in the data or the template couldn't be downloaded or read)\
+            \ and `error` (anything else). Older submissions can also be `license_revoked`\
+            \ or `accidental`."
           x-open-enum: true
         test:
           description: Test PDFs have a watermark and are free. Live PDFs use credits.
@@ -15213,7 +15673,8 @@ components:
       title: SubmissionSummary
     Submission:
       additionalProperties: {}
-      description: "Data submitted to a template, and the PDF generated from it."
+      description: "Data submitted to a template, and the files generated from it\
+        \ (a PDF, a Word document, an OpenDocument file, or more than one of them)."
       example:
         id: id
         template_id: template_id
@@ -15340,7 +15801,7 @@ components:
         template_type:
           allOf:
           - $ref: "#/components/schemas/TemplateType"
-          description: "The template's type: `pdf` or `html`."
+          description: "The template's type: `pdf`, `html` or `docx`."
           x-open-enum: true
         template_version:
           description: The published version of the template the submission used.
@@ -15360,19 +15821,20 @@ components:
         state:
           allOf:
           - $ref: "#/components/schemas/SubmissionState"
-          description: "`pending` until the PDF has been generated, then `processed`.\
+          description: "`pending` until the files have been generated, then `processed`.\
             \ `waiting_for_signature_requests` until every signature request is completed.\
             \ `insufficient_credits`: waiting for credits; `error_message` says whether\
-            \ the PDF is generated once you add them. `account_suspended`: waiting\
+            \ the files are generated once you add them. `account_suspended`: waiting\
             \ for the account to be reactivated, for up to 30 days. Waiting ends in\
             \ `error` if it's discarded or takes over 30 days. Every other state is\
-            \ final, with no PDF: `invalid_data` (the data doesn't match the template's\
+            \ final, with no files: `invalid_data` (the data doesn't match the template's\
             \ fields: see `data_errors`), `declined` (a signature request was declined),\
-            \ and the states where generating the PDF failed, which have an `error_message`:\
-            \ `syntax_error` (a mistake in an HTML template's Liquid or SCSS), `image_download_failed`\
-            \ or `image_processing_failed` (an image in the data or the template couldn't\
-            \ be downloaded or read) and `error` (anything else). Older submissions\
-            \ can also be `license_revoked` or `accidental`."
+            \ and the states where generating the files failed, which have an `error_message`:\
+            \ `syntax_error` (a mistake in an HTML template's Liquid or SCSS, or in\
+            \ a Word template's tags), `image_download_failed` or `image_processing_failed`\
+            \ (an image in the data or the template couldn't be downloaded or read)\
+            \ and `error` (anything else). Older submissions can also be `license_revoked`\
+            \ or `accidental`."
           x-open-enum: true
         test:
           description: Test PDFs have a watermark and are free. Live PDFs use credits.
@@ -15420,11 +15882,12 @@ components:
         files:
           allOf:
           - $ref: "#/components/schemas/SubmissionFiles"
-          description: "The generated files: `pdf` once the submission has been processed,\
-            \ `png` (the images of the PDF's pages, when `output_formats` has it:\
-            \ `files.png.pages[0]` is page 1), `audit_trail` once its signature requests\
-            \ are completed, and `preview` once a preview PDF has been generated.\
-            \ Empty once the submission has expired."
+          description: "The generated files: `pdf`, `docx` and `odt` (by `output_formats`)\
+            \ once the submission has been processed, `png` (the images of the PDF's\
+            \ pages, when `output_formats` has it: `files.png.pages[0]` is page 1),\
+            \ `audit_trail` once its signature requests are completed, and `preview`\
+            \ once a preview PDF has been generated. Empty once the submission has\
+            \ expired."
         expired:
           description: "An expired submission's data, metadata, password and PDF have\
             \ been deleted."
@@ -15476,10 +15939,13 @@ components:
           type: object
           x-nullable: true
         output_formats:
-          description: "What the submission makes: `pdf`, and `png` (an image of each\
-            \ page of the PDF, up to 100 pages) when you ask for it. Default `[\"\
-            pdf\"]`. POST /submissions/{submission_id}/generate_files adds `png` to\
-            \ a processed submission."
+          description: "What the submission makes: `pdf`, `docx` (a Word document,\
+            \ from a Word template), `odt` (an OpenDocument file, the format LibreOffice\
+            \ uses, converted from a Word template's Word document), and `png` (an\
+            \ image of each page of the PDF, up to 100 pages, which adds `pdf`) when\
+            \ you ask for it. Default `[\"pdf\"]`, or a Word template's `output_format`.\
+            \ POST /submissions/{submission_id}/generate_files adds `png`, and a Word\
+            \ template's submission's `pdf`, `docx` or `odt`, to a processed submission."
           items:
             $ref: "#/components/schemas/OutputFormat"
           type: array
@@ -16137,6 +16603,7 @@ components:
         name: name
         description: description
         template_type: ""
+        output_format: ""
         ready: true
         document: ""
         parent_folder_id: parent_folder_id
@@ -16165,21 +16632,36 @@ components:
           allOf:
           - $ref: "#/components/schemas/TemplateType"
           description: "`pdf`: fields placed on an uploaded PDF. `html`: a PDF rendered\
-            \ from HTML and SCSS. It can't be changed after the template is created."
+            \ from HTML and SCSS. `docx`: a Word document with tags where the data\
+            \ goes, which makes Word documents or PDFs. It can't be changed after\
+            \ the template is created."
+          x-open-enum: true
+        output_format:
+          allOf:
+          - $ref: "#/components/schemas/OutputFormat"
+          description: "What each submission makes unless its request sets `output_formats`:\
+            \ `docx` (a Word document), `odt` (an OpenDocument file, converted from\
+            \ the Word document) or `pdf`. A Word template's is chosen when it's created;\
+            \ PDF and HTML templates always make PDFs. A Word template that encrypts\
+            \ its PDFs makes PDFs, because Word documents and OpenDocument files can't\
+            \ be password-protected."
           x-open-enum: true
         ready:
-          description: "Whether the template can generate PDFs. HTML templates are\
+          description: "Whether the template can make documents. HTML templates are\
             \ always ready. A PDF template is ready once DocSpring has stored its\
             \ PDF, made an image of each page and finished looking for fields on each\
             \ page, which can be after `document.state` becomes `processed`. A PDF\
-            \ template with no PDF (`document` is null) isn't ready."
+            \ template with no PDF (`document` is null) isn't ready. A Word template\
+            \ is ready once it has a Word document (a `document_url`'s has been downloaded)."
           type: boolean
         document:
           allOf:
           - $ref: "#/components/schemas/TemplateDocumentSummary"
-          description: "The PDF of a PDF template: its file name, page count and processing\
-            \ state. Null for HTML templates, and for a PDF template that has no PDF\
-            \ yet."
+          description: "The PDF of a PDF template, or the Word document of a Word\
+            \ template: its file name, page count and processing state. Null for HTML\
+            \ templates, and for a PDF template that has no PDF yet. A template created\
+            \ from a `document_url`, or a Word template created from an OpenDocument\
+            \ file (.odt), has one, with no file, while it's downloaded or converted."
           x-nullable: true
         parent_folder_id:
           description: The ID of the folder the template is in. Null for a template
@@ -16226,6 +16708,7 @@ components:
       - latest_version
       - locked
       - name
+      - output_format
       - parent_folder_id
       - path
       - ready
@@ -16241,6 +16724,7 @@ components:
         name: name
         description: description
         template_type: ""
+        output_format: ""
         ready: true
         document: ""
         parent_folder_id: parent_folder_id
@@ -16396,20 +16880,35 @@ components:
           allOf:
           - $ref: "#/components/schemas/TemplateType"
           description: "`pdf`: fields placed on an uploaded PDF. `html`: a PDF rendered\
-            \ from HTML and SCSS. It can't be changed after the template is created."
+            \ from HTML and SCSS. `docx`: a Word document with tags where the data\
+            \ goes, which makes Word documents or PDFs. It can't be changed after\
+            \ the template is created."
+          x-open-enum: true
+        output_format:
+          allOf:
+          - $ref: "#/components/schemas/OutputFormat"
+          description: "What each submission makes unless its request sets `output_formats`:\
+            \ `docx` (a Word document), `odt` (an OpenDocument file, converted from\
+            \ the Word document) or `pdf`. A Word template's is chosen when it's created;\
+            \ PDF and HTML templates always make PDFs. A Word template that encrypts\
+            \ its PDFs makes PDFs, because Word documents and OpenDocument files can't\
+            \ be password-protected."
           x-open-enum: true
         ready:
-          description: "Whether the template can generate PDFs. HTML templates are\
+          description: "Whether the template can make documents. HTML templates are\
             \ always ready. A PDF template is ready once DocSpring has stored its\
             \ PDF, made an image of each page and finished looking for fields on each\
             \ page, which can be after `document.state` becomes `processed`. A PDF\
-            \ template with no PDF (`document` is null) isn't ready."
+            \ template with no PDF (`document` is null) isn't ready. A Word template\
+            \ is ready once it has a Word document (a `document_url`'s has been downloaded)."
           type: boolean
         document:
           allOf:
           - $ref: "#/components/schemas/TemplateDocument"
-          description: "The PDF of a PDF template. Null for HTML templates, and for\
-            \ a PDF template that has no PDF yet."
+          description: "The PDF of a PDF template, or the Word document of a Word\
+            \ template. Null for HTML templates, and for a PDF template that has no\
+            \ PDF yet. A template created from a `document_url` has one, with no file,\
+            \ while it's downloaded."
           x-nullable: true
         parent_folder_id:
           description: The ID of the folder the template is in. Null for a template
@@ -16482,8 +16981,8 @@ components:
           description: "The hosted form that /templates/{template_id}/form shows when\
             \ its URL has no `mode` parameter: `web` (the web form), `visual` (the\
             \ visual form, where fields are filled in on the PDF) or `dual` (both,\
-            \ in tabs). HTML templates have no visual form, so `web` is the only value\
-            \ they accept."
+            \ in tabs). Only PDF templates have a visual form, so other templates\
+            \ accept only `web`."
           x-open-enum: true
         editable_submissions:
           description: Generate PDFs whose text and check fields stay fillable ("Generate
@@ -16519,7 +17018,9 @@ components:
             PDF.
           type: boolean
         encrypt_pdfs:
-          description: Encrypt generated PDFs with `encrypt_pdfs_password`.
+          description: "Encrypt generated PDFs with `encrypt_pdfs_password`. A Word\
+            \ template can only encrypt its PDFs when its `output_format` is `pdf`,\
+            \ because Word documents and OpenDocument files can't be password-protected."
           type: boolean
         has_encrypt_pdfs_password:
           description: Whether `encrypt_pdfs_password` is set.
@@ -16546,7 +17047,7 @@ components:
           description: "Date fields also accept NN/NN/YYYY dates (with slashes, dashes\
             \ or dots), read in the order of the template's default date format: month\
             \ first for %m/%d/%Y, day first for %d/%m/%Y. When false, date fields\
-            \ only accept YYYY-MM-DD. Applies to PDF templates: an HTML template's\
+            \ only accept YYYY-MM-DD. Applies to PDF templates: an HTML or Word template's\
             \ date fields only accept YYYY-MM-DD. Date fields that include a time\
             \ take RFC 3339 date-times either way."
           type: boolean
@@ -16608,7 +17109,7 @@ components:
           x-nullable: true
         html:
           description: "The HTML of an HTML template, as a Liquid template. Null for\
-            \ PDF templates."
+            \ PDF and Word templates."
           type: string
           x-nullable: true
         scss:
@@ -16626,8 +17127,9 @@ components:
         html_engine_options:
           allOf:
           - $ref: "#/components/schemas/HtmlEngineOptions"
-          description: "How an HTML template's PDFs are printed. Null for PDF templates.\
-            \ Setting it replaces the whole object: options left out use their defaults."
+          description: "How an HTML template's PDFs are printed. Null for PDF and\
+            \ Word templates. Setting it replaces the whole object: options left out\
+            \ use their defaults."
           x-nullable: true
         html_escape_data:
           description: "Whether an HTML template HTML-escapes the values it prints.\
@@ -16685,6 +17187,7 @@ components:
       - locked
       - merge_audit_trail_pdf
       - name
+      - output_format
       - parent_folder_id
       - parse_dates_using_template_date_format
       - path
@@ -16710,6 +17213,7 @@ components:
           name: name
           description: description
           template_type: ""
+          output_format: ""
           ready: true
           document: ""
           parent_folder_id: parent_folder_id
@@ -16724,6 +17228,7 @@ components:
           name: name
           description: description
           template_type: ""
+          output_format: ""
           ready: true
           document: ""
           parent_folder_id: parent_folder_id
@@ -16841,9 +17346,9 @@ components:
     TemplatePreview:
       additionalProperties: true
       description: "PNG images of a template's pages filled in with data you send\
-        \ (not a PDF), to check how an HTML or PDF template prints with your data\
-        \ before you publish a version or send live data. A preview makes no submission\
-        \ and uses no credits. Its pages are watermarked like a test submission's\
+        \ (not a PDF), to check how an HTML, PDF or Word template prints with your\
+        \ data before you publish a version or send live data. A preview makes no\
+        \ submission and uses no credits. Its pages are watermarked like a test submission's\
         \ PDF, and it's deleted an hour after it's created."
       example:
         id: id
@@ -16892,8 +17397,8 @@ components:
           x-open-enum: true
         error_message:
           description: "Why the preview couldn't be rendered, such as an error in\
-            \ an HTML template's Liquid, or a value in the data that a field can't\
-            \ print."
+            \ an HTML or Word template's Liquid, or a value in the data that a field\
+            \ can't print."
           type: string
           x-nullable: true
         page_count:
@@ -17122,8 +17627,8 @@ components:
           allOf:
           - $ref: "#/components/schemas/FieldGroupType"
           description: "`array` for a list, whose fields' names number its items after\
-            \ the group's name (`items/0/price`, or `items/~/price` in an HTML template),\
-            \ and `object` for the other groups."
+            \ the group's name (`items/0/price`, or `items/~/price` in an HTML or\
+            \ Word template), and `object` for the other groups."
           x-open-enum: true
         title:
           description: "The group's title in the template's data schema and on forms.\
@@ -17143,9 +17648,9 @@ components:
           type: integer
           x-nullable: true
         max_items:
-          description: "HTML templates' lists only: the most items submission data\
-            \ can have. Null for no limit. A PDF template's list takes as many items\
-            \ as its fields are numbered for, or more with `allow_additional_items`."
+          description: "HTML and Word templates' lists only: the most items submission\
+            \ data can have. Null for no limit. A PDF template's list takes as many\
+            \ items as its fields are numbered for, or more with `allow_additional_items`."
           type: integer
           x-nullable: true
         allow_additional_items:
@@ -17234,16 +17739,18 @@ components:
           description: The fields that changed.
         changed_settings:
           description: "The names of the template's settings that changed, as they're\
-            \ named on the Template (`name`, `html`, `defaults`, `expire_after`, ...).\
-            \ Values aren't included, and secrets like `encrypt_pdfs_password` are\
-            \ named when they change."
+            \ named on the Template (`name`, `html`, `defaults`, `merge_audit_trail_pdf`,\
+            \ ...). Values aren't included. Settings that apply to every version,\
+            \ such as `webhook_url` and `encrypt_pdfs_password`, are the same on every\
+            \ version, so they're named only when there's no earlier version to compare\
+            \ with; a secret is named without its value."
           items:
             type: string
           type: array
           default: null
         document_changed:
-          description: "The template's PDF was replaced (or added, when there's no\
-            \ `from_version`)."
+          description: "The template's PDF was replaced, or its Word document replaced\
+            \ or edited (or added, when there's no `from_version`)."
           type: boolean
       required:
       - changed_settings
@@ -18218,11 +18725,13 @@ components:
       title: SubmissionBatchState
       type: string
     TemplateType:
-      description: "The kind of template: `pdf` (fields placed on an uploaded PDF)\
-        \ or `html` (a PDF rendered from HTML)."
+      description: "The kind of template: `pdf` (fields placed on an uploaded PDF),\
+        \ `html` (a PDF rendered from HTML) or `docx` (a Word document with tags where\
+        \ the data goes)."
       enum:
       - pdf
       - html
+      - docx
       title: TemplateType
       type: string
     SubmissionSource:
@@ -18253,10 +18762,12 @@ components:
       title: SubmissionState
       type: string
     OutputFormat:
-      description: "A file format DocSpring makes: `pdf`, or `png` (images of a PDF's\
-        \ pages)."
+      description: "A file format DocSpring makes: `pdf`, `docx` (a Word document),\
+        \ `odt` (an OpenDocument file), or `png` (images of a PDF's pages)."
       enum:
       - pdf
+      - docx
+      - odt
       - png
       title: OutputFormat
       type: string
@@ -18282,7 +18793,7 @@ components:
       title: SubmissionActionType
       type: string
     TemplateDocumentState:
-      description: Where a template's PDF is in its processing.
+      description: Where a template's document is in its processing.
       enum:
       - pending
       - processed
@@ -18291,14 +18802,18 @@ components:
       - unknown_error
       - downloading
       - download_failed
+      - converting
+      - conversion_failed
       title: TemplateDocumentState
       type: string
     TemplateDocumentSummary:
       additionalProperties: false
-      description: "A PDF template's PDF, as template lists show it."
+      description: "A PDF template's PDF or a Word template's Word document, as template\
+        \ lists show it."
       properties:
         filename:
-          description: The PDF's file name. Null until a `document_url` has been downloaded.
+          description: The file's name. Null until a `document_url` has been downloaded
+            or an OpenDocument file converted.
           type: string
           x-nullable: true
         state:
@@ -18309,16 +18824,21 @@ components:
             \ and `unknown_error` mean the PDF couldn't be processed, and `error_message`\
             \ says why: upload it again or upload another one. `downloading` while\
             \ DocSpring downloads a `document_url`, then as for an upload. `download_failed`\
-            \ means it couldn't be downloaded, and `error_message` says why. A template\
-            \ keeps its PDF while a new one is downloaded, and when it couldn't be."
+            \ means it couldn't be downloaded, and `error_message` says why. `converting`\
+            \ while DocSpring converts an OpenDocument file (.odt) uploaded to a Word\
+            \ template to a Word document, and `conversion_failed` when it couldn't,\
+            \ with `error_message` saying why. A template keeps its document while\
+            \ a new one is downloaded or converted, and when it couldn't be. A Word\
+            \ document is `processed` once it's uploaded, downloaded or converted."
           x-open-enum: true
         error_message:
-          description: "Why the PDF couldn't be processed or downloaded, and how to\
-            \ fix it. Null unless `state` is an error."
+          description: "Why the PDF couldn't be processed, or the document downloaded\
+            \ or converted, and how to fix it. Null unless `state` is an error."
           type: string
           x-nullable: true
         page_count:
-          description: 0 until the PDF has been processed.
+          description: "0 until the PDF has been processed. 0 for a Word document,\
+            \ whose pages depend on the data."
           type: integer
       required:
       - error_message
@@ -18433,10 +18953,11 @@ components:
       type: string
     TemplateDocument:
       additionalProperties: false
-      description: A PDF template's PDF.
+      description: "A PDF template's PDF, or a Word template's Word document."
       properties:
         filename:
-          description: The PDF's file name. Null until a `document_url` has been downloaded.
+          description: The file's name. Null until a `document_url` has been downloaded
+            or an OpenDocument file converted.
           type: string
           x-nullable: true
         state:
@@ -18447,19 +18968,24 @@ components:
             \ and `unknown_error` mean the PDF couldn't be processed, and `error_message`\
             \ says why: upload it again or upload another one. `downloading` while\
             \ DocSpring downloads a `document_url`, then as for an upload. `download_failed`\
-            \ means it couldn't be downloaded, and `error_message` says why. A template\
-            \ keeps its PDF while a new one is downloaded, and when it couldn't be."
+            \ means it couldn't be downloaded, and `error_message` says why. `converting`\
+            \ while DocSpring converts an OpenDocument file (.odt) uploaded to a Word\
+            \ template to a Word document, and `conversion_failed` when it couldn't,\
+            \ with `error_message` saying why. A template keeps its document while\
+            \ a new one is downloaded or converted, and when it couldn't be. A Word\
+            \ document is `processed` once it's uploaded, downloaded or converted."
           x-open-enum: true
         error_message:
-          description: "Why the PDF couldn't be processed or downloaded, and how to\
-            \ fix it. Null unless `state` is an error."
+          description: "Why the PDF couldn't be processed, or the document downloaded\
+            \ or converted, and how to fix it. Null unless `state` is an error."
           type: string
           x-nullable: true
         page_count:
-          description: 0 until the PDF has been processed.
+          description: "0 until the PDF has been processed. 0 for a Word document,\
+            \ whose pages depend on the data."
           type: integer
         md5:
-          description: The MD5 hash of the PDF.
+          description: The MD5 hash of the PDF. Null for a Word document.
           type: string
           x-nullable: true
         field_reimport_state:
@@ -18484,16 +19010,16 @@ components:
           x-nullable: true
           default: null
         has_fillable_fields:
-          description: Whether the PDF has fillable form fields. Null until DocSpring
-            has read the PDF.
+          description: "Whether the PDF has fillable form fields. Null until DocSpring\
+            \ has read the PDF, and for a Word document."
           type: boolean
           x-nullable: true
         page_processing_statuses:
           description: "How processing is going on each page, in page order: its image,\
             \ and its fields when DocSpring sets them up (`detect_fields` when the\
             \ template was created). `state` becomes `processed` once every page is\
-            \ done. Empty until DocSpring has read the PDF, and for PDFs uploaded\
-            \ before DocSpring recorded page statuses."
+            \ done. Empty until DocSpring has read the PDF, for PDFs uploaded before\
+            \ DocSpring recorded page statuses, and for a Word document."
           items:
             $ref: "#/components/schemas/TemplatePageProcessingStatus"
           type: array
@@ -18506,16 +19032,18 @@ components:
             \ and required fields: `pending` or `processing` until it finishes, then\
             \ `processed`, `failed` or `skipped`. Null until every page is done, and\
             \ when there's no logic step to run (`field_logic` is `none`, or the PDF\
-            \ has no fields)."
+            \ has no fields). Null for a Word document."
           x-nullable: true
           x-open-enum: true
         download_url:
-          description: A temporary link to download the PDF.
+          description: A temporary link to download the PDF. Null for a Word document
+            (use `permanent_url`).
           type: string
           x-nullable: true
         permanent_url:
-          description: A link to download the PDF that doesn't expire. Null until
-            the PDF has been processed.
+          description: A link to download the file that doesn't expire. Null until
+            a PDF has been processed. A Word document's is built from the template's
+            current document when it's downloaded.
           type: string
           x-nullable: true
       required:
@@ -18751,6 +19279,7 @@ components:
       - csharp
       - elixir
       - go
+      - rust
       title: ModelCodeLanguage
       type: string
     TemplateDiffSummary:
@@ -19045,7 +19574,7 @@ components:
         data:
           additionalProperties: true
           description: "The values of the template's fields, by field name. Required\
-            \ for a PDF template."
+            \ for PDF and Word templates."
           type: object
         metadata:
           additionalProperties: true
@@ -19060,15 +19589,20 @@ components:
             \ is added. Without it, the file is named after the submission's ID (`sub_1234567890abcdef01.pdf`)."
           type: object
         password:
-          description: A password that the PDF needs to be opened with. It's never
-            returned; `has_password` says if it's set.
+          description: "A password that the PDF needs to be opened with. It's never\
+            \ returned; `has_password` says if it's set. Word documents and OpenDocument\
+            \ files can't be password-protected, so a submission with a password can't\
+            \ make them."
           type: string
           writeOnly: true
         output_formats:
-          description: "What the submission makes: `pdf`, and `png` (an image of each\
-            \ page of the PDF, up to 100 pages) when you ask for it. Default `[\"\
-            pdf\"]`. POST /submissions/{submission_id}/generate_files adds `png` to\
-            \ a processed submission."
+          description: "What the submission makes: `pdf`, `docx` (a Word document,\
+            \ from a Word template), `odt` (an OpenDocument file, the format LibreOffice\
+            \ uses, converted from a Word template's Word document), and `png` (an\
+            \ image of each page of the PDF, up to 100 pages, which adds `pdf`) when\
+            \ you ask for it. Default `[\"pdf\"]`, or a Word template's `output_format`.\
+            \ POST /submissions/{submission_id}/generate_files adds `png`, and a Word\
+            \ template's submission's `pdf`, `docx` or `odt`, to a processed submission."
           items:
             $ref: "#/components/schemas/OutputFormat"
           type: array
@@ -19219,9 +19753,13 @@ components:
       - fields
       title: SignatureRequestInput
     GenerateFilesFormat:
-      description: "A format DocSpring can add to a processed submission: `png` (images\
-        \ of the PDF's pages)."
+      description: "A format DocSpring can add to a processed submission: `pdf`, `docx`\
+        \ or `odt` (a Word template's submission's PDF, Word document or OpenDocument\
+        \ file), or `png` (images of the PDF's pages)."
       enum:
+      - pdf
+      - docx
+      - odt
       - png
       title: GenerateFilesFormat
       type: string
@@ -19550,9 +20088,9 @@ components:
           type: integer
           x-nullable: true
         max_items:
-          description: "HTML templates' lists only: the most items submission data\
-            \ can have. Null for no limit. A PDF template's list takes as many items\
-            \ as its fields are numbered for, or more with `allow_additional_items`."
+          description: "HTML and Word templates' lists only: the most items submission\
+            \ data can have. Null for no limit. A PDF template's list takes as many\
+            \ items as its fields are numbered for, or more with `allow_additional_items`."
           type: integer
           x-nullable: true
         allow_additional_items:
@@ -19603,9 +20141,9 @@ components:
         \ are placed on its pages: `x`, `y`, `width` and `height` are in units where\
         \ every page is 2480 wide, measured from the top-left corner of the field's\
         \ `page`. To convert from PDF points, multiply by 2480 and divide by the page's\
-        \ width in points (`document.page_dimensions` on the template). An HTML template's\
-        \ fields are all on page 1, and their placement and style settings aren't\
-        \ used."
+        \ width in points (`document.page_dimensions` on the template). An HTML or\
+        \ Word template's fields are all on page 1, and their placement and style\
+        \ settings aren't used: its HTML or Word document places and styles each value."
       example:
         name: name
         page: 0
@@ -20772,7 +21310,8 @@ components:
         data:
           additionalProperties: true
           description: "The values of the template's fields, by field name. Required\
-            \ for a PDF template, unless `signature_requests` collects the values."
+            \ for PDF and Word templates, unless `signature_requests` collects them\
+            \ (PDF templates only)."
           type: object
         metadata:
           additionalProperties: true
@@ -20787,15 +21326,20 @@ components:
             \ is added. Without it, the file is named after the submission's ID (`sub_1234567890abcdef01.pdf`)."
           type: object
         password:
-          description: A password that the PDF needs to be opened with. It's never
-            returned; `has_password` says if it's set.
+          description: "A password that the PDF needs to be opened with. It's never\
+            \ returned; `has_password` says if it's set. Word documents and OpenDocument\
+            \ files can't be password-protected, so a submission with a password can't\
+            \ make them."
           type: string
           writeOnly: true
         output_formats:
-          description: "What the submission makes: `pdf`, and `png` (an image of each\
-            \ page of the PDF, up to 100 pages) when you ask for it. Default `[\"\
-            pdf\"]`. POST /submissions/{submission_id}/generate_files adds `png` to\
-            \ a processed submission."
+          description: "What the submission makes: `pdf`, `docx` (a Word document,\
+            \ from a Word template), `odt` (an OpenDocument file, the format LibreOffice\
+            \ uses, converted from a Word template's Word document), and `png` (an\
+            \ image of each page of the PDF, up to 100 pages, which adds `pdf`) when\
+            \ you ask for it. Default `[\"pdf\"]`, or a Word template's `output_format`.\
+            \ POST /submissions/{submission_id}/generate_files adds `png`, and a Word\
+            \ template's submission's `pdf`, `docx` or `odt`, to a processed submission."
           items:
             $ref: "#/components/schemas/OutputFormat"
           type: array
@@ -20978,7 +21522,8 @@ components:
         data:
           additionalProperties: true
           description: "The values of the template's fields, by field name. Required\
-            \ for a PDF template, unless `signature_requests` collects the values."
+            \ for PDF and Word templates, unless `signature_requests` collects them\
+            \ (PDF templates only)."
           type: object
         metadata:
           additionalProperties: true
@@ -20993,15 +21538,20 @@ components:
             \ is added. Without it, the file is named after the submission's ID (`sub_1234567890abcdef01.pdf`)."
           type: object
         password:
-          description: A password that the PDF needs to be opened with. It's never
-            returned; `has_password` says if it's set.
+          description: "A password that the PDF needs to be opened with. It's never\
+            \ returned; `has_password` says if it's set. Word documents and OpenDocument\
+            \ files can't be password-protected, so a submission with a password can't\
+            \ make them."
           type: string
           writeOnly: true
         output_formats:
-          description: "What the submission makes: `pdf`, and `png` (an image of each\
-            \ page of the PDF, up to 100 pages) when you ask for it. Default `[\"\
-            pdf\"]`. POST /submissions/{submission_id}/generate_files adds `png` to\
-            \ a processed submission."
+          description: "What the submission makes: `pdf`, `docx` (a Word document,\
+            \ from a Word template), `odt` (an OpenDocument file, the format LibreOffice\
+            \ uses, converted from a Word template's Word document), and `png` (an\
+            \ image of each page of the PDF, up to 100 pages, which adds `pdf`) when\
+            \ you ask for it. Default `[\"pdf\"]`, or a Word template's `output_format`.\
+            \ POST /submissions/{submission_id}/generate_files adds `png`, and a Word\
+            \ template's submission's `pdf`, `docx` or `odt`, to a processed submission."
           items:
             $ref: "#/components/schemas/OutputFormat"
           type: array
@@ -21056,13 +21606,21 @@ components:
       description: The formats to make.
       example:
         formats:
-        - png
-        - png
+        - pdf
+        - pdf
       properties:
         formats:
-          description: "The formats to add to the submission's files: `png`, an image\
-            \ of each page of the submission's PDF (up to 100 pages). A format the\
-            \ submission already has (or is making) is left as it is."
+          description: "The formats to add to the submission's files: `pdf`, the PDF\
+            \ of a Word template's submission that didn't make one (converted from\
+            \ its Word document); `docx`, the Word document of a Word template's submission\
+            \ that didn't make one (made again from the submission's data and the\
+            \ template version it used); `odt`, the OpenDocument file of a Word template's\
+            \ submission that didn't make one (converted from its Word document);\
+            \ and `png`, an image of each page of the PDF (up to 100 pages), which\
+            \ makes the PDF first if the submission doesn't have one. A submission\
+            \ without a Word document makes it again for `pdf` and `odt`, without\
+            \ keeping it. A format the submission already has (or is making) is left\
+            \ as it is."
           items:
             $ref: "#/components/schemas/GenerateFilesFormat"
           type: array
@@ -21078,6 +21636,7 @@ components:
         name: name
         description: description
         template_type: ""
+        output_format: ""
         parent_folder_id: parent_folder_id
         locked: true
         add_signature_request_submission_id_footers: true
@@ -21172,7 +21731,18 @@ components:
           allOf:
           - $ref: "#/components/schemas/TemplateType"
           description: "`pdf`: fields placed on an uploaded PDF. `html`: a PDF rendered\
-            \ from HTML and SCSS. It can't be changed after the template is created."
+            \ from HTML and SCSS. `docx`: a Word document with tags where the data\
+            \ goes, which makes Word documents or PDFs. It can't be changed after\
+            \ the template is created."
+        output_format:
+          allOf:
+          - $ref: "#/components/schemas/OutputFormat"
+          description: "What each submission makes unless its request sets `output_formats`:\
+            \ `docx` (a Word document), `odt` (an OpenDocument file, converted from\
+            \ the Word document) or `pdf`. A Word template's is chosen when it's created;\
+            \ PDF and HTML templates always make PDFs. A Word template that encrypts\
+            \ its PDFs makes PDFs, because Word documents and OpenDocument files can't\
+            \ be password-protected."
         parent_folder_id:
           description: The ID of the folder the template is in. Null for a template
             at the root. Setting it moves the template and all of its published versions.
@@ -21210,8 +21780,8 @@ components:
           description: "The hosted form that /templates/{template_id}/form shows when\
             \ its URL has no `mode` parameter: `web` (the web form), `visual` (the\
             \ visual form, where fields are filled in on the PDF) or `dual` (both,\
-            \ in tabs). HTML templates have no visual form, so `web` is the only value\
-            \ they accept."
+            \ in tabs). Only PDF templates have a visual form, so other templates\
+            \ accept only `web`."
         editable_submissions:
           description: Generate PDFs whose text and check fields stay fillable ("Generate
             Editable PDFs"). A submission's `editable` overrides it.
@@ -21246,7 +21816,9 @@ components:
             PDF.
           type: boolean
         encrypt_pdfs:
-          description: Encrypt generated PDFs with `encrypt_pdfs_password`.
+          description: "Encrypt generated PDFs with `encrypt_pdfs_password`. A Word\
+            \ template can only encrypt its PDFs when its `output_format` is `pdf`,\
+            \ because Word documents and OpenDocument files can't be password-protected."
           type: boolean
         encrypt_pdfs_password:
           description: The password that opens encrypted PDFs. It's never returned;
@@ -21275,7 +21847,7 @@ components:
           description: "Date fields also accept NN/NN/YYYY dates (with slashes, dashes\
             \ or dots), read in the order of the template's default date format: month\
             \ first for %m/%d/%Y, day first for %d/%m/%Y. When false, date fields\
-            \ only accept YYYY-MM-DD. Applies to PDF templates: an HTML template's\
+            \ only accept YYYY-MM-DD. Applies to PDF templates: an HTML or Word template's\
             \ date fields only accept YYYY-MM-DD. Date fields that include a time\
             \ take RFC 3339 date-times either way."
           type: boolean
@@ -21329,7 +21901,7 @@ components:
           x-nullable: true
         html:
           description: "The HTML of an HTML template, as a Liquid template. Null for\
-            \ PDF templates."
+            \ PDF and Word templates."
           type: string
           x-nullable: true
         scss:
@@ -21358,26 +21930,30 @@ components:
             \ as HTML. Null for PDF templates."
           type: boolean
         cache_id:
-          description: "A PDF template's document: the `fields.key` of a file you\
-            \ uploaded with the presigned upload (GET /uploads/presign). A PDF template\
-            \ needs one of `cache_id`, `document_url` and `document_base64`. To upload\
-            \ the PDF with the request, use POST /templates/upload."
+          description: "The template's document, a PDF or a Word document (.docx or\
+            \ .odt): the `fields.key` of a file you uploaded with the presigned upload\
+            \ (GET /uploads/presign). PDF and Word templates need one of `cache_id`,\
+            \ `document_url` and `document_base64`. To upload the file with the request,\
+            \ use POST /templates/upload."
           type: string
         document_url:
-          description: "An https:// link to the template's PDF (up to 100 MB), instead\
-            \ of `cache_id`. DocSpring downloads it after responding, following redirects\
-            \ to other https:// links: the template's `document.state` is `downloading`\
-            \ until then (sync.api hosts wait for it). If it can't be downloaded,\
-            \ the state is `download_failed` and `document.error_message` says why."
+          description: "An https:// link to the template's document, instead of `cache_id`:\
+            \ a PDF template's PDF (up to 100 MB) or a Word template's Word document\
+            \ (.docx or .odt, up to 50 MB). DocSpring downloads it after responding,\
+            \ following redirects to other https:// links: the template's `document.state`\
+            \ is `downloading` until then, and `converting` while an .odt is converted\
+            \ (sync.api hosts wait for both). If it can't be downloaded, the state\
+            \ is `download_failed` and `document.error_message` says why."
           type: string
           x-pattern-message: must be an https:// link
         document_base64:
-          description: "The template's PDF, encoded as base64 (a `data:` URI works\
-            \ too), instead of `cache_id`. Up to 7 MB before it's encoded: send a\
-            \ larger file with `cache_id` or `document_url`."
+          description: "The template's document (a PDF, or a Word template's Word\
+            \ document), encoded as base64 (a `data:` URI works too), instead of `cache_id`.\
+            \ Up to 7 MB before it's encoded: send a larger file with `cache_id` or\
+            \ `document_url`."
           type: string
         filename:
-          description: "The PDF's file name, for a `cache_id` (presigned uploads don't\
+          description: "The file's name, for a `cache_id` (presigned uploads don't\
             \ send one) or `document_base64`. A `document_url`'s is the last part\
             \ of its path unless you set it."
           type: string
@@ -21419,6 +21995,7 @@ components:
       example:
         name: name
         description: description
+        output_format: ""
         parent_folder_id: parent_folder_id
         locked: true
         add_signature_request_submission_id_footers: true
@@ -21516,6 +22093,15 @@ components:
             \ requests."
           type: string
           x-nullable: true
+        output_format:
+          allOf:
+          - $ref: "#/components/schemas/OutputFormat"
+          description: "What each submission makes unless its request sets `output_formats`:\
+            \ `docx` (a Word document), `odt` (an OpenDocument file, converted from\
+            \ the Word document) or `pdf`. A Word template's is chosen when it's created;\
+            \ PDF and HTML templates always make PDFs. A Word template that encrypts\
+            \ its PDFs makes PDFs, because Word documents and OpenDocument files can't\
+            \ be password-protected."
         parent_folder_id:
           description: The ID of the folder the template is in. Null for a template
             at the root. Setting it moves the template and all of its published versions.
@@ -21553,8 +22139,8 @@ components:
           description: "The hosted form that /templates/{template_id}/form shows when\
             \ its URL has no `mode` parameter: `web` (the web form), `visual` (the\
             \ visual form, where fields are filled in on the PDF) or `dual` (both,\
-            \ in tabs). HTML templates have no visual form, so `web` is the only value\
-            \ they accept."
+            \ in tabs). Only PDF templates have a visual form, so other templates\
+            \ accept only `web`."
         editable_submissions:
           description: Generate PDFs whose text and check fields stay fillable ("Generate
             Editable PDFs"). A submission's `editable` overrides it.
@@ -21589,7 +22175,9 @@ components:
             PDF.
           type: boolean
         encrypt_pdfs:
-          description: Encrypt generated PDFs with `encrypt_pdfs_password`.
+          description: "Encrypt generated PDFs with `encrypt_pdfs_password`. A Word\
+            \ template can only encrypt its PDFs when its `output_format` is `pdf`,\
+            \ because Word documents and OpenDocument files can't be password-protected."
           type: boolean
         encrypt_pdfs_password:
           description: The password that opens encrypted PDFs. It's never returned;
@@ -21618,7 +22206,7 @@ components:
           description: "Date fields also accept NN/NN/YYYY dates (with slashes, dashes\
             \ or dots), read in the order of the template's default date format: month\
             \ first for %m/%d/%Y, day first for %d/%m/%Y. When false, date fields\
-            \ only accept YYYY-MM-DD. Applies to PDF templates: an HTML template's\
+            \ only accept YYYY-MM-DD. Applies to PDF templates: an HTML or Word template's\
             \ date fields only accept YYYY-MM-DD. Date fields that include a time\
             \ take RFC 3339 date-times either way."
           type: boolean
@@ -21680,7 +22268,7 @@ components:
           x-nullable: true
         html:
           description: "The HTML of an HTML template, as a Liquid template. Null for\
-            \ PDF templates."
+            \ PDF and Word templates."
           type: string
           x-nullable: true
         scss:
@@ -21711,7 +22299,8 @@ components:
       title: UpdateTemplateRequest
     UpdateTemplateDocumentRequest:
       additionalProperties: false
-      description: "The new PDF, as one of `cache_id`, `document_url` and `document_base64`."
+      description: "The new PDF, or a Word template's new Word document, as one of\
+        \ `cache_id`, `document_url` and `document_base64`."
       example:
         cache_id: cache_id
         document_url: document_url
@@ -21720,24 +22309,27 @@ components:
         reimport_fields: true
       properties:
         cache_id:
-          description: "The `fields.key` of the new PDF, uploaded with the presigned\
-            \ upload (GET /uploads/presign)."
+          description: "The `fields.key` of the new PDF or Word document (.docx or\
+            \ .odt), uploaded with the presigned upload (GET /uploads/presign)."
           type: string
         document_url:
-          description: "An https:// link to the template's PDF (up to 100 MB), instead\
-            \ of `cache_id`. DocSpring downloads it after responding, following redirects\
-            \ to other https:// links: the template's `document.state` is `downloading`\
-            \ until then (sync.api hosts wait for it). If it can't be downloaded,\
-            \ the state is `download_failed` and `document.error_message` says why."
+          description: "An https:// link to the template's document, instead of `cache_id`:\
+            \ a PDF template's PDF (up to 100 MB) or a Word template's Word document\
+            \ (.docx or .odt, up to 50 MB). DocSpring downloads it after responding,\
+            \ following redirects to other https:// links: the template's `document.state`\
+            \ is `downloading` until then, and `converting` while an .odt is converted\
+            \ (sync.api hosts wait for both). If it can't be downloaded, the state\
+            \ is `download_failed` and `document.error_message` says why."
           type: string
           x-pattern-message: must be an https:// link
         document_base64:
-          description: "The template's PDF, encoded as base64 (a `data:` URI works\
-            \ too), instead of `cache_id`. Up to 7 MB before it's encoded: send a\
-            \ larger file with `cache_id` or `document_url`."
+          description: "The template's document (a PDF, or a Word template's Word\
+            \ document), encoded as base64 (a `data:` URI works too), instead of `cache_id`.\
+            \ Up to 7 MB before it's encoded: send a larger file with `cache_id` or\
+            \ `document_url`."
           type: string
         filename:
-          description: "The PDF's file name, for a `cache_id` (presigned uploads don't\
+          description: "The file's name, for a `cache_id` (presigned uploads don't\
             \ send one) or `document_base64`. A `document_url`'s is the last part\
             \ of its path unless you set it."
           type: string
@@ -21747,7 +22339,8 @@ components:
             \ As on a first upload, the default typeface, font size, bold and color\
             \ are taken from the PDF's fields; the template's other settings are kept.\
             \ If the PDF has no fillable fields, the template keeps its fields. A\
-            \ locked template can't re-import its fields."
+            \ locked template can't re-import its fields. Only for PDF templates:\
+            \ a Word template adds a field for each new tag."
           type: boolean
       title: UpdateTemplateDocumentRequest
     CopyTemplateRequest:
@@ -22473,10 +23066,13 @@ components:
       title: UpdateWebhookRequest
     UploadTemplateRequest:
       additionalProperties: {}
-      description: "The PDF, and the new template's settings."
+      description: "The PDF or Word document, and the new template's settings."
       properties:
         document:
-          description: The PDF.
+          description: "A PDF (for a PDF template) or a Word document (.docx or .odt,\
+            \ for a Word template). DocSpring converts an OpenDocument text file (.odt)\
+            \ to a Word document after responding: the template's `document.state`\
+            \ is `converting` until then (sync.api hosts wait for it)."
           format: binary
           type: string
         name:
@@ -22526,15 +23122,23 @@ components:
           description: "With `detect_fields`, whether AI reads the whole form once\
             \ the fields are named and sets up conditional logic and required fields\
             \ (`ai`) or not (`none`). Default: your account's template settings."
+        output_format:
+          allOf:
+          - $ref: "#/components/schemas/OutputFormat"
+          description: "What each submission of a Word template makes unless its request\
+            \ sets `output_formats`: `docx` (a Word document), `odt` (an OpenDocument\
+            \ file, converted from the Word document) or `pdf`. Required when `document`\
+            \ is a Word document."
       required:
       - document
       title: UploadTemplateRequest
     UploadTemplateDocumentRequest:
       additionalProperties: {}
-      description: The new PDF.
+      description: "The new PDF, or the new Word document of a Word template."
       properties:
         document:
-          description: The new PDF.
+          description: "The new PDF, or the new Word document (.docx or .odt) of a\
+            \ Word template."
           format: binary
           type: string
         reimport_fields:
@@ -22543,7 +23147,8 @@ components:
             \ As on a first upload, the default typeface, font size, bold and color\
             \ are taken from the PDF's fields; the template's other settings are kept.\
             \ If the PDF has no fillable fields, the template keeps its fields. A\
-            \ locked template can't re-import its fields."
+            \ locked template can't re-import its fields. Only for PDF templates:\
+            \ a Word template adds a field for each new tag."
           type: boolean
       required:
       - document

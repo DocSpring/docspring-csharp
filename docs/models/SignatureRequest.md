@@ -31,5 +31,5 @@ Name | Type | Description | Notes
 **IpAddress** | **string** | The IP address they completed the signature request from. Null in the events of a webhook that leaves out submission data. | 
 **UserAgent** | **string** | The User-Agent header of the browser they completed the signature request with. Null in the events of a webhook that leaves out submission data. | 
 
-[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+[[Back to Model list]](../../README.md#methods) [[Back to API list]](../../README.md#methods) [[Back to README]](../../README.md)
 

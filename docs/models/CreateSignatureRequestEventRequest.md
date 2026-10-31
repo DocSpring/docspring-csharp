@@ -10,5 +10,5 @@ Name | Type | Description | Notes
 **MessageRecipient** | **string** | Where you sent the request, such as an email address or a phone number. Required for `send_request`. | [optional] 
 **OccurredAt** | **DateTime** | When it happened. Default now. | [optional] 
 
-[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+[[Back to Model list]](../../README.md#methods) [[Back to API list]](../../README.md#methods) [[Back to README]](../../README.md)
 

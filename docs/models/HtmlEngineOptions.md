@@ -16,5 +16,5 @@ Name | Type | Description | Notes
 **Width** | **string** | The page width for the `Custom` format, with a unit (`8.5in`, `210mm`). | [optional] 
 **Height** | **string** | The page height for the `Custom` format, with a unit. | [optional] 
 
-[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+[[Back to Model list]](../../README.md#methods) [[Back to API list]](../../README.md#methods) [[Back to README]](../../README.md)
 

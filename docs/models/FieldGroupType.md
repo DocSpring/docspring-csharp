@@ -6,5 +6,5 @@ Whether a field group is an object or a list (an array) in submission data.
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 
-[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+[[Back to Model list]](../../README.md#methods) [[Back to API list]](../../README.md#methods) [[Back to README]](../../README.md)
 

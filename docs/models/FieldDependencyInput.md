@@ -9,5 +9,5 @@ Name | Type | Description | Notes
 **Conditions** | [**List&lt;TemplateFieldDependencyConditionInput&gt;**](TemplateFieldDependencyConditionInput.md) | The conditions on other fields' values. | 
 **Match** | **TemplateFieldDependencyMatch** | Whether all of the conditions (the default) or any of them must be met. | [optional] 
 
-[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+[[Back to Model list]](../../README.md#methods) [[Back to API list]](../../README.md#methods) [[Back to README]](../../README.md)
 

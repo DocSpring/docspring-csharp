@@ -11,5 +11,5 @@ Name | Type | Description | Notes
 **Match** | **TemplateFieldDependencyMatch** | Whether all of the conditions (the default) or any of them must be met. | [optional] 
 **Group** | **string** | Marks a rule made for a field group in the template editor. Its targets outside the group are removed when the template is saved, and the rule is removed once the group has no fields. | [optional] 
 
-[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+[[Back to Model list]](../../README.md#methods) [[Back to API list]](../../README.md#methods) [[Back to README]](../../README.md)
 

@@ -10,5 +10,5 @@ Name | Type | Description | Notes
 **Fields** | **Dictionary&lt;string, string&gt;** | Form fields to send with the file. Send them all, as they are. `key` is the uploaded file's ID: pass it as `cache_id`. | 
 **Headers** | **Dictionary&lt;string, string&gt;** | Headers to send with the upload. | 
 
-[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+[[Back to Model list]](../../README.md#methods) [[Back to API list]](../../README.md#methods) [[Back to README]](../../README.md)
 

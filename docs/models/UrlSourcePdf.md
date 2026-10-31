@@ -8,5 +8,5 @@ Name | Type | Description | Notes
 **Url** | **string** | For a `url` source, the URL to download the PDF from. Removed once the combined PDF has expired. | 
 **Type** | **string** | Must be `url`. | [default to "url"]
 
-[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+[[Back to Model list]](../../README.md#methods) [[Back to API list]](../../README.md#methods) [[Back to README]](../../README.md)
 

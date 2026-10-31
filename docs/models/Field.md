@@ -1,5 +1,5 @@
 # DocSpring.Client.Model.Field
-A field of a template: the name of a value in submission data, and how and where it prints. Fields with the same `name` share one value and the settings the descriptions say are shared. A PDF template's fields are placed on its pages: `x`, `y`, `width` and `height` are in units where every page is 2480 wide, measured from the top-left corner of the field's `page`. To convert from PDF points, multiply by 2480 and divide by the page's width in points (`document.page_dimensions` on the template). An HTML template's fields are all on page 1, and their placement and style settings aren't used.
+A field of a template: the name of a value in submission data, and how and where it prints. Fields with the same `name` share one value and the settings the descriptions say are shared. A PDF template's fields are placed on its pages: `x`, `y`, `width` and `height` are in units where every page is 2480 wide, measured from the top-left corner of the field's `page`. To convert from PDF points, multiply by 2480 and divide by the page's width in points (`document.page_dimensions` on the template). An HTML or Word template's fields are all on page 1, and their placement and style settings aren't used: its HTML or Word document places and styles each value.
 
 ## Properties
 
@@ -97,5 +97,5 @@ Name | Type | Description | Notes
 **DecimalPlaces** | **int** | Number fields with text display: prints the number with this many decimal places, from 0 (rounds to a whole number) to 99. Empty prints the number as it was sent. | 
 **Dependencies** | [**FieldDependency**](FieldDependency.md) | The field's own conditional logic rule: when other fields' values meet its conditions, the field is shown, made required, or both. Null when it has none. The template's rules (`field_dependencies`) can apply to the field too. Shared by every field with the same `name`. | 
 
-[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+[[Back to Model list]](../../README.md#methods) [[Back to API list]](../../README.md#methods) [[Back to README]](../../README.md)
 

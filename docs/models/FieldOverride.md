@@ -69,5 +69,5 @@ Name | Type | Description | Notes
 **ImageScaleType** | **ImageScaleType** | How an image is resized to its field. | [optional] 
 **ImageGravity** | **ImageGravity** | Where an image sits in its field when it doesn't fill it, or which part is kept when it's cropped. | [optional] 
 
-[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+[[Back to Model list]](../../README.md#methods) [[Back to API list]](../../README.md#methods) [[Back to README]](../../README.md)
 

@@ -9,5 +9,5 @@ Name | Type | Description | Notes
 **Value** | **List&lt;Object&gt;** | The values the field's value must be one of. | 
 **Operator** | **string** | Must be `in`. | [default to "in"]
 
-[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+[[Back to Model list]](../../README.md#methods) [[Back to API list]](../../README.md#methods) [[Back to README]](../../README.md)
 

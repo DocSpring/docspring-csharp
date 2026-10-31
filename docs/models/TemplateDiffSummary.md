@@ -12,5 +12,5 @@ Name | Type | Description | Notes
 **SettingsChanged** | **int** | How many of the template's settings changed. | 
 **TotalChanges** | **int** | All the changes, counting a new document as one. Zero when the versions are the same. | 
 
-[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+[[Back to Model list]](../../README.md#methods) [[Back to API list]](../../README.md#methods) [[Back to README]](../../README.md)
 

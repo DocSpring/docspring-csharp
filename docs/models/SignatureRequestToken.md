@@ -13,5 +13,5 @@ Name | Type | Description | Notes
 **ExpiresAt** | **DateTime** | When the link stops opening the signature request. | 
 **CreatedAt** | **DateTime** | When the token was created. | 
 
-[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+[[Back to Model list]](../../README.md#methods) [[Back to API list]](../../README.md#methods) [[Back to README]](../../README.md)
 

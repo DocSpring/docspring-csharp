@@ -26,5 +26,5 @@ Name | Type | Description | Notes
 **ShapeBorderColor** | **string** | The border color of shapes, as 6 hex digits. | [optional] 
 **ShapeBorderWidth** | **int** | The border width of shapes, in whole points (at least 1). | [optional] 
 
-[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+[[Back to Model list]](../../README.md#methods) [[Back to API list]](../../README.md#methods) [[Back to README]](../../README.md)
 

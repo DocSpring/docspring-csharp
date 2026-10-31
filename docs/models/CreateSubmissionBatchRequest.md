@@ -12,5 +12,5 @@ Name | Type | Description | Notes
 **Test** | **bool** | The default `test` for each submission that doesn't set its own. | [optional] 
 **OutputFormats** | [**List&lt;OutputFormat&gt;**](OutputFormat.md) | The default `output_formats` for each submission that doesn't set its own. | [optional] 
 
-[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+[[Back to Model list]](../../README.md#methods) [[Back to API list]](../../README.md#methods) [[Back to README]](../../README.md)
 

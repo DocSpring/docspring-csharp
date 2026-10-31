@@ -12,5 +12,5 @@ Name | Type | Description | Notes
 **Size** | **int** | The file's size in bytes. | 
 **ContentType** | **string** | The file's media type, such as `application/pdf`. | 
 
-[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+[[Back to Model list]](../../README.md#methods) [[Back to API list]](../../README.md#methods) [[Back to README]](../../README.md)
 

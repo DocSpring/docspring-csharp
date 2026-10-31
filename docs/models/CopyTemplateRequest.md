@@ -9,5 +9,5 @@ Name | Type | Description | Notes
 **ParentFolderId** | **string** | The folder to put the copy in. Null puts it at the root. Left out, the copy goes in the template's own folder. | [optional] 
 **VarVersion** | **string** | Copy this published version (`1.2.0`, or `1` for the latest 1.x.x) instead of the draft. | [optional] 
 
-[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+[[Back to Model list]](../../README.md#methods) [[Back to API list]](../../README.md#methods) [[Back to README]](../../README.md)
 

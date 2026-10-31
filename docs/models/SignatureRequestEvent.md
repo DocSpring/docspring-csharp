@@ -14,5 +14,5 @@ Name | Type | Description | Notes
 **MessageType** | **SignatureRequestMessageType** | How you sent the request. Required for `send_request`. | 
 **MessageRecipient** | **string** | Where you sent the request, such as an email address or a phone number. Required for `send_request`. | 
 
-[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+[[Back to Model list]](../../README.md#methods) [[Back to API list]](../../README.md#methods) [[Back to README]](../../README.md)
 
