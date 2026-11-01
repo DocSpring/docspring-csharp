@@ -151,5 +151,86 @@ namespace DocSpring.Client.Test.Model
         {
             // TODO unit test for the property 'SignatureRequests'
         }
+
+        /// <summary>
+        /// Test the property 'SendEmail'
+        /// </summary>
+        [Fact]
+        public void SendEmailTest()
+        {
+            // TODO unit test for the property 'SendEmail'
+        }
+
+        /// <summary>
+        /// Test the property 'SigningOrder'
+        /// </summary>
+        [Fact]
+        public void SigningOrderTest()
+        {
+            // TODO unit test for the property 'SigningOrder'
+        }
+
+        /// <summary>
+        /// Test the property 'EmailSubject'
+        /// </summary>
+        [Fact]
+        public void EmailSubjectTest()
+        {
+            // TODO unit test for the property 'EmailSubject'
+        }
+
+        /// <summary>
+        /// Test the property 'EmailMessage'
+        /// </summary>
+        [Fact]
+        public void EmailMessageTest()
+        {
+            // TODO unit test for the property 'EmailMessage'
+        }
+
+        /// <summary>
+        /// Test the property 'Cc'
+        /// </summary>
+        [Fact]
+        public void CcTest()
+        {
+            // TODO unit test for the property 'Cc'
+        }
+
+        /// <summary>
+        /// Test the property 'ReplyTo'
+        /// </summary>
+        [Fact]
+        public void ReplyToTest()
+        {
+            // TODO unit test for the property 'ReplyTo'
+        }
+
+        /// <summary>
+        /// Test the property 'NotificationEmails'
+        /// </summary>
+        [Fact]
+        public void NotificationEmailsTest()
+        {
+            // TODO unit test for the property 'NotificationEmails'
+        }
+
+        /// <summary>
+        /// Test the property 'NotifyWhenSigned'
+        /// </summary>
+        [Fact]
+        public void NotifyWhenSignedTest()
+        {
+            // TODO unit test for the property 'NotifyWhenSigned'
+        }
+
+        /// <summary>
+        /// Test the property 'Reminders'
+        /// </summary>
+        [Fact]
+        public void RemindersTest()
+        {
+            // TODO unit test for the property 'Reminders'
+        }
     }
 }

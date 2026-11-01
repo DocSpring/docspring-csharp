@@ -49,9 +49,19 @@ namespace DocSpring.Client.Model
         public static StringConditionType EqualsValue { get; } = new StringConditionType("equals");
 
         /// <summary>
+        /// not_equals
+        /// </summary>
+        public static StringConditionType NotEquals { get; } = new StringConditionType("not_equals");
+
+        /// <summary>
         /// contains
         /// </summary>
         public static StringConditionType Contains { get; } = new StringConditionType("contains");
+
+        /// <summary>
+        /// not_contains
+        /// </summary>
+        public static StringConditionType NotContains { get; } = new StringConditionType("not_contains");
 
         /// <summary>
         /// starts_with
@@ -59,9 +69,19 @@ namespace DocSpring.Client.Model
         public static StringConditionType StartsWith { get; } = new StringConditionType("starts_with");
 
         /// <summary>
+        /// not_starts_with
+        /// </summary>
+        public static StringConditionType NotStartsWith { get; } = new StringConditionType("not_starts_with");
+
+        /// <summary>
         /// ends_with
         /// </summary>
         public static StringConditionType EndsWith { get; } = new StringConditionType("ends_with");
+
+        /// <summary>
+        /// not_ends_with
+        /// </summary>
+        public static StringConditionType NotEndsWith { get; } = new StringConditionType("not_ends_with");
 
         /// <summary>
         /// regex
@@ -69,9 +89,24 @@ namespace DocSpring.Client.Model
         public static StringConditionType Regex { get; } = new StringConditionType("regex");
 
         /// <summary>
+        /// not_regex
+        /// </summary>
+        public static StringConditionType NotRegex { get; } = new StringConditionType("not_regex");
+
+        /// <summary>
+        /// blank
+        /// </summary>
+        public static StringConditionType Blank { get; } = new StringConditionType("blank");
+
+        /// <summary>
+        /// not_blank
+        /// </summary>
+        public static StringConditionType NotBlank { get; } = new StringConditionType("not_blank");
+
+        /// <summary>
         /// The values this client knows
         /// </summary>
-        public static IReadOnlyList<StringConditionType> Values { get; } = new[] { EqualsValue, Contains, StartsWith, EndsWith, Regex };
+        public static IReadOnlyList<StringConditionType> Values { get; } = new[] { EqualsValue, NotEquals, Contains, NotContains, StartsWith, NotStartsWith, EndsWith, NotEndsWith, Regex, NotRegex, Blank, NotBlank };
 
         /// <summary>
         /// Whether the value is one this client knows: a newer API can return values added after it was released

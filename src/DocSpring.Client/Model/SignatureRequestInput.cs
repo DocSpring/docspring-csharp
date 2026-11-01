@@ -32,11 +32,11 @@ namespace DocSpring.Client.Model
         /// Initializes a new instance of the <see cref="SignatureRequestInput" /> class.
         /// </summary>
         /// <param name="fields">The fields this person fills in. Each field can only be in one signature request, and a field that &#x60;data&#x60; fills in needs &#x60;prefilled_values_editable&#x60;.</param>
-        /// <param name="authType">How your app authenticated the person before it showed them the signature request.</param>
         /// <param name="name">The name of the person the request is for.</param>
-        /// <param name="email">Their email address.</param>
+        /// <param name="email">Their email address. Null when they have none.</param>
         /// <param name="metadata">Your own data about the signature request, such as an ID from your app.</param>
         /// <param name="role">Which of the template&#39;s signers the person is: &#x60;Signer 1&#x60;, &#x60;Signer 2&#x60; and so on, up to &#x60;Signer 100&#x60;, until templates have roles of their own. Either every signature request has a &#x60;role&#x60; or none does, and each role can only have one.</param>
+        /// <param name="authType">How your app authenticated the person before it showed them the signature request.</param>
         /// <param name="authSecondFactorType">The second factor your app authenticated them with, if any.</param>
         /// <param name="authProvider">The service that authenticated them, such as &#x60;google&#x60;. Required when &#x60;auth_type&#x60; is &#x60;oauth&#x60;.</param>
         /// <param name="authSessionStartedAt">When your app authenticated them. Set for you with &#x60;email_link&#x60;.</param>
@@ -46,15 +46,17 @@ namespace DocSpring.Client.Model
         /// <param name="authPhoneNumberHash">The phone number they authenticated with, or a SHA-256 hash of a salt and the phone number.</param>
         /// <param name="ignoreUnknownFields">Leave out names in &#x60;fields&#x60; that the template doesn&#39;t have, for one field list that you send with several templates. Without it, an unknown name makes the submission &#x60;invalid_data&#x60;.</param>
         /// <param name="prefilledValuesEditable">Let the person change the values that &#x60;data&#x60; already has for fields in &#x60;fields&#x60;. Without it, those fields are a 422.</param>
+        /// <param name="sendEmail">Whether DocSpring emails this person their signing link. Default: the submission&#39;s &#x60;send_email&#x60;. Set it to false for someone who signs in your app (embedded signing) or whose link you send yourself. When DocSpring emails them, &#x60;email&#x60; is required and &#x60;auth_type&#x60; is &#x60;email_link&#x60; (the default). Otherwise &#x60;auth_type&#x60; is required.</param>
+        /// <param name="signingStep">When this person signs, with &#x60;signing_order: sequential&#x60;: everyone in step 1 first, then step 2, and so on. People in the same step sign in any order. Only the order of the numbers matters. Either every signature request has a &#x60;signing_step&#x60; or none does; without them, each person is a step of their own, in the order of &#x60;signature_requests&#x60;.</param>
         [JsonConstructor]
-        public SignatureRequestInput(List<string> fields, SignatureRequestAuthType authType, Option<string> name = default, Option<string> email = default, Option<Dictionary<string, Object>> metadata = default, Option<string> role = default, Option<SignatureRequestAuthSecondFactorType?> authSecondFactorType = default, Option<string> authProvider = default, Option<DateTime?> authSessionStartedAt = default, Option<string> authSessionIdHash = default, Option<string> authUserIdHash = default, Option<string> authUsernameHash = default, Option<string> authPhoneNumberHash = default, Option<bool?> ignoreUnknownFields = default, Option<bool?> prefilledValuesEditable = default)
+        public SignatureRequestInput(List<string> fields, Option<string> name = default, Option<string> email = default, Option<Dictionary<string, Object>> metadata = default, Option<string> role = default, Option<SignatureRequestAuthType?> authType = default, Option<SignatureRequestAuthSecondFactorType?> authSecondFactorType = default, Option<string> authProvider = default, Option<DateTime?> authSessionStartedAt = default, Option<string> authSessionIdHash = default, Option<string> authUserIdHash = default, Option<string> authUsernameHash = default, Option<string> authPhoneNumberHash = default, Option<bool?> ignoreUnknownFields = default, Option<bool?> prefilledValuesEditable = default, Option<bool?> sendEmail = default, Option<int?> signingStep = default)
         {
             Fields = fields;
-            AuthType = authType;
             NameOption = name;
             EmailOption = email;
             MetadataOption = metadata;
             RoleOption = role;
+            AuthTypeOption = authType;
             AuthSecondFactorTypeOption = authSecondFactorType;
             AuthProviderOption = authProvider;
             AuthSessionStartedAtOption = authSessionStartedAt;
@@ -64,17 +66,26 @@ namespace DocSpring.Client.Model
             AuthPhoneNumberHashOption = authPhoneNumberHash;
             IgnoreUnknownFieldsOption = ignoreUnknownFields;
             PrefilledValuesEditableOption = prefilledValuesEditable;
+            SendEmailOption = sendEmail;
+            SigningStepOption = signingStep;
             OnCreated();
         }
 
         partial void OnCreated();
 
         /// <summary>
+        /// Used to track the state of AuthType
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<SignatureRequestAuthType?> AuthTypeOption { get; private set; }
+
+        /// <summary>
         /// How your app authenticated the person before it showed them the signature request.
         /// </summary>
         /// <value>How your app authenticated the person before it showed them the signature request.</value>
         [JsonPropertyName("auth_type")]
-        public SignatureRequestAuthType AuthType { get; set; }
+        public SignatureRequestAuthType? AuthType { get { return this.AuthTypeOption.Value; } set { this.AuthTypeOption = new Option<SignatureRequestAuthType?>(value); } }
 
         /// <summary>
         /// Used to track the state of AuthSecondFactorType
@@ -119,9 +130,9 @@ namespace DocSpring.Client.Model
         public Option<string> EmailOption { get; private set; }
 
         /// <summary>
-        /// Their email address.
+        /// Their email address. Null when they have none.
         /// </summary>
-        /// <value>Their email address.</value>
+        /// <value>Their email address. Null when they have none.</value>
         [JsonPropertyName("email")]
         public string Email { get { return this.EmailOption.Value; } set { this.EmailOption = new Option<string>(value); } }
 
@@ -266,6 +277,34 @@ namespace DocSpring.Client.Model
         public bool? PrefilledValuesEditable { get { return this.PrefilledValuesEditableOption.Value; } set { this.PrefilledValuesEditableOption = new Option<bool?>(value); } }
 
         /// <summary>
+        /// Used to track the state of SendEmail
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<bool?> SendEmailOption { get; private set; }
+
+        /// <summary>
+        /// Whether DocSpring emails this person their signing link. Default: the submission&#39;s &#x60;send_email&#x60;. Set it to false for someone who signs in your app (embedded signing) or whose link you send yourself. When DocSpring emails them, &#x60;email&#x60; is required and &#x60;auth_type&#x60; is &#x60;email_link&#x60; (the default). Otherwise &#x60;auth_type&#x60; is required.
+        /// </summary>
+        /// <value>Whether DocSpring emails this person their signing link. Default: the submission&#39;s &#x60;send_email&#x60;. Set it to false for someone who signs in your app (embedded signing) or whose link you send yourself. When DocSpring emails them, &#x60;email&#x60; is required and &#x60;auth_type&#x60; is &#x60;email_link&#x60; (the default). Otherwise &#x60;auth_type&#x60; is required.</value>
+        [JsonPropertyName("send_email")]
+        public bool? SendEmail { get { return this.SendEmailOption.Value; } set { this.SendEmailOption = new Option<bool?>(value); } }
+
+        /// <summary>
+        /// Used to track the state of SigningStep
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<int?> SigningStepOption { get; private set; }
+
+        /// <summary>
+        /// When this person signs, with &#x60;signing_order: sequential&#x60;: everyone in step 1 first, then step 2, and so on. People in the same step sign in any order. Only the order of the numbers matters. Either every signature request has a &#x60;signing_step&#x60; or none does; without them, each person is a step of their own, in the order of &#x60;signature_requests&#x60;.
+        /// </summary>
+        /// <value>When this person signs, with &#x60;signing_order: sequential&#x60;: everyone in step 1 first, then step 2, and so on. People in the same step sign in any order. Only the order of the numbers matters. Either every signature request has a &#x60;signing_step&#x60; or none does; without them, each person is a step of their own, in the order of &#x60;signature_requests&#x60;.</value>
+        [JsonPropertyName("signing_step")]
+        public int? SigningStep { get { return this.SigningStepOption.Value; } set { this.SigningStepOption = new Option<int?>(value); } }
+
+        /// <summary>
         /// Gets or Sets additional properties
         /// </summary>
         [JsonExtensionData]
@@ -280,11 +319,11 @@ namespace DocSpring.Client.Model
             StringBuilder sb = new StringBuilder();
             sb.Append("class SignatureRequestInput {\n");
             sb.Append("  Fields: ").Append(Fields).Append("\n");
-            sb.Append("  AuthType: ").Append(AuthType).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Email: ").Append(Email).Append("\n");
             sb.Append("  Metadata: ").Append(Metadata).Append("\n");
             sb.Append("  Role: ").Append(Role).Append("\n");
+            sb.Append("  AuthType: ").Append(AuthType).Append("\n");
             sb.Append("  AuthSecondFactorType: ").Append(AuthSecondFactorType).Append("\n");
             sb.Append("  AuthProvider: ").Append(AuthProvider).Append("\n");
             sb.Append("  AuthSessionStartedAt: ").Append(AuthSessionStartedAt).Append("\n");
@@ -294,6 +333,8 @@ namespace DocSpring.Client.Model
             sb.Append("  AuthPhoneNumberHash: ").Append(AuthPhoneNumberHash).Append("\n");
             sb.Append("  IgnoreUnknownFields: ").Append(IgnoreUnknownFields).Append("\n");
             sb.Append("  PrefilledValuesEditable: ").Append(PrefilledValuesEditable).Append("\n");
+            sb.Append("  SendEmail: ").Append(SendEmail).Append("\n");
+            sb.Append("  SigningStep: ").Append(SigningStep).Append("\n");
             sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -348,11 +389,11 @@ namespace DocSpring.Client.Model
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
             Option<List<string>> fields = default;
-            Option<SignatureRequestAuthType?> authType = default;
             Option<string> name = default;
             Option<string> email = default;
             Option<Dictionary<string, Object>> metadata = default;
             Option<string> role = default;
+            Option<SignatureRequestAuthType?> authType = default;
             Option<SignatureRequestAuthSecondFactorType?> authSecondFactorType = default;
             Option<string> authProvider = default;
             Option<DateTime?> authSessionStartedAt = default;
@@ -362,6 +403,8 @@ namespace DocSpring.Client.Model
             Option<string> authPhoneNumberHash = default;
             Option<bool?> ignoreUnknownFields = default;
             Option<bool?> prefilledValuesEditable = default;
+            Option<bool?> sendEmail = default;
+            Option<int?> signingStep = default;
 
             while (utf8JsonReader.Read())
             {
@@ -381,9 +424,6 @@ namespace DocSpring.Client.Model
                         case "fields":
                             fields = new Option<List<string>>(JsonSerializer.Deserialize<List<string>>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
-                        case "auth_type":
-                            authType = new Option<SignatureRequestAuthType?>(JsonSerializer.Deserialize<SignatureRequestAuthType?>(ref utf8JsonReader, jsonSerializerOptions));
-                            break;
                         case "name":
                             name = new Option<string>(utf8JsonReader.GetString());
                             break;
@@ -395,6 +435,9 @@ namespace DocSpring.Client.Model
                             break;
                         case "role":
                             role = new Option<string>(utf8JsonReader.GetString());
+                            break;
+                        case "auth_type":
+                            authType = new Option<SignatureRequestAuthType?>(JsonSerializer.Deserialize<SignatureRequestAuthType?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "auth_second_factor_type":
                             authSecondFactorType = new Option<SignatureRequestAuthSecondFactorType?>(JsonSerializer.Deserialize<SignatureRequestAuthSecondFactorType?>(ref utf8JsonReader, jsonSerializerOptions));
@@ -423,6 +466,12 @@ namespace DocSpring.Client.Model
                         case "prefilled_values_editable":
                             prefilledValuesEditable = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
                             break;
+                        case "send_email":
+                            sendEmail = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
+                            break;
+                        case "signing_step":
+                            signingStep = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
+                            break;
                         default:
                             break;
                     }
@@ -432,20 +481,17 @@ namespace DocSpring.Client.Model
             if (!fields.IsSet)
                 throw new JsonException("Property is required for class SignatureRequestInput: fields.");
 
-            if (!authType.IsSet)
-                throw new JsonException("Property is required for class SignatureRequestInput: auth_type.");
-
             if (fields.IsSet && fields.Value == null)
                 throw new JsonException("Property is not nullable for class SignatureRequestInput: fields.");
-
-            if (authType.IsSet && authType.Value == null)
-                throw new JsonException("Property is not nullable for class SignatureRequestInput: auth_type.");
 
             if (metadata.IsSet && metadata.Value == null)
                 throw new JsonException("Property is not nullable for class SignatureRequestInput: metadata.");
 
             if (role.IsSet && role.Value == null)
                 throw new JsonException("Property is not nullable for class SignatureRequestInput: role.");
+
+            if (authType.IsSet && authType.Value == null)
+                throw new JsonException("Property is not nullable for class SignatureRequestInput: auth_type.");
 
             if (authSecondFactorType.IsSet && authSecondFactorType.Value == null)
                 throw new JsonException("Property is not nullable for class SignatureRequestInput: auth_second_factor_type.");
@@ -456,7 +502,13 @@ namespace DocSpring.Client.Model
             if (prefilledValuesEditable.IsSet && prefilledValuesEditable.Value == null)
                 throw new JsonException("Property is not nullable for class SignatureRequestInput: prefilled_values_editable.");
 
-            return new SignatureRequestInput(fields.Value, authType.Value.Value, name, email, metadata, role, authSecondFactorType, authProvider, authSessionStartedAt, authSessionIdHash, authUserIdHash, authUsernameHash, authPhoneNumberHash, ignoreUnknownFields, prefilledValuesEditable);
+            if (sendEmail.IsSet && sendEmail.Value == null)
+                throw new JsonException("Property is not nullable for class SignatureRequestInput: send_email.");
+
+            if (signingStep.IsSet && signingStep.Value == null)
+                throw new JsonException("Property is not nullable for class SignatureRequestInput: signing_step.");
+
+            return new SignatureRequestInput(fields.Value, name, email, metadata, role, authType, authSecondFactorType, authProvider, authSessionStartedAt, authSessionIdHash, authUserIdHash, authUsernameHash, authPhoneNumberHash, ignoreUnknownFields, prefilledValuesEditable, sendEmail, signingStep);
         }
 
         /// <summary>
@@ -487,6 +539,9 @@ namespace DocSpring.Client.Model
             if (signatureRequestInput.RoleOption.IsSet && signatureRequestInput.Role == null)
                 throw new JsonException("Cannot write null property SignatureRequestInput.Role to non-nullable JSON property 'role'.");
 
+            if (signatureRequestInput.AuthTypeOption.IsSet && signatureRequestInput.AuthType == null)
+                throw new JsonException("Cannot write null property SignatureRequestInput.AuthType to non-nullable JSON property 'auth_type'.");
+
             if (signatureRequestInput.AuthSecondFactorTypeOption.IsSet && signatureRequestInput.AuthSecondFactorType == null)
                 throw new JsonException("Cannot write null property SignatureRequestInput.AuthSecondFactorType to non-nullable JSON property 'auth_second_factor_type'.");
 
@@ -496,11 +551,14 @@ namespace DocSpring.Client.Model
             if (signatureRequestInput.PrefilledValuesEditableOption.IsSet && signatureRequestInput.PrefilledValuesEditable == null)
                 throw new JsonException("Cannot write null property SignatureRequestInput.PrefilledValuesEditable to non-nullable JSON property 'prefilled_values_editable'.");
 
+            if (signatureRequestInput.SendEmailOption.IsSet && signatureRequestInput.SendEmail == null)
+                throw new JsonException("Cannot write null property SignatureRequestInput.SendEmail to non-nullable JSON property 'send_email'.");
+
+            if (signatureRequestInput.SigningStepOption.IsSet && signatureRequestInput.SigningStep == null)
+                throw new JsonException("Cannot write null property SignatureRequestInput.SigningStep to non-nullable JSON property 'signing_step'.");
+
             writer.WritePropertyName("fields");
             JsonSerializer.Serialize(writer, signatureRequestInput.Fields, jsonSerializerOptions);
-            var authTypeRawValue = SignatureRequestAuthTypeValueConverter.ToJsonValue(signatureRequestInput.AuthType);
-            writer.WriteString("auth_type", authTypeRawValue);
-
             if (signatureRequestInput.NameOption.IsSet)
                 if (signatureRequestInput.NameOption.Value != null)
                     writer.WriteString("name", signatureRequestInput.Name);
@@ -521,6 +579,11 @@ namespace DocSpring.Client.Model
             if (signatureRequestInput.RoleOption.IsSet)
                 writer.WriteString("role", signatureRequestInput.Role);
 
+            if (signatureRequestInput.AuthTypeOption.IsSet)
+            {
+                var authTypeRawValue = SignatureRequestAuthTypeValueConverter.ToJsonValue(signatureRequestInput.AuthType.Value);
+                writer.WriteString("auth_type", authTypeRawValue);
+            }
             if (signatureRequestInput.AuthSecondFactorTypeOption.IsSet)
             {
                 var authSecondFactorTypeRawValue = SignatureRequestAuthSecondFactorTypeValueConverter.ToJsonValue(signatureRequestInput.AuthSecondFactorType.Value);
@@ -567,6 +630,12 @@ namespace DocSpring.Client.Model
 
             if (signatureRequestInput.PrefilledValuesEditableOption.IsSet)
                 writer.WriteBoolean("prefilled_values_editable", signatureRequestInput.PrefilledValuesEditableOption.Value.Value);
+
+            if (signatureRequestInput.SendEmailOption.IsSet)
+                writer.WriteBoolean("send_email", signatureRequestInput.SendEmailOption.Value.Value);
+
+            if (signatureRequestInput.SigningStepOption.IsSet)
+                writer.WriteNumber("signing_step", signatureRequestInput.SigningStepOption.Value.Value);
         }
     }
 }

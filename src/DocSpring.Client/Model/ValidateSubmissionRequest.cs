@@ -31,19 +31,28 @@ namespace DocSpring.Client.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="ValidateSubmissionRequest" /> class.
         /// </summary>
-        /// <param name="test">Test PDFs have a watermark and are free. Live PDFs use credits. Submissions made with a test API token are always test submissions.</param>
+        /// <param name="test">Test PDFs have a watermark and are free. Live PDFs use credits. Submissions made with a test API token are always test submissions, and the demo API token&#39;s are always live.</param>
         /// <param name="editable">&#x60;true&#x60; keeps the PDF&#39;s text and check fields fillable, and &#x60;false&#x60; flattens every field. Left out, the template decides: its &#x60;editable_submissions&#x60; setting, or each field&#39;s own Editable option. A response shows the template&#39;s setting when the request left this out. Can&#39;t be &#x60;true&#x60; with &#x60;signature_requests&#x60;.</param>
-        /// <param name="data">The values of the template&#39;s fields, by field name. Required for PDF and Word templates, unless &#x60;signature_requests&#x60; collects them (PDF templates only).</param>
+        /// <param name="data">The values of the template&#39;s fields, by field name. Required for PDF templates, Word templates and page designs, unless &#x60;signature_requests&#x60; collects them (PDF templates only).</param>
         /// <param name="metadata">Your own data about the submission, such as an ID from your app. It isn&#39;t printed on the PDF. Two keys also change the PDF: &#x60;pdf_filename&#x60; names its file (&#x60;files.pdf.filename&#x60;, and its download), and &#x60;pdf_title&#x60; is its title in the PDF&#39;s document properties (and an HTML template&#39;s &#x60;&lt;title&gt;&#x60;, unless its HTML has one). Without &#x60;pdf_title&#x60;, the title is the template&#39;s name. In &#x60;pdf_filename&#x60;, a &#x60;.pdf&#x60; ending is removed, each run of characters other than letters, digits, &#x60;-&#x60;, &#x60;_&#x60; and &#x60;.&#x60; becomes one &#x60;_&#x60;, and the first 128 characters are kept, then &#x60;.pdf&#x60; is added. Without it, the file is named after the submission&#39;s ID (&#x60;sub_1234567890abcdef01.pdf&#x60;).</param>
         /// <param name="password">A password that the PDF needs to be opened with. It&#39;s never returned; &#x60;has_password&#x60; says if it&#39;s set. Word documents and OpenDocument files can&#39;t be password-protected, so a submission with a password can&#39;t make them.</param>
         /// <param name="outputFormats">What the submission makes: &#x60;pdf&#x60;, &#x60;docx&#x60; (a Word document, from a Word template), &#x60;odt&#x60; (an OpenDocument file, the format LibreOffice uses, converted from a Word template&#39;s Word document), and &#x60;png&#x60; (an image of each page of the PDF, up to 100 pages, which adds &#x60;pdf&#x60;) when you ask for it. Default &#x60;[\&quot;pdf\&quot;]&#x60;, or a Word template&#39;s &#x60;output_format&#x60;. POST /submissions/{submission_id}/generate_files adds &#x60;png&#x60;, and a Word template&#39;s submission&#39;s &#x60;pdf&#x60;, &#x60;docx&#x60; or &#x60;odt&#x60;, to a processed submission.</param>
-        /// <param name="expiresIn">Seconds after the PDF is generated until the submission expires, up to 10 years (315360000). Default the template&#39;s expiration setting. A submission that isn&#39;t processed, such as one with invalid data, is kept for at least 48 hours.</param>
+        /// <param name="expiresIn">Seconds after the PDF is generated until the submission expires, up to 10 years (315360000). Default the template&#39;s expiration setting. A submission that isn&#39;t processed, such as one with invalid data, is kept for at least 48 hours. The demo API token&#39;s submissions expire within an hour: up to 3600, and that&#39;s their default.</param>
         /// <param name="fieldOverrides">Changes to field settings for this submission only, by field name, such as &#x60;{\&quot;name\&quot;: {\&quot;required\&quot;: false, \&quot;font_size\&quot;: 9}}&#x60;. A setting that identifies the field (&#x60;id&#x60;, &#x60;name&#x60;, &#x60;type&#x60;), that only the template sets (such as &#x60;description&#x60;), or that doesn&#39;t apply to the field&#39;s type and display type (such as &#x60;check_character&#x60; on a field displayed as text) is a 422. With &#x60;signature_requests&#x60;, &#x60;editable: true&#x60; is a 422, and a &#x60;default&#x60; for a signature or initials field makes the submission &#x60;invalid_data&#x60;.</param>
         /// <param name="html">For an HTML template, HTML to use instead of the template&#39;s.</param>
         /// <param name="css">For an HTML template, SCSS (plain CSS works too) added after the template&#39;s styles, on the page and in its header and footer. It doesn&#39;t replace them: its rules come later, so they win over the template&#39;s rules of the same specificity.</param>
         /// <param name="signatureRequests">The people who sign the PDF, and fill in their fields first. The PDF is generated once every signature request is completed. PDF templates only. Without &#x60;role&#x60;s, the first signature request is &#x60;Signer 1&#x60;, the second &#x60;Signer 2&#x60;, and so on. To leave a signer out, give every signature request its &#x60;role&#x60; and leave that one&#39;s out. Only the signers sign: a value for a signature or initials field in &#x60;data&#x60; makes the submission &#x60;invalid_data&#x60;.</param>
+        /// <param name="sendEmail">Whether DocSpring emails the signers their signing links, and sends the reminders and the completed document. Default true. Each signature request&#39;s own &#x60;send_email&#x60; overrides it. A test submission only emails your DocSpring team: every other address is a 422. &#x60;true&#x60; needs &#x60;signature_requests&#x60;. DocSpring doesn&#39;t email the signers of a form library template: leave &#x60;send_email&#x60; out, and send them their links yourself.</param>
+        /// <param name="signingOrder">&#x60;parallel&#x60; (the default): everyone can sign at once. &#x60;sequential&#x60;: people sign one step at a time (&#x60;signing_step&#x60;), and DocSpring emails each step when the one before it is done. Needs &#x60;signature_requests&#x60;.</param>
+        /// <param name="emailSubject">The subject of the emails that ask people to sign. You can use &#x60;{{ signer.name }}&#x60;, &#x60;{{ signer.email }}&#x60;, &#x60;{{ document.name }}&#x60;, &#x60;{{ sender.name }}&#x60; and &#x60;{{ account.name }}&#x60;. Default \&quot;&lt;sender&gt; sent you &lt;document&gt; to sign\&quot; when you leave it out (a blank subject is a 422). Links and web addresses are shown as plain text (&#x60;example[.]com&#x60;).</param>
+        /// <param name="emailMessage">A message for the people who sign, shown above the signing button. It takes the same variables as &#x60;email_subject&#x60;. Links and web addresses are shown as plain text. Leave it out for none: a blank message is a 422.</param>
+        /// <param name="cc">People who get a copy of the completed document. They don&#39;t sign.</param>
+        /// <param name="replyTo">Where replies to the emails go: a member of your DocSpring team, or an address at one of your verified email domains. Leave it out for the template&#39;s reply-to address (the account owner when it has none).</param>
+        /// <param name="notificationEmails">Who DocSpring tells when the document is completed or declined, or an email bounces or can&#39;t be sent: members of your DocSpring team or addresses at your verified email domains. Leave it out for the template&#39;s notification addresses (the account owner when it has none); an empty list means the account owner.</param>
+        /// <param name="notifyWhenSigned">Also email &#x60;notification_emails&#x60; each time someone signs. Default false.</param>
+        /// <param name="reminders">Remind people who haven&#39;t signed: every &#x60;interval_days&#x60; days, up to &#x60;max_count&#x60; times. Each reminder has a new signing link. Without it, DocSpring sends no reminders.</param>
         [JsonConstructor]
-        public ValidateSubmissionRequest(Option<bool?> test = default, Option<bool?> editable = default, Option<Dictionary<string, Object>> data = default, Option<Dictionary<string, Object>> metadata = default, Option<string> password = default, Option<List<OutputFormat>> outputFormats = default, Option<int?> expiresIn = default, Option<Dictionary<string, FieldOverride>> fieldOverrides = default, Option<string> html = default, Option<string> css = default, Option<List<SignatureRequestInput>> signatureRequests = default)
+        public ValidateSubmissionRequest(Option<bool?> test = default, Option<bool?> editable = default, Option<Dictionary<string, Object>> data = default, Option<Dictionary<string, Object>> metadata = default, Option<string> password = default, Option<List<OutputFormat>> outputFormats = default, Option<int?> expiresIn = default, Option<Dictionary<string, FieldOverride>> fieldOverrides = default, Option<string> html = default, Option<string> css = default, Option<List<SignatureRequestInput>> signatureRequests = default, Option<bool?> sendEmail = default, Option<SigningOrder?> signingOrder = default, Option<string> emailSubject = default, Option<string> emailMessage = default, Option<List<string>> cc = default, Option<string> replyTo = default, Option<List<string>> notificationEmails = default, Option<bool?> notifyWhenSigned = default, Option<SignatureRequestReminders> reminders = default)
         {
             TestOption = test;
             EditableOption = editable;
@@ -56,10 +65,33 @@ namespace DocSpring.Client.Model
             HtmlOption = html;
             CssOption = css;
             SignatureRequestsOption = signatureRequests;
+            SendEmailOption = sendEmail;
+            SigningOrderOption = signingOrder;
+            EmailSubjectOption = emailSubject;
+            EmailMessageOption = emailMessage;
+            CcOption = cc;
+            ReplyToOption = replyTo;
+            NotificationEmailsOption = notificationEmails;
+            NotifyWhenSignedOption = notifyWhenSigned;
+            RemindersOption = reminders;
             OnCreated();
         }
 
         partial void OnCreated();
+
+        /// <summary>
+        /// Used to track the state of SigningOrder
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<SigningOrder?> SigningOrderOption { get; private set; }
+
+        /// <summary>
+        /// &#x60;parallel&#x60; (the default): everyone can sign at once. &#x60;sequential&#x60;: people sign one step at a time (&#x60;signing_step&#x60;), and DocSpring emails each step when the one before it is done. Needs &#x60;signature_requests&#x60;.
+        /// </summary>
+        /// <value>&#x60;parallel&#x60; (the default): everyone can sign at once. &#x60;sequential&#x60;: people sign one step at a time (&#x60;signing_step&#x60;), and DocSpring emails each step when the one before it is done. Needs &#x60;signature_requests&#x60;.</value>
+        [JsonPropertyName("signing_order")]
+        public SigningOrder? SigningOrder { get { return this.SigningOrderOption.Value; } set { this.SigningOrderOption = new Option<SigningOrder?>(value); } }
 
         /// <summary>
         /// Used to track the state of Test
@@ -69,9 +101,9 @@ namespace DocSpring.Client.Model
         public Option<bool?> TestOption { get; private set; }
 
         /// <summary>
-        /// Test PDFs have a watermark and are free. Live PDFs use credits. Submissions made with a test API token are always test submissions.
+        /// Test PDFs have a watermark and are free. Live PDFs use credits. Submissions made with a test API token are always test submissions, and the demo API token&#39;s are always live.
         /// </summary>
-        /// <value>Test PDFs have a watermark and are free. Live PDFs use credits. Submissions made with a test API token are always test submissions.</value>
+        /// <value>Test PDFs have a watermark and are free. Live PDFs use credits. Submissions made with a test API token are always test submissions, and the demo API token&#39;s are always live.</value>
         [JsonPropertyName("test")]
         public bool? Test { get { return this.TestOption.Value; } set { this.TestOption = new Option<bool?>(value); } }
 
@@ -97,9 +129,9 @@ namespace DocSpring.Client.Model
         public Option<Dictionary<string, Object>> DataOption { get; private set; }
 
         /// <summary>
-        /// The values of the template&#39;s fields, by field name. Required for PDF and Word templates, unless &#x60;signature_requests&#x60; collects them (PDF templates only).
+        /// The values of the template&#39;s fields, by field name. Required for PDF templates, Word templates and page designs, unless &#x60;signature_requests&#x60; collects them (PDF templates only).
         /// </summary>
-        /// <value>The values of the template&#39;s fields, by field name. Required for PDF and Word templates, unless &#x60;signature_requests&#x60; collects them (PDF templates only).</value>
+        /// <value>The values of the template&#39;s fields, by field name. Required for PDF templates, Word templates and page designs, unless &#x60;signature_requests&#x60; collects them (PDF templates only).</value>
         [JsonPropertyName("data")]
         public Dictionary<string, Object> Data { get { return this.DataOption.Value; } set { this.DataOption = new Option<Dictionary<string, Object>>(value); } }
 
@@ -153,9 +185,9 @@ namespace DocSpring.Client.Model
         public Option<int?> ExpiresInOption { get; private set; }
 
         /// <summary>
-        /// Seconds after the PDF is generated until the submission expires, up to 10 years (315360000). Default the template&#39;s expiration setting. A submission that isn&#39;t processed, such as one with invalid data, is kept for at least 48 hours.
+        /// Seconds after the PDF is generated until the submission expires, up to 10 years (315360000). Default the template&#39;s expiration setting. A submission that isn&#39;t processed, such as one with invalid data, is kept for at least 48 hours. The demo API token&#39;s submissions expire within an hour: up to 3600, and that&#39;s their default.
         /// </summary>
-        /// <value>Seconds after the PDF is generated until the submission expires, up to 10 years (315360000). Default the template&#39;s expiration setting. A submission that isn&#39;t processed, such as one with invalid data, is kept for at least 48 hours.</value>
+        /// <value>Seconds after the PDF is generated until the submission expires, up to 10 years (315360000). Default the template&#39;s expiration setting. A submission that isn&#39;t processed, such as one with invalid data, is kept for at least 48 hours. The demo API token&#39;s submissions expire within an hour: up to 3600, and that&#39;s their default.</value>
         [JsonPropertyName("expires_in")]
         public int? ExpiresIn { get { return this.ExpiresInOption.Value; } set { this.ExpiresInOption = new Option<int?>(value); } }
 
@@ -216,6 +248,118 @@ namespace DocSpring.Client.Model
         public List<SignatureRequestInput> SignatureRequests { get { return this.SignatureRequestsOption.Value; } set { this.SignatureRequestsOption = new Option<List<SignatureRequestInput>>(value); } }
 
         /// <summary>
+        /// Used to track the state of SendEmail
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<bool?> SendEmailOption { get; private set; }
+
+        /// <summary>
+        /// Whether DocSpring emails the signers their signing links, and sends the reminders and the completed document. Default true. Each signature request&#39;s own &#x60;send_email&#x60; overrides it. A test submission only emails your DocSpring team: every other address is a 422. &#x60;true&#x60; needs &#x60;signature_requests&#x60;. DocSpring doesn&#39;t email the signers of a form library template: leave &#x60;send_email&#x60; out, and send them their links yourself.
+        /// </summary>
+        /// <value>Whether DocSpring emails the signers their signing links, and sends the reminders and the completed document. Default true. Each signature request&#39;s own &#x60;send_email&#x60; overrides it. A test submission only emails your DocSpring team: every other address is a 422. &#x60;true&#x60; needs &#x60;signature_requests&#x60;. DocSpring doesn&#39;t email the signers of a form library template: leave &#x60;send_email&#x60; out, and send them their links yourself.</value>
+        [JsonPropertyName("send_email")]
+        public bool? SendEmail { get { return this.SendEmailOption.Value; } set { this.SendEmailOption = new Option<bool?>(value); } }
+
+        /// <summary>
+        /// Used to track the state of EmailSubject
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string> EmailSubjectOption { get; private set; }
+
+        /// <summary>
+        /// The subject of the emails that ask people to sign. You can use &#x60;{{ signer.name }}&#x60;, &#x60;{{ signer.email }}&#x60;, &#x60;{{ document.name }}&#x60;, &#x60;{{ sender.name }}&#x60; and &#x60;{{ account.name }}&#x60;. Default \&quot;&lt;sender&gt; sent you &lt;document&gt; to sign\&quot; when you leave it out (a blank subject is a 422). Links and web addresses are shown as plain text (&#x60;example[.]com&#x60;).
+        /// </summary>
+        /// <value>The subject of the emails that ask people to sign. You can use &#x60;{{ signer.name }}&#x60;, &#x60;{{ signer.email }}&#x60;, &#x60;{{ document.name }}&#x60;, &#x60;{{ sender.name }}&#x60; and &#x60;{{ account.name }}&#x60;. Default \&quot;&lt;sender&gt; sent you &lt;document&gt; to sign\&quot; when you leave it out (a blank subject is a 422). Links and web addresses are shown as plain text (&#x60;example[.]com&#x60;).</value>
+        [JsonPropertyName("email_subject")]
+        public string EmailSubject { get { return this.EmailSubjectOption.Value; } set { this.EmailSubjectOption = new Option<string>(value); } }
+
+        /// <summary>
+        /// Used to track the state of EmailMessage
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string> EmailMessageOption { get; private set; }
+
+        /// <summary>
+        /// A message for the people who sign, shown above the signing button. It takes the same variables as &#x60;email_subject&#x60;. Links and web addresses are shown as plain text. Leave it out for none: a blank message is a 422.
+        /// </summary>
+        /// <value>A message for the people who sign, shown above the signing button. It takes the same variables as &#x60;email_subject&#x60;. Links and web addresses are shown as plain text. Leave it out for none: a blank message is a 422.</value>
+        [JsonPropertyName("email_message")]
+        public string EmailMessage { get { return this.EmailMessageOption.Value; } set { this.EmailMessageOption = new Option<string>(value); } }
+
+        /// <summary>
+        /// Used to track the state of Cc
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<List<string>> CcOption { get; private set; }
+
+        /// <summary>
+        /// People who get a copy of the completed document. They don&#39;t sign.
+        /// </summary>
+        /// <value>People who get a copy of the completed document. They don&#39;t sign.</value>
+        [JsonPropertyName("cc")]
+        public List<string> Cc { get { return this.CcOption.Value; } set { this.CcOption = new Option<List<string>>(value); } }
+
+        /// <summary>
+        /// Used to track the state of ReplyTo
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string> ReplyToOption { get; private set; }
+
+        /// <summary>
+        /// Where replies to the emails go: a member of your DocSpring team, or an address at one of your verified email domains. Leave it out for the template&#39;s reply-to address (the account owner when it has none).
+        /// </summary>
+        /// <value>Where replies to the emails go: a member of your DocSpring team, or an address at one of your verified email domains. Leave it out for the template&#39;s reply-to address (the account owner when it has none).</value>
+        [JsonPropertyName("reply_to")]
+        public string ReplyTo { get { return this.ReplyToOption.Value; } set { this.ReplyToOption = new Option<string>(value); } }
+
+        /// <summary>
+        /// Used to track the state of NotificationEmails
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<List<string>> NotificationEmailsOption { get; private set; }
+
+        /// <summary>
+        /// Who DocSpring tells when the document is completed or declined, or an email bounces or can&#39;t be sent: members of your DocSpring team or addresses at your verified email domains. Leave it out for the template&#39;s notification addresses (the account owner when it has none); an empty list means the account owner.
+        /// </summary>
+        /// <value>Who DocSpring tells when the document is completed or declined, or an email bounces or can&#39;t be sent: members of your DocSpring team or addresses at your verified email domains. Leave it out for the template&#39;s notification addresses (the account owner when it has none); an empty list means the account owner.</value>
+        [JsonPropertyName("notification_emails")]
+        public List<string> NotificationEmails { get { return this.NotificationEmailsOption.Value; } set { this.NotificationEmailsOption = new Option<List<string>>(value); } }
+
+        /// <summary>
+        /// Used to track the state of NotifyWhenSigned
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<bool?> NotifyWhenSignedOption { get; private set; }
+
+        /// <summary>
+        /// Also email &#x60;notification_emails&#x60; each time someone signs. Default false.
+        /// </summary>
+        /// <value>Also email &#x60;notification_emails&#x60; each time someone signs. Default false.</value>
+        [JsonPropertyName("notify_when_signed")]
+        public bool? NotifyWhenSigned { get { return this.NotifyWhenSignedOption.Value; } set { this.NotifyWhenSignedOption = new Option<bool?>(value); } }
+
+        /// <summary>
+        /// Used to track the state of Reminders
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<SignatureRequestReminders> RemindersOption { get; private set; }
+
+        /// <summary>
+        /// Remind people who haven&#39;t signed: every &#x60;interval_days&#x60; days, up to &#x60;max_count&#x60; times. Each reminder has a new signing link. Without it, DocSpring sends no reminders.
+        /// </summary>
+        /// <value>Remind people who haven&#39;t signed: every &#x60;interval_days&#x60; days, up to &#x60;max_count&#x60; times. Each reminder has a new signing link. Without it, DocSpring sends no reminders.</value>
+        [JsonPropertyName("reminders")]
+        public SignatureRequestReminders Reminders { get { return this.RemindersOption.Value; } set { this.RemindersOption = new Option<SignatureRequestReminders>(value); } }
+
+        /// <summary>
         /// Gets or Sets additional properties
         /// </summary>
         [JsonExtensionData]
@@ -240,6 +384,15 @@ namespace DocSpring.Client.Model
             sb.Append("  Html: ").Append(Html).Append("\n");
             sb.Append("  Css: ").Append(Css).Append("\n");
             sb.Append("  SignatureRequests: ").Append(SignatureRequests).Append("\n");
+            sb.Append("  SendEmail: ").Append(SendEmail).Append("\n");
+            sb.Append("  SigningOrder: ").Append(SigningOrder).Append("\n");
+            sb.Append("  EmailSubject: ").Append(EmailSubject).Append("\n");
+            sb.Append("  EmailMessage: ").Append(EmailMessage).Append("\n");
+            sb.Append("  Cc: ").Append(Cc).Append("\n");
+            sb.Append("  ReplyTo: ").Append(ReplyTo).Append("\n");
+            sb.Append("  NotificationEmails: ").Append(NotificationEmails).Append("\n");
+            sb.Append("  NotifyWhenSigned: ").Append(NotifyWhenSigned).Append("\n");
+            sb.Append("  Reminders: ").Append(Reminders).Append("\n");
             sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -299,6 +452,15 @@ namespace DocSpring.Client.Model
             Option<string> html = default;
             Option<string> css = default;
             Option<List<SignatureRequestInput>> signatureRequests = default;
+            Option<bool?> sendEmail = default;
+            Option<SigningOrder?> signingOrder = default;
+            Option<string> emailSubject = default;
+            Option<string> emailMessage = default;
+            Option<List<string>> cc = default;
+            Option<string> replyTo = default;
+            Option<List<string>> notificationEmails = default;
+            Option<bool?> notifyWhenSigned = default;
+            Option<SignatureRequestReminders> reminders = default;
 
             while (utf8JsonReader.Read())
             {
@@ -348,6 +510,33 @@ namespace DocSpring.Client.Model
                         case "signature_requests":
                             signatureRequests = new Option<List<SignatureRequestInput>>(JsonSerializer.Deserialize<List<SignatureRequestInput>>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
+                        case "send_email":
+                            sendEmail = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
+                            break;
+                        case "signing_order":
+                            signingOrder = new Option<SigningOrder?>(JsonSerializer.Deserialize<SigningOrder?>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
+                        case "email_subject":
+                            emailSubject = new Option<string>(utf8JsonReader.GetString());
+                            break;
+                        case "email_message":
+                            emailMessage = new Option<string>(utf8JsonReader.GetString());
+                            break;
+                        case "cc":
+                            cc = new Option<List<string>>(JsonSerializer.Deserialize<List<string>>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
+                        case "reply_to":
+                            replyTo = new Option<string>(utf8JsonReader.GetString());
+                            break;
+                        case "notification_emails":
+                            notificationEmails = new Option<List<string>>(JsonSerializer.Deserialize<List<string>>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
+                        case "notify_when_signed":
+                            notifyWhenSigned = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
+                            break;
+                        case "reminders":
+                            reminders = new Option<SignatureRequestReminders>(JsonSerializer.Deserialize<SignatureRequestReminders>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
                         default:
                             break;
                     }
@@ -387,7 +576,34 @@ namespace DocSpring.Client.Model
             if (signatureRequests.IsSet && signatureRequests.Value == null)
                 throw new JsonException("Property is not nullable for class ValidateSubmissionRequest: signature_requests.");
 
-            return new ValidateSubmissionRequest(test, editable, data, metadata, password, outputFormats, expiresIn, fieldOverrides, html, css, signatureRequests);
+            if (sendEmail.IsSet && sendEmail.Value == null)
+                throw new JsonException("Property is not nullable for class ValidateSubmissionRequest: send_email.");
+
+            if (signingOrder.IsSet && signingOrder.Value == null)
+                throw new JsonException("Property is not nullable for class ValidateSubmissionRequest: signing_order.");
+
+            if (emailSubject.IsSet && emailSubject.Value == null)
+                throw new JsonException("Property is not nullable for class ValidateSubmissionRequest: email_subject.");
+
+            if (emailMessage.IsSet && emailMessage.Value == null)
+                throw new JsonException("Property is not nullable for class ValidateSubmissionRequest: email_message.");
+
+            if (cc.IsSet && cc.Value == null)
+                throw new JsonException("Property is not nullable for class ValidateSubmissionRequest: cc.");
+
+            if (replyTo.IsSet && replyTo.Value == null)
+                throw new JsonException("Property is not nullable for class ValidateSubmissionRequest: reply_to.");
+
+            if (notificationEmails.IsSet && notificationEmails.Value == null)
+                throw new JsonException("Property is not nullable for class ValidateSubmissionRequest: notification_emails.");
+
+            if (notifyWhenSigned.IsSet && notifyWhenSigned.Value == null)
+                throw new JsonException("Property is not nullable for class ValidateSubmissionRequest: notify_when_signed.");
+
+            if (reminders.IsSet && reminders.Value == null)
+                throw new JsonException("Property is not nullable for class ValidateSubmissionRequest: reminders.");
+
+            return new ValidateSubmissionRequest(test, editable, data, metadata, password, outputFormats, expiresIn, fieldOverrides, html, css, signatureRequests, sendEmail, signingOrder, emailSubject, emailMessage, cc, replyTo, notificationEmails, notifyWhenSigned, reminders);
         }
 
         /// <summary>
@@ -445,6 +661,33 @@ namespace DocSpring.Client.Model
             if (validateSubmissionRequest.SignatureRequestsOption.IsSet && validateSubmissionRequest.SignatureRequests == null)
                 throw new JsonException("Cannot write null property ValidateSubmissionRequest.SignatureRequests to non-nullable JSON property 'signature_requests'.");
 
+            if (validateSubmissionRequest.SendEmailOption.IsSet && validateSubmissionRequest.SendEmail == null)
+                throw new JsonException("Cannot write null property ValidateSubmissionRequest.SendEmail to non-nullable JSON property 'send_email'.");
+
+            if (validateSubmissionRequest.SigningOrderOption.IsSet && validateSubmissionRequest.SigningOrder == null)
+                throw new JsonException("Cannot write null property ValidateSubmissionRequest.SigningOrder to non-nullable JSON property 'signing_order'.");
+
+            if (validateSubmissionRequest.EmailSubjectOption.IsSet && validateSubmissionRequest.EmailSubject == null)
+                throw new JsonException("Cannot write null property ValidateSubmissionRequest.EmailSubject to non-nullable JSON property 'email_subject'.");
+
+            if (validateSubmissionRequest.EmailMessageOption.IsSet && validateSubmissionRequest.EmailMessage == null)
+                throw new JsonException("Cannot write null property ValidateSubmissionRequest.EmailMessage to non-nullable JSON property 'email_message'.");
+
+            if (validateSubmissionRequest.CcOption.IsSet && validateSubmissionRequest.Cc == null)
+                throw new JsonException("Cannot write null property ValidateSubmissionRequest.Cc to non-nullable JSON property 'cc'.");
+
+            if (validateSubmissionRequest.ReplyToOption.IsSet && validateSubmissionRequest.ReplyTo == null)
+                throw new JsonException("Cannot write null property ValidateSubmissionRequest.ReplyTo to non-nullable JSON property 'reply_to'.");
+
+            if (validateSubmissionRequest.NotificationEmailsOption.IsSet && validateSubmissionRequest.NotificationEmails == null)
+                throw new JsonException("Cannot write null property ValidateSubmissionRequest.NotificationEmails to non-nullable JSON property 'notification_emails'.");
+
+            if (validateSubmissionRequest.NotifyWhenSignedOption.IsSet && validateSubmissionRequest.NotifyWhenSigned == null)
+                throw new JsonException("Cannot write null property ValidateSubmissionRequest.NotifyWhenSigned to non-nullable JSON property 'notify_when_signed'.");
+
+            if (validateSubmissionRequest.RemindersOption.IsSet && validateSubmissionRequest.Reminders == null)
+                throw new JsonException("Cannot write null property ValidateSubmissionRequest.Reminders to non-nullable JSON property 'reminders'.");
+
             if (validateSubmissionRequest.TestOption.IsSet)
                 writer.WriteBoolean("test", validateSubmissionRequest.TestOption.Value.Value);
 
@@ -487,6 +730,41 @@ namespace DocSpring.Client.Model
             {
                 writer.WritePropertyName("signature_requests");
                 JsonSerializer.Serialize(writer, validateSubmissionRequest.SignatureRequestsOption.Value, jsonSerializerOptions);
+            }
+            if (validateSubmissionRequest.SendEmailOption.IsSet)
+                writer.WriteBoolean("send_email", validateSubmissionRequest.SendEmailOption.Value.Value);
+
+            if (validateSubmissionRequest.SigningOrderOption.IsSet)
+            {
+                var signingOrderRawValue = SigningOrderValueConverter.ToJsonValue(validateSubmissionRequest.SigningOrder.Value);
+                writer.WriteString("signing_order", signingOrderRawValue);
+            }
+            if (validateSubmissionRequest.EmailSubjectOption.IsSet)
+                writer.WriteString("email_subject", validateSubmissionRequest.EmailSubject);
+
+            if (validateSubmissionRequest.EmailMessageOption.IsSet)
+                writer.WriteString("email_message", validateSubmissionRequest.EmailMessage);
+
+            if (validateSubmissionRequest.CcOption.IsSet)
+            {
+                writer.WritePropertyName("cc");
+                JsonSerializer.Serialize(writer, validateSubmissionRequest.CcOption.Value, jsonSerializerOptions);
+            }
+            if (validateSubmissionRequest.ReplyToOption.IsSet)
+                writer.WriteString("reply_to", validateSubmissionRequest.ReplyTo);
+
+            if (validateSubmissionRequest.NotificationEmailsOption.IsSet)
+            {
+                writer.WritePropertyName("notification_emails");
+                JsonSerializer.Serialize(writer, validateSubmissionRequest.NotificationEmailsOption.Value, jsonSerializerOptions);
+            }
+            if (validateSubmissionRequest.NotifyWhenSignedOption.IsSet)
+                writer.WriteBoolean("notify_when_signed", validateSubmissionRequest.NotifyWhenSignedOption.Value.Value);
+
+            if (validateSubmissionRequest.RemindersOption.IsSet)
+            {
+                writer.WritePropertyName("reminders");
+                JsonSerializer.Serialize(writer, validateSubmissionRequest.RemindersOption.Value, jsonSerializerOptions);
             }
         }
     }

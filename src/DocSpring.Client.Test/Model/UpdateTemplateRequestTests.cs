@@ -279,6 +279,69 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'SignatureRequestEmailAttachments'
+        /// </summary>
+        [Fact]
+        public void SignatureRequestEmailAttachmentsTest()
+        {
+            // TODO unit test for the property 'SignatureRequestEmailAttachments'
+        }
+
+        /// <summary>
+        /// Test the property 'SignatureRequestFromAddress'
+        /// </summary>
+        [Fact]
+        public void SignatureRequestFromAddressTest()
+        {
+            // TODO unit test for the property 'SignatureRequestFromAddress'
+        }
+
+        /// <summary>
+        /// Test the property 'SignatureRequestIncludeSigningToken'
+        /// </summary>
+        [Fact]
+        public void SignatureRequestIncludeSigningTokenTest()
+        {
+            // TODO unit test for the property 'SignatureRequestIncludeSigningToken'
+        }
+
+        /// <summary>
+        /// Test the property 'SignatureRequestFromName'
+        /// </summary>
+        [Fact]
+        public void SignatureRequestFromNameTest()
+        {
+            // TODO unit test for the property 'SignatureRequestFromName'
+        }
+
+        /// <summary>
+        /// Test the property 'SignatureRequestNotificationEmails'
+        /// </summary>
+        [Fact]
+        public void SignatureRequestNotificationEmailsTest()
+        {
+            // TODO unit test for the property 'SignatureRequestNotificationEmails'
+        }
+
+        /// <summary>
+        /// Test the property 'SignatureRequestReplyTo'
+        /// </summary>
+        [Fact]
+        public void SignatureRequestReplyToTest()
+        {
+            // TODO unit test for the property 'SignatureRequestReplyTo'
+        }
+
+        /// <summary>
+        /// Test the property 'SignatureRequestSigningUrl'
+        /// </summary>
+        [Fact]
+        public void SignatureRequestSigningUrlTest()
+        {
+            // TODO unit test for the property 'SignatureRequestSigningUrl'
+        }
+
+        /// <summary>
         /// Test the property 'SlackWebhookUrl'
         /// </summary>
         [Fact]
@@ -384,6 +447,15 @@ namespace DocSpring.Client.Test.Model
         public void HtmlEscapeDataTest()
         {
             // TODO unit test for the property 'HtmlEscapeData'
+        }
+
+        /// <summary>
+        /// Test the property 'Layout'
+        /// </summary>
+        [Fact]
+        public void LayoutTest()
+        {
+            // TODO unit test for the property 'Layout'
         }
     }
 }

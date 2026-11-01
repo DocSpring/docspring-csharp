@@ -63,15 +63,6 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
-        /// Test the property 'AuthType'
-        /// </summary>
-        [Fact]
-        public void AuthTypeTest()
-        {
-            // TODO unit test for the property 'AuthType'
-        }
-
-        /// <summary>
         /// Test the property 'Name'
         /// </summary>
         [Fact]
@@ -105,6 +96,15 @@ namespace DocSpring.Client.Test.Model
         public void RoleTest()
         {
             // TODO unit test for the property 'Role'
+        }
+
+        /// <summary>
+        /// Test the property 'AuthType'
+        /// </summary>
+        [Fact]
+        public void AuthTypeTest()
+        {
+            // TODO unit test for the property 'AuthType'
         }
 
         /// <summary>
@@ -186,6 +186,24 @@ namespace DocSpring.Client.Test.Model
         public void PrefilledValuesEditableTest()
         {
             // TODO unit test for the property 'PrefilledValuesEditable'
+        }
+
+        /// <summary>
+        /// Test the property 'SendEmail'
+        /// </summary>
+        [Fact]
+        public void SendEmailTest()
+        {
+            // TODO unit test for the property 'SendEmail'
+        }
+
+        /// <summary>
+        /// Test the property 'SigningStep'
+        /// </summary>
+        [Fact]
+        public void SigningStepTest()
+        {
+            // TODO unit test for the property 'SigningStep'
         }
     }
 }

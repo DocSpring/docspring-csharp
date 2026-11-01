@@ -99,6 +99,15 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'EmailActionId'
+        /// </summary>
+        [Fact]
+        public void EmailActionIdTest()
+        {
+            // TODO unit test for the property 'EmailActionId'
+        }
+
+        /// <summary>
         /// Test the property 'ErrorMessage'
         /// </summary>
         [Fact]

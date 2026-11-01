@@ -34,7 +34,7 @@ namespace DocSpring.Client.Model
         /// <param name="format">The paper size. &#x60;Custom&#x60; uses &#x60;width&#x60; and &#x60;height&#x60;.</param>
         /// <param name="width">The page width for the &#x60;Custom&#x60; format, with a unit (&#x60;8.5in&#x60;, &#x60;210mm&#x60;).</param>
         /// <param name="height">The page height for the &#x60;Custom&#x60; format, with a unit.</param>
-        /// <param name="scale">How much to scale the page, such as &#x60;0.8&#x60;. &#x60;1&#x60; prints it at its normal size.</param>
+        /// <param name="scale">How much to scale the page, from 0.1 to 2, such as &#x60;0.8&#x60;. &#x60;1&#x60; prints it at its normal size.</param>
         /// <param name="landscape">Print pages in landscape orientation.</param>
         /// <param name="printBackground">Print background colors and images.</param>
         /// <param name="marginTop">The top margin, with a unit, such as &#x60;1in&#x60; or &#x60;20mm&#x60;.</param>
@@ -109,9 +109,9 @@ namespace DocSpring.Client.Model
         public Option<decimal?> ScaleOption { get; private set; }
 
         /// <summary>
-        /// How much to scale the page, such as &#x60;0.8&#x60;. &#x60;1&#x60; prints it at its normal size.
+        /// How much to scale the page, from 0.1 to 2, such as &#x60;0.8&#x60;. &#x60;1&#x60; prints it at its normal size.
         /// </summary>
-        /// <value>How much to scale the page, such as &#x60;0.8&#x60;. &#x60;1&#x60; prints it at its normal size.</value>
+        /// <value>How much to scale the page, from 0.1 to 2, such as &#x60;0.8&#x60;. &#x60;1&#x60; prints it at its normal size.</value>
         [JsonPropertyName("scale")]
         public decimal? Scale { get { return this.ScaleOption.Value; } set { this.ScaleOption = new Option<decimal?>(value); } }
 

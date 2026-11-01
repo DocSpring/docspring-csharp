@@ -35,7 +35,7 @@ namespace DocSpring.Client.Model
         /// <param name="templateType">The template&#39;s type: &#x60;pdf&#x60;, &#x60;html&#x60; or &#x60;docx&#x60;.</param>
         /// <param name="source">&#x60;api&#x60;: created with the API. &#x60;web&#x60;: a web form. &#x60;reprocess&#x60;: a copy of another submission, made to generate its PDF again.</param>
         /// <param name="state">&#x60;pending&#x60; until the files have been generated, then &#x60;processed&#x60;. &#x60;waiting_for_signature_requests&#x60; until every signature request is completed. &#x60;insufficient_credits&#x60;: waiting for credits; &#x60;error_message&#x60; says whether the files are generated once you add them. &#x60;account_suspended&#x60;: waiting for the account to be reactivated, for up to 30 days. Waiting ends in &#x60;error&#x60; if it&#39;s discarded or takes over 30 days. Every other state is final, with no files: &#x60;invalid_data&#x60; (the data doesn&#39;t match the template&#39;s fields: see &#x60;data_errors&#x60;), &#x60;declined&#x60; (a signature request was declined), and the states where generating the files failed, which have an &#x60;error_message&#x60;: &#x60;syntax_error&#x60; (a mistake in an HTML template&#39;s Liquid or SCSS, or in a Word template&#39;s tags), &#x60;image_download_failed&#x60; or &#x60;image_processing_failed&#x60; (an image in the data or the template couldn&#39;t be downloaded or read) and &#x60;error&#x60; (anything else). Older submissions can also be &#x60;license_revoked&#x60; or &#x60;accidental&#x60;.</param>
-        /// <param name="test">Test PDFs have a watermark and are free. Live PDFs use credits. Submissions made with a test API token are always test submissions.</param>
+        /// <param name="test">Test PDFs have a watermark and are free. Live PDFs use credits. Submissions made with a test API token are always test submissions, and the demo API token&#39;s are always live.</param>
         /// <param name="editable">&#x60;true&#x60; keeps the PDF&#39;s text and check fields fillable, and &#x60;false&#x60; flattens every field. Left out, the template decides: its &#x60;editable_submissions&#x60; setting, or each field&#39;s own Editable option. A response shows the template&#39;s setting when the request left this out. Can&#39;t be &#x60;true&#x60; with &#x60;signature_requests&#x60;.</param>
         /// <param name="dataErrors">Why the data doesn&#39;t match the template&#39;s fields, when &#x60;state&#x60; is &#x60;invalid_data&#x60;: the same details as the 422 response that recorded it, with pointers into the request that created the submission (&#x60;/data/name&#x60;). Cleared once the submission has expired.</param>
         /// <param name="metadata">Your own data about the submission, such as an ID from your app. It isn&#39;t printed on the PDF. Two keys also change the PDF: &#x60;pdf_filename&#x60; names its file (&#x60;files.pdf.filename&#x60;, and its download), and &#x60;pdf_title&#x60; is its title in the PDF&#39;s document properties (and an HTML template&#39;s &#x60;&lt;title&gt;&#x60;, unless its HTML has one). Without &#x60;pdf_title&#x60;, the title is the template&#39;s name. In &#x60;pdf_filename&#x60;, a &#x60;.pdf&#x60; ending is removed, each run of characters other than letters, digits, &#x60;-&#x60;, &#x60;_&#x60; and &#x60;.&#x60; becomes one &#x60;_&#x60;, and the first 128 characters are kept, then &#x60;.pdf&#x60; is added. Without it, the file is named after the submission&#39;s ID (&#x60;sub_1234567890abcdef01.pdf&#x60;).</param>
@@ -45,7 +45,8 @@ namespace DocSpring.Client.Model
         /// <param name="updatedAt">When the submission was last updated.</param>
         /// <param name="hasPassword">Whether the PDF needs a password to open (&#x60;password&#x60;).</param>
         /// <param name="signatureRequests">The people asked to sign the submission (and fill in their fields), in order.</param>
-        /// <param name="actions">The uploads of the submission&#39;s PDF to your storage (account integrations).</param>
+        /// <param name="signingOrder">&#x60;parallel&#x60;: everyone can sign at once. &#x60;sequential&#x60;: people sign one step at a time (each signature request&#39;s &#x60;signing_step&#x60;).</param>
+        /// <param name="actions">The uploads of the submission&#39;s PDF to your storage (account integrations), and the emails its template&#39;s email actions sent.</param>
         /// <param name="outputFormats">What the submission makes: &#x60;pdf&#x60;, &#x60;docx&#x60; (a Word document, from a Word template), &#x60;odt&#x60; (an OpenDocument file, the format LibreOffice uses, converted from a Word template&#39;s Word document), and &#x60;png&#x60; (an image of each page of the PDF, up to 100 pages, which adds &#x60;pdf&#x60;) when you ask for it. Default &#x60;[\&quot;pdf\&quot;]&#x60;, or a Word template&#39;s &#x60;output_format&#x60;. POST /submissions/{submission_id}/generate_files adds &#x60;png&#x60;, and a Word template&#39;s submission&#39;s &#x60;pdf&#x60;, &#x60;docx&#x60; or &#x60;odt&#x60;, to a processed submission.</param>
         /// <param name="templateId">Null once the template has been permanently deleted.</param>
         /// <param name="templateVersion">The published version of the template the submission used. Null for the draft.</param>
@@ -57,7 +58,7 @@ namespace DocSpring.Client.Model
         /// <param name="truncatedText">The text of each field that didn&#39;t fit in it, by field name. Left out (null) with &#x60;data&#x60;, and empty once the submission has expired.</param>
         /// <param name="previewGeneratedAt">When the preview PDF was generated. Null if there is no preview.</param>
         [JsonConstructor]
-        public Submission(string id, TemplateType templateType, SubmissionSource source, SubmissionState state, bool test, bool editable, List<ErrorDetail> dataErrors, Dictionary<string, Object> metadata, SubmissionFiles files, bool expired, DateTime createdAt, DateTime updatedAt, bool hasPassword, List<SignatureRequest> signatureRequests, List<SubmissionAction> actions, List<OutputFormat> outputFormats, string templateId = default, string templateVersion = default, string batchId = default, Dictionary<string, Object> data = default, string errorMessage = default, DateTime? expiresAt = default, DateTime? processedAt = default, Dictionary<string, List<string>> truncatedText = default, DateTime? previewGeneratedAt = default)
+        public Submission(string id, TemplateType templateType, SubmissionSource source, SubmissionState state, bool test, bool editable, List<ErrorDetail> dataErrors, Dictionary<string, Object> metadata, SubmissionFiles files, bool expired, DateTime createdAt, DateTime updatedAt, bool hasPassword, List<SignatureRequest> signatureRequests, SigningOrder signingOrder, List<SubmissionAction> actions, List<OutputFormat> outputFormats, string templateId = default, string templateVersion = default, string batchId = default, Dictionary<string, Object> data = default, string errorMessage = default, DateTime? expiresAt = default, DateTime? processedAt = default, Dictionary<string, List<string>> truncatedText = default, DateTime? previewGeneratedAt = default)
         {
             Id = id;
             TemplateType = templateType;
@@ -73,6 +74,7 @@ namespace DocSpring.Client.Model
             UpdatedAt = updatedAt;
             HasPassword = hasPassword;
             SignatureRequests = signatureRequests;
+            SigningOrder = signingOrder;
             Actions = actions;
             OutputFormats = outputFormats;
             TemplateId = templateId;
@@ -111,6 +113,13 @@ namespace DocSpring.Client.Model
         public SubmissionState State { get; set; }
 
         /// <summary>
+        /// &#x60;parallel&#x60;: everyone can sign at once. &#x60;sequential&#x60;: people sign one step at a time (each signature request&#39;s &#x60;signing_step&#x60;).
+        /// </summary>
+        /// <value>&#x60;parallel&#x60;: everyone can sign at once. &#x60;sequential&#x60;: people sign one step at a time (each signature request&#39;s &#x60;signing_step&#x60;).</value>
+        [JsonPropertyName("signing_order")]
+        public SigningOrder SigningOrder { get; set; }
+
+        /// <summary>
         /// The submission&#39;s ID.
         /// </summary>
         /// <value>The submission&#39;s ID.</value>
@@ -118,9 +127,9 @@ namespace DocSpring.Client.Model
         public string Id { get; set; }
 
         /// <summary>
-        /// Test PDFs have a watermark and are free. Live PDFs use credits. Submissions made with a test API token are always test submissions.
+        /// Test PDFs have a watermark and are free. Live PDFs use credits. Submissions made with a test API token are always test submissions, and the demo API token&#39;s are always live.
         /// </summary>
-        /// <value>Test PDFs have a watermark and are free. Live PDFs use credits. Submissions made with a test API token are always test submissions.</value>
+        /// <value>Test PDFs have a watermark and are free. Live PDFs use credits. Submissions made with a test API token are always test submissions, and the demo API token&#39;s are always live.</value>
         [JsonPropertyName("test")]
         public bool Test { get; set; }
 
@@ -188,9 +197,9 @@ namespace DocSpring.Client.Model
         public List<SignatureRequest> SignatureRequests { get; set; }
 
         /// <summary>
-        /// The uploads of the submission&#39;s PDF to your storage (account integrations).
+        /// The uploads of the submission&#39;s PDF to your storage (account integrations), and the emails its template&#39;s email actions sent.
         /// </summary>
-        /// <value>The uploads of the submission&#39;s PDF to your storage (account integrations).</value>
+        /// <value>The uploads of the submission&#39;s PDF to your storage (account integrations), and the emails its template&#39;s email actions sent.</value>
         [JsonPropertyName("actions")]
         public List<SubmissionAction> Actions { get; set; }
 
@@ -292,6 +301,7 @@ namespace DocSpring.Client.Model
             sb.Append("  UpdatedAt: ").Append(UpdatedAt).Append("\n");
             sb.Append("  HasPassword: ").Append(HasPassword).Append("\n");
             sb.Append("  SignatureRequests: ").Append(SignatureRequests).Append("\n");
+            sb.Append("  SigningOrder: ").Append(SigningOrder).Append("\n");
             sb.Append("  Actions: ").Append(Actions).Append("\n");
             sb.Append("  OutputFormats: ").Append(OutputFormats).Append("\n");
             sb.Append("  TemplateId: ").Append(TemplateId).Append("\n");
@@ -390,6 +400,7 @@ namespace DocSpring.Client.Model
             Option<DateTime?> updatedAt = default;
             Option<bool?> hasPassword = default;
             Option<List<SignatureRequest>> signatureRequests = default;
+            Option<SigningOrder?> signingOrder = default;
             Option<List<SubmissionAction>> actions = default;
             Option<List<OutputFormat>> outputFormats = default;
             Option<string> templateId = default;
@@ -458,6 +469,9 @@ namespace DocSpring.Client.Model
                             break;
                         case "signature_requests":
                             signatureRequests = new Option<List<SignatureRequest>>(JsonSerializer.Deserialize<List<SignatureRequest>>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
+                        case "signing_order":
+                            signingOrder = new Option<SigningOrder?>(JsonSerializer.Deserialize<SigningOrder?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "actions":
                             actions = new Option<List<SubmissionAction>>(JsonSerializer.Deserialize<List<SubmissionAction>>(ref utf8JsonReader, jsonSerializerOptions));
@@ -540,6 +554,9 @@ namespace DocSpring.Client.Model
             if (!signatureRequests.IsSet)
                 throw new JsonException("Property is required for class Submission: signature_requests.");
 
+            if (!signingOrder.IsSet)
+                throw new JsonException("Property is required for class Submission: signing_order.");
+
             if (!actions.IsSet)
                 throw new JsonException("Property is required for class Submission: actions.");
 
@@ -615,13 +632,16 @@ namespace DocSpring.Client.Model
             if (signatureRequests.IsSet && signatureRequests.Value == null)
                 throw new JsonException("Property is not nullable for class Submission: signature_requests.");
 
+            if (signingOrder.IsSet && signingOrder.Value == null)
+                throw new JsonException("Property is not nullable for class Submission: signing_order.");
+
             if (actions.IsSet && actions.Value == null)
                 throw new JsonException("Property is not nullable for class Submission: actions.");
 
             if (outputFormats.IsSet && outputFormats.Value == null)
                 throw new JsonException("Property is not nullable for class Submission: output_formats.");
 
-            return new Submission(id.Value, templateType.Value.Value, source.Value.Value, state.Value.Value, test.Value.Value, editable.Value.Value, dataErrors.Value, metadata.Value, files.Value, expired.Value.Value, createdAt.Value.Value, updatedAt.Value.Value, hasPassword.Value.Value, signatureRequests.Value, actions.Value, outputFormats.Value, templateId.Value, templateVersion.Value, batchId.Value, data.Value, errorMessage.Value, expiresAt.Value, processedAt.Value, truncatedText.Value, previewGeneratedAt.Value);
+            return new Submission(id.Value, templateType.Value.Value, source.Value.Value, state.Value.Value, test.Value.Value, editable.Value.Value, dataErrors.Value, metadata.Value, files.Value, expired.Value.Value, createdAt.Value.Value, updatedAt.Value.Value, hasPassword.Value.Value, signatureRequests.Value, signingOrder.Value.Value, actions.Value, outputFormats.Value, templateId.Value, templateVersion.Value, batchId.Value, data.Value, errorMessage.Value, expiresAt.Value, processedAt.Value, truncatedText.Value, previewGeneratedAt.Value);
         }
 
         /// <summary>
@@ -677,6 +697,9 @@ namespace DocSpring.Client.Model
 
             writer.WritePropertyName("signature_requests");
             JsonSerializer.Serialize(writer, submission.SignatureRequests, jsonSerializerOptions);
+            var signingOrderRawValue = SigningOrderValueConverter.ToJsonValue(submission.SigningOrder);
+            writer.WriteString("signing_order", signingOrderRawValue);
+
             writer.WritePropertyName("actions");
             JsonSerializer.Serialize(writer, submission.Actions, jsonSerializerOptions);
             writer.WritePropertyName("output_formats");

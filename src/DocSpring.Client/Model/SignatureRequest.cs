@@ -36,14 +36,18 @@ namespace DocSpring.Client.Model
         /// <param name="metadata">Your own data about the signature request, such as an ID from your app.</param>
         /// <param name="role">Which of the template&#39;s signers the person is. Until templates have roles of their own, a template&#39;s signers are &#x60;Signer 1&#x60;, &#x60;Signer 2&#x60; and so on, up to &#x60;Signer 100&#x60;: &#x60;Signer 1&#x60; is the one whose details the template&#39;s &#x60;@@signature_requests/0&#x60; fields print.</param>
         /// <param name="sortOrder">The signer&#39;s position, from 0: &#x60;Signer 1&#x60; is 0. The template&#39;s &#x60;@@signature_requests/&lt;sort_order&gt;&#x60; fields print this signature request&#39;s details.</param>
+        /// <param name="sendEmail">Whether DocSpring emails this person their signing link.</param>
         /// <param name="state">&#x60;pending&#x60; until the person completes the signature request (&#x60;completed&#x60;) or declines it (&#x60;declined&#x60;).</param>
         /// <param name="authType">How your app authenticated the person before it showed them the signature request.</param>
         /// <param name="authSecondFactorType">The second factor your app authenticated them with, if any.</param>
         /// <param name="createdAt">When the signature request was created.</param>
         /// <param name="updatedAt">When the signature request was last updated.</param>
         /// <param name="name">The name of the person the request is for.</param>
-        /// <param name="email">Their email address.</param>
+        /// <param name="email">Their email address. Null when they have none.</param>
         /// <param name="fields">The fields this person fills in. Null for a signature request created with API v1 without a field list: it asks for every field the submission&#39;s data doesn&#39;t have.</param>
+        /// <param name="signingStep">When this person signs, when the submission&#39;s &#x60;signing_order&#x60; is &#x60;sequential&#x60;: everyone in step 1 first, then step 2, and so on. Null when everyone can sign at once.</param>
+        /// <param name="sentAt">When DocSpring first emailed this person their signing link. Null until it has, and when it doesn&#39;t email them (&#x60;send_email&#x60; is false).</param>
+        /// <param name="emailStatus">What happened to the latest email DocSpring sent this person with their signing link: &#x60;sent&#x60; until the email service reports on it, then &#x60;delayed&#x60; (still trying), &#x60;delivered&#x60;, &#x60;undelivered&#x60; (it stopped trying, as with a full mailbox), &#x60;bounced&#x60; (the address doesn&#39;t exist) or &#x60;complained&#x60; (marked as spam). &#x60;failed&#x60; means DocSpring couldn&#39;t send the first email with their link, and &#x60;unknown&#x60; that it couldn&#39;t tell whether that email went: neither is sent again. Null until DocSpring has emailed them or tried to.</param>
         /// <param name="data">The values this person entered for their own fields (&#x60;fields&#x60;). Null when their submission&#39;s data is left out: in lists without &#x60;include_data&#x3D;true&#x60;, in the events of a webhook that leaves out submission data, and once the submission has expired.</param>
         /// <param name="viewedAt">When the person first opened the signature request.</param>
         /// <param name="completedAt">When they completed it.</param>
@@ -57,13 +61,14 @@ namespace DocSpring.Client.Model
         /// <param name="ipAddress">The IP address they completed the signature request from. Null in the events of a webhook that leaves out submission data.</param>
         /// <param name="userAgent">The User-Agent header of the browser they completed the signature request with. Null in the events of a webhook that leaves out submission data.</param>
         [JsonConstructor]
-        public SignatureRequest(string id, string submissionId, Dictionary<string, Object> metadata, string role, int sortOrder, SignatureRequestState state, SignatureRequestAuthType authType, SignatureRequestAuthSecondFactorType authSecondFactorType, DateTime createdAt, DateTime updatedAt, string name = default, string email = default, List<string> fields = default, Dictionary<string, Object> data = default, DateTime? viewedAt = default, DateTime? completedAt = default, DateTime? declinedAt = default, string authProvider = default, DateTime? authSessionStartedAt = default, string authSessionIdHash = default, string authUserIdHash = default, string authUsernameHash = default, string authPhoneNumberHash = default, string ipAddress = default, string userAgent = default)
+        public SignatureRequest(string id, string submissionId, Dictionary<string, Object> metadata, string role, int sortOrder, bool sendEmail, SignatureRequestState state, SignatureRequestAuthType authType, SignatureRequestAuthSecondFactorType authSecondFactorType, DateTime createdAt, DateTime updatedAt, string name = default, string email = default, List<string> fields = default, int? signingStep = default, DateTime? sentAt = default, SignatureRequestEmailStatus? emailStatus = default, Dictionary<string, Object> data = default, DateTime? viewedAt = default, DateTime? completedAt = default, DateTime? declinedAt = default, string authProvider = default, DateTime? authSessionStartedAt = default, string authSessionIdHash = default, string authUserIdHash = default, string authUsernameHash = default, string authPhoneNumberHash = default, string ipAddress = default, string userAgent = default)
         {
             Id = id;
             SubmissionId = submissionId;
             Metadata = metadata;
             Role = role;
             SortOrder = sortOrder;
+            SendEmail = sendEmail;
             State = state;
             AuthType = authType;
             AuthSecondFactorType = authSecondFactorType;
@@ -72,6 +77,9 @@ namespace DocSpring.Client.Model
             Name = name;
             Email = email;
             Fields = fields;
+            SigningStep = signingStep;
+            SentAt = sentAt;
+            EmailStatus = emailStatus;
             Data = data;
             ViewedAt = viewedAt;
             CompletedAt = completedAt;
@@ -111,6 +119,13 @@ namespace DocSpring.Client.Model
         public SignatureRequestAuthSecondFactorType AuthSecondFactorType { get; set; }
 
         /// <summary>
+        /// What happened to the latest email DocSpring sent this person with their signing link: &#x60;sent&#x60; until the email service reports on it, then &#x60;delayed&#x60; (still trying), &#x60;delivered&#x60;, &#x60;undelivered&#x60; (it stopped trying, as with a full mailbox), &#x60;bounced&#x60; (the address doesn&#39;t exist) or &#x60;complained&#x60; (marked as spam). &#x60;failed&#x60; means DocSpring couldn&#39;t send the first email with their link, and &#x60;unknown&#x60; that it couldn&#39;t tell whether that email went: neither is sent again. Null until DocSpring has emailed them or tried to.
+        /// </summary>
+        /// <value>What happened to the latest email DocSpring sent this person with their signing link: &#x60;sent&#x60; until the email service reports on it, then &#x60;delayed&#x60; (still trying), &#x60;delivered&#x60;, &#x60;undelivered&#x60; (it stopped trying, as with a full mailbox), &#x60;bounced&#x60; (the address doesn&#39;t exist) or &#x60;complained&#x60; (marked as spam). &#x60;failed&#x60; means DocSpring couldn&#39;t send the first email with their link, and &#x60;unknown&#x60; that it couldn&#39;t tell whether that email went: neither is sent again. Null until DocSpring has emailed them or tried to.</value>
+        [JsonPropertyName("email_status")]
+        public SignatureRequestEmailStatus? EmailStatus { get; set; }
+
+        /// <summary>
         /// The signature request&#39;s ID.
         /// </summary>
         /// <value>The signature request&#39;s ID.</value>
@@ -146,6 +161,13 @@ namespace DocSpring.Client.Model
         public int SortOrder { get; set; }
 
         /// <summary>
+        /// Whether DocSpring emails this person their signing link.
+        /// </summary>
+        /// <value>Whether DocSpring emails this person their signing link.</value>
+        [JsonPropertyName("send_email")]
+        public bool SendEmail { get; set; }
+
+        /// <summary>
         /// When the signature request was created.
         /// </summary>
         /// <value>When the signature request was created.</value>
@@ -167,9 +189,9 @@ namespace DocSpring.Client.Model
         public string Name { get; set; }
 
         /// <summary>
-        /// Their email address.
+        /// Their email address. Null when they have none.
         /// </summary>
-        /// <value>Their email address.</value>
+        /// <value>Their email address. Null when they have none.</value>
         [JsonPropertyName("email")]
         public string Email { get; set; }
 
@@ -179,6 +201,20 @@ namespace DocSpring.Client.Model
         /// <value>The fields this person fills in. Null for a signature request created with API v1 without a field list: it asks for every field the submission&#39;s data doesn&#39;t have.</value>
         [JsonPropertyName("fields")]
         public List<string> Fields { get; set; }
+
+        /// <summary>
+        /// When this person signs, when the submission&#39;s &#x60;signing_order&#x60; is &#x60;sequential&#x60;: everyone in step 1 first, then step 2, and so on. Null when everyone can sign at once.
+        /// </summary>
+        /// <value>When this person signs, when the submission&#39;s &#x60;signing_order&#x60; is &#x60;sequential&#x60;: everyone in step 1 first, then step 2, and so on. Null when everyone can sign at once.</value>
+        [JsonPropertyName("signing_step")]
+        public int? SigningStep { get; set; }
+
+        /// <summary>
+        /// When DocSpring first emailed this person their signing link. Null until it has, and when it doesn&#39;t email them (&#x60;send_email&#x60; is false).
+        /// </summary>
+        /// <value>When DocSpring first emailed this person their signing link. Null until it has, and when it doesn&#39;t email them (&#x60;send_email&#x60; is false).</value>
+        [JsonPropertyName("sent_at")]
+        public DateTime? SentAt { get; set; }
 
         /// <summary>
         /// The values this person entered for their own fields (&#x60;fields&#x60;). Null when their submission&#39;s data is left out: in lists without &#x60;include_data&#x3D;true&#x60;, in the events of a webhook that leaves out submission data, and once the submission has expired.
@@ -283,6 +319,7 @@ namespace DocSpring.Client.Model
             sb.Append("  Metadata: ").Append(Metadata).Append("\n");
             sb.Append("  Role: ").Append(Role).Append("\n");
             sb.Append("  SortOrder: ").Append(SortOrder).Append("\n");
+            sb.Append("  SendEmail: ").Append(SendEmail).Append("\n");
             sb.Append("  State: ").Append(State).Append("\n");
             sb.Append("  AuthType: ").Append(AuthType).Append("\n");
             sb.Append("  AuthSecondFactorType: ").Append(AuthSecondFactorType).Append("\n");
@@ -291,6 +328,9 @@ namespace DocSpring.Client.Model
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Email: ").Append(Email).Append("\n");
             sb.Append("  Fields: ").Append(Fields).Append("\n");
+            sb.Append("  SigningStep: ").Append(SigningStep).Append("\n");
+            sb.Append("  SentAt: ").Append(SentAt).Append("\n");
+            sb.Append("  EmailStatus: ").Append(EmailStatus).Append("\n");
             sb.Append("  Data: ").Append(Data).Append("\n");
             sb.Append("  ViewedAt: ").Append(ViewedAt).Append("\n");
             sb.Append("  CompletedAt: ").Append(CompletedAt).Append("\n");
@@ -345,6 +385,11 @@ namespace DocSpring.Client.Model
         public string UpdatedAtFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
+        /// The format to use to serialize SentAt
+        /// </summary>
+        public string SentAtFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
+
+        /// <summary>
         /// The format to use to serialize ViewedAt
         /// </summary>
         public string ViewedAtFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
@@ -386,6 +431,7 @@ namespace DocSpring.Client.Model
             Option<Dictionary<string, Object>> metadata = default;
             Option<string> role = default;
             Option<int?> sortOrder = default;
+            Option<bool?> sendEmail = default;
             Option<SignatureRequestState?> state = default;
             Option<SignatureRequestAuthType?> authType = default;
             Option<SignatureRequestAuthSecondFactorType?> authSecondFactorType = default;
@@ -394,6 +440,9 @@ namespace DocSpring.Client.Model
             Option<string> name = default;
             Option<string> email = default;
             Option<List<string>> fields = default;
+            Option<int?> signingStep = default;
+            Option<DateTime?> sentAt = default;
+            Option<SignatureRequestEmailStatus?> emailStatus = default;
             Option<Dictionary<string, Object>> data = default;
             Option<DateTime?> viewedAt = default;
             Option<DateTime?> completedAt = default;
@@ -437,6 +486,9 @@ namespace DocSpring.Client.Model
                         case "sort_order":
                             sortOrder = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
                             break;
+                        case "send_email":
+                            sendEmail = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
+                            break;
                         case "state":
                             state = new Option<SignatureRequestState?>(JsonSerializer.Deserialize<SignatureRequestState?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
@@ -460,6 +512,15 @@ namespace DocSpring.Client.Model
                             break;
                         case "fields":
                             fields = new Option<List<string>>(JsonSerializer.Deserialize<List<string>>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
+                        case "signing_step":
+                            signingStep = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
+                            break;
+                        case "sent_at":
+                            sentAt = new Option<DateTime?>(JsonSerializer.Deserialize<DateTime?>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
+                        case "email_status":
+                            emailStatus = new Option<SignatureRequestEmailStatus?>(JsonSerializer.Deserialize<SignatureRequestEmailStatus?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "data":
                             data = new Option<Dictionary<string, Object>>(JsonSerializer.Deserialize<Dictionary<string, Object>>(ref utf8JsonReader, jsonSerializerOptions));
@@ -518,6 +579,9 @@ namespace DocSpring.Client.Model
             if (!sortOrder.IsSet)
                 throw new JsonException("Property is required for class SignatureRequest: sort_order.");
 
+            if (!sendEmail.IsSet)
+                throw new JsonException("Property is required for class SignatureRequest: send_email.");
+
             if (!state.IsSet)
                 throw new JsonException("Property is required for class SignatureRequest: state.");
 
@@ -541,6 +605,15 @@ namespace DocSpring.Client.Model
 
             if (!fields.IsSet)
                 throw new JsonException("Property is required for class SignatureRequest: fields.");
+
+            if (!signingStep.IsSet)
+                throw new JsonException("Property is required for class SignatureRequest: signing_step.");
+
+            if (!sentAt.IsSet)
+                throw new JsonException("Property is required for class SignatureRequest: sent_at.");
+
+            if (!emailStatus.IsSet)
+                throw new JsonException("Property is required for class SignatureRequest: email_status.");
 
             if (!data.IsSet)
                 throw new JsonException("Property is required for class SignatureRequest: data.");
@@ -593,6 +666,9 @@ namespace DocSpring.Client.Model
             if (sortOrder.IsSet && sortOrder.Value == null)
                 throw new JsonException("Property is not nullable for class SignatureRequest: sort_order.");
 
+            if (sendEmail.IsSet && sendEmail.Value == null)
+                throw new JsonException("Property is not nullable for class SignatureRequest: send_email.");
+
             if (state.IsSet && state.Value == null)
                 throw new JsonException("Property is not nullable for class SignatureRequest: state.");
 
@@ -608,7 +684,7 @@ namespace DocSpring.Client.Model
             if (updatedAt.IsSet && updatedAt.Value == null)
                 throw new JsonException("Property is not nullable for class SignatureRequest: updated_at.");
 
-            return new SignatureRequest(id.Value, submissionId.Value, metadata.Value, role.Value, sortOrder.Value.Value, state.Value.Value, authType.Value.Value, authSecondFactorType.Value.Value, createdAt.Value.Value, updatedAt.Value.Value, name.Value, email.Value, fields.Value, data.Value, viewedAt.Value, completedAt.Value, declinedAt.Value, authProvider.Value, authSessionStartedAt.Value, authSessionIdHash.Value, authUserIdHash.Value, authUsernameHash.Value, authPhoneNumberHash.Value, ipAddress.Value, userAgent.Value);
+            return new SignatureRequest(id.Value, submissionId.Value, metadata.Value, role.Value, sortOrder.Value.Value, sendEmail.Value.Value, state.Value.Value, authType.Value.Value, authSecondFactorType.Value.Value, createdAt.Value.Value, updatedAt.Value.Value, name.Value, email.Value, fields.Value, signingStep.Value, sentAt.Value, emailStatus.Value, data.Value, viewedAt.Value, completedAt.Value, declinedAt.Value, authProvider.Value, authSessionStartedAt.Value, authSessionIdHash.Value, authUserIdHash.Value, authUsernameHash.Value, authPhoneNumberHash.Value, ipAddress.Value, userAgent.Value);
         }
 
         /// <summary>
@@ -643,6 +719,8 @@ namespace DocSpring.Client.Model
 
             writer.WriteNumber("sort_order", signatureRequest.SortOrder);
 
+            writer.WriteBoolean("send_email", signatureRequest.SendEmail);
+
             var stateRawValue = SignatureRequestStateValueConverter.ToJsonValue(signatureRequest.State);
             writer.WriteString("state", stateRawValue);
 
@@ -673,6 +751,27 @@ namespace DocSpring.Client.Model
             }
             else
                 writer.WriteNull("fields");
+            if (signatureRequest.SigningStep != null)
+                writer.WriteNumber("signing_step", signatureRequest.SigningStep.Value);
+            else
+                writer.WriteNull("signing_step");
+
+            if (signatureRequest.SentAt != null)
+                writer.WriteString("sent_at", signatureRequest.SentAt.Value.ToString(SentAtFormat));
+            else
+                writer.WriteNull("sent_at");
+
+            if (signatureRequest.EmailStatus == null)
+                writer.WriteNull("email_status");
+            else
+            {
+                var emailStatusRawValue = SignatureRequestEmailStatusValueConverter.ToJsonValue(signatureRequest.EmailStatus.Value);
+                if (emailStatusRawValue != null)
+                    writer.WriteString("email_status", emailStatusRawValue);
+                else
+                    writer.WriteNull("email_status");
+            }
+
             if (signatureRequest.Data != null)
             {
                 writer.WritePropertyName("data");

@@ -99,6 +99,15 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'SendEmail'
+        /// </summary>
+        [Fact]
+        public void SendEmailTest()
+        {
+            // TODO unit test for the property 'SendEmail'
+        }
+
+        /// <summary>
         /// Test the property 'State'
         /// </summary>
         [Fact]
@@ -168,6 +177,33 @@ namespace DocSpring.Client.Test.Model
         public void FieldsTest()
         {
             // TODO unit test for the property 'Fields'
+        }
+
+        /// <summary>
+        /// Test the property 'SigningStep'
+        /// </summary>
+        [Fact]
+        public void SigningStepTest()
+        {
+            // TODO unit test for the property 'SigningStep'
+        }
+
+        /// <summary>
+        /// Test the property 'SentAt'
+        /// </summary>
+        [Fact]
+        public void SentAtTest()
+        {
+            // TODO unit test for the property 'SentAt'
+        }
+
+        /// <summary>
+        /// Test the property 'EmailStatus'
+        /// </summary>
+        [Fact]
+        public void EmailStatusTest()
+        {
+            // TODO unit test for the property 'EmailStatus'
         }
 
         /// <summary>

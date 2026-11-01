@@ -74,9 +74,19 @@ namespace DocSpring.Client.Model
         public static SignatureRequestEventType AllCompleted { get; } = new SignatureRequestEventType("all_completed");
 
         /// <summary>
+        /// email_bounced
+        /// </summary>
+        public static SignatureRequestEventType EmailBounced { get; } = new SignatureRequestEventType("email_bounced");
+
+        /// <summary>
+        /// email_marked_as_spam
+        /// </summary>
+        public static SignatureRequestEventType EmailMarkedAsSpam { get; } = new SignatureRequestEventType("email_marked_as_spam");
+
+        /// <summary>
         /// The values this client knows
         /// </summary>
-        public static IReadOnlyList<SignatureRequestEventType> Values { get; } = new[] { SendRequest, ViewRequest, AcceptedTerms, DeclineRequest, SignRequest, AllCompleted };
+        public static IReadOnlyList<SignatureRequestEventType> Values { get; } = new[] { SendRequest, ViewRequest, AcceptedTerms, DeclineRequest, SignRequest, AllCompleted, EmailBounced, EmailMarkedAsSpam };
 
         /// <summary>
         /// Whether the value is one this client knows: a newer API can return values added after it was released

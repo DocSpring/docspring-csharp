@@ -33,7 +33,7 @@ namespace DocSpring.Client.Model
         /// </summary>
         /// <param name="id">The ID of the submission, combined PDF, template or custom file.</param>
         /// <param name="type">Must be &#x60;template&#x60;. (default to &quot;template&quot;)</param>
-        /// <param name="templateVersion">For a &#x60;template&#x60; source, the version to use: a published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;latest&#x60; (the draft when no version has been published).</param>
+        /// <param name="templateVersion">For a &#x60;template&#x60; source, the version to use: a published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; (the newest published version, or the draft when none has been published) or &#x60;draft&#x60;. Default &#x60;latest&#x60;.</param>
         /// <param name="processed">For a &#x60;template&#x60; source: true (the default) merges the template&#39;s processed PDF, which is the PDF submissions are filled in on (decrypted, with its form fields removed). false merges the PDF as it was uploaded.</param>
         [JsonConstructor]
         public TemplateSourcePdf(string id, string type = @"template", Option<string> templateVersion = default, Option<bool?> processed = default)
@@ -69,9 +69,9 @@ namespace DocSpring.Client.Model
         public Option<string> TemplateVersionOption { get; private set; }
 
         /// <summary>
-        /// For a &#x60;template&#x60; source, the version to use: a published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;latest&#x60; (the draft when no version has been published).
+        /// For a &#x60;template&#x60; source, the version to use: a published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; (the newest published version, or the draft when none has been published) or &#x60;draft&#x60;. Default &#x60;latest&#x60;.
         /// </summary>
-        /// <value>For a &#x60;template&#x60; source, the version to use: a published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;latest&#x60; (the draft when no version has been published).</value>
+        /// <value>For a &#x60;template&#x60; source, the version to use: a published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; (the newest published version, or the draft when none has been published) or &#x60;draft&#x60;. Default &#x60;latest&#x60;.</value>
         [JsonPropertyName("template_version")]
         public string TemplateVersion { get { return this.TemplateVersionOption.Value; } set { this.TemplateVersionOption = new Option<string>(value); } }
 

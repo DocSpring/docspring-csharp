@@ -33,7 +33,7 @@ namespace DocSpring.Client.Model
         /// </summary>
         /// <param name="cacheId">The &#x60;fields.key&#x60; of the new PDF or Word document (.docx or .odt), uploaded with the presigned upload (GET /uploads/presign).</param>
         /// <param name="documentUrl">An https:// link to the template&#39;s document, instead of &#x60;cache_id&#x60;: a PDF template&#39;s PDF (up to 100 MB) or a Word template&#39;s Word document (.docx or .odt, up to 50 MB). DocSpring downloads it after responding, following redirects to other https:// links: the template&#39;s &#x60;document.state&#x60; is &#x60;downloading&#x60; until then, and &#x60;converting&#x60; while an .odt is converted (sync.api hosts wait for both). If it can&#39;t be downloaded, the state is &#x60;download_failed&#x60; and &#x60;document.error_message&#x60; says why.</param>
-        /// <param name="documentBase64">The template&#39;s document (a PDF, or a Word template&#39;s Word document), encoded as base64 (a &#x60;data:&#x60; URI works too), instead of &#x60;cache_id&#x60;. Up to 7 MB before it&#39;s encoded: send a larger file with &#x60;cache_id&#x60; or &#x60;document_url&#x60;.</param>
+        /// <param name="documentBase64">The template&#39;s document (a PDF, or a Word template&#39;s Word document), encoded as base64 (a &#x60;data:&#x60; URI works too), instead of &#x60;cache_id&#x60;. Line breaks and spaces in it are ignored. Up to 7 MB before it&#39;s encoded: send a larger file with &#x60;cache_id&#x60; or &#x60;document_url&#x60;.</param>
         /// <param name="filename">The file&#39;s name, for a &#x60;cache_id&#x60; (presigned uploads don&#39;t send one) or &#x60;document_base64&#x60;. A &#x60;document_url&#x60;&#39;s is the last part of its path unless you set it.</param>
         /// <param name="reimportFields">Replace all of the template&#39;s fields with the fillable fields in the new PDF, once DocSpring has processed it (&#x60;document.field_reimport_state&#x60;). As on a first upload, the default typeface, font size, bold and color are taken from the PDF&#39;s fields; the template&#39;s other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can&#39;t re-import its fields. Only for PDF templates: a Word template adds a field for each new tag.</param>
         [JsonConstructor]
@@ -85,9 +85,9 @@ namespace DocSpring.Client.Model
         public Option<string> DocumentBase64Option { get; private set; }
 
         /// <summary>
-        /// The template&#39;s document (a PDF, or a Word template&#39;s Word document), encoded as base64 (a &#x60;data:&#x60; URI works too), instead of &#x60;cache_id&#x60;. Up to 7 MB before it&#39;s encoded: send a larger file with &#x60;cache_id&#x60; or &#x60;document_url&#x60;.
+        /// The template&#39;s document (a PDF, or a Word template&#39;s Word document), encoded as base64 (a &#x60;data:&#x60; URI works too), instead of &#x60;cache_id&#x60;. Line breaks and spaces in it are ignored. Up to 7 MB before it&#39;s encoded: send a larger file with &#x60;cache_id&#x60; or &#x60;document_url&#x60;.
         /// </summary>
-        /// <value>The template&#39;s document (a PDF, or a Word template&#39;s Word document), encoded as base64 (a &#x60;data:&#x60; URI works too), instead of &#x60;cache_id&#x60;. Up to 7 MB before it&#39;s encoded: send a larger file with &#x60;cache_id&#x60; or &#x60;document_url&#x60;.</value>
+        /// <value>The template&#39;s document (a PDF, or a Word template&#39;s Word document), encoded as base64 (a &#x60;data:&#x60; URI works too), instead of &#x60;cache_id&#x60;. Line breaks and spaces in it are ignored. Up to 7 MB before it&#39;s encoded: send a larger file with &#x60;cache_id&#x60; or &#x60;document_url&#x60;.</value>
         [JsonPropertyName("document_base64")]
         public string DocumentBase64 { get { return this.DocumentBase64Option.Value; } set { this.DocumentBase64Option = new Option<string>(value); } }
 

@@ -59,6 +59,11 @@ namespace DocSpring.Client.Model
         public static WebhookEventType SubmissionDeclined { get; } = new WebhookEventType("submission.declined");
 
         /// <summary>
+        /// signature_request.sent
+        /// </summary>
+        public static WebhookEventType SignatureRequestSent { get; } = new WebhookEventType("signature_request.sent");
+
+        /// <summary>
         /// signature_request.viewed
         /// </summary>
         public static WebhookEventType SignatureRequestViewed { get; } = new WebhookEventType("signature_request.viewed");
@@ -72,6 +77,11 @@ namespace DocSpring.Client.Model
         /// signature_request.declined
         /// </summary>
         public static WebhookEventType SignatureRequestDeclined { get; } = new WebhookEventType("signature_request.declined");
+
+        /// <summary>
+        /// signature_request.email_bounced
+        /// </summary>
+        public static WebhookEventType SignatureRequestEmailBounced { get; } = new WebhookEventType("signature_request.email_bounced");
 
         /// <summary>
         /// combined_pdf.processed
@@ -171,7 +181,7 @@ namespace DocSpring.Client.Model
         /// <summary>
         /// The values this client knows
         /// </summary>
-        public static IReadOnlyList<WebhookEventType> Values { get; } = new[] { SubmissionProcessed, SubmissionFailed, SubmissionDeclined, SignatureRequestViewed, SignatureRequestCompleted, SignatureRequestDeclined, CombinedPdfProcessed, CombinedPdfFailed, SubmissionBatchProcessed, SubmissionBatchFailed, SubmissionCreated, SubmissionUpdated, SubmissionExpired, SignatureRequestUpdated, CombinedPdfExpired, TemplateCreated, TemplateUpdated, TemplateDeleted, WebhookCreated, WebhookUpdated, WebhookDeleted, CustomFileCreated, FolderCreated, FolderUpdated, FolderDeleted };
+        public static IReadOnlyList<WebhookEventType> Values { get; } = new[] { SubmissionProcessed, SubmissionFailed, SubmissionDeclined, SignatureRequestSent, SignatureRequestViewed, SignatureRequestCompleted, SignatureRequestDeclined, SignatureRequestEmailBounced, CombinedPdfProcessed, CombinedPdfFailed, SubmissionBatchProcessed, SubmissionBatchFailed, SubmissionCreated, SubmissionUpdated, SubmissionExpired, SignatureRequestUpdated, CombinedPdfExpired, TemplateCreated, TemplateUpdated, TemplateDeleted, WebhookCreated, WebhookUpdated, WebhookDeleted, CustomFileCreated, FolderCreated, FolderUpdated, FolderDeleted };
 
         /// <summary>
         /// Whether the value is one this client knows: a newer API can return values added after it was released

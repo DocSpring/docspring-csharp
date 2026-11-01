@@ -180,6 +180,15 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'SigningOrder'
+        /// </summary>
+        [Fact]
+        public void SigningOrderTest()
+        {
+            // TODO unit test for the property 'SigningOrder'
+        }
+
+        /// <summary>
         /// Test the property 'Actions'
         /// </summary>
         [Fact]

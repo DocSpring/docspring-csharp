@@ -124,5 +124,32 @@ namespace DocSpring.Client.Test.Model
         {
             // TODO unit test for the property 'TemplateId'
         }
+
+        /// <summary>
+        /// Test the property 'FolderId'
+        /// </summary>
+        [Fact]
+        public void FolderIdTest()
+        {
+            // TODO unit test for the property 'FolderId'
+        }
+
+        /// <summary>
+        /// Test the property 'CustomFileId'
+        /// </summary>
+        [Fact]
+        public void CustomFileIdTest()
+        {
+            // TODO unit test for the property 'CustomFileId'
+        }
+
+        /// <summary>
+        /// Test the property 'WebhookId'
+        /// </summary>
+        [Fact]
+        public void WebhookIdTest()
+        {
+            // TODO unit test for the property 'WebhookId'
+        }
     }
 }

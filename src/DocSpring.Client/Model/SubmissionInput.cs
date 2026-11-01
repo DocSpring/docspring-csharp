@@ -31,13 +31,13 @@ namespace DocSpring.Client.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="SubmissionInput" /> class.
         /// </summary>
-        /// <param name="test">Test PDFs have a watermark and are free. Live PDFs use credits. Submissions made with a test API token are always test submissions.</param>
+        /// <param name="test">Test PDFs have a watermark and are free. Live PDFs use credits. Submissions made with a test API token are always test submissions, and the demo API token&#39;s are always live.</param>
         /// <param name="editable">&#x60;true&#x60; keeps the PDF&#39;s text and check fields fillable, and &#x60;false&#x60; flattens every field. Left out, the template decides: its &#x60;editable_submissions&#x60; setting, or each field&#39;s own Editable option. A response shows the template&#39;s setting when the request left this out. Can&#39;t be &#x60;true&#x60; with &#x60;signature_requests&#x60;.</param>
-        /// <param name="data">The values of the template&#39;s fields, by field name. Required for PDF and Word templates.</param>
+        /// <param name="data">The values of the template&#39;s fields, by field name. Required for PDF templates, Word templates and page designs.</param>
         /// <param name="metadata">Your own data about the submission, such as an ID from your app. It isn&#39;t printed on the PDF. Two keys also change the PDF: &#x60;pdf_filename&#x60; names its file (&#x60;files.pdf.filename&#x60;, and its download), and &#x60;pdf_title&#x60; is its title in the PDF&#39;s document properties (and an HTML template&#39;s &#x60;&lt;title&gt;&#x60;, unless its HTML has one). Without &#x60;pdf_title&#x60;, the title is the template&#39;s name. In &#x60;pdf_filename&#x60;, a &#x60;.pdf&#x60; ending is removed, each run of characters other than letters, digits, &#x60;-&#x60;, &#x60;_&#x60; and &#x60;.&#x60; becomes one &#x60;_&#x60;, and the first 128 characters are kept, then &#x60;.pdf&#x60; is added. Without it, the file is named after the submission&#39;s ID (&#x60;sub_1234567890abcdef01.pdf&#x60;).</param>
         /// <param name="password">A password that the PDF needs to be opened with. It&#39;s never returned; &#x60;has_password&#x60; says if it&#39;s set. Word documents and OpenDocument files can&#39;t be password-protected, so a submission with a password can&#39;t make them.</param>
         /// <param name="outputFormats">What the submission makes: &#x60;pdf&#x60;, &#x60;docx&#x60; (a Word document, from a Word template), &#x60;odt&#x60; (an OpenDocument file, the format LibreOffice uses, converted from a Word template&#39;s Word document), and &#x60;png&#x60; (an image of each page of the PDF, up to 100 pages, which adds &#x60;pdf&#x60;) when you ask for it. Default &#x60;[\&quot;pdf\&quot;]&#x60;, or a Word template&#39;s &#x60;output_format&#x60;. POST /submissions/{submission_id}/generate_files adds &#x60;png&#x60;, and a Word template&#39;s submission&#39;s &#x60;pdf&#x60;, &#x60;docx&#x60; or &#x60;odt&#x60;, to a processed submission.</param>
-        /// <param name="expiresIn">Seconds after the PDF is generated until the submission expires, up to 10 years (315360000). Default the template&#39;s expiration setting. A submission that isn&#39;t processed, such as one with invalid data, is kept for at least 48 hours.</param>
+        /// <param name="expiresIn">Seconds after the PDF is generated until the submission expires, up to 10 years (315360000). Default the template&#39;s expiration setting. A submission that isn&#39;t processed, such as one with invalid data, is kept for at least 48 hours. The demo API token&#39;s submissions expire within an hour: up to 3600, and that&#39;s their default.</param>
         /// <param name="fieldOverrides">Changes to field settings for this submission only, by field name, such as &#x60;{\&quot;name\&quot;: {\&quot;required\&quot;: false, \&quot;font_size\&quot;: 9}}&#x60;. A setting that identifies the field (&#x60;id&#x60;, &#x60;name&#x60;, &#x60;type&#x60;), that only the template sets (such as &#x60;description&#x60;), or that doesn&#39;t apply to the field&#39;s type and display type (such as &#x60;check_character&#x60; on a field displayed as text) is a 422. With &#x60;signature_requests&#x60;, &#x60;editable: true&#x60; is a 422, and a &#x60;default&#x60; for a signature or initials field makes the submission &#x60;invalid_data&#x60;.</param>
         /// <param name="html">For an HTML template, HTML to use instead of the template&#39;s.</param>
         /// <param name="css">For an HTML template, SCSS (plain CSS works too) added after the template&#39;s styles, on the page and in its header and footer. It doesn&#39;t replace them: its rules come later, so they win over the template&#39;s rules of the same specificity.</param>
@@ -71,9 +71,9 @@ namespace DocSpring.Client.Model
         public Option<bool?> TestOption { get; private set; }
 
         /// <summary>
-        /// Test PDFs have a watermark and are free. Live PDFs use credits. Submissions made with a test API token are always test submissions.
+        /// Test PDFs have a watermark and are free. Live PDFs use credits. Submissions made with a test API token are always test submissions, and the demo API token&#39;s are always live.
         /// </summary>
-        /// <value>Test PDFs have a watermark and are free. Live PDFs use credits. Submissions made with a test API token are always test submissions.</value>
+        /// <value>Test PDFs have a watermark and are free. Live PDFs use credits. Submissions made with a test API token are always test submissions, and the demo API token&#39;s are always live.</value>
         [JsonPropertyName("test")]
         public bool? Test { get { return this.TestOption.Value; } set { this.TestOption = new Option<bool?>(value); } }
 
@@ -99,9 +99,9 @@ namespace DocSpring.Client.Model
         public Option<Dictionary<string, Object>> DataOption { get; private set; }
 
         /// <summary>
-        /// The values of the template&#39;s fields, by field name. Required for PDF and Word templates.
+        /// The values of the template&#39;s fields, by field name. Required for PDF templates, Word templates and page designs.
         /// </summary>
-        /// <value>The values of the template&#39;s fields, by field name. Required for PDF and Word templates.</value>
+        /// <value>The values of the template&#39;s fields, by field name. Required for PDF templates, Word templates and page designs.</value>
         [JsonPropertyName("data")]
         public Dictionary<string, Object> Data { get { return this.DataOption.Value; } set { this.DataOption = new Option<Dictionary<string, Object>>(value); } }
 
@@ -155,9 +155,9 @@ namespace DocSpring.Client.Model
         public Option<int?> ExpiresInOption { get; private set; }
 
         /// <summary>
-        /// Seconds after the PDF is generated until the submission expires, up to 10 years (315360000). Default the template&#39;s expiration setting. A submission that isn&#39;t processed, such as one with invalid data, is kept for at least 48 hours.
+        /// Seconds after the PDF is generated until the submission expires, up to 10 years (315360000). Default the template&#39;s expiration setting. A submission that isn&#39;t processed, such as one with invalid data, is kept for at least 48 hours. The demo API token&#39;s submissions expire within an hour: up to 3600, and that&#39;s their default.
         /// </summary>
-        /// <value>Seconds after the PDF is generated until the submission expires, up to 10 years (315360000). Default the template&#39;s expiration setting. A submission that isn&#39;t processed, such as one with invalid data, is kept for at least 48 hours.</value>
+        /// <value>Seconds after the PDF is generated until the submission expires, up to 10 years (315360000). Default the template&#39;s expiration setting. A submission that isn&#39;t processed, such as one with invalid data, is kept for at least 48 hours. The demo API token&#39;s submissions expire within an hour: up to 3600, and that&#39;s their default.</value>
         [JsonPropertyName("expires_in")]
         public int? ExpiresIn { get { return this.ExpiresInOption.Value; } set { this.ExpiresInOption = new Option<int?>(value); } }
 

@@ -31,16 +31,19 @@ namespace DocSpring.Client.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="ErrorInfo" /> class.
         /// </summary>
-        /// <param name="code">A machine-readable error code. Clients should handle codes they don&#39;t know: new codes can be added. &#x60;invalid_data&#x60;: a submission&#39;s data doesn&#39;t match its template&#39;s fields. The submission is still recorded. &#x60;insufficient_credits&#x60; (402): your credit balance can&#39;t cover a live PDF. The record was saved and waits for credits in the &#x60;insufficient_credits&#x60; state: its ID is in &#x60;submission_id&#x60;, &#x60;submission_batch_id&#x60; or &#x60;combined_pdf_id&#x60;. &#x60;upgrade_required&#x60; (403): your plan doesn&#39;t include this, such as more templates, another active integration (webhooks count) or the embedded template editor. &#x60;account_suspended&#x60; (403): the account is suspended, so it can&#39;t create submissions. &#x60;polling_timeout&#x60;: on a sync.api host, the files weren&#39;t ready in time. The record was created and is still being processed: its ID is in &#x60;submission_id&#x60;, &#x60;submission_batch_id&#x60;, &#x60;combined_pdf_id&#x60; or &#x60;template_id&#x60;. Without one of these IDs, the request itself got no answer in time, and the record may or may not have been created. &#x60;idempotency_key_in_use&#x60; (409): a request with the same Idempotency-Key is still being processed. Send the request again in a few seconds; when the first request has already created its record, its ID is in &#x60;submission_id&#x60;, &#x60;submission_batch_id&#x60; or &#x60;combined_pdf_id&#x60;. &#x60;idempotency_key_reused&#x60; (422): the Idempotency-Key was already used for a different request.</param>
+        /// <param name="code">A machine-readable error code. Clients should handle codes they don&#39;t know: new codes can be added. &#x60;invalid_data&#x60;: a submission&#39;s data doesn&#39;t match its template&#39;s fields. The submission is still recorded. &#x60;insufficient_credits&#x60; (402): your credit balance can&#39;t cover a live PDF. The record was saved and waits for credits in the &#x60;insufficient_credits&#x60; state: its ID is in &#x60;submission_id&#x60;, &#x60;submission_batch_id&#x60; or &#x60;combined_pdf_id&#x60;. &#x60;insufficient_credits_to_send&#x60; (402): your credit balance can&#39;t cover a live signature request that DocSpring would email, so nothing was saved. Add credits and send the request again. &#x60;upgrade_required&#x60; (403): your plan doesn&#39;t include this, such as more templates, another active integration (webhooks count), the embedded template editor, email actions, or live signature requests before your account&#39;s first payment. &#x60;account_suspended&#x60; (403): the account is suspended, so it can&#39;t create submissions. &#x60;polling_timeout&#x60;: on a sync.api host, the files weren&#39;t ready in time. The record was created and is still being processed: its ID is in &#x60;submission_id&#x60;, &#x60;submission_batch_id&#x60;, &#x60;combined_pdf_id&#x60; or &#x60;template_id&#x60;. Without one of these IDs, the request itself got no answer in time, and the record may or may not have been created. &#x60;idempotency_key_in_use&#x60; (409): the first request with the same Idempotency-Key is still being processed, and the response has a &#x60;Retry-After&#x60; header: send the request again then. Without the header, the first request was processed but its response is no longer kept. When the first request created a record, its ID is in &#x60;submission_id&#x60;, &#x60;submission_batch_id&#x60;, &#x60;combined_pdf_id&#x60;, &#x60;template_id&#x60;, &#x60;folder_id&#x60;, &#x60;custom_file_id&#x60; or &#x60;webhook_id&#x60;. &#x60;idempotency_key_reused&#x60; (422): the Idempotency-Key was already used for a different request. &#x60;rate_limited&#x60; (429): too many API requests. Wait for the &#x60;Retry-After&#x60; header&#39;s seconds. &#x60;daily_email_limit_reached&#x60; (429): a submission that DocSpring would email would take your account over its daily email limit, so nothing was saved. Send it again after the &#x60;Retry-After&#x60; header&#39;s seconds (midnight UTC), or send the signing links yourself (&#x60;send_email: false&#x60;).</param>
         /// <param name="message">A human-readable explanation, safe to show to developers.</param>
         /// <param name="details">What was wrong with each part of the request. Empty when the error isn&#39;t about one part of it.</param>
         /// <param name="requestId">The ID of the request. Include it when you contact support.</param>
-        /// <param name="submissionId">When a submission&#39;s data fails validation, the submission is still recorded (state &#x60;invalid_data&#x60;) so you can see it in the dashboard. This is its ID. With &#x60;insufficient_credits&#x60;, the submission that waits for credits. With &#x60;polling_timeout&#x60; or &#x60;idempotency_key_in_use&#x60;, the submission that&#39;s still being processed.</param>
-        /// <param name="submissionBatchId">The ID of the recorded batch, when items in a batch fail validation. With &#x60;insufficient_credits&#x60;, the batch whose submissions wait for credits. With &#x60;polling_timeout&#x60; or &#x60;idempotency_key_in_use&#x60;, the batch that&#39;s still being processed.</param>
-        /// <param name="combinedPdfId">With &#x60;insufficient_credits&#x60;, the combined PDF that waits for credits. With &#x60;polling_timeout&#x60; or &#x60;idempotency_key_in_use&#x60;, the combined PDF that&#39;s still being processed.</param>
-        /// <param name="templateId">With &#x60;polling_timeout&#x60;, the template whose PDF is still being processed.</param>
+        /// <param name="submissionId">When a submission&#39;s data fails validation, the submission is still recorded (state &#x60;invalid_data&#x60;) so you can see it in the dashboard. This is its ID. With &#x60;insufficient_credits&#x60;, the submission that waits for credits. With &#x60;polling_timeout&#x60;, the submission that&#39;s still being processed. With &#x60;idempotency_key_in_use&#x60;, the submission the first request with the key created.</param>
+        /// <param name="submissionBatchId">The ID of the recorded batch, when items in a batch fail validation. With &#x60;insufficient_credits&#x60;, the batch whose submissions wait for credits. With &#x60;polling_timeout&#x60;, the batch that&#39;s still being processed. With &#x60;idempotency_key_in_use&#x60;, the batch the first request with the key created.</param>
+        /// <param name="combinedPdfId">With &#x60;insufficient_credits&#x60;, the combined PDF that waits for credits. With &#x60;polling_timeout&#x60;, the combined PDF that&#39;s still being processed. With &#x60;idempotency_key_in_use&#x60;, the combined PDF the first request with the key created.</param>
+        /// <param name="templateId">With &#x60;polling_timeout&#x60;, the template whose PDF is still being processed. With &#x60;idempotency_key_in_use&#x60;, the template the first request with the key created.</param>
+        /// <param name="folderId">With &#x60;idempotency_key_in_use&#x60;, the folder the first request with the key created.</param>
+        /// <param name="customFileId">With &#x60;idempotency_key_in_use&#x60;, the custom file the first request with the key created.</param>
+        /// <param name="webhookId">With &#x60;idempotency_key_in_use&#x60;, the webhook the first request with the key created.</param>
         [JsonConstructor]
-        public ErrorInfo(ErrorCode code, string message, List<ErrorDetail> details, string requestId = default, Option<string> submissionId = default, Option<string> submissionBatchId = default, Option<string> combinedPdfId = default, Option<string> templateId = default)
+        public ErrorInfo(ErrorCode code, string message, List<ErrorDetail> details, string requestId = default, Option<string> submissionId = default, Option<string> submissionBatchId = default, Option<string> combinedPdfId = default, Option<string> templateId = default, Option<string> folderId = default, Option<string> customFileId = default, Option<string> webhookId = default)
         {
             Code = code;
             Message = message;
@@ -50,15 +53,18 @@ namespace DocSpring.Client.Model
             SubmissionBatchIdOption = submissionBatchId;
             CombinedPdfIdOption = combinedPdfId;
             TemplateIdOption = templateId;
+            FolderIdOption = folderId;
+            CustomFileIdOption = customFileId;
+            WebhookIdOption = webhookId;
             OnCreated();
         }
 
         partial void OnCreated();
 
         /// <summary>
-        /// A machine-readable error code. Clients should handle codes they don&#39;t know: new codes can be added. &#x60;invalid_data&#x60;: a submission&#39;s data doesn&#39;t match its template&#39;s fields. The submission is still recorded. &#x60;insufficient_credits&#x60; (402): your credit balance can&#39;t cover a live PDF. The record was saved and waits for credits in the &#x60;insufficient_credits&#x60; state: its ID is in &#x60;submission_id&#x60;, &#x60;submission_batch_id&#x60; or &#x60;combined_pdf_id&#x60;. &#x60;upgrade_required&#x60; (403): your plan doesn&#39;t include this, such as more templates, another active integration (webhooks count) or the embedded template editor. &#x60;account_suspended&#x60; (403): the account is suspended, so it can&#39;t create submissions. &#x60;polling_timeout&#x60;: on a sync.api host, the files weren&#39;t ready in time. The record was created and is still being processed: its ID is in &#x60;submission_id&#x60;, &#x60;submission_batch_id&#x60;, &#x60;combined_pdf_id&#x60; or &#x60;template_id&#x60;. Without one of these IDs, the request itself got no answer in time, and the record may or may not have been created. &#x60;idempotency_key_in_use&#x60; (409): a request with the same Idempotency-Key is still being processed. Send the request again in a few seconds; when the first request has already created its record, its ID is in &#x60;submission_id&#x60;, &#x60;submission_batch_id&#x60; or &#x60;combined_pdf_id&#x60;. &#x60;idempotency_key_reused&#x60; (422): the Idempotency-Key was already used for a different request.
+        /// A machine-readable error code. Clients should handle codes they don&#39;t know: new codes can be added. &#x60;invalid_data&#x60;: a submission&#39;s data doesn&#39;t match its template&#39;s fields. The submission is still recorded. &#x60;insufficient_credits&#x60; (402): your credit balance can&#39;t cover a live PDF. The record was saved and waits for credits in the &#x60;insufficient_credits&#x60; state: its ID is in &#x60;submission_id&#x60;, &#x60;submission_batch_id&#x60; or &#x60;combined_pdf_id&#x60;. &#x60;insufficient_credits_to_send&#x60; (402): your credit balance can&#39;t cover a live signature request that DocSpring would email, so nothing was saved. Add credits and send the request again. &#x60;upgrade_required&#x60; (403): your plan doesn&#39;t include this, such as more templates, another active integration (webhooks count), the embedded template editor, email actions, or live signature requests before your account&#39;s first payment. &#x60;account_suspended&#x60; (403): the account is suspended, so it can&#39;t create submissions. &#x60;polling_timeout&#x60;: on a sync.api host, the files weren&#39;t ready in time. The record was created and is still being processed: its ID is in &#x60;submission_id&#x60;, &#x60;submission_batch_id&#x60;, &#x60;combined_pdf_id&#x60; or &#x60;template_id&#x60;. Without one of these IDs, the request itself got no answer in time, and the record may or may not have been created. &#x60;idempotency_key_in_use&#x60; (409): the first request with the same Idempotency-Key is still being processed, and the response has a &#x60;Retry-After&#x60; header: send the request again then. Without the header, the first request was processed but its response is no longer kept. When the first request created a record, its ID is in &#x60;submission_id&#x60;, &#x60;submission_batch_id&#x60;, &#x60;combined_pdf_id&#x60;, &#x60;template_id&#x60;, &#x60;folder_id&#x60;, &#x60;custom_file_id&#x60; or &#x60;webhook_id&#x60;. &#x60;idempotency_key_reused&#x60; (422): the Idempotency-Key was already used for a different request. &#x60;rate_limited&#x60; (429): too many API requests. Wait for the &#x60;Retry-After&#x60; header&#39;s seconds. &#x60;daily_email_limit_reached&#x60; (429): a submission that DocSpring would email would take your account over its daily email limit, so nothing was saved. Send it again after the &#x60;Retry-After&#x60; header&#39;s seconds (midnight UTC), or send the signing links yourself (&#x60;send_email: false&#x60;).
         /// </summary>
-        /// <value>A machine-readable error code. Clients should handle codes they don&#39;t know: new codes can be added. &#x60;invalid_data&#x60;: a submission&#39;s data doesn&#39;t match its template&#39;s fields. The submission is still recorded. &#x60;insufficient_credits&#x60; (402): your credit balance can&#39;t cover a live PDF. The record was saved and waits for credits in the &#x60;insufficient_credits&#x60; state: its ID is in &#x60;submission_id&#x60;, &#x60;submission_batch_id&#x60; or &#x60;combined_pdf_id&#x60;. &#x60;upgrade_required&#x60; (403): your plan doesn&#39;t include this, such as more templates, another active integration (webhooks count) or the embedded template editor. &#x60;account_suspended&#x60; (403): the account is suspended, so it can&#39;t create submissions. &#x60;polling_timeout&#x60;: on a sync.api host, the files weren&#39;t ready in time. The record was created and is still being processed: its ID is in &#x60;submission_id&#x60;, &#x60;submission_batch_id&#x60;, &#x60;combined_pdf_id&#x60; or &#x60;template_id&#x60;. Without one of these IDs, the request itself got no answer in time, and the record may or may not have been created. &#x60;idempotency_key_in_use&#x60; (409): a request with the same Idempotency-Key is still being processed. Send the request again in a few seconds; when the first request has already created its record, its ID is in &#x60;submission_id&#x60;, &#x60;submission_batch_id&#x60; or &#x60;combined_pdf_id&#x60;. &#x60;idempotency_key_reused&#x60; (422): the Idempotency-Key was already used for a different request.</value>
+        /// <value>A machine-readable error code. Clients should handle codes they don&#39;t know: new codes can be added. &#x60;invalid_data&#x60;: a submission&#39;s data doesn&#39;t match its template&#39;s fields. The submission is still recorded. &#x60;insufficient_credits&#x60; (402): your credit balance can&#39;t cover a live PDF. The record was saved and waits for credits in the &#x60;insufficient_credits&#x60; state: its ID is in &#x60;submission_id&#x60;, &#x60;submission_batch_id&#x60; or &#x60;combined_pdf_id&#x60;. &#x60;insufficient_credits_to_send&#x60; (402): your credit balance can&#39;t cover a live signature request that DocSpring would email, so nothing was saved. Add credits and send the request again. &#x60;upgrade_required&#x60; (403): your plan doesn&#39;t include this, such as more templates, another active integration (webhooks count), the embedded template editor, email actions, or live signature requests before your account&#39;s first payment. &#x60;account_suspended&#x60; (403): the account is suspended, so it can&#39;t create submissions. &#x60;polling_timeout&#x60;: on a sync.api host, the files weren&#39;t ready in time. The record was created and is still being processed: its ID is in &#x60;submission_id&#x60;, &#x60;submission_batch_id&#x60;, &#x60;combined_pdf_id&#x60; or &#x60;template_id&#x60;. Without one of these IDs, the request itself got no answer in time, and the record may or may not have been created. &#x60;idempotency_key_in_use&#x60; (409): the first request with the same Idempotency-Key is still being processed, and the response has a &#x60;Retry-After&#x60; header: send the request again then. Without the header, the first request was processed but its response is no longer kept. When the first request created a record, its ID is in &#x60;submission_id&#x60;, &#x60;submission_batch_id&#x60;, &#x60;combined_pdf_id&#x60;, &#x60;template_id&#x60;, &#x60;folder_id&#x60;, &#x60;custom_file_id&#x60; or &#x60;webhook_id&#x60;. &#x60;idempotency_key_reused&#x60; (422): the Idempotency-Key was already used for a different request. &#x60;rate_limited&#x60; (429): too many API requests. Wait for the &#x60;Retry-After&#x60; header&#39;s seconds. &#x60;daily_email_limit_reached&#x60; (429): a submission that DocSpring would email would take your account over its daily email limit, so nothing was saved. Send it again after the &#x60;Retry-After&#x60; header&#39;s seconds (midnight UTC), or send the signing links yourself (&#x60;send_email: false&#x60;).</value>
         [JsonPropertyName("code")]
         public ErrorCode Code { get; set; }
 
@@ -91,9 +97,9 @@ namespace DocSpring.Client.Model
         public Option<string> SubmissionIdOption { get; private set; }
 
         /// <summary>
-        /// When a submission&#39;s data fails validation, the submission is still recorded (state &#x60;invalid_data&#x60;) so you can see it in the dashboard. This is its ID. With &#x60;insufficient_credits&#x60;, the submission that waits for credits. With &#x60;polling_timeout&#x60; or &#x60;idempotency_key_in_use&#x60;, the submission that&#39;s still being processed.
+        /// When a submission&#39;s data fails validation, the submission is still recorded (state &#x60;invalid_data&#x60;) so you can see it in the dashboard. This is its ID. With &#x60;insufficient_credits&#x60;, the submission that waits for credits. With &#x60;polling_timeout&#x60;, the submission that&#39;s still being processed. With &#x60;idempotency_key_in_use&#x60;, the submission the first request with the key created.
         /// </summary>
-        /// <value>When a submission&#39;s data fails validation, the submission is still recorded (state &#x60;invalid_data&#x60;) so you can see it in the dashboard. This is its ID. With &#x60;insufficient_credits&#x60;, the submission that waits for credits. With &#x60;polling_timeout&#x60; or &#x60;idempotency_key_in_use&#x60;, the submission that&#39;s still being processed.</value>
+        /// <value>When a submission&#39;s data fails validation, the submission is still recorded (state &#x60;invalid_data&#x60;) so you can see it in the dashboard. This is its ID. With &#x60;insufficient_credits&#x60;, the submission that waits for credits. With &#x60;polling_timeout&#x60;, the submission that&#39;s still being processed. With &#x60;idempotency_key_in_use&#x60;, the submission the first request with the key created.</value>
         [JsonPropertyName("submission_id")]
         public string SubmissionId { get { return this.SubmissionIdOption.Value; } set { this.SubmissionIdOption = new Option<string>(value); } }
 
@@ -105,9 +111,9 @@ namespace DocSpring.Client.Model
         public Option<string> SubmissionBatchIdOption { get; private set; }
 
         /// <summary>
-        /// The ID of the recorded batch, when items in a batch fail validation. With &#x60;insufficient_credits&#x60;, the batch whose submissions wait for credits. With &#x60;polling_timeout&#x60; or &#x60;idempotency_key_in_use&#x60;, the batch that&#39;s still being processed.
+        /// The ID of the recorded batch, when items in a batch fail validation. With &#x60;insufficient_credits&#x60;, the batch whose submissions wait for credits. With &#x60;polling_timeout&#x60;, the batch that&#39;s still being processed. With &#x60;idempotency_key_in_use&#x60;, the batch the first request with the key created.
         /// </summary>
-        /// <value>The ID of the recorded batch, when items in a batch fail validation. With &#x60;insufficient_credits&#x60;, the batch whose submissions wait for credits. With &#x60;polling_timeout&#x60; or &#x60;idempotency_key_in_use&#x60;, the batch that&#39;s still being processed.</value>
+        /// <value>The ID of the recorded batch, when items in a batch fail validation. With &#x60;insufficient_credits&#x60;, the batch whose submissions wait for credits. With &#x60;polling_timeout&#x60;, the batch that&#39;s still being processed. With &#x60;idempotency_key_in_use&#x60;, the batch the first request with the key created.</value>
         [JsonPropertyName("submission_batch_id")]
         public string SubmissionBatchId { get { return this.SubmissionBatchIdOption.Value; } set { this.SubmissionBatchIdOption = new Option<string>(value); } }
 
@@ -119,9 +125,9 @@ namespace DocSpring.Client.Model
         public Option<string> CombinedPdfIdOption { get; private set; }
 
         /// <summary>
-        /// With &#x60;insufficient_credits&#x60;, the combined PDF that waits for credits. With &#x60;polling_timeout&#x60; or &#x60;idempotency_key_in_use&#x60;, the combined PDF that&#39;s still being processed.
+        /// With &#x60;insufficient_credits&#x60;, the combined PDF that waits for credits. With &#x60;polling_timeout&#x60;, the combined PDF that&#39;s still being processed. With &#x60;idempotency_key_in_use&#x60;, the combined PDF the first request with the key created.
         /// </summary>
-        /// <value>With &#x60;insufficient_credits&#x60;, the combined PDF that waits for credits. With &#x60;polling_timeout&#x60; or &#x60;idempotency_key_in_use&#x60;, the combined PDF that&#39;s still being processed.</value>
+        /// <value>With &#x60;insufficient_credits&#x60;, the combined PDF that waits for credits. With &#x60;polling_timeout&#x60;, the combined PDF that&#39;s still being processed. With &#x60;idempotency_key_in_use&#x60;, the combined PDF the first request with the key created.</value>
         [JsonPropertyName("combined_pdf_id")]
         public string CombinedPdfId { get { return this.CombinedPdfIdOption.Value; } set { this.CombinedPdfIdOption = new Option<string>(value); } }
 
@@ -133,11 +139,53 @@ namespace DocSpring.Client.Model
         public Option<string> TemplateIdOption { get; private set; }
 
         /// <summary>
-        /// With &#x60;polling_timeout&#x60;, the template whose PDF is still being processed.
+        /// With &#x60;polling_timeout&#x60;, the template whose PDF is still being processed. With &#x60;idempotency_key_in_use&#x60;, the template the first request with the key created.
         /// </summary>
-        /// <value>With &#x60;polling_timeout&#x60;, the template whose PDF is still being processed.</value>
+        /// <value>With &#x60;polling_timeout&#x60;, the template whose PDF is still being processed. With &#x60;idempotency_key_in_use&#x60;, the template the first request with the key created.</value>
         [JsonPropertyName("template_id")]
         public string TemplateId { get { return this.TemplateIdOption.Value; } set { this.TemplateIdOption = new Option<string>(value); } }
+
+        /// <summary>
+        /// Used to track the state of FolderId
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string> FolderIdOption { get; private set; }
+
+        /// <summary>
+        /// With &#x60;idempotency_key_in_use&#x60;, the folder the first request with the key created.
+        /// </summary>
+        /// <value>With &#x60;idempotency_key_in_use&#x60;, the folder the first request with the key created.</value>
+        [JsonPropertyName("folder_id")]
+        public string FolderId { get { return this.FolderIdOption.Value; } set { this.FolderIdOption = new Option<string>(value); } }
+
+        /// <summary>
+        /// Used to track the state of CustomFileId
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string> CustomFileIdOption { get; private set; }
+
+        /// <summary>
+        /// With &#x60;idempotency_key_in_use&#x60;, the custom file the first request with the key created.
+        /// </summary>
+        /// <value>With &#x60;idempotency_key_in_use&#x60;, the custom file the first request with the key created.</value>
+        [JsonPropertyName("custom_file_id")]
+        public string CustomFileId { get { return this.CustomFileIdOption.Value; } set { this.CustomFileIdOption = new Option<string>(value); } }
+
+        /// <summary>
+        /// Used to track the state of WebhookId
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<string> WebhookIdOption { get; private set; }
+
+        /// <summary>
+        /// With &#x60;idempotency_key_in_use&#x60;, the webhook the first request with the key created.
+        /// </summary>
+        /// <value>With &#x60;idempotency_key_in_use&#x60;, the webhook the first request with the key created.</value>
+        [JsonPropertyName("webhook_id")]
+        public string WebhookId { get { return this.WebhookIdOption.Value; } set { this.WebhookIdOption = new Option<string>(value); } }
 
         /// <summary>
         /// Gets or Sets additional properties
@@ -161,6 +209,9 @@ namespace DocSpring.Client.Model
             sb.Append("  SubmissionBatchId: ").Append(SubmissionBatchId).Append("\n");
             sb.Append("  CombinedPdfId: ").Append(CombinedPdfId).Append("\n");
             sb.Append("  TemplateId: ").Append(TemplateId).Append("\n");
+            sb.Append("  FolderId: ").Append(FolderId).Append("\n");
+            sb.Append("  CustomFileId: ").Append(CustomFileId).Append("\n");
+            sb.Append("  WebhookId: ").Append(WebhookId).Append("\n");
             sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -217,6 +268,9 @@ namespace DocSpring.Client.Model
             Option<string> submissionBatchId = default;
             Option<string> combinedPdfId = default;
             Option<string> templateId = default;
+            Option<string> folderId = default;
+            Option<string> customFileId = default;
+            Option<string> webhookId = default;
 
             while (utf8JsonReader.Read())
             {
@@ -257,6 +311,15 @@ namespace DocSpring.Client.Model
                         case "template_id":
                             templateId = new Option<string>(utf8JsonReader.GetString());
                             break;
+                        case "folder_id":
+                            folderId = new Option<string>(utf8JsonReader.GetString());
+                            break;
+                        case "custom_file_id":
+                            customFileId = new Option<string>(utf8JsonReader.GetString());
+                            break;
+                        case "webhook_id":
+                            webhookId = new Option<string>(utf8JsonReader.GetString());
+                            break;
                         default:
                             break;
                     }
@@ -296,7 +359,16 @@ namespace DocSpring.Client.Model
             if (templateId.IsSet && templateId.Value == null)
                 throw new JsonException("Property is not nullable for class ErrorInfo: template_id.");
 
-            return new ErrorInfo(code.Value.Value, message.Value, details.Value, requestId.Value, submissionId, submissionBatchId, combinedPdfId, templateId);
+            if (folderId.IsSet && folderId.Value == null)
+                throw new JsonException("Property is not nullable for class ErrorInfo: folder_id.");
+
+            if (customFileId.IsSet && customFileId.Value == null)
+                throw new JsonException("Property is not nullable for class ErrorInfo: custom_file_id.");
+
+            if (webhookId.IsSet && webhookId.Value == null)
+                throw new JsonException("Property is not nullable for class ErrorInfo: webhook_id.");
+
+            return new ErrorInfo(code.Value.Value, message.Value, details.Value, requestId.Value, submissionId, submissionBatchId, combinedPdfId, templateId, folderId, customFileId, webhookId);
         }
 
         /// <summary>
@@ -333,6 +405,15 @@ namespace DocSpring.Client.Model
             if (errorInfo.TemplateIdOption.IsSet && errorInfo.TemplateId == null)
                 throw new JsonException("Cannot write null property ErrorInfo.TemplateId to non-nullable JSON property 'template_id'.");
 
+            if (errorInfo.FolderIdOption.IsSet && errorInfo.FolderId == null)
+                throw new JsonException("Cannot write null property ErrorInfo.FolderId to non-nullable JSON property 'folder_id'.");
+
+            if (errorInfo.CustomFileIdOption.IsSet && errorInfo.CustomFileId == null)
+                throw new JsonException("Cannot write null property ErrorInfo.CustomFileId to non-nullable JSON property 'custom_file_id'.");
+
+            if (errorInfo.WebhookIdOption.IsSet && errorInfo.WebhookId == null)
+                throw new JsonException("Cannot write null property ErrorInfo.WebhookId to non-nullable JSON property 'webhook_id'.");
+
             var codeRawValue = ErrorCodeValueConverter.ToJsonValue(errorInfo.Code);
             writer.WriteString("code", codeRawValue);
 
@@ -356,6 +437,15 @@ namespace DocSpring.Client.Model
 
             if (errorInfo.TemplateIdOption.IsSet)
                 writer.WriteString("template_id", errorInfo.TemplateId);
+
+            if (errorInfo.FolderIdOption.IsSet)
+                writer.WriteString("folder_id", errorInfo.FolderId);
+
+            if (errorInfo.CustomFileIdOption.IsSet)
+                writer.WriteString("custom_file_id", errorInfo.CustomFileId);
+
+            if (errorInfo.WebhookIdOption.IsSet)
+                writer.WriteString("webhook_id", errorInfo.WebhookId);
         }
     }
 }

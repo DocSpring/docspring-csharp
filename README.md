@@ -10,7 +10,7 @@ e-signatures.
 The code in this repository is generated from DocSpring's OpenAPI spec ([About this SDK](#about-this-sdk)). Issues and
 pull requests are welcome.
 
-Version 4.3.0. Requires .NET Standard 2.0 (.NET 6 or later, or .NET Framework 4.6.2 or later).
+Version 4.4.0. Requires .NET Standard 2.0 (.NET 6 or later, or .NET Framework 4.6.2 or later).
 
 ## Install and configure
 
@@ -98,8 +98,11 @@ C# code for every method.
 | ------ | ----------- |
 | [`AddTemplateFields`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#addtemplatefields) | Add fields to a template |
 | [`CopyTemplate`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#copytemplate) | Copy a template |
+| [`CreateAccountEmailAction`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#createaccountemailaction) | Create an account email action |
 | [`CreateCombinedPdf`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#createcombinedpdf) | Combine PDFs |
 | [`CreateCustomFileFromUpload`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#createcustomfilefromupload) | Create a custom file from an upload |
+| [`CreateEmailAction`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#createemailaction) | Create an email action |
+| [`CreateEmailDomain`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#createemaildomain) | Add an email domain |
 | [`CreateFolder`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#createfolder) | Create a folder |
 | [`CreateSignatureRequestEvent`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#createsignaturerequestevent) | Record a signature request event |
 | [`CreateSignatureRequestToken`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#createsignaturerequesttoken) | Create a signature request token |
@@ -108,7 +111,11 @@ C# code for every method.
 | [`CreateTemplate`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#createtemplate) | Create a template |
 | [`CreateTemplatePreview`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#createtemplatepreview) | Preview a template with data |
 | [`CreateWebhook`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#createwebhook) | Create a webhook |
+| [`DeleteAccountEmailAction`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#deleteaccountemailaction) | Delete an account email action |
 | [`DeleteCustomFile`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#deletecustomfile) | Delete a custom file |
+| [`DeleteEmailAction`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#deleteemailaction) | Delete an email action |
+| [`DeleteEmailActionCustomization`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#deleteemailactioncustomization) | Reset an account email action's customization |
+| [`DeleteEmailDomain`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#deleteemaildomain) | Remove an email domain |
 | [`DeleteFolder`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#deletefolder) | Delete a folder |
 | [`DeleteTemplate`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#deletetemplate) | Delete a template |
 | [`DeleteWebhook`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#deletewebhook) | Delete a webhook |
@@ -116,8 +123,11 @@ C# code for every method.
 | [`ExpireSubmission`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#expiresubmission) | Expire a submission |
 | [`GenerateSubmissionFiles`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#generatesubmissionfiles) | Generate more files |
 | [`GenerateSubmissionPreview`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#generatesubmissionpreview) | Generate a preview PDF |
+| [`GetAccountEmailAction`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#getaccountemailaction) | Get an account email action |
 | [`GetCombinedPdf`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#getcombinedpdf) | Get a combined PDF |
 | [`GetCustomFile`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#getcustomfile) | Get a custom file |
+| [`GetEmailAction`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#getemailaction) | Get an email action |
+| [`GetEmailDomain`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#getemaildomain) | Get an email domain |
 | [`GetFolder`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#getfolder) | Get a folder |
 | [`GetPresignUrl`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#getpresignurl) | Get a presigned URL to upload a file |
 | [`GetSignatureRequest`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#getsignaturerequest) | Get a signature request |
@@ -130,8 +140,11 @@ C# code for every method.
 | [`GetTemplatePreview`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#gettemplatepreview) | Get a template preview |
 | [`GetTemplateSchema`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#gettemplateschema) | Get the JSON Schema of a template's submission data |
 | [`GetWebhook`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#getwebhook) | Get a webhook |
+| [`ListAccountEmailActions`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#listaccountemailactions) | List account email actions |
 | [`ListCombinedPdfs`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#listcombinedpdfs) | List combined PDFs |
 | [`ListCustomFiles`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#listcustomfiles) | List custom files |
+| [`ListEmailActions`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#listemailactions) | List email actions |
+| [`ListEmailDomains`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#listemaildomains) | List email domains |
 | [`ListFolders`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#listfolders) | List folders |
 | [`ListSubmissions`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#listsubmissions) | List submissions |
 | [`ListTemplateFields`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#listtemplatefields) | List a template's fields |
@@ -145,7 +158,12 @@ C# code for every method.
 | [`RenameFolder`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#renamefolder) | Rename a folder |
 | [`ReorderTemplateFields`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#reordertemplatefields) | Reorder a template's fields |
 | [`RestoreTemplateVersion`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#restoretemplateversion) | Restore a template version |
+| [`SendAccountEmailActionTestEmail`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#sendaccountemailactiontestemail) | Send a test email for an account email action |
+| [`SendEmailActionTestEmail`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#sendemailactiontestemail) | Send a test email |
 | [`TestAuthentication`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#testauthentication) | Test authentication |
+| [`UpdateAccountEmailAction`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#updateaccountemailaction) | Update an account email action |
+| [`UpdateEmailAction`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#updateemailaction) | Update an email action |
+| [`UpdateEmailActionCustomization`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#updateemailactioncustomization) | Customize an account email action for a template |
 | [`UpdateSignatureRequest`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#updatesignaturerequest) | Update a signature request |
 | [`UpdateTemplate`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#updatetemplate) | Update a template |
 | [`UpdateTemplateDocument`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#updatetemplatedocument) | Replace a template's document |
@@ -154,6 +172,7 @@ C# code for every method.
 | [`UploadTemplate`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#uploadtemplate) | Create a template from an uploaded PDF or Word document |
 | [`UploadTemplateDocument`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#uploadtemplatedocument) | Replace a template's document with an uploaded file |
 | [`ValidateSubmission`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#validatesubmission) | Check a submission without creating it |
+| [`VerifyEmailDomain`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#verifyemaildomain) | Verify an email domain |
 
 ## Errors
 

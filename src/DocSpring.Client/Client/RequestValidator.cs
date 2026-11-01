@@ -387,6 +387,11 @@ namespace DocSpring.Client.Client
                     if (!data.TryGetProperty(name, out _)) details.Add(Detail(location, pointer + "/" + Escape(name), "required", "is required"));
                 }
             }
+            // Only an update's body has minProperties, and it's always 1 (api_clients/scripts/extract_request_schemas)
+            if (schema.TryGetProperty("minProperties", out var minProperties) && data.EnumerateObject().Count() < minProperties.GetDouble())
+            {
+                details.Add(Detail(location, pointer, "minProperties", "must have at least one property to change"));
+            }
 
             schema.TryGetProperty("properties", out var properties);
             schema.TryGetProperty("additionalProperties", out var additional);

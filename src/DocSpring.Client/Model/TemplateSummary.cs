@@ -32,16 +32,16 @@ namespace DocSpring.Client.Model
         /// Initializes a new instance of the <see cref="TemplateSummary" /> class.
         /// </summary>
         /// <param name="id">The template&#39;s ID.</param>
-        /// <param name="templateType">&#x60;pdf&#x60;: fields placed on an uploaded PDF. &#x60;html&#x60;: a PDF rendered from HTML and SCSS. &#x60;docx&#x60;: a Word document with tags where the data goes, which makes Word documents or PDFs. It can&#39;t be changed after the template is created.</param>
-        /// <param name="outputFormat">What each submission makes unless its request sets &#x60;output_formats&#x60;: &#x60;docx&#x60; (a Word document), &#x60;odt&#x60; (an OpenDocument file, converted from the Word document) or &#x60;pdf&#x60;. A Word template&#39;s is chosen when it&#39;s created; PDF and HTML templates always make PDFs. A Word template that encrypts its PDFs makes PDFs, because Word documents and OpenDocument files can&#39;t be password-protected.</param>
-        /// <param name="ready">Whether the template can make documents. HTML templates are always ready. A PDF template is ready once DocSpring has stored its PDF, made an image of each page and finished looking for fields on each page, which can be after &#x60;document.state&#x60; becomes &#x60;processed&#x60;. A PDF template with no PDF (&#x60;document&#x60; is null) isn&#39;t ready. A Word template is ready once it has a Word document (a &#x60;document_url&#x60;&#39;s has been downloaded).</param>
+        /// <param name="templateType">&#x60;pdf&#x60;: fields placed on an uploaded PDF. &#x60;html&#x60;: a PDF rendered from HTML and SCSS. &#x60;docx&#x60;: a Word document with tags where the data goes, which makes Word documents or PDFs. &#x60;page_designer&#x60;: a page design, a PDF laid out in the Page Designer from its &#x60;layout&#x60;. It can&#39;t be changed after the template is created.</param>
+        /// <param name="outputFormat">What each submission makes unless its request sets &#x60;output_formats&#x60;: &#x60;docx&#x60; (a Word document), &#x60;odt&#x60; (an OpenDocument file, converted from the Word document) or &#x60;pdf&#x60;. A Word template&#39;s is chosen when it&#39;s created; other templates always make PDFs. A Word template that encrypts its PDFs makes PDFs, because Word documents and OpenDocument files can&#39;t be password-protected.</param>
+        /// <param name="ready">Whether the template can make documents. HTML templates and page designs are always ready. A PDF template is ready once DocSpring has stored its PDF, made an image of each page and finished looking for fields on each page, which can be after &#x60;document.state&#x60; becomes &#x60;processed&#x60;. A PDF template with no PDF (&#x60;document&#x60; is null) isn&#39;t ready. A Word template is ready once it has a Word document (a &#x60;document_url&#x60;&#39;s has been downloaded).</param>
         /// <param name="path">The path of the folder the template is in, such as &#x60;/Contracts&#x60;. &#x60;/&#x60; for a template at the root.</param>
         /// <param name="locked">A locked template can&#39;t be changed or deleted until it&#39;s unlocked (&#x60;locked&#x60; can always be changed).</param>
         /// <param name="createdAt">When the template was created.</param>
         /// <param name="updatedAt">When the template was last updated.</param>
         /// <param name="name">The template&#39;s name.</param>
         /// <param name="description">Shown under the template&#39;s name at the top of its hosted forms, and used as their meta description. Not shown on embedded forms or signature requests.</param>
-        /// <param name="document">The PDF of a PDF template, or the Word document of a Word template: its file name, page count and processing state. Null for HTML templates, and for a PDF template that has no PDF yet. A template created from a &#x60;document_url&#x60;, or a Word template created from an OpenDocument file (.odt), has one, with no file, while it&#39;s downloaded or converted.</param>
+        /// <param name="document">The PDF of a PDF template, or the Word document of a Word template: its file name, page count and processing state. Null for HTML templates and page designs, and for a PDF template that has no PDF yet. A template created from a &#x60;document_url&#x60;, or a Word template created from an OpenDocument file (.odt), has one, with no file, while it&#39;s downloaded or converted.</param>
         /// <param name="parentFolderId">The ID of the folder the template is in. Null for a template at the root. Setting it moves the template and all of its published versions.</param>
         /// <param name="latestVersion">The template&#39;s latest published version. Null if no version has been published.</param>
         /// <param name="versionPublishedAt">When this version was published. Null for the draft.</param>
@@ -70,16 +70,16 @@ namespace DocSpring.Client.Model
         partial void OnCreated();
 
         /// <summary>
-        /// &#x60;pdf&#x60;: fields placed on an uploaded PDF. &#x60;html&#x60;: a PDF rendered from HTML and SCSS. &#x60;docx&#x60;: a Word document with tags where the data goes, which makes Word documents or PDFs. It can&#39;t be changed after the template is created.
+        /// &#x60;pdf&#x60;: fields placed on an uploaded PDF. &#x60;html&#x60;: a PDF rendered from HTML and SCSS. &#x60;docx&#x60;: a Word document with tags where the data goes, which makes Word documents or PDFs. &#x60;page_designer&#x60;: a page design, a PDF laid out in the Page Designer from its &#x60;layout&#x60;. It can&#39;t be changed after the template is created.
         /// </summary>
-        /// <value>&#x60;pdf&#x60;: fields placed on an uploaded PDF. &#x60;html&#x60;: a PDF rendered from HTML and SCSS. &#x60;docx&#x60;: a Word document with tags where the data goes, which makes Word documents or PDFs. It can&#39;t be changed after the template is created.</value>
+        /// <value>&#x60;pdf&#x60;: fields placed on an uploaded PDF. &#x60;html&#x60;: a PDF rendered from HTML and SCSS. &#x60;docx&#x60;: a Word document with tags where the data goes, which makes Word documents or PDFs. &#x60;page_designer&#x60;: a page design, a PDF laid out in the Page Designer from its &#x60;layout&#x60;. It can&#39;t be changed after the template is created.</value>
         [JsonPropertyName("template_type")]
         public TemplateType TemplateType { get; set; }
 
         /// <summary>
-        /// What each submission makes unless its request sets &#x60;output_formats&#x60;: &#x60;docx&#x60; (a Word document), &#x60;odt&#x60; (an OpenDocument file, converted from the Word document) or &#x60;pdf&#x60;. A Word template&#39;s is chosen when it&#39;s created; PDF and HTML templates always make PDFs. A Word template that encrypts its PDFs makes PDFs, because Word documents and OpenDocument files can&#39;t be password-protected.
+        /// What each submission makes unless its request sets &#x60;output_formats&#x60;: &#x60;docx&#x60; (a Word document), &#x60;odt&#x60; (an OpenDocument file, converted from the Word document) or &#x60;pdf&#x60;. A Word template&#39;s is chosen when it&#39;s created; other templates always make PDFs. A Word template that encrypts its PDFs makes PDFs, because Word documents and OpenDocument files can&#39;t be password-protected.
         /// </summary>
-        /// <value>What each submission makes unless its request sets &#x60;output_formats&#x60;: &#x60;docx&#x60; (a Word document), &#x60;odt&#x60; (an OpenDocument file, converted from the Word document) or &#x60;pdf&#x60;. A Word template&#39;s is chosen when it&#39;s created; PDF and HTML templates always make PDFs. A Word template that encrypts its PDFs makes PDFs, because Word documents and OpenDocument files can&#39;t be password-protected.</value>
+        /// <value>What each submission makes unless its request sets &#x60;output_formats&#x60;: &#x60;docx&#x60; (a Word document), &#x60;odt&#x60; (an OpenDocument file, converted from the Word document) or &#x60;pdf&#x60;. A Word template&#39;s is chosen when it&#39;s created; other templates always make PDFs. A Word template that encrypts its PDFs makes PDFs, because Word documents and OpenDocument files can&#39;t be password-protected.</value>
         [JsonPropertyName("output_format")]
         public OutputFormat OutputFormat { get; set; }
 
@@ -91,9 +91,9 @@ namespace DocSpring.Client.Model
         public string Id { get; set; }
 
         /// <summary>
-        /// Whether the template can make documents. HTML templates are always ready. A PDF template is ready once DocSpring has stored its PDF, made an image of each page and finished looking for fields on each page, which can be after &#x60;document.state&#x60; becomes &#x60;processed&#x60;. A PDF template with no PDF (&#x60;document&#x60; is null) isn&#39;t ready. A Word template is ready once it has a Word document (a &#x60;document_url&#x60;&#39;s has been downloaded).
+        /// Whether the template can make documents. HTML templates and page designs are always ready. A PDF template is ready once DocSpring has stored its PDF, made an image of each page and finished looking for fields on each page, which can be after &#x60;document.state&#x60; becomes &#x60;processed&#x60;. A PDF template with no PDF (&#x60;document&#x60; is null) isn&#39;t ready. A Word template is ready once it has a Word document (a &#x60;document_url&#x60;&#39;s has been downloaded).
         /// </summary>
-        /// <value>Whether the template can make documents. HTML templates are always ready. A PDF template is ready once DocSpring has stored its PDF, made an image of each page and finished looking for fields on each page, which can be after &#x60;document.state&#x60; becomes &#x60;processed&#x60;. A PDF template with no PDF (&#x60;document&#x60; is null) isn&#39;t ready. A Word template is ready once it has a Word document (a &#x60;document_url&#x60;&#39;s has been downloaded).</value>
+        /// <value>Whether the template can make documents. HTML templates and page designs are always ready. A PDF template is ready once DocSpring has stored its PDF, made an image of each page and finished looking for fields on each page, which can be after &#x60;document.state&#x60; becomes &#x60;processed&#x60;. A PDF template with no PDF (&#x60;document&#x60; is null) isn&#39;t ready. A Word template is ready once it has a Word document (a &#x60;document_url&#x60;&#39;s has been downloaded).</value>
         [JsonPropertyName("ready")]
         public bool Ready { get; set; }
 
@@ -140,9 +140,9 @@ namespace DocSpring.Client.Model
         public string Description { get; set; }
 
         /// <summary>
-        /// The PDF of a PDF template, or the Word document of a Word template: its file name, page count and processing state. Null for HTML templates, and for a PDF template that has no PDF yet. A template created from a &#x60;document_url&#x60;, or a Word template created from an OpenDocument file (.odt), has one, with no file, while it&#39;s downloaded or converted.
+        /// The PDF of a PDF template, or the Word document of a Word template: its file name, page count and processing state. Null for HTML templates and page designs, and for a PDF template that has no PDF yet. A template created from a &#x60;document_url&#x60;, or a Word template created from an OpenDocument file (.odt), has one, with no file, while it&#39;s downloaded or converted.
         /// </summary>
-        /// <value>The PDF of a PDF template, or the Word document of a Word template: its file name, page count and processing state. Null for HTML templates, and for a PDF template that has no PDF yet. A template created from a &#x60;document_url&#x60;, or a Word template created from an OpenDocument file (.odt), has one, with no file, while it&#39;s downloaded or converted.</value>
+        /// <value>The PDF of a PDF template, or the Word document of a Word template: its file name, page count and processing state. Null for HTML templates and page designs, and for a PDF template that has no PDF yet. A template created from a &#x60;document_url&#x60;, or a Word template created from an OpenDocument file (.odt), has one, with no file, while it&#39;s downloaded or converted.</value>
         [JsonPropertyName("document")]
         public TemplateDocumentSummary Document { get; set; }
 

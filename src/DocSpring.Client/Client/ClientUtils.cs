@@ -120,6 +120,22 @@ namespace DocSpring.Client.Client
                 return CombinedPdfSourceTypeValueConverter.ToJsonValue(combinedPdfSourceType);
             if (obj is CombinedPdfState combinedPdfState)
                 return CombinedPdfStateValueConverter.ToJsonValue(combinedPdfState);
+            if (obj is DnsRecordType dnsRecordType)
+                return DnsRecordTypeValueConverter.ToJsonValue(dnsRecordType);
+            if (obj is EmailActionDelivery emailActionDelivery)
+                return EmailActionDeliveryValueConverter.ToJsonValue(emailActionDelivery);
+            if (obj is EmailActionFileFormats emailActionFileFormats)
+                return EmailActionFileFormatsValueConverter.ToJsonValue(emailActionFileFormats);
+            if (obj is EmailActionSetting emailActionSetting)
+                return EmailActionSettingValueConverter.ToJsonValue(emailActionSetting);
+            if (obj is EmailActionSubmissionType emailActionSubmissionType)
+                return EmailActionSubmissionTypeValueConverter.ToJsonValue(emailActionSubmissionType);
+            if (obj is EmailDomainDnsRecordPurpose emailDomainDnsRecordPurpose)
+                return EmailDomainDnsRecordPurposeValueConverter.ToJsonValue(emailDomainDnsRecordPurpose);
+            if (obj is EmailDomainRecordState emailDomainRecordState)
+                return EmailDomainRecordStateValueConverter.ToJsonValue(emailDomainRecordState);
+            if (obj is EmailDomainState emailDomainState)
+                return EmailDomainStateValueConverter.ToJsonValue(emailDomainState);
             if (obj is ErrorCode errorCode)
                 return ErrorCodeValueConverter.ToJsonValue(errorCode);
             if (obj is ExpirationInterval expirationInterval)
@@ -166,6 +182,10 @@ namespace DocSpring.Client.Client
                 return SignatureRequestAuthSecondFactorTypeValueConverter.ToJsonValue(signatureRequestAuthSecondFactorType);
             if (obj is SignatureRequestAuthType signatureRequestAuthType)
                 return SignatureRequestAuthTypeValueConverter.ToJsonValue(signatureRequestAuthType);
+            if (obj is SignatureRequestEmailAttachments signatureRequestEmailAttachments)
+                return SignatureRequestEmailAttachmentsValueConverter.ToJsonValue(signatureRequestEmailAttachments);
+            if (obj is SignatureRequestEmailStatus signatureRequestEmailStatus)
+                return SignatureRequestEmailStatusValueConverter.ToJsonValue(signatureRequestEmailStatus);
             if (obj is SignatureRequestEventType signatureRequestEventType)
                 return SignatureRequestEventTypeValueConverter.ToJsonValue(signatureRequestEventType);
             if (obj is SignatureRequestMessageType signatureRequestMessageType)
@@ -174,6 +194,8 @@ namespace DocSpring.Client.Client
                 return SignatureRequestStateValueConverter.ToJsonValue(signatureRequestState);
             if (obj is SignatureRequestTokenType signatureRequestTokenType)
                 return SignatureRequestTokenTypeValueConverter.ToJsonValue(signatureRequestTokenType);
+            if (obj is SigningOrder signingOrder)
+                return SigningOrderValueConverter.ToJsonValue(signingOrder);
             if (obj is StringConditionType stringConditionType)
                 return StringConditionTypeValueConverter.ToJsonValue(stringConditionType);
             if (obj is SubmissionActionState submissionActionState)

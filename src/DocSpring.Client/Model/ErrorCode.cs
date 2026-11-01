@@ -64,6 +64,11 @@ namespace DocSpring.Client.Model
         public static ErrorCode InsufficientCredits { get; } = new ErrorCode("insufficient_credits");
 
         /// <summary>
+        /// insufficient_credits_to_send
+        /// </summary>
+        public static ErrorCode InsufficientCreditsToSend { get; } = new ErrorCode("insufficient_credits_to_send");
+
+        /// <summary>
         /// forbidden
         /// </summary>
         public static ErrorCode Forbidden { get; } = new ErrorCode("forbidden");
@@ -124,6 +129,11 @@ namespace DocSpring.Client.Model
         public static ErrorCode RateLimited { get; } = new ErrorCode("rate_limited");
 
         /// <summary>
+        /// daily_email_limit_reached
+        /// </summary>
+        public static ErrorCode DailyEmailLimitReached { get; } = new ErrorCode("daily_email_limit_reached");
+
+        /// <summary>
         /// internal_error
         /// </summary>
         public static ErrorCode InternalError { get; } = new ErrorCode("internal_error");
@@ -161,7 +171,7 @@ namespace DocSpring.Client.Model
         /// <summary>
         /// The values this client knows
         /// </summary>
-        public static IReadOnlyList<ErrorCode> Values { get; } = new[] { InvalidRequest, Unauthorized, PaymentRequired, InsufficientCredits, Forbidden, UpgradeRequired, AccountSuspended, NotFound, MethodNotAllowed, Conflict, Gone, RequestTooLarge, UnsupportedMediaType, ValidationFailed, InvalidData, RateLimited, InternalError, BadGateway, ServiceUnavailable, UpstreamTimeout, PollingTimeout, IdempotencyKeyInUse, IdempotencyKeyReused };
+        public static IReadOnlyList<ErrorCode> Values { get; } = new[] { InvalidRequest, Unauthorized, PaymentRequired, InsufficientCredits, InsufficientCreditsToSend, Forbidden, UpgradeRequired, AccountSuspended, NotFound, MethodNotAllowed, Conflict, Gone, RequestTooLarge, UnsupportedMediaType, ValidationFailed, InvalidData, RateLimited, DailyEmailLimitReached, InternalError, BadGateway, ServiceUnavailable, UpstreamTimeout, PollingTimeout, IdempotencyKeyInUse, IdempotencyKeyReused };
 
         /// <summary>
         /// Whether the value is one this client knows: a newer API can return values added after it was released

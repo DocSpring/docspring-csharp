@@ -32,9 +32,9 @@ namespace DocSpring.Client.Model
         /// Initializes a new instance of the <see cref="Template" /> class.
         /// </summary>
         /// <param name="id">The template&#39;s ID.</param>
-        /// <param name="templateType">&#x60;pdf&#x60;: fields placed on an uploaded PDF. &#x60;html&#x60;: a PDF rendered from HTML and SCSS. &#x60;docx&#x60;: a Word document with tags where the data goes, which makes Word documents or PDFs. It can&#39;t be changed after the template is created.</param>
-        /// <param name="outputFormat">What each submission makes unless its request sets &#x60;output_formats&#x60;: &#x60;docx&#x60; (a Word document), &#x60;odt&#x60; (an OpenDocument file, converted from the Word document) or &#x60;pdf&#x60;. A Word template&#39;s is chosen when it&#39;s created; PDF and HTML templates always make PDFs. A Word template that encrypts its PDFs makes PDFs, because Word documents and OpenDocument files can&#39;t be password-protected.</param>
-        /// <param name="ready">Whether the template can make documents. HTML templates are always ready. A PDF template is ready once DocSpring has stored its PDF, made an image of each page and finished looking for fields on each page, which can be after &#x60;document.state&#x60; becomes &#x60;processed&#x60;. A PDF template with no PDF (&#x60;document&#x60; is null) isn&#39;t ready. A Word template is ready once it has a Word document (a &#x60;document_url&#x60;&#39;s has been downloaded).</param>
+        /// <param name="templateType">&#x60;pdf&#x60;: fields placed on an uploaded PDF. &#x60;html&#x60;: a PDF rendered from HTML and SCSS. &#x60;docx&#x60;: a Word document with tags where the data goes, which makes Word documents or PDFs. &#x60;page_designer&#x60;: a page design, a PDF laid out in the Page Designer from its &#x60;layout&#x60;. It can&#39;t be changed after the template is created.</param>
+        /// <param name="outputFormat">What each submission makes unless its request sets &#x60;output_formats&#x60;: &#x60;docx&#x60; (a Word document), &#x60;odt&#x60; (an OpenDocument file, converted from the Word document) or &#x60;pdf&#x60;. A Word template&#39;s is chosen when it&#39;s created; other templates always make PDFs. A Word template that encrypts its PDFs makes PDFs, because Word documents and OpenDocument files can&#39;t be password-protected.</param>
+        /// <param name="ready">Whether the template can make documents. HTML templates and page designs are always ready. A PDF template is ready once DocSpring has stored its PDF, made an image of each page and finished looking for fields on each page, which can be after &#x60;document.state&#x60; becomes &#x60;processed&#x60;. A PDF template with no PDF (&#x60;document&#x60; is null) isn&#39;t ready. A Word template is ready once it has a Word document (a &#x60;document_url&#x60;&#39;s has been downloaded).</param>
         /// <param name="path">The path of the folder the template is in, such as &#x60;/Contracts&#x60;. &#x60;/&#x60; for a template at the root.</param>
         /// <param name="locked">A locked template can&#39;t be changed or deleted until it&#39;s unlocked (&#x60;locked&#x60; can always be changed).</param>
         /// <param name="createdAt">When the template was created.</param>
@@ -44,7 +44,7 @@ namespace DocSpring.Client.Model
         /// <param name="allowSkippingOptionalFields">Visual forms and signature request forms show the Continue button as soon as the required fields are filled in, without visiting each optional field. The &#x60;allowSkippingOptionalFields&#x60; embed option overrides it.</param>
         /// <param name="defaultFormMode">The hosted form that /templates/{template_id}/form shows when its URL has no &#x60;mode&#x60; parameter: &#x60;web&#x60; (the web form), &#x60;visual&#x60; (the visual form, where fields are filled in on the PDF) or &#x60;dual&#x60; (both, in tabs). Only PDF templates have a visual form, so other templates accept only &#x60;web&#x60;.</param>
         /// <param name="editableSubmissions">Generate PDFs whose text and check fields stay fillable (\&quot;Generate Editable PDFs\&quot;). A submission&#39;s &#x60;editable&#x60; overrides it.</param>
-        /// <param name="embedDomains">The sites that can embed the template&#39;s live signature requests and its embedded template editor: a host such as &#x60;app.example.com&#x60;, with an optional leading wildcard (&#x60;*.example.com&#x60;), port (&#x60;localhost:3000&#x60;) or scheme (&#x60;https://app.example.com&#x60;; without one, &#x60;http&#x60; and &#x60;https&#x60; both work). Browsers open a live signature request in a frame only on these sites (and DocSpring&#39;s), so with an empty list it can&#39;t be embedded anywhere; a test signature request can be embedded on any site. The embedded template editor loads only for a page on one of these sites (by its Referer or Origin header), and on any site when the list is empty. Forms embedded on a page (Visual Forms JS and the simple form) aren&#39;t restricted.</param>
+        /// <param name="embedDomains">The sites that can embed the template&#39;s live signature requests and its embedded template editor: a host such as &#x60;app.example.com&#x60;, with an optional leading wildcard (&#x60;*.example.com&#x60;), port (&#x60;localhost:3000&#x60;) or scheme (&#x60;https://app.example.com&#x60;; without one, &#x60;http&#x60; and &#x60;https&#x60; both work), without a path. Browsers open a live signature request in a frame only on these sites (and DocSpring&#39;s), so with an empty list it can&#39;t be embedded anywhere; a test signature request can be embedded on any site. The embedded template editor loads only for a page on one of these sites (by its Referer or Origin header), and on any site when the list is empty. Forms embedded on a page (Visual Forms JS and the simple form) aren&#39;t restricted.</param>
         /// <param name="embedEditAllowSettings">Allow the embedded template editor to change sensitive template settings (webhooks, redirect URL, encryption, public access, expiration and so on).</param>
         /// <param name="embedEditAllowVersioning">Allow the embedded template editor to publish, restore, compare and delete published versions.</param>
         /// <param name="embedEditAllowDocumentReplacement">Allow the embedded template editor to replace the template&#39;s PDF.</param>
@@ -57,6 +57,8 @@ namespace DocSpring.Client.Model
         /// <param name="parseDatesUsingTemplateDateFormat">Date fields also accept NN/NN/YYYY dates (with slashes, dashes or dots), read in the order of the template&#39;s default date format: month first for %m/%d/%Y, day first for %d/%m/%Y. When false, date fields only accept YYYY-MM-DD. Applies to PDF templates: an HTML or Word template&#39;s date fields only accept YYYY-MM-DD. Date fields that include a time take RFC 3339 date-times either way.</param>
         /// <param name="publicSubmissions">Allow anyone with a submission&#39;s ID to download its PDF.</param>
         /// <param name="publicWebForm">Allow anyone to fill in the template&#39;s web form.</param>
+        /// <param name="signatureRequestIncludeSigningToken">Puts a signing token in &#x60;signature_request_signing_url&#x60;, as &#x60;{{ token_id }}&#x60; and &#x60;{{ token_secret }}&#x60;, so your page can open the signing form without creating a token itself. The email then carries a credential: anyone who has it can open the form and sign. PDF templates only.</param>
+        /// <param name="signatureRequestNotificationEmails">Who DocSpring tells when a signature request&#39;s document is completed or declined, or an email bounces or can&#39;t be sent: members of your DocSpring team or addresses at your verified email domains. Empty means your account&#39;s owner. A submission&#39;s &#x60;notification_emails&#x60; replaces them. PDF templates only.</param>
         /// <param name="hasSlackWebhookUrl">Whether &#x60;slack_webhook_url&#x60; is set.</param>
         /// <param name="defaults">defaults</param>
         /// <param name="fieldDependencies">Conditional logic: each rule shows or hides its target fields, or makes them required, depending on the values of other fields.</param>
@@ -73,17 +75,23 @@ namespace DocSpring.Client.Model
         /// <param name="varVersion">The published version this is, such as &#x60;1.2.0&#x60;. Null for the draft.</param>
         /// <param name="aiFieldNamingLanguage">The language AI field setup names fields in: &#x60;auto&#x60; uses the form&#39;s language when it&#39;s written in the Latin alphabet without accents, and English otherwise; &#x60;english&#x60; always uses English; &#x60;form_language&#x60; uses the form&#39;s language and script. New templates take it from your account&#39;s template settings. Null for HTML templates.</param>
         /// <param name="redirectUrl">Where the web form sends people after they submit it.</param>
+        /// <param name="signatureRequestEmailAttachments">How DocSpring&#39;s completed emails send the signed PDF to your signers and CCs: &#x60;attachment&#x60; (attached, or a download link when it&#39;s too big to attach) or &#x60;link&#x60; (a download link). Null uses your account&#39;s rule: a link if your account has signed a BAA, otherwise attached. PDF templates only. A signature request uses the value it had when the request was created.</param>
+        /// <param name="signatureRequestFromAddress">The address DocSpring&#39;s emails to your signers come from: an address at one of your verified email domains, on the Growth plan or higher. Null sends them from DocSpring&#39;s shared address, with \&quot;via DocSpring\&quot; after the sender name. PDF templates only.</param>
+        /// <param name="signatureRequestFromName">The sender name on the emails DocSpring sends your signers, as in \&quot;Acme via DocSpring\&quot;. It can&#39;t contain an email address, a website or quotes. Null uses your account&#39;s name. PDF templates only.</param>
+        /// <param name="signatureRequestReplyTo">Where your signers&#39; replies to DocSpring&#39;s emails go: a member of your DocSpring team or an address at one of your verified email domains. Null means your account&#39;s owner. A submission&#39;s &#x60;reply_to&#x60; replaces it. PDF templates only.</param>
+        /// <param name="signatureRequestSigningUrl">A page on your own site that the button in DocSpring&#39;s email to a signer opens, instead of DocSpring&#39;s signing page: an https URL on one of your verified email domains or a subdomain of one, on the Growth plan or higher. It must include &#x60;{{ signature_request_id }}&#x60;. Your page authenticates the signer, creates a token for the signature request, and opens the signing form with it. Null links to DocSpring&#39;s signing page. PDF templates only.</param>
         /// <param name="lastChangedBy">Who last changed the draft: a user in your account, an API token, or someone using the embedded template editor. Null if no change has been recorded.</param>
         /// <param name="predefinedFieldsSampleData">Sample submission data that sets &#x60;predefined_fields&#x60;: each value becomes a predefined field, with a type that fits it (&#x60;string&#x60;, &#x60;number&#x60;, &#x60;boolean&#x60;, &#x60;date&#x60;, &#x60;email&#x60; or &#x60;url&#x60;) and &#x60;required_in_template&#x60; true. Nested objects and arrays become names with &#x60;/&#x60;, such as &#x60;customer/email&#x60;. Without &#x60;predefined_fields&#x60; in the same request, it replaces them; with them, it adds to them and sets the types of the ones it has values for.</param>
-        /// <param name="html">The HTML of an HTML template, as a Liquid template. Null for PDF and Word templates.</param>
+        /// <param name="html">The HTML of an HTML template, as a Liquid template. Null for other templates.</param>
         /// <param name="scss">The SCSS of an HTML template.</param>
         /// <param name="headerHtml">The HTML printed at the top of each page of an HTML template.</param>
         /// <param name="footerHtml">The HTML printed at the bottom of each page of an HTML template.</param>
-        /// <param name="htmlEngineOptions">How an HTML template&#39;s PDFs are printed. Null for PDF and Word templates. Setting it replaces the whole object: options left out use their defaults.</param>
-        /// <param name="htmlEscapeData">Whether an HTML template HTML-escapes the values it prints. When true, &#x60;{{ value }}&#x60; prints a value as text, so a &#x60;&lt;&#x60; or &#x60;&amp;&#x60; in it is printed as that character, and &#x60;{{ value | raw }}&#x60; prints a value as HTML. New HTML templates default to true. Templates created before October 2026, or with API v1, default to false, which prints every value as HTML. Null for PDF templates.</param>
+        /// <param name="htmlEngineOptions">How an HTML template&#39;s PDFs are printed. Null for other templates. Setting it replaces the whole object: options left out use their defaults.</param>
+        /// <param name="htmlEscapeData">Whether an HTML template HTML-escapes the values it prints. When true, &#x60;{{ value }}&#x60; prints a value as text, so a &#x60;&lt;&#x60; or &#x60;&amp;&#x60; in it is printed as that character, and &#x60;{{ value | raw }}&#x60; prints a value as HTML. New HTML templates default to true. Templates created before October 2026, or with API v1, default to false, which prints every value as HTML. Null for other templates.</param>
+        /// <param name="layout">A page design&#39;s layout: its page setup, its sections and the elements placed in them, in the Page Designer layout format (https://docspring.com/docs/page-designer/layout-format/). Its JSON Schema is at https://docspring.com/schemas/page-designer/layout.v1.json. Null for other templates. Setting it replaces the whole layout, and DocSpring adds a field for each value it reads. Left out when a page design is created, it starts with an empty page.</param>
         /// <param name="embedEditToken">The token that opens the template in the embedded template editor.</param>
         [JsonConstructor]
-        public Template(string id, TemplateType templateType, OutputFormat outputFormat, bool ready, string path, bool locked, DateTime createdAt, DateTime updatedAt, bool addSignatureRequestSubmissionIdFooters, bool allowAdditionalProperties, bool allowSkippingOptionalFields, TemplateFormMode defaultFormMode, bool editableSubmissions, List<string> embedDomains, bool embedEditAllowSettings, bool embedEditAllowVersioning, bool embedEditAllowDocumentReplacement, bool encryptPdfs, bool hasEncryptPdfsPassword, bool expireSubmissions, int expireAfter, ExpirationInterval expirationInterval, bool mergeAuditTrailPdf, bool parseDatesUsingTemplateDateFormat, bool publicSubmissions, bool publicWebForm, bool hasSlackWebhookUrl, TemplateDefaults defaults, List<TemplateFieldDependency> fieldDependencies, List<FieldGroup> fieldGroups, List<PredefinedField> predefinedFields, List<TemplateVersion> versions, string name = default, string description = default, TemplateDocument document = default, string parentFolderId = default, string latestVersion = default, DateTime? versionPublishedAt = default, DateTime? lastChangedAt = default, string varVersion = default, AiFieldNamingLanguage? aiFieldNamingLanguage = default, string redirectUrl = default, TemplateActor lastChangedBy = default, Dictionary<string, Object> predefinedFieldsSampleData = default, string html = default, string scss = default, string headerHtml = default, string footerHtml = default, HtmlEngineOptions htmlEngineOptions = default, bool? htmlEscapeData = default, string embedEditToken = default)
+        public Template(string id, TemplateType templateType, OutputFormat outputFormat, bool ready, string path, bool locked, DateTime createdAt, DateTime updatedAt, bool addSignatureRequestSubmissionIdFooters, bool allowAdditionalProperties, bool allowSkippingOptionalFields, TemplateFormMode defaultFormMode, bool editableSubmissions, List<string> embedDomains, bool embedEditAllowSettings, bool embedEditAllowVersioning, bool embedEditAllowDocumentReplacement, bool encryptPdfs, bool hasEncryptPdfsPassword, bool expireSubmissions, int expireAfter, ExpirationInterval expirationInterval, bool mergeAuditTrailPdf, bool parseDatesUsingTemplateDateFormat, bool publicSubmissions, bool publicWebForm, bool signatureRequestIncludeSigningToken, List<string> signatureRequestNotificationEmails, bool hasSlackWebhookUrl, TemplateDefaults defaults, List<TemplateFieldDependency> fieldDependencies, List<FieldGroup> fieldGroups, List<PredefinedField> predefinedFields, List<TemplateVersion> versions, string name = default, string description = default, TemplateDocument document = default, string parentFolderId = default, string latestVersion = default, DateTime? versionPublishedAt = default, DateTime? lastChangedAt = default, string varVersion = default, AiFieldNamingLanguage? aiFieldNamingLanguage = default, string redirectUrl = default, SignatureRequestEmailAttachments? signatureRequestEmailAttachments = default, string signatureRequestFromAddress = default, string signatureRequestFromName = default, string signatureRequestReplyTo = default, string signatureRequestSigningUrl = default, TemplateActor lastChangedBy = default, Dictionary<string, Object> predefinedFieldsSampleData = default, string html = default, string scss = default, string headerHtml = default, string footerHtml = default, HtmlEngineOptions htmlEngineOptions = default, bool? htmlEscapeData = default, Dictionary<string, Object> layout = default, string embedEditToken = default)
         {
             Id = id;
             TemplateType = templateType;
@@ -111,6 +119,8 @@ namespace DocSpring.Client.Model
             ParseDatesUsingTemplateDateFormat = parseDatesUsingTemplateDateFormat;
             PublicSubmissions = publicSubmissions;
             PublicWebForm = publicWebForm;
+            SignatureRequestIncludeSigningToken = signatureRequestIncludeSigningToken;
+            SignatureRequestNotificationEmails = signatureRequestNotificationEmails;
             HasSlackWebhookUrl = hasSlackWebhookUrl;
             Defaults = defaults;
             FieldDependencies = fieldDependencies;
@@ -127,6 +137,11 @@ namespace DocSpring.Client.Model
             VarVersion = varVersion;
             AiFieldNamingLanguage = aiFieldNamingLanguage;
             RedirectUrl = redirectUrl;
+            SignatureRequestEmailAttachments = signatureRequestEmailAttachments;
+            SignatureRequestFromAddress = signatureRequestFromAddress;
+            SignatureRequestFromName = signatureRequestFromName;
+            SignatureRequestReplyTo = signatureRequestReplyTo;
+            SignatureRequestSigningUrl = signatureRequestSigningUrl;
             LastChangedBy = lastChangedBy;
             PredefinedFieldsSampleData = predefinedFieldsSampleData;
             Html = html;
@@ -135,6 +150,7 @@ namespace DocSpring.Client.Model
             FooterHtml = footerHtml;
             HtmlEngineOptions = htmlEngineOptions;
             HtmlEscapeData = htmlEscapeData;
+            Layout = layout;
             EmbedEditToken = embedEditToken;
             OnCreated();
         }
@@ -142,16 +158,16 @@ namespace DocSpring.Client.Model
         partial void OnCreated();
 
         /// <summary>
-        /// &#x60;pdf&#x60;: fields placed on an uploaded PDF. &#x60;html&#x60;: a PDF rendered from HTML and SCSS. &#x60;docx&#x60;: a Word document with tags where the data goes, which makes Word documents or PDFs. It can&#39;t be changed after the template is created.
+        /// &#x60;pdf&#x60;: fields placed on an uploaded PDF. &#x60;html&#x60;: a PDF rendered from HTML and SCSS. &#x60;docx&#x60;: a Word document with tags where the data goes, which makes Word documents or PDFs. &#x60;page_designer&#x60;: a page design, a PDF laid out in the Page Designer from its &#x60;layout&#x60;. It can&#39;t be changed after the template is created.
         /// </summary>
-        /// <value>&#x60;pdf&#x60;: fields placed on an uploaded PDF. &#x60;html&#x60;: a PDF rendered from HTML and SCSS. &#x60;docx&#x60;: a Word document with tags where the data goes, which makes Word documents or PDFs. It can&#39;t be changed after the template is created.</value>
+        /// <value>&#x60;pdf&#x60;: fields placed on an uploaded PDF. &#x60;html&#x60;: a PDF rendered from HTML and SCSS. &#x60;docx&#x60;: a Word document with tags where the data goes, which makes Word documents or PDFs. &#x60;page_designer&#x60;: a page design, a PDF laid out in the Page Designer from its &#x60;layout&#x60;. It can&#39;t be changed after the template is created.</value>
         [JsonPropertyName("template_type")]
         public TemplateType TemplateType { get; set; }
 
         /// <summary>
-        /// What each submission makes unless its request sets &#x60;output_formats&#x60;: &#x60;docx&#x60; (a Word document), &#x60;odt&#x60; (an OpenDocument file, converted from the Word document) or &#x60;pdf&#x60;. A Word template&#39;s is chosen when it&#39;s created; PDF and HTML templates always make PDFs. A Word template that encrypts its PDFs makes PDFs, because Word documents and OpenDocument files can&#39;t be password-protected.
+        /// What each submission makes unless its request sets &#x60;output_formats&#x60;: &#x60;docx&#x60; (a Word document), &#x60;odt&#x60; (an OpenDocument file, converted from the Word document) or &#x60;pdf&#x60;. A Word template&#39;s is chosen when it&#39;s created; other templates always make PDFs. A Word template that encrypts its PDFs makes PDFs, because Word documents and OpenDocument files can&#39;t be password-protected.
         /// </summary>
-        /// <value>What each submission makes unless its request sets &#x60;output_formats&#x60;: &#x60;docx&#x60; (a Word document), &#x60;odt&#x60; (an OpenDocument file, converted from the Word document) or &#x60;pdf&#x60;. A Word template&#39;s is chosen when it&#39;s created; PDF and HTML templates always make PDFs. A Word template that encrypts its PDFs makes PDFs, because Word documents and OpenDocument files can&#39;t be password-protected.</value>
+        /// <value>What each submission makes unless its request sets &#x60;output_formats&#x60;: &#x60;docx&#x60; (a Word document), &#x60;odt&#x60; (an OpenDocument file, converted from the Word document) or &#x60;pdf&#x60;. A Word template&#39;s is chosen when it&#39;s created; other templates always make PDFs. A Word template that encrypts its PDFs makes PDFs, because Word documents and OpenDocument files can&#39;t be password-protected.</value>
         [JsonPropertyName("output_format")]
         public OutputFormat OutputFormat { get; set; }
 
@@ -177,6 +193,13 @@ namespace DocSpring.Client.Model
         public AiFieldNamingLanguage? AiFieldNamingLanguage { get; set; }
 
         /// <summary>
+        /// How DocSpring&#39;s completed emails send the signed PDF to your signers and CCs: &#x60;attachment&#x60; (attached, or a download link when it&#39;s too big to attach) or &#x60;link&#x60; (a download link). Null uses your account&#39;s rule: a link if your account has signed a BAA, otherwise attached. PDF templates only. A signature request uses the value it had when the request was created.
+        /// </summary>
+        /// <value>How DocSpring&#39;s completed emails send the signed PDF to your signers and CCs: &#x60;attachment&#x60; (attached, or a download link when it&#39;s too big to attach) or &#x60;link&#x60; (a download link). Null uses your account&#39;s rule: a link if your account has signed a BAA, otherwise attached. PDF templates only. A signature request uses the value it had when the request was created.</value>
+        [JsonPropertyName("signature_request_email_attachments")]
+        public SignatureRequestEmailAttachments? SignatureRequestEmailAttachments { get; set; }
+
+        /// <summary>
         /// The template&#39;s ID.
         /// </summary>
         /// <value>The template&#39;s ID.</value>
@@ -184,9 +207,9 @@ namespace DocSpring.Client.Model
         public string Id { get; set; }
 
         /// <summary>
-        /// Whether the template can make documents. HTML templates are always ready. A PDF template is ready once DocSpring has stored its PDF, made an image of each page and finished looking for fields on each page, which can be after &#x60;document.state&#x60; becomes &#x60;processed&#x60;. A PDF template with no PDF (&#x60;document&#x60; is null) isn&#39;t ready. A Word template is ready once it has a Word document (a &#x60;document_url&#x60;&#39;s has been downloaded).
+        /// Whether the template can make documents. HTML templates and page designs are always ready. A PDF template is ready once DocSpring has stored its PDF, made an image of each page and finished looking for fields on each page, which can be after &#x60;document.state&#x60; becomes &#x60;processed&#x60;. A PDF template with no PDF (&#x60;document&#x60; is null) isn&#39;t ready. A Word template is ready once it has a Word document (a &#x60;document_url&#x60;&#39;s has been downloaded).
         /// </summary>
-        /// <value>Whether the template can make documents. HTML templates are always ready. A PDF template is ready once DocSpring has stored its PDF, made an image of each page and finished looking for fields on each page, which can be after &#x60;document.state&#x60; becomes &#x60;processed&#x60;. A PDF template with no PDF (&#x60;document&#x60; is null) isn&#39;t ready. A Word template is ready once it has a Word document (a &#x60;document_url&#x60;&#39;s has been downloaded).</value>
+        /// <value>Whether the template can make documents. HTML templates and page designs are always ready. A PDF template is ready once DocSpring has stored its PDF, made an image of each page and finished looking for fields on each page, which can be after &#x60;document.state&#x60; becomes &#x60;processed&#x60;. A PDF template with no PDF (&#x60;document&#x60; is null) isn&#39;t ready. A Word template is ready once it has a Word document (a &#x60;document_url&#x60;&#39;s has been downloaded).</value>
         [JsonPropertyName("ready")]
         public bool Ready { get; set; }
 
@@ -247,9 +270,9 @@ namespace DocSpring.Client.Model
         public bool EditableSubmissions { get; set; }
 
         /// <summary>
-        /// The sites that can embed the template&#39;s live signature requests and its embedded template editor: a host such as &#x60;app.example.com&#x60;, with an optional leading wildcard (&#x60;*.example.com&#x60;), port (&#x60;localhost:3000&#x60;) or scheme (&#x60;https://app.example.com&#x60;; without one, &#x60;http&#x60; and &#x60;https&#x60; both work). Browsers open a live signature request in a frame only on these sites (and DocSpring&#39;s), so with an empty list it can&#39;t be embedded anywhere; a test signature request can be embedded on any site. The embedded template editor loads only for a page on one of these sites (by its Referer or Origin header), and on any site when the list is empty. Forms embedded on a page (Visual Forms JS and the simple form) aren&#39;t restricted.
+        /// The sites that can embed the template&#39;s live signature requests and its embedded template editor: a host such as &#x60;app.example.com&#x60;, with an optional leading wildcard (&#x60;*.example.com&#x60;), port (&#x60;localhost:3000&#x60;) or scheme (&#x60;https://app.example.com&#x60;; without one, &#x60;http&#x60; and &#x60;https&#x60; both work), without a path. Browsers open a live signature request in a frame only on these sites (and DocSpring&#39;s), so with an empty list it can&#39;t be embedded anywhere; a test signature request can be embedded on any site. The embedded template editor loads only for a page on one of these sites (by its Referer or Origin header), and on any site when the list is empty. Forms embedded on a page (Visual Forms JS and the simple form) aren&#39;t restricted.
         /// </summary>
-        /// <value>The sites that can embed the template&#39;s live signature requests and its embedded template editor: a host such as &#x60;app.example.com&#x60;, with an optional leading wildcard (&#x60;*.example.com&#x60;), port (&#x60;localhost:3000&#x60;) or scheme (&#x60;https://app.example.com&#x60;; without one, &#x60;http&#x60; and &#x60;https&#x60; both work). Browsers open a live signature request in a frame only on these sites (and DocSpring&#39;s), so with an empty list it can&#39;t be embedded anywhere; a test signature request can be embedded on any site. The embedded template editor loads only for a page on one of these sites (by its Referer or Origin header), and on any site when the list is empty. Forms embedded on a page (Visual Forms JS and the simple form) aren&#39;t restricted.</value>
+        /// <value>The sites that can embed the template&#39;s live signature requests and its embedded template editor: a host such as &#x60;app.example.com&#x60;, with an optional leading wildcard (&#x60;*.example.com&#x60;), port (&#x60;localhost:3000&#x60;) or scheme (&#x60;https://app.example.com&#x60;; without one, &#x60;http&#x60; and &#x60;https&#x60; both work), without a path. Browsers open a live signature request in a frame only on these sites (and DocSpring&#39;s), so with an empty list it can&#39;t be embedded anywhere; a test signature request can be embedded on any site. The embedded template editor loads only for a page on one of these sites (by its Referer or Origin header), and on any site when the list is empty. Forms embedded on a page (Visual Forms JS and the simple form) aren&#39;t restricted.</value>
         [JsonPropertyName("embed_domains")]
         public List<string> EmbedDomains { get; set; }
 
@@ -329,6 +352,20 @@ namespace DocSpring.Client.Model
         /// <value>Allow anyone to fill in the template&#39;s web form.</value>
         [JsonPropertyName("public_web_form")]
         public bool PublicWebForm { get; set; }
+
+        /// <summary>
+        /// Puts a signing token in &#x60;signature_request_signing_url&#x60;, as &#x60;{{ token_id }}&#x60; and &#x60;{{ token_secret }}&#x60;, so your page can open the signing form without creating a token itself. The email then carries a credential: anyone who has it can open the form and sign. PDF templates only.
+        /// </summary>
+        /// <value>Puts a signing token in &#x60;signature_request_signing_url&#x60;, as &#x60;{{ token_id }}&#x60; and &#x60;{{ token_secret }}&#x60;, so your page can open the signing form without creating a token itself. The email then carries a credential: anyone who has it can open the form and sign. PDF templates only.</value>
+        [JsonPropertyName("signature_request_include_signing_token")]
+        public bool SignatureRequestIncludeSigningToken { get; set; }
+
+        /// <summary>
+        /// Who DocSpring tells when a signature request&#39;s document is completed or declined, or an email bounces or can&#39;t be sent: members of your DocSpring team or addresses at your verified email domains. Empty means your account&#39;s owner. A submission&#39;s &#x60;notification_emails&#x60; replaces them. PDF templates only.
+        /// </summary>
+        /// <value>Who DocSpring tells when a signature request&#39;s document is completed or declined, or an email bounces or can&#39;t be sent: members of your DocSpring team or addresses at your verified email domains. Empty means your account&#39;s owner. A submission&#39;s &#x60;notification_emails&#x60; replaces them. PDF templates only.</value>
+        [JsonPropertyName("signature_request_notification_emails")]
+        public List<string> SignatureRequestNotificationEmails { get; set; }
 
         /// <summary>
         /// Whether &#x60;slack_webhook_url&#x60; is set.
@@ -435,6 +472,34 @@ namespace DocSpring.Client.Model
         public string RedirectUrl { get; set; }
 
         /// <summary>
+        /// The address DocSpring&#39;s emails to your signers come from: an address at one of your verified email domains, on the Growth plan or higher. Null sends them from DocSpring&#39;s shared address, with \&quot;via DocSpring\&quot; after the sender name. PDF templates only.
+        /// </summary>
+        /// <value>The address DocSpring&#39;s emails to your signers come from: an address at one of your verified email domains, on the Growth plan or higher. Null sends them from DocSpring&#39;s shared address, with \&quot;via DocSpring\&quot; after the sender name. PDF templates only.</value>
+        [JsonPropertyName("signature_request_from_address")]
+        public string SignatureRequestFromAddress { get; set; }
+
+        /// <summary>
+        /// The sender name on the emails DocSpring sends your signers, as in \&quot;Acme via DocSpring\&quot;. It can&#39;t contain an email address, a website or quotes. Null uses your account&#39;s name. PDF templates only.
+        /// </summary>
+        /// <value>The sender name on the emails DocSpring sends your signers, as in \&quot;Acme via DocSpring\&quot;. It can&#39;t contain an email address, a website or quotes. Null uses your account&#39;s name. PDF templates only.</value>
+        [JsonPropertyName("signature_request_from_name")]
+        public string SignatureRequestFromName { get; set; }
+
+        /// <summary>
+        /// Where your signers&#39; replies to DocSpring&#39;s emails go: a member of your DocSpring team or an address at one of your verified email domains. Null means your account&#39;s owner. A submission&#39;s &#x60;reply_to&#x60; replaces it. PDF templates only.
+        /// </summary>
+        /// <value>Where your signers&#39; replies to DocSpring&#39;s emails go: a member of your DocSpring team or an address at one of your verified email domains. Null means your account&#39;s owner. A submission&#39;s &#x60;reply_to&#x60; replaces it. PDF templates only.</value>
+        [JsonPropertyName("signature_request_reply_to")]
+        public string SignatureRequestReplyTo { get; set; }
+
+        /// <summary>
+        /// A page on your own site that the button in DocSpring&#39;s email to a signer opens, instead of DocSpring&#39;s signing page: an https URL on one of your verified email domains or a subdomain of one, on the Growth plan or higher. It must include &#x60;{{ signature_request_id }}&#x60;. Your page authenticates the signer, creates a token for the signature request, and opens the signing form with it. Null links to DocSpring&#39;s signing page. PDF templates only.
+        /// </summary>
+        /// <value>A page on your own site that the button in DocSpring&#39;s email to a signer opens, instead of DocSpring&#39;s signing page: an https URL on one of your verified email domains or a subdomain of one, on the Growth plan or higher. It must include &#x60;{{ signature_request_id }}&#x60;. Your page authenticates the signer, creates a token for the signature request, and opens the signing form with it. Null links to DocSpring&#39;s signing page. PDF templates only.</value>
+        [JsonPropertyName("signature_request_signing_url")]
+        public string SignatureRequestSigningUrl { get; set; }
+
+        /// <summary>
         /// Who last changed the draft: a user in your account, an API token, or someone using the embedded template editor. Null if no change has been recorded.
         /// </summary>
         /// <value>Who last changed the draft: a user in your account, an API token, or someone using the embedded template editor. Null if no change has been recorded.</value>
@@ -449,9 +514,9 @@ namespace DocSpring.Client.Model
         public Dictionary<string, Object> PredefinedFieldsSampleData { get; set; }
 
         /// <summary>
-        /// The HTML of an HTML template, as a Liquid template. Null for PDF and Word templates.
+        /// The HTML of an HTML template, as a Liquid template. Null for other templates.
         /// </summary>
-        /// <value>The HTML of an HTML template, as a Liquid template. Null for PDF and Word templates.</value>
+        /// <value>The HTML of an HTML template, as a Liquid template. Null for other templates.</value>
         [JsonPropertyName("html")]
         public string Html { get; set; }
 
@@ -477,18 +542,25 @@ namespace DocSpring.Client.Model
         public string FooterHtml { get; set; }
 
         /// <summary>
-        /// How an HTML template&#39;s PDFs are printed. Null for PDF and Word templates. Setting it replaces the whole object: options left out use their defaults.
+        /// How an HTML template&#39;s PDFs are printed. Null for other templates. Setting it replaces the whole object: options left out use their defaults.
         /// </summary>
-        /// <value>How an HTML template&#39;s PDFs are printed. Null for PDF and Word templates. Setting it replaces the whole object: options left out use their defaults.</value>
+        /// <value>How an HTML template&#39;s PDFs are printed. Null for other templates. Setting it replaces the whole object: options left out use their defaults.</value>
         [JsonPropertyName("html_engine_options")]
         public HtmlEngineOptions HtmlEngineOptions { get; set; }
 
         /// <summary>
-        /// Whether an HTML template HTML-escapes the values it prints. When true, &#x60;{{ value }}&#x60; prints a value as text, so a &#x60;&lt;&#x60; or &#x60;&amp;&#x60; in it is printed as that character, and &#x60;{{ value | raw }}&#x60; prints a value as HTML. New HTML templates default to true. Templates created before October 2026, or with API v1, default to false, which prints every value as HTML. Null for PDF templates.
+        /// Whether an HTML template HTML-escapes the values it prints. When true, &#x60;{{ value }}&#x60; prints a value as text, so a &#x60;&lt;&#x60; or &#x60;&amp;&#x60; in it is printed as that character, and &#x60;{{ value | raw }}&#x60; prints a value as HTML. New HTML templates default to true. Templates created before October 2026, or with API v1, default to false, which prints every value as HTML. Null for other templates.
         /// </summary>
-        /// <value>Whether an HTML template HTML-escapes the values it prints. When true, &#x60;{{ value }}&#x60; prints a value as text, so a &#x60;&lt;&#x60; or &#x60;&amp;&#x60; in it is printed as that character, and &#x60;{{ value | raw }}&#x60; prints a value as HTML. New HTML templates default to true. Templates created before October 2026, or with API v1, default to false, which prints every value as HTML. Null for PDF templates.</value>
+        /// <value>Whether an HTML template HTML-escapes the values it prints. When true, &#x60;{{ value }}&#x60; prints a value as text, so a &#x60;&lt;&#x60; or &#x60;&amp;&#x60; in it is printed as that character, and &#x60;{{ value | raw }}&#x60; prints a value as HTML. New HTML templates default to true. Templates created before October 2026, or with API v1, default to false, which prints every value as HTML. Null for other templates.</value>
         [JsonPropertyName("html_escape_data")]
         public bool? HtmlEscapeData { get; set; }
+
+        /// <summary>
+        /// A page design&#39;s layout: its page setup, its sections and the elements placed in them, in the Page Designer layout format (https://docspring.com/docs/page-designer/layout-format/). Its JSON Schema is at https://docspring.com/schemas/page-designer/layout.v1.json. Null for other templates. Setting it replaces the whole layout, and DocSpring adds a field for each value it reads. Left out when a page design is created, it starts with an empty page.
+        /// </summary>
+        /// <value>A page design&#39;s layout: its page setup, its sections and the elements placed in them, in the Page Designer layout format (https://docspring.com/docs/page-designer/layout-format/). Its JSON Schema is at https://docspring.com/schemas/page-designer/layout.v1.json. Null for other templates. Setting it replaces the whole layout, and DocSpring adds a field for each value it reads. Left out when a page design is created, it starts with an empty page.</value>
+        [JsonPropertyName("layout")]
+        public Dictionary<string, Object> Layout { get; set; }
 
         /// <summary>
         /// The token that opens the template in the embedded template editor.
@@ -537,6 +609,8 @@ namespace DocSpring.Client.Model
             sb.Append("  ParseDatesUsingTemplateDateFormat: ").Append(ParseDatesUsingTemplateDateFormat).Append("\n");
             sb.Append("  PublicSubmissions: ").Append(PublicSubmissions).Append("\n");
             sb.Append("  PublicWebForm: ").Append(PublicWebForm).Append("\n");
+            sb.Append("  SignatureRequestIncludeSigningToken: ").Append(SignatureRequestIncludeSigningToken).Append("\n");
+            sb.Append("  SignatureRequestNotificationEmails: ").Append(SignatureRequestNotificationEmails).Append("\n");
             sb.Append("  HasSlackWebhookUrl: ").Append(HasSlackWebhookUrl).Append("\n");
             sb.Append("  Defaults: ").Append(Defaults).Append("\n");
             sb.Append("  FieldDependencies: ").Append(FieldDependencies).Append("\n");
@@ -553,6 +627,11 @@ namespace DocSpring.Client.Model
             sb.Append("  VarVersion: ").Append(VarVersion).Append("\n");
             sb.Append("  AiFieldNamingLanguage: ").Append(AiFieldNamingLanguage).Append("\n");
             sb.Append("  RedirectUrl: ").Append(RedirectUrl).Append("\n");
+            sb.Append("  SignatureRequestEmailAttachments: ").Append(SignatureRequestEmailAttachments).Append("\n");
+            sb.Append("  SignatureRequestFromAddress: ").Append(SignatureRequestFromAddress).Append("\n");
+            sb.Append("  SignatureRequestFromName: ").Append(SignatureRequestFromName).Append("\n");
+            sb.Append("  SignatureRequestReplyTo: ").Append(SignatureRequestReplyTo).Append("\n");
+            sb.Append("  SignatureRequestSigningUrl: ").Append(SignatureRequestSigningUrl).Append("\n");
             sb.Append("  LastChangedBy: ").Append(LastChangedBy).Append("\n");
             sb.Append("  PredefinedFieldsSampleData: ").Append(PredefinedFieldsSampleData).Append("\n");
             sb.Append("  Html: ").Append(Html).Append("\n");
@@ -561,6 +640,7 @@ namespace DocSpring.Client.Model
             sb.Append("  FooterHtml: ").Append(FooterHtml).Append("\n");
             sb.Append("  HtmlEngineOptions: ").Append(HtmlEngineOptions).Append("\n");
             sb.Append("  HtmlEscapeData: ").Append(HtmlEscapeData).Append("\n");
+            sb.Append("  Layout: ").Append(Layout).Append("\n");
             sb.Append("  EmbedEditToken: ").Append(EmbedEditToken).Append("\n");
             sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
@@ -656,6 +736,8 @@ namespace DocSpring.Client.Model
             Option<bool?> parseDatesUsingTemplateDateFormat = default;
             Option<bool?> publicSubmissions = default;
             Option<bool?> publicWebForm = default;
+            Option<bool?> signatureRequestIncludeSigningToken = default;
+            Option<List<string>> signatureRequestNotificationEmails = default;
             Option<bool?> hasSlackWebhookUrl = default;
             Option<TemplateDefaults> defaults = default;
             Option<List<TemplateFieldDependency>> fieldDependencies = default;
@@ -672,6 +754,11 @@ namespace DocSpring.Client.Model
             Option<string> varVersion = default;
             Option<AiFieldNamingLanguage?> aiFieldNamingLanguage = default;
             Option<string> redirectUrl = default;
+            Option<SignatureRequestEmailAttachments?> signatureRequestEmailAttachments = default;
+            Option<string> signatureRequestFromAddress = default;
+            Option<string> signatureRequestFromName = default;
+            Option<string> signatureRequestReplyTo = default;
+            Option<string> signatureRequestSigningUrl = default;
             Option<TemplateActor> lastChangedBy = default;
             Option<Dictionary<string, Object>> predefinedFieldsSampleData = default;
             Option<string> html = default;
@@ -680,6 +767,7 @@ namespace DocSpring.Client.Model
             Option<string> footerHtml = default;
             Option<HtmlEngineOptions> htmlEngineOptions = default;
             Option<bool?> htmlEscapeData = default;
+            Option<Dictionary<string, Object>> layout = default;
             Option<string> embedEditToken = default;
 
             while (utf8JsonReader.Read())
@@ -775,6 +863,12 @@ namespace DocSpring.Client.Model
                         case "public_web_form":
                             publicWebForm = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
                             break;
+                        case "signature_request_include_signing_token":
+                            signatureRequestIncludeSigningToken = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
+                            break;
+                        case "signature_request_notification_emails":
+                            signatureRequestNotificationEmails = new Option<List<string>>(JsonSerializer.Deserialize<List<string>>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
                         case "has_slack_webhook_url":
                             hasSlackWebhookUrl = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
                             break;
@@ -823,6 +917,21 @@ namespace DocSpring.Client.Model
                         case "redirect_url":
                             redirectUrl = new Option<string>(utf8JsonReader.GetString());
                             break;
+                        case "signature_request_email_attachments":
+                            signatureRequestEmailAttachments = new Option<SignatureRequestEmailAttachments?>(JsonSerializer.Deserialize<SignatureRequestEmailAttachments?>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
+                        case "signature_request_from_address":
+                            signatureRequestFromAddress = new Option<string>(utf8JsonReader.GetString());
+                            break;
+                        case "signature_request_from_name":
+                            signatureRequestFromName = new Option<string>(utf8JsonReader.GetString());
+                            break;
+                        case "signature_request_reply_to":
+                            signatureRequestReplyTo = new Option<string>(utf8JsonReader.GetString());
+                            break;
+                        case "signature_request_signing_url":
+                            signatureRequestSigningUrl = new Option<string>(utf8JsonReader.GetString());
+                            break;
                         case "last_changed_by":
                             lastChangedBy = new Option<TemplateActor>(JsonSerializer.Deserialize<TemplateActor>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
@@ -846,6 +955,9 @@ namespace DocSpring.Client.Model
                             break;
                         case "html_escape_data":
                             htmlEscapeData = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
+                            break;
+                        case "layout":
+                            layout = new Option<Dictionary<string, Object>>(JsonSerializer.Deserialize<Dictionary<string, Object>>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "embed_edit_token":
                             embedEditToken = new Option<string>(utf8JsonReader.GetString());
@@ -934,6 +1046,12 @@ namespace DocSpring.Client.Model
             if (!publicWebForm.IsSet)
                 throw new JsonException("Property is required for class Template: public_web_form.");
 
+            if (!signatureRequestIncludeSigningToken.IsSet)
+                throw new JsonException("Property is required for class Template: signature_request_include_signing_token.");
+
+            if (!signatureRequestNotificationEmails.IsSet)
+                throw new JsonException("Property is required for class Template: signature_request_notification_emails.");
+
             if (!hasSlackWebhookUrl.IsSet)
                 throw new JsonException("Property is required for class Template: has_slack_webhook_url.");
 
@@ -982,6 +1100,21 @@ namespace DocSpring.Client.Model
             if (!redirectUrl.IsSet)
                 throw new JsonException("Property is required for class Template: redirect_url.");
 
+            if (!signatureRequestEmailAttachments.IsSet)
+                throw new JsonException("Property is required for class Template: signature_request_email_attachments.");
+
+            if (!signatureRequestFromAddress.IsSet)
+                throw new JsonException("Property is required for class Template: signature_request_from_address.");
+
+            if (!signatureRequestFromName.IsSet)
+                throw new JsonException("Property is required for class Template: signature_request_from_name.");
+
+            if (!signatureRequestReplyTo.IsSet)
+                throw new JsonException("Property is required for class Template: signature_request_reply_to.");
+
+            if (!signatureRequestSigningUrl.IsSet)
+                throw new JsonException("Property is required for class Template: signature_request_signing_url.");
+
             if (!lastChangedBy.IsSet)
                 throw new JsonException("Property is required for class Template: last_changed_by.");
 
@@ -1005,6 +1138,9 @@ namespace DocSpring.Client.Model
 
             if (!htmlEscapeData.IsSet)
                 throw new JsonException("Property is required for class Template: html_escape_data.");
+
+            if (!layout.IsSet)
+                throw new JsonException("Property is required for class Template: layout.");
 
             if (!embedEditToken.IsSet)
                 throw new JsonException("Property is required for class Template: embed_edit_token.");
@@ -1087,6 +1223,12 @@ namespace DocSpring.Client.Model
             if (publicWebForm.IsSet && publicWebForm.Value == null)
                 throw new JsonException("Property is not nullable for class Template: public_web_form.");
 
+            if (signatureRequestIncludeSigningToken.IsSet && signatureRequestIncludeSigningToken.Value == null)
+                throw new JsonException("Property is not nullable for class Template: signature_request_include_signing_token.");
+
+            if (signatureRequestNotificationEmails.IsSet && signatureRequestNotificationEmails.Value == null)
+                throw new JsonException("Property is not nullable for class Template: signature_request_notification_emails.");
+
             if (hasSlackWebhookUrl.IsSet && hasSlackWebhookUrl.Value == null)
                 throw new JsonException("Property is not nullable for class Template: has_slack_webhook_url.");
 
@@ -1105,7 +1247,7 @@ namespace DocSpring.Client.Model
             if (versions.IsSet && versions.Value == null)
                 throw new JsonException("Property is not nullable for class Template: versions.");
 
-            return new Template(id.Value, templateType.Value.Value, outputFormat.Value.Value, ready.Value.Value, path.Value, locked.Value.Value, createdAt.Value.Value, updatedAt.Value.Value, addSignatureRequestSubmissionIdFooters.Value.Value, allowAdditionalProperties.Value.Value, allowSkippingOptionalFields.Value.Value, defaultFormMode.Value.Value, editableSubmissions.Value.Value, embedDomains.Value, embedEditAllowSettings.Value.Value, embedEditAllowVersioning.Value.Value, embedEditAllowDocumentReplacement.Value.Value, encryptPdfs.Value.Value, hasEncryptPdfsPassword.Value.Value, expireSubmissions.Value.Value, expireAfter.Value.Value, expirationInterval.Value.Value, mergeAuditTrailPdf.Value.Value, parseDatesUsingTemplateDateFormat.Value.Value, publicSubmissions.Value.Value, publicWebForm.Value.Value, hasSlackWebhookUrl.Value.Value, defaults.Value, fieldDependencies.Value, fieldGroups.Value, predefinedFields.Value, versions.Value, name.Value, description.Value, document.Value, parentFolderId.Value, latestVersion.Value, versionPublishedAt.Value, lastChangedAt.Value, varVersion.Value, aiFieldNamingLanguage.Value, redirectUrl.Value, lastChangedBy.Value, predefinedFieldsSampleData.Value, html.Value, scss.Value, headerHtml.Value, footerHtml.Value, htmlEngineOptions.Value, htmlEscapeData.Value, embedEditToken.Value);
+            return new Template(id.Value, templateType.Value.Value, outputFormat.Value.Value, ready.Value.Value, path.Value, locked.Value.Value, createdAt.Value.Value, updatedAt.Value.Value, addSignatureRequestSubmissionIdFooters.Value.Value, allowAdditionalProperties.Value.Value, allowSkippingOptionalFields.Value.Value, defaultFormMode.Value.Value, editableSubmissions.Value.Value, embedDomains.Value, embedEditAllowSettings.Value.Value, embedEditAllowVersioning.Value.Value, embedEditAllowDocumentReplacement.Value.Value, encryptPdfs.Value.Value, hasEncryptPdfsPassword.Value.Value, expireSubmissions.Value.Value, expireAfter.Value.Value, expirationInterval.Value.Value, mergeAuditTrailPdf.Value.Value, parseDatesUsingTemplateDateFormat.Value.Value, publicSubmissions.Value.Value, publicWebForm.Value.Value, signatureRequestIncludeSigningToken.Value.Value, signatureRequestNotificationEmails.Value, hasSlackWebhookUrl.Value.Value, defaults.Value, fieldDependencies.Value, fieldGroups.Value, predefinedFields.Value, versions.Value, name.Value, description.Value, document.Value, parentFolderId.Value, latestVersion.Value, versionPublishedAt.Value, lastChangedAt.Value, varVersion.Value, aiFieldNamingLanguage.Value, redirectUrl.Value, signatureRequestEmailAttachments.Value, signatureRequestFromAddress.Value, signatureRequestFromName.Value, signatureRequestReplyTo.Value, signatureRequestSigningUrl.Value, lastChangedBy.Value, predefinedFieldsSampleData.Value, html.Value, scss.Value, headerHtml.Value, footerHtml.Value, htmlEngineOptions.Value, htmlEscapeData.Value, layout.Value, embedEditToken.Value);
         }
 
         /// <summary>
@@ -1186,6 +1328,10 @@ namespace DocSpring.Client.Model
 
             writer.WriteBoolean("public_web_form", template.PublicWebForm);
 
+            writer.WriteBoolean("signature_request_include_signing_token", template.SignatureRequestIncludeSigningToken);
+
+            writer.WritePropertyName("signature_request_notification_emails");
+            JsonSerializer.Serialize(writer, template.SignatureRequestNotificationEmails, jsonSerializerOptions);
             writer.WriteBoolean("has_slack_webhook_url", template.HasSlackWebhookUrl);
 
             writer.WritePropertyName("defaults");
@@ -1256,6 +1402,37 @@ namespace DocSpring.Client.Model
             else
                 writer.WriteNull("redirect_url");
 
+            if (template.SignatureRequestEmailAttachments == null)
+                writer.WriteNull("signature_request_email_attachments");
+            else
+            {
+                var signatureRequestEmailAttachmentsRawValue = SignatureRequestEmailAttachmentsValueConverter.ToJsonValue(template.SignatureRequestEmailAttachments.Value);
+                if (signatureRequestEmailAttachmentsRawValue != null)
+                    writer.WriteString("signature_request_email_attachments", signatureRequestEmailAttachmentsRawValue);
+                else
+                    writer.WriteNull("signature_request_email_attachments");
+            }
+
+            if (template.SignatureRequestFromAddress != null)
+                writer.WriteString("signature_request_from_address", template.SignatureRequestFromAddress);
+            else
+                writer.WriteNull("signature_request_from_address");
+
+            if (template.SignatureRequestFromName != null)
+                writer.WriteString("signature_request_from_name", template.SignatureRequestFromName);
+            else
+                writer.WriteNull("signature_request_from_name");
+
+            if (template.SignatureRequestReplyTo != null)
+                writer.WriteString("signature_request_reply_to", template.SignatureRequestReplyTo);
+            else
+                writer.WriteNull("signature_request_reply_to");
+
+            if (template.SignatureRequestSigningUrl != null)
+                writer.WriteString("signature_request_signing_url", template.SignatureRequestSigningUrl);
+            else
+                writer.WriteNull("signature_request_signing_url");
+
             if (template.LastChangedBy != null)
             {
                 writer.WritePropertyName("last_changed_by");
@@ -1302,6 +1479,13 @@ namespace DocSpring.Client.Model
             else
                 writer.WriteNull("html_escape_data");
 
+            if (template.Layout != null)
+            {
+                writer.WritePropertyName("layout");
+                JsonSerializer.Serialize(writer, template.Layout, jsonSerializerOptions);
+            }
+            else
+                writer.WriteNull("layout");
             if (template.EmbedEditToken != null)
                 writer.WriteString("embed_edit_token", template.EmbedEditToken);
             else

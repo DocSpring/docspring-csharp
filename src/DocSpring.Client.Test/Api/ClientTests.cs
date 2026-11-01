@@ -58,7 +58,8 @@ namespace DocSpring.Client.Test.Api
         {
             string templateId = default;
             AddTemplateFieldsRequest body = default;
-            var response = await _instance.AddTemplateFieldsAsync(templateId, body);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.AddTemplateFieldsAsync(templateId, body, idempotencyKey);
             var model = response.Created();
             Assert.IsType<DocSpring.Client.Model.TemplateFields>(model);
         }
@@ -71,9 +72,23 @@ namespace DocSpring.Client.Test.Api
         {
             string templateId = default;
             Client.Option<CopyTemplateRequest> body = default;
-            var response = await _instance.CopyTemplateAsync(templateId, body);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.CopyTemplateAsync(templateId, body, idempotencyKey);
             var model = response.Created();
             Assert.IsType<DocSpring.Client.Model.Template>(model);
+        }
+
+        /// <summary>
+        /// Test CreateAccountEmailAction
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task CreateAccountEmailActionAsyncTest()
+        {
+            CreateAccountEmailActionRequest body = default;
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.CreateAccountEmailActionAsync(body, idempotencyKey);
+            var model = response.Created();
+            Assert.IsType<DocSpring.Client.Model.EmailAction>(model);
         }
 
         /// <summary>
@@ -97,9 +112,37 @@ namespace DocSpring.Client.Test.Api
         public async Task CreateCustomFileFromUploadAsyncTest()
         {
             CreateCustomFileFromUploadRequest body = default;
-            var response = await _instance.CreateCustomFileFromUploadAsync(body);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.CreateCustomFileFromUploadAsync(body, idempotencyKey);
             var model = response.Created();
             Assert.IsType<DocSpring.Client.Model.CustomFile>(model);
+        }
+
+        /// <summary>
+        /// Test CreateEmailAction
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task CreateEmailActionAsyncTest()
+        {
+            string templateId = default;
+            CreateEmailActionRequest body = default;
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.CreateEmailActionAsync(templateId, body, idempotencyKey);
+            var model = response.Created();
+            Assert.IsType<DocSpring.Client.Model.EmailAction>(model);
+        }
+
+        /// <summary>
+        /// Test CreateEmailDomain
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task CreateEmailDomainAsyncTest()
+        {
+            CreateEmailDomainRequest body = default;
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.CreateEmailDomainAsync(body, idempotencyKey);
+            var model = response.Created();
+            Assert.IsType<DocSpring.Client.Model.EmailDomain>(model);
         }
 
         /// <summary>
@@ -109,7 +152,8 @@ namespace DocSpring.Client.Test.Api
         public async Task CreateFolderAsyncTest()
         {
             CreateFolderRequest body = default;
-            var response = await _instance.CreateFolderAsync(body);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.CreateFolderAsync(body, idempotencyKey);
             var model = response.Created();
             Assert.IsType<DocSpring.Client.Model.Folder>(model);
         }
@@ -122,7 +166,8 @@ namespace DocSpring.Client.Test.Api
         {
             string signatureRequestId = default;
             CreateSignatureRequestEventRequest body = default;
-            var response = await _instance.CreateSignatureRequestEventAsync(signatureRequestId, body);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.CreateSignatureRequestEventAsync(signatureRequestId, body, idempotencyKey);
             var model = response.Created();
             Assert.IsType<DocSpring.Client.Model.SignatureRequestEvent>(model);
         }
@@ -135,7 +180,8 @@ namespace DocSpring.Client.Test.Api
         {
             string signatureRequestId = default;
             Client.Option<CreateSignatureRequestTokenRequest> body = default;
-            var response = await _instance.CreateSignatureRequestTokenAsync(signatureRequestId, body);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.CreateSignatureRequestTokenAsync(signatureRequestId, body, idempotencyKey);
             var model = response.Created();
             Assert.IsType<DocSpring.Client.Model.SignatureRequestToken>(model);
         }
@@ -178,7 +224,8 @@ namespace DocSpring.Client.Test.Api
         {
             CreateTemplateRequest body = default;
             Client.Option<bool> wait = default;
-            var response = await _instance.CreateTemplateAsync(body, wait);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.CreateTemplateAsync(body, wait, idempotencyKey);
             var model = response.Created();
             Assert.IsType<DocSpring.Client.Model.Template>(model);
         }
@@ -192,7 +239,8 @@ namespace DocSpring.Client.Test.Api
             string templateId = default;
             CreateTemplatePreviewRequest body = default;
             Client.Option<string> version = default;
-            var response = await _instance.CreateTemplatePreviewAsync(templateId, body, version);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.CreateTemplatePreviewAsync(templateId, body, version, idempotencyKey);
             var model = response.Created();
             Assert.IsType<DocSpring.Client.Model.TemplatePreview>(model);
         }
@@ -204,9 +252,23 @@ namespace DocSpring.Client.Test.Api
         public async Task CreateWebhookAsyncTest()
         {
             CreateWebhookRequest body = default;
-            var response = await _instance.CreateWebhookAsync(body);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.CreateWebhookAsync(body, idempotencyKey);
             var model = response.Created();
             Assert.IsType<DocSpring.Client.Model.Webhook>(model);
+        }
+
+        /// <summary>
+        /// Test DeleteAccountEmailAction
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task DeleteAccountEmailActionAsyncTest()
+        {
+            string emailActionId = default;
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.DeleteAccountEmailActionAsync(emailActionId, idempotencyKey);
+            var model = response.Ok();
+            Assert.IsType<DocSpring.Client.Model.EmailAction>(model);
         }
 
         /// <summary>
@@ -216,9 +278,51 @@ namespace DocSpring.Client.Test.Api
         public async Task DeleteCustomFileAsyncTest()
         {
             string customFileId = default;
-            var response = await _instance.DeleteCustomFileAsync(customFileId);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.DeleteCustomFileAsync(customFileId, idempotencyKey);
             var model = response.Ok();
             Assert.IsType<DocSpring.Client.Model.CustomFile>(model);
+        }
+
+        /// <summary>
+        /// Test DeleteEmailAction
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task DeleteEmailActionAsyncTest()
+        {
+            string templateId = default;
+            string emailActionId = default;
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.DeleteEmailActionAsync(templateId, emailActionId, idempotencyKey);
+            var model = response.Ok();
+            Assert.IsType<DocSpring.Client.Model.EmailAction>(model);
+        }
+
+        /// <summary>
+        /// Test DeleteEmailActionCustomization
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task DeleteEmailActionCustomizationAsyncTest()
+        {
+            string templateId = default;
+            string emailActionId = default;
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.DeleteEmailActionCustomizationAsync(templateId, emailActionId, idempotencyKey);
+            var model = response.Ok();
+            Assert.IsType<DocSpring.Client.Model.EmailAction>(model);
+        }
+
+        /// <summary>
+        /// Test DeleteEmailDomain
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task DeleteEmailDomainAsyncTest()
+        {
+            string emailDomainId = default;
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.DeleteEmailDomainAsync(emailDomainId, idempotencyKey);
+            var model = response.Ok();
+            Assert.IsType<DocSpring.Client.Model.EmailDomain>(model);
         }
 
         /// <summary>
@@ -228,7 +332,8 @@ namespace DocSpring.Client.Test.Api
         public async Task DeleteFolderAsyncTest()
         {
             string folderId = default;
-            var response = await _instance.DeleteFolderAsync(folderId);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.DeleteFolderAsync(folderId, idempotencyKey);
             var model = response.Ok();
             Assert.IsType<DocSpring.Client.Model.Folder>(model);
         }
@@ -241,7 +346,8 @@ namespace DocSpring.Client.Test.Api
         {
             string templateId = default;
             Client.Option<string> version = default;
-            var response = await _instance.DeleteTemplateAsync(templateId, version);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.DeleteTemplateAsync(templateId, version, idempotencyKey);
             var model = response.Ok();
             Assert.IsType<DocSpring.Client.Model.Template>(model);
         }
@@ -253,7 +359,8 @@ namespace DocSpring.Client.Test.Api
         public async Task DeleteWebhookAsyncTest()
         {
             string webhookId = default;
-            var response = await _instance.DeleteWebhookAsync(webhookId);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.DeleteWebhookAsync(webhookId, idempotencyKey);
             var model = response.Ok();
             Assert.IsType<DocSpring.Client.Model.Webhook>(model);
         }
@@ -265,7 +372,8 @@ namespace DocSpring.Client.Test.Api
         public async Task ExpireCombinedPdfAsyncTest()
         {
             string combinedPdfId = default;
-            var response = await _instance.ExpireCombinedPdfAsync(combinedPdfId);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.ExpireCombinedPdfAsync(combinedPdfId, idempotencyKey);
             var model = response.Ok();
             Assert.IsType<DocSpring.Client.Model.CombinedPdf>(model);
         }
@@ -277,7 +385,8 @@ namespace DocSpring.Client.Test.Api
         public async Task ExpireSubmissionAsyncTest()
         {
             string submissionId = default;
-            var response = await _instance.ExpireSubmissionAsync(submissionId);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.ExpireSubmissionAsync(submissionId, idempotencyKey);
             var model = response.Ok();
             Assert.IsType<DocSpring.Client.Model.Submission>(model);
         }
@@ -291,7 +400,8 @@ namespace DocSpring.Client.Test.Api
             string submissionId = default;
             GenerateSubmissionFilesRequest body = default;
             Client.Option<bool> wait = default;
-            var response = await _instance.GenerateSubmissionFilesAsync(submissionId, body, wait);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.GenerateSubmissionFilesAsync(submissionId, body, wait, idempotencyKey);
             var model = response.Ok();
             Assert.IsType<DocSpring.Client.Model.Submission>(model);
         }
@@ -303,9 +413,22 @@ namespace DocSpring.Client.Test.Api
         public async Task GenerateSubmissionPreviewAsyncTest()
         {
             string submissionId = default;
-            var response = await _instance.GenerateSubmissionPreviewAsync(submissionId);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.GenerateSubmissionPreviewAsync(submissionId, idempotencyKey);
             var model = response.Ok();
             Assert.IsType<DocSpring.Client.Model.Submission>(model);
+        }
+
+        /// <summary>
+        /// Test GetAccountEmailAction
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task GetAccountEmailActionAsyncTest()
+        {
+            string emailActionId = default;
+            var response = await _instance.GetAccountEmailActionAsync(emailActionId);
+            var model = response.Ok();
+            Assert.IsType<DocSpring.Client.Model.EmailAction>(model);
         }
 
         /// <summary>
@@ -330,6 +453,31 @@ namespace DocSpring.Client.Test.Api
             var response = await _instance.GetCustomFileAsync(customFileId);
             var model = response.Ok();
             Assert.IsType<DocSpring.Client.Model.CustomFile>(model);
+        }
+
+        /// <summary>
+        /// Test GetEmailAction
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task GetEmailActionAsyncTest()
+        {
+            string templateId = default;
+            string emailActionId = default;
+            var response = await _instance.GetEmailActionAsync(templateId, emailActionId);
+            var model = response.Ok();
+            Assert.IsType<DocSpring.Client.Model.EmailAction>(model);
+        }
+
+        /// <summary>
+        /// Test GetEmailDomain
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task GetEmailDomainAsyncTest()
+        {
+            string emailDomainId = default;
+            var response = await _instance.GetEmailDomainAsync(emailDomainId);
+            var model = response.Ok();
+            Assert.IsType<DocSpring.Client.Model.EmailDomain>(model);
         }
 
         /// <summary>
@@ -485,6 +633,19 @@ namespace DocSpring.Client.Test.Api
         }
 
         /// <summary>
+        /// Test ListAccountEmailActions
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task ListAccountEmailActionsAsyncTest()
+        {
+            Client.Option<int> limit = default;
+            Client.Option<string> cursor = default;
+            var response = await _instance.ListAccountEmailActionsAsync(limit, cursor);
+            var model = response.Ok();
+            Assert.IsType<DocSpring.Client.Model.EmailActionList>(model);
+        }
+
+        /// <summary>
         /// Test ListCombinedPdfs
         /// </summary>
         [Fact (Skip = "not implemented")]
@@ -508,6 +669,33 @@ namespace DocSpring.Client.Test.Api
             var response = await _instance.ListCustomFilesAsync(limit, cursor);
             var model = response.Ok();
             Assert.IsType<DocSpring.Client.Model.CustomFileList>(model);
+        }
+
+        /// <summary>
+        /// Test ListEmailActions
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task ListEmailActionsAsyncTest()
+        {
+            string templateId = default;
+            Client.Option<int> limit = default;
+            Client.Option<string> cursor = default;
+            var response = await _instance.ListEmailActionsAsync(templateId, limit, cursor);
+            var model = response.Ok();
+            Assert.IsType<DocSpring.Client.Model.EmailActionList>(model);
+        }
+
+        /// <summary>
+        /// Test ListEmailDomains
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task ListEmailDomainsAsyncTest()
+        {
+            Client.Option<int> limit = default;
+            Client.Option<string> cursor = default;
+            var response = await _instance.ListEmailDomainsAsync(limit, cursor);
+            var model = response.Ok();
+            Assert.IsType<DocSpring.Client.Model.EmailDomainList>(model);
         }
 
         /// <summary>
@@ -618,7 +806,8 @@ namespace DocSpring.Client.Test.Api
         {
             string folderId = default;
             MoveFolderRequest body = default;
-            var response = await _instance.MoveFolderAsync(folderId, body);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.MoveFolderAsync(folderId, body, idempotencyKey);
             var model = response.Ok();
             Assert.IsType<DocSpring.Client.Model.Folder>(model);
         }
@@ -631,7 +820,8 @@ namespace DocSpring.Client.Test.Api
         {
             string templateId = default;
             MoveTemplateRequest body = default;
-            var response = await _instance.MoveTemplateAsync(templateId, body);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.MoveTemplateAsync(templateId, body, idempotencyKey);
             var model = response.Ok();
             Assert.IsType<DocSpring.Client.Model.Template>(model);
         }
@@ -644,7 +834,8 @@ namespace DocSpring.Client.Test.Api
         {
             string templateId = default;
             PublishTemplateVersionRequest body = default;
-            var response = await _instance.PublishTemplateVersionAsync(templateId, body);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.PublishTemplateVersionAsync(templateId, body, idempotencyKey);
             var model = response.Created();
             Assert.IsType<DocSpring.Client.Model.TemplateVersion>(model);
         }
@@ -657,7 +848,8 @@ namespace DocSpring.Client.Test.Api
         {
             string templateId = default;
             RemoveTemplateFieldsRequest body = default;
-            var response = await _instance.RemoveTemplateFieldsAsync(templateId, body);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.RemoveTemplateFieldsAsync(templateId, body, idempotencyKey);
             var model = response.Ok();
             Assert.IsType<DocSpring.Client.Model.TemplateFields>(model);
         }
@@ -670,7 +862,8 @@ namespace DocSpring.Client.Test.Api
         {
             string folderId = default;
             RenameFolderRequest body = default;
-            var response = await _instance.RenameFolderAsync(folderId, body);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.RenameFolderAsync(folderId, body, idempotencyKey);
             var model = response.Ok();
             Assert.IsType<DocSpring.Client.Model.Folder>(model);
         }
@@ -683,7 +876,8 @@ namespace DocSpring.Client.Test.Api
         {
             string templateId = default;
             ReorderTemplateFieldsRequest body = default;
-            var response = await _instance.ReorderTemplateFieldsAsync(templateId, body);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.ReorderTemplateFieldsAsync(templateId, body, idempotencyKey);
             var model = response.Ok();
             Assert.IsType<DocSpring.Client.Model.TemplateFields>(model);
         }
@@ -696,9 +890,38 @@ namespace DocSpring.Client.Test.Api
         {
             string templateId = default;
             RestoreTemplateVersionRequest body = default;
-            var response = await _instance.RestoreTemplateVersionAsync(templateId, body);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.RestoreTemplateVersionAsync(templateId, body, idempotencyKey);
             var model = response.Ok();
             Assert.IsType<DocSpring.Client.Model.Template>(model);
+        }
+
+        /// <summary>
+        /// Test SendAccountEmailActionTestEmail
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task SendAccountEmailActionTestEmailAsyncTest()
+        {
+            string emailActionId = default;
+            Client.Option<SendAccountEmailActionTestEmailRequest> body = default;
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.SendAccountEmailActionTestEmailAsync(emailActionId, body, idempotencyKey);
+            var model = response.Ok();
+            Assert.IsType<DocSpring.Client.Model.EmailActionTestEmail>(model);
+        }
+
+        /// <summary>
+        /// Test SendEmailActionTestEmail
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task SendEmailActionTestEmailAsyncTest()
+        {
+            string templateId = default;
+            string emailActionId = default;
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.SendEmailActionTestEmailAsync(templateId, emailActionId, idempotencyKey);
+            var model = response.Ok();
+            Assert.IsType<DocSpring.Client.Model.EmailActionTestEmail>(model);
         }
 
         /// <summary>
@@ -713,6 +936,50 @@ namespace DocSpring.Client.Test.Api
         }
 
         /// <summary>
+        /// Test UpdateAccountEmailAction
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task UpdateAccountEmailActionAsyncTest()
+        {
+            string emailActionId = default;
+            UpdateAccountEmailActionRequest body = default;
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.UpdateAccountEmailActionAsync(emailActionId, body, idempotencyKey);
+            var model = response.Ok();
+            Assert.IsType<DocSpring.Client.Model.EmailAction>(model);
+        }
+
+        /// <summary>
+        /// Test UpdateEmailAction
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task UpdateEmailActionAsyncTest()
+        {
+            string templateId = default;
+            string emailActionId = default;
+            UpdateEmailActionRequest body = default;
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.UpdateEmailActionAsync(templateId, emailActionId, body, idempotencyKey);
+            var model = response.Ok();
+            Assert.IsType<DocSpring.Client.Model.EmailAction>(model);
+        }
+
+        /// <summary>
+        /// Test UpdateEmailActionCustomization
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task UpdateEmailActionCustomizationAsyncTest()
+        {
+            string templateId = default;
+            string emailActionId = default;
+            UpdateEmailActionCustomizationRequest body = default;
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.UpdateEmailActionCustomizationAsync(templateId, emailActionId, body, idempotencyKey);
+            var model = response.Ok();
+            Assert.IsType<DocSpring.Client.Model.EmailAction>(model);
+        }
+
+        /// <summary>
         /// Test UpdateSignatureRequest
         /// </summary>
         [Fact (Skip = "not implemented")]
@@ -720,7 +987,8 @@ namespace DocSpring.Client.Test.Api
         {
             string signatureRequestId = default;
             UpdateSignatureRequestRequest body = default;
-            var response = await _instance.UpdateSignatureRequestAsync(signatureRequestId, body);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.UpdateSignatureRequestAsync(signatureRequestId, body, idempotencyKey);
             var model = response.Ok();
             Assert.IsType<DocSpring.Client.Model.SignatureRequest>(model);
         }
@@ -733,7 +1001,8 @@ namespace DocSpring.Client.Test.Api
         {
             string templateId = default;
             UpdateTemplateRequest body = default;
-            var response = await _instance.UpdateTemplateAsync(templateId, body);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.UpdateTemplateAsync(templateId, body, idempotencyKey);
             var model = response.Ok();
             Assert.IsType<DocSpring.Client.Model.Template>(model);
         }
@@ -747,7 +1016,8 @@ namespace DocSpring.Client.Test.Api
             string templateId = default;
             UpdateTemplateDocumentRequest body = default;
             Client.Option<bool> wait = default;
-            var response = await _instance.UpdateTemplateDocumentAsync(templateId, body, wait);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.UpdateTemplateDocumentAsync(templateId, body, wait, idempotencyKey);
             var model = response.Ok();
             Assert.IsType<DocSpring.Client.Model.Template>(model);
         }
@@ -760,7 +1030,8 @@ namespace DocSpring.Client.Test.Api
         {
             string templateId = default;
             UpdateTemplateFieldsRequest body = default;
-            var response = await _instance.UpdateTemplateFieldsAsync(templateId, body);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.UpdateTemplateFieldsAsync(templateId, body, idempotencyKey);
             var model = response.Ok();
             Assert.IsType<DocSpring.Client.Model.TemplateFields>(model);
         }
@@ -773,7 +1044,8 @@ namespace DocSpring.Client.Test.Api
         {
             string webhookId = default;
             UpdateWebhookRequest body = default;
-            var response = await _instance.UpdateWebhookAsync(webhookId, body);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.UpdateWebhookAsync(webhookId, body, idempotencyKey);
             var model = response.Ok();
             Assert.IsType<DocSpring.Client.Model.Webhook>(model);
         }
@@ -795,7 +1067,8 @@ namespace DocSpring.Client.Test.Api
             Client.Option<FieldSetupNaming> fieldNaming = default;
             Client.Option<FieldSetupLogic> fieldLogic = default;
             Client.Option<OutputFormat> outputFormat = default;
-            var response = await _instance.UploadTemplateAsync(document, wait, name, description, parentFolderId, aiFieldNamingLanguage, detectFields, fieldSource, fieldNaming, fieldLogic, outputFormat);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.UploadTemplateAsync(document, wait, name, description, parentFolderId, aiFieldNamingLanguage, detectFields, fieldSource, fieldNaming, fieldLogic, outputFormat, idempotencyKey);
             var model = response.Created();
             Assert.IsType<DocSpring.Client.Model.Template>(model);
         }
@@ -810,7 +1083,8 @@ namespace DocSpring.Client.Test.Api
             DocSpring.Client.Client.FileParameter document = default;
             Client.Option<bool> wait = default;
             Client.Option<bool> reimportFields = default;
-            var response = await _instance.UploadTemplateDocumentAsync(templateId, document, wait, reimportFields);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.UploadTemplateDocumentAsync(templateId, document, wait, reimportFields, idempotencyKey);
             var model = response.Ok();
             Assert.IsType<DocSpring.Client.Model.Template>(model);
         }
@@ -824,9 +1098,23 @@ namespace DocSpring.Client.Test.Api
             string templateId = default;
             ValidateSubmissionRequest body = default;
             Client.Option<string> version = default;
-            var response = await _instance.ValidateSubmissionAsync(templateId, body, version);
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.ValidateSubmissionAsync(templateId, body, version, idempotencyKey);
             var model = response.Ok();
             Assert.IsType<DocSpring.Client.Model.SubmissionValidation>(model);
+        }
+
+        /// <summary>
+        /// Test VerifyEmailDomain
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task VerifyEmailDomainAsyncTest()
+        {
+            string emailDomainId = default;
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.VerifyEmailDomainAsync(emailDomainId, idempotencyKey);
+            var model = response.Ok();
+            Assert.IsType<DocSpring.Client.Model.EmailDomain>(model);
         }
     }
 }

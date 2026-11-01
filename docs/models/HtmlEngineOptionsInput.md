@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **Format** | **PageFormat** | The paper size. `Custom` uses `width` and `height`. | [optional] 
 **Width** | **string** | The page width for the `Custom` format, with a unit (`8.5in`, `210mm`). | [optional] 
 **Height** | **string** | The page height for the `Custom` format, with a unit. | [optional] 
-**Scale** | **decimal** | How much to scale the page, such as `0.8`. `1` prints it at its normal size. | [optional] 
+**Scale** | **decimal** | How much to scale the page, from 0.1 to 2, such as `0.8`. `1` prints it at its normal size. | [optional] 
 **Landscape** | **bool** | Print pages in landscape orientation. | [optional] 
 **PrintBackground** | **bool** | Print background colors and images. | [optional] 
 **MarginTop** | **string** | The top margin, with a unit, such as `1in` or `20mm`. | [optional] 

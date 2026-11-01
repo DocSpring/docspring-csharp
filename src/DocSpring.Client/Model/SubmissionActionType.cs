@@ -24,7 +24,7 @@ using DocSpring.Client.Client;
 namespace DocSpring.Client.Model
 {
     /// <summary>
-    /// The kind of storage a submission action uploads the PDF to.
+    /// The kind of storage a submission action uploads the PDF to, or &#x60;email&#x60;.
     /// </summary>
     /// <remarks>
     /// The static properties are the values this client knows. A response can have a value added to the API after this

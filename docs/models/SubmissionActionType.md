@@ -1,5 +1,5 @@
 # DocSpring.Client.Model.SubmissionActionType
-The kind of storage a submission action uploads the PDF to.
+The kind of storage a submission action uploads the PDF to, or `email`.
 
 ## Properties
 

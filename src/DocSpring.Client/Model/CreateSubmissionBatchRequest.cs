@@ -31,10 +31,10 @@ namespace DocSpring.Client.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateSubmissionBatchRequest" /> class.
         /// </summary>
-        /// <param name="submissions">Up to 50 submissions. Each one takes the properties of POST /templates/{template_id}/submissions except &#x60;signature_requests&#x60;, plus &#x60;template_id&#x60; and &#x60;template_version&#x60; when it uses a different template from the batch.</param>
+        /// <param name="submissions">Up to 50 submissions. Each one takes the properties of POST /templates/{template_id}/submissions except &#x60;signature_requests&#x60; and the options for DocSpring&#39;s emails to signers (&#x60;send_email&#x60;, &#x60;signing_order&#x60;, &#x60;email_subject&#x60;, &#x60;email_message&#x60;, &#x60;cc&#x60;, &#x60;reply_to&#x60;, &#x60;notification_emails&#x60;, &#x60;notify_when_signed&#x60; and &#x60;reminders&#x60;), plus &#x60;template_id&#x60; and &#x60;template_version&#x60; when it uses a different template from the batch.</param>
         /// <param name="metadata">Your own data about the batch, such as an ID from your app.</param>
         /// <param name="templateId">The template for each submission that doesn&#39;t name its own &#x60;template_id&#x60;.</param>
-        /// <param name="templateVersion">The template version to use: a published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;latest&#x60; (the draft when no version has been published).</param>
+        /// <param name="templateVersion">The template version to use: a published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; (the newest published version, or the draft when none has been published) or &#x60;draft&#x60;. Default &#x60;latest&#x60;.</param>
         /// <param name="test">The default &#x60;test&#x60; for each submission that doesn&#39;t set its own.</param>
         /// <param name="outputFormats">The default &#x60;output_formats&#x60; for each submission that doesn&#39;t set its own.</param>
         [JsonConstructor]
@@ -52,9 +52,9 @@ namespace DocSpring.Client.Model
         partial void OnCreated();
 
         /// <summary>
-        /// Up to 50 submissions. Each one takes the properties of POST /templates/{template_id}/submissions except &#x60;signature_requests&#x60;, plus &#x60;template_id&#x60; and &#x60;template_version&#x60; when it uses a different template from the batch.
+        /// Up to 50 submissions. Each one takes the properties of POST /templates/{template_id}/submissions except &#x60;signature_requests&#x60; and the options for DocSpring&#39;s emails to signers (&#x60;send_email&#x60;, &#x60;signing_order&#x60;, &#x60;email_subject&#x60;, &#x60;email_message&#x60;, &#x60;cc&#x60;, &#x60;reply_to&#x60;, &#x60;notification_emails&#x60;, &#x60;notify_when_signed&#x60; and &#x60;reminders&#x60;), plus &#x60;template_id&#x60; and &#x60;template_version&#x60; when it uses a different template from the batch.
         /// </summary>
-        /// <value>Up to 50 submissions. Each one takes the properties of POST /templates/{template_id}/submissions except &#x60;signature_requests&#x60;, plus &#x60;template_id&#x60; and &#x60;template_version&#x60; when it uses a different template from the batch.</value>
+        /// <value>Up to 50 submissions. Each one takes the properties of POST /templates/{template_id}/submissions except &#x60;signature_requests&#x60; and the options for DocSpring&#39;s emails to signers (&#x60;send_email&#x60;, &#x60;signing_order&#x60;, &#x60;email_subject&#x60;, &#x60;email_message&#x60;, &#x60;cc&#x60;, &#x60;reply_to&#x60;, &#x60;notification_emails&#x60;, &#x60;notify_when_signed&#x60; and &#x60;reminders&#x60;), plus &#x60;template_id&#x60; and &#x60;template_version&#x60; when it uses a different template from the batch.</value>
         [JsonPropertyName("submissions")]
         public List<SubmissionInput> Submissions { get; set; }
 
@@ -94,9 +94,9 @@ namespace DocSpring.Client.Model
         public Option<string> TemplateVersionOption { get; private set; }
 
         /// <summary>
-        /// The template version to use: a published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;latest&#x60; (the draft when no version has been published).
+        /// The template version to use: a published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; (the newest published version, or the draft when none has been published) or &#x60;draft&#x60;. Default &#x60;latest&#x60;.
         /// </summary>
-        /// <value>The template version to use: a published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; or &#x60;draft&#x60;. Default &#x60;latest&#x60; (the draft when no version has been published).</value>
+        /// <value>The template version to use: a published version (&#x60;1.2.0&#x60;, or &#x60;1&#x60; for the latest 1.x.x), &#x60;latest&#x60; (the newest published version, or the draft when none has been published) or &#x60;draft&#x60;. Default &#x60;latest&#x60;.</value>
         [JsonPropertyName("template_version")]
         public string TemplateVersion { get { return this.TemplateVersionOption.Value; } set { this.TemplateVersionOption = new Option<string>(value); } }
 

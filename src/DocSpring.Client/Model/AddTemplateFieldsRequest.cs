@@ -31,7 +31,7 @@ namespace DocSpring.Client.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="AddTemplateFieldsRequest" /> class.
         /// </summary>
-        /// <param name="fields">The fields to add. Settings left out have their defaults, except that a field with the name of other fields takes their shared settings. Shared settings it sets change them for every field with the name.</param>
+        /// <param name="fields">The fields to add. Settings left out have their defaults, except that a field with the name of other fields takes their shared settings. It can&#39;t set one of them to another value: PUT /templates/{template_id}/fields changes them for every field with the name.</param>
         [JsonConstructor]
         public AddTemplateFieldsRequest(List<FieldInput> fields)
         {
@@ -42,9 +42,9 @@ namespace DocSpring.Client.Model
         partial void OnCreated();
 
         /// <summary>
-        /// The fields to add. Settings left out have their defaults, except that a field with the name of other fields takes their shared settings. Shared settings it sets change them for every field with the name.
+        /// The fields to add. Settings left out have their defaults, except that a field with the name of other fields takes their shared settings. It can&#39;t set one of them to another value: PUT /templates/{template_id}/fields changes them for every field with the name.
         /// </summary>
-        /// <value>The fields to add. Settings left out have their defaults, except that a field with the name of other fields takes their shared settings. Shared settings it sets change them for every field with the name.</value>
+        /// <value>The fields to add. Settings left out have their defaults, except that a field with the name of other fields takes their shared settings. It can&#39;t set one of them to another value: PUT /templates/{template_id}/fields changes them for every field with the name.</value>
         [JsonPropertyName("fields")]
         public List<FieldInput> Fields { get; set; }
 

@@ -59,8 +59,11 @@ namespace DocSpring.Client.Client
             _jsonOptions.Converters.Add(new CombinedPdfStateJsonConverter());
             _jsonOptions.Converters.Add(new CombinedPdfStateNullableJsonConverter());
             _jsonOptions.Converters.Add(new CopyTemplateRequestJsonConverter());
+            _jsonOptions.Converters.Add(new CreateAccountEmailActionRequestJsonConverter());
             _jsonOptions.Converters.Add(new CreateCombinedPdfRequestJsonConverter());
             _jsonOptions.Converters.Add(new CreateCustomFileFromUploadRequestJsonConverter());
+            _jsonOptions.Converters.Add(new CreateEmailActionRequestJsonConverter());
+            _jsonOptions.Converters.Add(new CreateEmailDomainRequestJsonConverter());
             _jsonOptions.Converters.Add(new CreateFolderRequestJsonConverter());
             _jsonOptions.Converters.Add(new CreateSignatureRequestEventRequestJsonConverter());
             _jsonOptions.Converters.Add(new CreateSignatureRequestTokenRequestJsonConverter());
@@ -72,6 +75,31 @@ namespace DocSpring.Client.Client
             _jsonOptions.Converters.Add(new CustomFileJsonConverter());
             _jsonOptions.Converters.Add(new CustomFileListJsonConverter());
             _jsonOptions.Converters.Add(new CustomFileSourcePdfJsonConverter());
+            _jsonOptions.Converters.Add(new DnsRecordTypeJsonConverter());
+            _jsonOptions.Converters.Add(new DnsRecordTypeNullableJsonConverter());
+            _jsonOptions.Converters.Add(new EmailActionJsonConverter());
+            _jsonOptions.Converters.Add(new EmailActionConditionsJsonConverter());
+            _jsonOptions.Converters.Add(new EmailActionConditionsInputJsonConverter());
+            _jsonOptions.Converters.Add(new EmailActionCustomizationJsonConverter());
+            _jsonOptions.Converters.Add(new EmailActionDeliveryJsonConverter());
+            _jsonOptions.Converters.Add(new EmailActionDeliveryNullableJsonConverter());
+            _jsonOptions.Converters.Add(new EmailActionFileFormatsJsonConverter());
+            _jsonOptions.Converters.Add(new EmailActionFileFormatsNullableJsonConverter());
+            _jsonOptions.Converters.Add(new EmailActionListJsonConverter());
+            _jsonOptions.Converters.Add(new EmailActionSettingJsonConverter());
+            _jsonOptions.Converters.Add(new EmailActionSettingNullableJsonConverter());
+            _jsonOptions.Converters.Add(new EmailActionSubmissionTypeJsonConverter());
+            _jsonOptions.Converters.Add(new EmailActionSubmissionTypeNullableJsonConverter());
+            _jsonOptions.Converters.Add(new EmailActionTestEmailJsonConverter());
+            _jsonOptions.Converters.Add(new EmailDomainJsonConverter());
+            _jsonOptions.Converters.Add(new EmailDomainDnsRecordJsonConverter());
+            _jsonOptions.Converters.Add(new EmailDomainDnsRecordPurposeJsonConverter());
+            _jsonOptions.Converters.Add(new EmailDomainDnsRecordPurposeNullableJsonConverter());
+            _jsonOptions.Converters.Add(new EmailDomainListJsonConverter());
+            _jsonOptions.Converters.Add(new EmailDomainRecordStateJsonConverter());
+            _jsonOptions.Converters.Add(new EmailDomainRecordStateNullableJsonConverter());
+            _jsonOptions.Converters.Add(new EmailDomainStateJsonConverter());
+            _jsonOptions.Converters.Add(new EmailDomainStateNullableJsonConverter());
             _jsonOptions.Converters.Add(new ErrorCodeJsonConverter());
             _jsonOptions.Converters.Add(new ErrorCodeNullableJsonConverter());
             _jsonOptions.Converters.Add(new ErrorDetailJsonConverter());
@@ -144,6 +172,7 @@ namespace DocSpring.Client.Client
             _jsonOptions.Converters.Add(new RenameFolderRequestJsonConverter());
             _jsonOptions.Converters.Add(new ReorderTemplateFieldsRequestJsonConverter());
             _jsonOptions.Converters.Add(new RestoreTemplateVersionRequestJsonConverter());
+            _jsonOptions.Converters.Add(new SendAccountEmailActionTestEmailRequestJsonConverter());
             _jsonOptions.Converters.Add(new ShapeTypeJsonConverter());
             _jsonOptions.Converters.Add(new ShapeTypeNullableJsonConverter());
             _jsonOptions.Converters.Add(new SignatureRequestJsonConverter());
@@ -151,17 +180,24 @@ namespace DocSpring.Client.Client
             _jsonOptions.Converters.Add(new SignatureRequestAuthSecondFactorTypeNullableJsonConverter());
             _jsonOptions.Converters.Add(new SignatureRequestAuthTypeJsonConverter());
             _jsonOptions.Converters.Add(new SignatureRequestAuthTypeNullableJsonConverter());
+            _jsonOptions.Converters.Add(new SignatureRequestEmailAttachmentsJsonConverter());
+            _jsonOptions.Converters.Add(new SignatureRequestEmailAttachmentsNullableJsonConverter());
+            _jsonOptions.Converters.Add(new SignatureRequestEmailStatusJsonConverter());
+            _jsonOptions.Converters.Add(new SignatureRequestEmailStatusNullableJsonConverter());
             _jsonOptions.Converters.Add(new SignatureRequestEventJsonConverter());
             _jsonOptions.Converters.Add(new SignatureRequestEventTypeJsonConverter());
             _jsonOptions.Converters.Add(new SignatureRequestEventTypeNullableJsonConverter());
             _jsonOptions.Converters.Add(new SignatureRequestInputJsonConverter());
             _jsonOptions.Converters.Add(new SignatureRequestMessageTypeJsonConverter());
             _jsonOptions.Converters.Add(new SignatureRequestMessageTypeNullableJsonConverter());
+            _jsonOptions.Converters.Add(new SignatureRequestRemindersJsonConverter());
             _jsonOptions.Converters.Add(new SignatureRequestStateJsonConverter());
             _jsonOptions.Converters.Add(new SignatureRequestStateNullableJsonConverter());
             _jsonOptions.Converters.Add(new SignatureRequestTokenJsonConverter());
             _jsonOptions.Converters.Add(new SignatureRequestTokenTypeJsonConverter());
             _jsonOptions.Converters.Add(new SignatureRequestTokenTypeNullableJsonConverter());
+            _jsonOptions.Converters.Add(new SigningOrderJsonConverter());
+            _jsonOptions.Converters.Add(new SigningOrderNullableJsonConverter());
             _jsonOptions.Converters.Add(new StringConditionTypeJsonConverter());
             _jsonOptions.Converters.Add(new StringConditionTypeNullableJsonConverter());
             _jsonOptions.Converters.Add(new SubmissionJsonConverter());
@@ -243,6 +279,9 @@ namespace DocSpring.Client.Client
             _jsonOptions.Converters.Add(new TextVerticalAlignmentNullableJsonConverter());
             _jsonOptions.Converters.Add(new TypefaceJsonConverter());
             _jsonOptions.Converters.Add(new TypefaceNullableJsonConverter());
+            _jsonOptions.Converters.Add(new UpdateAccountEmailActionRequestJsonConverter());
+            _jsonOptions.Converters.Add(new UpdateEmailActionCustomizationRequestJsonConverter());
+            _jsonOptions.Converters.Add(new UpdateEmailActionRequestJsonConverter());
             _jsonOptions.Converters.Add(new UpdateSignatureRequestRequestJsonConverter());
             _jsonOptions.Converters.Add(new UpdateTemplateDocumentRequestJsonConverter());
             _jsonOptions.Converters.Add(new UpdateTemplateFieldsRequestJsonConverter());
@@ -309,7 +348,7 @@ namespace DocSpring.Client.Client
 
             List<IHttpClientBuilder> builders = new List<IHttpClientBuilder>();
 
-            builders.Add(_services.AddHttpClient<DocSpring.Client.Api.IClient, DocSpring.Client.Api.Client>("DocSpring.Client.Api.IClient", (serviceProvider, c) => { c.DefaultRequestHeaders.UserAgent.ParseAdd("docspring-csharp-4.3.0"); client(serviceProvider, c); }));
+            builders.Add(_services.AddHttpClient<DocSpring.Client.Api.IClient, DocSpring.Client.Api.Client>("DocSpring.Client.Api.IClient", (serviceProvider, c) => { c.DefaultRequestHeaders.UserAgent.ParseAdd("docspring-csharp-4.4.0"); client(serviceProvider, c); }));
 
             foreach (IHttpClientBuilder instance in builders)
             {

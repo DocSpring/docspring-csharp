@@ -24,7 +24,7 @@ using DocSpring.Client.Client;
 namespace DocSpring.Client.Model
 {
     /// <summary>
-    /// Where a submission action (an upload to your storage) is.
+    /// Where a submission action (an upload to your storage, or an email) is.
     /// </summary>
     /// <remarks>
     /// The static properties are the values this client knows. A response can have a value added to the API after this

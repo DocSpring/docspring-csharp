@@ -24,7 +24,7 @@ using DocSpring.Client.Client;
 namespace DocSpring.Client.Model
 {
     /// <summary>
-    /// An upload of a PDF to your storage, such as an S3 bucket.
+    /// An upload of a PDF to your storage, such as an S3 bucket, or an email action&#39;s email.
     /// </summary>
     public partial class SubmissionAction : IValidatableObject
     {
@@ -32,19 +32,21 @@ namespace DocSpring.Client.Model
         /// Initializes a new instance of the <see cref="SubmissionAction" /> class.
         /// </summary>
         /// <param name="id">The upload&#39;s ID.</param>
-        /// <param name="state">&#x60;pending&#x60; until the upload has run, then &#x60;processed&#x60;. &#x60;failed&#x60;: your storage rejected it. &#x60;error&#x60;: it failed in DocSpring.</param>
-        /// <param name="actionType">The kind of storage, such as &#x60;aws_s3_upload&#x60; for an S3 bucket.</param>
-        /// <param name="resultData">Where the PDF was uploaded, such as the S3 bucket and key.</param>
+        /// <param name="state">&#x60;pending&#x60; until the upload or email has run, then &#x60;processed&#x60;. &#x60;failed&#x60;: your storage or the email service rejected it. &#x60;error&#x60;: it failed in DocSpring.</param>
+        /// <param name="actionType">The kind of storage, such as &#x60;aws_s3_upload&#x60; for an S3 bucket, or &#x60;email&#x60; for an email action&#39;s email.</param>
+        /// <param name="resultData">Where the PDF was uploaded, such as the S3 bucket and key. For an email: its &#x60;subject&#x60;, &#x60;recipients&#x60;, each with its &#x60;address&#x60;, &#x60;kind&#x60; (&#x60;to&#x60;, &#x60;cc&#x60; or &#x60;bcc&#x60;), &#x60;source&#x60;, &#x60;field&#x60; or &#x60;metadata&#x60; when the address came from one, and &#x60;status&#x60; (&#x60;sent&#x60;, &#x60;delivered&#x60;, &#x60;bounced&#x60;, &#x60;complained&#x60;, &#x60;skipped&#x60; and others), &#x60;sent_at&#x60;, &#x60;delivery&#x60;, and &#x60;files&#x60; (the files it sent: &#x60;pdf&#x60;, &#x60;docx&#x60;, &#x60;odt&#x60;). An email whose submission didn&#39;t meet the email action&#39;s &#x60;send_when&#x60; conditions has only &#x60;skipped&#x60;, &#x60;conditions_not_met&#x60;, and its state is &#x60;processed&#x60;. An email whose submission made none of the files the email action sends has &#x60;skipped&#x60;, &#x60;no_files&#x60; and the action&#39;s &#x60;file_formats&#x60;, and its state is &#x60;processed&#x60; too. When the submission&#39;s data is left out (a batch, or a webhook without submission data), the subject and the addresses that came from fields or metadata are null.</param>
         /// <param name="integrationId">The ID of the account integration it used.</param>
+        /// <param name="emailActionId">The ID of the email action that sent the email. Null for an upload, or once the email action is deleted.</param>
         /// <param name="errorMessage">Why the upload failed, when &#x60;state&#x60; is &#x60;failed&#x60; or &#x60;error&#x60;.</param>
         [JsonConstructor]
-        public SubmissionAction(string id, SubmissionActionState state, SubmissionActionType actionType, Dictionary<string, Object> resultData, string integrationId = default, string errorMessage = default)
+        public SubmissionAction(string id, SubmissionActionState state, SubmissionActionType actionType, Dictionary<string, Object> resultData, string integrationId = default, string emailActionId = default, string errorMessage = default)
         {
             Id = id;
             State = state;
             ActionType = actionType;
             ResultData = resultData;
             IntegrationId = integrationId;
+            EmailActionId = emailActionId;
             ErrorMessage = errorMessage;
             OnCreated();
         }
@@ -52,16 +54,16 @@ namespace DocSpring.Client.Model
         partial void OnCreated();
 
         /// <summary>
-        /// &#x60;pending&#x60; until the upload has run, then &#x60;processed&#x60;. &#x60;failed&#x60;: your storage rejected it. &#x60;error&#x60;: it failed in DocSpring.
+        /// &#x60;pending&#x60; until the upload or email has run, then &#x60;processed&#x60;. &#x60;failed&#x60;: your storage or the email service rejected it. &#x60;error&#x60;: it failed in DocSpring.
         /// </summary>
-        /// <value>&#x60;pending&#x60; until the upload has run, then &#x60;processed&#x60;. &#x60;failed&#x60;: your storage rejected it. &#x60;error&#x60;: it failed in DocSpring.</value>
+        /// <value>&#x60;pending&#x60; until the upload or email has run, then &#x60;processed&#x60;. &#x60;failed&#x60;: your storage or the email service rejected it. &#x60;error&#x60;: it failed in DocSpring.</value>
         [JsonPropertyName("state")]
         public SubmissionActionState State { get; set; }
 
         /// <summary>
-        /// The kind of storage, such as &#x60;aws_s3_upload&#x60; for an S3 bucket.
+        /// The kind of storage, such as &#x60;aws_s3_upload&#x60; for an S3 bucket, or &#x60;email&#x60; for an email action&#39;s email.
         /// </summary>
-        /// <value>The kind of storage, such as &#x60;aws_s3_upload&#x60; for an S3 bucket.</value>
+        /// <value>The kind of storage, such as &#x60;aws_s3_upload&#x60; for an S3 bucket, or &#x60;email&#x60; for an email action&#39;s email.</value>
         [JsonPropertyName("action_type")]
         public SubmissionActionType ActionType { get; set; }
 
@@ -73,9 +75,9 @@ namespace DocSpring.Client.Model
         public string Id { get; set; }
 
         /// <summary>
-        /// Where the PDF was uploaded, such as the S3 bucket and key.
+        /// Where the PDF was uploaded, such as the S3 bucket and key. For an email: its &#x60;subject&#x60;, &#x60;recipients&#x60;, each with its &#x60;address&#x60;, &#x60;kind&#x60; (&#x60;to&#x60;, &#x60;cc&#x60; or &#x60;bcc&#x60;), &#x60;source&#x60;, &#x60;field&#x60; or &#x60;metadata&#x60; when the address came from one, and &#x60;status&#x60; (&#x60;sent&#x60;, &#x60;delivered&#x60;, &#x60;bounced&#x60;, &#x60;complained&#x60;, &#x60;skipped&#x60; and others), &#x60;sent_at&#x60;, &#x60;delivery&#x60;, and &#x60;files&#x60; (the files it sent: &#x60;pdf&#x60;, &#x60;docx&#x60;, &#x60;odt&#x60;). An email whose submission didn&#39;t meet the email action&#39;s &#x60;send_when&#x60; conditions has only &#x60;skipped&#x60;, &#x60;conditions_not_met&#x60;, and its state is &#x60;processed&#x60;. An email whose submission made none of the files the email action sends has &#x60;skipped&#x60;, &#x60;no_files&#x60; and the action&#39;s &#x60;file_formats&#x60;, and its state is &#x60;processed&#x60; too. When the submission&#39;s data is left out (a batch, or a webhook without submission data), the subject and the addresses that came from fields or metadata are null.
         /// </summary>
-        /// <value>Where the PDF was uploaded, such as the S3 bucket and key.</value>
+        /// <value>Where the PDF was uploaded, such as the S3 bucket and key. For an email: its &#x60;subject&#x60;, &#x60;recipients&#x60;, each with its &#x60;address&#x60;, &#x60;kind&#x60; (&#x60;to&#x60;, &#x60;cc&#x60; or &#x60;bcc&#x60;), &#x60;source&#x60;, &#x60;field&#x60; or &#x60;metadata&#x60; when the address came from one, and &#x60;status&#x60; (&#x60;sent&#x60;, &#x60;delivered&#x60;, &#x60;bounced&#x60;, &#x60;complained&#x60;, &#x60;skipped&#x60; and others), &#x60;sent_at&#x60;, &#x60;delivery&#x60;, and &#x60;files&#x60; (the files it sent: &#x60;pdf&#x60;, &#x60;docx&#x60;, &#x60;odt&#x60;). An email whose submission didn&#39;t meet the email action&#39;s &#x60;send_when&#x60; conditions has only &#x60;skipped&#x60;, &#x60;conditions_not_met&#x60;, and its state is &#x60;processed&#x60;. An email whose submission made none of the files the email action sends has &#x60;skipped&#x60;, &#x60;no_files&#x60; and the action&#39;s &#x60;file_formats&#x60;, and its state is &#x60;processed&#x60; too. When the submission&#39;s data is left out (a batch, or a webhook without submission data), the subject and the addresses that came from fields or metadata are null.</value>
         [JsonPropertyName("result_data")]
         public Dictionary<string, Object> ResultData { get; set; }
 
@@ -85,6 +87,13 @@ namespace DocSpring.Client.Model
         /// <value>The ID of the account integration it used.</value>
         [JsonPropertyName("integration_id")]
         public string IntegrationId { get; set; }
+
+        /// <summary>
+        /// The ID of the email action that sent the email. Null for an upload, or once the email action is deleted.
+        /// </summary>
+        /// <value>The ID of the email action that sent the email. Null for an upload, or once the email action is deleted.</value>
+        [JsonPropertyName("email_action_id")]
+        public string EmailActionId { get; set; }
 
         /// <summary>
         /// Why the upload failed, when &#x60;state&#x60; is &#x60;failed&#x60; or &#x60;error&#x60;.
@@ -112,6 +121,7 @@ namespace DocSpring.Client.Model
             sb.Append("  ActionType: ").Append(ActionType).Append("\n");
             sb.Append("  ResultData: ").Append(ResultData).Append("\n");
             sb.Append("  IntegrationId: ").Append(IntegrationId).Append("\n");
+            sb.Append("  EmailActionId: ").Append(EmailActionId).Append("\n");
             sb.Append("  ErrorMessage: ").Append(ErrorMessage).Append("\n");
             sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
@@ -166,6 +176,7 @@ namespace DocSpring.Client.Model
             Option<SubmissionActionType?> actionType = default;
             Option<Dictionary<string, Object>> resultData = default;
             Option<string> integrationId = default;
+            Option<string> emailActionId = default;
             Option<string> errorMessage = default;
 
             while (utf8JsonReader.Read())
@@ -198,6 +209,9 @@ namespace DocSpring.Client.Model
                         case "integration_id":
                             integrationId = new Option<string>(utf8JsonReader.GetString());
                             break;
+                        case "email_action_id":
+                            emailActionId = new Option<string>(utf8JsonReader.GetString());
+                            break;
                         case "error_message":
                             errorMessage = new Option<string>(utf8JsonReader.GetString());
                             break;
@@ -222,6 +236,9 @@ namespace DocSpring.Client.Model
             if (!integrationId.IsSet)
                 throw new JsonException("Property is required for class SubmissionAction: integration_id.");
 
+            if (!emailActionId.IsSet)
+                throw new JsonException("Property is required for class SubmissionAction: email_action_id.");
+
             if (!errorMessage.IsSet)
                 throw new JsonException("Property is required for class SubmissionAction: error_message.");
 
@@ -237,7 +254,7 @@ namespace DocSpring.Client.Model
             if (resultData.IsSet && resultData.Value == null)
                 throw new JsonException("Property is not nullable for class SubmissionAction: result_data.");
 
-            return new SubmissionAction(id.Value, state.Value.Value, actionType.Value.Value, resultData.Value, integrationId.Value, errorMessage.Value);
+            return new SubmissionAction(id.Value, state.Value.Value, actionType.Value.Value, resultData.Value, integrationId.Value, emailActionId.Value, errorMessage.Value);
         }
 
         /// <summary>
@@ -276,6 +293,11 @@ namespace DocSpring.Client.Model
                 writer.WriteString("integration_id", submissionAction.IntegrationId);
             else
                 writer.WriteNull("integration_id");
+
+            if (submissionAction.EmailActionId != null)
+                writer.WriteString("email_action_id", submissionAction.EmailActionId);
+            else
+                writer.WriteNull("email_action_id");
 
             if (submissionAction.ErrorMessage != null)
                 writer.WriteString("error_message", submissionAction.ErrorMessage);

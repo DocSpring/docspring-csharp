@@ -59,9 +59,14 @@ namespace DocSpring.Client.Model
         public static TemplateType Docx { get; } = new TemplateType("docx");
 
         /// <summary>
+        /// page_designer
+        /// </summary>
+        public static TemplateType PageDesigner { get; } = new TemplateType("page_designer");
+
+        /// <summary>
         /// The values this client knows
         /// </summary>
-        public static IReadOnlyList<TemplateType> Values { get; } = new[] { Pdf, Html, Docx };
+        public static IReadOnlyList<TemplateType> Values { get; } = new[] { Pdf, Html, Docx, PageDesigner };
 
         /// <summary>
         /// Whether the value is one this client knows: a newer API can return values added after it was released
