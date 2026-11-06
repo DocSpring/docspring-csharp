@@ -32,14 +32,14 @@ namespace DocSpring.Client.Model
         /// Initializes a new instance of the <see cref="HtmlEngineOptionsInput" /> class.
         /// </summary>
         /// <param name="format">The paper size. &#x60;Custom&#x60; uses &#x60;width&#x60; and &#x60;height&#x60;.</param>
-        /// <param name="width">The page width for the &#x60;Custom&#x60; format, with a unit (&#x60;8.5in&#x60;, &#x60;210mm&#x60;).</param>
-        /// <param name="height">The page height for the &#x60;Custom&#x60; format, with a unit.</param>
+        /// <param name="width">The page width for the &#x60;Custom&#x60; format, with a unit (&#x60;8.5in&#x60;, &#x60;210mm&#x60;), from 0.05in to 200in.</param>
+        /// <param name="height">The page height for the &#x60;Custom&#x60; format, with a unit, from 0.05in to 200in.</param>
         /// <param name="scale">How much to scale the page, from 0.1 to 2, such as &#x60;0.8&#x60;. &#x60;1&#x60; prints it at its normal size.</param>
         /// <param name="landscape">Print pages in landscape orientation.</param>
         /// <param name="printBackground">Print background colors and images.</param>
-        /// <param name="marginTop">The top margin, with a unit, such as &#x60;1in&#x60; or &#x60;20mm&#x60;.</param>
+        /// <param name="marginTop">The top margin, with a unit, such as &#x60;1in&#x60; or &#x60;20mm&#x60;. The top and bottom margins together must be less than the page&#39;s height.</param>
         /// <param name="marginBottom">The bottom margin, with a unit.</param>
-        /// <param name="marginLeft">The left margin, with a unit.</param>
+        /// <param name="marginLeft">The left margin, with a unit. The left and right margins together must be less than the page&#39;s width.</param>
         /// <param name="marginRight">The right margin, with a unit.</param>
         [JsonConstructor]
         public HtmlEngineOptionsInput(Option<PageFormat?> format = default, Option<string> width = default, Option<string> height = default, Option<decimal?> scale = default, Option<bool?> landscape = default, Option<bool?> printBackground = default, Option<string> marginTop = default, Option<string> marginBottom = default, Option<string> marginLeft = default, Option<string> marginRight = default)
@@ -81,9 +81,9 @@ namespace DocSpring.Client.Model
         public Option<string> WidthOption { get; private set; }
 
         /// <summary>
-        /// The page width for the &#x60;Custom&#x60; format, with a unit (&#x60;8.5in&#x60;, &#x60;210mm&#x60;).
+        /// The page width for the &#x60;Custom&#x60; format, with a unit (&#x60;8.5in&#x60;, &#x60;210mm&#x60;), from 0.05in to 200in.
         /// </summary>
-        /// <value>The page width for the &#x60;Custom&#x60; format, with a unit (&#x60;8.5in&#x60;, &#x60;210mm&#x60;).</value>
+        /// <value>The page width for the &#x60;Custom&#x60; format, with a unit (&#x60;8.5in&#x60;, &#x60;210mm&#x60;), from 0.05in to 200in.</value>
         [JsonPropertyName("width")]
         public string Width { get { return this.WidthOption.Value; } set { this.WidthOption = new Option<string>(value); } }
 
@@ -95,9 +95,9 @@ namespace DocSpring.Client.Model
         public Option<string> HeightOption { get; private set; }
 
         /// <summary>
-        /// The page height for the &#x60;Custom&#x60; format, with a unit.
+        /// The page height for the &#x60;Custom&#x60; format, with a unit, from 0.05in to 200in.
         /// </summary>
-        /// <value>The page height for the &#x60;Custom&#x60; format, with a unit.</value>
+        /// <value>The page height for the &#x60;Custom&#x60; format, with a unit, from 0.05in to 200in.</value>
         [JsonPropertyName("height")]
         public string Height { get { return this.HeightOption.Value; } set { this.HeightOption = new Option<string>(value); } }
 
@@ -151,9 +151,9 @@ namespace DocSpring.Client.Model
         public Option<string> MarginTopOption { get; private set; }
 
         /// <summary>
-        /// The top margin, with a unit, such as &#x60;1in&#x60; or &#x60;20mm&#x60;.
+        /// The top margin, with a unit, such as &#x60;1in&#x60; or &#x60;20mm&#x60;. The top and bottom margins together must be less than the page&#39;s height.
         /// </summary>
-        /// <value>The top margin, with a unit, such as &#x60;1in&#x60; or &#x60;20mm&#x60;.</value>
+        /// <value>The top margin, with a unit, such as &#x60;1in&#x60; or &#x60;20mm&#x60;. The top and bottom margins together must be less than the page&#39;s height.</value>
         [JsonPropertyName("margin_top")]
         public string MarginTop { get { return this.MarginTopOption.Value; } set { this.MarginTopOption = new Option<string>(value); } }
 
@@ -179,9 +179,9 @@ namespace DocSpring.Client.Model
         public Option<string> MarginLeftOption { get; private set; }
 
         /// <summary>
-        /// The left margin, with a unit.
+        /// The left margin, with a unit. The left and right margins together must be less than the page&#39;s width.
         /// </summary>
-        /// <value>The left margin, with a unit.</value>
+        /// <value>The left margin, with a unit. The left and right margins together must be less than the page&#39;s width.</value>
         [JsonPropertyName("margin_left")]
         public string MarginLeft { get { return this.MarginLeftOption.Value; } set { this.MarginLeftOption = new Option<string>(value); } }
 

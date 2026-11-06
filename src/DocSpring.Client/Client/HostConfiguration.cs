@@ -249,6 +249,8 @@ namespace DocSpring.Client.Client
             _jsonOptions.Converters.Add(new TemplateFieldsJsonConverter());
             _jsonOptions.Converters.Add(new TemplateFormModeJsonConverter());
             _jsonOptions.Converters.Add(new TemplateFormModeNullableJsonConverter());
+            _jsonOptions.Converters.Add(new TemplateFormSectionJsonConverter());
+            _jsonOptions.Converters.Add(new TemplateFormSectionInputJsonConverter());
             _jsonOptions.Converters.Add(new TemplateModelCodeJsonConverter());
             _jsonOptions.Converters.Add(new TemplatePageAiErrorJsonConverter());
             _jsonOptions.Converters.Add(new TemplatePageAiErrorNullableJsonConverter());
@@ -348,7 +350,7 @@ namespace DocSpring.Client.Client
 
             List<IHttpClientBuilder> builders = new List<IHttpClientBuilder>();
 
-            builders.Add(_services.AddHttpClient<DocSpring.Client.Api.IClient, DocSpring.Client.Api.Client>("DocSpring.Client.Api.IClient", (serviceProvider, c) => { c.DefaultRequestHeaders.UserAgent.ParseAdd("docspring-csharp-4.4.0"); client(serviceProvider, c); }));
+            builders.Add(_services.AddHttpClient<DocSpring.Client.Api.IClient, DocSpring.Client.Api.Client>("DocSpring.Client.Api.IClient", (serviceProvider, c) => { c.DefaultRequestHeaders.UserAgent.ParseAdd("docspring-csharp-4.5.0"); client(serviceProvider, c); }));
 
             foreach (IHttpClientBuilder instance in builders)
             {

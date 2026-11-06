@@ -151,5 +151,23 @@ namespace DocSpring.Client.Test.Model
         {
             // TODO unit test for the property 'WebhookId'
         }
+
+        /// <summary>
+        /// Test the property 'EmailActionId'
+        /// </summary>
+        [Fact]
+        public void EmailActionIdTest()
+        {
+            // TODO unit test for the property 'EmailActionId'
+        }
+
+        /// <summary>
+        /// Test the property 'EmailDomainId'
+        /// </summary>
+        [Fact]
+        public void EmailDomainIdTest()
+        {
+            // TODO unit test for the property 'EmailDomainId'
+        }
     }
 }

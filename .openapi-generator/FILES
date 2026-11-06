@@ -158,6 +158,8 @@ docs/models/TemplateFieldLogicStatus.md
 docs/models/TemplateFieldMove.md
 docs/models/TemplateFields.md
 docs/models/TemplateFormMode.md
+docs/models/TemplateFormSection.md
+docs/models/TemplateFormSectionInput.md
 docs/models/TemplateModelCode.md
 docs/models/TemplatePageAiError.md
 docs/models/TemplatePageAiNamingStatus.md
@@ -352,6 +354,8 @@ src/DocSpring.Client.Test/Model/TemplateFieldLogicStatusTests.cs
 src/DocSpring.Client.Test/Model/TemplateFieldMoveTests.cs
 src/DocSpring.Client.Test/Model/TemplateFieldsTests.cs
 src/DocSpring.Client.Test/Model/TemplateFormModeTests.cs
+src/DocSpring.Client.Test/Model/TemplateFormSectionInputTests.cs
+src/DocSpring.Client.Test/Model/TemplateFormSectionTests.cs
 src/DocSpring.Client.Test/Model/TemplateModelCodeTests.cs
 src/DocSpring.Client.Test/Model/TemplatePageAiErrorTests.cs
 src/DocSpring.Client.Test/Model/TemplatePageAiNamingStatusTests.cs
@@ -568,6 +572,8 @@ src/DocSpring.Client/Model/TemplateFieldLogicStatus.cs
 src/DocSpring.Client/Model/TemplateFieldMove.cs
 src/DocSpring.Client/Model/TemplateFields.cs
 src/DocSpring.Client/Model/TemplateFormMode.cs
+src/DocSpring.Client/Model/TemplateFormSection.cs
+src/DocSpring.Client/Model/TemplateFormSectionInput.cs
 src/DocSpring.Client/Model/TemplateModelCode.cs
 src/DocSpring.Client/Model/TemplatePageAiError.cs
 src/DocSpring.Client/Model/TemplatePageAiNamingStatus.cs

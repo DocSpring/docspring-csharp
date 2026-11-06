@@ -1067,8 +1067,9 @@ namespace DocSpring.Client.Test.Api
             Client.Option<FieldSetupNaming> fieldNaming = default;
             Client.Option<FieldSetupLogic> fieldLogic = default;
             Client.Option<OutputFormat> outputFormat = default;
+            Client.Option<bool> includeOfficeUseFields = default;
             Client.Option<string> idempotencyKey = default;
-            var response = await _instance.UploadTemplateAsync(document, wait, name, description, parentFolderId, aiFieldNamingLanguage, detectFields, fieldSource, fieldNaming, fieldLogic, outputFormat, idempotencyKey);
+            var response = await _instance.UploadTemplateAsync(document, wait, name, description, parentFolderId, aiFieldNamingLanguage, detectFields, fieldSource, fieldNaming, fieldLogic, outputFormat, includeOfficeUseFields, idempotencyKey);
             var model = response.Created();
             Assert.IsType<DocSpring.Client.Model.Template>(model);
         }

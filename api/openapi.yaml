@@ -145,7 +145,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -313,7 +315,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -553,7 +557,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -702,7 +708,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -1069,7 +1077,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -1345,7 +1355,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -1709,7 +1721,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -1824,7 +1838,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -2198,7 +2214,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -2430,7 +2448,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -2710,7 +2730,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -2892,7 +2914,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -3053,7 +3077,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -3273,7 +3299,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -3518,7 +3546,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -3679,7 +3709,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -3937,7 +3969,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -4225,7 +4259,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -4355,7 +4391,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -4585,7 +4623,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -4745,7 +4785,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -5012,7 +5054,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -5207,7 +5251,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -5384,7 +5430,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -5571,7 +5619,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -6869,7 +6919,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -7636,7 +7688,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -7811,7 +7865,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -8187,7 +8243,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -8384,7 +8442,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -8823,7 +8883,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -8866,6 +8928,7 @@ paths:
                   field_source: pdf_form_fields
                   field_naming: preserve
                   field_logic: none
+                  include_office_use_fields: true
               PDF template created from a URL:
                 summary: PDF template created from a URL
                 value:
@@ -8982,6 +9045,9 @@ paths:
                     signature_request_notification_emails: []
                     signature_request_reply_to: null
                     signature_request_signing_url: null
+                    success_title: null
+                    success_message: null
+                    show_fill_again_button: true
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: api
@@ -9001,6 +9067,7 @@ paths:
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
+                    form_sections: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: "<h1>Receipt for {{ name }}</h1>"
@@ -9078,6 +9145,9 @@ paths:
                     signature_request_notification_emails: []
                     signature_request_reply_to: null
                     signature_request_signing_url: null
+                    success_title: null
+                    success_message: null
+                    show_fill_again_button: true
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: api
@@ -9097,6 +9167,7 @@ paths:
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
+                    form_sections: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -9166,6 +9237,9 @@ paths:
                     signature_request_notification_emails: []
                     signature_request_reply_to: null
                     signature_request_signing_url: null
+                    success_title: null
+                    success_message: null
+                    show_fill_again_button: true
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: api
@@ -9185,6 +9259,7 @@ paths:
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
+                    form_sections: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -9254,6 +9329,9 @@ paths:
                     signature_request_notification_emails: []
                     signature_request_reply_to: null
                     signature_request_signing_url: null
+                    success_title: null
+                    success_message: null
+                    show_fill_again_button: true
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: api
@@ -9273,6 +9351,7 @@ paths:
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
+                    form_sections: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -9342,6 +9421,9 @@ paths:
                     signature_request_notification_emails: []
                     signature_request_reply_to: null
                     signature_request_signing_url: null
+                    success_title: null
+                    success_message: null
+                    show_fill_again_button: true
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: api
@@ -9361,6 +9443,7 @@ paths:
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
+                    form_sections: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -9418,6 +9501,9 @@ paths:
                     signature_request_notification_emails: []
                     signature_request_reply_to: null
                     signature_request_signing_url: null
+                    success_title: null
+                    success_message: null
+                    show_fill_again_button: true
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: api
@@ -9453,6 +9539,7 @@ paths:
                       min_items: null
                       max_items: null
                       allow_additional_items: false
+                    form_sections: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -9563,6 +9650,9 @@ paths:
                     signature_request_notification_emails: []
                     signature_request_reply_to: null
                     signature_request_signing_url: null
+                    success_title: null
+                    success_message: null
+                    show_fill_again_button: true
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: api
@@ -9590,6 +9680,7 @@ paths:
                       min_items: null
                       max_items: null
                       allow_additional_items: false
+                    form_sections: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -9735,7 +9826,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -9814,6 +9907,9 @@ paths:
                     signature_request_notification_emails: []
                     signature_request_reply_to: null
                     signature_request_signing_url: null
+                    success_title: null
+                    success_message: null
+                    show_fill_again_button: true
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: api
@@ -9833,6 +9929,7 @@ paths:
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
+                    form_sections: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -9902,6 +9999,9 @@ paths:
                     signature_request_notification_emails: []
                     signature_request_reply_to: null
                     signature_request_signing_url: null
+                    success_title: null
+                    success_message: null
+                    show_fill_again_button: true
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: api
@@ -9929,6 +10029,7 @@ paths:
                       min_items: null
                       max_items: null
                       allow_additional_items: false
+                    form_sections: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -10077,7 +10178,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -10137,6 +10240,9 @@ paths:
                     signature_request_notification_emails: []
                     signature_request_reply_to: null
                     signature_request_signing_url: null
+                    success_title: null
+                    success_message: null
+                    show_fill_again_button: true
                     has_slack_webhook_url: false
                     last_changed_by: null
                     defaults:
@@ -10151,6 +10257,7 @@ paths:
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
+                    form_sections: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: "<h1>Invoice {{ invoice_number }}</h1>"
@@ -10363,6 +10470,9 @@ paths:
                     signature_request_notification_emails: []
                     signature_request_reply_to: null
                     signature_request_signing_url: null
+                    success_title: null
+                    success_message: null
+                    show_fill_again_button: true
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: user
@@ -10382,6 +10492,7 @@ paths:
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
+                    form_sections: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -10451,6 +10562,9 @@ paths:
                     signature_request_notification_emails: []
                     signature_request_reply_to: null
                     signature_request_signing_url: null
+                    success_title: null
+                    success_message: null
+                    show_fill_again_button: true
                     has_slack_webhook_url: false
                     last_changed_by: null
                     defaults:
@@ -10473,6 +10587,7 @@ paths:
                       min_items: null
                       max_items: null
                       allow_additional_items: false
+                    form_sections: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -10530,6 +10645,9 @@ paths:
                     signature_request_notification_emails: []
                     signature_request_reply_to: null
                     signature_request_signing_url: null
+                    success_title: null
+                    success_message: null
+                    show_fill_again_button: true
                     has_slack_webhook_url: false
                     last_changed_by: null
                     defaults:
@@ -10544,6 +10662,7 @@ paths:
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
+                    form_sections: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: "<h1>Invoice {{ invoice_number }}</h1>"
@@ -10609,6 +10728,9 @@ paths:
                     signature_request_notification_emails: []
                     signature_request_reply_to: null
                     signature_request_signing_url: null
+                    success_title: null
+                    success_message: null
+                    show_fill_again_button: true
                     has_slack_webhook_url: false
                     last_changed_by: null
                     defaults:
@@ -10639,6 +10761,7 @@ paths:
                       min_items: null
                       max_items: null
                       allow_additional_items: false
+                    form_sections: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -10756,6 +10879,9 @@ paths:
                     signature_request_notification_emails: []
                     signature_request_reply_to: null
                     signature_request_signing_url: null
+                    success_title: null
+                    success_message: null
+                    show_fill_again_button: true
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: user
@@ -10775,6 +10901,7 @@ paths:
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
+                    form_sections: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -10904,7 +11031,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -11028,6 +11157,20 @@ paths:
                       value: John
                     targets:
                     - last_name
+              web form sections set:
+                summary: web form sections set
+                value:
+                  form_sections:
+                  - id: names
+                    title: Your name
+                    description: As on your passport
+                    field_ids:
+                    - 2
+                    - 1
+                  - id: contact
+                    title: Contact details
+                    field_ids:
+                    - 3
               conditional logic on a number field:
                 summary: conditional logic on a number field
                 value:
@@ -11137,6 +11280,9 @@ paths:
                     signature_request_notification_emails: []
                     signature_request_reply_to: null
                     signature_request_signing_url: null
+                    success_title: null
+                    success_message: null
+                    show_fill_again_button: true
                     has_slack_webhook_url: true
                     last_changed_by:
                       type: api
@@ -11150,6 +11296,7 @@ paths:
                       bold: true
                     field_dependencies: []
                     field_groups: []
+                    form_sections: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -11207,6 +11354,9 @@ paths:
                     signature_request_notification_emails: []
                     signature_request_reply_to: null
                     signature_request_signing_url: null
+                    success_title: null
+                    success_message: null
+                    show_fill_again_button: true
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: api
@@ -11242,6 +11392,7 @@ paths:
                       min_items: null
                       max_items: null
                       allow_additional_items: false
+                    form_sections: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -11457,7 +11608,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -11548,6 +11701,9 @@ paths:
                     signature_request_notification_emails: []
                     signature_request_reply_to: null
                     signature_request_signing_url: null
+                    success_title: null
+                    success_message: null
+                    show_fill_again_button: true
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: api
@@ -11567,6 +11723,7 @@ paths:
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
+                    form_sections: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -11643,6 +11800,9 @@ paths:
                     signature_request_notification_emails: []
                     signature_request_reply_to: null
                     signature_request_signing_url: null
+                    success_title: null
+                    success_message: null
+                    show_fill_again_button: true
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: api
@@ -11662,6 +11822,7 @@ paths:
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
+                    form_sections: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -11844,7 +12005,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -11923,6 +12086,9 @@ paths:
                     signature_request_notification_emails: []
                     signature_request_reply_to: null
                     signature_request_signing_url: null
+                    success_title: null
+                    success_message: null
+                    show_fill_again_button: true
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: api
@@ -11942,6 +12108,7 @@ paths:
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
+                    form_sections: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -12079,7 +12246,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -12176,6 +12345,9 @@ paths:
                     signature_request_notification_emails: []
                     signature_request_reply_to: null
                     signature_request_signing_url: null
+                    success_title: null
+                    success_message: null
+                    show_fill_again_button: true
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: user
@@ -12195,6 +12367,7 @@ paths:
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
+                    form_sections: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -12328,7 +12501,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -12419,6 +12594,9 @@ paths:
                     signature_request_notification_emails: []
                     signature_request_reply_to: null
                     signature_request_signing_url: null
+                    success_title: null
+                    success_message: null
+                    show_fill_again_button: true
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: user
@@ -12438,6 +12616,7 @@ paths:
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
+                    form_sections: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -12562,7 +12741,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -12739,7 +12920,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -12830,6 +13013,9 @@ paths:
                     signature_request_notification_emails: []
                     signature_request_reply_to: null
                     signature_request_signing_url: null
+                    success_title: null
+                    success_message: null
+                    show_fill_again_button: true
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: api
@@ -12849,6 +13035,7 @@ paths:
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
+                    form_sections: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -13261,7 +13448,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -14401,7 +14590,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -15045,7 +15236,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -15462,7 +15655,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -15788,7 +15983,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -16843,7 +17040,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -17023,7 +17222,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -17255,7 +17456,9 @@ paths:
           \ the same request again, such as after a timeout, a network error or a\
           \ 5xx. The same key with a different request is a 422 `idempotency_key_reused`.\
           \ A 409 `idempotency_key_in_use` with a `Retry-After` header means the first\
-          \ request is still being processed: send the request again then."
+          \ request is still being processed: send the request again then. A repeated\
+          \ response is the first one as it was, so its `download_url` links may have\
+          \ expired: use `permanent_url`, or get the record again for new links."
         explode: false
         in: header
         name: Idempotency-Key
@@ -18363,6 +18566,8 @@ components:
           folder_id: folder_id
           custom_file_id: custom_file_id
           webhook_id: webhook_id
+          email_action_id: email_action_id
+          email_domain_id: email_domain_id
       properties:
         error:
           $ref: "#/components/schemas/ErrorInfo"
@@ -18394,6 +18599,8 @@ components:
         folder_id: folder_id
         custom_file_id: custom_file_id
         webhook_id: webhook_id
+        email_action_id: email_action_id
+        email_domain_id: email_domain_id
       properties:
         code:
           allOf:
@@ -18419,16 +18626,19 @@ components:
             \ first request with the same Idempotency-Key is still being processed,\
             \ and the response has a `Retry-After` header: send the request again\
             \ then. Without the header, the first request was processed but its response\
-            \ is no longer kept. When the first request created a record, its ID is\
-            \ in `submission_id`, `submission_batch_id`, `combined_pdf_id`, `template_id`,\
-            \ `folder_id`, `custom_file_id` or `webhook_id`. `idempotency_key_reused`\
-            \ (422): the Idempotency-Key was already used for a different request.\
-            \ `rate_limited` (429): too many API requests. Wait for the `Retry-After`\
-            \ header's seconds. `daily_email_limit_reached` (429): a submission that\
-            \ DocSpring would email would take your account over its daily email limit,\
-            \ so nothing was saved. Send it again after the `Retry-After` header's\
-            \ seconds (midnight UTC), or send the signing links yourself (`send_email:\
-            \ false`)."
+            \ is no longer kept, or it failed after creating or changing a record,\
+            \ and the message says which. When the first request created a record,\
+            \ or changed a template's fields or published a version of it, the message\
+            \ names it, and its ID is in `submission_id`, `submission_batch_id`, `combined_pdf_id`,\
+            \ `template_id`, `folder_id`, `custom_file_id`, `webhook_id`, `email_action_id`\
+            \ or `email_domain_id` (a signature request's events and tokens have no\
+            \ member). `idempotency_key_reused` (422): the Idempotency-Key was already\
+            \ used for a different request. `rate_limited` (429): too many API requests.\
+            \ Wait for the `Retry-After` header's seconds. `daily_email_limit_reached`\
+            \ (429): a submission that DocSpring would email would take your account\
+            \ over its daily email limit, so nothing was saved. Send it again after\
+            \ the `Retry-After` header's seconds (midnight UTC), or send the signing\
+            \ links yourself (`send_email: false`)."
           x-open-enum: true
         message:
           description: "A human-readable explanation, safe to show to developers."
@@ -18467,7 +18677,8 @@ components:
         template_id:
           description: "With `polling_timeout`, the template whose PDF is still being\
             \ processed. With `idempotency_key_in_use`, the template the first request\
-            \ with the key created."
+            \ with the key created, or whose fields it changed or whose version it\
+            \ published."
           type: string
         folder_id:
           description: "With `idempotency_key_in_use`, the folder the first request\
@@ -18480,6 +18691,14 @@ components:
         webhook_id:
           description: "With `idempotency_key_in_use`, the webhook the first request\
             \ with the key created."
+          type: string
+        email_action_id:
+          description: "With `idempotency_key_in_use`, the email action the first\
+            \ request with the key created."
+          type: string
+        email_domain_id:
+          description: "With `idempotency_key_in_use`, the email domain the first\
+            \ request with the key created."
           type: string
       required:
       - code
@@ -20935,6 +21154,8 @@ components:
           folder_id: folder_id
           custom_file_id: custom_file_id
           webhook_id: webhook_id
+          email_action_id: email_action_id
+          email_domain_id: email_domain_id
       properties:
         valid:
           description: True when creating the submission would succeed.
@@ -21716,6 +21937,9 @@ components:
         - signature_request_notification_emails
         signature_request_reply_to: signature_request_reply_to
         signature_request_signing_url: signature_request_signing_url
+        success_title: success_title
+        success_message: success_message
+        show_fill_again_button: true
         has_slack_webhook_url: true
         last_changed_by: ""
         defaults:
@@ -21787,6 +22011,19 @@ components:
           min_items: 2
           max_items: 7
           allow_additional_items: true
+        form_sections:
+        - id: id
+          title: title
+          description: description
+          field_ids:
+          - 9
+          - 9
+        - id: id
+          title: title
+          description: description
+          field_ids:
+          - 9
+          - 9
         predefined_fields:
         - name: name
           display_name: display_name
@@ -21955,13 +22192,14 @@ components:
             \ and its embedded template editor: a host such as `app.example.com`,\
             \ with an optional leading wildcard (`*.example.com`), port (`localhost:3000`)\
             \ or scheme (`https://app.example.com`; without one, `http` and `https`\
-            \ both work), without a path. Browsers open a live signature request in\
-            \ a frame only on these sites (and DocSpring's), so with an empty list\
-            \ it can't be embedded anywhere; a test signature request can be embedded\
-            \ on any site. The embedded template editor loads only for a page on one\
-            \ of these sites (by its Referer or Origin header), and on any site when\
-            \ the list is empty. Forms embedded on a page (Visual Forms JS and the\
-            \ simple form) aren't restricted."
+            \ both work), without a path. Each one is stored in lowercase, without\
+            \ a trailing slash. Browsers open a live signature request in a frame\
+            \ only on these sites (and DocSpring's), so with an empty list it can't\
+            \ be embedded anywhere; a test signature request can be embedded on any\
+            \ site. The embedded template editor loads only for a page on one of these\
+            \ sites (by its Referer or Origin header), and on any site when the list\
+            \ is empty. Forms embedded on a page (Visual Forms JS and Web Forms JS)\
+            \ aren't restricted."
           items:
             type: string
           type: array
@@ -22020,7 +22258,10 @@ components:
           description: Allow anyone to fill in the template's web form.
           type: boolean
         redirect_url:
-          description: Where the web form sends people after they submit it.
+          description: "Where the web form sends people after they submit it, instead\
+            \ of showing its success screen. After its `?` or `#`, it can have variables\
+            \ such as `{{ data.first_name }}`, which the form fills in with what they\
+            \ submitted."
           type: string
           x-nullable: true
         signature_request_email_attachments:
@@ -22081,6 +22322,22 @@ components:
             \ signing page. PDF templates only."
           type: string
           x-nullable: true
+        success_title:
+          description: "The title of the web form's success screen. When it's null\
+            \ or empty, the screen says \"Thanks for filling out\" and the template's\
+            \ name. It can have variables such as `{{ data.first_name }}`."
+          type: string
+          x-nullable: true
+        success_message:
+          description: "A message under the title of the web form's success screen,\
+            \ as plain text. Line breaks show, and web addresses become links. It\
+            \ can have variables such as `{{ data.first_name }}`."
+          type: string
+          x-nullable: true
+        show_fill_again_button:
+          description: "Whether the web form's success screen has a \"Fill out again\"\
+            \ button, which clears the form so someone can fill it in again."
+          type: boolean
         has_slack_webhook_url:
           description: Whether `slack_webhook_url` is set.
           type: boolean
@@ -22106,6 +22363,17 @@ components:
             \ and `items/0/price` is in the list `items` and its items' group `items/~`."
           items:
             $ref: "#/components/schemas/FieldGroup"
+          type: array
+          default: null
+        form_sections:
+          description: "The web form's sections, in order: Web Forms JS and the hosted\
+            \ web form show one section at a time. Empty when the template has none,\
+            \ and the web form shows all of its fields together, in the order the\
+            \ fields endpoint lists them. A field that no section lists (one added\
+            \ later) goes after the field before it in that order, in that field's\
+            \ section."
+          items:
+            $ref: "#/components/schemas/TemplateFormSection"
           type: array
           default: null
         predefined_fields:
@@ -22203,6 +22471,7 @@ components:
       - field_dependencies
       - field_groups
       - footer_html
+      - form_sections
       - has_encrypt_pdfs_password
       - has_slack_webhook_url
       - header_html
@@ -22228,6 +22497,7 @@ components:
       - ready
       - redirect_url
       - scss
+      - show_fill_again_button
       - signature_request_email_attachments
       - signature_request_from_address
       - signature_request_from_name
@@ -22235,6 +22505,8 @@ components:
       - signature_request_notification_emails
       - signature_request_reply_to
       - signature_request_signing_url
+      - success_message
+      - success_title
       - template_type
       - updated_at
       - version
@@ -22639,6 +22911,41 @@ components:
       - conditions
       - targets
       title: TemplateFieldDependency
+    TemplateFormSection:
+      additionalProperties: true
+      description: "A section of the template's web form, with its fields in order."
+      example:
+        id: id
+        title: title
+        description: description
+        field_ids:
+        - 9
+        - 9
+      properties:
+        id:
+          description: "The section's ID, unique among the template's sections. Any\
+            \ string you choose."
+          type: string
+        title:
+          description: The section's heading on the web form.
+          type: string
+        description:
+          description: Text shown under the section's heading. Null for none.
+          type: string
+          x-nullable: true
+        field_ids:
+          description: "The IDs of the section's fields (Field's `id`), in the order\
+            \ the web form shows them. A field can be in one section only."
+          items:
+            type: integer
+          type: array
+          default: null
+      required:
+      - description
+      - field_ids
+      - id
+      - title
+      title: TemplateFormSection
     FieldGroup:
       additionalProperties: true
       description: "A group of a template's fields: the fields whose names start with\
@@ -24458,10 +24765,11 @@ components:
           x-open-enum: true
         width:
           description: "The page width for the `Custom` format, with a unit (`8.5in`,\
-            \ `210mm`)."
+            \ `210mm`), from 0.05in to 200in."
           type: string
         height:
-          description: "The page height for the `Custom` format, with a unit."
+          description: "The page height for the `Custom` format, with a unit, from\
+            \ 0.05in to 200in."
           type: string
         scale:
           description: "How much to scale the page, from 0.1 to 2, such as `0.8`.\
@@ -24474,13 +24782,15 @@ components:
           description: Print background colors and images.
           type: boolean
         margin_top:
-          description: "The top margin, with a unit, such as `1in` or `20mm`."
+          description: "The top margin, with a unit, such as `1in` or `20mm`. The\
+            \ top and bottom margins together must be less than the page's height."
           type: string
         margin_bottom:
           description: "The bottom margin, with a unit."
           type: string
         margin_left:
-          description: "The left margin, with a unit."
+          description: "The left margin, with a unit. The left and right margins together\
+            \ must be less than the page's width."
           type: string
         margin_right:
           description: "The right margin, with a unit."
@@ -24912,9 +25222,9 @@ components:
             \ A setting that identifies the field (`id`, `name`, `type`), that only\
             \ the template sets (such as `description`), or that doesn't apply to\
             \ the field's type and display type (such as `check_character` on a field\
-            \ displayed as text) is a 422. With `signature_requests`, `editable: true`\
-            \ is a 422, and a `default` for a signature or initials field makes the\
-            \ submission `invalid_data`."
+            \ displayed as text) is a 422. A `default` for a signature or initials\
+            \ field makes the submission `invalid_data`. With `signature_requests`,\
+            \ `editable: true` is a 422."
           type: object
           writeOnly: true
         html:
@@ -25298,10 +25608,11 @@ components:
           description: The paper size. `Custom` uses `width` and `height`.
         width:
           description: "The page width for the `Custom` format, with a unit (`8.5in`,\
-            \ `210mm`)."
+            \ `210mm`), from 0.05in to 200in."
           type: string
         height:
-          description: "The page height for the `Custom` format, with a unit."
+          description: "The page height for the `Custom` format, with a unit, from\
+            \ 0.05in to 200in."
           type: string
         scale:
           description: "How much to scale the page, from 0.1 to 2, such as `0.8`.\
@@ -25314,13 +25625,15 @@ components:
           description: Print background colors and images.
           type: boolean
         margin_top:
-          description: "The top margin, with a unit, such as `1in` or `20mm`."
+          description: "The top margin, with a unit, such as `1in` or `20mm`. The\
+            \ top and bottom margins together must be less than the page's height."
           type: string
         margin_bottom:
           description: "The bottom margin, with a unit."
           type: string
         margin_left:
-          description: "The left margin, with a unit."
+          description: "The left margin, with a unit. The left and right margins together\
+            \ must be less than the page's width."
           type: string
         margin_right:
           description: "The right margin, with a unit."
@@ -25398,6 +25711,41 @@ components:
       required:
       - name
       title: FieldGroupInput
+    TemplateFormSectionInput:
+      additionalProperties: false
+      description: "A section of the template's web form, with its fields in order."
+      example:
+        id: id
+        title: title
+        description: description
+        field_ids:
+        - 5
+        - 5
+      properties:
+        id:
+          description: "The section's ID, unique among the template's sections. Any\
+            \ string you choose."
+          type: string
+          x-pattern-message: can't be blank
+        title:
+          description: The section's heading on the web form.
+          type: string
+        description:
+          description: Text shown under the section's heading. Null for none.
+          type: string
+          x-nullable: true
+        field_ids:
+          description: "The IDs of the section's fields (Field's `id`), in the order\
+            \ the web form shows them. A field can be in one section only."
+          items:
+            type: integer
+          type: array
+          default: null
+      required:
+      - field_ids
+      - id
+      - title
+      title: TemplateFormSectionInput
     TemplateVersionType:
       description: Which part of a version number to increase.
       enum:
@@ -27483,7 +27831,10 @@ components:
           additionalProperties: true
           description: "The values of the template's fields, by field name. Required\
             \ for PDF templates, Word templates and page designs, unless `signature_requests`\
-            \ collects them (PDF templates only)."
+            \ collects them (PDF templates only). Signatures come only from signature\
+            \ requests: a value for a signature or initials field makes the submission\
+            \ `invalid_data`, in test mode too. To print an image or a name you send,\
+            \ use an Image or Text field."
           type: object
         metadata:
           additionalProperties: true
@@ -27533,9 +27884,9 @@ components:
             \ A setting that identifies the field (`id`, `name`, `type`), that only\
             \ the template sets (such as `description`), or that doesn't apply to\
             \ the field's type and display type (such as `check_character` on a field\
-            \ displayed as text) is a 422. With `signature_requests`, `editable: true`\
-            \ is a 422, and a `default` for a signature or initials field makes the\
-            \ submission `invalid_data`."
+            \ displayed as text) is a 422. A `default` for a signature or initials\
+            \ field makes the submission `invalid_data`. With `signature_requests`,\
+            \ `editable: true` is a 422."
           type: object
           writeOnly: true
         html:
@@ -27554,9 +27905,7 @@ components:
             \ The PDF is generated once every signature request is completed. PDF\
             \ templates only. Without `role`s, the first signature request is `Signer\
             \ 1`, the second `Signer 2`, and so on. To leave a signer out, give every\
-            \ signature request its `role` and leave that one's out. Only the signers\
-            \ sign: a value for a signature or initials field in `data` makes the\
-            \ submission `invalid_data`."
+            \ signature request its `role` and leave that one's out."
           items:
             $ref: "#/components/schemas/SignatureRequestInput"
           type: array
@@ -27777,7 +28126,10 @@ components:
           additionalProperties: true
           description: "The values of the template's fields, by field name. Required\
             \ for PDF templates, Word templates and page designs, unless `signature_requests`\
-            \ collects them (PDF templates only)."
+            \ collects them (PDF templates only). Signatures come only from signature\
+            \ requests: a value for a signature or initials field makes the submission\
+            \ `invalid_data`, in test mode too. To print an image or a name you send,\
+            \ use an Image or Text field."
           type: object
         metadata:
           additionalProperties: true
@@ -27827,9 +28179,9 @@ components:
             \ A setting that identifies the field (`id`, `name`, `type`), that only\
             \ the template sets (such as `description`), or that doesn't apply to\
             \ the field's type and display type (such as `check_character` on a field\
-            \ displayed as text) is a 422. With `signature_requests`, `editable: true`\
-            \ is a 422, and a `default` for a signature or initials field makes the\
-            \ submission `invalid_data`."
+            \ displayed as text) is a 422. A `default` for a signature or initials\
+            \ field makes the submission `invalid_data`. With `signature_requests`,\
+            \ `editable: true` is a 422."
           type: object
           writeOnly: true
         html:
@@ -27848,9 +28200,7 @@ components:
             \ The PDF is generated once every signature request is completed. PDF\
             \ templates only. Without `role`s, the first signature request is `Signer\
             \ 1`, the second `Signer 2`, and so on. To leave a signer out, give every\
-            \ signature request its `role` and leave that one's out. Only the signers\
-            \ sign: a value for a signature or initials field in `data` makes the\
-            \ submission `invalid_data`."
+            \ signature request its `role` and leave that one's out."
           items:
             $ref: "#/components/schemas/SignatureRequestInput"
           type: array
@@ -27988,6 +28338,9 @@ components:
         - signature_request_notification_emails
         signature_request_reply_to: signature_request_reply_to
         signature_request_signing_url: signature_request_signing_url
+        success_title: success_title
+        success_message: success_message
+        show_fill_again_button: true
         slack_webhook_url: slack_webhook_url
         defaults: ""
         field_dependencies:
@@ -28046,6 +28399,7 @@ components:
         field_source: ""
         field_naming: ""
         field_logic: ""
+        include_office_use_fields: true
       properties:
         name:
           description: The template's name.
@@ -28123,13 +28477,14 @@ components:
             \ and its embedded template editor: a host such as `app.example.com`,\
             \ with an optional leading wildcard (`*.example.com`), port (`localhost:3000`)\
             \ or scheme (`https://app.example.com`; without one, `http` and `https`\
-            \ both work), without a path. Browsers open a live signature request in\
-            \ a frame only on these sites (and DocSpring's), so with an empty list\
-            \ it can't be embedded anywhere; a test signature request can be embedded\
-            \ on any site. The embedded template editor loads only for a page on one\
-            \ of these sites (by its Referer or Origin header), and on any site when\
-            \ the list is empty. Forms embedded on a page (Visual Forms JS and the\
-            \ simple form) aren't restricted."
+            \ both work), without a path. Each one is stored in lowercase, without\
+            \ a trailing slash. Browsers open a live signature request in a frame\
+            \ only on these sites (and DocSpring's), so with an empty list it can't\
+            \ be embedded anywhere; a test signature request can be embedded on any\
+            \ site. The embedded template editor loads only for a page on one of these\
+            \ sites (by its Referer or Origin header), and on any site when the list\
+            \ is empty. Forms embedded on a page (Visual Forms JS and Web Forms JS)\
+            \ aren't restricted."
           items:
             type: string
           type: array
@@ -28190,7 +28545,10 @@ components:
           description: Allow anyone to fill in the template's web form.
           type: boolean
         redirect_url:
-          description: Where the web form sends people after they submit it.
+          description: "Where the web form sends people after they submit it, instead\
+            \ of showing its success screen. After its `?` or `#`, it can have variables\
+            \ such as `{{ data.first_name }}`, which the form fills in with what they\
+            \ submitted."
           type: string
           x-nullable: true
         signature_request_email_attachments:
@@ -28251,6 +28609,22 @@ components:
             \ signing page. PDF templates only."
           type: string
           x-nullable: true
+        success_title:
+          description: "The title of the web form's success screen. When it's null\
+            \ or empty, the screen says \"Thanks for filling out\" and the template's\
+            \ name. It can have variables such as `{{ data.first_name }}`."
+          type: string
+          x-nullable: true
+        success_message:
+          description: "A message under the title of the web form's success screen,\
+            \ as plain text. Line breaks show, and web addresses become links. It\
+            \ can have variables such as `{{ data.first_name }}`."
+          type: string
+          x-nullable: true
+        show_fill_again_button:
+          description: "Whether the web form's success screen has a \"Fill out again\"\
+            \ button, which clears the form so someone can fill it in again."
+          type: boolean
         slack_webhook_url:
           description: A Slack incoming webhook URL that is notified about the template's
             submissions. It's never returned; `has_slack_webhook_url` says if it's
@@ -28358,7 +28732,7 @@ components:
             \ send one) or `document_base64`. A `document_url`'s is the last part\
             \ of its path unless you set it."
           type: string
-          x-pattern-message: can't contain a slash (/ or \)
+          x-pattern-message: can't be blank or contain a slash (/ or \)
         detect_fields:
           description: "Set up the PDF's fields as DocSpring's \"Automatically detect\
             \ fields\" upload option does: import or detect the fields, name them\
@@ -28388,6 +28762,12 @@ components:
           description: "With `detect_fields`, whether AI reads the whole form once\
             \ the fields are named and sets up conditional logic and required fields\
             \ (`ai`) or not (`none`). Default: your account's template settings."
+        include_office_use_fields:
+          description: "With `detect_fields`, whether AI field setup keeps the fields\
+            \ that only the office receiving the form fills in, such as a \"For office\
+            \ use only\" box (`true`), or leaves them out (`false`). Default: your\
+            \ account's template settings."
+          type: boolean
       required:
       - template_type
       title: CreateTemplateRequest
@@ -28431,6 +28811,9 @@ components:
         - signature_request_notification_emails
         signature_request_reply_to: signature_request_reply_to
         signature_request_signing_url: signature_request_signing_url
+        success_title: success_title
+        success_message: success_message
+        show_fill_again_button: true
         slack_webhook_url: slack_webhook_url
         defaults: ""
         field_dependencies:
@@ -28471,6 +28854,19 @@ components:
           min_items: 6
           max_items: 1
           allow_additional_items: true
+        form_sections:
+        - id: id
+          title: title
+          description: description
+          field_ids:
+          - 5
+          - 5
+        - id: id
+          title: title
+          description: description
+          field_ids:
+          - 5
+          - 5
         predefined_fields:
         - name: name
           display_name: display_name
@@ -28566,13 +28962,14 @@ components:
             \ and its embedded template editor: a host such as `app.example.com`,\
             \ with an optional leading wildcard (`*.example.com`), port (`localhost:3000`)\
             \ or scheme (`https://app.example.com`; without one, `http` and `https`\
-            \ both work), without a path. Browsers open a live signature request in\
-            \ a frame only on these sites (and DocSpring's), so with an empty list\
-            \ it can't be embedded anywhere; a test signature request can be embedded\
-            \ on any site. The embedded template editor loads only for a page on one\
-            \ of these sites (by its Referer or Origin header), and on any site when\
-            \ the list is empty. Forms embedded on a page (Visual Forms JS and the\
-            \ simple form) aren't restricted."
+            \ both work), without a path. Each one is stored in lowercase, without\
+            \ a trailing slash. Browsers open a live signature request in a frame\
+            \ only on these sites (and DocSpring's), so with an empty list it can't\
+            \ be embedded anywhere; a test signature request can be embedded on any\
+            \ site. The embedded template editor loads only for a page on one of these\
+            \ sites (by its Referer or Origin header), and on any site when the list\
+            \ is empty. Forms embedded on a page (Visual Forms JS and Web Forms JS)\
+            \ aren't restricted."
           items:
             type: string
           type: array
@@ -28633,7 +29030,10 @@ components:
           description: Allow anyone to fill in the template's web form.
           type: boolean
         redirect_url:
-          description: Where the web form sends people after they submit it.
+          description: "Where the web form sends people after they submit it, instead\
+            \ of showing its success screen. After its `?` or `#`, it can have variables\
+            \ such as `{{ data.first_name }}`, which the form fills in with what they\
+            \ submitted."
           type: string
           x-nullable: true
         signature_request_email_attachments:
@@ -28694,6 +29094,22 @@ components:
             \ signing page. PDF templates only."
           type: string
           x-nullable: true
+        success_title:
+          description: "The title of the web form's success screen. When it's null\
+            \ or empty, the screen says \"Thanks for filling out\" and the template's\
+            \ name. It can have variables such as `{{ data.first_name }}`."
+          type: string
+          x-nullable: true
+        success_message:
+          description: "A message under the title of the web form's success screen,\
+            \ as plain text. Line breaks show, and web addresses become links. It\
+            \ can have variables such as `{{ data.first_name }}`."
+          type: string
+          x-nullable: true
+        show_fill_again_button:
+          description: "Whether the web form's success screen has a \"Fill out again\"\
+            \ button, which clears the form so someone can fill it in again."
+          type: boolean
         slack_webhook_url:
           description: A Slack incoming webhook URL that is notified about the template's
             submissions. It's never returned; `has_slack_webhook_url` says if it's
@@ -28719,6 +29135,13 @@ components:
             \ values, and groups left out are unchanged."
           items:
             $ref: "#/components/schemas/FieldGroupInput"
+          type: array
+          default: null
+        form_sections:
+          description: "The web form's sections, in order. Setting them replaces all\
+            \ of the sections; an empty list removes them."
+          items:
+            $ref: "#/components/schemas/TemplateFormSectionInput"
           type: array
           default: null
         predefined_fields:
@@ -28818,7 +29241,7 @@ components:
             \ send one) or `document_base64`. A `document_url`'s is the last part\
             \ of its path unless you set it."
           type: string
-          x-pattern-message: can't contain a slash (/ or \)
+          x-pattern-message: can't be blank or contain a slash (/ or \)
         reimport_fields:
           description: "Replace all of the template's fields with the fillable fields\
             \ in the new PDF, once DocSpring has processed it (`document.field_reimport_state`).\
@@ -29627,6 +30050,12 @@ components:
             \ sets `output_formats`: `docx` (a Word document), `odt` (an OpenDocument\
             \ file, converted from the Word document) or `pdf`. Required when `document`\
             \ is a Word document."
+        include_office_use_fields:
+          description: "With `detect_fields`, whether AI field setup keeps the fields\
+            \ that only the office receiving the form fills in, such as a \"For office\
+            \ use only\" box (`true`), or leaves them out (`false`). Default: your\
+            \ account's template settings."
+          type: boolean
       required:
       - document
       title: UploadTemplateRequest

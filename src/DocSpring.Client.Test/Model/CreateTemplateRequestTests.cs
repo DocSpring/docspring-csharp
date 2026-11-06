@@ -351,6 +351,33 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'SuccessTitle'
+        /// </summary>
+        [Fact]
+        public void SuccessTitleTest()
+        {
+            // TODO unit test for the property 'SuccessTitle'
+        }
+
+        /// <summary>
+        /// Test the property 'SuccessMessage'
+        /// </summary>
+        [Fact]
+        public void SuccessMessageTest()
+        {
+            // TODO unit test for the property 'SuccessMessage'
+        }
+
+        /// <summary>
+        /// Test the property 'ShowFillAgainButton'
+        /// </summary>
+        [Fact]
+        public void ShowFillAgainButtonTest()
+        {
+            // TODO unit test for the property 'ShowFillAgainButton'
+        }
+
+        /// <summary>
         /// Test the property 'SlackWebhookUrl'
         /// </summary>
         [Fact]
@@ -528,6 +555,15 @@ namespace DocSpring.Client.Test.Model
         public void FieldLogicTest()
         {
             // TODO unit test for the property 'FieldLogic'
+        }
+
+        /// <summary>
+        /// Test the property 'IncludeOfficeUseFields'
+        /// </summary>
+        [Fact]
+        public void IncludeOfficeUseFieldsTest()
+        {
+            // TODO unit test for the property 'IncludeOfficeUseFields'
         }
     }
 }

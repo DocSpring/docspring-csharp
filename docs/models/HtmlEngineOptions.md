@@ -9,12 +9,12 @@ Name | Type | Description | Notes
 **Scale** | **decimal** | How much to scale the page, from 0.1 to 2, such as `0.8`. `1` prints it at its normal size. | 
 **Landscape** | **bool** | Print pages in landscape orientation. | 
 **PrintBackground** | **bool** | Print background colors and images. | 
-**MarginTop** | **string** | The top margin, with a unit, such as `1in` or `20mm`. | 
+**MarginTop** | **string** | The top margin, with a unit, such as `1in` or `20mm`. The top and bottom margins together must be less than the page's height. | 
 **MarginBottom** | **string** | The bottom margin, with a unit. | 
-**MarginLeft** | **string** | The left margin, with a unit. | 
+**MarginLeft** | **string** | The left margin, with a unit. The left and right margins together must be less than the page's width. | 
 **MarginRight** | **string** | The right margin, with a unit. | 
-**Width** | **string** | The page width for the `Custom` format, with a unit (`8.5in`, `210mm`). | [optional] 
-**Height** | **string** | The page height for the `Custom` format, with a unit. | [optional] 
+**Width** | **string** | The page width for the `Custom` format, with a unit (`8.5in`, `210mm`), from 0.05in to 200in. | [optional] 
+**Height** | **string** | The page height for the `Custom` format, with a unit, from 0.05in to 200in. | [optional] 
 
 [[Back to Model list]](../../README.md#methods) [[Back to API list]](../../README.md#methods) [[Back to README]](../../README.md)
 
