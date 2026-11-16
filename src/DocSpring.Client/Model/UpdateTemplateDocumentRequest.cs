@@ -36,14 +36,16 @@ namespace DocSpring.Client.Model
         /// <param name="documentBase64">The template&#39;s document (a PDF, or a Word template&#39;s Word document), encoded as base64 (a &#x60;data:&#x60; URI works too), instead of &#x60;cache_id&#x60;. Line breaks and spaces in it are ignored. Up to 7 MB before it&#39;s encoded: send a larger file with &#x60;cache_id&#x60; or &#x60;document_url&#x60;.</param>
         /// <param name="filename">The file&#39;s name, for a &#x60;cache_id&#x60; (presigned uploads don&#39;t send one) or &#x60;document_base64&#x60;. A &#x60;document_url&#x60;&#39;s is the last part of its path unless you set it.</param>
         /// <param name="reimportFields">Replace all of the template&#39;s fields with the fillable fields in the new PDF, once DocSpring has processed it (&#x60;document.field_reimport_state&#x60;). As on a first upload, the default typeface, font size, bold and color are taken from the PDF&#39;s fields; the template&#39;s other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can&#39;t re-import its fields. Only for PDF templates: a Word template adds a field for each new tag.</param>
+        /// <param name="syncFields">Add a field for each value the template&#39;s code, Word document or layout reads for the first time, with a type worked out from how it&#39;s used. Existing fields keep their settings, and a field you deleted while the code still read the value stays deleted. Default true. Set it to false to manage the fields yourself with the fields endpoints: a form field whose field isn&#39;t on the template then fails its submissions and previews. Only for HTML templates, Word templates and page designs.</param>
         [JsonConstructor]
-        public UpdateTemplateDocumentRequest(Option<string> cacheId = default, Option<string> documentUrl = default, Option<string> documentBase64 = default, Option<string> filename = default, Option<bool?> reimportFields = default)
+        public UpdateTemplateDocumentRequest(Option<string> cacheId = default, Option<string> documentUrl = default, Option<string> documentBase64 = default, Option<string> filename = default, Option<bool?> reimportFields = default, Option<bool?> syncFields = default)
         {
             CacheIdOption = cacheId;
             DocumentUrlOption = documentUrl;
             DocumentBase64Option = documentBase64;
             FilenameOption = filename;
             ReimportFieldsOption = reimportFields;
+            SyncFieldsOption = syncFields;
             OnCreated();
         }
 
@@ -120,6 +122,20 @@ namespace DocSpring.Client.Model
         public bool? ReimportFields { get { return this.ReimportFieldsOption.Value; } set { this.ReimportFieldsOption = new Option<bool?>(value); } }
 
         /// <summary>
+        /// Used to track the state of SyncFields
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<bool?> SyncFieldsOption { get; private set; }
+
+        /// <summary>
+        /// Add a field for each value the template&#39;s code, Word document or layout reads for the first time, with a type worked out from how it&#39;s used. Existing fields keep their settings, and a field you deleted while the code still read the value stays deleted. Default true. Set it to false to manage the fields yourself with the fields endpoints: a form field whose field isn&#39;t on the template then fails its submissions and previews. Only for HTML templates, Word templates and page designs.
+        /// </summary>
+        /// <value>Add a field for each value the template&#39;s code, Word document or layout reads for the first time, with a type worked out from how it&#39;s used. Existing fields keep their settings, and a field you deleted while the code still read the value stays deleted. Default true. Set it to false to manage the fields yourself with the fields endpoints: a form field whose field isn&#39;t on the template then fails its submissions and previews. Only for HTML templates, Word templates and page designs.</value>
+        [JsonPropertyName("sync_fields")]
+        public bool? SyncFields { get { return this.SyncFieldsOption.Value; } set { this.SyncFieldsOption = new Option<bool?>(value); } }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -132,6 +148,7 @@ namespace DocSpring.Client.Model
             sb.Append("  DocumentBase64: ").Append(DocumentBase64).Append("\n");
             sb.Append("  Filename: ").Append(Filename).Append("\n");
             sb.Append("  ReimportFields: ").Append(ReimportFields).Append("\n");
+            sb.Append("  SyncFields: ").Append(SyncFields).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -184,6 +201,7 @@ namespace DocSpring.Client.Model
             Option<string> documentBase64 = default;
             Option<string> filename = default;
             Option<bool?> reimportFields = default;
+            Option<bool?> syncFields = default;
 
             while (utf8JsonReader.Read())
             {
@@ -215,6 +233,9 @@ namespace DocSpring.Client.Model
                         case "reimport_fields":
                             reimportFields = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
                             break;
+                        case "sync_fields":
+                            syncFields = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
+                            break;
                         default:
                             break;
                     }
@@ -236,7 +257,10 @@ namespace DocSpring.Client.Model
             if (reimportFields.IsSet && reimportFields.Value == null)
                 throw new JsonException("Property is not nullable for class UpdateTemplateDocumentRequest: reimport_fields.");
 
-            return new UpdateTemplateDocumentRequest(cacheId, documentUrl, documentBase64, filename, reimportFields);
+            if (syncFields.IsSet && syncFields.Value == null)
+                throw new JsonException("Property is not nullable for class UpdateTemplateDocumentRequest: sync_fields.");
+
+            return new UpdateTemplateDocumentRequest(cacheId, documentUrl, documentBase64, filename, reimportFields, syncFields);
         }
 
         /// <summary>
@@ -276,6 +300,9 @@ namespace DocSpring.Client.Model
             if (updateTemplateDocumentRequest.ReimportFieldsOption.IsSet && updateTemplateDocumentRequest.ReimportFields == null)
                 throw new JsonException("Cannot write null property UpdateTemplateDocumentRequest.ReimportFields to non-nullable JSON property 'reimport_fields'.");
 
+            if (updateTemplateDocumentRequest.SyncFieldsOption.IsSet && updateTemplateDocumentRequest.SyncFields == null)
+                throw new JsonException("Cannot write null property UpdateTemplateDocumentRequest.SyncFields to non-nullable JSON property 'sync_fields'.");
+
             if (updateTemplateDocumentRequest.CacheIdOption.IsSet)
                 writer.WriteString("cache_id", updateTemplateDocumentRequest.CacheId);
 
@@ -290,6 +317,9 @@ namespace DocSpring.Client.Model
 
             if (updateTemplateDocumentRequest.ReimportFieldsOption.IsSet)
                 writer.WriteBoolean("reimport_fields", updateTemplateDocumentRequest.ReimportFieldsOption.Value.Value);
+
+            if (updateTemplateDocumentRequest.SyncFieldsOption.IsSet)
+                writer.WriteBoolean("sync_fields", updateTemplateDocumentRequest.SyncFieldsOption.Value.Value);
         }
     }
 }

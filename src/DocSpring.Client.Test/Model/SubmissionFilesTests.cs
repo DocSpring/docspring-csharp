@@ -72,6 +72,15 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'SigningManifest'
+        /// </summary>
+        [Fact]
+        public void SigningManifestTest()
+        {
+            // TODO unit test for the property 'SigningManifest'
+        }
+
+        /// <summary>
         /// Test the property 'Preview'
         /// </summary>
         [Fact]

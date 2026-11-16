@@ -33,10 +33,10 @@ namespace DocSpring.Client.Model
         /// </summary>
         /// <param name="state">&#x60;processed&#x60; once the file has been made. &#x60;pending&#x60; while it&#39;s being made, and &#x60;error&#x60; if it couldn&#39;t be made (see &#x60;error_message&#x60;).</param>
         /// <param name="filename">The file&#39;s name, such as &#x60;sub_123.pdf&#x60;, &#x60;sub_123.docx&#x60; or &#x60;sub_123.odt&#x60;.</param>
-        /// <param name="contentType">The file&#39;s media type: &#x60;application/pdf&#x60;, &#x60;application/vnd.openxmlformats-officedocument.wordprocessingml.document&#x60; for a Word document, or &#x60;application/vnd.oasis.opendocument.text&#x60; for an OpenDocument file.</param>
+        /// <param name="contentType">The file&#39;s media type: &#x60;application/pdf&#x60;, &#x60;application/vnd.openxmlformats-officedocument.wordprocessingml.document&#x60; for a Word document, or &#x60;application/vnd.oasis.opendocument.text&#x60; for an OpenDocument file, or &#x60;application/json&#x60; for a signing manifest.</param>
         /// <param name="errorMessage">Why the file couldn&#39;t be made, when &#x60;state&#x60; is &#x60;error&#x60;.</param>
         /// <param name="downloadUrl">A temporary link to download the file. Null until the file has been made, and when your account turns off download links for submissions.</param>
-        /// <param name="permanentUrl">A link to download the file that doesn&#39;t expire: it redirects to a new temporary link. It needs your API token or a signed-in session, except for a submission of a template that makes its submissions public. Null until the file has been made.</param>
+        /// <param name="permanentUrl">A link to download the file that doesn&#39;t expire: it redirects to a new temporary link. It needs your API token or a signed-in session, except for a submission of a template that makes its submissions public (a signing manifest&#39;s link always needs one). Null until the file has been made.</param>
         /// <param name="size">The file&#39;s size in bytes. Null until the file has been made.</param>
         /// <param name="sha256">The SHA-256 hash of the file. Null until the file has been made.</param>
         [JsonConstructor]
@@ -70,9 +70,9 @@ namespace DocSpring.Client.Model
         public string Filename { get; set; }
 
         /// <summary>
-        /// The file&#39;s media type: &#x60;application/pdf&#x60;, &#x60;application/vnd.openxmlformats-officedocument.wordprocessingml.document&#x60; for a Word document, or &#x60;application/vnd.oasis.opendocument.text&#x60; for an OpenDocument file.
+        /// The file&#39;s media type: &#x60;application/pdf&#x60;, &#x60;application/vnd.openxmlformats-officedocument.wordprocessingml.document&#x60; for a Word document, or &#x60;application/vnd.oasis.opendocument.text&#x60; for an OpenDocument file, or &#x60;application/json&#x60; for a signing manifest.
         /// </summary>
-        /// <value>The file&#39;s media type: &#x60;application/pdf&#x60;, &#x60;application/vnd.openxmlformats-officedocument.wordprocessingml.document&#x60; for a Word document, or &#x60;application/vnd.oasis.opendocument.text&#x60; for an OpenDocument file.</value>
+        /// <value>The file&#39;s media type: &#x60;application/pdf&#x60;, &#x60;application/vnd.openxmlformats-officedocument.wordprocessingml.document&#x60; for a Word document, or &#x60;application/vnd.oasis.opendocument.text&#x60; for an OpenDocument file, or &#x60;application/json&#x60; for a signing manifest.</value>
         [JsonPropertyName("content_type")]
         public string ContentType { get; set; }
 
@@ -91,9 +91,9 @@ namespace DocSpring.Client.Model
         public string DownloadUrl { get; set; }
 
         /// <summary>
-        /// A link to download the file that doesn&#39;t expire: it redirects to a new temporary link. It needs your API token or a signed-in session, except for a submission of a template that makes its submissions public. Null until the file has been made.
+        /// A link to download the file that doesn&#39;t expire: it redirects to a new temporary link. It needs your API token or a signed-in session, except for a submission of a template that makes its submissions public (a signing manifest&#39;s link always needs one). Null until the file has been made.
         /// </summary>
-        /// <value>A link to download the file that doesn&#39;t expire: it redirects to a new temporary link. It needs your API token or a signed-in session, except for a submission of a template that makes its submissions public. Null until the file has been made.</value>
+        /// <value>A link to download the file that doesn&#39;t expire: it redirects to a new temporary link. It needs your API token or a signed-in session, except for a submission of a template that makes its submissions public (a signing manifest&#39;s link always needs one). Null until the file has been made.</value>
         [JsonPropertyName("permanent_url")]
         public string PermanentUrl { get; set; }
 

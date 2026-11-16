@@ -172,6 +172,8 @@ namespace DocSpring.Client.Client
                 return ModelCodeLanguageValueConverter.ToJsonValue(modelCodeLanguage);
             if (obj is NumberConditionType numberConditionType)
                 return NumberConditionTypeValueConverter.ToJsonValue(numberConditionType);
+            if (obj is NumberPart numberPart)
+                return NumberPartValueConverter.ToJsonValue(numberPart);
             if (obj is OutputFormat outputFormat)
                 return OutputFormatValueConverter.ToJsonValue(outputFormat);
             if (obj is PageFormat pageFormat)

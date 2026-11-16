@@ -93,6 +93,7 @@ docs/models/ModelCodeLanguage.md
 docs/models/MoveFolderRequest.md
 docs/models/MoveTemplateRequest.md
 docs/models/NumberConditionType.md
+docs/models/NumberPart.md
 docs/models/OutputFormat.md
 docs/models/PageFormat.md
 docs/models/PageImage.md
@@ -169,6 +170,8 @@ docs/models/TemplatePageImages.md
 docs/models/TemplatePageProcessingStatus.md
 docs/models/TemplatePreview.md
 docs/models/TemplatePreviewState.md
+docs/models/TemplateSignerRole.md
+docs/models/TemplateSignerRoleInput.md
 docs/models/TemplateSourcePdf.md
 docs/models/TemplateSummary.md
 docs/models/TemplateSummaryList.md
@@ -290,6 +293,7 @@ src/DocSpring.Client.Test/Model/ModelCodeLanguageTests.cs
 src/DocSpring.Client.Test/Model/MoveFolderRequestTests.cs
 src/DocSpring.Client.Test/Model/MoveTemplateRequestTests.cs
 src/DocSpring.Client.Test/Model/NumberConditionTypeTests.cs
+src/DocSpring.Client.Test/Model/NumberPartTests.cs
 src/DocSpring.Client.Test/Model/OutputFormatTests.cs
 src/DocSpring.Client.Test/Model/PageFormatTests.cs
 src/DocSpring.Client.Test/Model/PageImageTests.cs
@@ -365,6 +369,8 @@ src/DocSpring.Client.Test/Model/TemplatePageImagesTests.cs
 src/DocSpring.Client.Test/Model/TemplatePageProcessingStatusTests.cs
 src/DocSpring.Client.Test/Model/TemplatePreviewStateTests.cs
 src/DocSpring.Client.Test/Model/TemplatePreviewTests.cs
+src/DocSpring.Client.Test/Model/TemplateSignerRoleInputTests.cs
+src/DocSpring.Client.Test/Model/TemplateSignerRoleTests.cs
 src/DocSpring.Client.Test/Model/TemplateSourcePdfTests.cs
 src/DocSpring.Client.Test/Model/TemplateSummaryListTests.cs
 src/DocSpring.Client.Test/Model/TemplateSummaryTests.cs
@@ -507,6 +513,7 @@ src/DocSpring.Client/Model/ModelCodeLanguage.cs
 src/DocSpring.Client/Model/MoveFolderRequest.cs
 src/DocSpring.Client/Model/MoveTemplateRequest.cs
 src/DocSpring.Client/Model/NumberConditionType.cs
+src/DocSpring.Client/Model/NumberPart.cs
 src/DocSpring.Client/Model/OutputFormat.cs
 src/DocSpring.Client/Model/PageFormat.cs
 src/DocSpring.Client/Model/PageImage.cs
@@ -583,6 +590,8 @@ src/DocSpring.Client/Model/TemplatePageImages.cs
 src/DocSpring.Client/Model/TemplatePageProcessingStatus.cs
 src/DocSpring.Client/Model/TemplatePreview.cs
 src/DocSpring.Client/Model/TemplatePreviewState.cs
+src/DocSpring.Client/Model/TemplateSignerRole.cs
+src/DocSpring.Client/Model/TemplateSignerRoleInput.cs
 src/DocSpring.Client/Model/TemplateSourcePdf.cs
 src/DocSpring.Client/Model/TemplateSummary.cs
 src/DocSpring.Client/Model/TemplateSummaryList.cs

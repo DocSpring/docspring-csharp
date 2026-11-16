@@ -97,5 +97,14 @@ namespace DocSpring.Client.Test.Model
         {
             // TODO unit test for the property 'ReimportFields'
         }
+
+        /// <summary>
+        /// Test the property 'SyncFields'
+        /// </summary>
+        [Fact]
+        public void SyncFieldsTest()
+        {
+            // TODO unit test for the property 'SyncFields'
+        }
     }
 }

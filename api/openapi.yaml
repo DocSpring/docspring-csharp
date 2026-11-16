@@ -6413,7 +6413,7 @@ paths:
                         user_id: 42
                       files: {}
                       expired: false
-                      expires_at: 2018-10-27T09:00:00Z
+                      expires_at: 2018-10-27T08:30:05Z
                       processed_at: 2018-10-20T08:30:05Z
                       created_at: 2018-10-20T08:30:00Z
                       updated_at: 2018-10-20T09:00:00Z
@@ -6466,7 +6466,7 @@ paths:
                           size: 4911
                           sha256: 0622971147486e1900037eff229d921d14f5b51aac7171729b2b66f81cdf6585
                       expired: false
-                      expires_at: 2018-10-27T09:00:00Z
+                      expires_at: 2018-10-27T08:30:05Z
                       processed_at: 2018-10-20T08:30:05Z
                       created_at: 2018-10-20T08:30:00Z
                       updated_at: 2018-10-20T09:00:00Z
@@ -6494,7 +6494,7 @@ paths:
                         user_id: 42
                       files: {}
                       expired: false
-                      expires_at: 2018-10-27T09:00:00Z
+                      expires_at: 2018-10-27T08:30:05Z
                       processed_at: 2018-10-20T08:30:05Z
                       created_at: 2018-10-20T08:30:00Z
                       updated_at: 2018-10-20T09:00:00Z
@@ -6750,7 +6750,7 @@ paths:
                         user_id: 42
                       files: {}
                       expired: false
-                      expires_at: 2018-10-27T09:00:00Z
+                      expires_at: 2018-10-27T08:30:05Z
                       processed_at: 2018-10-20T08:30:05Z
                       created_at: 2018-10-20T08:30:00Z
                       updated_at: 2018-10-20T09:00:00Z
@@ -6775,7 +6775,7 @@ paths:
                         user_id: 42
                       files: {}
                       expired: false
-                      expires_at: 2018-10-27T09:00:00Z
+                      expires_at: 2018-10-27T08:30:05Z
                       processed_at: 2018-10-20T08:30:05Z
                       created_at: 2018-10-20T08:30:00Z
                       updated_at: 2018-10-20T09:00:00Z
@@ -7017,6 +7017,7 @@ paths:
                     email: jane@example.com
                     fields:
                     - last_name
+                    - phone_number
                     signing_step: 2
               signature requests for some of the signers:
                 summary: signature requests for some of the signers
@@ -7027,11 +7028,21 @@ paths:
                     name: Jane Smith
                     fields:
                     - last_name
+                    - phone_number
                     auth_type: email_link
                   - role: Signer 2
                     name: John Smith
                     fields:
                     - first_name
+                    auth_type: email_link
+              a signature request without a field list:
+                summary: a signature request without a field list
+                value:
+                  send_email: false
+                  data:
+                    first_name: Jane
+                  signature_requests:
+                  - name: Jane Smith
                     auth_type: email_link
               signature requests with a shared field list and an editable prefilled value:
                 summary: signature requests with a shared field list and an editable
@@ -7040,6 +7051,7 @@ paths:
                   send_email: false
                   data:
                     first_name: John
+                    phone_number: 555-0100
                   signature_requests:
                   - name: Jane Smith
                     fields:
@@ -7264,6 +7276,7 @@ paths:
                       email: jane@example.com
                       fields:
                       - last_name
+                      - phone_number
                       metadata: {}
                       role: Signer 2
                       sort_order: 1
@@ -7354,9 +7367,72 @@ paths:
                       email: null
                       fields:
                       - last_name
+                      - phone_number
                       metadata: {}
                       role: Signer 3
                       sort_order: 2
+                      send_email: false
+                      signing_step: null
+                      sent_at: null
+                      email_status: null
+                      state: pending
+                      data: {}
+                      viewed_at: null
+                      completed_at: null
+                      declined_at: null
+                      auth_type: email_link
+                      auth_second_factor_type: none
+                      auth_provider: null
+                      auth_session_started_at: null
+                      auth_session_id_hash: null
+                      auth_user_id_hash: null
+                      auth_username_hash: null
+                      auth_phone_number_hash: null
+                      ip_address: null
+                      user_agent: null
+                      created_at: 2018-10-20T09:00:00Z
+                      updated_at: 2018-10-20T09:00:00Z
+                    signing_order: parallel
+                    actions: []
+                    truncated_text: {}
+                    output_formats:
+                    - pdf
+                    preview_generated_at: null
+                a signature request without a field list:
+                  summary: a signature request without a field list
+                  value:
+                    id: sub_1234567890abcdef04
+                    template_id: tpl_1234567890abcdef01
+                    template_type: pdf
+                    template_version: null
+                    batch_id: null
+                    source: api
+                    state: waiting_for_signature_requests
+                    test: false
+                    editable: false
+                    data:
+                      first_name: Jane
+                    data_errors: []
+                    error_message: null
+                    metadata: {}
+                    files: {}
+                    expired: false
+                    expires_at: null
+                    processed_at: null
+                    created_at: 2018-10-20T09:00:00Z
+                    updated_at: 2018-10-20T09:00:00Z
+                    has_password: false
+                    signature_requests:
+                    - id: srq_1234567890abcdef04
+                      submission_id: sub_1234567890abcdef04
+                      name: Jane Smith
+                      email: null
+                      fields:
+                      - last_name
+                      - phone_number
+                      metadata: {}
+                      role: Signer 1
+                      sort_order: 0
                       send_email: false
                       signing_step: null
                       sent_at: null
@@ -7399,6 +7475,7 @@ paths:
                     editable: false
                     data:
                       first_name: John
+                      phone_number: 555-0100
                     data_errors: []
                     error_message: null
                     metadata: {}
@@ -7844,8 +7921,9 @@ paths:
       x-codegen-request-body-name: body
   /submissions/{submission_id}:
     delete:
-      description: "Deletes a submission's data and PDF now, and returns the expired\
-        \ submission."
+      description: |
+        Deletes a submission's data and files now, along with any signature requests and audit trail, and returns the
+        expired submission.
       operationId: expireSubmission
       parameters:
       - description: The submission's ID.
@@ -8039,7 +8117,7 @@ paths:
                         size: 4911
                         sha256: 0622971147486e1900037eff229d921d14f5b51aac7171729b2b66f81cdf6585
                     expired: false
-                    expires_at: 2018-10-27T09:00:00Z
+                    expires_at: 2018-10-27T08:30:05Z
                     processed_at: 2018-10-20T08:30:05Z
                     created_at: 2018-10-20T08:30:00Z
                     updated_at: 2018-10-20T09:00:00Z
@@ -8104,7 +8182,7 @@ paths:
                           size: 7571
                           sha256: 7f7a39be055fc66a64d7b4a877d7d43f06a2a955ad8d9252f354ffcf2bd6eaca
                     expired: false
-                    expires_at: 2018-10-27T09:00:00Z
+                    expires_at: 2018-10-27T08:50:05Z
                     processed_at: 2018-10-20T08:50:05Z
                     created_at: 2018-10-20T08:50:00Z
                     updated_at: 2018-10-20T09:00:00Z
@@ -8145,7 +8223,7 @@ paths:
                         size: 1458
                         sha256: a82be2ac1c56d32f41f9d788b1ee965749afe88b8bbfbfd7a3c776ca53ed9e97
                     expired: false
-                    expires_at: 2018-10-27T09:00:00Z
+                    expires_at: 2018-10-27T08:50:05Z
                     processed_at: 2018-10-20T08:50:05Z
                     created_at: 2018-10-20T08:50:00Z
                     updated_at: 2018-10-20T09:00:00Z
@@ -8512,7 +8590,7 @@ paths:
                         page_count: null
                         pages: []
                     expired: false
-                    expires_at: 2018-10-27T09:00:00Z
+                    expires_at: 2018-10-27T08:30:05Z
                     processed_at: 2018-10-20T08:30:05Z
                     created_at: 2018-10-20T08:30:00Z
                     updated_at: 2018-10-20T09:00:00Z
@@ -9022,6 +9100,7 @@ paths:
                     ai_field_naming_language: null
                     allow_additional_properties: false
                     allow_skipping_optional_fields: false
+                    continue_before_optional_fields: true
                     default_form_mode: web
                     editable_submissions: false
                     embed_domains: []
@@ -9048,6 +9127,7 @@ paths:
                     success_title: null
                     success_message: null
                     show_fill_again_button: true
+                    form_sections_in_order: false
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: api
@@ -9062,12 +9142,14 @@ paths:
                       color: "444444"
                       opacity: 1
                       date_format: '%m/%d/%Y'
-                      date_time_format: '%m/%d/%Y %H:%M:%S'
+                      date_time_format: '%m/%d/%Y %H:%M'
                       check_color: "444444"
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
                     form_sections: []
+                    signer_roles: []
+                    signature_request_cc: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: "<h1>Receipt for {{ name }}</h1>"
@@ -9087,6 +9169,7 @@ paths:
                     layout: null
                     embed_edit_token: exampleEmbedEditTokenGenerated001
                     versions: []
+                    override_account_expiry: false
                 PDF template created from an upload:
                   summary: PDF template created from an upload
                   value:
@@ -9122,6 +9205,7 @@ paths:
                     ai_field_naming_language: auto
                     allow_additional_properties: false
                     allow_skipping_optional_fields: false
+                    continue_before_optional_fields: true
                     default_form_mode: web
                     editable_submissions: false
                     embed_domains: []
@@ -9148,6 +9232,7 @@ paths:
                     success_title: null
                     success_message: null
                     show_fill_again_button: true
+                    form_sections_in_order: false
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: api
@@ -9162,12 +9247,14 @@ paths:
                       color: "444444"
                       opacity: 1
                       date_format: '%m/%d/%Y'
-                      date_time_format: '%m/%d/%Y %H:%M:%S'
+                      date_time_format: '%m/%d/%Y %H:%M'
                       check_color: "444444"
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
                     form_sections: []
+                    signer_roles: []
+                    signature_request_cc: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -9179,6 +9266,7 @@ paths:
                     layout: null
                     embed_edit_token: exampleEmbedEditTokenGenerated001
                     versions: []
+                    override_account_expiry: false
                 PDF template whose fields DocSpring sets up:
                   summary: PDF template whose fields DocSpring sets up
                   value:
@@ -9214,6 +9302,7 @@ paths:
                     ai_field_naming_language: english
                     allow_additional_properties: false
                     allow_skipping_optional_fields: false
+                    continue_before_optional_fields: true
                     default_form_mode: web
                     editable_submissions: false
                     embed_domains: []
@@ -9240,6 +9329,7 @@ paths:
                     success_title: null
                     success_message: null
                     show_fill_again_button: true
+                    form_sections_in_order: false
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: api
@@ -9254,12 +9344,14 @@ paths:
                       color: "444444"
                       opacity: 1
                       date_format: '%m/%d/%Y'
-                      date_time_format: '%m/%d/%Y %H:%M:%S'
+                      date_time_format: '%m/%d/%Y %H:%M'
                       check_color: "444444"
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
                     form_sections: []
+                    signer_roles: []
+                    signature_request_cc: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -9271,6 +9363,7 @@ paths:
                     layout: null
                     embed_edit_token: exampleEmbedEditTokenGenerated001
                     versions: []
+                    override_account_expiry: false
                 PDF template created from a URL:
                   summary: PDF template created from a URL
                   value:
@@ -9306,6 +9399,7 @@ paths:
                     ai_field_naming_language: auto
                     allow_additional_properties: false
                     allow_skipping_optional_fields: false
+                    continue_before_optional_fields: true
                     default_form_mode: web
                     editable_submissions: false
                     embed_domains: []
@@ -9332,6 +9426,7 @@ paths:
                     success_title: null
                     success_message: null
                     show_fill_again_button: true
+                    form_sections_in_order: false
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: api
@@ -9346,12 +9441,14 @@ paths:
                       color: "444444"
                       opacity: 1
                       date_format: '%m/%d/%Y'
-                      date_time_format: '%m/%d/%Y %H:%M:%S'
+                      date_time_format: '%m/%d/%Y %H:%M'
                       check_color: "444444"
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
                     form_sections: []
+                    signer_roles: []
+                    signature_request_cc: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -9363,6 +9460,7 @@ paths:
                     layout: null
                     embed_edit_token: exampleEmbedEditTokenGenerated001
                     versions: []
+                    override_account_expiry: false
                 PDF template created from base64:
                   summary: PDF template created from base64
                   value:
@@ -9398,6 +9496,7 @@ paths:
                     ai_field_naming_language: auto
                     allow_additional_properties: false
                     allow_skipping_optional_fields: false
+                    continue_before_optional_fields: true
                     default_form_mode: web
                     editable_submissions: false
                     embed_domains: []
@@ -9424,6 +9523,7 @@ paths:
                     success_title: null
                     success_message: null
                     show_fill_again_button: true
+                    form_sections_in_order: false
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: api
@@ -9438,12 +9538,14 @@ paths:
                       color: "444444"
                       opacity: 1
                       date_format: '%m/%d/%Y'
-                      date_time_format: '%m/%d/%Y %H:%M:%S'
+                      date_time_format: '%m/%d/%Y %H:%M'
                       check_color: "444444"
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
                     form_sections: []
+                    signer_roles: []
+                    signature_request_cc: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -9455,6 +9557,7 @@ paths:
                     layout: null
                     embed_edit_token: exampleEmbedEditTokenGenerated001
                     versions: []
+                    override_account_expiry: false
                 page design created:
                   summary: page design created
                   value:
@@ -9478,6 +9581,7 @@ paths:
                     ai_field_naming_language: null
                     allow_additional_properties: false
                     allow_skipping_optional_fields: false
+                    continue_before_optional_fields: true
                     default_form_mode: web
                     editable_submissions: false
                     embed_domains: []
@@ -9504,6 +9608,7 @@ paths:
                     success_title: null
                     success_message: null
                     show_fill_again_button: true
+                    form_sections_in_order: false
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: api
@@ -9518,7 +9623,7 @@ paths:
                       color: "444444"
                       opacity: 1
                       date_format: '%m/%d/%Y'
-                      date_time_format: '%m/%d/%Y %H:%M:%S'
+                      date_time_format: '%m/%d/%Y %H:%M'
                       check_color: "444444"
                       shape_border_color: 4A90E2
                     field_dependencies: []
@@ -9540,6 +9645,8 @@ paths:
                       max_items: null
                       allow_additional_items: false
                     form_sections: []
+                    signer_roles: []
+                    signature_request_cc: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -9592,6 +9699,7 @@ paths:
                                   expression: invoice.total
                     embed_edit_token: exampleEmbedEditTokenGenerated001
                     versions: []
+                    override_account_expiry: false
                 Word template created from an upload:
                   summary: Word template created from an upload
                   value:
@@ -9627,6 +9735,7 @@ paths:
                     ai_field_naming_language: null
                     allow_additional_properties: false
                     allow_skipping_optional_fields: false
+                    continue_before_optional_fields: true
                     default_form_mode: web
                     editable_submissions: false
                     embed_domains: []
@@ -9653,6 +9762,7 @@ paths:
                     success_title: null
                     success_message: null
                     show_fill_again_button: true
+                    form_sections_in_order: false
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: api
@@ -9667,7 +9777,7 @@ paths:
                       color: "444444"
                       opacity: 1
                       date_format: '%m/%d/%Y'
-                      date_time_format: '%m/%d/%Y %H:%M:%S'
+                      date_time_format: '%m/%d/%Y %H:%M'
                       check_color: "444444"
                       shape_border_color: 4A90E2
                     field_dependencies: []
@@ -9681,6 +9791,8 @@ paths:
                       max_items: null
                       allow_additional_items: false
                     form_sections: []
+                    signer_roles: []
+                    signature_request_cc: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -9692,6 +9804,7 @@ paths:
                     layout: null
                     embed_edit_token: exampleEmbedEditTokenGenerated001
                     versions: []
+                    override_account_expiry: false
               schema:
                 $ref: "#/components/schemas/Template"
           description: HTML template created
@@ -9884,6 +9997,7 @@ paths:
                     ai_field_naming_language: auto
                     allow_additional_properties: false
                     allow_skipping_optional_fields: false
+                    continue_before_optional_fields: true
                     default_form_mode: web
                     editable_submissions: false
                     embed_domains: []
@@ -9910,6 +10024,7 @@ paths:
                     success_title: null
                     success_message: null
                     show_fill_again_button: true
+                    form_sections_in_order: false
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: api
@@ -9924,12 +10039,14 @@ paths:
                       color: "444444"
                       opacity: 1
                       date_format: '%m/%d/%Y'
-                      date_time_format: '%m/%d/%Y %H:%M:%S'
+                      date_time_format: '%m/%d/%Y %H:%M'
                       check_color: "444444"
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
                     form_sections: []
+                    signer_roles: []
+                    signature_request_cc: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -9941,6 +10058,7 @@ paths:
                     layout: null
                     embed_edit_token: exampleEmbedEditTokenGenerated001
                     versions: []
+                    override_account_expiry: false
                 Word template created:
                   summary: Word template created
                   value:
@@ -9976,6 +10094,7 @@ paths:
                     ai_field_naming_language: null
                     allow_additional_properties: false
                     allow_skipping_optional_fields: false
+                    continue_before_optional_fields: true
                     default_form_mode: web
                     editable_submissions: false
                     embed_domains: []
@@ -10002,6 +10121,7 @@ paths:
                     success_title: null
                     success_message: null
                     show_fill_again_button: true
+                    form_sections_in_order: false
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: api
@@ -10016,7 +10136,7 @@ paths:
                       color: "444444"
                       opacity: 1
                       date_format: '%m/%d/%Y'
-                      date_time_format: '%m/%d/%Y %H:%M:%S'
+                      date_time_format: '%m/%d/%Y %H:%M'
                       check_color: "444444"
                       shape_border_color: 4A90E2
                     field_dependencies: []
@@ -10030,6 +10150,8 @@ paths:
                       max_items: null
                       allow_additional_items: false
                     form_sections: []
+                    signer_roles: []
+                    signature_request_cc: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -10041,6 +10163,7 @@ paths:
                     layout: null
                     embed_edit_token: exampleEmbedEditTokenGenerated001
                     versions: []
+                    override_account_expiry: false
               schema:
                 $ref: "#/components/schemas/Template"
           description: PDF template created
@@ -10147,7 +10270,8 @@ paths:
     delete:
       description: |
         Deletes a template's draft and all of its published versions, or one published version (`version`). Returns
-        the template as it was before it was deleted.
+        the template as it was before it was deleted. A deleted template can be restored from Trash in the dashboard
+        for a limited time; a single deleted version can't.
       operationId: deleteTemplate
       parameters:
       - description: The template's ID.
@@ -10217,6 +10341,7 @@ paths:
                     ai_field_naming_language: null
                     allow_additional_properties: false
                     allow_skipping_optional_fields: false
+                    continue_before_optional_fields: true
                     default_form_mode: web
                     editable_submissions: false
                     embed_domains: []
@@ -10243,6 +10368,7 @@ paths:
                     success_title: null
                     success_message: null
                     show_fill_again_button: true
+                    form_sections_in_order: false
                     has_slack_webhook_url: false
                     last_changed_by: null
                     defaults:
@@ -10252,12 +10378,14 @@ paths:
                       color: "444444"
                       opacity: 1
                       date_format: '%m/%d/%Y'
-                      date_time_format: '%m/%d/%Y %H:%M:%S'
+                      date_time_format: '%m/%d/%Y %H:%M'
                       check_color: "444444"
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
                     form_sections: []
+                    signer_roles: []
+                    signature_request_cc: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: "<h1>Invoice {{ invoice_number }}</h1>"
@@ -10277,6 +10405,7 @@ paths:
                     layout: null
                     embed_edit_token: exampleEmbedEditTokenForTemplate2
                     versions: []
+                    override_account_expiry: true
               schema:
                 $ref: "#/components/schemas/Template"
           description: template deleted
@@ -10447,6 +10576,7 @@ paths:
                     ai_field_naming_language: auto
                     allow_additional_properties: false
                     allow_skipping_optional_fields: false
+                    continue_before_optional_fields: true
                     default_form_mode: web
                     editable_submissions: false
                     embed_domains: []
@@ -10473,6 +10603,7 @@ paths:
                     success_title: null
                     success_message: null
                     show_fill_again_button: true
+                    form_sections_in_order: false
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: user
@@ -10487,12 +10618,14 @@ paths:
                       color: "444444"
                       opacity: 1
                       date_format: '%m/%d/%Y'
-                      date_time_format: '%m/%d/%Y %H:%M:%S'
+                      date_time_format: '%m/%d/%Y %H:%M'
                       check_color: "444444"
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
                     form_sections: []
+                    signer_roles: []
+                    signature_request_cc: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -10504,6 +10637,7 @@ paths:
                     layout: null
                     embed_edit_token: exampleEmbedEditTokenForTemplate1
                     versions: []
+                    override_account_expiry: true
                 Word template:
                   summary: Word template
                   value:
@@ -10539,6 +10673,7 @@ paths:
                     ai_field_naming_language: null
                     allow_additional_properties: false
                     allow_skipping_optional_fields: false
+                    continue_before_optional_fields: true
                     default_form_mode: web
                     editable_submissions: false
                     embed_domains: []
@@ -10565,6 +10700,7 @@ paths:
                     success_title: null
                     success_message: null
                     show_fill_again_button: true
+                    form_sections_in_order: false
                     has_slack_webhook_url: false
                     last_changed_by: null
                     defaults:
@@ -10574,7 +10710,7 @@ paths:
                       color: "444444"
                       opacity: 1
                       date_format: '%m/%d/%Y'
-                      date_time_format: '%m/%d/%Y %H:%M:%S'
+                      date_time_format: '%m/%d/%Y %H:%M'
                       check_color: "444444"
                       shape_border_color: 4A90E2
                     field_dependencies: []
@@ -10588,6 +10724,8 @@ paths:
                       max_items: null
                       allow_additional_items: false
                     form_sections: []
+                    signer_roles: []
+                    signature_request_cc: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -10599,6 +10737,7 @@ paths:
                     layout: null
                     embed_edit_token: exampleEmbedEditTokenForTemplate3
                     versions: []
+                    override_account_expiry: true
                 HTML template:
                   summary: HTML template
                   value:
@@ -10622,6 +10761,7 @@ paths:
                     ai_field_naming_language: null
                     allow_additional_properties: false
                     allow_skipping_optional_fields: false
+                    continue_before_optional_fields: true
                     default_form_mode: web
                     editable_submissions: false
                     embed_domains: []
@@ -10648,6 +10788,7 @@ paths:
                     success_title: null
                     success_message: null
                     show_fill_again_button: true
+                    form_sections_in_order: false
                     has_slack_webhook_url: false
                     last_changed_by: null
                     defaults:
@@ -10657,12 +10798,14 @@ paths:
                       color: "444444"
                       opacity: 1
                       date_format: '%m/%d/%Y'
-                      date_time_format: '%m/%d/%Y %H:%M:%S'
+                      date_time_format: '%m/%d/%Y %H:%M'
                       check_color: "444444"
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
                     form_sections: []
+                    signer_roles: []
+                    signature_request_cc: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: "<h1>Invoice {{ invoice_number }}</h1>"
@@ -10682,6 +10825,7 @@ paths:
                     layout: null
                     embed_edit_token: exampleEmbedEditTokenForTemplate2
                     versions: []
+                    override_account_expiry: true
                 page design:
                   summary: page design
                   value:
@@ -10705,6 +10849,7 @@ paths:
                     ai_field_naming_language: null
                     allow_additional_properties: false
                     allow_skipping_optional_fields: false
+                    continue_before_optional_fields: true
                     default_form_mode: web
                     editable_submissions: false
                     embed_domains: []
@@ -10731,6 +10876,7 @@ paths:
                     success_title: null
                     success_message: null
                     show_fill_again_button: true
+                    form_sections_in_order: false
                     has_slack_webhook_url: false
                     last_changed_by: null
                     defaults:
@@ -10740,7 +10886,7 @@ paths:
                       color: "444444"
                       opacity: 1
                       date_format: '%m/%d/%Y'
-                      date_time_format: '%m/%d/%Y %H:%M:%S'
+                      date_time_format: '%m/%d/%Y %H:%M'
                       check_color: "444444"
                       shape_border_color: 4A90E2
                     field_dependencies: []
@@ -10762,6 +10908,8 @@ paths:
                       max_items: null
                       allow_additional_items: false
                     form_sections: []
+                    signer_roles: []
+                    signature_request_cc: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -10814,6 +10962,7 @@ paths:
                                   expression: invoice.total
                     embed_edit_token: exampleEmbedEditTokenForTemplate8
                     versions: []
+                    override_account_expiry: true
                 published version:
                   summary: published version
                   value:
@@ -10856,6 +11005,7 @@ paths:
                     ai_field_naming_language: auto
                     allow_additional_properties: false
                     allow_skipping_optional_fields: false
+                    continue_before_optional_fields: true
                     default_form_mode: web
                     editable_submissions: false
                     embed_domains: []
@@ -10882,6 +11032,7 @@ paths:
                     success_title: null
                     success_message: null
                     show_fill_again_button: true
+                    form_sections_in_order: false
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: user
@@ -10896,12 +11047,14 @@ paths:
                       color: "444444"
                       opacity: 1
                       date_format: '%m/%d/%Y'
-                      date_time_format: '%m/%d/%Y %H:%M:%S'
+                      date_time_format: '%m/%d/%Y %H:%M'
                       check_color: "444444"
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
                     form_sections: []
+                    signer_roles: []
+                    signature_request_cc: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -10922,6 +11075,7 @@ paths:
                         external_id: null
                         name: Test User 1
                         email: null
+                    override_account_expiry: true
               schema:
                 $ref: "#/components/schemas/Template"
           description: PDF template
@@ -11076,7 +11230,9 @@ paths:
                     required_in_template: true
                   - name: plan
                     type: string
-                    option_list: "Basic,Pro"
+                    option_list: "basic,pro"
+                    option_labels:
+                      pro: Professional
                     field_required: false
               predefined fields from sample data:
                 summary: predefined fields from sample data
@@ -11089,6 +11245,16 @@ paths:
                 summary: signature request footers turned on
                 value:
                   add_signature_request_submission_id_footers: true
+              following the account's expiry setting:
+                summary: following the account's expiry setting
+                value:
+                  override_account_expiry: false
+              own expiry turned on, which overrides the account:
+                summary: "own expiry turned on, which overrides the account"
+                value:
+                  expire_submissions: true
+                  expire_after: 30
+                  expiration_interval: days
               embed domains set:
                 summary: embed domains set
                 value:
@@ -11257,6 +11423,7 @@ paths:
                     ai_field_naming_language: form_language
                     allow_additional_properties: false
                     allow_skipping_optional_fields: false
+                    continue_before_optional_fields: true
                     default_form_mode: dual
                     editable_submissions: false
                     embed_domains: []
@@ -11283,6 +11450,7 @@ paths:
                     success_title: null
                     success_message: null
                     show_fill_again_button: true
+                    form_sections_in_order: false
                     has_slack_webhook_url: true
                     last_changed_by:
                       type: api
@@ -11297,6 +11465,8 @@ paths:
                     field_dependencies: []
                     field_groups: []
                     form_sections: []
+                    signer_roles: []
+                    signature_request_cc: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -11308,6 +11478,7 @@ paths:
                     layout: null
                     embed_edit_token: exampleEmbedEditTokenForTemplate1
                     versions: []
+                    override_account_expiry: true
                 page design layout replaced:
                   summary: page design layout replaced
                   value:
@@ -11331,6 +11502,7 @@ paths:
                     ai_field_naming_language: null
                     allow_additional_properties: false
                     allow_skipping_optional_fields: false
+                    continue_before_optional_fields: true
                     default_form_mode: web
                     editable_submissions: false
                     embed_domains: []
@@ -11357,6 +11529,7 @@ paths:
                     success_title: null
                     success_message: null
                     show_fill_again_button: true
+                    form_sections_in_order: false
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: api
@@ -11371,7 +11544,7 @@ paths:
                       color: "444444"
                       opacity: 1
                       date_format: '%m/%d/%Y'
-                      date_time_format: '%m/%d/%Y %H:%M:%S'
+                      date_time_format: '%m/%d/%Y %H:%M'
                       check_color: "444444"
                       shape_border_color: 4A90E2
                     field_dependencies: []
@@ -11393,6 +11566,8 @@ paths:
                       max_items: null
                       allow_additional_items: false
                     form_sections: []
+                    signer_roles: []
+                    signature_request_cc: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -11445,6 +11620,7 @@ paths:
                                   expression: invoice.total
                     embed_edit_token: exampleEmbedEditTokenForTemplate8
                     versions: []
+                    override_account_expiry: true
               schema:
                 $ref: "#/components/schemas/Template"
           description: template updated
@@ -11678,6 +11854,7 @@ paths:
                     ai_field_naming_language: auto
                     allow_additional_properties: false
                     allow_skipping_optional_fields: false
+                    continue_before_optional_fields: true
                     default_form_mode: web
                     editable_submissions: false
                     embed_domains: []
@@ -11704,6 +11881,7 @@ paths:
                     success_title: null
                     success_message: null
                     show_fill_again_button: true
+                    form_sections_in_order: false
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: api
@@ -11718,12 +11896,14 @@ paths:
                       color: "444444"
                       opacity: 1
                       date_format: '%m/%d/%Y'
-                      date_time_format: '%m/%d/%Y %H:%M:%S'
+                      date_time_format: '%m/%d/%Y %H:%M'
                       check_color: "444444"
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
                     form_sections: []
+                    signer_roles: []
+                    signature_request_cc: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -11735,6 +11915,7 @@ paths:
                     layout: null
                     embed_edit_token: exampleEmbedEditTokenForTemplate1
                     versions: []
+                    override_account_expiry: true
                 PDF to be replaced from a URL:
                   summary: PDF to be replaced from a URL
                   value:
@@ -11777,6 +11958,7 @@ paths:
                     ai_field_naming_language: auto
                     allow_additional_properties: false
                     allow_skipping_optional_fields: false
+                    continue_before_optional_fields: true
                     default_form_mode: web
                     editable_submissions: false
                     embed_domains: []
@@ -11803,6 +11985,7 @@ paths:
                     success_title: null
                     success_message: null
                     show_fill_again_button: true
+                    form_sections_in_order: false
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: api
@@ -11817,12 +12000,14 @@ paths:
                       color: "444444"
                       opacity: 1
                       date_format: '%m/%d/%Y'
-                      date_time_format: '%m/%d/%Y %H:%M:%S'
+                      date_time_format: '%m/%d/%Y %H:%M'
                       check_color: "444444"
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
                     form_sections: []
+                    signer_roles: []
+                    signature_request_cc: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -11834,6 +12019,7 @@ paths:
                     layout: null
                     embed_edit_token: exampleEmbedEditTokenForTemplate1
                     versions: []
+                    override_account_expiry: true
               schema:
                 $ref: "#/components/schemas/Template"
           description: PDF replaced
@@ -12063,6 +12249,7 @@ paths:
                     ai_field_naming_language: auto
                     allow_additional_properties: false
                     allow_skipping_optional_fields: false
+                    continue_before_optional_fields: true
                     default_form_mode: web
                     editable_submissions: false
                     embed_domains: []
@@ -12089,6 +12276,7 @@ paths:
                     success_title: null
                     success_message: null
                     show_fill_again_button: true
+                    form_sections_in_order: false
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: api
@@ -12103,12 +12291,14 @@ paths:
                       color: "444444"
                       opacity: 1
                       date_format: '%m/%d/%Y'
-                      date_time_format: '%m/%d/%Y %H:%M:%S'
+                      date_time_format: '%m/%d/%Y %H:%M'
                       check_color: "444444"
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
                     form_sections: []
+                    signer_roles: []
+                    signature_request_cc: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -12120,6 +12310,7 @@ paths:
                     layout: null
                     embed_edit_token: exampleEmbedEditTokenForTemplate1
                     versions: []
+                    override_account_expiry: true
               schema:
                 $ref: "#/components/schemas/Template"
           description: PDF replaced
@@ -12322,6 +12513,7 @@ paths:
                     ai_field_naming_language: auto
                     allow_additional_properties: false
                     allow_skipping_optional_fields: false
+                    continue_before_optional_fields: true
                     default_form_mode: web
                     editable_submissions: false
                     embed_domains: []
@@ -12348,6 +12540,7 @@ paths:
                     success_title: null
                     success_message: null
                     show_fill_again_button: true
+                    form_sections_in_order: false
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: user
@@ -12362,12 +12555,14 @@ paths:
                       color: "444444"
                       opacity: 1
                       date_format: '%m/%d/%Y'
-                      date_time_format: '%m/%d/%Y %H:%M:%S'
+                      date_time_format: '%m/%d/%Y %H:%M'
                       check_color: "444444"
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
                     form_sections: []
+                    signer_roles: []
+                    signature_request_cc: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -12379,6 +12574,7 @@ paths:
                     layout: null
                     embed_edit_token: exampleEmbedEditTokenGenerated001
                     versions: []
+                    override_account_expiry: true
               schema:
                 $ref: "#/components/schemas/Template"
           description: template copied
@@ -12571,6 +12767,7 @@ paths:
                     ai_field_naming_language: auto
                     allow_additional_properties: false
                     allow_skipping_optional_fields: false
+                    continue_before_optional_fields: true
                     default_form_mode: web
                     editable_submissions: false
                     embed_domains: []
@@ -12597,6 +12794,7 @@ paths:
                     success_title: null
                     success_message: null
                     show_fill_again_button: true
+                    form_sections_in_order: false
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: user
@@ -12611,12 +12809,14 @@ paths:
                       color: "444444"
                       opacity: 1
                       date_format: '%m/%d/%Y'
-                      date_time_format: '%m/%d/%Y %H:%M:%S'
+                      date_time_format: '%m/%d/%Y %H:%M'
                       check_color: "444444"
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
                     form_sections: []
+                    signer_roles: []
+                    signature_request_cc: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -12628,6 +12828,7 @@ paths:
                     layout: null
                     embed_edit_token: exampleEmbedEditTokenForTemplate1
                     versions: []
+                    override_account_expiry: true
               schema:
                 $ref: "#/components/schemas/Template"
           description: template moved
@@ -12990,6 +13191,7 @@ paths:
                     ai_field_naming_language: auto
                     allow_additional_properties: false
                     allow_skipping_optional_fields: false
+                    continue_before_optional_fields: true
                     default_form_mode: web
                     editable_submissions: false
                     embed_domains: []
@@ -13016,6 +13218,7 @@ paths:
                     success_title: null
                     success_message: null
                     show_fill_again_button: true
+                    form_sections_in_order: false
                     has_slack_webhook_url: false
                     last_changed_by:
                       type: api
@@ -13030,12 +13233,14 @@ paths:
                       color: "444444"
                       opacity: 1
                       date_format: '%m/%d/%Y'
-                      date_time_format: '%m/%d/%Y %H:%M:%S'
+                      date_time_format: '%m/%d/%Y %H:%M'
                       check_color: "444444"
                       shape_border_color: 4A90E2
                     field_dependencies: []
                     field_groups: []
                     form_sections: []
+                    signer_roles: []
+                    signature_request_cc: []
                     predefined_fields: []
                     predefined_fields_sample_data: null
                     html: null
@@ -13056,6 +13261,7 @@ paths:
                         external_id: null
                         name: Test User 1
                         email: null
+                    override_account_expiry: true
               schema:
                 $ref: "#/components/schemas/Template"
           description: version restored
@@ -13725,6 +13931,8 @@ paths:
                         metadata: ""
                         required: true
                         option_list: null
+                        option_labels: null
+                        print_option_labels: false
                         combined_field_names: ""
                         combined_field_type: separator
                         combined_field_separator: ' '
@@ -13738,6 +13946,9 @@ paths:
                         signature_allow_draw: true
                         signature_allow_type: true
                         barcode_symbology: code_128
+                        comb_fill_from_right: false
+                        comb_pad_with_zeros: false
+                        print_digits_only: false
                         hidden: false
                         x: 100
                         "y": 300
@@ -13799,8 +14010,10 @@ paths:
                         invert_boolean_condition: false
                         currency: false
                         decimal_places: null
+                        number_part: all
                         image_scale_type: fit
                         image_gravity: Center
+                        signer_role: null
                         dependencies: null
                       removed:
                       - id: 3
@@ -13817,6 +14030,8 @@ paths:
                         metadata: ""
                         required: false
                         option_list: null
+                        option_labels: null
+                        print_option_labels: false
                         combined_field_names: ""
                         combined_field_type: separator
                         combined_field_separator: ' '
@@ -13830,6 +14045,9 @@ paths:
                         signature_allow_draw: true
                         signature_allow_type: true
                         barcode_symbology: code_128
+                        comb_fill_from_right: false
+                        comb_pad_with_zeros: false
+                        print_digits_only: false
                         hidden: false
                         x: 0
                         "y": 200
@@ -13891,8 +14109,10 @@ paths:
                         invert_boolean_condition: false
                         currency: false
                         decimal_places: null
+                        number_part: all
                         image_scale_type: fit
                         image_gravity: Center
+                        signer_role: null
                         dependencies: null
                       changed:
                       - id: 2
@@ -13914,6 +14134,8 @@ paths:
                           metadata: ""
                           required: true
                           option_list: null
+                          option_labels: null
+                          print_option_labels: false
                           combined_field_names: ""
                           combined_field_type: separator
                           combined_field_separator: ' '
@@ -13927,6 +14149,9 @@ paths:
                           signature_allow_draw: true
                           signature_allow_type: true
                           barcode_symbology: code_128
+                          comb_fill_from_right: false
+                          comb_pad_with_zeros: false
+                          print_digits_only: false
                           hidden: false
                           x: 0
                           "y": 100
@@ -13988,8 +14213,10 @@ paths:
                           invert_boolean_condition: false
                           currency: false
                           decimal_places: null
+                          number_part: all
                           image_scale_type: fit
                           image_gravity: Center
+                          signer_role: null
                           dependencies: null
                         new:
                           id: 2
@@ -14006,6 +14233,8 @@ paths:
                           metadata: ""
                           required: false
                           option_list: null
+                          option_labels: null
+                          print_option_labels: false
                           combined_field_names: ""
                           combined_field_type: separator
                           combined_field_separator: ' '
@@ -14019,6 +14248,9 @@ paths:
                           signature_allow_draw: true
                           signature_allow_type: true
                           barcode_symbology: code_128
+                          comb_fill_from_right: false
+                          comb_pad_with_zeros: false
+                          print_digits_only: false
                           hidden: false
                           x: 40
                           "y": 100
@@ -14080,8 +14312,10 @@ paths:
                           invert_boolean_condition: false
                           currency: false
                           decimal_places: null
+                          number_part: all
                           image_scale_type: fit
                           image_gravity: Center
+                          signer_role: null
                           dependencies: null
                       reordered: []
                     changed_settings:
@@ -14224,6 +14458,8 @@ paths:
                       metadata: ""
                       required: true
                       option_list: null
+                      option_labels: null
+                      print_option_labels: false
                       combined_field_names: ""
                       combined_field_type: separator
                       combined_field_separator: ' '
@@ -14237,6 +14473,9 @@ paths:
                       signature_allow_draw: true
                       signature_allow_type: true
                       barcode_symbology: code_128
+                      comb_fill_from_right: false
+                      comb_pad_with_zeros: false
+                      print_digits_only: false
                       hidden: false
                       x: 0
                       "y": 0
@@ -14298,8 +14537,10 @@ paths:
                       invert_boolean_condition: false
                       currency: false
                       decimal_places: null
+                      number_part: all
                       image_scale_type: fit
                       image_gravity: Center
+                      signer_role: null
                       dependencies: null
                     - id: 2
                       name: last_name
@@ -14315,6 +14556,8 @@ paths:
                       metadata: ""
                       required: true
                       option_list: null
+                      option_labels: null
+                      print_option_labels: false
                       combined_field_names: ""
                       combined_field_type: separator
                       combined_field_separator: ' '
@@ -14328,6 +14571,9 @@ paths:
                       signature_allow_draw: true
                       signature_allow_type: true
                       barcode_symbology: code_128
+                      comb_fill_from_right: false
+                      comb_pad_with_zeros: false
+                      print_digits_only: false
                       hidden: false
                       x: 0
                       "y": 100
@@ -14389,8 +14635,10 @@ paths:
                       invert_boolean_condition: false
                       currency: false
                       decimal_places: null
+                      number_part: all
                       image_scale_type: fit
                       image_gravity: Center
+                      signer_role: null
                       dependencies: null
                     - id: 3
                       name: phone_number
@@ -14406,6 +14654,8 @@ paths:
                       metadata: ""
                       required: false
                       option_list: null
+                      option_labels: null
+                      print_option_labels: false
                       combined_field_names: ""
                       combined_field_type: separator
                       combined_field_separator: ' '
@@ -14419,6 +14669,9 @@ paths:
                       signature_allow_draw: true
                       signature_allow_type: true
                       barcode_symbology: code_128
+                      comb_fill_from_right: false
+                      comb_pad_with_zeros: false
+                      print_digits_only: false
                       hidden: false
                       x: 0
                       "y": 200
@@ -14480,8 +14733,10 @@ paths:
                       invert_boolean_condition: false
                       currency: false
                       decimal_places: null
+                      number_part: all
                       image_scale_type: fit
                       image_gravity: Center
+                      signer_role: null
                       dependencies: null
               schema:
                 $ref: "#/components/schemas/TemplateFields"
@@ -14670,6 +14925,8 @@ paths:
                       metadata: ""
                       required: true
                       option_list: null
+                      option_labels: null
+                      print_option_labels: false
                       combined_field_names: ""
                       combined_field_type: separator
                       combined_field_separator: ' '
@@ -14683,6 +14940,9 @@ paths:
                       signature_allow_draw: true
                       signature_allow_type: true
                       barcode_symbology: code_128
+                      comb_fill_from_right: false
+                      comb_pad_with_zeros: false
+                      print_digits_only: false
                       hidden: false
                       x: 0
                       "y": 0
@@ -14744,8 +15004,10 @@ paths:
                       invert_boolean_condition: false
                       currency: false
                       decimal_places: null
+                      number_part: all
                       image_scale_type: fit
                       image_gravity: Center
+                      signer_role: null
                       dependencies: null
                     - id: 2
                       name: last_name
@@ -14761,6 +15023,8 @@ paths:
                       metadata: ""
                       required: true
                       option_list: null
+                      option_labels: null
+                      print_option_labels: false
                       combined_field_names: ""
                       combined_field_type: separator
                       combined_field_separator: ' '
@@ -14774,6 +15038,9 @@ paths:
                       signature_allow_draw: true
                       signature_allow_type: true
                       barcode_symbology: code_128
+                      comb_fill_from_right: false
+                      comb_pad_with_zeros: false
+                      print_digits_only: false
                       hidden: false
                       x: 0
                       "y": 100
@@ -14835,8 +15102,10 @@ paths:
                       invert_boolean_condition: false
                       currency: false
                       decimal_places: null
+                      number_part: all
                       image_scale_type: fit
                       image_gravity: Center
+                      signer_role: null
                       dependencies: null
                     - id: 3
                       name: phone_number
@@ -14852,6 +15121,8 @@ paths:
                       metadata: ""
                       required: false
                       option_list: null
+                      option_labels: null
+                      print_option_labels: false
                       combined_field_names: ""
                       combined_field_type: separator
                       combined_field_separator: ' '
@@ -14865,6 +15136,9 @@ paths:
                       signature_allow_draw: true
                       signature_allow_type: true
                       barcode_symbology: code_128
+                      comb_fill_from_right: false
+                      comb_pad_with_zeros: false
+                      print_digits_only: false
                       hidden: false
                       x: 0
                       "y": 200
@@ -14926,8 +15200,10 @@ paths:
                       invert_boolean_condition: false
                       currency: false
                       decimal_places: null
+                      number_part: all
                       image_scale_type: fit
                       image_gravity: Center
+                      signer_role: null
                       dependencies: null
                     - id: 4
                       name: email
@@ -14943,6 +15219,8 @@ paths:
                       metadata: ""
                       required: true
                       option_list: null
+                      option_labels: null
+                      print_option_labels: false
                       combined_field_names: ""
                       combined_field_type: separator
                       combined_field_separator: ' '
@@ -14956,6 +15234,9 @@ paths:
                       signature_allow_draw: true
                       signature_allow_type: true
                       barcode_symbology: code_128
+                      comb_fill_from_right: false
+                      comb_pad_with_zeros: false
+                      print_digits_only: false
                       hidden: false
                       x: 100
                       "y": 300
@@ -15017,8 +15298,10 @@ paths:
                       invert_boolean_condition: false
                       currency: false
                       decimal_places: null
+                      number_part: all
                       image_scale_type: fit
                       image_gravity: Center
+                      signer_role: null
                       dependencies: null
                     - id: 5
                       name: signature
@@ -15034,6 +15317,8 @@ paths:
                       metadata: ""
                       required: true
                       option_list: null
+                      option_labels: null
+                      print_option_labels: false
                       combined_field_names: ""
                       combined_field_type: separator
                       combined_field_separator: ' '
@@ -15047,6 +15332,9 @@ paths:
                       signature_allow_draw: true
                       signature_allow_type: true
                       barcode_symbology: code_128
+                      comb_fill_from_right: false
+                      comb_pad_with_zeros: false
+                      print_digits_only: false
                       hidden: false
                       x: 100
                       "y": 400
@@ -15108,8 +15396,10 @@ paths:
                       invert_boolean_condition: false
                       currency: false
                       decimal_places: null
+                      number_part: all
                       image_scale_type: fit
                       image_gravity: Center
+                      signer_role: null
                       dependencies: null
               schema:
                 $ref: "#/components/schemas/TemplateFields"
@@ -15286,6 +15576,8 @@ paths:
                       metadata: ""
                       required: true
                       option_list: null
+                      option_labels: null
+                      print_option_labels: false
                       combined_field_names: ""
                       combined_field_type: separator
                       combined_field_separator: ' '
@@ -15299,6 +15591,9 @@ paths:
                       signature_allow_draw: true
                       signature_allow_type: true
                       barcode_symbology: code_128
+                      comb_fill_from_right: false
+                      comb_pad_with_zeros: false
+                      print_digits_only: false
                       hidden: false
                       x: 0
                       "y": 0
@@ -15360,8 +15655,10 @@ paths:
                       invert_boolean_condition: false
                       currency: false
                       decimal_places: null
+                      number_part: all
                       image_scale_type: fit
                       image_gravity: Center
+                      signer_role: null
                       dependencies: null
                     - id: 2
                       name: surname
@@ -15377,6 +15674,8 @@ paths:
                       metadata: ""
                       required: true
                       option_list: null
+                      option_labels: null
+                      print_option_labels: false
                       combined_field_names: ""
                       combined_field_type: separator
                       combined_field_separator: ' '
@@ -15390,6 +15689,9 @@ paths:
                       signature_allow_draw: true
                       signature_allow_type: true
                       barcode_symbology: code_128
+                      comb_fill_from_right: false
+                      comb_pad_with_zeros: false
+                      print_digits_only: false
                       hidden: false
                       x: 0
                       "y": 120
@@ -15451,8 +15753,10 @@ paths:
                       invert_boolean_condition: false
                       currency: false
                       decimal_places: null
+                      number_part: all
                       image_scale_type: fit
                       image_gravity: Center
+                      signer_role: null
                       dependencies: null
                     - id: 3
                       name: phone_number
@@ -15468,6 +15772,8 @@ paths:
                       metadata: ""
                       required: true
                       option_list: null
+                      option_labels: null
+                      print_option_labels: false
                       combined_field_names: ""
                       combined_field_type: separator
                       combined_field_separator: ' '
@@ -15481,6 +15787,9 @@ paths:
                       signature_allow_draw: true
                       signature_allow_type: true
                       barcode_symbology: code_128
+                      comb_fill_from_right: false
+                      comb_pad_with_zeros: false
+                      print_digits_only: false
                       hidden: false
                       x: 0
                       "y": 200
@@ -15542,8 +15851,10 @@ paths:
                       invert_boolean_condition: false
                       currency: false
                       decimal_places: null
+                      number_part: all
                       image_scale_type: fit
                       image_gravity: Center
+                      signer_role: null
                       dependencies: null
               schema:
                 $ref: "#/components/schemas/TemplateFields"
@@ -15704,6 +16015,8 @@ paths:
                       metadata: ""
                       required: true
                       option_list: null
+                      option_labels: null
+                      print_option_labels: false
                       combined_field_names: ""
                       combined_field_type: separator
                       combined_field_separator: ' '
@@ -15717,6 +16030,9 @@ paths:
                       signature_allow_draw: true
                       signature_allow_type: true
                       barcode_symbology: code_128
+                      comb_fill_from_right: false
+                      comb_pad_with_zeros: false
+                      print_digits_only: false
                       hidden: false
                       x: 0
                       "y": 0
@@ -15778,8 +16094,10 @@ paths:
                       invert_boolean_condition: false
                       currency: false
                       decimal_places: null
+                      number_part: all
                       image_scale_type: fit
                       image_gravity: Center
+                      signer_role: null
                       dependencies: null
                     - id: 2
                       name: last_name
@@ -15795,6 +16113,8 @@ paths:
                       metadata: ""
                       required: true
                       option_list: null
+                      option_labels: null
+                      print_option_labels: false
                       combined_field_names: ""
                       combined_field_type: separator
                       combined_field_separator: ' '
@@ -15808,6 +16128,9 @@ paths:
                       signature_allow_draw: true
                       signature_allow_type: true
                       barcode_symbology: code_128
+                      comb_fill_from_right: false
+                      comb_pad_with_zeros: false
+                      print_digits_only: false
                       hidden: false
                       x: 0
                       "y": 100
@@ -15869,8 +16192,10 @@ paths:
                       invert_boolean_condition: false
                       currency: false
                       decimal_places: null
+                      number_part: all
                       image_scale_type: fit
                       image_gravity: Center
+                      signer_role: null
                       dependencies: null
               schema:
                 $ref: "#/components/schemas/TemplateFields"
@@ -16034,6 +16359,8 @@ paths:
                       metadata: ""
                       required: false
                       option_list: null
+                      option_labels: null
+                      print_option_labels: false
                       combined_field_names: ""
                       combined_field_type: separator
                       combined_field_separator: ' '
@@ -16047,6 +16374,9 @@ paths:
                       signature_allow_draw: true
                       signature_allow_type: true
                       barcode_symbology: code_128
+                      comb_fill_from_right: false
+                      comb_pad_with_zeros: false
+                      print_digits_only: false
                       hidden: false
                       x: 0
                       "y": 200
@@ -16108,8 +16438,10 @@ paths:
                       invert_boolean_condition: false
                       currency: false
                       decimal_places: null
+                      number_part: all
                       image_scale_type: fit
                       image_gravity: Center
+                      signer_role: null
                       dependencies: null
                     - id: 1
                       name: first_name
@@ -16125,6 +16457,8 @@ paths:
                       metadata: ""
                       required: true
                       option_list: null
+                      option_labels: null
+                      print_option_labels: false
                       combined_field_names: ""
                       combined_field_type: separator
                       combined_field_separator: ' '
@@ -16138,6 +16472,9 @@ paths:
                       signature_allow_draw: true
                       signature_allow_type: true
                       barcode_symbology: code_128
+                      comb_fill_from_right: false
+                      comb_pad_with_zeros: false
+                      print_digits_only: false
                       hidden: false
                       x: 0
                       "y": 0
@@ -16199,8 +16536,10 @@ paths:
                       invert_boolean_condition: false
                       currency: false
                       decimal_places: null
+                      number_part: all
                       image_scale_type: fit
                       image_gravity: Center
+                      signer_role: null
                       dependencies: null
                     - id: 2
                       name: last_name
@@ -16216,6 +16555,8 @@ paths:
                       metadata: ""
                       required: true
                       option_list: null
+                      option_labels: null
+                      print_option_labels: false
                       combined_field_names: ""
                       combined_field_type: separator
                       combined_field_separator: ' '
@@ -16229,6 +16570,9 @@ paths:
                       signature_allow_draw: true
                       signature_allow_type: true
                       barcode_symbology: code_128
+                      comb_fill_from_right: false
+                      comb_pad_with_zeros: false
+                      print_digits_only: false
                       hidden: false
                       x: 0
                       "y": 100
@@ -16290,8 +16634,10 @@ paths:
                       invert_boolean_condition: false
                       currency: false
                       decimal_places: null
+                      number_part: all
                       image_scale_type: fit
                       image_gravity: Center
+                      signer_role: null
                       dependencies: null
               schema:
                 $ref: "#/components/schemas/TemplateFields"
@@ -17737,8 +18083,9 @@ components:
             \ URLs have been deleted."
           type: boolean
         expires_at:
-          description: When the combined PDF expires (`expires_in` after it's generated).
-            Null if it's kept until you delete it.
+          description: "When the combined PDF expires (`expires_in`, or the account's\
+            \ expiry setting, after it's generated). Null if it's kept until you delete\
+            \ it."
           format: date-time
           type: string
           x-nullable: true
@@ -18128,8 +18475,8 @@ components:
           - $ref: "#/components/schemas/EmailActionDelivery"
           description: "`attachment` attaches the files, or sends a download link\
             \ when together they're larger than `max_attachment_mb`. `link` sends\
-            \ a download link, which works for 7 days. Accounts with a BAA start with\
-            \ `link`."
+            \ a download link, which works for 7 days, or until the submission expires\
+            \ if that's sooner. Accounts with a BAA start with `link`."
           x-open-enum: true
         max_attachment_mb:
           description: "With `delivery` `attachment`, files larger than this many\
@@ -18617,28 +18964,30 @@ components:
             \ your plan doesn't include this, such as more templates, another active\
             \ integration (webhooks count), the embedded template editor, email actions,\
             \ or live signature requests before your account's first payment. `account_suspended`\
-            \ (403): the account is suspended, so it can't create submissions. `polling_timeout`:\
-            \ on a sync.api host, the files weren't ready in time. The record was\
-            \ created and is still being processed: its ID is in `submission_id`,\
-            \ `submission_batch_id`, `combined_pdf_id` or `template_id`. Without one\
-            \ of these IDs, the request itself got no answer in time, and the record\
-            \ may or may not have been created. `idempotency_key_in_use` (409): the\
-            \ first request with the same Idempotency-Key is still being processed,\
-            \ and the response has a `Retry-After` header: send the request again\
-            \ then. Without the header, the first request was processed but its response\
-            \ is no longer kept, or it failed after creating or changing a record,\
-            \ and the message says which. When the first request created a record,\
-            \ or changed a template's fields or published a version of it, the message\
-            \ names it, and its ID is in `submission_id`, `submission_batch_id`, `combined_pdf_id`,\
-            \ `template_id`, `folder_id`, `custom_file_id`, `webhook_id`, `email_action_id`\
-            \ or `email_domain_id` (a signature request's events and tokens have no\
-            \ member). `idempotency_key_reused` (422): the Idempotency-Key was already\
-            \ used for a different request. `rate_limited` (429): too many API requests.\
-            \ Wait for the `Retry-After` header's seconds. `daily_email_limit_reached`\
-            \ (429): a submission that DocSpring would email would take your account\
-            \ over its daily email limit, so nothing was saved. Send it again after\
-            \ the `Retry-After` header's seconds (midnight UTC), or send the signing\
-            \ links yourself (`send_email: false`)."
+            \ (403): the account is suspended, so it can't create submissions, or\
+            \ it's scheduled for deletion, so every request is refused until one of\
+            \ its users signs in to cancel that. `polling_timeout`: on a sync.api\
+            \ host, the files weren't ready in time. The record was created and is\
+            \ still being processed: its ID is in `submission_id`, `submission_batch_id`,\
+            \ `combined_pdf_id` or `template_id`. Without one of these IDs, the request\
+            \ itself got no answer in time, and the record may or may not have been\
+            \ created. `idempotency_key_in_use` (409): the first request with the\
+            \ same Idempotency-Key is still being processed, and the response has\
+            \ a `Retry-After` header: send the request again then. Without the header,\
+            \ the first request was processed but its response is no longer kept,\
+            \ or it failed after creating or changing a record, and the message says\
+            \ which. When the first request created a record, or changed a template's\
+            \ fields or published a version of it, the message names it, and its ID\
+            \ is in `submission_id`, `submission_batch_id`, `combined_pdf_id`, `template_id`,\
+            \ `folder_id`, `custom_file_id`, `webhook_id`, `email_action_id` or `email_domain_id`\
+            \ (a signature request's events and tokens have no member). `idempotency_key_reused`\
+            \ (422): the Idempotency-Key was already used for a different request.\
+            \ `rate_limited` (429): too many API requests. Wait for the `Retry-After`\
+            \ header's seconds. `daily_email_limit_reached` (429): a submission that\
+            \ DocSpring would email would take your account over its daily email limit,\
+            \ so nothing was saved. Send it again after the `Retry-After` header's\
+            \ seconds (midnight UTC), or send the signing links yourself (`send_email:\
+            \ false`)."
           x-open-enum: true
         message:
           description: "A human-readable explanation, safe to show to developers."
@@ -18766,6 +19115,9 @@ components:
         metadata: metadata
         required: true
         option_list: option_list
+        option_labels:
+          key: option_labels
+        print_option_labels: true
         combined_field_names: combined_field_names
         combined_field_type: ""
         combined_field_separator: combined_field_separator
@@ -18779,6 +19131,9 @@ components:
         signature_allow_draw: true
         signature_allow_type: true
         barcode_symbology: ""
+        comb_fill_from_right: true
+        comb_pad_with_zeros: true
+        print_digits_only: true
         hidden: true
         x: 5.637376656633329
         "y": 2.3021358869347655
@@ -18840,8 +19195,10 @@ components:
         invert_boolean_condition: true
         currency: true
         decimal_places: 9
+        number_part: ""
         image_scale_type: ""
         image_gravity: ""
+        signer_role: signer_role
         dependencies: ""
       properties:
         id:
@@ -18931,6 +19288,25 @@ components:
             \ Shared by every field with the same `name`."
           type: string
           x-nullable: true
+        option_labels:
+          additionalProperties:
+            type: string
+          description: "With `option_list`: the label forms show for each option,\
+            \ keyed by its value, such as `{\"head_of_household\": \"Head of household\"\
+            }`. The data, the API and webhooks keep the value, and the PDF prints\
+            \ it unless `print_option_labels` is set. An option without a label shows\
+            \ its value, or its sentence case when the options are lowercase words\
+            \ joined by underscores (`head_of_household` shows as \"Head of household\"\
+            ). The template's data schema has them as `x-option-labels`. Each key\
+            \ must be one of the options, and each label must have some text. Shared\
+            \ by every field with the same `name`."
+          type: object
+          x-nullable: true
+        print_option_labels:
+          description: "Text display, with `option_labels`: the PDF prints the chosen\
+            \ option's label instead of its value, and an `editable` field's dropdown\
+            \ lists the labels. Shared by every field with the same `name`."
+          type: boolean
         combined_field_names:
           description: "Combined fields only: a comma-separated list of the names\
             \ of the fields whose values are combined, in order. Shared by every field\
@@ -19002,6 +19378,26 @@ components:
             \ digits; `ean_13` takes 12 digits, `ean_8` 7 digits and `upc_a` 11 digits\
             \ (the check digit is added). Shared by every field with the same `name`."
           x-open-enum: true
+        comb_fill_from_right:
+          description: "With `comb`: the value fills the last boxes of the comb fields\
+            \ with this name, padded on the left with spaces, or with zeros with `comb_pad_with_zeros`,\
+            \ as amounts are written on paper forms. A number with `decimal_places`\
+            \ in one row of boxes lines up on its decimal point, which takes no box:\
+            \ the decimal places fill the last boxes. Date fields ignore it: a date\
+            \ prints in its format. Shared by every field with the same `name`."
+          type: boolean
+        comb_pad_with_zeros:
+          description: "With `comb_fill_from_right`: pads the value on the left with\
+            \ zeros instead of spaces, such as `000123`. A negative number keeps its\
+            \ minus sign in the first box. Shared by every field with the same `name`."
+          type: boolean
+        print_digits_only:
+          description: "With `comb`, for string fields: only the value's digits print,\
+            \ one in each box, and any punctuation is left out, so `123-45-6789` fills\
+            \ the 9 boxes of an SSN. The template's data schema accepts as many digits\
+            \ as the boxes hold, with anything but letters between them. Number and\
+            \ date fields ignore it. Shared by every field with the same `name`."
+          type: boolean
         hidden:
           description: "Leaves the field off the PDF. It stays in the template's data\
             \ schema (marked `x-hidden`) and on forms, so other fields, such as combined\
@@ -19178,13 +19574,22 @@ components:
             \ boxes of equal width and prints one character, centered, in each."
           type: boolean
         comb_number_of_cells:
-          description: "With `comb`: how many boxes the field has. The value's maximum\
-            \ length in the template's data schema is this plus `comb_value_offset`."
+          description: "With `comb`: how many boxes the field has, up to 10,000. The\
+            \ value's maximum length in the template's data schema is the furthest\
+            \ that a comb field of its name reaches: its `comb_value_offset` plus\
+            \ its boxes. With `print_digits_only`, that many digits. A number field\
+            \ is split from its printed form (with `decimal_places`), and a number\
+            \ with a digit that no box prints (more digits than the boxes, or a digit\
+            \ where the offsets leave a gap) is a data error."
           type: integer
         comb_value_offset:
-          description: "With `comb`: the position, from 0, of the first character\
-            \ of the value that this field prints. For an SSN printed in boxes of\
-            \ 3, 2 and 4 digits, three fields named `ssn` use offsets 0, 3 and 5."
+          description: "With `comb`: how many boxes of the value's row come before\
+            \ this field, from 0 to 10,000. The comb fields that share a name make\
+            \ one row of boxes, and each prints the row's characters from its offset.\
+            \ For an SSN printed in boxes of 3, 2 and 4 digits, three fields named\
+            \ `ssn` use offsets 0, 3 and 5. The fields that print a number's whole\
+            \ part (`number_part`) make a row of their own, and so do the ones that\
+            \ print its decimal places."
           type: integer
         shape_type:
           allOf:
@@ -19351,6 +19756,17 @@ components:
             \ prints the number as it was sent."
           type: integer
           x-nullable: true
+        number_part:
+          allOf:
+          - $ref: "#/components/schemas/NumberPart"
+          description: "Number fields with text display: which part of the number\
+            \ this field prints. `all` prints the whole number, `whole` only the part\
+            \ before the decimal point (with a minus sign) and `decimals` only the\
+            \ decimal places. For an amount printed as `$ ____ . __`, two fields with\
+            \ the same name: one `whole`, and one `decimals` with `decimal_places`\
+            \ 2. The number is rounded once, to the `decimals` field's decimal places\
+            \ (2 when it sets none)."
+          x-open-enum: true
         image_scale_type:
           allOf:
           - $ref: "#/components/schemas/ImageScaleType"
@@ -19369,6 +19785,18 @@ components:
             \ `South` or `SouthEast` (bottom right). It also aligns typed signatures,\
             \ and isn't used with `stretch`."
           x-open-enum: true
+        signer_role:
+          description: "Who fills in or signs the field when a submission has signature\
+            \ requests: one of the template's `signer_roles`, by its key, or `sender`\
+            \ for a field that submission data fills in, which no signer is asked\
+            \ for. Null when it has no role: a submission's only signer fills it in\
+            \ when data doesn't, and with two or more signature requests one of them\
+            \ has to list it in its `fields`. In an HTML or Word template, a field\
+            \ whose tag gives it a role (`{% form_field tenant_name, role: tenant\
+            \ %}`) has that one, which only the code can change. Shared by every field\
+            \ with the same `name`."
+          type: string
+          x-nullable: true
         dependencies:
           allOf:
           - $ref: "#/components/schemas/FieldDependency"
@@ -19395,7 +19823,9 @@ components:
       - color_field_name
       - color_field_required
       - comb
+      - comb_fill_from_right
       - comb_number_of_cells
+      - comb_pad_with_zeros
       - comb_value_offset
       - combined_field_format
       - combined_field_names
@@ -19436,11 +19866,15 @@ components:
       - number_condition_range_max
       - number_condition_range_min
       - number_condition_type
+      - number_part
       - opacity
+      - option_labels
       - option_list
       - overflow
       - page
       - placeholder
+      - print_digits_only
+      - print_option_labels
       - qrcode_color
       - qrcode_color_field_name
       - qrcode_color_field_required
@@ -19457,6 +19891,7 @@ components:
       - shape_type
       - signature_allow_draw
       - signature_allow_type
+      - signer_role
       - static
       - strikethrough
       - string_condition_type
@@ -19491,6 +19926,9 @@ components:
           metadata: metadata
           required: true
           option_list: option_list
+          option_labels:
+            key: option_labels
+          print_option_labels: true
           combined_field_names: combined_field_names
           combined_field_type: ""
           combined_field_separator: combined_field_separator
@@ -19504,6 +19942,9 @@ components:
           signature_allow_draw: true
           signature_allow_type: true
           barcode_symbology: ""
+          comb_fill_from_right: true
+          comb_pad_with_zeros: true
+          print_digits_only: true
           hidden: true
           x: 5.637376656633329
           "y": 2.3021358869347655
@@ -19565,8 +20006,10 @@ components:
           invert_boolean_condition: true
           currency: true
           decimal_places: 9
+          number_part: ""
           image_scale_type: ""
           image_gravity: ""
+          signer_role: signer_role
           dependencies: ""
         - id: 0
           name: name
@@ -19582,6 +20025,9 @@ components:
           metadata: metadata
           required: true
           option_list: option_list
+          option_labels:
+            key: option_labels
+          print_option_labels: true
           combined_field_names: combined_field_names
           combined_field_type: ""
           combined_field_separator: combined_field_separator
@@ -19595,6 +20041,9 @@ components:
           signature_allow_draw: true
           signature_allow_type: true
           barcode_symbology: ""
+          comb_fill_from_right: true
+          comb_pad_with_zeros: true
+          print_digits_only: true
           hidden: true
           x: 5.637376656633329
           "y": 2.3021358869347655
@@ -19656,8 +20105,10 @@ components:
           invert_boolean_condition: true
           currency: true
           decimal_places: 9
+          number_part: ""
           image_scale_type: ""
           image_gravity: ""
+          signer_role: signer_role
           dependencies: ""
       properties:
         template_id:
@@ -19781,8 +20232,9 @@ components:
         permanent_url:
           description: "A link to download the file that doesn't expire: it redirects\
             \ to a new temporary link. It needs your API token or a signed-in session,\
-            \ except for a submission of a template that makes its submissions public.\
-            \ Null until the file has been made."
+            \ except for a submission of a template that makes its submissions public\
+            \ (a signing manifest's link always needs one). Null until the file has\
+            \ been made."
           type: string
           x-nullable: true
         filename:
@@ -19792,7 +20244,7 @@ components:
         content_type:
           description: "The file's media type: `application/pdf`, `application/vnd.openxmlformats-officedocument.wordprocessingml.document`\
             \ for a Word document, or `application/vnd.oasis.opendocument.text` for\
-            \ an OpenDocument file."
+            \ an OpenDocument file, or `application/json` for a signing manifest."
           type: string
         size:
           description: The file's size in bytes. Null until the file has been made.
@@ -19827,6 +20279,15 @@ components:
           description: "The audit trail of a submission with signature requests: who\
             \ signed, when and how. It's also added to the end of the PDF when the\
             \ template's `merge_audit_trail_pdf` is on."
+        signing_manifest:
+          allOf:
+          - $ref: "#/components/schemas/GeneratedFile"
+          description: "The audit data behind the audit trail of a submission with\
+            \ signature requests, as JSON: the hashes of the document and the audit\
+            \ trail, and each signing event with the salt and hash that DocSpring's\
+            \ signing record holds for it. It has who signed, like the audit trail,\
+            \ and goes when the submission expires, so keep it with the PDF and the\
+            \ audit trail."
         preview:
           allOf:
           - $ref: "#/components/schemas/GeneratedFile"
@@ -20006,9 +20467,13 @@ components:
           type: string
           x-nullable: true
         fields:
-          description: "The fields this person fills in. Null for a signature request\
-            \ created with API v1 without a field list: it asks for every field the\
-            \ submission's data doesn't have."
+          description: "The fields this person fills in or signs: the ones the template\
+            \ gives their role that data didn't fill in, and the ones their signature\
+            \ request listed. A submission's only signature request without a list\
+            \ also has every field without a role that data didn't fill in. Null for\
+            \ a signature request created with API v1 without a field list, on a PDF\
+            \ template without roles: it asks for every field the submission's data\
+            \ doesn't have."
           items:
             type: string
           type: array
@@ -20020,15 +20485,18 @@ components:
             \ your app."
           type: object
         role:
-          description: "Which of the template's signers the person is. Until templates\
-            \ have roles of their own, a template's signers are `Signer 1`, `Signer\
-            \ 2` and so on, up to `Signer 100`: `Signer 1` is the one whose details\
-            \ the template's `@@signature_requests/0` fields print."
+          description: "Which of the template's signers the person is: their role's\
+            \ key (`tenant`) when the template has roles, otherwise `Signer 1`, `Signer\
+            \ 2` and so on, up to `Signer 100`. `Signer 1`, or the template's first\
+            \ role, is the one whose details the template's `@@signature_requests/0`\
+            \ fields print, and a role's details are in its `@@signature_requests/<key>`\
+            \ fields too (`@@signature_requests/tenant/completed_at`)."
           type: string
         sort_order:
-          description: "The signer's position, from 0: `Signer 1` is 0. The template's\
-            \ `@@signature_requests/<sort_order>` fields print this signature request's\
-            \ details."
+          description: "The signer's position, from 0: `Signer 1` is 0, as is the\
+            \ template's first role. The template's `@@signature_requests/<sort_order>`\
+            \ fields, and its role's `@@signature_requests/<key>` fields, print this\
+            \ signature request's details."
           type: integer
         send_email:
           description: Whether DocSpring emails this person their signing link.
@@ -20749,8 +21217,8 @@ components:
             \ files, as when you get the submission, without the `png` pages' links\
             \ (`files.png.pages` is null). Get the submission for its page images."
         expired:
-          description: "An expired submission's data, metadata, password and PDF have\
-            \ been deleted."
+          description: "An expired submission's data, metadata, password and files\
+            \ have been deleted, along with its signature requests and audit trail."
           type: boolean
         expires_at:
           description: When the submission expires. Null if it's kept until you delete
@@ -21018,12 +21486,12 @@ components:
           description: "The generated files: `pdf`, `docx` and `odt` (by `output_formats`)\
             \ once the submission has been processed, `png` (the images of the PDF's\
             \ pages, when `output_formats` has it: `files.png.pages[0]` is page 1),\
-            \ `audit_trail` once its signature requests are completed, and `preview`\
-            \ once a preview PDF has been generated. Empty once the submission has\
-            \ expired."
+            \ `audit_trail` and `signing_manifest` once its signature requests are\
+            \ completed, and `preview` once a preview PDF has been generated. Empty\
+            \ once the submission has expired."
         expired:
-          description: "An expired submission's data, metadata, password and PDF have\
-            \ been deleted."
+          description: "An expired submission's data, metadata, password and files\
+            \ have been deleted, along with its signature requests and audit trail."
           type: boolean
         expires_at:
           description: When the submission expires. Null if it's kept until you delete
@@ -21083,8 +21551,10 @@ components:
             \ uses, converted from a Word template's Word document), and `png` (an\
             \ image of each page of the PDF, up to 100 pages, which adds `pdf`) when\
             \ you ask for it. Default `[\"pdf\"]`, or a Word template's `output_format`.\
-            \ POST /submissions/{submission_id}/generate_files adds `png`, and a Word\
-            \ template's submission's `pdf`, `docx` or `odt`, to a processed submission."
+            \ A Word template's submission with signature requests makes only `pdf`,\
+            \ which its signers sign. POST /submissions/{submission_id}/generate_files\
+            \ adds `png`, and a Word template's submission's `pdf`, `docx` or `odt`,\
+            \ to a processed submission."
           items:
             $ref: "#/components/schemas/OutputFormat"
           type: array
@@ -21338,6 +21808,9 @@ components:
         title: title
         required: true
         option_list: option_list
+        option_labels:
+          key: option_labels
+        print_option_labels: true
         combined_field_names: combined_field_names
         combined_field_type: ""
         combined_field_separator: combined_field_separator
@@ -21347,6 +21820,8 @@ components:
         signature_allow_draw: true
         signature_allow_type: true
         barcode_symbology: ""
+        comb_fill_from_right: true
+        comb_pad_with_zeros: true
         hidden: true
         x: 6.027456183070403
         "y": 1.4658129805029452
@@ -21393,6 +21868,7 @@ components:
         number_condition_range_exclusive_max: true
         invert_boolean_condition: true
         decimal_places: 1
+        number_part: ""
         image_scale_type: ""
         image_gravity: ""
       properties:
@@ -21419,6 +21895,16 @@ components:
             \ `Yes,No`. Null allows any value."
           type: string
           x-nullable: true
+        option_labels:
+          additionalProperties:
+            type: string
+          description: "The label forms show for each option, keyed by its value,\
+            \ such as `{\"no\": \"No, I don't\"}`. Each key must be one of the options."
+          type: object
+          x-nullable: true
+        print_option_labels:
+          description: Print the chosen option's label instead of its value.
+          type: boolean
         combined_field_names:
           description: "The names of the fields a combined field joins, separated\
             \ by commas."
@@ -21455,6 +21941,14 @@ components:
           allOf:
           - $ref: "#/components/schemas/BarcodeSymbology"
           description: The kind of barcode a field with display_type `barcode` prints.
+        comb_fill_from_right:
+          description: "Fill the last boxes of the field's comb fields, padding the\
+            \ value on the left, as amounts are written on paper forms."
+          type: boolean
+        comb_pad_with_zeros:
+          description: "With `comb_fill_from_right`, pad the value with zeros instead\
+            \ of spaces."
+          type: boolean
         hidden:
           description: "Leave the field off the PDF. Its value is still in the data,\
             \ and combined fields can use it."
@@ -21559,7 +22053,7 @@ components:
           description: The number of boxes in a comb field.
           type: integer
         comb_value_offset:
-          description: "The character of the value that the first box starts from,\
+          description: "How many boxes of the value's row come before this field,\
             \ for a value split over several comb fields (such as the parts of a Social\
             \ Security number)."
           type: integer
@@ -21652,6 +22146,12 @@ components:
             the value as it was sent.
           type: integer
           x-nullable: true
+        number_part:
+          allOf:
+          - $ref: "#/components/schemas/NumberPart"
+          description: "Which part of a number field's number this field prints: the\
+            \ whole number, only the part before the decimal point, or only the decimal\
+            \ places."
         image_scale_type:
           allOf:
           - $ref: "#/components/schemas/ImageScaleType"
@@ -21683,6 +22183,9 @@ components:
         minItems: can't be changed for one submission. Change the field in the template
         max_items: can't be changed for one submission. Change the field in the template
         maxItems: can't be changed for one submission. Change the field in the template
+        signer_role: can't be changed for one submission. Change the field in the
+          template
+        signerRole: can't be changed for one submission. Change the field in the template
         description: "can't be changed for one submission: the template's setting\
           \ always applies. Change it in the template"
         placeholder: "can't be changed for one submission: the template's setting\
@@ -21711,6 +22214,10 @@ components:
           \ setting always applies. Change it in the template"
         autoCalculateMaxLength: "can't be changed for one submission: the template's\
           \ setting always applies. Change it in the template"
+        print_digits_only: "can't be changed for one submission: the template's setting\
+          \ always applies. Change it in the template"
+        printDigitsOnly: "can't be changed for one submission: the template's setting\
+          \ always applies. Change it in the template"
         color_field_name: "can't be changed for one submission: the template's setting\
           \ always applies. Change it in the template"
         colorFieldName: "can't be changed for one submission: the template's setting\
@@ -21910,6 +22417,7 @@ components:
         ai_field_naming_language: ""
         allow_additional_properties: true
         allow_skipping_optional_fields: true
+        continue_before_optional_fields: true
         default_form_mode: ""
         editable_submissions: true
         embed_domains:
@@ -21940,6 +22448,7 @@ components:
         success_title: success_title
         success_message: success_message
         show_fill_again_button: true
+        form_sections_in_order: true
         has_slack_webhook_url: true
         last_changed_by: ""
         defaults:
@@ -22024,12 +22533,28 @@ components:
           field_ids:
           - 9
           - 9
+        signer_roles:
+        - id: id
+          key: key
+          name: name
+          name_expression: name_expression
+          email_expression: email_expression
+        - id: id
+          key: key
+          name: name
+          name_expression: name_expression
+          email_expression: email_expression
+        signature_request_cc:
+        - signature_request_cc
+        - signature_request_cc
         predefined_fields:
         - name: name
           display_name: display_name
           title: title
           type: ""
           option_list: option_list
+          option_labels:
+            key: option_labels
           required_in_template: true
           field_required: true
         - name: name
@@ -22037,6 +22562,8 @@ components:
           title: title
           type: ""
           option_list: option_list
+          option_labels:
+            key: option_labels
           required_in_template: true
           field_required: true
         predefined_fields_sample_data:
@@ -22059,6 +22586,7 @@ components:
           description: description
           published_at: 2000-01-23T04:56:07.000+00:00
           published_by: ""
+        override_account_expiry: true
       properties:
         id:
           description: The template's ID.
@@ -22169,10 +22697,16 @@ components:
             the template.
           type: boolean
         allow_skipping_optional_fields:
+          description: "Visual Forms JS 2.16.0 to 2.23.0 only: with it on, Continue\
+            \ takes the place of Next once the required fields are filled in. Later\
+            \ versions use `continue_before_optional_fields`."
+          type: boolean
+        continue_before_optional_fields:
           description: "Visual forms and signature request forms show the Continue\
-            \ button as soon as the required fields are filled in, without visiting\
-            \ each optional field. The `allowSkippingOptionalFields` embed option\
-            \ overrides it."
+            \ button next to Next as soon as the required fields are filled in, without\
+            \ visiting each optional field. Turned off, Continue shows in place of\
+            \ Next only once every field has a value or has been visited. The `allowSkippingOptionalFields`\
+            \ embed option overrides it."
           type: boolean
         default_form_mode:
           allOf:
@@ -22188,8 +22722,8 @@ components:
             Editable PDFs"). A submission's `editable` overrides it.
           type: boolean
         embed_domains:
-          description: "The sites that can embed the template's live signature requests\
-            \ and its embedded template editor: a host such as `app.example.com`,\
+          description: "The sites that can embed the template's live signature requests,\
+            \ its embedded template editor and its visual form: a host such as `app.example.com`,\
             \ with an optional leading wildcard (`*.example.com`), port (`localhost:3000`)\
             \ or scheme (`https://app.example.com`; without one, `http` and `https`\
             \ both work), without a path. Each one is stored in lowercase, without\
@@ -22198,8 +22732,9 @@ components:
             \ be embedded anywhere; a test signature request can be embedded on any\
             \ site. The embedded template editor loads only for a page on one of these\
             \ sites (by its Referer or Origin header), and on any site when the list\
-            \ is empty. Forms embedded on a page (Visual Forms JS and Web Forms JS)\
-            \ aren't restricted."
+            \ is empty. A visual form embedded with Visual Forms JS loads only on\
+            \ these sites, and on any site when the list is empty. Web Forms JS isn't\
+            \ restricted."
           items:
             type: string
           type: array
@@ -22226,13 +22761,13 @@ components:
           description: Whether `encrypt_pdfs_password` is set.
           type: boolean
         expire_submissions:
-          description: Delete each submission's data and PDF after `expire_after`
-            `expiration_interval`.
+          description: "Delete each submission's data and files after `expire_after`\
+            \ `expiration_interval`, when `override_account_expiry` is on."
           type: boolean
         expire_after:
           description: "How many `expiration_interval`s a submission's data and PDF\
-            \ are kept for, when `expire_submissions` is on. At most 5256000 (10 years\
-            \ in minutes)."
+            \ are kept for, when `expire_submissions` and `override_account_expiry`\
+            \ are on. At most 5256000 (10 years in minutes)."
           type: integer
         expiration_interval:
           allOf:
@@ -22270,29 +22805,27 @@ components:
           description: "How DocSpring's completed emails send the signed PDF to your\
             \ signers and CCs: `attachment` (attached, or a download link when it's\
             \ too big to attach) or `link` (a download link). Null uses your account's\
-            \ rule: a link if your account has signed a BAA, otherwise attached. PDF\
-            \ templates only. A signature request uses the value it had when the request\
-            \ was created."
+            \ rule: a link if your account has signed a BAA, otherwise attached. A\
+            \ signature request uses the value it had when the request was created."
           x-nullable: true
           x-open-enum: true
         signature_request_from_address:
           description: "The address DocSpring's emails to your signers come from:\
             \ an address at one of your verified email domains, on the Growth plan\
             \ or higher. Null sends them from DocSpring's shared address, with \"\
-            via DocSpring\" after the sender name. PDF templates only."
+            via DocSpring\" after the sender name."
           type: string
           x-nullable: true
         signature_request_include_signing_token:
           description: "Puts a signing token in `signature_request_signing_url`, as\
             \ `{{ token_id }}` and `{{ token_secret }}`, so your page can open the\
             \ signing form without creating a token itself. The email then carries\
-            \ a credential: anyone who has it can open the form and sign. PDF templates\
-            \ only."
+            \ a credential: anyone who has it can open the form and sign."
           type: boolean
         signature_request_from_name:
           description: "The sender name on the emails DocSpring sends your signers,\
             \ as in \"Acme via DocSpring\". It can't contain an email address, a website\
-            \ or quotes. Null uses your account's name. PDF templates only."
+            \ or quotes. Null uses your account's name."
           type: string
           x-nullable: true
         signature_request_notification_emails:
@@ -22300,7 +22833,7 @@ components:
             \ completed or declined, or an email bounces or can't be sent: members\
             \ of your DocSpring team or addresses at your verified email domains.\
             \ Empty means your account's owner. A submission's `notification_emails`\
-            \ replaces them. PDF templates only."
+            \ replaces them."
           items:
             type: string
           type: array
@@ -22309,7 +22842,7 @@ components:
           description: "Where your signers' replies to DocSpring's emails go: a member\
             \ of your DocSpring team or an address at one of your verified email domains.\
             \ Null means your account's owner. A submission's `reply_to` replaces\
-            \ it. PDF templates only."
+            \ it."
           type: string
           x-nullable: true
         signature_request_signing_url:
@@ -22319,7 +22852,7 @@ components:
             \ Growth plan or higher. It must include `{{ signature_request_id }}`.\
             \ Your page authenticates the signer, creates a token for the signature\
             \ request, and opens the signing form with it. Null links to DocSpring's\
-            \ signing page. PDF templates only."
+            \ signing page."
           type: string
           x-nullable: true
         success_title:
@@ -22337,6 +22870,12 @@ components:
         show_fill_again_button:
           description: "Whether the web form's success screen has a \"Fill out again\"\
             \ button, which clears the form so someone can fill it in again."
+          type: boolean
+        form_sections_in_order:
+          description: "Whether a web form with sections makes people fill them out\
+            \ in order. When true, a later section stays locked until they reach it\
+            \ with Next. When false, they can open any section from the list, and\
+            \ Next and Submit still check their answers."
           type: boolean
         has_slack_webhook_url:
           description: Whether `slack_webhook_url` is set.
@@ -22374,6 +22913,32 @@ components:
             \ section."
           items:
             $ref: "#/components/schemas/TemplateFormSection"
+          type: array
+          default: null
+        signer_roles:
+          description: "The people who sign the template's submissions, in order.\
+            \ A field's `signer_role` says which signer fills it in or signs it, and\
+            \ a signature request's `role` says which signer it's for. Role N is also\
+            \ `Signer N`. Setting it replaces the whole list: a role left out is deleted,\
+            \ and its fields are left unassigned. Without roles (an empty list), a\
+            \ template's signers are Signer 1, Signer 2 and so on, and each signature\
+            \ request lists the fields its signer fills in or signs."
+          items:
+            $ref: "#/components/schemas/TemplateSignerRole"
+          type: array
+          default: null
+        signature_request_cc:
+          description: "Who gets a copy of the completed document when DocSpring emails\
+            \ a submission's signers, with the submission's `cc`: email addresses,\
+            \ or `{{ variables }}` that name an address in the submission's data,\
+            \ such as `{{ agent.email }}`. A value the data doesn't have prints nothing,\
+            \ and an address that comes out blank is left out. The data has to have\
+            \ the value, so it's one of the template's fields (one the sender fills\
+            \ in) or the template allows additional properties: setting a variable\
+            \ that isn't a field is a `422` otherwise. They don't sign. Setting it\
+            \ replaces the whole list."
+          items:
+            type: string
           type: array
           default: null
         predefined_fields:
@@ -22448,11 +23013,20 @@ components:
             $ref: "#/components/schemas/TemplateVersion"
           type: array
           default: null
+        override_account_expiry:
+          description: "Whether the template's own expiry (`expire_submissions`, `expire_after`\
+            \ and `expiration_interval`) decides when all its submissions are deleted,\
+            \ with or without signature requests, including keeping them until you\
+            \ delete them. When false, the account's expiry settings do. Turning `expire_submissions`\
+            \ on also turns this on, unless the same request sets it, and so does\
+            \ creating a template with `expire_submissions` on or off."
+          type: boolean
       required:
       - add_signature_request_submission_id_footers
       - ai_field_naming_language
       - allow_additional_properties
       - allow_skipping_optional_fields
+      - continue_before_optional_fields
       - created_at
       - default_form_mode
       - defaults
@@ -22472,6 +23046,7 @@ components:
       - field_groups
       - footer_html
       - form_sections
+      - form_sections_in_order
       - has_encrypt_pdfs_password
       - has_slack_webhook_url
       - header_html
@@ -22487,6 +23062,7 @@ components:
       - merge_audit_trail_pdf
       - name
       - output_format
+      - override_account_expiry
       - parent_folder_id
       - parse_dates_using_template_date_format
       - path
@@ -22498,6 +23074,7 @@ components:
       - redirect_url
       - scss
       - show_fill_again_button
+      - signature_request_cc
       - signature_request_email_attachments
       - signature_request_from_address
       - signature_request_from_name
@@ -22505,6 +23082,7 @@ components:
       - signature_request_notification_emails
       - signature_request_reply_to
       - signature_request_signing_url
+      - signer_roles
       - success_message
       - success_title
       - template_type
@@ -22807,7 +23385,7 @@ components:
           x-nullable: true
         date_time_format:
           description: "How date-time fields are printed, as a strftime format such\
-            \ as `%m/%d/%Y %H:%M:%S`."
+            \ as `%m/%d/%Y %H:%M`."
           type: string
           x-nullable: true
         check_color:
@@ -22946,6 +23524,63 @@ components:
       - id
       - title
       title: TemplateFormSection
+    TemplateSignerRole:
+      additionalProperties: true
+      description: "One of a template's signer roles: someone who fills in or signs\
+        \ its fields."
+      example:
+        id: id
+        key: key
+        name: name
+        name_expression: name_expression
+        email_expression: email_expression
+      properties:
+        id:
+          description: "The role's ID, which never changes: fields refer to their\
+            \ role by it, so changing the role's key or name, or moving it in the\
+            \ list, keeps its fields. Leave it out for a new role. A role keeps the\
+            \ ID you give it, so roles copied from another template with their IDs\
+            \ keep the fields copied with them."
+          type: string
+        key:
+          description: "The role's name in the API and in the template's code, in\
+            \ snake_case: `role: tenant` on a field tag, a field's `signer_role`,\
+            \ a signature request's `role`, and `@@signature_requests/tenant/...`\
+            \ fields. Each role has its own, and `sender` is taken (it marks the fields\
+            \ that submission data fills in). Left out, it's made from `name`: Co-tenant\
+            \ 2 is `co_tenant_2`."
+          type: string
+        name:
+          description: "The role's name, such as Tenant, which the template editor\
+            \ shows. Each role has its own, and `Signer N` can only be role N's."
+          type: string
+        name_expression:
+          description: "The signer's name, for a signature request that doesn't give\
+            \ one: a fixed name, or text and `{{ variables }}` that name a path into\
+            \ the submission's data, such as `{{ tenant.name }}` or `{{ tenant.first_name\
+            \ }} {{ tenant.last_name }}`. No filters or tags. Each variable is one\
+            \ of the template's fields, unless the template allows additional properties:\
+            \ setting one that isn't is a `422`. A value the data doesn't have prints\
+            \ nothing, and a name that comes out blank is left out. Null for none."
+          type: string
+          x-nullable: true
+        email_expression:
+          description: "The signer's email address, for a signature request that doesn't\
+            \ give one: a fixed address, such as `leasing@example.com`, or one from\
+            \ the submission's data, written like `name_expression`: `{{ tenant.email\
+            \ }}`. The data has to have the value, so it's one of the template's fields\
+            \ (one the sender fills in) or the template allows additional properties:\
+            \ setting a variable that isn't a field is a `422` otherwise. Null for\
+            \ none."
+          type: string
+          x-nullable: true
+      required:
+      - email_expression
+      - id
+      - key
+      - name
+      - name_expression
+      title: TemplateSignerRole
     FieldGroup:
       additionalProperties: true
       description: "A group of a template's fields: the fields whose names start with\
@@ -24100,6 +24735,16 @@ components:
       - lt
       title: NumberConditionType
       type: string
+    NumberPart:
+      description: "Which part of a number a field prints: the whole number (`all`),\
+        \ only the part before the decimal point (`whole`), or only the decimal places\
+        \ (`decimals`)."
+      enum:
+      - all
+      - whole
+      - decimals
+      title: NumberPart
+      type: string
     ImageScaleType:
       description: "How an image is resized to its field: scaled to fit inside it\
         \ (`fit`), scaled to cover it and cropped (`fill`), or stretched to its shape\
@@ -24693,6 +25338,8 @@ components:
         title: title
         type: ""
         option_list: option_list
+        option_labels:
+          key: option_labels
         required_in_template: true
         field_required: true
       properties:
@@ -24721,6 +25368,17 @@ components:
           description: "String fields only: the values allowed, separated by commas,\
             \ such as `Yes,No`. Null allows any value."
           type: string
+          x-nullable: true
+        option_labels:
+          additionalProperties:
+            type: string
+          description: "The labels forms show for `option_list`'s values, by value,\
+            \ as a field's `option_labels`, such as `{\"married_filing_jointly\":\
+            \ \"Married filing jointly\"}`. Each key must be one of `option_list`'s\
+            \ values. A value without a label shows the value, or its sentence case\
+            \ when the values are lowercase words joined by underscores. Null gives\
+            \ no value a label of its own."
+          type: object
           x-nullable: true
         required_in_template:
           description: "Whether the template must have a field with this name. The\
@@ -25096,6 +25754,9 @@ components:
             title: title
             required: true
             option_list: option_list
+            option_labels:
+              key: option_labels
+            print_option_labels: true
             combined_field_names: combined_field_names
             combined_field_type: ""
             combined_field_separator: combined_field_separator
@@ -25105,6 +25766,8 @@ components:
             signature_allow_draw: true
             signature_allow_type: true
             barcode_symbology: ""
+            comb_fill_from_right: true
+            comb_pad_with_zeros: true
             hidden: true
             x: 6.027456183070403
             "y": 1.4658129805029452
@@ -25151,6 +25814,7 @@ components:
             number_condition_range_exclusive_max: true
             invert_boolean_condition: true
             decimal_places: 1
+            number_part: ""
             image_scale_type: ""
             image_gravity: ""
         html: html
@@ -25199,19 +25863,24 @@ components:
             \ uses, converted from a Word template's Word document), and `png` (an\
             \ image of each page of the PDF, up to 100 pages, which adds `pdf`) when\
             \ you ask for it. Default `[\"pdf\"]`, or a Word template's `output_format`.\
-            \ POST /submissions/{submission_id}/generate_files adds `png`, and a Word\
-            \ template's submission's `pdf`, `docx` or `odt`, to a processed submission."
+            \ A Word template's submission with signature requests makes only `pdf`,\
+            \ which its signers sign. POST /submissions/{submission_id}/generate_files\
+            \ adds `png`, and a Word template's submission's `pdf`, `docx` or `odt`,\
+            \ to a processed submission."
           items:
             $ref: "#/components/schemas/OutputFormat"
           type: array
           uniqueItems: true
           default: null
         expires_in:
-          description: "Seconds after the PDF is generated until the submission expires,\
-            \ up to 10 years (315360000). Default the template's expiration setting.\
-            \ A submission that isn't processed, such as one with invalid data, is\
-            \ kept for at least 48 hours. The demo API token's submissions expire\
-            \ within an hour: up to 3600, and that's their default."
+          description: "Seconds after the submission is processed until it expires,\
+            \ up to 10 years (315360000), sooner or later than the template's or the\
+            \ account's expiry setting. Defaults to the template's expiry when it\
+            \ overrides the account's (`override_account_expiry`), and otherwise to\
+            \ the account's expiry setting. A submission that isn't processed, such\
+            \ as one with invalid data, is kept for at least 48 hours. The demo API\
+            \ token's submissions expire within an hour: up to 3600, and that's their\
+            \ default."
           type: integer
           writeOnly: true
         field_overrides:
@@ -25286,8 +25955,19 @@ components:
           x-pattern-message: "must be an email address, like name@example.com"
           x-nullable: true
         fields:
-          description: "The fields this person fills in. Each field can only be in\
-            \ one signature request, and a field that `data` fills in needs `prefilled_values_editable`."
+          description: "The fields this person fills in or signs, besides the ones\
+            \ the template gives their role. A submission's only signature request\
+            \ can leave it out: the person gets every field without a role that `data`\
+            \ doesn't fill in. With two or more signature requests, every required\
+            \ field that `data` doesn't fill in needs a signer, from its role in the\
+            \ template or from a signature request's `fields` (an optional one that\
+            \ nobody is given stays empty). Each field can only be in one signature\
+            \ request, can't be another role's or the sender's, and needs `prefilled_values_editable`\
+            \ when `data` fills it in. A field that the Liquid of an HTML template,\
+            \ a Word template or a page design uses outside its form fields (`{{ name\
+            \ }}`) can only be filled in by the signer who signs first (the only signer,\
+            \ or the only one in the first `signing_step`): their signing page asks\
+            \ them for it before the document is made."
           items:
             type: string
           type: array
@@ -25299,10 +25979,14 @@ components:
             \ your app."
           type: object
         role:
-          description: "Which of the template's signers the person is: `Signer 1`,\
-            \ `Signer 2` and so on, up to `Signer 100`, until templates have roles\
-            \ of their own. Either every signature request has a `role` or none does,\
-            \ and each role can only have one."
+          description: "Which of the template's signers the person is: one of its\
+            \ roles, by key (`tenant`), or by place (`Signer 1` is the first role).\
+            \ A template without roles has `Signer 1`, `Signer 2` and so on, up to\
+            \ `Signer 100`. Either every signature request has a `role` or none does,\
+            \ and each role can only have one. Without any `role`, the first signature\
+            \ request is the template's first signer, the second its second, and so\
+            \ on. When the template gives its roles names of their own (`Tenant`,\
+            \ not `Signer 1`), two or more signature requests each need a `role`."
           type: string
         auth_type:
           allOf:
@@ -25349,7 +26033,8 @@ components:
           type: boolean
         prefilled_values_editable:
           description: "Let the person change the values that `data` already has for\
-            \ fields in `fields`. Without it, those fields are a 422."
+            \ their fields. Without it, a field in `fields` that `data` fills in is\
+            \ a 422, and a field of their role that `data` fills in is the sender's."
           type: boolean
         send_email:
           description: "Whether DocSpring emails this person their signing link. Default:\
@@ -25365,8 +26050,6 @@ components:
             \ every signature request has a `signing_step` or none does; without them,\
             \ each person is a step of their own, in the order of `signature_requests`."
           type: integer
-      required:
-      - fields
       title: SignatureRequestInput
     SignatureRequestReminders:
       additionalProperties: false
@@ -25443,7 +26126,7 @@ components:
           x-nullable: true
         date_time_format:
           description: "How date-time fields are printed, as a strftime format such\
-            \ as `%m/%d/%Y %H:%M:%S`."
+            \ as `%m/%d/%Y %H:%M`."
           type: string
           x-nullable: true
         check_color:
@@ -25545,6 +26228,63 @@ components:
       - conditions
       - targets
       title: TemplateFieldDependencyInput
+    TemplateSignerRoleInput:
+      additionalProperties: false
+      description: "One of a template's signer roles: someone who fills in or signs\
+        \ its fields."
+      example:
+        id: id
+        key: key
+        name: name
+        name_expression: name_expression
+        email_expression: email_expression
+      properties:
+        id:
+          description: "The role's ID, which never changes: fields refer to their\
+            \ role by it, so changing the role's key or name, or moving it in the\
+            \ list, keeps its fields. Leave it out for a new role. A role keeps the\
+            \ ID you give it, so roles copied from another template with their IDs\
+            \ keep the fields copied with them."
+          type: string
+          x-pattern-message: "must be letters, digits, _ or -, at most 64 of them"
+        key:
+          description: "The role's name in the API and in the template's code, in\
+            \ snake_case: `role: tenant` on a field tag, a field's `signer_role`,\
+            \ a signature request's `role`, and `@@signature_requests/tenant/...`\
+            \ fields. Each role has its own, and `sender` is taken (it marks the fields\
+            \ that submission data fills in). Left out, it's made from `name`: Co-tenant\
+            \ 2 is `co_tenant_2`."
+          type: string
+          x-pattern-message: "must be snake_case: lowercase letters, digits and underscores,\
+            \ starting with a letter (like tenant)"
+        name:
+          description: "The role's name, such as Tenant, which the template editor\
+            \ shows. Each role has its own, and `Signer N` can only be role N's."
+          type: string
+          x-pattern-message: can't be blank
+        name_expression:
+          description: "The signer's name, for a signature request that doesn't give\
+            \ one: a fixed name, or text and `{{ variables }}` that name a path into\
+            \ the submission's data, such as `{{ tenant.name }}` or `{{ tenant.first_name\
+            \ }} {{ tenant.last_name }}`. No filters or tags. Each variable is one\
+            \ of the template's fields, unless the template allows additional properties:\
+            \ setting one that isn't is a `422`. A value the data doesn't have prints\
+            \ nothing, and a name that comes out blank is left out. Null for none."
+          type: string
+          x-nullable: true
+        email_expression:
+          description: "The signer's email address, for a signature request that doesn't\
+            \ give one: a fixed address, such as `leasing@example.com`, or one from\
+            \ the submission's data, written like `name_expression`: `{{ tenant.email\
+            \ }}`. The data has to have the value, so it's one of the template's fields\
+            \ (one the sender fills in) or the template allows additional properties:\
+            \ setting a variable that isn't a field is a `422` otherwise. Null for\
+            \ none."
+          type: string
+          x-nullable: true
+      required:
+      - name
+      title: TemplateSignerRoleInput
     PredefinedFieldInput:
       additionalProperties: false
       description: "A field name that people using the embedded template editor can\
@@ -25556,6 +26296,8 @@ components:
         title: title
         type: ""
         option_list: option_list
+        option_labels:
+          key: option_labels
         required_in_template: true
         field_required: true
       properties:
@@ -25583,6 +26325,17 @@ components:
           description: "String fields only: the values allowed, separated by commas,\
             \ such as `Yes,No`. Null allows any value."
           type: string
+          x-nullable: true
+        option_labels:
+          additionalProperties:
+            type: string
+          description: "The labels forms show for `option_list`'s values, by value,\
+            \ as a field's `option_labels`, such as `{\"married_filing_jointly\":\
+            \ \"Married filing jointly\"}`. Each key must be one of `option_list`'s\
+            \ values. A value without a label shows the value, or its sentence case\
+            \ when the values are lowercase words joined by underscores. Null gives\
+            \ no value a label of its own."
+          type: object
           x-nullable: true
         required_in_template:
           description: "Whether the template must have a field with this name. The\
@@ -25803,6 +26556,9 @@ components:
         metadata: metadata
         required: true
         option_list: option_list
+        option_labels:
+          key: option_labels
+        print_option_labels: true
         combined_field_names: combined_field_names
         combined_field_type: ""
         combined_field_separator: combined_field_separator
@@ -25816,6 +26572,9 @@ components:
         signature_allow_draw: true
         signature_allow_type: true
         barcode_symbology: ""
+        comb_fill_from_right: true
+        comb_pad_with_zeros: true
+        print_digits_only: true
         hidden: true
         x: 5.962133916683182
         "y": 5.637376656633329
@@ -25877,8 +26636,10 @@ components:
         invert_boolean_condition: true
         currency: true
         decimal_places: 9
+        number_part: ""
         image_scale_type: ""
         image_gravity: ""
+        signer_role: signer_role
         dependencies: ""
         id: 9
       properties:
@@ -25960,6 +26721,25 @@ components:
             \ Shared by every field with the same `name`."
           type: string
           x-nullable: true
+        option_labels:
+          additionalProperties:
+            type: string
+          description: "With `option_list`: the label forms show for each option,\
+            \ keyed by its value, such as `{\"head_of_household\": \"Head of household\"\
+            }`. The data, the API and webhooks keep the value, and the PDF prints\
+            \ it unless `print_option_labels` is set. An option without a label shows\
+            \ its value, or its sentence case when the options are lowercase words\
+            \ joined by underscores (`head_of_household` shows as \"Head of household\"\
+            ). The template's data schema has them as `x-option-labels`. Each key\
+            \ must be one of the options, and each label must have some text. Shared\
+            \ by every field with the same `name`."
+          type: object
+          x-nullable: true
+        print_option_labels:
+          description: "Text display, with `option_labels`: the PDF prints the chosen\
+            \ option's label instead of its value, and an `editable` field's dropdown\
+            \ lists the labels. Shared by every field with the same `name`."
+          type: boolean
         combined_field_names:
           description: "Combined fields only: a comma-separated list of the names\
             \ of the fields whose values are combined, in order. Shared by every field\
@@ -26029,6 +26809,26 @@ components:
             \ take capital letters, digits, spaces and `- . $ / + %`; `code_25` takes\
             \ digits; `ean_13` takes 12 digits, `ean_8` 7 digits and `upc_a` 11 digits\
             \ (the check digit is added). Shared by every field with the same `name`."
+        comb_fill_from_right:
+          description: "With `comb`: the value fills the last boxes of the comb fields\
+            \ with this name, padded on the left with spaces, or with zeros with `comb_pad_with_zeros`,\
+            \ as amounts are written on paper forms. A number with `decimal_places`\
+            \ in one row of boxes lines up on its decimal point, which takes no box:\
+            \ the decimal places fill the last boxes. Date fields ignore it: a date\
+            \ prints in its format. Shared by every field with the same `name`."
+          type: boolean
+        comb_pad_with_zeros:
+          description: "With `comb_fill_from_right`: pads the value on the left with\
+            \ zeros instead of spaces, such as `000123`. A negative number keeps its\
+            \ minus sign in the first box. Shared by every field with the same `name`."
+          type: boolean
+        print_digits_only:
+          description: "With `comb`, for string fields: only the value's digits print,\
+            \ one in each box, and any punctuation is left out, so `123-45-6789` fills\
+            \ the 9 boxes of an SSN. The template's data schema accepts as many digits\
+            \ as the boxes hold, with anything but letters between them. Number and\
+            \ date fields ignore it. Shared by every field with the same `name`."
+          type: boolean
         hidden:
           description: "Leaves the field off the PDF. It stays in the template's data\
             \ schema (marked `x-hidden`) and on forms, so other fields, such as combined\
@@ -26200,13 +27000,22 @@ components:
             \ boxes of equal width and prints one character, centered, in each."
           type: boolean
         comb_number_of_cells:
-          description: "With `comb`: how many boxes the field has. The value's maximum\
-            \ length in the template's data schema is this plus `comb_value_offset`."
+          description: "With `comb`: how many boxes the field has, up to 10,000. The\
+            \ value's maximum length in the template's data schema is the furthest\
+            \ that a comb field of its name reaches: its `comb_value_offset` plus\
+            \ its boxes. With `print_digits_only`, that many digits. A number field\
+            \ is split from its printed form (with `decimal_places`), and a number\
+            \ with a digit that no box prints (more digits than the boxes, or a digit\
+            \ where the offsets leave a gap) is a data error."
           type: integer
         comb_value_offset:
-          description: "With `comb`: the position, from 0, of the first character\
-            \ of the value that this field prints. For an SSN printed in boxes of\
-            \ 3, 2 and 4 digits, three fields named `ssn` use offsets 0, 3 and 5."
+          description: "With `comb`: how many boxes of the value's row come before\
+            \ this field, from 0 to 10,000. The comb fields that share a name make\
+            \ one row of boxes, and each prints the row's characters from its offset.\
+            \ For an SSN printed in boxes of 3, 2 and 4 digits, three fields named\
+            \ `ssn` use offsets 0, 3 and 5. The fields that print a number's whole\
+            \ part (`number_part`) make a row of their own, and so do the ones that\
+            \ print its decimal places."
           type: integer
         shape_type:
           allOf:
@@ -26369,6 +27178,16 @@ components:
             \ prints the number as it was sent."
           type: integer
           x-nullable: true
+        number_part:
+          allOf:
+          - $ref: "#/components/schemas/NumberPart"
+          description: "Number fields with text display: which part of the number\
+            \ this field prints. `all` prints the whole number, `whole` only the part\
+            \ before the decimal point (with a minus sign) and `decimals` only the\
+            \ decimal places. For an amount printed as `$ ____ . __`, two fields with\
+            \ the same name: one `whole`, and one `decimals` with `decimal_places`\
+            \ 2. The number is rounded once, to the `decimals` field's decimal places\
+            \ (2 when it sets none)."
         image_scale_type:
           allOf:
           - $ref: "#/components/schemas/ImageScaleType"
@@ -26385,6 +27204,18 @@ components:
             \ (top left), `North`, `NorthEast`, `West`, `Center`, `East`, `SouthWest`,\
             \ `South` or `SouthEast` (bottom right). It also aligns typed signatures,\
             \ and isn't used with `stretch`."
+        signer_role:
+          description: "Who fills in or signs the field when a submission has signature\
+            \ requests: one of the template's `signer_roles`, by its key, or `sender`\
+            \ for a field that submission data fills in, which no signer is asked\
+            \ for. Null when it has no role: a submission's only signer fills it in\
+            \ when data doesn't, and with two or more signature requests one of them\
+            \ has to list it in its `fields`. In an HTML or Word template, a field\
+            \ whose tag gives it a role (`{% form_field tenant_name, role: tenant\
+            \ %}`) has that one, which only the code can change. Shared by every field\
+            \ with the same `name`."
+          type: string
+          x-nullable: true
         dependencies:
           allOf:
           - $ref: "#/components/schemas/FieldDependencyInput"
@@ -26549,8 +27380,8 @@ components:
           - $ref: "#/components/schemas/EmailActionDelivery"
           description: "`attachment` attaches the files, or sends a download link\
             \ when together they're larger than `max_attachment_mb`. `link` sends\
-            \ a download link, which works for 7 days. Accounts with a BAA start with\
-            \ `link`."
+            \ a download link, which works for 7 days, or until the submission expires\
+            \ if that's sooner. Accounts with a BAA start with `link`."
         max_attachment_mb:
           description: "With `delivery` `attachment`, files larger than this many\
             \ megabytes in all (1 MB is 1,000,000 bytes) are sent as a download link\
@@ -26730,8 +27561,8 @@ components:
           - $ref: "#/components/schemas/EmailActionDelivery"
           description: "`attachment` attaches the files, or sends a download link\
             \ when together they're larger than `max_attachment_mb`. `link` sends\
-            \ a download link, which works for 7 days. Accounts with a BAA start with\
-            \ `link`."
+            \ a download link, which works for 7 days, or until the submission expires\
+            \ if that's sooner. Accounts with a BAA start with `link`."
         max_attachment_mb:
           description: "With `delivery` `attachment`, files larger than this many\
             \ megabytes in all (1 MB is 1,000,000 bytes) are sent as a download link\
@@ -26815,8 +27646,10 @@ components:
           type: boolean
         expires_in:
           description: "Seconds after the PDF is generated until the combined PDF\
-            \ expires, up to 10 years (315360000). One that fails is kept for at least\
-            \ 48 hours. Without it, the combined PDF is kept until you delete it."
+            \ expires, up to 10 years (315360000), sooner or later than the account's\
+            \ expiry setting. Defaults to the account's expiry setting, which keeps\
+            \ it until you delete it when it's off. One that fails is kept for at\
+            \ least 48 hours."
           type: integer
           writeOnly: true
       required:
@@ -26960,8 +27793,8 @@ components:
           - $ref: "#/components/schemas/EmailActionDelivery"
           description: "`attachment` attaches the files, or sends a download link\
             \ when together they're larger than `max_attachment_mb`. `link` sends\
-            \ a download link, which works for 7 days. Accounts with a BAA start with\
-            \ `link`."
+            \ a download link, which works for 7 days, or until the submission expires\
+            \ if that's sooner. Accounts with a BAA start with `link`."
         max_attachment_mb:
           description: "With `delivery` `attachment`, files larger than this many\
             \ megabytes in all (1 MB is 1,000,000 bytes) are sent as a download link\
@@ -27116,8 +27949,8 @@ components:
           - $ref: "#/components/schemas/EmailActionDelivery"
           description: "`attachment` attaches the files, or sends a download link\
             \ when together they're larger than `max_attachment_mb`. `link` sends\
-            \ a download link, which works for 7 days. Accounts with a BAA start with\
-            \ `link`."
+            \ a download link, which works for 7 days, or until the submission expires\
+            \ if that's sooner. Accounts with a BAA start with `link`."
         max_attachment_mb:
           description: "With `delivery` `attachment`, files larger than this many\
             \ megabytes in all (1 MB is 1,000,000 bytes) are sent as a download link\
@@ -27267,8 +28100,8 @@ components:
           - $ref: "#/components/schemas/EmailActionDelivery"
           description: "`attachment` attaches the files, or sends a download link\
             \ when together they're larger than `max_attachment_mb`. `link` sends\
-            \ a download link, which works for 7 days. Accounts with a BAA start with\
-            \ `link`."
+            \ a download link, which works for 7 days, or until the submission expires\
+            \ if that's sooner. Accounts with a BAA start with `link`."
         max_attachment_mb:
           description: "With `delivery` `attachment`, files larger than this many\
             \ megabytes in all (1 MB is 1,000,000 bytes) are sent as a download link\
@@ -27496,6 +28329,9 @@ components:
               title: title
               required: true
               option_list: option_list
+              option_labels:
+                key: option_labels
+              print_option_labels: true
               combined_field_names: combined_field_names
               combined_field_type: ""
               combined_field_separator: combined_field_separator
@@ -27505,6 +28341,8 @@ components:
               signature_allow_draw: true
               signature_allow_type: true
               barcode_symbology: ""
+              comb_fill_from_right: true
+              comb_pad_with_zeros: true
               hidden: true
               x: 6.027456183070403
               "y": 1.4658129805029452
@@ -27551,6 +28389,7 @@ components:
               number_condition_range_exclusive_max: true
               invert_boolean_condition: true
               decimal_places: 1
+              number_part: ""
               image_scale_type: ""
               image_gravity: ""
           html: html
@@ -27576,6 +28415,9 @@ components:
               title: title
               required: true
               option_list: option_list
+              option_labels:
+                key: option_labels
+              print_option_labels: true
               combined_field_names: combined_field_names
               combined_field_type: ""
               combined_field_separator: combined_field_separator
@@ -27585,6 +28427,8 @@ components:
               signature_allow_draw: true
               signature_allow_type: true
               barcode_symbology: ""
+              comb_fill_from_right: true
+              comb_pad_with_zeros: true
               hidden: true
               x: 6.027456183070403
               "y": 1.4658129805029452
@@ -27631,6 +28475,7 @@ components:
               number_condition_range_exclusive_max: true
               invert_boolean_condition: true
               decimal_places: 1
+              number_part: ""
               image_scale_type: ""
               image_gravity: ""
           html: html
@@ -27702,6 +28547,9 @@ components:
             title: title
             required: true
             option_list: option_list
+            option_labels:
+              key: option_labels
+            print_option_labels: true
             combined_field_names: combined_field_names
             combined_field_type: ""
             combined_field_separator: combined_field_separator
@@ -27711,6 +28559,8 @@ components:
             signature_allow_draw: true
             signature_allow_type: true
             barcode_symbology: ""
+            comb_fill_from_right: true
+            comb_pad_with_zeros: true
             hidden: true
             x: 6.027456183070403
             "y": 1.4658129805029452
@@ -27757,6 +28607,7 @@ components:
             number_condition_range_exclusive_max: true
             invert_boolean_condition: true
             decimal_places: 1
+            number_part: ""
             image_scale_type: ""
             image_gravity: ""
         html: html
@@ -27831,10 +28682,10 @@ components:
           additionalProperties: true
           description: "The values of the template's fields, by field name. Required\
             \ for PDF templates, Word templates and page designs, unless `signature_requests`\
-            \ collects them (PDF templates only). Signatures come only from signature\
-            \ requests: a value for a signature or initials field makes the submission\
-            \ `invalid_data`, in test mode too. To print an image or a name you send,\
-            \ use an Image or Text field."
+            \ collects them. Signatures come only from signature requests: a value\
+            \ for a signature or initials field makes the submission `invalid_data`,\
+            \ in test mode too. To print an image or a name you send, use an Image\
+            \ or Text field."
           type: object
         metadata:
           additionalProperties: true
@@ -27861,19 +28712,24 @@ components:
             \ uses, converted from a Word template's Word document), and `png` (an\
             \ image of each page of the PDF, up to 100 pages, which adds `pdf`) when\
             \ you ask for it. Default `[\"pdf\"]`, or a Word template's `output_format`.\
-            \ POST /submissions/{submission_id}/generate_files adds `png`, and a Word\
-            \ template's submission's `pdf`, `docx` or `odt`, to a processed submission."
+            \ A Word template's submission with signature requests makes only `pdf`,\
+            \ which its signers sign. POST /submissions/{submission_id}/generate_files\
+            \ adds `png`, and a Word template's submission's `pdf`, `docx` or `odt`,\
+            \ to a processed submission."
           items:
             $ref: "#/components/schemas/OutputFormat"
           type: array
           uniqueItems: true
           default: null
         expires_in:
-          description: "Seconds after the PDF is generated until the submission expires,\
-            \ up to 10 years (315360000). Default the template's expiration setting.\
-            \ A submission that isn't processed, such as one with invalid data, is\
-            \ kept for at least 48 hours. The demo API token's submissions expire\
-            \ within an hour: up to 3600, and that's their default."
+          description: "Seconds after the submission is processed until it expires,\
+            \ up to 10 years (315360000), sooner or later than the template's or the\
+            \ account's expiry setting. Defaults to the template's expiry when it\
+            \ overrides the account's (`override_account_expiry`), and otherwise to\
+            \ the account's expiry setting. A submission that isn't processed, such\
+            \ as one with invalid data, is kept for at least 48 hours. The demo API\
+            \ token's submissions expire within an hour: up to 3600, and that's their\
+            \ default."
           type: integer
           writeOnly: true
         field_overrides:
@@ -27902,10 +28758,13 @@ components:
           writeOnly: true
         signature_requests:
           description: "The people who sign the PDF, and fill in their fields first.\
-            \ The PDF is generated once every signature request is completed. PDF\
-            \ templates only. Without `role`s, the first signature request is `Signer\
-            \ 1`, the second `Signer 2`, and so on. To leave a signer out, give every\
-            \ signature request its `role` and leave that one's out."
+            \ The PDF is generated once every signature request is completed. The\
+            \ signers of an HTML template, a Word template or a page design fill in\
+            \ its form fields and signature tags in a PDF made from `data`, and a\
+            \ Word template's submission makes only a PDF. Without `role`s, the first\
+            \ signature request is `Signer 1`, the second `Signer 2`, and so on. To\
+            \ leave a signer out, give every signature request its `role` and leave\
+            \ that one's out."
           items:
             $ref: "#/components/schemas/SignatureRequestInput"
           type: array
@@ -27939,8 +28798,8 @@ components:
             \ is a 422."
           type: string
         cc:
-          description: People who get a copy of the completed document. They don't
-            sign.
+          description: "People who get a copy of the completed document, as well as\
+            \ the template's `signature_request_cc`. They don't sign."
           items:
             type: string
           type: array
@@ -27997,6 +28856,9 @@ components:
             title: title
             required: true
             option_list: option_list
+            option_labels:
+              key: option_labels
+            print_option_labels: true
             combined_field_names: combined_field_names
             combined_field_type: ""
             combined_field_separator: combined_field_separator
@@ -28006,6 +28868,8 @@ components:
             signature_allow_draw: true
             signature_allow_type: true
             barcode_symbology: ""
+            comb_fill_from_right: true
+            comb_pad_with_zeros: true
             hidden: true
             x: 6.027456183070403
             "y": 1.4658129805029452
@@ -28052,6 +28916,7 @@ components:
             number_condition_range_exclusive_max: true
             invert_boolean_condition: true
             decimal_places: 1
+            number_part: ""
             image_scale_type: ""
             image_gravity: ""
         html: html
@@ -28126,10 +28991,10 @@ components:
           additionalProperties: true
           description: "The values of the template's fields, by field name. Required\
             \ for PDF templates, Word templates and page designs, unless `signature_requests`\
-            \ collects them (PDF templates only). Signatures come only from signature\
-            \ requests: a value for a signature or initials field makes the submission\
-            \ `invalid_data`, in test mode too. To print an image or a name you send,\
-            \ use an Image or Text field."
+            \ collects them. Signatures come only from signature requests: a value\
+            \ for a signature or initials field makes the submission `invalid_data`,\
+            \ in test mode too. To print an image or a name you send, use an Image\
+            \ or Text field."
           type: object
         metadata:
           additionalProperties: true
@@ -28156,19 +29021,24 @@ components:
             \ uses, converted from a Word template's Word document), and `png` (an\
             \ image of each page of the PDF, up to 100 pages, which adds `pdf`) when\
             \ you ask for it. Default `[\"pdf\"]`, or a Word template's `output_format`.\
-            \ POST /submissions/{submission_id}/generate_files adds `png`, and a Word\
-            \ template's submission's `pdf`, `docx` or `odt`, to a processed submission."
+            \ A Word template's submission with signature requests makes only `pdf`,\
+            \ which its signers sign. POST /submissions/{submission_id}/generate_files\
+            \ adds `png`, and a Word template's submission's `pdf`, `docx` or `odt`,\
+            \ to a processed submission."
           items:
             $ref: "#/components/schemas/OutputFormat"
           type: array
           uniqueItems: true
           default: null
         expires_in:
-          description: "Seconds after the PDF is generated until the submission expires,\
-            \ up to 10 years (315360000). Default the template's expiration setting.\
-            \ A submission that isn't processed, such as one with invalid data, is\
-            \ kept for at least 48 hours. The demo API token's submissions expire\
-            \ within an hour: up to 3600, and that's their default."
+          description: "Seconds after the submission is processed until it expires,\
+            \ up to 10 years (315360000), sooner or later than the template's or the\
+            \ account's expiry setting. Defaults to the template's expiry when it\
+            \ overrides the account's (`override_account_expiry`), and otherwise to\
+            \ the account's expiry setting. A submission that isn't processed, such\
+            \ as one with invalid data, is kept for at least 48 hours. The demo API\
+            \ token's submissions expire within an hour: up to 3600, and that's their\
+            \ default."
           type: integer
           writeOnly: true
         field_overrides:
@@ -28197,10 +29067,13 @@ components:
           writeOnly: true
         signature_requests:
           description: "The people who sign the PDF, and fill in their fields first.\
-            \ The PDF is generated once every signature request is completed. PDF\
-            \ templates only. Without `role`s, the first signature request is `Signer\
-            \ 1`, the second `Signer 2`, and so on. To leave a signer out, give every\
-            \ signature request its `role` and leave that one's out."
+            \ The PDF is generated once every signature request is completed. The\
+            \ signers of an HTML template, a Word template or a page design fill in\
+            \ its form fields and signature tags in a PDF made from `data`, and a\
+            \ Word template's submission makes only a PDF. Without `role`s, the first\
+            \ signature request is `Signer 1`, the second `Signer 2`, and so on. To\
+            \ leave a signer out, give every signature request its `role` and leave\
+            \ that one's out."
           items:
             $ref: "#/components/schemas/SignatureRequestInput"
           type: array
@@ -28234,8 +29107,8 @@ components:
             \ is a 422."
           type: string
         cc:
-          description: People who get a copy of the completed document. They don't
-            sign.
+          description: "People who get a copy of the completed document, as well as\
+            \ the template's `signature_request_cc`. They don't sign."
           items:
             type: string
           type: array
@@ -28311,6 +29184,7 @@ components:
         ai_field_naming_language: ""
         allow_additional_properties: true
         allow_skipping_optional_fields: true
+        continue_before_optional_fields: true
         default_form_mode: ""
         editable_submissions: true
         embed_domains:
@@ -28341,6 +29215,7 @@ components:
         success_title: success_title
         success_message: success_message
         show_fill_again_button: true
+        form_sections_in_order: true
         slack_webhook_url: slack_webhook_url
         defaults: ""
         field_dependencies:
@@ -28366,12 +29241,28 @@ components:
           - targets
           - targets
           group: group
+        signer_roles:
+        - id: id
+          key: key
+          name: name
+          name_expression: name_expression
+          email_expression: email_expression
+        - id: id
+          key: key
+          name: name
+          name_expression: name_expression
+          email_expression: email_expression
+        signature_request_cc:
+        - signature_request_cc
+        - signature_request_cc
         predefined_fields:
         - name: name
           display_name: display_name
           title: title
           type: ""
           option_list: option_list
+          option_labels:
+            key: option_labels
           required_in_template: true
           field_required: true
         - name: name
@@ -28379,6 +29270,8 @@ components:
           title: title
           type: ""
           option_list: option_list
+          option_labels:
+            key: option_labels
           required_in_template: true
           field_required: true
         predefined_fields_sample_data:
@@ -28391,6 +29284,8 @@ components:
         html_escape_data: true
         layout:
           key: ""
+        override_account_expiry: true
+        sync_fields: true
         cache_id: cache_id
         document_url: document_url
         document_base64: document_base64
@@ -28455,10 +29350,16 @@ components:
             the template.
           type: boolean
         allow_skipping_optional_fields:
+          description: "Visual Forms JS 2.16.0 to 2.23.0 only: with it on, Continue\
+            \ takes the place of Next once the required fields are filled in. Later\
+            \ versions use `continue_before_optional_fields`."
+          type: boolean
+        continue_before_optional_fields:
           description: "Visual forms and signature request forms show the Continue\
-            \ button as soon as the required fields are filled in, without visiting\
-            \ each optional field. The `allowSkippingOptionalFields` embed option\
-            \ overrides it."
+            \ button next to Next as soon as the required fields are filled in, without\
+            \ visiting each optional field. Turned off, Continue shows in place of\
+            \ Next only once every field has a value or has been visited. The `allowSkippingOptionalFields`\
+            \ embed option overrides it."
           type: boolean
         default_form_mode:
           allOf:
@@ -28473,8 +29374,8 @@ components:
             Editable PDFs"). A submission's `editable` overrides it.
           type: boolean
         embed_domains:
-          description: "The sites that can embed the template's live signature requests\
-            \ and its embedded template editor: a host such as `app.example.com`,\
+          description: "The sites that can embed the template's live signature requests,\
+            \ its embedded template editor and its visual form: a host such as `app.example.com`,\
             \ with an optional leading wildcard (`*.example.com`), port (`localhost:3000`)\
             \ or scheme (`https://app.example.com`; without one, `http` and `https`\
             \ both work), without a path. Each one is stored in lowercase, without\
@@ -28483,8 +29384,9 @@ components:
             \ be embedded anywhere; a test signature request can be embedded on any\
             \ site. The embedded template editor loads only for a page on one of these\
             \ sites (by its Referer or Origin header), and on any site when the list\
-            \ is empty. Forms embedded on a page (Visual Forms JS and Web Forms JS)\
-            \ aren't restricted."
+            \ is empty. A visual form embedded with Visual Forms JS loads only on\
+            \ these sites, and on any site when the list is empty. Web Forms JS isn't\
+            \ restricted."
           items:
             type: string
           type: array
@@ -28514,13 +29416,13 @@ components:
           writeOnly: true
           x-nullable: true
         expire_submissions:
-          description: Delete each submission's data and PDF after `expire_after`
-            `expiration_interval`.
+          description: "Delete each submission's data and files after `expire_after`\
+            \ `expiration_interval`, when `override_account_expiry` is on."
           type: boolean
         expire_after:
           description: "How many `expiration_interval`s a submission's data and PDF\
-            \ are kept for, when `expire_submissions` is on. At most 5256000 (10 years\
-            \ in minutes)."
+            \ are kept for, when `expire_submissions` and `override_account_expiry`\
+            \ are on. At most 5256000 (10 years in minutes)."
           type: integer
         expiration_interval:
           allOf:
@@ -28557,28 +29459,26 @@ components:
           description: "How DocSpring's completed emails send the signed PDF to your\
             \ signers and CCs: `attachment` (attached, or a download link when it's\
             \ too big to attach) or `link` (a download link). Null uses your account's\
-            \ rule: a link if your account has signed a BAA, otherwise attached. PDF\
-            \ templates only. A signature request uses the value it had when the request\
-            \ was created."
+            \ rule: a link if your account has signed a BAA, otherwise attached. A\
+            \ signature request uses the value it had when the request was created."
           x-nullable: true
         signature_request_from_address:
           description: "The address DocSpring's emails to your signers come from:\
             \ an address at one of your verified email domains, on the Growth plan\
             \ or higher. Null sends them from DocSpring's shared address, with \"\
-            via DocSpring\" after the sender name. PDF templates only."
+            via DocSpring\" after the sender name."
           type: string
           x-nullable: true
         signature_request_include_signing_token:
           description: "Puts a signing token in `signature_request_signing_url`, as\
             \ `{{ token_id }}` and `{{ token_secret }}`, so your page can open the\
             \ signing form without creating a token itself. The email then carries\
-            \ a credential: anyone who has it can open the form and sign. PDF templates\
-            \ only."
+            \ a credential: anyone who has it can open the form and sign."
           type: boolean
         signature_request_from_name:
           description: "The sender name on the emails DocSpring sends your signers,\
             \ as in \"Acme via DocSpring\". It can't contain an email address, a website\
-            \ or quotes. Null uses your account's name. PDF templates only."
+            \ or quotes. Null uses your account's name."
           type: string
           x-nullable: true
         signature_request_notification_emails:
@@ -28586,7 +29486,7 @@ components:
             \ completed or declined, or an email bounces or can't be sent: members\
             \ of your DocSpring team or addresses at your verified email domains.\
             \ Empty means your account's owner. A submission's `notification_emails`\
-            \ replaces them. PDF templates only."
+            \ replaces them."
           items:
             type: string
           type: array
@@ -28596,7 +29496,7 @@ components:
           description: "Where your signers' replies to DocSpring's emails go: a member\
             \ of your DocSpring team or an address at one of your verified email domains.\
             \ Null means your account's owner. A submission's `reply_to` replaces\
-            \ it. PDF templates only."
+            \ it."
           type: string
           x-nullable: true
         signature_request_signing_url:
@@ -28606,7 +29506,7 @@ components:
             \ Growth plan or higher. It must include `{{ signature_request_id }}`.\
             \ Your page authenticates the signer, creates a token for the signature\
             \ request, and opens the signing form with it. Null links to DocSpring's\
-            \ signing page. PDF templates only."
+            \ signing page."
           type: string
           x-nullable: true
         success_title:
@@ -28625,6 +29525,12 @@ components:
           description: "Whether the web form's success screen has a \"Fill out again\"\
             \ button, which clears the form so someone can fill it in again."
           type: boolean
+        form_sections_in_order:
+          description: "Whether a web form with sections makes people fill them out\
+            \ in order. When true, a later section stays locked until they reach it\
+            \ with Next. When false, they can open any section from the list, and\
+            \ Next and Submit still check their answers."
+          type: boolean
         slack_webhook_url:
           description: A Slack incoming webhook URL that is notified about the template's
             submissions. It's never returned; `has_slack_webhook_url` says if it's
@@ -28642,6 +29548,29 @@ components:
             all of the rules.
           items:
             $ref: "#/components/schemas/TemplateFieldDependencyInput"
+          type: array
+          default: null
+        signer_roles:
+          description: "The template's signer roles, in order. Setting them replaces\
+            \ the whole list: a role left out is deleted, and its fields are left\
+            \ unassigned. Give each role you keep its `id`."
+          items:
+            $ref: "#/components/schemas/TemplateSignerRoleInput"
+          type: array
+          default: null
+        signature_request_cc:
+          description: "Who gets a copy of the completed document when DocSpring emails\
+            \ a submission's signers, with the submission's `cc`: email addresses,\
+            \ or `{{ variables }}` that name an address in the submission's data,\
+            \ such as `{{ agent.email }}`. A value the data doesn't have prints nothing,\
+            \ and an address that comes out blank is left out. The data has to have\
+            \ the value, so it's one of the template's fields (one the sender fills\
+            \ in) or the template allows additional properties: setting a variable\
+            \ that isn't a field is a `422` otherwise. They don't sign. Setting it\
+            \ replaces the whole list."
+          items:
+            type: string
+            x-pattern-message: can't be blank
           type: array
           default: null
         predefined_fields:
@@ -28703,6 +29632,23 @@ components:
             \ design is created, it starts with an empty page."
           type: object
           x-nullable: true
+        override_account_expiry:
+          description: "Whether the template's own expiry (`expire_submissions`, `expire_after`\
+            \ and `expiration_interval`) decides when all its submissions are deleted,\
+            \ with or without signature requests, including keeping them until you\
+            \ delete them. When false, the account's expiry settings do. Turning `expire_submissions`\
+            \ on also turns this on, unless the same request sets it, and so does\
+            \ creating a template with `expire_submissions` on or off."
+          type: boolean
+        sync_fields:
+          description: "Add a field for each value the template's code, Word document\
+            \ or layout reads for the first time, with a type worked out from how\
+            \ it's used. Existing fields keep their settings, and a field you deleted\
+            \ while the code still read the value stays deleted. Default true. Set\
+            \ it to false to manage the fields yourself with the fields endpoints:\
+            \ a form field whose field isn't on the template then fails its submissions\
+            \ and previews. Only for HTML templates, Word templates and page designs."
+          type: boolean
         cache_id:
           description: "The template's document, a PDF or a Word document (.docx or\
             \ .odt): the `fields.key` of a file you uploaded with the presigned upload\
@@ -28784,6 +29730,7 @@ components:
         ai_field_naming_language: ""
         allow_additional_properties: true
         allow_skipping_optional_fields: true
+        continue_before_optional_fields: true
         default_form_mode: ""
         editable_submissions: true
         embed_domains:
@@ -28814,6 +29761,7 @@ components:
         success_title: success_title
         success_message: success_message
         show_fill_again_button: true
+        form_sections_in_order: true
         slack_webhook_url: slack_webhook_url
         defaults: ""
         field_dependencies:
@@ -28867,12 +29815,28 @@ components:
           field_ids:
           - 5
           - 5
+        signer_roles:
+        - id: id
+          key: key
+          name: name
+          name_expression: name_expression
+          email_expression: email_expression
+        - id: id
+          key: key
+          name: name
+          name_expression: name_expression
+          email_expression: email_expression
+        signature_request_cc:
+        - signature_request_cc
+        - signature_request_cc
         predefined_fields:
         - name: name
           display_name: display_name
           title: title
           type: ""
           option_list: option_list
+          option_labels:
+            key: option_labels
           required_in_template: true
           field_required: true
         - name: name
@@ -28880,6 +29844,8 @@ components:
           title: title
           type: ""
           option_list: option_list
+          option_labels:
+            key: option_labels
           required_in_template: true
           field_required: true
         predefined_fields_sample_data:
@@ -28892,6 +29858,8 @@ components:
         html_escape_data: true
         layout:
           key: ""
+        override_account_expiry: true
+        sync_fields: true
       minProperties: 1
       properties:
         name:
@@ -28940,10 +29908,16 @@ components:
             the template.
           type: boolean
         allow_skipping_optional_fields:
+          description: "Visual Forms JS 2.16.0 to 2.23.0 only: with it on, Continue\
+            \ takes the place of Next once the required fields are filled in. Later\
+            \ versions use `continue_before_optional_fields`."
+          type: boolean
+        continue_before_optional_fields:
           description: "Visual forms and signature request forms show the Continue\
-            \ button as soon as the required fields are filled in, without visiting\
-            \ each optional field. The `allowSkippingOptionalFields` embed option\
-            \ overrides it."
+            \ button next to Next as soon as the required fields are filled in, without\
+            \ visiting each optional field. Turned off, Continue shows in place of\
+            \ Next only once every field has a value or has been visited. The `allowSkippingOptionalFields`\
+            \ embed option overrides it."
           type: boolean
         default_form_mode:
           allOf:
@@ -28958,8 +29932,8 @@ components:
             Editable PDFs"). A submission's `editable` overrides it.
           type: boolean
         embed_domains:
-          description: "The sites that can embed the template's live signature requests\
-            \ and its embedded template editor: a host such as `app.example.com`,\
+          description: "The sites that can embed the template's live signature requests,\
+            \ its embedded template editor and its visual form: a host such as `app.example.com`,\
             \ with an optional leading wildcard (`*.example.com`), port (`localhost:3000`)\
             \ or scheme (`https://app.example.com`; without one, `http` and `https`\
             \ both work), without a path. Each one is stored in lowercase, without\
@@ -28968,8 +29942,9 @@ components:
             \ be embedded anywhere; a test signature request can be embedded on any\
             \ site. The embedded template editor loads only for a page on one of these\
             \ sites (by its Referer or Origin header), and on any site when the list\
-            \ is empty. Forms embedded on a page (Visual Forms JS and Web Forms JS)\
-            \ aren't restricted."
+            \ is empty. A visual form embedded with Visual Forms JS loads only on\
+            \ these sites, and on any site when the list is empty. Web Forms JS isn't\
+            \ restricted."
           items:
             type: string
           type: array
@@ -28999,13 +29974,13 @@ components:
           writeOnly: true
           x-nullable: true
         expire_submissions:
-          description: Delete each submission's data and PDF after `expire_after`
-            `expiration_interval`.
+          description: "Delete each submission's data and files after `expire_after`\
+            \ `expiration_interval`, when `override_account_expiry` is on."
           type: boolean
         expire_after:
           description: "How many `expiration_interval`s a submission's data and PDF\
-            \ are kept for, when `expire_submissions` is on. At most 5256000 (10 years\
-            \ in minutes)."
+            \ are kept for, when `expire_submissions` and `override_account_expiry`\
+            \ are on. At most 5256000 (10 years in minutes)."
           type: integer
         expiration_interval:
           allOf:
@@ -29042,28 +30017,26 @@ components:
           description: "How DocSpring's completed emails send the signed PDF to your\
             \ signers and CCs: `attachment` (attached, or a download link when it's\
             \ too big to attach) or `link` (a download link). Null uses your account's\
-            \ rule: a link if your account has signed a BAA, otherwise attached. PDF\
-            \ templates only. A signature request uses the value it had when the request\
-            \ was created."
+            \ rule: a link if your account has signed a BAA, otherwise attached. A\
+            \ signature request uses the value it had when the request was created."
           x-nullable: true
         signature_request_from_address:
           description: "The address DocSpring's emails to your signers come from:\
             \ an address at one of your verified email domains, on the Growth plan\
             \ or higher. Null sends them from DocSpring's shared address, with \"\
-            via DocSpring\" after the sender name. PDF templates only."
+            via DocSpring\" after the sender name."
           type: string
           x-nullable: true
         signature_request_include_signing_token:
           description: "Puts a signing token in `signature_request_signing_url`, as\
             \ `{{ token_id }}` and `{{ token_secret }}`, so your page can open the\
             \ signing form without creating a token itself. The email then carries\
-            \ a credential: anyone who has it can open the form and sign. PDF templates\
-            \ only."
+            \ a credential: anyone who has it can open the form and sign."
           type: boolean
         signature_request_from_name:
           description: "The sender name on the emails DocSpring sends your signers,\
             \ as in \"Acme via DocSpring\". It can't contain an email address, a website\
-            \ or quotes. Null uses your account's name. PDF templates only."
+            \ or quotes. Null uses your account's name."
           type: string
           x-nullable: true
         signature_request_notification_emails:
@@ -29071,7 +30044,7 @@ components:
             \ completed or declined, or an email bounces or can't be sent: members\
             \ of your DocSpring team or addresses at your verified email domains.\
             \ Empty means your account's owner. A submission's `notification_emails`\
-            \ replaces them. PDF templates only."
+            \ replaces them."
           items:
             type: string
           type: array
@@ -29081,7 +30054,7 @@ components:
           description: "Where your signers' replies to DocSpring's emails go: a member\
             \ of your DocSpring team or an address at one of your verified email domains.\
             \ Null means your account's owner. A submission's `reply_to` replaces\
-            \ it. PDF templates only."
+            \ it."
           type: string
           x-nullable: true
         signature_request_signing_url:
@@ -29091,7 +30064,7 @@ components:
             \ Growth plan or higher. It must include `{{ signature_request_id }}`.\
             \ Your page authenticates the signer, creates a token for the signature\
             \ request, and opens the signing form with it. Null links to DocSpring's\
-            \ signing page. PDF templates only."
+            \ signing page."
           type: string
           x-nullable: true
         success_title:
@@ -29109,6 +30082,12 @@ components:
         show_fill_again_button:
           description: "Whether the web form's success screen has a \"Fill out again\"\
             \ button, which clears the form so someone can fill it in again."
+          type: boolean
+        form_sections_in_order:
+          description: "Whether a web form with sections makes people fill them out\
+            \ in order. When true, a later section stays locked until they reach it\
+            \ with Next. When false, they can open any section from the list, and\
+            \ Next and Submit still check their answers."
           type: boolean
         slack_webhook_url:
           description: A Slack incoming webhook URL that is notified about the template's
@@ -29142,6 +30121,29 @@ components:
             \ of the sections; an empty list removes them."
           items:
             $ref: "#/components/schemas/TemplateFormSectionInput"
+          type: array
+          default: null
+        signer_roles:
+          description: "The template's signer roles, in order. Setting them replaces\
+            \ the whole list: a role left out is deleted, and its fields are left\
+            \ unassigned. Give each role you keep its `id`."
+          items:
+            $ref: "#/components/schemas/TemplateSignerRoleInput"
+          type: array
+          default: null
+        signature_request_cc:
+          description: "Who gets a copy of the completed document when DocSpring emails\
+            \ a submission's signers, with the submission's `cc`: email addresses,\
+            \ or `{{ variables }}` that name an address in the submission's data,\
+            \ such as `{{ agent.email }}`. A value the data doesn't have prints nothing,\
+            \ and an address that comes out blank is left out. The data has to have\
+            \ the value, so it's one of the template's fields (one the sender fills\
+            \ in) or the template allows additional properties: setting a variable\
+            \ that isn't a field is a `422` otherwise. They don't sign. Setting it\
+            \ replaces the whole list."
+          items:
+            type: string
+            x-pattern-message: can't be blank
           type: array
           default: null
         predefined_fields:
@@ -29203,6 +30205,24 @@ components:
             \ design is created, it starts with an empty page."
           type: object
           x-nullable: true
+        override_account_expiry:
+          description: "Whether the template's own expiry (`expire_submissions`, `expire_after`\
+            \ and `expiration_interval`) decides when all its submissions are deleted,\
+            \ with or without signature requests, including keeping them until you\
+            \ delete them. When false, the account's expiry settings do. Turning `expire_submissions`\
+            \ on also turns this on, unless the same request sets it, and so does\
+            \ creating a template with `expire_submissions` on or off."
+          type: boolean
+        sync_fields:
+          description: "Add a field for each value the template's code or layout reads\
+            \ for the first time, with a type worked out from how it's used. Existing\
+            \ fields keep their settings, and a field you deleted while the code still\
+            \ read the value stays deleted. Default true. Set it to false to manage\
+            \ the fields yourself with the fields endpoints: a form field whose field\
+            \ isn't on the template then fails its submissions and previews. Only\
+            \ for HTML templates and page designs: a Word template takes it with its\
+            \ document, in PUT /templates/{template_id}/document or PUT /templates/{template_id}/document/upload."
+          type: boolean
       title: UpdateTemplateRequest
     UpdateTemplateDocumentRequest:
       additionalProperties: false
@@ -29214,6 +30234,7 @@ components:
         document_base64: document_base64
         filename: filename
         reimport_fields: true
+        sync_fields: true
       properties:
         cache_id:
           description: "The `fields.key` of the new PDF or Word document (.docx or\
@@ -29250,6 +30271,15 @@ components:
             \ If the PDF has no fillable fields, the template keeps its fields. A\
             \ locked template can't re-import its fields. Only for PDF templates:\
             \ a Word template adds a field for each new tag."
+          type: boolean
+        sync_fields:
+          description: "Add a field for each value the template's code, Word document\
+            \ or layout reads for the first time, with a type worked out from how\
+            \ it's used. Existing fields keep their settings, and a field you deleted\
+            \ while the code still read the value stays deleted. Default true. Set\
+            \ it to false to manage the fields yourself with the fields endpoints:\
+            \ a form field whose field isn't on the template then fails its submissions\
+            \ and previews. Only for HTML templates, Word templates and page designs."
           type: boolean
       title: UpdateTemplateDocumentRequest
     CopyTemplateRequest:
@@ -29359,6 +30389,9 @@ components:
           metadata: metadata
           required: true
           option_list: option_list
+          option_labels:
+            key: option_labels
+          print_option_labels: true
           combined_field_names: combined_field_names
           combined_field_type: ""
           combined_field_separator: combined_field_separator
@@ -29372,6 +30405,9 @@ components:
           signature_allow_draw: true
           signature_allow_type: true
           barcode_symbology: ""
+          comb_fill_from_right: true
+          comb_pad_with_zeros: true
+          print_digits_only: true
           hidden: true
           x: 5.962133916683182
           "y": 5.637376656633329
@@ -29433,8 +30469,10 @@ components:
           invert_boolean_condition: true
           currency: true
           decimal_places: 9
+          number_part: ""
           image_scale_type: ""
           image_gravity: ""
+          signer_role: signer_role
           dependencies: ""
           id: 9
         - name: name
@@ -29449,6 +30487,9 @@ components:
           metadata: metadata
           required: true
           option_list: option_list
+          option_labels:
+            key: option_labels
+          print_option_labels: true
           combined_field_names: combined_field_names
           combined_field_type: ""
           combined_field_separator: combined_field_separator
@@ -29462,6 +30503,9 @@ components:
           signature_allow_draw: true
           signature_allow_type: true
           barcode_symbology: ""
+          comb_fill_from_right: true
+          comb_pad_with_zeros: true
+          print_digits_only: true
           hidden: true
           x: 5.962133916683182
           "y": 5.637376656633329
@@ -29523,8 +30567,10 @@ components:
           invert_boolean_condition: true
           currency: true
           decimal_places: 9
+          number_part: ""
           image_scale_type: ""
           image_gravity: ""
+          signer_role: signer_role
           dependencies: ""
           id: 9
       properties:
@@ -29557,6 +30603,9 @@ components:
           metadata: metadata
           required: true
           option_list: option_list
+          option_labels:
+            key: option_labels
+          print_option_labels: true
           combined_field_names: combined_field_names
           combined_field_type: ""
           combined_field_separator: combined_field_separator
@@ -29570,6 +30619,9 @@ components:
           signature_allow_draw: true
           signature_allow_type: true
           barcode_symbology: ""
+          comb_fill_from_right: true
+          comb_pad_with_zeros: true
+          print_digits_only: true
           hidden: true
           x: 5.962133916683182
           "y": 5.637376656633329
@@ -29631,8 +30683,10 @@ components:
           invert_boolean_condition: true
           currency: true
           decimal_places: 9
+          number_part: ""
           image_scale_type: ""
           image_gravity: ""
+          signer_role: signer_role
           dependencies: ""
           id: 9
         - name: name
@@ -29647,6 +30701,9 @@ components:
           metadata: metadata
           required: true
           option_list: option_list
+          option_labels:
+            key: option_labels
+          print_option_labels: true
           combined_field_names: combined_field_names
           combined_field_type: ""
           combined_field_separator: combined_field_separator
@@ -29660,6 +30717,9 @@ components:
           signature_allow_draw: true
           signature_allow_type: true
           barcode_symbology: ""
+          comb_fill_from_right: true
+          comb_pad_with_zeros: true
+          print_digits_only: true
           hidden: true
           x: 5.962133916683182
           "y": 5.637376656633329
@@ -29721,8 +30781,10 @@ components:
           invert_boolean_condition: true
           currency: true
           decimal_places: 9
+          number_part: ""
           image_scale_type: ""
           image_gravity: ""
+          signer_role: signer_role
           dependencies: ""
           id: 9
       properties:
@@ -30056,6 +31118,15 @@ components:
             \ use only\" box (`true`), or leaves them out (`false`). Default: your\
             \ account's template settings."
           type: boolean
+        sync_fields:
+          description: "Add a field for each value the template's code, Word document\
+            \ or layout reads for the first time, with a type worked out from how\
+            \ it's used. Existing fields keep their settings, and a field you deleted\
+            \ while the code still read the value stays deleted. Default true. Set\
+            \ it to false to manage the fields yourself with the fields endpoints:\
+            \ a form field whose field isn't on the template then fails its submissions\
+            \ and previews. Only for HTML templates, Word templates and page designs."
+          type: boolean
       required:
       - document
       title: UploadTemplateRequest
@@ -30076,6 +31147,15 @@ components:
             \ If the PDF has no fillable fields, the template keeps its fields. A\
             \ locked template can't re-import its fields. Only for PDF templates:\
             \ a Word template adds a field for each new tag."
+          type: boolean
+        sync_fields:
+          description: "Add a field for each value the template's code, Word document\
+            \ or layout reads for the first time, with a type worked out from how\
+            \ it's used. Existing fields keep their settings, and a field you deleted\
+            \ while the code still read the value stays deleted. Default true. Set\
+            \ it to false to manage the fields yourself with the fields endpoints:\
+            \ a form field whose field isn't on the template then fails its submissions\
+            \ and previews. Only for HTML templates, Word templates and page designs."
           type: boolean
       required:
       - document

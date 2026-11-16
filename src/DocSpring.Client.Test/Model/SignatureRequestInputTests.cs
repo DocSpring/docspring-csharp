@@ -54,15 +54,6 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
-        /// Test the property 'Fields'
-        /// </summary>
-        [Fact]
-        public void FieldsTest()
-        {
-            // TODO unit test for the property 'Fields'
-        }
-
-        /// <summary>
         /// Test the property 'Name'
         /// </summary>
         [Fact]
@@ -78,6 +69,15 @@ namespace DocSpring.Client.Test.Model
         public void EmailTest()
         {
             // TODO unit test for the property 'Email'
+        }
+
+        /// <summary>
+        /// Test the property 'Fields'
+        /// </summary>
+        [Fact]
+        public void FieldsTest()
+        {
+            // TODO unit test for the property 'Fields'
         }
 
         /// <summary>

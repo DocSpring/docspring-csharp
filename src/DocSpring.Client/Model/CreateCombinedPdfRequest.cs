@@ -35,7 +35,7 @@ namespace DocSpring.Client.Model
         /// <param name="metadata">Your own data about the combined PDF, such as an ID from your app. Its &#x60;pdf_filename&#x60; key names the PDF&#39;s file (&#x60;files.pdf.filename&#x60;, and its download): a &#x60;.pdf&#x60; ending is removed, each run of characters other than letters, digits, &#x60;-&#x60;, &#x60;_&#x60; and &#x60;.&#x60; becomes one &#x60;_&#x60;, and the first 128 characters are kept, then &#x60;.pdf&#x60; is added. Without it, the file is named after the combined PDF&#39;s ID (&#x60;com_1234567890abcdef01.pdf&#x60;).</param>
         /// <param name="password">A password that the PDF needs to be opened with. It&#39;s never returned; &#x60;has_password&#x60; says if it&#39;s set.</param>
         /// <param name="deleteCustomFiles">Delete the custom files in &#x60;source_pdfs&#x60; once the combined PDF has been generated (they&#39;re kept if it fails). Other combined PDFs can&#39;t use them after that. A test API token can&#39;t delete custom files.</param>
-        /// <param name="expiresIn">Seconds after the PDF is generated until the combined PDF expires, up to 10 years (315360000). One that fails is kept for at least 48 hours. Without it, the combined PDF is kept until you delete it.</param>
+        /// <param name="expiresIn">Seconds after the PDF is generated until the combined PDF expires, up to 10 years (315360000), sooner or later than the account&#39;s expiry setting. Defaults to the account&#39;s expiry setting, which keeps it until you delete it when it&#39;s off. One that fails is kept for at least 48 hours.</param>
         [JsonConstructor]
         public CreateCombinedPdfRequest(List<CombinedPdfSourceInput> sourcePdfs, Option<Dictionary<string, Object>> metadata = default, Option<string> password = default, Option<bool?> deleteCustomFiles = default, Option<int?> expiresIn = default)
         {
@@ -106,9 +106,9 @@ namespace DocSpring.Client.Model
         public Option<int?> ExpiresInOption { get; private set; }
 
         /// <summary>
-        /// Seconds after the PDF is generated until the combined PDF expires, up to 10 years (315360000). One that fails is kept for at least 48 hours. Without it, the combined PDF is kept until you delete it.
+        /// Seconds after the PDF is generated until the combined PDF expires, up to 10 years (315360000), sooner or later than the account&#39;s expiry setting. Defaults to the account&#39;s expiry setting, which keeps it until you delete it when it&#39;s off. One that fails is kept for at least 48 hours.
         /// </summary>
-        /// <value>Seconds after the PDF is generated until the combined PDF expires, up to 10 years (315360000). One that fails is kept for at least 48 hours. Without it, the combined PDF is kept until you delete it.</value>
+        /// <value>Seconds after the PDF is generated until the combined PDF expires, up to 10 years (315360000), sooner or later than the account&#39;s expiry setting. Defaults to the account&#39;s expiry setting, which keeps it until you delete it when it&#39;s off. One that fails is kept for at least 48 hours.</value>
         [JsonPropertyName("expires_in")]
         public int? ExpiresIn { get { return this.ExpiresInOption.Value; } set { this.ExpiresInOption = new Option<int?>(value); } }
 

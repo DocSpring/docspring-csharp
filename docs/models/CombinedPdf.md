@@ -17,7 +17,7 @@ Name | Type | Description | Notes
 **CreatedAt** | **DateTime** | When the combined PDF was created. | 
 **UpdatedAt** | **DateTime** | When the combined PDF was last updated. | 
 **ErrorMessage** | **string** | Why the PDFs couldn't be merged, when `state` is `error`. | 
-**ExpiresAt** | **DateTime** | When the combined PDF expires (`expires_in` after it's generated). Null if it's kept until you delete it. | 
+**ExpiresAt** | **DateTime** | When the combined PDF expires (`expires_in`, or the account's expiry setting, after it's generated). Null if it's kept until you delete it. | 
 **ProcessedAt** | **DateTime** | When the PDF was generated. Null until then. | 
 
 [[Back to Model list]](../../README.md#methods) [[Back to API list]](../../README.md#methods) [[Back to README]](../../README.md)

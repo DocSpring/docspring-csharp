@@ -39,7 +39,7 @@ namespace DocSpring.Client.Model
         /// <param name="cc">Who is copied on each email, as in &#x60;to&#x60; (but not &#x60;{{ signer.email }}&#x60;).</param>
         /// <param name="bcc">Who is blind-copied on each email, as in &#x60;to&#x60; (but not &#x60;{{ signer.email }}&#x60;).</param>
         /// <param name="fileFormats">Which of the submission&#39;s files the email sends: &#x60;all&#x60; sends every file the submission made (its PDF, and a Word template&#39;s Word document and OpenDocument file when it made them), and &#x60;docx&#x60;, &#x60;odt&#x60; or &#x60;pdf&#x60; sends only that file. A submission that made none of them sends nothing, and its email shows as skipped. Only Word templates make Word documents and OpenDocument files, so another template&#39;s email action takes &#x60;pdf&#x60; or &#x60;all&#x60;.</param>
-        /// <param name="delivery">&#x60;attachment&#x60; attaches the files, or sends a download link when together they&#39;re larger than &#x60;max_attachment_mb&#x60;. &#x60;link&#x60; sends a download link, which works for 7 days. Accounts with a BAA start with &#x60;link&#x60;.</param>
+        /// <param name="delivery">&#x60;attachment&#x60; attaches the files, or sends a download link when together they&#39;re larger than &#x60;max_attachment_mb&#x60;. &#x60;link&#x60; sends a download link, which works for 7 days, or until the submission expires if that&#39;s sooner. Accounts with a BAA start with &#x60;link&#x60;.</param>
         /// <param name="maxAttachmentMb">With &#x60;delivery&#x60; &#x60;attachment&#x60;, files larger than this many megabytes in all (1 MB is 1,000,000 bytes) are sent as a download link instead. Emailing a file makes it about 38% larger, and many company mail servers refuse emails over 10 MB, so the default is 7. Raise it only when every recipient&#39;s mail server accepts larger emails, such as Microsoft 365 (up to 36 MB) or Gmail (50 MB).</param>
         /// <param name="submissionType">Which submissions send emails: &#x60;live&#x60;, &#x60;test&#x60; or &#x60;all&#x60;. Test submissions only email your team&#39;s members, and skip every other recipient.</param>
         /// <param name="failureNotificationsEnabled">Whether the account&#39;s owner gets an email when the email action&#39;s emails keep failing.</param>
@@ -107,9 +107,9 @@ namespace DocSpring.Client.Model
         public EmailActionFileFormats FileFormats { get; set; }
 
         /// <summary>
-        /// &#x60;attachment&#x60; attaches the files, or sends a download link when together they&#39;re larger than &#x60;max_attachment_mb&#x60;. &#x60;link&#x60; sends a download link, which works for 7 days. Accounts with a BAA start with &#x60;link&#x60;.
+        /// &#x60;attachment&#x60; attaches the files, or sends a download link when together they&#39;re larger than &#x60;max_attachment_mb&#x60;. &#x60;link&#x60; sends a download link, which works for 7 days, or until the submission expires if that&#39;s sooner. Accounts with a BAA start with &#x60;link&#x60;.
         /// </summary>
-        /// <value>&#x60;attachment&#x60; attaches the files, or sends a download link when together they&#39;re larger than &#x60;max_attachment_mb&#x60;. &#x60;link&#x60; sends a download link, which works for 7 days. Accounts with a BAA start with &#x60;link&#x60;.</value>
+        /// <value>&#x60;attachment&#x60; attaches the files, or sends a download link when together they&#39;re larger than &#x60;max_attachment_mb&#x60;. &#x60;link&#x60; sends a download link, which works for 7 days, or until the submission expires if that&#39;s sooner. Accounts with a BAA start with &#x60;link&#x60;.</value>
         [JsonPropertyName("delivery")]
         public EmailActionDelivery Delivery { get; set; }
 

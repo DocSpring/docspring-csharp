@@ -973,7 +973,7 @@ Deletes an empty folder and returns it. A folder that still has templates or fol
 
 Delete a template
 
-Deletes a template's draft and all of its published versions, or one published version (`version`). Returns the template as it was before it was deleted. 
+Deletes a template's draft and all of its published versions, or one published version (`version`). Returns the template as it was before it was deleted. A deleted template can be restored from Trash in the dashboard for a limited time; a single deleted version can't. 
 
 
 ### Parameters
@@ -1097,7 +1097,7 @@ Deletes a combined PDF's PDF and returns the expired combined PDF.
 
 Expire a submission
 
-Deletes a submission's data and PDF now, and returns the expired submission.
+Deletes a submission's data and files now, along with any signature requests and audit trail, and returns the expired submission. 
 
 
 ### Parameters
@@ -3110,7 +3110,7 @@ Updates a webhook. Only the properties you send change.
 
 <a id="uploadtemplate"></a>
 # **UploadTemplate**
-> Template UploadTemplate (System.IO.Stream document, bool wait = null, string name = null, string description = null, string parentFolderId = null, AiFieldNamingLanguage aiFieldNamingLanguage = null, bool detectFields = null, FieldSetupSource fieldSource = null, FieldSetupNaming fieldNaming = null, FieldSetupLogic fieldLogic = null, OutputFormat outputFormat = null, bool includeOfficeUseFields = null, string idempotencyKey = null)
+> Template UploadTemplate (System.IO.Stream document, bool wait = null, string name = null, string description = null, string parentFolderId = null, AiFieldNamingLanguage aiFieldNamingLanguage = null, bool detectFields = null, FieldSetupSource fieldSource = null, FieldSetupNaming fieldNaming = null, FieldSetupLogic fieldLogic = null, OutputFormat outputFormat = null, bool includeOfficeUseFields = null, bool syncFields = null, string idempotencyKey = null)
 
 Create a template from an uploaded PDF or Word document
 
@@ -3133,6 +3133,7 @@ Creates a PDF template from a PDF, or a Word template from a Word document (.doc
 | **fieldLogic** | **FieldSetupLogic** | With `detect_fields`, whether AI reads the whole form once the fields are named and sets up conditional logic and required fields (`ai`) or not (`none`). Default: your account's template settings. | [optional]  |
 | **outputFormat** | **OutputFormat** | What each submission of a Word template makes unless its request sets `output_formats`: `docx` (a Word document), `odt` (an OpenDocument file, converted from the Word document) or `pdf`. Required when `document` is a Word document. | [optional]  |
 | **includeOfficeUseFields** | **bool** | With `detect_fields`, whether AI field setup keeps the fields that only the office receiving the form fills in, such as a "For office use only" box (`true`), or leaves them out (`false`). Default: your account's template settings. | [optional]  |
+| **syncFields** | **bool** | Add a field for each value the template's code, Word document or layout reads for the first time, with a type worked out from how it's used. Existing fields keep their settings, and a field you deleted while the code still read the value stays deleted. Default true. Set it to false to manage the fields yourself with the fields endpoints: a form field whose field isn't on the template then fails its submissions and previews. Only for HTML templates, Word templates and page designs. | [optional]  |
 | **idempotencyKey** | **string** | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. A repeated response is the first one as it was, so its `download_url` links may have expired: use `permanent_url`, or get the record again for new links. | [optional]  |
 
 ### Return type
@@ -3163,7 +3164,7 @@ Creates a PDF template from a PDF, or a Word template from a Word document (.doc
 
 <a id="uploadtemplatedocument"></a>
 # **UploadTemplateDocument**
-> Template UploadTemplateDocument (string templateId, System.IO.Stream document, bool wait = null, bool reimportFields = null, string idempotencyKey = null)
+> Template UploadTemplateDocument (string templateId, System.IO.Stream document, bool wait = null, bool reimportFields = null, bool syncFields = null, string idempotencyKey = null)
 
 Replace a template's document with an uploaded file
 
@@ -3178,6 +3179,7 @@ Replaces a PDF template's PDF, or a Word template's Word document, with one sent
 | **document** | **System.IO.Stream****System.IO.Stream** | The new PDF, or the new Word document (.docx or .odt) of a Word template. |  |
 | **wait** | **bool** | Wait until the PDF has been processed, a `document_url`'s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts. | [optional]  |
 | **reimportFields** | **bool** | Replace all of the template's fields with the fillable fields in the new PDF, once DocSpring has processed it (`document.field_reimport_state`). As on a first upload, the default typeface, font size, bold and color are taken from the PDF's fields; the template's other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can't re-import its fields. Only for PDF templates: a Word template adds a field for each new tag. | [optional]  |
+| **syncFields** | **bool** | Add a field for each value the template's code, Word document or layout reads for the first time, with a type worked out from how it's used. Existing fields keep their settings, and a field you deleted while the code still read the value stays deleted. Default true. Set it to false to manage the fields yourself with the fields endpoints: a form field whose field isn't on the template then fails its submissions and previews. Only for HTML templates, Word templates and page designs. | [optional]  |
 | **idempotencyKey** | **string** | A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request's response (and an `Idempotent-Replayed: true` header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 `idempotency_key_reused`. A 409 `idempotency_key_in_use` with a `Retry-After` header means the first request is still being processed: send the request again then. A repeated response is the first one as it was, so its `download_url` links may have expired: use `permanent_url`, or get the record again for new links. | [optional]  |
 
 ### Return type

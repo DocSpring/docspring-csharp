@@ -31,11 +31,11 @@ namespace DocSpring.Client.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="SignatureRequestInput" /> class.
         /// </summary>
-        /// <param name="fields">The fields this person fills in. Each field can only be in one signature request, and a field that &#x60;data&#x60; fills in needs &#x60;prefilled_values_editable&#x60;.</param>
         /// <param name="name">The name of the person the request is for.</param>
         /// <param name="email">Their email address. Null when they have none.</param>
+        /// <param name="fields">The fields this person fills in or signs, besides the ones the template gives their role. A submission&#39;s only signature request can leave it out: the person gets every field without a role that &#x60;data&#x60; doesn&#39;t fill in. With two or more signature requests, every required field that &#x60;data&#x60; doesn&#39;t fill in needs a signer, from its role in the template or from a signature request&#39;s &#x60;fields&#x60; (an optional one that nobody is given stays empty). Each field can only be in one signature request, can&#39;t be another role&#39;s or the sender&#39;s, and needs &#x60;prefilled_values_editable&#x60; when &#x60;data&#x60; fills it in. A field that the Liquid of an HTML template, a Word template or a page design uses outside its form fields (&#x60;{{ name }}&#x60;) can only be filled in by the signer who signs first (the only signer, or the only one in the first &#x60;signing_step&#x60;): their signing page asks them for it before the document is made.</param>
         /// <param name="metadata">Your own data about the signature request, such as an ID from your app.</param>
-        /// <param name="role">Which of the template&#39;s signers the person is: &#x60;Signer 1&#x60;, &#x60;Signer 2&#x60; and so on, up to &#x60;Signer 100&#x60;, until templates have roles of their own. Either every signature request has a &#x60;role&#x60; or none does, and each role can only have one.</param>
+        /// <param name="role">Which of the template&#39;s signers the person is: one of its roles, by key (&#x60;tenant&#x60;), or by place (&#x60;Signer 1&#x60; is the first role). A template without roles has &#x60;Signer 1&#x60;, &#x60;Signer 2&#x60; and so on, up to &#x60;Signer 100&#x60;. Either every signature request has a &#x60;role&#x60; or none does, and each role can only have one. Without any &#x60;role&#x60;, the first signature request is the template&#39;s first signer, the second its second, and so on. When the template gives its roles names of their own (&#x60;Tenant&#x60;, not &#x60;Signer 1&#x60;), two or more signature requests each need a &#x60;role&#x60;.</param>
         /// <param name="authType">How your app authenticated the person before it showed them the signature request.</param>
         /// <param name="authSecondFactorType">The second factor your app authenticated them with, if any.</param>
         /// <param name="authProvider">The service that authenticated them, such as &#x60;google&#x60;. Required when &#x60;auth_type&#x60; is &#x60;oauth&#x60;.</param>
@@ -45,15 +45,15 @@ namespace DocSpring.Client.Model
         /// <param name="authUsernameHash">Their username in your app, or a SHA-256 hash of a salt and the username.</param>
         /// <param name="authPhoneNumberHash">The phone number they authenticated with, or a SHA-256 hash of a salt and the phone number.</param>
         /// <param name="ignoreUnknownFields">Leave out names in &#x60;fields&#x60; that the template doesn&#39;t have, for one field list that you send with several templates. Without it, an unknown name makes the submission &#x60;invalid_data&#x60;.</param>
-        /// <param name="prefilledValuesEditable">Let the person change the values that &#x60;data&#x60; already has for fields in &#x60;fields&#x60;. Without it, those fields are a 422.</param>
+        /// <param name="prefilledValuesEditable">Let the person change the values that &#x60;data&#x60; already has for their fields. Without it, a field in &#x60;fields&#x60; that &#x60;data&#x60; fills in is a 422, and a field of their role that &#x60;data&#x60; fills in is the sender&#39;s.</param>
         /// <param name="sendEmail">Whether DocSpring emails this person their signing link. Default: the submission&#39;s &#x60;send_email&#x60;. Set it to false for someone who signs in your app (embedded signing) or whose link you send yourself. When DocSpring emails them, &#x60;email&#x60; is required and &#x60;auth_type&#x60; is &#x60;email_link&#x60; (the default). Otherwise &#x60;auth_type&#x60; is required.</param>
         /// <param name="signingStep">When this person signs, with &#x60;signing_order: sequential&#x60;: everyone in step 1 first, then step 2, and so on. People in the same step sign in any order. Only the order of the numbers matters. Either every signature request has a &#x60;signing_step&#x60; or none does; without them, each person is a step of their own, in the order of &#x60;signature_requests&#x60;.</param>
         [JsonConstructor]
-        public SignatureRequestInput(List<string> fields, Option<string> name = default, Option<string> email = default, Option<Dictionary<string, Object>> metadata = default, Option<string> role = default, Option<SignatureRequestAuthType?> authType = default, Option<SignatureRequestAuthSecondFactorType?> authSecondFactorType = default, Option<string> authProvider = default, Option<DateTime?> authSessionStartedAt = default, Option<string> authSessionIdHash = default, Option<string> authUserIdHash = default, Option<string> authUsernameHash = default, Option<string> authPhoneNumberHash = default, Option<bool?> ignoreUnknownFields = default, Option<bool?> prefilledValuesEditable = default, Option<bool?> sendEmail = default, Option<int?> signingStep = default)
+        public SignatureRequestInput(Option<string> name = default, Option<string> email = default, Option<List<string>> fields = default, Option<Dictionary<string, Object>> metadata = default, Option<string> role = default, Option<SignatureRequestAuthType?> authType = default, Option<SignatureRequestAuthSecondFactorType?> authSecondFactorType = default, Option<string> authProvider = default, Option<DateTime?> authSessionStartedAt = default, Option<string> authSessionIdHash = default, Option<string> authUserIdHash = default, Option<string> authUsernameHash = default, Option<string> authPhoneNumberHash = default, Option<bool?> ignoreUnknownFields = default, Option<bool?> prefilledValuesEditable = default, Option<bool?> sendEmail = default, Option<int?> signingStep = default)
         {
-            Fields = fields;
             NameOption = name;
             EmailOption = email;
+            FieldsOption = fields;
             MetadataOption = metadata;
             RoleOption = role;
             AuthTypeOption = authType;
@@ -102,13 +102,6 @@ namespace DocSpring.Client.Model
         public SignatureRequestAuthSecondFactorType? AuthSecondFactorType { get { return this.AuthSecondFactorTypeOption.Value; } set { this.AuthSecondFactorTypeOption = new Option<SignatureRequestAuthSecondFactorType?>(value); } }
 
         /// <summary>
-        /// The fields this person fills in. Each field can only be in one signature request, and a field that &#x60;data&#x60; fills in needs &#x60;prefilled_values_editable&#x60;.
-        /// </summary>
-        /// <value>The fields this person fills in. Each field can only be in one signature request, and a field that &#x60;data&#x60; fills in needs &#x60;prefilled_values_editable&#x60;.</value>
-        [JsonPropertyName("fields")]
-        public List<string> Fields { get; set; }
-
-        /// <summary>
         /// Used to track the state of Name
         /// </summary>
         [JsonIgnore]
@@ -137,6 +130,20 @@ namespace DocSpring.Client.Model
         public string Email { get { return this.EmailOption.Value; } set { this.EmailOption = new Option<string>(value); } }
 
         /// <summary>
+        /// Used to track the state of Fields
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<List<string>> FieldsOption { get; private set; }
+
+        /// <summary>
+        /// The fields this person fills in or signs, besides the ones the template gives their role. A submission&#39;s only signature request can leave it out: the person gets every field without a role that &#x60;data&#x60; doesn&#39;t fill in. With two or more signature requests, every required field that &#x60;data&#x60; doesn&#39;t fill in needs a signer, from its role in the template or from a signature request&#39;s &#x60;fields&#x60; (an optional one that nobody is given stays empty). Each field can only be in one signature request, can&#39;t be another role&#39;s or the sender&#39;s, and needs &#x60;prefilled_values_editable&#x60; when &#x60;data&#x60; fills it in. A field that the Liquid of an HTML template, a Word template or a page design uses outside its form fields (&#x60;{{ name }}&#x60;) can only be filled in by the signer who signs first (the only signer, or the only one in the first &#x60;signing_step&#x60;): their signing page asks them for it before the document is made.
+        /// </summary>
+        /// <value>The fields this person fills in or signs, besides the ones the template gives their role. A submission&#39;s only signature request can leave it out: the person gets every field without a role that &#x60;data&#x60; doesn&#39;t fill in. With two or more signature requests, every required field that &#x60;data&#x60; doesn&#39;t fill in needs a signer, from its role in the template or from a signature request&#39;s &#x60;fields&#x60; (an optional one that nobody is given stays empty). Each field can only be in one signature request, can&#39;t be another role&#39;s or the sender&#39;s, and needs &#x60;prefilled_values_editable&#x60; when &#x60;data&#x60; fills it in. A field that the Liquid of an HTML template, a Word template or a page design uses outside its form fields (&#x60;{{ name }}&#x60;) can only be filled in by the signer who signs first (the only signer, or the only one in the first &#x60;signing_step&#x60;): their signing page asks them for it before the document is made.</value>
+        [JsonPropertyName("fields")]
+        public List<string> Fields { get { return this.FieldsOption.Value; } set { this.FieldsOption = new Option<List<string>>(value); } }
+
+        /// <summary>
         /// Used to track the state of Metadata
         /// </summary>
         [JsonIgnore]
@@ -158,9 +165,9 @@ namespace DocSpring.Client.Model
         public Option<string> RoleOption { get; private set; }
 
         /// <summary>
-        /// Which of the template&#39;s signers the person is: &#x60;Signer 1&#x60;, &#x60;Signer 2&#x60; and so on, up to &#x60;Signer 100&#x60;, until templates have roles of their own. Either every signature request has a &#x60;role&#x60; or none does, and each role can only have one.
+        /// Which of the template&#39;s signers the person is: one of its roles, by key (&#x60;tenant&#x60;), or by place (&#x60;Signer 1&#x60; is the first role). A template without roles has &#x60;Signer 1&#x60;, &#x60;Signer 2&#x60; and so on, up to &#x60;Signer 100&#x60;. Either every signature request has a &#x60;role&#x60; or none does, and each role can only have one. Without any &#x60;role&#x60;, the first signature request is the template&#39;s first signer, the second its second, and so on. When the template gives its roles names of their own (&#x60;Tenant&#x60;, not &#x60;Signer 1&#x60;), two or more signature requests each need a &#x60;role&#x60;.
         /// </summary>
-        /// <value>Which of the template&#39;s signers the person is: &#x60;Signer 1&#x60;, &#x60;Signer 2&#x60; and so on, up to &#x60;Signer 100&#x60;, until templates have roles of their own. Either every signature request has a &#x60;role&#x60; or none does, and each role can only have one.</value>
+        /// <value>Which of the template&#39;s signers the person is: one of its roles, by key (&#x60;tenant&#x60;), or by place (&#x60;Signer 1&#x60; is the first role). A template without roles has &#x60;Signer 1&#x60;, &#x60;Signer 2&#x60; and so on, up to &#x60;Signer 100&#x60;. Either every signature request has a &#x60;role&#x60; or none does, and each role can only have one. Without any &#x60;role&#x60;, the first signature request is the template&#39;s first signer, the second its second, and so on. When the template gives its roles names of their own (&#x60;Tenant&#x60;, not &#x60;Signer 1&#x60;), two or more signature requests each need a &#x60;role&#x60;.</value>
         [JsonPropertyName("role")]
         public string Role { get { return this.RoleOption.Value; } set { this.RoleOption = new Option<string>(value); } }
 
@@ -270,9 +277,9 @@ namespace DocSpring.Client.Model
         public Option<bool?> PrefilledValuesEditableOption { get; private set; }
 
         /// <summary>
-        /// Let the person change the values that &#x60;data&#x60; already has for fields in &#x60;fields&#x60;. Without it, those fields are a 422.
+        /// Let the person change the values that &#x60;data&#x60; already has for their fields. Without it, a field in &#x60;fields&#x60; that &#x60;data&#x60; fills in is a 422, and a field of their role that &#x60;data&#x60; fills in is the sender&#39;s.
         /// </summary>
-        /// <value>Let the person change the values that &#x60;data&#x60; already has for fields in &#x60;fields&#x60;. Without it, those fields are a 422.</value>
+        /// <value>Let the person change the values that &#x60;data&#x60; already has for their fields. Without it, a field in &#x60;fields&#x60; that &#x60;data&#x60; fills in is a 422, and a field of their role that &#x60;data&#x60; fills in is the sender&#39;s.</value>
         [JsonPropertyName("prefilled_values_editable")]
         public bool? PrefilledValuesEditable { get { return this.PrefilledValuesEditableOption.Value; } set { this.PrefilledValuesEditableOption = new Option<bool?>(value); } }
 
@@ -318,9 +325,9 @@ namespace DocSpring.Client.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class SignatureRequestInput {\n");
-            sb.Append("  Fields: ").Append(Fields).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Email: ").Append(Email).Append("\n");
+            sb.Append("  Fields: ").Append(Fields).Append("\n");
             sb.Append("  Metadata: ").Append(Metadata).Append("\n");
             sb.Append("  Role: ").Append(Role).Append("\n");
             sb.Append("  AuthType: ").Append(AuthType).Append("\n");
@@ -388,9 +395,9 @@ namespace DocSpring.Client.Model
 
             JsonTokenType startingTokenType = utf8JsonReader.TokenType;
 
-            Option<List<string>> fields = default;
             Option<string> name = default;
             Option<string> email = default;
+            Option<List<string>> fields = default;
             Option<Dictionary<string, Object>> metadata = default;
             Option<string> role = default;
             Option<SignatureRequestAuthType?> authType = default;
@@ -421,14 +428,14 @@ namespace DocSpring.Client.Model
 
                     switch (localVarJsonPropertyName)
                     {
-                        case "fields":
-                            fields = new Option<List<string>>(JsonSerializer.Deserialize<List<string>>(ref utf8JsonReader, jsonSerializerOptions));
-                            break;
                         case "name":
                             name = new Option<string>(utf8JsonReader.GetString());
                             break;
                         case "email":
                             email = new Option<string>(utf8JsonReader.GetString());
+                            break;
+                        case "fields":
+                            fields = new Option<List<string>>(JsonSerializer.Deserialize<List<string>>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "metadata":
                             metadata = new Option<Dictionary<string, Object>>(JsonSerializer.Deserialize<Dictionary<string, Object>>(ref utf8JsonReader, jsonSerializerOptions));
@@ -478,9 +485,6 @@ namespace DocSpring.Client.Model
                 }
             }
 
-            if (!fields.IsSet)
-                throw new JsonException("Property is required for class SignatureRequestInput: fields.");
-
             if (fields.IsSet && fields.Value == null)
                 throw new JsonException("Property is not nullable for class SignatureRequestInput: fields.");
 
@@ -508,7 +512,7 @@ namespace DocSpring.Client.Model
             if (signingStep.IsSet && signingStep.Value == null)
                 throw new JsonException("Property is not nullable for class SignatureRequestInput: signing_step.");
 
-            return new SignatureRequestInput(fields.Value, name, email, metadata, role, authType, authSecondFactorType, authProvider, authSessionStartedAt, authSessionIdHash, authUserIdHash, authUsernameHash, authPhoneNumberHash, ignoreUnknownFields, prefilledValuesEditable, sendEmail, signingStep);
+            return new SignatureRequestInput(name, email, fields, metadata, role, authType, authSecondFactorType, authProvider, authSessionStartedAt, authSessionIdHash, authUserIdHash, authUsernameHash, authPhoneNumberHash, ignoreUnknownFields, prefilledValuesEditable, sendEmail, signingStep);
         }
 
         /// <summary>
@@ -533,6 +537,9 @@ namespace DocSpring.Client.Model
         /// <param name="jsonSerializerOptions"></param>
         public void WriteProperties(Utf8JsonWriter writer, SignatureRequestInput signatureRequestInput, JsonSerializerOptions jsonSerializerOptions)
         {
+            if (signatureRequestInput.FieldsOption.IsSet && signatureRequestInput.Fields == null)
+                throw new JsonException("Cannot write null property SignatureRequestInput.Fields to non-nullable JSON property 'fields'.");
+
             if (signatureRequestInput.MetadataOption.IsSet && signatureRequestInput.Metadata == null)
                 throw new JsonException("Cannot write null property SignatureRequestInput.Metadata to non-nullable JSON property 'metadata'.");
 
@@ -557,8 +564,6 @@ namespace DocSpring.Client.Model
             if (signatureRequestInput.SigningStepOption.IsSet && signatureRequestInput.SigningStep == null)
                 throw new JsonException("Cannot write null property SignatureRequestInput.SigningStep to non-nullable JSON property 'signing_step'.");
 
-            writer.WritePropertyName("fields");
-            JsonSerializer.Serialize(writer, signatureRequestInput.Fields, jsonSerializerOptions);
             if (signatureRequestInput.NameOption.IsSet)
                 if (signatureRequestInput.NameOption.Value != null)
                     writer.WriteString("name", signatureRequestInput.Name);
@@ -571,6 +576,11 @@ namespace DocSpring.Client.Model
                 else
                     writer.WriteNull("email");
 
+            if (signatureRequestInput.FieldsOption.IsSet)
+            {
+                writer.WritePropertyName("fields");
+                JsonSerializer.Serialize(writer, signatureRequestInput.FieldsOption.Value, jsonSerializerOptions);
+            }
             if (signatureRequestInput.MetadataOption.IsSet)
             {
                 writer.WritePropertyName("metadata");

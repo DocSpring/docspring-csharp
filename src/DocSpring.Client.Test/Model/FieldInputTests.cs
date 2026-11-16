@@ -162,6 +162,24 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'OptionLabels'
+        /// </summary>
+        [Fact]
+        public void OptionLabelsTest()
+        {
+            // TODO unit test for the property 'OptionLabels'
+        }
+
+        /// <summary>
+        /// Test the property 'PrintOptionLabels'
+        /// </summary>
+        [Fact]
+        public void PrintOptionLabelsTest()
+        {
+            // TODO unit test for the property 'PrintOptionLabels'
+        }
+
+        /// <summary>
         /// Test the property 'CombinedFieldNames'
         /// </summary>
         [Fact]
@@ -276,6 +294,33 @@ namespace DocSpring.Client.Test.Model
         public void BarcodeSymbologyTest()
         {
             // TODO unit test for the property 'BarcodeSymbology'
+        }
+
+        /// <summary>
+        /// Test the property 'CombFillFromRight'
+        /// </summary>
+        [Fact]
+        public void CombFillFromRightTest()
+        {
+            // TODO unit test for the property 'CombFillFromRight'
+        }
+
+        /// <summary>
+        /// Test the property 'CombPadWithZeros'
+        /// </summary>
+        [Fact]
+        public void CombPadWithZerosTest()
+        {
+            // TODO unit test for the property 'CombPadWithZeros'
+        }
+
+        /// <summary>
+        /// Test the property 'PrintDigitsOnly'
+        /// </summary>
+        [Fact]
+        public void PrintDigitsOnlyTest()
+        {
+            // TODO unit test for the property 'PrintDigitsOnly'
         }
 
         /// <summary>
@@ -828,6 +873,15 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'NumberPart'
+        /// </summary>
+        [Fact]
+        public void NumberPartTest()
+        {
+            // TODO unit test for the property 'NumberPart'
+        }
+
+        /// <summary>
         /// Test the property 'ImageScaleType'
         /// </summary>
         [Fact]
@@ -843,6 +897,15 @@ namespace DocSpring.Client.Test.Model
         public void ImageGravityTest()
         {
             // TODO unit test for the property 'ImageGravity'
+        }
+
+        /// <summary>
+        /// Test the property 'SignerRole'
+        /// </summary>
+        [Fact]
+        public void SignerRoleTest()
+        {
+            // TODO unit test for the property 'SignerRole'
         }
 
         /// <summary>

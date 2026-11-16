@@ -8,8 +8,8 @@ Name | Type | Description | Notes
 **Id** | **string** | The signature request's ID. | 
 **SubmissionId** | **string** | The ID of the submission the signature request belongs to. | 
 **Metadata** | **Dictionary&lt;string, Object&gt;** | Your own data about the signature request, such as an ID from your app. | 
-**Role** | **string** | Which of the template's signers the person is. Until templates have roles of their own, a template's signers are `Signer 1`, `Signer 2` and so on, up to `Signer 100`: `Signer 1` is the one whose details the template's `@@signature_requests/0` fields print. | 
-**SortOrder** | **int** | The signer's position, from 0: `Signer 1` is 0. The template's `@@signature_requests/&lt;sort_order&gt;` fields print this signature request's details. | 
+**Role** | **string** | Which of the template's signers the person is: their role's key (`tenant`) when the template has roles, otherwise `Signer 1`, `Signer 2` and so on, up to `Signer 100`. `Signer 1`, or the template's first role, is the one whose details the template's `@@signature_requests/0` fields print, and a role's details are in its `@@signature_requests/&lt;key&gt;` fields too (`@@signature_requests/tenant/completed_at`). | 
+**SortOrder** | **int** | The signer's position, from 0: `Signer 1` is 0, as is the template's first role. The template's `@@signature_requests/&lt;sort_order&gt;` fields, and its role's `@@signature_requests/&lt;key&gt;` fields, print this signature request's details. | 
 **SendEmail** | **bool** | Whether DocSpring emails this person their signing link. | 
 **State** | **SignatureRequestState** | `pending` until the person completes the signature request (`completed`) or declines it (`declined`). | 
 **AuthType** | **SignatureRequestAuthType** | How your app authenticated the person before it showed them the signature request. | 
@@ -18,7 +18,7 @@ Name | Type | Description | Notes
 **UpdatedAt** | **DateTime** | When the signature request was last updated. | 
 **Name** | **string** | The name of the person the request is for. | 
 **Email** | **string** | Their email address. Null when they have none. | 
-**Fields** | **List&lt;string&gt;** | The fields this person fills in. Null for a signature request created with API v1 without a field list: it asks for every field the submission's data doesn't have. | 
+**Fields** | **List&lt;string&gt;** | The fields this person fills in or signs: the ones the template gives their role that data didn't fill in, and the ones their signature request listed. A submission's only signature request without a list also has every field without a role that data didn't fill in. Null for a signature request created with API v1 without a field list, on a PDF template without roles: it asks for every field the submission's data doesn't have. | 
 **SigningStep** | **int** | When this person signs, when the submission's `signing_order` is `sequential`: everyone in step 1 first, then step 2, and so on. Null when everyone can sign at once. | 
 **SentAt** | **DateTime** | When DocSpring first emailed this person their signing link. Null until it has, and when it doesn't email them (`send_email` is false). | 
 **EmailStatus** | **SignatureRequestEmailStatus** | What happened to the latest email DocSpring sent this person with their signing link: `sent` until the email service reports on it, then `delayed` (still trying), `delivered`, `undelivered` (it stopped trying, as with a full mailbox), `bounced` (the address doesn't exist) or `complained` (marked as spam). `failed` means DocSpring couldn't send the first email with their link, and `unknown` that it couldn't tell whether that email went: neither is sent again. Null until DocSpring has emailed them or tried to. | 

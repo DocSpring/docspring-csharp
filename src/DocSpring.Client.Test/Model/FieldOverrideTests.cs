@@ -108,6 +108,24 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'OptionLabels'
+        /// </summary>
+        [Fact]
+        public void OptionLabelsTest()
+        {
+            // TODO unit test for the property 'OptionLabels'
+        }
+
+        /// <summary>
+        /// Test the property 'PrintOptionLabels'
+        /// </summary>
+        [Fact]
+        public void PrintOptionLabelsTest()
+        {
+            // TODO unit test for the property 'PrintOptionLabels'
+        }
+
+        /// <summary>
         /// Test the property 'CombinedFieldNames'
         /// </summary>
         [Fact]
@@ -186,6 +204,24 @@ namespace DocSpring.Client.Test.Model
         public void BarcodeSymbologyTest()
         {
             // TODO unit test for the property 'BarcodeSymbology'
+        }
+
+        /// <summary>
+        /// Test the property 'CombFillFromRight'
+        /// </summary>
+        [Fact]
+        public void CombFillFromRightTest()
+        {
+            // TODO unit test for the property 'CombFillFromRight'
+        }
+
+        /// <summary>
+        /// Test the property 'CombPadWithZeros'
+        /// </summary>
+        [Fact]
+        public void CombPadWithZerosTest()
+        {
+            // TODO unit test for the property 'CombPadWithZeros'
         }
 
         /// <summary>
@@ -600,6 +636,15 @@ namespace DocSpring.Client.Test.Model
         public void DecimalPlacesTest()
         {
             // TODO unit test for the property 'DecimalPlaces'
+        }
+
+        /// <summary>
+        /// Test the property 'NumberPart'
+        /// </summary>
+        [Fact]
+        public void NumberPartTest()
+        {
+            // TODO unit test for the property 'NumberPart'
         }
 
         /// <summary>

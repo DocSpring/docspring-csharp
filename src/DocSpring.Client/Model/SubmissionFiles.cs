@@ -33,15 +33,17 @@ namespace DocSpring.Client.Model
         /// </summary>
         /// <param name="pdf">The submission&#39;s PDF.</param>
         /// <param name="auditTrail">The audit trail of a submission with signature requests: who signed, when and how. It&#39;s also added to the end of the PDF when the template&#39;s &#x60;merge_audit_trail_pdf&#x60; is on.</param>
+        /// <param name="signingManifest">The audit data behind the audit trail of a submission with signature requests, as JSON: the hashes of the document and the audit trail, and each signing event with the salt and hash that DocSpring&#39;s signing record holds for it. It has who signed, like the audit trail, and goes when the submission expires, so keep it with the PDF and the audit trail.</param>
         /// <param name="preview">The preview PDF from POST /submissions/{submission_id}/generate_preview, such as for a submission still waiting for its signature requests.</param>
         /// <param name="docx">The Word document of a Word template&#39;s submission, when the submission makes one (&#x60;output_formats&#x60;).</param>
         /// <param name="odt">The OpenDocument file (.odt, the format LibreOffice uses) of a Word template&#39;s submission, converted from its Word document, when the submission makes one (&#x60;output_formats&#x60;).</param>
         /// <param name="png">png</param>
         [JsonConstructor]
-        public SubmissionFiles(Option<GeneratedFile> pdf = default, Option<GeneratedFile> auditTrail = default, Option<GeneratedFile> preview = default, Option<GeneratedFile> docx = default, Option<GeneratedFile> odt = default, Option<PageImages> png = default)
+        public SubmissionFiles(Option<GeneratedFile> pdf = default, Option<GeneratedFile> auditTrail = default, Option<GeneratedFile> signingManifest = default, Option<GeneratedFile> preview = default, Option<GeneratedFile> docx = default, Option<GeneratedFile> odt = default, Option<PageImages> png = default)
         {
             PdfOption = pdf;
             AuditTrailOption = auditTrail;
+            SigningManifestOption = signingManifest;
             PreviewOption = preview;
             DocxOption = docx;
             OdtOption = odt;
@@ -78,6 +80,20 @@ namespace DocSpring.Client.Model
         /// <value>The audit trail of a submission with signature requests: who signed, when and how. It&#39;s also added to the end of the PDF when the template&#39;s &#x60;merge_audit_trail_pdf&#x60; is on.</value>
         [JsonPropertyName("audit_trail")]
         public GeneratedFile AuditTrail { get { return this.AuditTrailOption.Value; } set { this.AuditTrailOption = new Option<GeneratedFile>(value); } }
+
+        /// <summary>
+        /// Used to track the state of SigningManifest
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<GeneratedFile> SigningManifestOption { get; private set; }
+
+        /// <summary>
+        /// The audit data behind the audit trail of a submission with signature requests, as JSON: the hashes of the document and the audit trail, and each signing event with the salt and hash that DocSpring&#39;s signing record holds for it. It has who signed, like the audit trail, and goes when the submission expires, so keep it with the PDF and the audit trail.
+        /// </summary>
+        /// <value>The audit data behind the audit trail of a submission with signature requests, as JSON: the hashes of the document and the audit trail, and each signing event with the salt and hash that DocSpring&#39;s signing record holds for it. It has who signed, like the audit trail, and goes when the submission expires, so keep it with the PDF and the audit trail.</value>
+        [JsonPropertyName("signing_manifest")]
+        public GeneratedFile SigningManifest { get { return this.SigningManifestOption.Value; } set { this.SigningManifestOption = new Option<GeneratedFile>(value); } }
 
         /// <summary>
         /// Used to track the state of Preview
@@ -150,6 +166,7 @@ namespace DocSpring.Client.Model
             sb.Append("class SubmissionFiles {\n");
             sb.Append("  Pdf: ").Append(Pdf).Append("\n");
             sb.Append("  AuditTrail: ").Append(AuditTrail).Append("\n");
+            sb.Append("  SigningManifest: ").Append(SigningManifest).Append("\n");
             sb.Append("  Preview: ").Append(Preview).Append("\n");
             sb.Append("  Docx: ").Append(Docx).Append("\n");
             sb.Append("  Odt: ").Append(Odt).Append("\n");
@@ -204,6 +221,7 @@ namespace DocSpring.Client.Model
 
             Option<GeneratedFile> pdf = default;
             Option<GeneratedFile> auditTrail = default;
+            Option<GeneratedFile> signingManifest = default;
             Option<GeneratedFile> preview = default;
             Option<GeneratedFile> docx = default;
             Option<GeneratedFile> odt = default;
@@ -230,6 +248,9 @@ namespace DocSpring.Client.Model
                         case "audit_trail":
                             auditTrail = new Option<GeneratedFile>(JsonSerializer.Deserialize<GeneratedFile>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
+                        case "signing_manifest":
+                            signingManifest = new Option<GeneratedFile>(JsonSerializer.Deserialize<GeneratedFile>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
                         case "preview":
                             preview = new Option<GeneratedFile>(JsonSerializer.Deserialize<GeneratedFile>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
@@ -254,6 +275,9 @@ namespace DocSpring.Client.Model
             if (auditTrail.IsSet && auditTrail.Value == null)
                 throw new JsonException("Property is not nullable for class SubmissionFiles: audit_trail.");
 
+            if (signingManifest.IsSet && signingManifest.Value == null)
+                throw new JsonException("Property is not nullable for class SubmissionFiles: signing_manifest.");
+
             if (preview.IsSet && preview.Value == null)
                 throw new JsonException("Property is not nullable for class SubmissionFiles: preview.");
 
@@ -266,7 +290,7 @@ namespace DocSpring.Client.Model
             if (png.IsSet && png.Value == null)
                 throw new JsonException("Property is not nullable for class SubmissionFiles: png.");
 
-            return new SubmissionFiles(pdf, auditTrail, preview, docx, odt, png);
+            return new SubmissionFiles(pdf, auditTrail, signingManifest, preview, docx, odt, png);
         }
 
         /// <summary>
@@ -297,6 +321,9 @@ namespace DocSpring.Client.Model
             if (submissionFiles.AuditTrailOption.IsSet && submissionFiles.AuditTrail == null)
                 throw new JsonException("Cannot write null property SubmissionFiles.AuditTrail to non-nullable JSON property 'audit_trail'.");
 
+            if (submissionFiles.SigningManifestOption.IsSet && submissionFiles.SigningManifest == null)
+                throw new JsonException("Cannot write null property SubmissionFiles.SigningManifest to non-nullable JSON property 'signing_manifest'.");
+
             if (submissionFiles.PreviewOption.IsSet && submissionFiles.Preview == null)
                 throw new JsonException("Cannot write null property SubmissionFiles.Preview to non-nullable JSON property 'preview'.");
 
@@ -318,6 +345,11 @@ namespace DocSpring.Client.Model
             {
                 writer.WritePropertyName("audit_trail");
                 JsonSerializer.Serialize(writer, submissionFiles.AuditTrailOption.Value, jsonSerializerOptions);
+            }
+            if (submissionFiles.SigningManifestOption.IsSet)
+            {
+                writer.WritePropertyName("signing_manifest");
+                JsonSerializer.Serialize(writer, submissionFiles.SigningManifestOption.Value, jsonSerializerOptions);
             }
             if (submissionFiles.PreviewOption.IsSet)
             {

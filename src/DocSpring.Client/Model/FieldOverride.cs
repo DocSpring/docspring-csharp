@@ -37,6 +37,8 @@ namespace DocSpring.Client.Model
         /// <param name="title">The field&#39;s label on the signing form.</param>
         /// <param name="required">Whether &#x60;data&#x60; must have a value for the field.</param>
         /// <param name="optionList">The values the field can take, separated by commas, such as &#x60;Yes,No&#x60;. Null allows any value.</param>
+        /// <param name="optionLabels">The label forms show for each option, keyed by its value, such as &#x60;{\&quot;no\&quot;: \&quot;No, I don&#39;t\&quot;}&#x60;. Each key must be one of the options.</param>
+        /// <param name="printOptionLabels">Print the chosen option&#39;s label instead of its value.</param>
         /// <param name="combinedFieldNames">The names of the fields a combined field joins, separated by commas.</param>
         /// <param name="combinedFieldType">How a combined field joins its fields&#39; values.</param>
         /// <param name="combinedFieldSeparator">The text between the values of a combined field, such as &#x60;, &#x60;.</param>
@@ -46,6 +48,8 @@ namespace DocSpring.Client.Model
         /// <param name="signatureAllowDraw">Let the person draw their signature or initials on the signing form.</param>
         /// <param name="signatureAllowType">Let the person type their signature or initials on the signing form.</param>
         /// <param name="barcodeSymbology">The kind of barcode a field with display_type &#x60;barcode&#x60; prints.</param>
+        /// <param name="combFillFromRight">Fill the last boxes of the field&#39;s comb fields, padding the value on the left, as amounts are written on paper forms.</param>
+        /// <param name="combPadWithZeros">With &#x60;comb_fill_from_right&#x60;, pad the value with zeros instead of spaces.</param>
         /// <param name="hidden">Leave the field off the PDF. Its value is still in the data, and combined fields can use it.</param>
         /// <param name="x">The distance from the left edge of the page, in the template editor&#39;s page units.</param>
         /// <param name="y">The distance from the top of the page, in the template editor&#39;s page units.</param>
@@ -72,7 +76,7 @@ namespace DocSpring.Client.Model
         /// <param name="vAlignment">How text is aligned vertically in its field.</param>
         /// <param name="comb">Print one character in each of the field&#39;s equally spaced boxes (combs).</param>
         /// <param name="combNumberOfCells">The number of boxes in a comb field.</param>
-        /// <param name="combValueOffset">The character of the value that the first box starts from, for a value split over several comb fields (such as the parts of a Social Security number).</param>
+        /// <param name="combValueOffset">How many boxes of the value&#39;s row come before this field, for a value split over several comb fields (such as the parts of a Social Security number).</param>
         /// <param name="shapeType">The shape a field with display_type &#x60;shape&#x60; draws.</param>
         /// <param name="shapeSides">The number of sides of a &#x60;polygon&#x60; shape.</param>
         /// <param name="shapeBorderWidth">The width of a shape&#39;s border, in points, a whole number.</param>
@@ -92,10 +96,11 @@ namespace DocSpring.Client.Model
         /// <param name="numberConditionRangeExclusiveMax">Leave the upper end itself out of a &#x60;range&#x60; condition.</param>
         /// <param name="invertBooleanCondition">Draw a boolean field&#39;s check mark or shape for &#x60;false&#x60; instead of &#x60;true&#x60;.</param>
         /// <param name="decimalPlaces">The number of decimal places a number field prints. Null prints the value as it was sent.</param>
+        /// <param name="numberPart">Which part of a number field&#39;s number this field prints: the whole number, only the part before the decimal point, or only the decimal places.</param>
         /// <param name="imageScaleType">How an image is resized to its field.</param>
         /// <param name="imageGravity">Where an image sits in its field when it doesn&#39;t fill it, or which part is kept when it&#39;s cropped.</param>
         [JsonConstructor]
-        public FieldOverride(Option<bool?> @static = default, Option<bool?> editable = default, Option<string> @default = default, Option<string> title = default, Option<bool?> required = default, Option<string> optionList = default, Option<string> combinedFieldNames = default, Option<CombinedFieldType?> combinedFieldType = default, Option<string> combinedFieldSeparator = default, Option<string> combinedFieldFormat = default, Option<bool?> integer = default, Option<bool?> includeTime = default, Option<bool?> signatureAllowDraw = default, Option<bool?> signatureAllowType = default, Option<BarcodeSymbology?> barcodeSymbology = default, Option<bool?> hidden = default, Option<decimal?> x = default, Option<decimal?> y = default, Option<decimal?> width = default, Option<decimal?> height = default, Option<decimal?> rotation = default, Option<FieldDisplayType?> displayType = default, Option<decimal?> opacity = default, Option<string> dateTimeFormat = default, Option<Typeface?> typeface = default, Option<int?> fontSize = default, Option<decimal?> characterSpacing = default, Option<bool?> bold = default, Option<bool?> uppercase = default, Option<bool?> strikethrough = default, Option<bool?> keepLeadingSpaces = default, Option<TextOverflow?> overflow = default, Option<bool?> multiline = default, Option<int?> multilineLines = default, Option<int?> maxLength = default, Option<string> color = default, Option<string> backgroundColor = default, Option<TextAlignment?> alignment = default, Option<TextVerticalAlignment?> vAlignment = default, Option<bool?> comb = default, Option<int?> combNumberOfCells = default, Option<int?> combValueOffset = default, Option<ShapeType?> shapeType = default, Option<int?> shapeSides = default, Option<int?> shapeBorderWidth = default, Option<string> shapeBorderColor = default, Option<string> shapeFillColor = default, Option<CheckCharacter?> checkCharacter = default, Option<string> checkColor = default, Option<string> qrcodeColor = default, Option<string> trueText = default, Option<string> falseText = default, Option<string> condition = default, Option<StringConditionType?> stringConditionType = default, Option<NumberConditionType?> numberConditionType = default, Option<decimal?> numberConditionRangeMin = default, Option<decimal?> numberConditionRangeMax = default, Option<bool?> numberConditionRangeExclusiveMin = default, Option<bool?> numberConditionRangeExclusiveMax = default, Option<bool?> invertBooleanCondition = default, Option<int?> decimalPlaces = default, Option<ImageScaleType?> imageScaleType = default, Option<ImageGravity?> imageGravity = default)
+        public FieldOverride(Option<bool?> @static = default, Option<bool?> editable = default, Option<string> @default = default, Option<string> title = default, Option<bool?> required = default, Option<string> optionList = default, Option<Dictionary<string, string>> optionLabels = default, Option<bool?> printOptionLabels = default, Option<string> combinedFieldNames = default, Option<CombinedFieldType?> combinedFieldType = default, Option<string> combinedFieldSeparator = default, Option<string> combinedFieldFormat = default, Option<bool?> integer = default, Option<bool?> includeTime = default, Option<bool?> signatureAllowDraw = default, Option<bool?> signatureAllowType = default, Option<BarcodeSymbology?> barcodeSymbology = default, Option<bool?> combFillFromRight = default, Option<bool?> combPadWithZeros = default, Option<bool?> hidden = default, Option<decimal?> x = default, Option<decimal?> y = default, Option<decimal?> width = default, Option<decimal?> height = default, Option<decimal?> rotation = default, Option<FieldDisplayType?> displayType = default, Option<decimal?> opacity = default, Option<string> dateTimeFormat = default, Option<Typeface?> typeface = default, Option<int?> fontSize = default, Option<decimal?> characterSpacing = default, Option<bool?> bold = default, Option<bool?> uppercase = default, Option<bool?> strikethrough = default, Option<bool?> keepLeadingSpaces = default, Option<TextOverflow?> overflow = default, Option<bool?> multiline = default, Option<int?> multilineLines = default, Option<int?> maxLength = default, Option<string> color = default, Option<string> backgroundColor = default, Option<TextAlignment?> alignment = default, Option<TextVerticalAlignment?> vAlignment = default, Option<bool?> comb = default, Option<int?> combNumberOfCells = default, Option<int?> combValueOffset = default, Option<ShapeType?> shapeType = default, Option<int?> shapeSides = default, Option<int?> shapeBorderWidth = default, Option<string> shapeBorderColor = default, Option<string> shapeFillColor = default, Option<CheckCharacter?> checkCharacter = default, Option<string> checkColor = default, Option<string> qrcodeColor = default, Option<string> trueText = default, Option<string> falseText = default, Option<string> condition = default, Option<StringConditionType?> stringConditionType = default, Option<NumberConditionType?> numberConditionType = default, Option<decimal?> numberConditionRangeMin = default, Option<decimal?> numberConditionRangeMax = default, Option<bool?> numberConditionRangeExclusiveMin = default, Option<bool?> numberConditionRangeExclusiveMax = default, Option<bool?> invertBooleanCondition = default, Option<int?> decimalPlaces = default, Option<NumberPart?> numberPart = default, Option<ImageScaleType?> imageScaleType = default, Option<ImageGravity?> imageGravity = default)
         {
             StaticOption = @static;
             EditableOption = editable;
@@ -103,6 +108,8 @@ namespace DocSpring.Client.Model
             TitleOption = title;
             RequiredOption = required;
             OptionListOption = optionList;
+            OptionLabelsOption = optionLabels;
+            PrintOptionLabelsOption = printOptionLabels;
             CombinedFieldNamesOption = combinedFieldNames;
             CombinedFieldTypeOption = combinedFieldType;
             CombinedFieldSeparatorOption = combinedFieldSeparator;
@@ -112,6 +119,8 @@ namespace DocSpring.Client.Model
             SignatureAllowDrawOption = signatureAllowDraw;
             SignatureAllowTypeOption = signatureAllowType;
             BarcodeSymbologyOption = barcodeSymbology;
+            CombFillFromRightOption = combFillFromRight;
+            CombPadWithZerosOption = combPadWithZeros;
             HiddenOption = hidden;
             XOption = x;
             YOption = y;
@@ -158,6 +167,7 @@ namespace DocSpring.Client.Model
             NumberConditionRangeExclusiveMaxOption = numberConditionRangeExclusiveMax;
             InvertBooleanConditionOption = invertBooleanCondition;
             DecimalPlacesOption = decimalPlaces;
+            NumberPartOption = numberPart;
             ImageScaleTypeOption = imageScaleType;
             ImageGravityOption = imageGravity;
             OnCreated();
@@ -320,6 +330,20 @@ namespace DocSpring.Client.Model
         public NumberConditionType? NumberConditionType { get { return this.NumberConditionTypeOption.Value; } set { this.NumberConditionTypeOption = new Option<NumberConditionType?>(value); } }
 
         /// <summary>
+        /// Used to track the state of NumberPart
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<NumberPart?> NumberPartOption { get; private set; }
+
+        /// <summary>
+        /// Which part of a number field&#39;s number this field prints: the whole number, only the part before the decimal point, or only the decimal places.
+        /// </summary>
+        /// <value>Which part of a number field&#39;s number this field prints: the whole number, only the part before the decimal point, or only the decimal places.</value>
+        [JsonPropertyName("number_part")]
+        public NumberPart? NumberPart { get { return this.NumberPartOption.Value; } set { this.NumberPartOption = new Option<NumberPart?>(value); } }
+
+        /// <summary>
         /// Used to track the state of ImageScaleType
         /// </summary>
         [JsonIgnore]
@@ -432,6 +456,34 @@ namespace DocSpring.Client.Model
         public string OptionList { get { return this.OptionListOption.Value; } set { this.OptionListOption = new Option<string>(value); } }
 
         /// <summary>
+        /// Used to track the state of OptionLabels
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<Dictionary<string, string>> OptionLabelsOption { get; private set; }
+
+        /// <summary>
+        /// The label forms show for each option, keyed by its value, such as &#x60;{\&quot;no\&quot;: \&quot;No, I don&#39;t\&quot;}&#x60;. Each key must be one of the options.
+        /// </summary>
+        /// <value>The label forms show for each option, keyed by its value, such as &#x60;{\&quot;no\&quot;: \&quot;No, I don&#39;t\&quot;}&#x60;. Each key must be one of the options.</value>
+        [JsonPropertyName("option_labels")]
+        public Dictionary<string, string> OptionLabels { get { return this.OptionLabelsOption.Value; } set { this.OptionLabelsOption = new Option<Dictionary<string, string>>(value); } }
+
+        /// <summary>
+        /// Used to track the state of PrintOptionLabels
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<bool?> PrintOptionLabelsOption { get; private set; }
+
+        /// <summary>
+        /// Print the chosen option&#39;s label instead of its value.
+        /// </summary>
+        /// <value>Print the chosen option&#39;s label instead of its value.</value>
+        [JsonPropertyName("print_option_labels")]
+        public bool? PrintOptionLabels { get { return this.PrintOptionLabelsOption.Value; } set { this.PrintOptionLabelsOption = new Option<bool?>(value); } }
+
+        /// <summary>
         /// Used to track the state of CombinedFieldNames
         /// </summary>
         [JsonIgnore]
@@ -528,6 +580,34 @@ namespace DocSpring.Client.Model
         /// <value>Let the person type their signature or initials on the signing form.</value>
         [JsonPropertyName("signature_allow_type")]
         public bool? SignatureAllowType { get { return this.SignatureAllowTypeOption.Value; } set { this.SignatureAllowTypeOption = new Option<bool?>(value); } }
+
+        /// <summary>
+        /// Used to track the state of CombFillFromRight
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<bool?> CombFillFromRightOption { get; private set; }
+
+        /// <summary>
+        /// Fill the last boxes of the field&#39;s comb fields, padding the value on the left, as amounts are written on paper forms.
+        /// </summary>
+        /// <value>Fill the last boxes of the field&#39;s comb fields, padding the value on the left, as amounts are written on paper forms.</value>
+        [JsonPropertyName("comb_fill_from_right")]
+        public bool? CombFillFromRight { get { return this.CombFillFromRightOption.Value; } set { this.CombFillFromRightOption = new Option<bool?>(value); } }
+
+        /// <summary>
+        /// Used to track the state of CombPadWithZeros
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<bool?> CombPadWithZerosOption { get; private set; }
+
+        /// <summary>
+        /// With &#x60;comb_fill_from_right&#x60;, pad the value with zeros instead of spaces.
+        /// </summary>
+        /// <value>With &#x60;comb_fill_from_right&#x60;, pad the value with zeros instead of spaces.</value>
+        [JsonPropertyName("comb_pad_with_zeros")]
+        public bool? CombPadWithZeros { get { return this.CombPadWithZerosOption.Value; } set { this.CombPadWithZerosOption = new Option<bool?>(value); } }
 
         /// <summary>
         /// Used to track the state of Hidden
@@ -831,9 +911,9 @@ namespace DocSpring.Client.Model
         public Option<int?> CombValueOffsetOption { get; private set; }
 
         /// <summary>
-        /// The character of the value that the first box starts from, for a value split over several comb fields (such as the parts of a Social Security number).
+        /// How many boxes of the value&#39;s row come before this field, for a value split over several comb fields (such as the parts of a Social Security number).
         /// </summary>
-        /// <value>The character of the value that the first box starts from, for a value split over several comb fields (such as the parts of a Social Security number).</value>
+        /// <value>How many boxes of the value&#39;s row come before this field, for a value split over several comb fields (such as the parts of a Social Security number).</value>
         [JsonPropertyName("comb_value_offset")]
         public int? CombValueOffset { get { return this.CombValueOffsetOption.Value; } set { this.CombValueOffsetOption = new Option<int?>(value); } }
 
@@ -1061,6 +1141,8 @@ namespace DocSpring.Client.Model
             sb.Append("  Title: ").Append(Title).Append("\n");
             sb.Append("  Required: ").Append(Required).Append("\n");
             sb.Append("  OptionList: ").Append(OptionList).Append("\n");
+            sb.Append("  OptionLabels: ").Append(OptionLabels).Append("\n");
+            sb.Append("  PrintOptionLabels: ").Append(PrintOptionLabels).Append("\n");
             sb.Append("  CombinedFieldNames: ").Append(CombinedFieldNames).Append("\n");
             sb.Append("  CombinedFieldType: ").Append(CombinedFieldType).Append("\n");
             sb.Append("  CombinedFieldSeparator: ").Append(CombinedFieldSeparator).Append("\n");
@@ -1070,6 +1152,8 @@ namespace DocSpring.Client.Model
             sb.Append("  SignatureAllowDraw: ").Append(SignatureAllowDraw).Append("\n");
             sb.Append("  SignatureAllowType: ").Append(SignatureAllowType).Append("\n");
             sb.Append("  BarcodeSymbology: ").Append(BarcodeSymbology).Append("\n");
+            sb.Append("  CombFillFromRight: ").Append(CombFillFromRight).Append("\n");
+            sb.Append("  CombPadWithZeros: ").Append(CombPadWithZeros).Append("\n");
             sb.Append("  Hidden: ").Append(Hidden).Append("\n");
             sb.Append("  X: ").Append(X).Append("\n");
             sb.Append("  Y: ").Append(Y).Append("\n");
@@ -1116,6 +1200,7 @@ namespace DocSpring.Client.Model
             sb.Append("  NumberConditionRangeExclusiveMax: ").Append(NumberConditionRangeExclusiveMax).Append("\n");
             sb.Append("  InvertBooleanCondition: ").Append(InvertBooleanCondition).Append("\n");
             sb.Append("  DecimalPlaces: ").Append(DecimalPlaces).Append("\n");
+            sb.Append("  NumberPart: ").Append(NumberPart).Append("\n");
             sb.Append("  ImageScaleType: ").Append(ImageScaleType).Append("\n");
             sb.Append("  ImageGravity: ").Append(ImageGravity).Append("\n");
             sb.Append("}\n");
@@ -1171,6 +1256,8 @@ namespace DocSpring.Client.Model
             Option<string> title = default;
             Option<bool?> required = default;
             Option<string> optionList = default;
+            Option<Dictionary<string, string>> optionLabels = default;
+            Option<bool?> printOptionLabels = default;
             Option<string> combinedFieldNames = default;
             Option<CombinedFieldType?> combinedFieldType = default;
             Option<string> combinedFieldSeparator = default;
@@ -1180,6 +1267,8 @@ namespace DocSpring.Client.Model
             Option<bool?> signatureAllowDraw = default;
             Option<bool?> signatureAllowType = default;
             Option<BarcodeSymbology?> barcodeSymbology = default;
+            Option<bool?> combFillFromRight = default;
+            Option<bool?> combPadWithZeros = default;
             Option<bool?> hidden = default;
             Option<decimal?> x = default;
             Option<decimal?> y = default;
@@ -1226,6 +1315,7 @@ namespace DocSpring.Client.Model
             Option<bool?> numberConditionRangeExclusiveMax = default;
             Option<bool?> invertBooleanCondition = default;
             Option<int?> decimalPlaces = default;
+            Option<NumberPart?> numberPart = default;
             Option<ImageScaleType?> imageScaleType = default;
             Option<ImageGravity?> imageGravity = default;
 
@@ -1262,6 +1352,12 @@ namespace DocSpring.Client.Model
                         case "option_list":
                             optionList = new Option<string>(utf8JsonReader.GetString());
                             break;
+                        case "option_labels":
+                            optionLabels = new Option<Dictionary<string, string>>(JsonSerializer.Deserialize<Dictionary<string, string>>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
+                        case "print_option_labels":
+                            printOptionLabels = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
+                            break;
                         case "combined_field_names":
                             combinedFieldNames = new Option<string>(utf8JsonReader.GetString());
                             break;
@@ -1288,6 +1384,12 @@ namespace DocSpring.Client.Model
                             break;
                         case "barcode_symbology":
                             barcodeSymbology = new Option<BarcodeSymbology?>(JsonSerializer.Deserialize<BarcodeSymbology?>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
+                        case "comb_fill_from_right":
+                            combFillFromRight = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
+                            break;
+                        case "comb_pad_with_zeros":
+                            combPadWithZeros = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
                             break;
                         case "hidden":
                             hidden = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
@@ -1427,6 +1529,9 @@ namespace DocSpring.Client.Model
                         case "decimal_places":
                             decimalPlaces = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
                             break;
+                        case "number_part":
+                            numberPart = new Option<NumberPart?>(JsonSerializer.Deserialize<NumberPart?>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
                         case "image_scale_type":
                             imageScaleType = new Option<ImageScaleType?>(JsonSerializer.Deserialize<ImageScaleType?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
@@ -1451,6 +1556,9 @@ namespace DocSpring.Client.Model
             if (required.IsSet && required.Value == null)
                 throw new JsonException("Property is not nullable for class FieldOverride: required.");
 
+            if (printOptionLabels.IsSet && printOptionLabels.Value == null)
+                throw new JsonException("Property is not nullable for class FieldOverride: print_option_labels.");
+
             if (combinedFieldNames.IsSet && combinedFieldNames.Value == null)
                 throw new JsonException("Property is not nullable for class FieldOverride: combined_field_names.");
 
@@ -1474,6 +1582,12 @@ namespace DocSpring.Client.Model
 
             if (barcodeSymbology.IsSet && barcodeSymbology.Value == null)
                 throw new JsonException("Property is not nullable for class FieldOverride: barcode_symbology.");
+
+            if (combFillFromRight.IsSet && combFillFromRight.Value == null)
+                throw new JsonException("Property is not nullable for class FieldOverride: comb_fill_from_right.");
+
+            if (combPadWithZeros.IsSet && combPadWithZeros.Value == null)
+                throw new JsonException("Property is not nullable for class FieldOverride: comb_pad_with_zeros.");
 
             if (hidden.IsSet && hidden.Value == null)
                 throw new JsonException("Property is not nullable for class FieldOverride: hidden.");
@@ -1565,13 +1679,16 @@ namespace DocSpring.Client.Model
             if (invertBooleanCondition.IsSet && invertBooleanCondition.Value == null)
                 throw new JsonException("Property is not nullable for class FieldOverride: invert_boolean_condition.");
 
+            if (numberPart.IsSet && numberPart.Value == null)
+                throw new JsonException("Property is not nullable for class FieldOverride: number_part.");
+
             if (imageScaleType.IsSet && imageScaleType.Value == null)
                 throw new JsonException("Property is not nullable for class FieldOverride: image_scale_type.");
 
             if (imageGravity.IsSet && imageGravity.Value == null)
                 throw new JsonException("Property is not nullable for class FieldOverride: image_gravity.");
 
-            return new FieldOverride(varStatic, editable, varDefault, title, required, optionList, combinedFieldNames, combinedFieldType, combinedFieldSeparator, combinedFieldFormat, integer, includeTime, signatureAllowDraw, signatureAllowType, barcodeSymbology, hidden, x, y, width, height, rotation, displayType, opacity, dateTimeFormat, typeface, fontSize, characterSpacing, bold, uppercase, strikethrough, keepLeadingSpaces, overflow, multiline, multilineLines, maxLength, color, backgroundColor, alignment, vAlignment, comb, combNumberOfCells, combValueOffset, shapeType, shapeSides, shapeBorderWidth, shapeBorderColor, shapeFillColor, checkCharacter, checkColor, qrcodeColor, trueText, falseText, condition, stringConditionType, numberConditionType, numberConditionRangeMin, numberConditionRangeMax, numberConditionRangeExclusiveMin, numberConditionRangeExclusiveMax, invertBooleanCondition, decimalPlaces, imageScaleType, imageGravity);
+            return new FieldOverride(varStatic, editable, varDefault, title, required, optionList, optionLabels, printOptionLabels, combinedFieldNames, combinedFieldType, combinedFieldSeparator, combinedFieldFormat, integer, includeTime, signatureAllowDraw, signatureAllowType, barcodeSymbology, combFillFromRight, combPadWithZeros, hidden, x, y, width, height, rotation, displayType, opacity, dateTimeFormat, typeface, fontSize, characterSpacing, bold, uppercase, strikethrough, keepLeadingSpaces, overflow, multiline, multilineLines, maxLength, color, backgroundColor, alignment, vAlignment, comb, combNumberOfCells, combValueOffset, shapeType, shapeSides, shapeBorderWidth, shapeBorderColor, shapeFillColor, checkCharacter, checkColor, qrcodeColor, trueText, falseText, condition, stringConditionType, numberConditionType, numberConditionRangeMin, numberConditionRangeMax, numberConditionRangeExclusiveMin, numberConditionRangeExclusiveMax, invertBooleanCondition, decimalPlaces, numberPart, imageScaleType, imageGravity);
         }
 
         /// <summary>
@@ -1608,6 +1725,9 @@ namespace DocSpring.Client.Model
             if (fieldOverride.RequiredOption.IsSet && fieldOverride.Required == null)
                 throw new JsonException("Cannot write null property FieldOverride.Required to non-nullable JSON property 'required'.");
 
+            if (fieldOverride.PrintOptionLabelsOption.IsSet && fieldOverride.PrintOptionLabels == null)
+                throw new JsonException("Cannot write null property FieldOverride.PrintOptionLabels to non-nullable JSON property 'print_option_labels'.");
+
             if (fieldOverride.CombinedFieldNamesOption.IsSet && fieldOverride.CombinedFieldNames == null)
                 throw new JsonException("Cannot write null property FieldOverride.CombinedFieldNames to non-nullable JSON property 'combined_field_names'.");
 
@@ -1631,6 +1751,12 @@ namespace DocSpring.Client.Model
 
             if (fieldOverride.BarcodeSymbologyOption.IsSet && fieldOverride.BarcodeSymbology == null)
                 throw new JsonException("Cannot write null property FieldOverride.BarcodeSymbology to non-nullable JSON property 'barcode_symbology'.");
+
+            if (fieldOverride.CombFillFromRightOption.IsSet && fieldOverride.CombFillFromRight == null)
+                throw new JsonException("Cannot write null property FieldOverride.CombFillFromRight to non-nullable JSON property 'comb_fill_from_right'.");
+
+            if (fieldOverride.CombPadWithZerosOption.IsSet && fieldOverride.CombPadWithZeros == null)
+                throw new JsonException("Cannot write null property FieldOverride.CombPadWithZeros to non-nullable JSON property 'comb_pad_with_zeros'.");
 
             if (fieldOverride.HiddenOption.IsSet && fieldOverride.Hidden == null)
                 throw new JsonException("Cannot write null property FieldOverride.Hidden to non-nullable JSON property 'hidden'.");
@@ -1722,6 +1848,9 @@ namespace DocSpring.Client.Model
             if (fieldOverride.InvertBooleanConditionOption.IsSet && fieldOverride.InvertBooleanCondition == null)
                 throw new JsonException("Cannot write null property FieldOverride.InvertBooleanCondition to non-nullable JSON property 'invert_boolean_condition'.");
 
+            if (fieldOverride.NumberPartOption.IsSet && fieldOverride.NumberPart == null)
+                throw new JsonException("Cannot write null property FieldOverride.NumberPart to non-nullable JSON property 'number_part'.");
+
             if (fieldOverride.ImageScaleTypeOption.IsSet && fieldOverride.ImageScaleType == null)
                 throw new JsonException("Cannot write null property FieldOverride.ImageScaleType to non-nullable JSON property 'image_scale_type'.");
 
@@ -1751,6 +1880,17 @@ namespace DocSpring.Client.Model
                     writer.WriteString("option_list", fieldOverride.OptionList);
                 else
                     writer.WriteNull("option_list");
+
+            if (fieldOverride.OptionLabelsOption.IsSet)
+                if (fieldOverride.OptionLabelsOption.Value != null)
+                {
+                    writer.WritePropertyName("option_labels");
+                    JsonSerializer.Serialize(writer, fieldOverride.OptionLabelsOption.Value, jsonSerializerOptions);
+                }
+                else
+                    writer.WriteNull("option_labels");
+            if (fieldOverride.PrintOptionLabelsOption.IsSet)
+                writer.WriteBoolean("print_option_labels", fieldOverride.PrintOptionLabelsOption.Value.Value);
 
             if (fieldOverride.CombinedFieldNamesOption.IsSet)
                 writer.WriteString("combined_field_names", fieldOverride.CombinedFieldNames);
@@ -1786,6 +1926,12 @@ namespace DocSpring.Client.Model
                 var barcodeSymbologyRawValue = BarcodeSymbologyValueConverter.ToJsonValue(fieldOverride.BarcodeSymbology.Value);
                 writer.WriteString("barcode_symbology", barcodeSymbologyRawValue);
             }
+            if (fieldOverride.CombFillFromRightOption.IsSet)
+                writer.WriteBoolean("comb_fill_from_right", fieldOverride.CombFillFromRightOption.Value.Value);
+
+            if (fieldOverride.CombPadWithZerosOption.IsSet)
+                writer.WriteBoolean("comb_pad_with_zeros", fieldOverride.CombPadWithZerosOption.Value.Value);
+
             if (fieldOverride.HiddenOption.IsSet)
                 writer.WriteBoolean("hidden", fieldOverride.HiddenOption.Value.Value);
 
@@ -1990,6 +2136,11 @@ namespace DocSpring.Client.Model
                 else
                     writer.WriteNull("decimal_places");
 
+            if (fieldOverride.NumberPartOption.IsSet)
+            {
+                var numberPartRawValue = NumberPartValueConverter.ToJsonValue(fieldOverride.NumberPart.Value);
+                writer.WriteString("number_part", numberPartRawValue);
+            }
             if (fieldOverride.ImageScaleTypeOption.IsSet)
             {
                 var imageScaleTypeRawValue = ImageScaleTypeValueConverter.ToJsonValue(fieldOverride.ImageScaleType.Value);

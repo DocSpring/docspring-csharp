@@ -36,16 +36,18 @@ namespace DocSpring.Client.Model
         /// <param name="displayName">The name the template editor shows instead of &#x60;name&#x60;, where a &#x60;/&#x60; puts it in a folder, such as &#x60;Defendant/Name&#x60;. Null shows &#x60;name&#x60;. Two names can&#39;t share a display name.</param>
         /// <param name="title">The Title setting a field gets when it&#39;s given this name. Null leaves the field&#39;s title as it is.</param>
         /// <param name="optionList">String fields only: the values allowed, separated by commas, such as &#x60;Yes,No&#x60;. Null allows any value.</param>
+        /// <param name="optionLabels">The labels forms show for &#x60;option_list&#x60;&#39;s values, by value, as a field&#39;s &#x60;option_labels&#x60;, such as &#x60;{\&quot;married_filing_jointly\&quot;: \&quot;Married filing jointly\&quot;}&#x60;. Each key must be one of &#x60;option_list&#x60;&#39;s values. A value without a label shows the value, or its sentence case when the values are lowercase words joined by underscores. Null gives no value a label of its own.</param>
         /// <param name="requiredInTemplate">Whether the template must have a field with this name. The embedded editor shows the names that are missing, and with &#x60;disableDoneButtonIfPredefinedFieldsMissing&#x60; keeps its Done button disabled until the template has them. Default false.</param>
         /// <param name="fieldRequired">The Required setting a field gets when it&#39;s given this name. Default true.</param>
         [JsonConstructor]
-        public PredefinedField(string name, FieldType type, Option<string> displayName = default, Option<string> title = default, Option<string> optionList = default, Option<bool?> requiredInTemplate = default, Option<bool?> fieldRequired = default)
+        public PredefinedField(string name, FieldType type, Option<string> displayName = default, Option<string> title = default, Option<string> optionList = default, Option<Dictionary<string, string>> optionLabels = default, Option<bool?> requiredInTemplate = default, Option<bool?> fieldRequired = default)
         {
             Name = name;
             Type = type;
             DisplayNameOption = displayName;
             TitleOption = title;
             OptionListOption = optionList;
+            OptionLabelsOption = optionLabels;
             RequiredInTemplateOption = requiredInTemplate;
             FieldRequiredOption = fieldRequired;
             OnCreated();
@@ -110,6 +112,20 @@ namespace DocSpring.Client.Model
         public string OptionList { get { return this.OptionListOption.Value; } set { this.OptionListOption = new Option<string>(value); } }
 
         /// <summary>
+        /// Used to track the state of OptionLabels
+        /// </summary>
+        [JsonIgnore]
+        [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+        public Option<Dictionary<string, string>> OptionLabelsOption { get; private set; }
+
+        /// <summary>
+        /// The labels forms show for &#x60;option_list&#x60;&#39;s values, by value, as a field&#39;s &#x60;option_labels&#x60;, such as &#x60;{\&quot;married_filing_jointly\&quot;: \&quot;Married filing jointly\&quot;}&#x60;. Each key must be one of &#x60;option_list&#x60;&#39;s values. A value without a label shows the value, or its sentence case when the values are lowercase words joined by underscores. Null gives no value a label of its own.
+        /// </summary>
+        /// <value>The labels forms show for &#x60;option_list&#x60;&#39;s values, by value, as a field&#39;s &#x60;option_labels&#x60;, such as &#x60;{\&quot;married_filing_jointly\&quot;: \&quot;Married filing jointly\&quot;}&#x60;. Each key must be one of &#x60;option_list&#x60;&#39;s values. A value without a label shows the value, or its sentence case when the values are lowercase words joined by underscores. Null gives no value a label of its own.</value>
+        [JsonPropertyName("option_labels")]
+        public Dictionary<string, string> OptionLabels { get { return this.OptionLabelsOption.Value; } set { this.OptionLabelsOption = new Option<Dictionary<string, string>>(value); } }
+
+        /// <summary>
         /// Used to track the state of RequiredInTemplate
         /// </summary>
         [JsonIgnore]
@@ -150,6 +166,7 @@ namespace DocSpring.Client.Model
             sb.Append("  DisplayName: ").Append(DisplayName).Append("\n");
             sb.Append("  Title: ").Append(Title).Append("\n");
             sb.Append("  OptionList: ").Append(OptionList).Append("\n");
+            sb.Append("  OptionLabels: ").Append(OptionLabels).Append("\n");
             sb.Append("  RequiredInTemplate: ").Append(RequiredInTemplate).Append("\n");
             sb.Append("  FieldRequired: ").Append(FieldRequired).Append("\n");
             sb.Append("}\n");
@@ -204,6 +221,7 @@ namespace DocSpring.Client.Model
             Option<string> displayName = default;
             Option<string> title = default;
             Option<string> optionList = default;
+            Option<Dictionary<string, string>> optionLabels = default;
             Option<bool?> requiredInTemplate = default;
             Option<bool?> fieldRequired = default;
 
@@ -237,6 +255,9 @@ namespace DocSpring.Client.Model
                         case "option_list":
                             optionList = new Option<string>(utf8JsonReader.GetString());
                             break;
+                        case "option_labels":
+                            optionLabels = new Option<Dictionary<string, string>>(JsonSerializer.Deserialize<Dictionary<string, string>>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
                         case "required_in_template":
                             requiredInTemplate = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
                             break;
@@ -267,7 +288,7 @@ namespace DocSpring.Client.Model
             if (fieldRequired.IsSet && fieldRequired.Value == null)
                 throw new JsonException("Property is not nullable for class PredefinedField: field_required.");
 
-            return new PredefinedField(name.Value, type.Value.Value, displayName, title, optionList, requiredInTemplate, fieldRequired);
+            return new PredefinedField(name.Value, type.Value.Value, displayName, title, optionList, optionLabels, requiredInTemplate, fieldRequired);
         }
 
         /// <summary>
@@ -321,6 +342,14 @@ namespace DocSpring.Client.Model
                 else
                     writer.WriteNull("option_list");
 
+            if (predefinedField.OptionLabelsOption.IsSet)
+                if (predefinedField.OptionLabelsOption.Value != null)
+                {
+                    writer.WritePropertyName("option_labels");
+                    JsonSerializer.Serialize(writer, predefinedField.OptionLabelsOption.Value, jsonSerializerOptions);
+                }
+                else
+                    writer.WriteNull("option_labels");
             if (predefinedField.RequiredInTemplateOption.IsSet)
                 writer.WriteBoolean("required_in_template", predefinedField.RequiredInTemplateOption.Value.Value);
 

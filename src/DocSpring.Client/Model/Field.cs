@@ -41,6 +41,7 @@ namespace DocSpring.Client.Model
         /// <param name="placeholder">Placeholder text for the field&#39;s input on forms, added to the template&#39;s data schema as &#x60;x-placeholder&#x60;. Shared by every field with the same &#x60;name&#x60;.</param>
         /// <param name="metadata">Text for your own use, added to the template&#39;s data schema as &#x60;x-metadata&#x60;. DocSpring doesn&#39;t use it. Shared by every field with the same &#x60;name&#x60;.</param>
         /// <param name="required">Whether each submission must include a value for the field. A submission without one fails validation, and no PDF is generated. Shared by every field with the same &#x60;name&#x60;.</param>
+        /// <param name="printOptionLabels">Text display, with &#x60;option_labels&#x60;: the PDF prints the chosen option&#39;s label instead of its value, and an &#x60;editable&#x60; field&#39;s dropdown lists the labels. Shared by every field with the same &#x60;name&#x60;.</param>
         /// <param name="combinedFieldNames">Combined fields only: a comma-separated list of the names of the fields whose values are combined, in order. Shared by every field with the same &#x60;name&#x60;.</param>
         /// <param name="combinedFieldType">Combined fields only: &#x60;separator&#x60; joins the values with &#x60;combined_field_separator&#x60;, and &#x60;format&#x60; puts them into &#x60;combined_field_format&#x60;. Shared by every field with the same &#x60;name&#x60;.</param>
         /// <param name="combinedFieldSeparator">Combined fields only: the text placed between the values when &#x60;combined_field_type&#x60; is &#x60;separator&#x60;. Empty values are skipped. Defaults to a space. Shared by every field with the same &#x60;name&#x60;.</param>
@@ -51,6 +52,9 @@ namespace DocSpring.Client.Model
         /// <param name="signatureAllowDraw">Signature and initials fields only: lets signers draw their signature on forms and in data requests. Shared by every field with the same &#x60;name&#x60;.</param>
         /// <param name="signatureAllowType">Signature and initials fields only: lets signers type their name and choose a script font instead of drawing, on forms and in data requests. Shared by every field with the same &#x60;name&#x60;.</param>
         /// <param name="barcodeSymbology">Barcode fields only: the barcode format, which the value must match. &#x60;code_128&#x60; and &#x60;pdf417&#x60; take any ASCII text; &#x60;code_39&#x60; and &#x60;code_93&#x60; take capital letters, digits, spaces and &#x60;- . $ / + %&#x60;; &#x60;code_25&#x60; takes digits; &#x60;ean_13&#x60; takes 12 digits, &#x60;ean_8&#x60; 7 digits and &#x60;upc_a&#x60; 11 digits (the check digit is added). Shared by every field with the same &#x60;name&#x60;.</param>
+        /// <param name="combFillFromRight">With &#x60;comb&#x60;: the value fills the last boxes of the comb fields with this name, padded on the left with spaces, or with zeros with &#x60;comb_pad_with_zeros&#x60;, as amounts are written on paper forms. A number with &#x60;decimal_places&#x60; in one row of boxes lines up on its decimal point, which takes no box: the decimal places fill the last boxes. Date fields ignore it: a date prints in its format. Shared by every field with the same &#x60;name&#x60;.</param>
+        /// <param name="combPadWithZeros">With &#x60;comb_fill_from_right&#x60;: pads the value on the left with zeros instead of spaces, such as &#x60;000123&#x60;. A negative number keeps its minus sign in the first box. Shared by every field with the same &#x60;name&#x60;.</param>
+        /// <param name="printDigitsOnly">With &#x60;comb&#x60;, for string fields: only the value&#39;s digits print, one in each box, and any punctuation is left out, so &#x60;123-45-6789&#x60; fills the 9 boxes of an SSN. The template&#39;s data schema accepts as many digits as the boxes hold, with anything but letters between them. Number and date fields ignore it. Shared by every field with the same &#x60;name&#x60;.</param>
         /// <param name="hidden">Leaves the field off the PDF. It stays in the template&#39;s data schema (marked &#x60;x-hidden&#x60;) and on forms, so other fields, such as combined fields, can use its value. A hidden static check mark or shape isn&#39;t printed.</param>
         /// <param name="x">The distance from the page&#39;s left edge to the field&#39;s left edge. Positions and sizes are in units where every page is 2480 wide: one unit is the page&#39;s width in points divided by 2480 (about 0.247 points on a US Letter page).</param>
         /// <param name="y">The distance from the top edge of the field&#39;s &#x60;page&#x60; down to the field&#39;s top edge, in the units of &#x60;x&#x60;. A page is 2480 times its height divided by its width units tall: about 3209 for US Letter and 3508 for A4.</param>
@@ -73,8 +77,8 @@ namespace DocSpring.Client.Model
         /// <param name="alignment">Text display only: how the text is aligned across the field: &#x60;left&#x60;, &#x60;center&#x60;, &#x60;right&#x60; or &#x60;justify&#x60; (both edges of every line of multiline text except the last of each paragraph).</param>
         /// <param name="vAlignment">Text display only: how the text is aligned vertically in the field: &#x60;bottom&#x60;, &#x60;center&#x60; or &#x60;top&#x60;.</param>
         /// <param name="comb">Text display only: splits the field into &#x60;comb_number_of_cells&#x60; boxes of equal width and prints one character, centered, in each.</param>
-        /// <param name="combNumberOfCells">With &#x60;comb&#x60;: how many boxes the field has. The value&#39;s maximum length in the template&#39;s data schema is this plus &#x60;comb_value_offset&#x60;.</param>
-        /// <param name="combValueOffset">With &#x60;comb&#x60;: the position, from 0, of the first character of the value that this field prints. For an SSN printed in boxes of 3, 2 and 4 digits, three fields named &#x60;ssn&#x60; use offsets 0, 3 and 5.</param>
+        /// <param name="combNumberOfCells">With &#x60;comb&#x60;: how many boxes the field has, up to 10,000. The value&#39;s maximum length in the template&#39;s data schema is the furthest that a comb field of its name reaches: its &#x60;comb_value_offset&#x60; plus its boxes. With &#x60;print_digits_only&#x60;, that many digits. A number field is split from its printed form (with &#x60;decimal_places&#x60;), and a number with a digit that no box prints (more digits than the boxes, or a digit where the offsets leave a gap) is a data error.</param>
+        /// <param name="combValueOffset">With &#x60;comb&#x60;: how many boxes of the value&#39;s row come before this field, from 0 to 10,000. The comb fields that share a name make one row of boxes, and each prints the row&#39;s characters from its offset. For an SSN printed in boxes of 3, 2 and 4 digits, three fields named &#x60;ssn&#x60; use offsets 0, 3 and 5. The fields that print a number&#39;s whole part (&#x60;number_part&#x60;) make a row of their own, and so do the ones that print its decimal places.</param>
         /// <param name="shapeType">Shape display only: &#x60;square&#x60;, &#x60;rectangle&#x60;, &#x60;circle&#x60;, &#x60;ellipse&#x60;, &#x60;triangle&#x60; or &#x60;polygon&#x60;. A square or circle uses the smaller of &#x60;width&#x60; and &#x60;height&#x60;.</param>
         /// <param name="shapeSides">Shape display only, with &#x60;shape_type&#x60; &#x60;polygon&#x60;: the number of sides, 3 to 12.</param>
         /// <param name="shapeBorderWidth">Shape display only: the width of the shape&#39;s border, in points.</param>
@@ -90,12 +94,14 @@ namespace DocSpring.Client.Model
         /// <param name="numberConditionRangeExclusiveMax">With &#x60;number_condition_type&#x60; &#x60;range&#x60;: leaves &#x60;number_condition_range_max&#x60; itself out of the range.</param>
         /// <param name="invertBooleanCondition">Boolean fields with check or shape display: prints the check mark or shape when the value is &#x60;false&#x60; or missing, instead of &#x60;true&#x60;.</param>
         /// <param name="currency">Number fields only: forms show a currency input, and the template&#39;s data schema gives the field &#x60;format: currency&#x60;. It doesn&#39;t change how the number prints.</param>
+        /// <param name="numberPart">Number fields with text display: which part of the number this field prints. &#x60;all&#x60; prints the whole number, &#x60;whole&#x60; only the part before the decimal point (with a minus sign) and &#x60;decimals&#x60; only the decimal places. For an amount printed as &#x60;$ ____ . __&#x60;, two fields with the same name: one &#x60;whole&#x60;, and one &#x60;decimals&#x60; with &#x60;decimal_places&#x60; 2. The number is rounded once, to the &#x60;decimals&#x60; field&#39;s decimal places (2 when it sets none).</param>
         /// <param name="imageScaleType">Image fields only: how the image is resized to the field. &#x60;fit&#x60; keeps its proportions and fits it inside the field, which can leave empty space; &#x60;fill&#x60; keeps its proportions and crops it to fill the field; &#x60;stretch&#x60; stretches it to the field&#39;s size. Signatures and initials always fit.</param>
         /// <param name="imageGravity">Image, signature and initials fields: where the image sits in the field with &#x60;fit&#x60;, or which part is kept with &#x60;fill&#x60;: &#x60;NorthWest&#x60; (top left), &#x60;North&#x60;, &#x60;NorthEast&#x60;, &#x60;West&#x60;, &#x60;Center&#x60;, &#x60;East&#x60;, &#x60;SouthWest&#x60;, &#x60;South&#x60; or &#x60;SouthEast&#x60; (bottom right). It also aligns typed signatures, and isn&#39;t used with &#x60;stretch&#x60;.</param>
         /// <param name="name">The field&#39;s name, the key of its value in submission data. A &#x60;/&#x60; nests the key in objects and arrays (&#x60;client/address&#x60;, &#x60;items/0/price&#x60;); write a literal &#x60;/&#x60; as &#x60;~1&#x60; and &#x60;~&#x60; as &#x60;~0&#x60;. Fields with the same name share one value and their shared settings, and array indexes inside a name are ignored for settings, so &#x60;items/0/price&#x60; and &#x60;items/1/price&#x60; share settings but not values. A &#x60;#&#x60; and a line number (&#x60;notes#0&#x60;, &#x60;notes#1&#x60;) splits one value over several fields as lines of text, and names that start with &#x60;@@&#x60; print submission details such as &#x60;@@date&#x60;.</param>
         /// <param name="acroformName">The name of the PDF form field this field was made from, when the template&#39;s PDF had fillable fields. Null for fields added in DocSpring.</param>
         /// <param name="default">The value used when a submission leaves the field out, and the value forms are pre-filled with. A required field still needs a value in each submission. An image field&#39;s default is an image URL, a number field&#39;s can be a formula, and a static field&#39;s is the content it prints. Shared by every field with the same &#x60;name&#x60;.</param>
         /// <param name="optionList">String fields only: a comma-separated list of the values the field accepts. It&#39;s added to the template&#39;s data schema as an &#x60;enum&#x60;, forms show it as a select list, and an &#x60;editable&#x60; field becomes a dropdown. Shared by every field with the same &#x60;name&#x60;.</param>
+        /// <param name="optionLabels">With &#x60;option_list&#x60;: the label forms show for each option, keyed by its value, such as &#x60;{\&quot;head_of_household\&quot;: \&quot;Head of household\&quot;}&#x60;. The data, the API and webhooks keep the value, and the PDF prints it unless &#x60;print_option_labels&#x60; is set. An option without a label shows its value, or its sentence case when the options are lowercase words joined by underscores (&#x60;head_of_household&#x60; shows as \&quot;Head of household\&quot;). The template&#39;s data schema has them as &#x60;x-option-labels&#x60;. Each key must be one of the options, and each label must have some text. Shared by every field with the same &#x60;name&#x60;.</param>
         /// <param name="minimum">Number fields only: the smallest value allowed. Shared by every field with the same &#x60;name&#x60;.</param>
         /// <param name="maximum">Number fields only: the largest value allowed. Shared by every field with the same &#x60;name&#x60;.</param>
         /// <param name="includeTime">Date fields only: the value is a date and time (&#x60;YYYY-MM-DDThh:mm:ss.fffZ&#x60;) instead of a date (&#x60;YYYY-MM-DD&#x60;), and it prints with the template&#39;s date-time format unless &#x60;date_time_format&#x60; is set. Shared by every field with the same &#x60;name&#x60;.</param>
@@ -121,9 +127,10 @@ namespace DocSpring.Client.Model
         /// <param name="numberConditionRangeMin">With &#x60;number_condition_type&#x60; &#x60;range&#x60;: the lower end of the range, included unless &#x60;number_condition_range_exclusive_min&#x60; is set.</param>
         /// <param name="numberConditionRangeMax">With &#x60;number_condition_type&#x60; &#x60;range&#x60;: the upper end of the range, included unless &#x60;number_condition_range_exclusive_max&#x60; is set.</param>
         /// <param name="decimalPlaces">Number fields with text display: prints the number with this many decimal places, from 0 (rounds to a whole number) to 99. Empty prints the number as it was sent.</param>
+        /// <param name="signerRole">Who fills in or signs the field when a submission has signature requests: one of the template&#39;s &#x60;signer_roles&#x60;, by its key, or &#x60;sender&#x60; for a field that submission data fills in, which no signer is asked for. Null when it has no role: a submission&#39;s only signer fills it in when data doesn&#39;t, and with two or more signature requests one of them has to list it in its &#x60;fields&#x60;. In an HTML or Word template, a field whose tag gives it a role (&#x60;{% form_field tenant_name, role: tenant %}&#x60;) has that one, which only the code can change. Shared by every field with the same &#x60;name&#x60;.</param>
         /// <param name="dependencies">The field&#39;s own conditional logic rule: when other fields&#39; values meet its conditions, the field is shown, made required, or both. Null when it has none. The template&#39;s rules (&#x60;field_dependencies&#x60;) can apply to the field too. Shared by every field with the same &#x60;name&#x60;.</param>
         [JsonConstructor]
-        public Field(int id, int page, FieldType type, bool @static, bool editable, string title, string description, string placeholder, string metadata, bool required, string combinedFieldNames, CombinedFieldType combinedFieldType, string combinedFieldSeparator, string combinedFieldFormat, bool integer, bool exclusiveMinimum, bool exclusiveMaximum, bool signatureAllowDraw, bool signatureAllowType, BarcodeSymbology barcodeSymbology, bool hidden, decimal x, decimal y, decimal width, decimal height, decimal rotation, FieldDisplayType displayType, decimal opacity, decimal characterSpacing, bool bold, bool uppercase, bool strikethrough, bool keepLeadingSpaces, TextOverflow overflow, bool multiline, decimal minLength, bool autoCalculateMaxLength, bool colorFieldRequired, bool backgroundColorFieldRequired, TextAlignment alignment, TextVerticalAlignment vAlignment, bool comb, int combNumberOfCells, int combValueOffset, ShapeType shapeType, int shapeSides, int shapeBorderWidth, string shapeBorderColor, bool shapeBorderColorFieldRequired, bool shapeFillColorFieldRequired, CheckCharacter checkCharacter, bool checkColorFieldRequired, bool qrcodeColorFieldRequired, StringConditionType stringConditionType, NumberConditionType numberConditionType, bool numberConditionRangeExclusiveMin, bool numberConditionRangeExclusiveMax, bool invertBooleanCondition, bool currency, ImageScaleType imageScaleType, ImageGravity imageGravity, string name = default, string acroformName = default, string @default = default, string optionList = default, decimal? minimum = default, decimal? maximum = default, bool? includeTime = default, string dateTimeFormat = default, Typeface? typeface = default, int? fontSize = default, int? multilineLines = default, int? maxLength = default, string color = default, string colorFieldName = default, string backgroundColor = default, string backgroundColorFieldName = default, string shapeBorderColorFieldName = default, string shapeFillColor = default, string shapeFillColorFieldName = default, string checkColor = default, string checkColorFieldName = default, string qrcodeColor = default, string qrcodeColorFieldName = default, string trueText = default, string falseText = default, string condition = default, decimal? numberConditionRangeMin = default, decimal? numberConditionRangeMax = default, int? decimalPlaces = default, FieldDependency dependencies = default)
+        public Field(int id, int page, FieldType type, bool @static, bool editable, string title, string description, string placeholder, string metadata, bool required, bool printOptionLabels, string combinedFieldNames, CombinedFieldType combinedFieldType, string combinedFieldSeparator, string combinedFieldFormat, bool integer, bool exclusiveMinimum, bool exclusiveMaximum, bool signatureAllowDraw, bool signatureAllowType, BarcodeSymbology barcodeSymbology, bool combFillFromRight, bool combPadWithZeros, bool printDigitsOnly, bool hidden, decimal x, decimal y, decimal width, decimal height, decimal rotation, FieldDisplayType displayType, decimal opacity, decimal characterSpacing, bool bold, bool uppercase, bool strikethrough, bool keepLeadingSpaces, TextOverflow overflow, bool multiline, decimal minLength, bool autoCalculateMaxLength, bool colorFieldRequired, bool backgroundColorFieldRequired, TextAlignment alignment, TextVerticalAlignment vAlignment, bool comb, int combNumberOfCells, int combValueOffset, ShapeType shapeType, int shapeSides, int shapeBorderWidth, string shapeBorderColor, bool shapeBorderColorFieldRequired, bool shapeFillColorFieldRequired, CheckCharacter checkCharacter, bool checkColorFieldRequired, bool qrcodeColorFieldRequired, StringConditionType stringConditionType, NumberConditionType numberConditionType, bool numberConditionRangeExclusiveMin, bool numberConditionRangeExclusiveMax, bool invertBooleanCondition, bool currency, NumberPart numberPart, ImageScaleType imageScaleType, ImageGravity imageGravity, string name = default, string acroformName = default, string @default = default, string optionList = default, Dictionary<string, string> optionLabels = default, decimal? minimum = default, decimal? maximum = default, bool? includeTime = default, string dateTimeFormat = default, Typeface? typeface = default, int? fontSize = default, int? multilineLines = default, int? maxLength = default, string color = default, string colorFieldName = default, string backgroundColor = default, string backgroundColorFieldName = default, string shapeBorderColorFieldName = default, string shapeFillColor = default, string shapeFillColorFieldName = default, string checkColor = default, string checkColorFieldName = default, string qrcodeColor = default, string qrcodeColorFieldName = default, string trueText = default, string falseText = default, string condition = default, decimal? numberConditionRangeMin = default, decimal? numberConditionRangeMax = default, int? decimalPlaces = default, string signerRole = default, FieldDependency dependencies = default)
         {
             Id = id;
             Page = page;
@@ -135,6 +142,7 @@ namespace DocSpring.Client.Model
             Placeholder = placeholder;
             Metadata = metadata;
             Required = required;
+            PrintOptionLabels = printOptionLabels;
             CombinedFieldNames = combinedFieldNames;
             CombinedFieldType = combinedFieldType;
             CombinedFieldSeparator = combinedFieldSeparator;
@@ -145,6 +153,9 @@ namespace DocSpring.Client.Model
             SignatureAllowDraw = signatureAllowDraw;
             SignatureAllowType = signatureAllowType;
             BarcodeSymbology = barcodeSymbology;
+            CombFillFromRight = combFillFromRight;
+            CombPadWithZeros = combPadWithZeros;
+            PrintDigitsOnly = printDigitsOnly;
             Hidden = hidden;
             X = x;
             Y = y;
@@ -184,12 +195,14 @@ namespace DocSpring.Client.Model
             NumberConditionRangeExclusiveMax = numberConditionRangeExclusiveMax;
             InvertBooleanCondition = invertBooleanCondition;
             Currency = currency;
+            NumberPart = numberPart;
             ImageScaleType = imageScaleType;
             ImageGravity = imageGravity;
             Name = name;
             AcroformName = acroformName;
             Default = @default;
             OptionList = optionList;
+            OptionLabels = optionLabels;
             Minimum = minimum;
             Maximum = maximum;
             IncludeTime = includeTime;
@@ -215,6 +228,7 @@ namespace DocSpring.Client.Model
             NumberConditionRangeMin = numberConditionRangeMin;
             NumberConditionRangeMax = numberConditionRangeMax;
             DecimalPlaces = decimalPlaces;
+            SignerRole = signerRole;
             Dependencies = dependencies;
             OnCreated();
         }
@@ -297,6 +311,13 @@ namespace DocSpring.Client.Model
         /// <value>Number fields with check or shape display: how the value is compared with &#x60;condition&#x60;: &#x60;equals&#x60;, &#x60;gt&#x60; (greater than), &#x60;gte&#x60; (greater than or equal to), &#x60;lt&#x60; (less than), &#x60;lte&#x60; (less than or equal to), or &#x60;range&#x60;, between &#x60;number_condition_range_min&#x60; and &#x60;number_condition_range_max&#x60;.</value>
         [JsonPropertyName("number_condition_type")]
         public NumberConditionType NumberConditionType { get; set; }
+
+        /// <summary>
+        /// Number fields with text display: which part of the number this field prints. &#x60;all&#x60; prints the whole number, &#x60;whole&#x60; only the part before the decimal point (with a minus sign) and &#x60;decimals&#x60; only the decimal places. For an amount printed as &#x60;$ ____ . __&#x60;, two fields with the same name: one &#x60;whole&#x60;, and one &#x60;decimals&#x60; with &#x60;decimal_places&#x60; 2. The number is rounded once, to the &#x60;decimals&#x60; field&#39;s decimal places (2 when it sets none).
+        /// </summary>
+        /// <value>Number fields with text display: which part of the number this field prints. &#x60;all&#x60; prints the whole number, &#x60;whole&#x60; only the part before the decimal point (with a minus sign) and &#x60;decimals&#x60; only the decimal places. For an amount printed as &#x60;$ ____ . __&#x60;, two fields with the same name: one &#x60;whole&#x60;, and one &#x60;decimals&#x60; with &#x60;decimal_places&#x60; 2. The number is rounded once, to the &#x60;decimals&#x60; field&#39;s decimal places (2 when it sets none).</value>
+        [JsonPropertyName("number_part")]
+        public NumberPart NumberPart { get; set; }
 
         /// <summary>
         /// Image fields only: how the image is resized to the field. &#x60;fit&#x60; keeps its proportions and fits it inside the field, which can leave empty space; &#x60;fill&#x60; keeps its proportions and crops it to fill the field; &#x60;stretch&#x60; stretches it to the field&#39;s size. Signatures and initials always fit.
@@ -383,6 +404,13 @@ namespace DocSpring.Client.Model
         public bool Required { get; set; }
 
         /// <summary>
+        /// Text display, with &#x60;option_labels&#x60;: the PDF prints the chosen option&#39;s label instead of its value, and an &#x60;editable&#x60; field&#39;s dropdown lists the labels. Shared by every field with the same &#x60;name&#x60;.
+        /// </summary>
+        /// <value>Text display, with &#x60;option_labels&#x60;: the PDF prints the chosen option&#39;s label instead of its value, and an &#x60;editable&#x60; field&#39;s dropdown lists the labels. Shared by every field with the same &#x60;name&#x60;.</value>
+        [JsonPropertyName("print_option_labels")]
+        public bool PrintOptionLabels { get; set; }
+
+        /// <summary>
         /// Combined fields only: a comma-separated list of the names of the fields whose values are combined, in order. Shared by every field with the same &#x60;name&#x60;.
         /// </summary>
         /// <value>Combined fields only: a comma-separated list of the names of the fields whose values are combined, in order. Shared by every field with the same &#x60;name&#x60;.</value>
@@ -437,6 +465,27 @@ namespace DocSpring.Client.Model
         /// <value>Signature and initials fields only: lets signers type their name and choose a script font instead of drawing, on forms and in data requests. Shared by every field with the same &#x60;name&#x60;.</value>
         [JsonPropertyName("signature_allow_type")]
         public bool SignatureAllowType { get; set; }
+
+        /// <summary>
+        /// With &#x60;comb&#x60;: the value fills the last boxes of the comb fields with this name, padded on the left with spaces, or with zeros with &#x60;comb_pad_with_zeros&#x60;, as amounts are written on paper forms. A number with &#x60;decimal_places&#x60; in one row of boxes lines up on its decimal point, which takes no box: the decimal places fill the last boxes. Date fields ignore it: a date prints in its format. Shared by every field with the same &#x60;name&#x60;.
+        /// </summary>
+        /// <value>With &#x60;comb&#x60;: the value fills the last boxes of the comb fields with this name, padded on the left with spaces, or with zeros with &#x60;comb_pad_with_zeros&#x60;, as amounts are written on paper forms. A number with &#x60;decimal_places&#x60; in one row of boxes lines up on its decimal point, which takes no box: the decimal places fill the last boxes. Date fields ignore it: a date prints in its format. Shared by every field with the same &#x60;name&#x60;.</value>
+        [JsonPropertyName("comb_fill_from_right")]
+        public bool CombFillFromRight { get; set; }
+
+        /// <summary>
+        /// With &#x60;comb_fill_from_right&#x60;: pads the value on the left with zeros instead of spaces, such as &#x60;000123&#x60;. A negative number keeps its minus sign in the first box. Shared by every field with the same &#x60;name&#x60;.
+        /// </summary>
+        /// <value>With &#x60;comb_fill_from_right&#x60;: pads the value on the left with zeros instead of spaces, such as &#x60;000123&#x60;. A negative number keeps its minus sign in the first box. Shared by every field with the same &#x60;name&#x60;.</value>
+        [JsonPropertyName("comb_pad_with_zeros")]
+        public bool CombPadWithZeros { get; set; }
+
+        /// <summary>
+        /// With &#x60;comb&#x60;, for string fields: only the value&#39;s digits print, one in each box, and any punctuation is left out, so &#x60;123-45-6789&#x60; fills the 9 boxes of an SSN. The template&#39;s data schema accepts as many digits as the boxes hold, with anything but letters between them. Number and date fields ignore it. Shared by every field with the same &#x60;name&#x60;.
+        /// </summary>
+        /// <value>With &#x60;comb&#x60;, for string fields: only the value&#39;s digits print, one in each box, and any punctuation is left out, so &#x60;123-45-6789&#x60; fills the 9 boxes of an SSN. The template&#39;s data schema accepts as many digits as the boxes hold, with anything but letters between them. Number and date fields ignore it. Shared by every field with the same &#x60;name&#x60;.</value>
+        [JsonPropertyName("print_digits_only")]
+        public bool PrintDigitsOnly { get; set; }
 
         /// <summary>
         /// Leaves the field off the PDF. It stays in the template&#39;s data schema (marked &#x60;x-hidden&#x60;) and on forms, so other fields, such as combined fields, can use its value. A hidden static check mark or shape isn&#39;t printed.
@@ -565,16 +614,16 @@ namespace DocSpring.Client.Model
         public bool Comb { get; set; }
 
         /// <summary>
-        /// With &#x60;comb&#x60;: how many boxes the field has. The value&#39;s maximum length in the template&#39;s data schema is this plus &#x60;comb_value_offset&#x60;.
+        /// With &#x60;comb&#x60;: how many boxes the field has, up to 10,000. The value&#39;s maximum length in the template&#39;s data schema is the furthest that a comb field of its name reaches: its &#x60;comb_value_offset&#x60; plus its boxes. With &#x60;print_digits_only&#x60;, that many digits. A number field is split from its printed form (with &#x60;decimal_places&#x60;), and a number with a digit that no box prints (more digits than the boxes, or a digit where the offsets leave a gap) is a data error.
         /// </summary>
-        /// <value>With &#x60;comb&#x60;: how many boxes the field has. The value&#39;s maximum length in the template&#39;s data schema is this plus &#x60;comb_value_offset&#x60;.</value>
+        /// <value>With &#x60;comb&#x60;: how many boxes the field has, up to 10,000. The value&#39;s maximum length in the template&#39;s data schema is the furthest that a comb field of its name reaches: its &#x60;comb_value_offset&#x60; plus its boxes. With &#x60;print_digits_only&#x60;, that many digits. A number field is split from its printed form (with &#x60;decimal_places&#x60;), and a number with a digit that no box prints (more digits than the boxes, or a digit where the offsets leave a gap) is a data error.</value>
         [JsonPropertyName("comb_number_of_cells")]
         public int CombNumberOfCells { get; set; }
 
         /// <summary>
-        /// With &#x60;comb&#x60;: the position, from 0, of the first character of the value that this field prints. For an SSN printed in boxes of 3, 2 and 4 digits, three fields named &#x60;ssn&#x60; use offsets 0, 3 and 5.
+        /// With &#x60;comb&#x60;: how many boxes of the value&#39;s row come before this field, from 0 to 10,000. The comb fields that share a name make one row of boxes, and each prints the row&#39;s characters from its offset. For an SSN printed in boxes of 3, 2 and 4 digits, three fields named &#x60;ssn&#x60; use offsets 0, 3 and 5. The fields that print a number&#39;s whole part (&#x60;number_part&#x60;) make a row of their own, and so do the ones that print its decimal places.
         /// </summary>
-        /// <value>With &#x60;comb&#x60;: the position, from 0, of the first character of the value that this field prints. For an SSN printed in boxes of 3, 2 and 4 digits, three fields named &#x60;ssn&#x60; use offsets 0, 3 and 5.</value>
+        /// <value>With &#x60;comb&#x60;: how many boxes of the value&#39;s row come before this field, from 0 to 10,000. The comb fields that share a name make one row of boxes, and each prints the row&#39;s characters from its offset. For an SSN printed in boxes of 3, 2 and 4 digits, three fields named &#x60;ssn&#x60; use offsets 0, 3 and 5. The fields that print a number&#39;s whole part (&#x60;number_part&#x60;) make a row of their own, and so do the ones that print its decimal places.</value>
         [JsonPropertyName("comb_value_offset")]
         public int CombValueOffset { get; set; }
 
@@ -682,6 +731,13 @@ namespace DocSpring.Client.Model
         /// <value>String fields only: a comma-separated list of the values the field accepts. It&#39;s added to the template&#39;s data schema as an &#x60;enum&#x60;, forms show it as a select list, and an &#x60;editable&#x60; field becomes a dropdown. Shared by every field with the same &#x60;name&#x60;.</value>
         [JsonPropertyName("option_list")]
         public string OptionList { get; set; }
+
+        /// <summary>
+        /// With &#x60;option_list&#x60;: the label forms show for each option, keyed by its value, such as &#x60;{\&quot;head_of_household\&quot;: \&quot;Head of household\&quot;}&#x60;. The data, the API and webhooks keep the value, and the PDF prints it unless &#x60;print_option_labels&#x60; is set. An option without a label shows its value, or its sentence case when the options are lowercase words joined by underscores (&#x60;head_of_household&#x60; shows as \&quot;Head of household\&quot;). The template&#39;s data schema has them as &#x60;x-option-labels&#x60;. Each key must be one of the options, and each label must have some text. Shared by every field with the same &#x60;name&#x60;.
+        /// </summary>
+        /// <value>With &#x60;option_list&#x60;: the label forms show for each option, keyed by its value, such as &#x60;{\&quot;head_of_household\&quot;: \&quot;Head of household\&quot;}&#x60;. The data, the API and webhooks keep the value, and the PDF prints it unless &#x60;print_option_labels&#x60; is set. An option without a label shows its value, or its sentence case when the options are lowercase words joined by underscores (&#x60;head_of_household&#x60; shows as \&quot;Head of household\&quot;). The template&#39;s data schema has them as &#x60;x-option-labels&#x60;. Each key must be one of the options, and each label must have some text. Shared by every field with the same &#x60;name&#x60;.</value>
+        [JsonPropertyName("option_labels")]
+        public Dictionary<string, string> OptionLabels { get; set; }
 
         /// <summary>
         /// Number fields only: the smallest value allowed. Shared by every field with the same &#x60;name&#x60;.
@@ -852,6 +908,13 @@ namespace DocSpring.Client.Model
         public int? DecimalPlaces { get; set; }
 
         /// <summary>
+        /// Who fills in or signs the field when a submission has signature requests: one of the template&#39;s &#x60;signer_roles&#x60;, by its key, or &#x60;sender&#x60; for a field that submission data fills in, which no signer is asked for. Null when it has no role: a submission&#39;s only signer fills it in when data doesn&#39;t, and with two or more signature requests one of them has to list it in its &#x60;fields&#x60;. In an HTML or Word template, a field whose tag gives it a role (&#x60;{% form_field tenant_name, role: tenant %}&#x60;) has that one, which only the code can change. Shared by every field with the same &#x60;name&#x60;.
+        /// </summary>
+        /// <value>Who fills in or signs the field when a submission has signature requests: one of the template&#39;s &#x60;signer_roles&#x60;, by its key, or &#x60;sender&#x60; for a field that submission data fills in, which no signer is asked for. Null when it has no role: a submission&#39;s only signer fills it in when data doesn&#39;t, and with two or more signature requests one of them has to list it in its &#x60;fields&#x60;. In an HTML or Word template, a field whose tag gives it a role (&#x60;{% form_field tenant_name, role: tenant %}&#x60;) has that one, which only the code can change. Shared by every field with the same &#x60;name&#x60;.</value>
+        [JsonPropertyName("signer_role")]
+        public string SignerRole { get; set; }
+
+        /// <summary>
         /// The field&#39;s own conditional logic rule: when other fields&#39; values meet its conditions, the field is shown, made required, or both. Null when it has none. The template&#39;s rules (&#x60;field_dependencies&#x60;) can apply to the field too. Shared by every field with the same &#x60;name&#x60;.
         /// </summary>
         /// <value>The field&#39;s own conditional logic rule: when other fields&#39; values meet its conditions, the field is shown, made required, or both. Null when it has none. The template&#39;s rules (&#x60;field_dependencies&#x60;) can apply to the field too. Shared by every field with the same &#x60;name&#x60;.</value>
@@ -882,6 +945,7 @@ namespace DocSpring.Client.Model
             sb.Append("  Placeholder: ").Append(Placeholder).Append("\n");
             sb.Append("  Metadata: ").Append(Metadata).Append("\n");
             sb.Append("  Required: ").Append(Required).Append("\n");
+            sb.Append("  PrintOptionLabels: ").Append(PrintOptionLabels).Append("\n");
             sb.Append("  CombinedFieldNames: ").Append(CombinedFieldNames).Append("\n");
             sb.Append("  CombinedFieldType: ").Append(CombinedFieldType).Append("\n");
             sb.Append("  CombinedFieldSeparator: ").Append(CombinedFieldSeparator).Append("\n");
@@ -892,6 +956,9 @@ namespace DocSpring.Client.Model
             sb.Append("  SignatureAllowDraw: ").Append(SignatureAllowDraw).Append("\n");
             sb.Append("  SignatureAllowType: ").Append(SignatureAllowType).Append("\n");
             sb.Append("  BarcodeSymbology: ").Append(BarcodeSymbology).Append("\n");
+            sb.Append("  CombFillFromRight: ").Append(CombFillFromRight).Append("\n");
+            sb.Append("  CombPadWithZeros: ").Append(CombPadWithZeros).Append("\n");
+            sb.Append("  PrintDigitsOnly: ").Append(PrintDigitsOnly).Append("\n");
             sb.Append("  Hidden: ").Append(Hidden).Append("\n");
             sb.Append("  X: ").Append(X).Append("\n");
             sb.Append("  Y: ").Append(Y).Append("\n");
@@ -931,12 +998,14 @@ namespace DocSpring.Client.Model
             sb.Append("  NumberConditionRangeExclusiveMax: ").Append(NumberConditionRangeExclusiveMax).Append("\n");
             sb.Append("  InvertBooleanCondition: ").Append(InvertBooleanCondition).Append("\n");
             sb.Append("  Currency: ").Append(Currency).Append("\n");
+            sb.Append("  NumberPart: ").Append(NumberPart).Append("\n");
             sb.Append("  ImageScaleType: ").Append(ImageScaleType).Append("\n");
             sb.Append("  ImageGravity: ").Append(ImageGravity).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  AcroformName: ").Append(AcroformName).Append("\n");
             sb.Append("  Default: ").Append(Default).Append("\n");
             sb.Append("  OptionList: ").Append(OptionList).Append("\n");
+            sb.Append("  OptionLabels: ").Append(OptionLabels).Append("\n");
             sb.Append("  Minimum: ").Append(Minimum).Append("\n");
             sb.Append("  Maximum: ").Append(Maximum).Append("\n");
             sb.Append("  IncludeTime: ").Append(IncludeTime).Append("\n");
@@ -962,6 +1031,7 @@ namespace DocSpring.Client.Model
             sb.Append("  NumberConditionRangeMin: ").Append(NumberConditionRangeMin).Append("\n");
             sb.Append("  NumberConditionRangeMax: ").Append(NumberConditionRangeMax).Append("\n");
             sb.Append("  DecimalPlaces: ").Append(DecimalPlaces).Append("\n");
+            sb.Append("  SignerRole: ").Append(SignerRole).Append("\n");
             sb.Append("  Dependencies: ").Append(Dependencies).Append("\n");
             sb.Append("  AdditionalProperties: ").Append(AdditionalProperties).Append("\n");
             sb.Append("}\n");
@@ -1021,6 +1091,7 @@ namespace DocSpring.Client.Model
             Option<string> placeholder = default;
             Option<string> metadata = default;
             Option<bool?> required = default;
+            Option<bool?> printOptionLabels = default;
             Option<string> combinedFieldNames = default;
             Option<CombinedFieldType?> combinedFieldType = default;
             Option<string> combinedFieldSeparator = default;
@@ -1031,6 +1102,9 @@ namespace DocSpring.Client.Model
             Option<bool?> signatureAllowDraw = default;
             Option<bool?> signatureAllowType = default;
             Option<BarcodeSymbology?> barcodeSymbology = default;
+            Option<bool?> combFillFromRight = default;
+            Option<bool?> combPadWithZeros = default;
+            Option<bool?> printDigitsOnly = default;
             Option<bool?> hidden = default;
             Option<decimal?> x = default;
             Option<decimal?> y = default;
@@ -1070,12 +1144,14 @@ namespace DocSpring.Client.Model
             Option<bool?> numberConditionRangeExclusiveMax = default;
             Option<bool?> invertBooleanCondition = default;
             Option<bool?> currency = default;
+            Option<NumberPart?> numberPart = default;
             Option<ImageScaleType?> imageScaleType = default;
             Option<ImageGravity?> imageGravity = default;
             Option<string> name = default;
             Option<string> acroformName = default;
             Option<string> varDefault = default;
             Option<string> optionList = default;
+            Option<Dictionary<string, string>> optionLabels = default;
             Option<decimal?> minimum = default;
             Option<decimal?> maximum = default;
             Option<bool?> includeTime = default;
@@ -1101,6 +1177,7 @@ namespace DocSpring.Client.Model
             Option<decimal?> numberConditionRangeMin = default;
             Option<decimal?> numberConditionRangeMax = default;
             Option<int?> decimalPlaces = default;
+            Option<string> signerRole = default;
             Option<FieldDependency> dependencies = default;
 
             while (utf8JsonReader.Read())
@@ -1148,6 +1225,9 @@ namespace DocSpring.Client.Model
                         case "required":
                             required = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
                             break;
+                        case "print_option_labels":
+                            printOptionLabels = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
+                            break;
                         case "combined_field_names":
                             combinedFieldNames = new Option<string>(utf8JsonReader.GetString());
                             break;
@@ -1177,6 +1257,15 @@ namespace DocSpring.Client.Model
                             break;
                         case "barcode_symbology":
                             barcodeSymbology = new Option<BarcodeSymbology?>(JsonSerializer.Deserialize<BarcodeSymbology?>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
+                        case "comb_fill_from_right":
+                            combFillFromRight = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
+                            break;
+                        case "comb_pad_with_zeros":
+                            combPadWithZeros = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
+                            break;
+                        case "print_digits_only":
+                            printDigitsOnly = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
                             break;
                         case "hidden":
                             hidden = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
@@ -1295,6 +1384,9 @@ namespace DocSpring.Client.Model
                         case "currency":
                             currency = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
                             break;
+                        case "number_part":
+                            numberPart = new Option<NumberPart?>(JsonSerializer.Deserialize<NumberPart?>(ref utf8JsonReader, jsonSerializerOptions));
+                            break;
                         case "image_scale_type":
                             imageScaleType = new Option<ImageScaleType?>(JsonSerializer.Deserialize<ImageScaleType?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
@@ -1312,6 +1404,9 @@ namespace DocSpring.Client.Model
                             break;
                         case "option_list":
                             optionList = new Option<string>(utf8JsonReader.GetString());
+                            break;
+                        case "option_labels":
+                            optionLabels = new Option<Dictionary<string, string>>(JsonSerializer.Deserialize<Dictionary<string, string>>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "minimum":
                             minimum = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
@@ -1388,6 +1483,9 @@ namespace DocSpring.Client.Model
                         case "decimal_places":
                             decimalPlaces = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
                             break;
+                        case "signer_role":
+                            signerRole = new Option<string>(utf8JsonReader.GetString());
+                            break;
                         case "dependencies":
                             dependencies = new Option<FieldDependency>(JsonSerializer.Deserialize<FieldDependency>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
@@ -1427,6 +1525,9 @@ namespace DocSpring.Client.Model
             if (!required.IsSet)
                 throw new JsonException("Property is required for class Field: required.");
 
+            if (!printOptionLabels.IsSet)
+                throw new JsonException("Property is required for class Field: print_option_labels.");
+
             if (!combinedFieldNames.IsSet)
                 throw new JsonException("Property is required for class Field: combined_field_names.");
 
@@ -1456,6 +1557,15 @@ namespace DocSpring.Client.Model
 
             if (!barcodeSymbology.IsSet)
                 throw new JsonException("Property is required for class Field: barcode_symbology.");
+
+            if (!combFillFromRight.IsSet)
+                throw new JsonException("Property is required for class Field: comb_fill_from_right.");
+
+            if (!combPadWithZeros.IsSet)
+                throw new JsonException("Property is required for class Field: comb_pad_with_zeros.");
+
+            if (!printDigitsOnly.IsSet)
+                throw new JsonException("Property is required for class Field: print_digits_only.");
 
             if (!hidden.IsSet)
                 throw new JsonException("Property is required for class Field: hidden.");
@@ -1574,6 +1684,9 @@ namespace DocSpring.Client.Model
             if (!currency.IsSet)
                 throw new JsonException("Property is required for class Field: currency.");
 
+            if (!numberPart.IsSet)
+                throw new JsonException("Property is required for class Field: number_part.");
+
             if (!imageScaleType.IsSet)
                 throw new JsonException("Property is required for class Field: image_scale_type.");
 
@@ -1591,6 +1704,9 @@ namespace DocSpring.Client.Model
 
             if (!optionList.IsSet)
                 throw new JsonException("Property is required for class Field: option_list.");
+
+            if (!optionLabels.IsSet)
+                throw new JsonException("Property is required for class Field: option_labels.");
 
             if (!minimum.IsSet)
                 throw new JsonException("Property is required for class Field: minimum.");
@@ -1667,6 +1783,9 @@ namespace DocSpring.Client.Model
             if (!decimalPlaces.IsSet)
                 throw new JsonException("Property is required for class Field: decimal_places.");
 
+            if (!signerRole.IsSet)
+                throw new JsonException("Property is required for class Field: signer_role.");
+
             if (!dependencies.IsSet)
                 throw new JsonException("Property is required for class Field: dependencies.");
 
@@ -1700,6 +1819,9 @@ namespace DocSpring.Client.Model
             if (required.IsSet && required.Value == null)
                 throw new JsonException("Property is not nullable for class Field: required.");
 
+            if (printOptionLabels.IsSet && printOptionLabels.Value == null)
+                throw new JsonException("Property is not nullable for class Field: print_option_labels.");
+
             if (combinedFieldNames.IsSet && combinedFieldNames.Value == null)
                 throw new JsonException("Property is not nullable for class Field: combined_field_names.");
 
@@ -1729,6 +1851,15 @@ namespace DocSpring.Client.Model
 
             if (barcodeSymbology.IsSet && barcodeSymbology.Value == null)
                 throw new JsonException("Property is not nullable for class Field: barcode_symbology.");
+
+            if (combFillFromRight.IsSet && combFillFromRight.Value == null)
+                throw new JsonException("Property is not nullable for class Field: comb_fill_from_right.");
+
+            if (combPadWithZeros.IsSet && combPadWithZeros.Value == null)
+                throw new JsonException("Property is not nullable for class Field: comb_pad_with_zeros.");
+
+            if (printDigitsOnly.IsSet && printDigitsOnly.Value == null)
+                throw new JsonException("Property is not nullable for class Field: print_digits_only.");
 
             if (hidden.IsSet && hidden.Value == null)
                 throw new JsonException("Property is not nullable for class Field: hidden.");
@@ -1847,13 +1978,16 @@ namespace DocSpring.Client.Model
             if (currency.IsSet && currency.Value == null)
                 throw new JsonException("Property is not nullable for class Field: currency.");
 
+            if (numberPart.IsSet && numberPart.Value == null)
+                throw new JsonException("Property is not nullable for class Field: number_part.");
+
             if (imageScaleType.IsSet && imageScaleType.Value == null)
                 throw new JsonException("Property is not nullable for class Field: image_scale_type.");
 
             if (imageGravity.IsSet && imageGravity.Value == null)
                 throw new JsonException("Property is not nullable for class Field: image_gravity.");
 
-            return new Field(id.Value.Value, page.Value.Value, type.Value.Value, varStatic.Value.Value, editable.Value.Value, title.Value, description.Value, placeholder.Value, metadata.Value, required.Value.Value, combinedFieldNames.Value, combinedFieldType.Value.Value, combinedFieldSeparator.Value, combinedFieldFormat.Value, integer.Value.Value, exclusiveMinimum.Value.Value, exclusiveMaximum.Value.Value, signatureAllowDraw.Value.Value, signatureAllowType.Value.Value, barcodeSymbology.Value.Value, hidden.Value.Value, x.Value.Value, y.Value.Value, width.Value.Value, height.Value.Value, rotation.Value.Value, displayType.Value.Value, opacity.Value.Value, characterSpacing.Value.Value, bold.Value.Value, uppercase.Value.Value, strikethrough.Value.Value, keepLeadingSpaces.Value.Value, overflow.Value.Value, multiline.Value.Value, minLength.Value.Value, autoCalculateMaxLength.Value.Value, colorFieldRequired.Value.Value, backgroundColorFieldRequired.Value.Value, alignment.Value.Value, vAlignment.Value.Value, comb.Value.Value, combNumberOfCells.Value.Value, combValueOffset.Value.Value, shapeType.Value.Value, shapeSides.Value.Value, shapeBorderWidth.Value.Value, shapeBorderColor.Value, shapeBorderColorFieldRequired.Value.Value, shapeFillColorFieldRequired.Value.Value, checkCharacter.Value.Value, checkColorFieldRequired.Value.Value, qrcodeColorFieldRequired.Value.Value, stringConditionType.Value.Value, numberConditionType.Value.Value, numberConditionRangeExclusiveMin.Value.Value, numberConditionRangeExclusiveMax.Value.Value, invertBooleanCondition.Value.Value, currency.Value.Value, imageScaleType.Value.Value, imageGravity.Value.Value, name.Value, acroformName.Value, varDefault.Value, optionList.Value, minimum.Value, maximum.Value, includeTime.Value, dateTimeFormat.Value, typeface.Value, fontSize.Value, multilineLines.Value, maxLength.Value, color.Value, colorFieldName.Value, backgroundColor.Value, backgroundColorFieldName.Value, shapeBorderColorFieldName.Value, shapeFillColor.Value, shapeFillColorFieldName.Value, checkColor.Value, checkColorFieldName.Value, qrcodeColor.Value, qrcodeColorFieldName.Value, trueText.Value, falseText.Value, condition.Value, numberConditionRangeMin.Value, numberConditionRangeMax.Value, decimalPlaces.Value, dependencies.Value);
+            return new Field(id.Value.Value, page.Value.Value, type.Value.Value, varStatic.Value.Value, editable.Value.Value, title.Value, description.Value, placeholder.Value, metadata.Value, required.Value.Value, printOptionLabels.Value.Value, combinedFieldNames.Value, combinedFieldType.Value.Value, combinedFieldSeparator.Value, combinedFieldFormat.Value, integer.Value.Value, exclusiveMinimum.Value.Value, exclusiveMaximum.Value.Value, signatureAllowDraw.Value.Value, signatureAllowType.Value.Value, barcodeSymbology.Value.Value, combFillFromRight.Value.Value, combPadWithZeros.Value.Value, printDigitsOnly.Value.Value, hidden.Value.Value, x.Value.Value, y.Value.Value, width.Value.Value, height.Value.Value, rotation.Value.Value, displayType.Value.Value, opacity.Value.Value, characterSpacing.Value.Value, bold.Value.Value, uppercase.Value.Value, strikethrough.Value.Value, keepLeadingSpaces.Value.Value, overflow.Value.Value, multiline.Value.Value, minLength.Value.Value, autoCalculateMaxLength.Value.Value, colorFieldRequired.Value.Value, backgroundColorFieldRequired.Value.Value, alignment.Value.Value, vAlignment.Value.Value, comb.Value.Value, combNumberOfCells.Value.Value, combValueOffset.Value.Value, shapeType.Value.Value, shapeSides.Value.Value, shapeBorderWidth.Value.Value, shapeBorderColor.Value, shapeBorderColorFieldRequired.Value.Value, shapeFillColorFieldRequired.Value.Value, checkCharacter.Value.Value, checkColorFieldRequired.Value.Value, qrcodeColorFieldRequired.Value.Value, stringConditionType.Value.Value, numberConditionType.Value.Value, numberConditionRangeExclusiveMin.Value.Value, numberConditionRangeExclusiveMax.Value.Value, invertBooleanCondition.Value.Value, currency.Value.Value, numberPart.Value.Value, imageScaleType.Value.Value, imageGravity.Value.Value, name.Value, acroformName.Value, varDefault.Value, optionList.Value, optionLabels.Value, minimum.Value, maximum.Value, includeTime.Value, dateTimeFormat.Value, typeface.Value, fontSize.Value, multilineLines.Value, maxLength.Value, color.Value, colorFieldName.Value, backgroundColor.Value, backgroundColorFieldName.Value, shapeBorderColorFieldName.Value, shapeFillColor.Value, shapeFillColorFieldName.Value, checkColor.Value, checkColorFieldName.Value, qrcodeColor.Value, qrcodeColorFieldName.Value, trueText.Value, falseText.Value, condition.Value, numberConditionRangeMin.Value, numberConditionRangeMax.Value, decimalPlaces.Value, signerRole.Value, dependencies.Value);
         }
 
         /// <summary>
@@ -1899,6 +2033,8 @@ namespace DocSpring.Client.Model
 
             writer.WriteBoolean("required", field.Required);
 
+            writer.WriteBoolean("print_option_labels", field.PrintOptionLabels);
+
             writer.WriteString("combined_field_names", field.CombinedFieldNames);
 
             var combinedFieldTypeRawValue = CombinedFieldTypeValueConverter.ToJsonValue(field.CombinedFieldType);
@@ -1920,6 +2056,12 @@ namespace DocSpring.Client.Model
 
             var barcodeSymbologyRawValue = BarcodeSymbologyValueConverter.ToJsonValue(field.BarcodeSymbology);
             writer.WriteString("barcode_symbology", barcodeSymbologyRawValue);
+
+            writer.WriteBoolean("comb_fill_from_right", field.CombFillFromRight);
+
+            writer.WriteBoolean("comb_pad_with_zeros", field.CombPadWithZeros);
+
+            writer.WriteBoolean("print_digits_only", field.PrintDigitsOnly);
 
             writer.WriteBoolean("hidden", field.Hidden);
 
@@ -2007,6 +2149,9 @@ namespace DocSpring.Client.Model
 
             writer.WriteBoolean("currency", field.Currency);
 
+            var numberPartRawValue = NumberPartValueConverter.ToJsonValue(field.NumberPart);
+            writer.WriteString("number_part", numberPartRawValue);
+
             var imageScaleTypeRawValue = ImageScaleTypeValueConverter.ToJsonValue(field.ImageScaleType);
             writer.WriteString("image_scale_type", imageScaleTypeRawValue);
 
@@ -2033,6 +2178,13 @@ namespace DocSpring.Client.Model
             else
                 writer.WriteNull("option_list");
 
+            if (field.OptionLabels != null)
+            {
+                writer.WritePropertyName("option_labels");
+                JsonSerializer.Serialize(writer, field.OptionLabels, jsonSerializerOptions);
+            }
+            else
+                writer.WriteNull("option_labels");
             if (field.Minimum != null)
                 writer.WriteNumber("minimum", field.Minimum.Value);
             else
@@ -2163,6 +2315,11 @@ namespace DocSpring.Client.Model
                 writer.WriteNumber("decimal_places", field.DecimalPlaces.Value);
             else
                 writer.WriteNull("decimal_places");
+
+            if (field.SignerRole != null)
+                writer.WriteString("signer_role", field.SignerRole);
+            else
+                writer.WriteNull("signer_role");
 
             if (field.Dependencies != null)
             {

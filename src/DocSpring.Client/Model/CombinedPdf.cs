@@ -43,7 +43,7 @@ namespace DocSpring.Client.Model
         /// <param name="createdAt">When the combined PDF was created.</param>
         /// <param name="updatedAt">When the combined PDF was last updated.</param>
         /// <param name="errorMessage">Why the PDFs couldn&#39;t be merged, when &#x60;state&#x60; is &#x60;error&#x60;.</param>
-        /// <param name="expiresAt">When the combined PDF expires (&#x60;expires_in&#x60; after it&#39;s generated). Null if it&#39;s kept until you delete it.</param>
+        /// <param name="expiresAt">When the combined PDF expires (&#x60;expires_in&#x60;, or the account&#39;s expiry setting, after it&#39;s generated). Null if it&#39;s kept until you delete it.</param>
         /// <param name="processedAt">When the PDF was generated. Null until then.</param>
         [JsonConstructor]
         public CombinedPdf(string id, CombinedPdfState state, List<CombinedPdfSource> sourcePdfs, Dictionary<string, Object> metadata, bool hasPassword, bool deleteCustomFiles, CombinedPdfFiles files, List<SubmissionAction> actions, bool expired, DateTime createdAt, DateTime updatedAt, string errorMessage = default, DateTime? expiresAt = default, DateTime? processedAt = default)
@@ -152,9 +152,9 @@ namespace DocSpring.Client.Model
         public string ErrorMessage { get; set; }
 
         /// <summary>
-        /// When the combined PDF expires (&#x60;expires_in&#x60; after it&#39;s generated). Null if it&#39;s kept until you delete it.
+        /// When the combined PDF expires (&#x60;expires_in&#x60;, or the account&#39;s expiry setting, after it&#39;s generated). Null if it&#39;s kept until you delete it.
         /// </summary>
-        /// <value>When the combined PDF expires (&#x60;expires_in&#x60; after it&#39;s generated). Null if it&#39;s kept until you delete it.</value>
+        /// <value>When the combined PDF expires (&#x60;expires_in&#x60;, or the account&#39;s expiry setting, after it&#39;s generated). Null if it&#39;s kept until you delete it.</value>
         [JsonPropertyName("expires_at")]
         public DateTime? ExpiresAt { get; set; }
 

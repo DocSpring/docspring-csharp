@@ -34,8 +34,8 @@ namespace DocSpring.Client.Model
         /// <param name="id">The signature request&#39;s ID.</param>
         /// <param name="submissionId">The ID of the submission the signature request belongs to.</param>
         /// <param name="metadata">Your own data about the signature request, such as an ID from your app.</param>
-        /// <param name="role">Which of the template&#39;s signers the person is. Until templates have roles of their own, a template&#39;s signers are &#x60;Signer 1&#x60;, &#x60;Signer 2&#x60; and so on, up to &#x60;Signer 100&#x60;: &#x60;Signer 1&#x60; is the one whose details the template&#39;s &#x60;@@signature_requests/0&#x60; fields print.</param>
-        /// <param name="sortOrder">The signer&#39;s position, from 0: &#x60;Signer 1&#x60; is 0. The template&#39;s &#x60;@@signature_requests/&lt;sort_order&gt;&#x60; fields print this signature request&#39;s details.</param>
+        /// <param name="role">Which of the template&#39;s signers the person is: their role&#39;s key (&#x60;tenant&#x60;) when the template has roles, otherwise &#x60;Signer 1&#x60;, &#x60;Signer 2&#x60; and so on, up to &#x60;Signer 100&#x60;. &#x60;Signer 1&#x60;, or the template&#39;s first role, is the one whose details the template&#39;s &#x60;@@signature_requests/0&#x60; fields print, and a role&#39;s details are in its &#x60;@@signature_requests/&lt;key&gt;&#x60; fields too (&#x60;@@signature_requests/tenant/completed_at&#x60;).</param>
+        /// <param name="sortOrder">The signer&#39;s position, from 0: &#x60;Signer 1&#x60; is 0, as is the template&#39;s first role. The template&#39;s &#x60;@@signature_requests/&lt;sort_order&gt;&#x60; fields, and its role&#39;s &#x60;@@signature_requests/&lt;key&gt;&#x60; fields, print this signature request&#39;s details.</param>
         /// <param name="sendEmail">Whether DocSpring emails this person their signing link.</param>
         /// <param name="state">&#x60;pending&#x60; until the person completes the signature request (&#x60;completed&#x60;) or declines it (&#x60;declined&#x60;).</param>
         /// <param name="authType">How your app authenticated the person before it showed them the signature request.</param>
@@ -44,7 +44,7 @@ namespace DocSpring.Client.Model
         /// <param name="updatedAt">When the signature request was last updated.</param>
         /// <param name="name">The name of the person the request is for.</param>
         /// <param name="email">Their email address. Null when they have none.</param>
-        /// <param name="fields">The fields this person fills in. Null for a signature request created with API v1 without a field list: it asks for every field the submission&#39;s data doesn&#39;t have.</param>
+        /// <param name="fields">The fields this person fills in or signs: the ones the template gives their role that data didn&#39;t fill in, and the ones their signature request listed. A submission&#39;s only signature request without a list also has every field without a role that data didn&#39;t fill in. Null for a signature request created with API v1 without a field list, on a PDF template without roles: it asks for every field the submission&#39;s data doesn&#39;t have.</param>
         /// <param name="signingStep">When this person signs, when the submission&#39;s &#x60;signing_order&#x60; is &#x60;sequential&#x60;: everyone in step 1 first, then step 2, and so on. Null when everyone can sign at once.</param>
         /// <param name="sentAt">When DocSpring first emailed this person their signing link. Null until it has, and when it doesn&#39;t email them (&#x60;send_email&#x60; is false).</param>
         /// <param name="emailStatus">What happened to the latest email DocSpring sent this person with their signing link: &#x60;sent&#x60; until the email service reports on it, then &#x60;delayed&#x60; (still trying), &#x60;delivered&#x60;, &#x60;undelivered&#x60; (it stopped trying, as with a full mailbox), &#x60;bounced&#x60; (the address doesn&#39;t exist) or &#x60;complained&#x60; (marked as spam). &#x60;failed&#x60; means DocSpring couldn&#39;t send the first email with their link, and &#x60;unknown&#x60; that it couldn&#39;t tell whether that email went: neither is sent again. Null until DocSpring has emailed them or tried to.</param>
@@ -147,16 +147,16 @@ namespace DocSpring.Client.Model
         public Dictionary<string, Object> Metadata { get; set; }
 
         /// <summary>
-        /// Which of the template&#39;s signers the person is. Until templates have roles of their own, a template&#39;s signers are &#x60;Signer 1&#x60;, &#x60;Signer 2&#x60; and so on, up to &#x60;Signer 100&#x60;: &#x60;Signer 1&#x60; is the one whose details the template&#39;s &#x60;@@signature_requests/0&#x60; fields print.
+        /// Which of the template&#39;s signers the person is: their role&#39;s key (&#x60;tenant&#x60;) when the template has roles, otherwise &#x60;Signer 1&#x60;, &#x60;Signer 2&#x60; and so on, up to &#x60;Signer 100&#x60;. &#x60;Signer 1&#x60;, or the template&#39;s first role, is the one whose details the template&#39;s &#x60;@@signature_requests/0&#x60; fields print, and a role&#39;s details are in its &#x60;@@signature_requests/&lt;key&gt;&#x60; fields too (&#x60;@@signature_requests/tenant/completed_at&#x60;).
         /// </summary>
-        /// <value>Which of the template&#39;s signers the person is. Until templates have roles of their own, a template&#39;s signers are &#x60;Signer 1&#x60;, &#x60;Signer 2&#x60; and so on, up to &#x60;Signer 100&#x60;: &#x60;Signer 1&#x60; is the one whose details the template&#39;s &#x60;@@signature_requests/0&#x60; fields print.</value>
+        /// <value>Which of the template&#39;s signers the person is: their role&#39;s key (&#x60;tenant&#x60;) when the template has roles, otherwise &#x60;Signer 1&#x60;, &#x60;Signer 2&#x60; and so on, up to &#x60;Signer 100&#x60;. &#x60;Signer 1&#x60;, or the template&#39;s first role, is the one whose details the template&#39;s &#x60;@@signature_requests/0&#x60; fields print, and a role&#39;s details are in its &#x60;@@signature_requests/&lt;key&gt;&#x60; fields too (&#x60;@@signature_requests/tenant/completed_at&#x60;).</value>
         [JsonPropertyName("role")]
         public string Role { get; set; }
 
         /// <summary>
-        /// The signer&#39;s position, from 0: &#x60;Signer 1&#x60; is 0. The template&#39;s &#x60;@@signature_requests/&lt;sort_order&gt;&#x60; fields print this signature request&#39;s details.
+        /// The signer&#39;s position, from 0: &#x60;Signer 1&#x60; is 0, as is the template&#39;s first role. The template&#39;s &#x60;@@signature_requests/&lt;sort_order&gt;&#x60; fields, and its role&#39;s &#x60;@@signature_requests/&lt;key&gt;&#x60; fields, print this signature request&#39;s details.
         /// </summary>
-        /// <value>The signer&#39;s position, from 0: &#x60;Signer 1&#x60; is 0. The template&#39;s &#x60;@@signature_requests/&lt;sort_order&gt;&#x60; fields print this signature request&#39;s details.</value>
+        /// <value>The signer&#39;s position, from 0: &#x60;Signer 1&#x60; is 0, as is the template&#39;s first role. The template&#39;s &#x60;@@signature_requests/&lt;sort_order&gt;&#x60; fields, and its role&#39;s &#x60;@@signature_requests/&lt;key&gt;&#x60; fields, print this signature request&#39;s details.</value>
         [JsonPropertyName("sort_order")]
         public int SortOrder { get; set; }
 
@@ -196,9 +196,9 @@ namespace DocSpring.Client.Model
         public string Email { get; set; }
 
         /// <summary>
-        /// The fields this person fills in. Null for a signature request created with API v1 without a field list: it asks for every field the submission&#39;s data doesn&#39;t have.
+        /// The fields this person fills in or signs: the ones the template gives their role that data didn&#39;t fill in, and the ones their signature request listed. A submission&#39;s only signature request without a list also has every field without a role that data didn&#39;t fill in. Null for a signature request created with API v1 without a field list, on a PDF template without roles: it asks for every field the submission&#39;s data doesn&#39;t have.
         /// </summary>
-        /// <value>The fields this person fills in. Null for a signature request created with API v1 without a field list: it asks for every field the submission&#39;s data doesn&#39;t have.</value>
+        /// <value>The fields this person fills in or signs: the ones the template gives their role that data didn&#39;t fill in, and the ones their signature request listed. A submission&#39;s only signature request without a list also has every field without a role that data didn&#39;t fill in. Null for a signature request created with API v1 without a field list, on a PDF template without roles: it asks for every field the submission&#39;s data doesn&#39;t have.</value>
         [JsonPropertyName("fields")]
         public List<string> Fields { get; set; }
 

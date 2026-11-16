@@ -153,6 +153,15 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'ContinueBeforeOptionalFields'
+        /// </summary>
+        [Fact]
+        public void ContinueBeforeOptionalFieldsTest()
+        {
+            // TODO unit test for the property 'ContinueBeforeOptionalFields'
+        }
+
+        /// <summary>
         /// Test the property 'DefaultFormMode'
         /// </summary>
         [Fact]
@@ -315,6 +324,15 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'FormSectionsInOrder'
+        /// </summary>
+        [Fact]
+        public void FormSectionsInOrderTest()
+        {
+            // TODO unit test for the property 'FormSectionsInOrder'
+        }
+
+        /// <summary>
         /// Test the property 'HasSlackWebhookUrl'
         /// </summary>
         [Fact]
@@ -360,6 +378,24 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'SignerRoles'
+        /// </summary>
+        [Fact]
+        public void SignerRolesTest()
+        {
+            // TODO unit test for the property 'SignerRoles'
+        }
+
+        /// <summary>
+        /// Test the property 'SignatureRequestCc'
+        /// </summary>
+        [Fact]
+        public void SignatureRequestCcTest()
+        {
+            // TODO unit test for the property 'SignatureRequestCc'
+        }
+
+        /// <summary>
         /// Test the property 'PredefinedFields'
         /// </summary>
         [Fact]
@@ -375,6 +411,15 @@ namespace DocSpring.Client.Test.Model
         public void VersionsTest()
         {
             // TODO unit test for the property 'Versions'
+        }
+
+        /// <summary>
+        /// Test the property 'OverrideAccountExpiry'
+        /// </summary>
+        [Fact]
+        public void OverrideAccountExpiryTest()
+        {
+            // TODO unit test for the property 'OverrideAccountExpiry'
         }
 
         /// <summary>

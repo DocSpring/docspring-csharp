@@ -40,7 +40,7 @@ namespace DocSpring.Client.Model
         /// <param name="dataErrors">Why the data doesn&#39;t match the template&#39;s fields, when &#x60;state&#x60; is &#x60;invalid_data&#x60;: the same details as the 422 response that recorded it, with pointers into the request that created the submission (&#x60;/data/name&#x60;). Cleared once the submission has expired.</param>
         /// <param name="metadata">Your own data about the submission, such as an ID from your app. It isn&#39;t printed on the PDF. Two keys also change the PDF: &#x60;pdf_filename&#x60; names its file (&#x60;files.pdf.filename&#x60;, and its download), and &#x60;pdf_title&#x60; is its title in the PDF&#39;s document properties (and an HTML template&#39;s &#x60;&lt;title&gt;&#x60;, unless its HTML has one). Without &#x60;pdf_title&#x60;, the title is the template&#39;s name. In &#x60;pdf_filename&#x60;, a &#x60;.pdf&#x60; ending is removed, each run of characters other than letters, digits, &#x60;-&#x60;, &#x60;_&#x60; and &#x60;.&#x60; becomes one &#x60;_&#x60;, and the first 128 characters are kept, then &#x60;.pdf&#x60; is added. Without it, the file is named after the submission&#39;s ID (&#x60;sub_1234567890abcdef01.pdf&#x60;).</param>
         /// <param name="files">Empty unless you pass &#x60;include_files&#x3D;true&#x60;: then the generated files, as when you get the submission, without the &#x60;png&#x60; pages&#39; links (&#x60;files.png.pages&#x60; is null). Get the submission for its page images.</param>
-        /// <param name="expired">An expired submission&#39;s data, metadata, password and PDF have been deleted.</param>
+        /// <param name="expired">An expired submission&#39;s data, metadata, password and files have been deleted, along with its signature requests and audit trail.</param>
         /// <param name="createdAt">When the submission was created.</param>
         /// <param name="updatedAt">When the submission was last updated.</param>
         /// <param name="templateId">Null once the template has been permanently deleted.</param>
@@ -141,9 +141,9 @@ namespace DocSpring.Client.Model
         public SubmissionFiles Files { get; set; }
 
         /// <summary>
-        /// An expired submission&#39;s data, metadata, password and PDF have been deleted.
+        /// An expired submission&#39;s data, metadata, password and files have been deleted, along with its signature requests and audit trail.
         /// </summary>
-        /// <value>An expired submission&#39;s data, metadata, password and PDF have been deleted.</value>
+        /// <value>An expired submission&#39;s data, metadata, password and files have been deleted, along with its signature requests and audit trail.</value>
         [JsonPropertyName("expired")]
         public bool Expired { get; set; }
 

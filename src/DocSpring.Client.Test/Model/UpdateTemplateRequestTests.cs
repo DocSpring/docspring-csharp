@@ -135,6 +135,15 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'ContinueBeforeOptionalFields'
+        /// </summary>
+        [Fact]
+        public void ContinueBeforeOptionalFieldsTest()
+        {
+            // TODO unit test for the property 'ContinueBeforeOptionalFields'
+        }
+
+        /// <summary>
         /// Test the property 'DefaultFormMode'
         /// </summary>
         [Fact]
@@ -369,6 +378,15 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'FormSectionsInOrder'
+        /// </summary>
+        [Fact]
+        public void FormSectionsInOrderTest()
+        {
+            // TODO unit test for the property 'FormSectionsInOrder'
+        }
+
+        /// <summary>
         /// Test the property 'SlackWebhookUrl'
         /// </summary>
         [Fact]
@@ -411,6 +429,24 @@ namespace DocSpring.Client.Test.Model
         public void FormSectionsTest()
         {
             // TODO unit test for the property 'FormSections'
+        }
+
+        /// <summary>
+        /// Test the property 'SignerRoles'
+        /// </summary>
+        [Fact]
+        public void SignerRolesTest()
+        {
+            // TODO unit test for the property 'SignerRoles'
+        }
+
+        /// <summary>
+        /// Test the property 'SignatureRequestCc'
+        /// </summary>
+        [Fact]
+        public void SignatureRequestCcTest()
+        {
+            // TODO unit test for the property 'SignatureRequestCc'
         }
 
         /// <summary>
@@ -492,6 +528,24 @@ namespace DocSpring.Client.Test.Model
         public void LayoutTest()
         {
             // TODO unit test for the property 'Layout'
+        }
+
+        /// <summary>
+        /// Test the property 'OverrideAccountExpiry'
+        /// </summary>
+        [Fact]
+        public void OverrideAccountExpiryTest()
+        {
+            // TODO unit test for the property 'OverrideAccountExpiry'
+        }
+
+        /// <summary>
+        /// Test the property 'SyncFields'
+        /// </summary>
+        [Fact]
+        public void SyncFieldsTest()
+        {
+            // TODO unit test for the property 'SyncFields'
         }
     }
 }

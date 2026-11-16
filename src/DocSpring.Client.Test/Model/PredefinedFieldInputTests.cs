@@ -99,6 +99,15 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'OptionLabels'
+        /// </summary>
+        [Fact]
+        public void OptionLabelsTest()
+        {
+            // TODO unit test for the property 'OptionLabels'
+        }
+
+        /// <summary>
         /// Test the property 'RequiredInTemplate'
         /// </summary>
         [Fact]

@@ -1,0 +1,37 @@
+# Written by DocSpring/docspring's api_clients/scripts/generate from api_clients/github_workflows/csharp/.shiplist.yml:
+# change it there.
+#
+# The files the NuGet package may hold (https://github.com/DocSpring/shiplist): the compiled library and the README.
+# The release workflow packs it and fails if it has any other file.
+version: 1
+stages: [package]
+
+remove_before:
+  package:
+    include:
+      - '.*'
+      - '.*/**'
+      - 'api/'
+      - 'docs/'
+      - 'src/'
+      - 'AGENTS.md'
+      - 'appveyor.yml'
+      - 'CHANGELOG.md'
+      - 'DocSpring.Client.sln'
+      - 'LICENSE'
+
+keep:
+  include:
+    - 'README.md'
+
+forbid:
+  - '**/.env'
+  - '**/.env.*'
+
+# What dotnet pack writes: the library and its XML docs, the manifest and the package's metadata
+build_output:
+  - 'lib/**'
+  - '_rels/**'
+  - 'package/**'
+  - '\[Content_Types\].xml'
+  - 'DocSpring.Client.nuspec'

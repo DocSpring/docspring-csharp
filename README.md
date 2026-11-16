@@ -13,7 +13,7 @@ pull requests are welcome.
 Outside C# code, the [DocSpring CLI](https://docspring.com/docs/cli/) calls the same API from a terminal or a
 shell script, and the [MCP server](https://docspring.com/docs/mcp/) connects AI assistants to your account.
 
-Version 4.5.0. Requires .NET Standard 2.0 (.NET 6 or later, or .NET Framework 4.6.2 or later).
+Version 4.6.0. Requires .NET Standard 2.0 (.NET 6 or later, or .NET Framework 4.6.2 or later).
 
 ## Install and configure
 

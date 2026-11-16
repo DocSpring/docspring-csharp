@@ -600,7 +600,7 @@ namespace DocSpring.Client.Api
         /// Delete a template
         /// </summary>
         /// <remarks>
-        /// Deletes a template&#39;s draft and all of its published versions, or one published version (&#x60;version&#x60;). Returns the template as it was before it was deleted. 
+        /// Deletes a template&#39;s draft and all of its published versions, or one published version (&#x60;version&#x60;). Returns the template as it was before it was deleted. A deleted template can be restored from Trash in the dashboard for a limited time; a single deleted version can&#39;t. 
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId">The template&#39;s ID.</param>
@@ -614,7 +614,7 @@ namespace DocSpring.Client.Api
         /// Delete a template
         /// </summary>
         /// <remarks>
-        /// Deletes a template&#39;s draft and all of its published versions, or one published version (&#x60;version&#x60;). Returns the template as it was before it was deleted. 
+        /// Deletes a template&#39;s draft and all of its published versions, or one published version (&#x60;version&#x60;). Returns the template as it was before it was deleted. A deleted template can be restored from Trash in the dashboard for a limited time; a single deleted version can&#39;t. 
         /// </remarks>
         /// <param name="templateId">The template&#39;s ID.</param>
         /// <param name="version">Delete only this published version (&#x60;1.2.0&#x60;) or the draft (&#x60;draft&#x60;, when no version has been published). Without it, the draft and every published version are deleted. (optional)</param>
@@ -677,7 +677,7 @@ namespace DocSpring.Client.Api
         /// Expire a submission
         /// </summary>
         /// <remarks>
-        /// Deletes a submission&#39;s data and PDF now, and returns the expired submission.
+        /// Deletes a submission&#39;s data and files now, along with any signature requests and audit trail, and returns the expired submission. 
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="submissionId">The submission&#39;s ID.</param>
@@ -690,7 +690,7 @@ namespace DocSpring.Client.Api
         /// Expire a submission
         /// </summary>
         /// <remarks>
-        /// Deletes a submission&#39;s data and PDF now, and returns the expired submission.
+        /// Deletes a submission&#39;s data and files now, along with any signature requests and audit trail, and returns the expired submission. 
         /// </remarks>
         /// <param name="submissionId">The submission&#39;s ID.</param>
         /// <param name="idempotencyKey">A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request&#39;s response (and an &#x60;Idempotent-Replayed: true&#x60; header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 &#x60;idempotency_key_reused&#x60;. A 409 &#x60;idempotency_key_in_use&#x60; with a &#x60;Retry-After&#x60; header means the first request is still being processed: send the request again then. A repeated response is the first one as it was, so its &#x60;download_url&#x60; links may have expired: use &#x60;permanent_url&#x60;, or get the record again for new links. (optional)</param>
@@ -1987,10 +1987,11 @@ namespace DocSpring.Client.Api
         /// <param name="fieldLogic">With &#x60;detect_fields&#x60;, whether AI reads the whole form once the fields are named and sets up conditional logic and required fields (&#x60;ai&#x60;) or not (&#x60;none&#x60;). Default: your account&#39;s template settings. (optional)</param>
         /// <param name="outputFormat">What each submission of a Word template makes unless its request sets &#x60;output_formats&#x60;: &#x60;docx&#x60; (a Word document), &#x60;odt&#x60; (an OpenDocument file, converted from the Word document) or &#x60;pdf&#x60;. Required when &#x60;document&#x60; is a Word document. (optional)</param>
         /// <param name="includeOfficeUseFields">With &#x60;detect_fields&#x60;, whether AI field setup keeps the fields that only the office receiving the form fills in, such as a \\\&quot;For office use only\\\&quot; box (&#x60;true&#x60;), or leaves them out (&#x60;false&#x60;). Default: your account&#39;s template settings. (optional)</param>
+        /// <param name="syncFields">Add a field for each value the template&#39;s code, Word document or layout reads for the first time, with a type worked out from how it&#39;s used. Existing fields keep their settings, and a field you deleted while the code still read the value stays deleted. Default true. Set it to false to manage the fields yourself with the fields endpoints: a form field whose field isn&#39;t on the template then fails its submissions and previews. Only for HTML templates, Word templates and page designs. (optional)</param>
         /// <param name="idempotencyKey">A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request&#39;s response (and an &#x60;Idempotent-Replayed: true&#x60; header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 &#x60;idempotency_key_reused&#x60;. A 409 &#x60;idempotency_key_in_use&#x60; with a &#x60;Retry-After&#x60; header means the first request is still being processed: send the request again then. A repeated response is the first one as it was, so its &#x60;download_url&#x60; links may have expired: use &#x60;permanent_url&#x60;, or get the record again for new links. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IUploadTemplateApiResponse"/>&gt;</returns>
-        Task<IUploadTemplateApiResponse> UploadTemplateAsync(DocSpring.Client.Client.FileParameter document, Option<bool> wait = default, Option<string> name = default, Option<string> description = default, Option<string> parentFolderId = default, Option<AiFieldNamingLanguage> aiFieldNamingLanguage = default, Option<bool> detectFields = default, Option<FieldSetupSource> fieldSource = default, Option<FieldSetupNaming> fieldNaming = default, Option<FieldSetupLogic> fieldLogic = default, Option<OutputFormat> outputFormat = default, Option<bool> includeOfficeUseFields = default, Option<string> idempotencyKey = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<IUploadTemplateApiResponse> UploadTemplateAsync(DocSpring.Client.Client.FileParameter document, Option<bool> wait = default, Option<string> name = default, Option<string> description = default, Option<string> parentFolderId = default, Option<AiFieldNamingLanguage> aiFieldNamingLanguage = default, Option<bool> detectFields = default, Option<FieldSetupSource> fieldSource = default, Option<FieldSetupNaming> fieldNaming = default, Option<FieldSetupLogic> fieldLogic = default, Option<OutputFormat> outputFormat = default, Option<bool> includeOfficeUseFields = default, Option<bool> syncFields = default, Option<string> idempotencyKey = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a template from an uploaded PDF or Word document
@@ -2010,10 +2011,11 @@ namespace DocSpring.Client.Api
         /// <param name="fieldLogic">With &#x60;detect_fields&#x60;, whether AI reads the whole form once the fields are named and sets up conditional logic and required fields (&#x60;ai&#x60;) or not (&#x60;none&#x60;). Default: your account&#39;s template settings. (optional)</param>
         /// <param name="outputFormat">What each submission of a Word template makes unless its request sets &#x60;output_formats&#x60;: &#x60;docx&#x60; (a Word document), &#x60;odt&#x60; (an OpenDocument file, converted from the Word document) or &#x60;pdf&#x60;. Required when &#x60;document&#x60; is a Word document. (optional)</param>
         /// <param name="includeOfficeUseFields">With &#x60;detect_fields&#x60;, whether AI field setup keeps the fields that only the office receiving the form fills in, such as a \\\&quot;For office use only\\\&quot; box (&#x60;true&#x60;), or leaves them out (&#x60;false&#x60;). Default: your account&#39;s template settings. (optional)</param>
+        /// <param name="syncFields">Add a field for each value the template&#39;s code, Word document or layout reads for the first time, with a type worked out from how it&#39;s used. Existing fields keep their settings, and a field you deleted while the code still read the value stays deleted. Default true. Set it to false to manage the fields yourself with the fields endpoints: a form field whose field isn&#39;t on the template then fails its submissions and previews. Only for HTML templates, Word templates and page designs. (optional)</param>
         /// <param name="idempotencyKey">A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request&#39;s response (and an &#x60;Idempotent-Replayed: true&#x60; header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 &#x60;idempotency_key_reused&#x60;. A 409 &#x60;idempotency_key_in_use&#x60; with a &#x60;Retry-After&#x60; header means the first request is still being processed: send the request again then. A repeated response is the first one as it was, so its &#x60;download_url&#x60; links may have expired: use &#x60;permanent_url&#x60;, or get the record again for new links. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IUploadTemplateApiResponse"/>&gt;</returns>
-        Task<IUploadTemplateApiResponse> UploadTemplateOrDefaultAsync(DocSpring.Client.Client.FileParameter document, Option<bool> wait = default, Option<string> name = default, Option<string> description = default, Option<string> parentFolderId = default, Option<AiFieldNamingLanguage> aiFieldNamingLanguage = default, Option<bool> detectFields = default, Option<FieldSetupSource> fieldSource = default, Option<FieldSetupNaming> fieldNaming = default, Option<FieldSetupLogic> fieldLogic = default, Option<OutputFormat> outputFormat = default, Option<bool> includeOfficeUseFields = default, Option<string> idempotencyKey = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<IUploadTemplateApiResponse> UploadTemplateOrDefaultAsync(DocSpring.Client.Client.FileParameter document, Option<bool> wait = default, Option<string> name = default, Option<string> description = default, Option<string> parentFolderId = default, Option<AiFieldNamingLanguage> aiFieldNamingLanguage = default, Option<bool> detectFields = default, Option<FieldSetupSource> fieldSource = default, Option<FieldSetupNaming> fieldNaming = default, Option<FieldSetupLogic> fieldLogic = default, Option<OutputFormat> outputFormat = default, Option<bool> includeOfficeUseFields = default, Option<bool> syncFields = default, Option<string> idempotencyKey = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Replace a template&#39;s document with an uploaded file
@@ -2026,10 +2028,11 @@ namespace DocSpring.Client.Api
         /// <param name="document">The new PDF, or the new Word document (.docx or .odt) of a Word template.</param>
         /// <param name="wait">Wait until the PDF has been processed, a &#x60;document_url&#x60;&#39;s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts. (optional)</param>
         /// <param name="reimportFields">Replace all of the template&#39;s fields with the fillable fields in the new PDF, once DocSpring has processed it (&#x60;document.field_reimport_state&#x60;). As on a first upload, the default typeface, font size, bold and color are taken from the PDF&#39;s fields; the template&#39;s other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can&#39;t re-import its fields. Only for PDF templates: a Word template adds a field for each new tag. (optional)</param>
+        /// <param name="syncFields">Add a field for each value the template&#39;s code, Word document or layout reads for the first time, with a type worked out from how it&#39;s used. Existing fields keep their settings, and a field you deleted while the code still read the value stays deleted. Default true. Set it to false to manage the fields yourself with the fields endpoints: a form field whose field isn&#39;t on the template then fails its submissions and previews. Only for HTML templates, Word templates and page designs. (optional)</param>
         /// <param name="idempotencyKey">A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request&#39;s response (and an &#x60;Idempotent-Replayed: true&#x60; header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 &#x60;idempotency_key_reused&#x60;. A 409 &#x60;idempotency_key_in_use&#x60; with a &#x60;Retry-After&#x60; header means the first request is still being processed: send the request again then. A repeated response is the first one as it was, so its &#x60;download_url&#x60; links may have expired: use &#x60;permanent_url&#x60;, or get the record again for new links. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IUploadTemplateDocumentApiResponse"/>&gt;</returns>
-        Task<IUploadTemplateDocumentApiResponse> UploadTemplateDocumentAsync(string templateId, DocSpring.Client.Client.FileParameter document, Option<bool> wait = default, Option<bool> reimportFields = default, Option<string> idempotencyKey = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<IUploadTemplateDocumentApiResponse> UploadTemplateDocumentAsync(string templateId, DocSpring.Client.Client.FileParameter document, Option<bool> wait = default, Option<bool> reimportFields = default, Option<bool> syncFields = default, Option<string> idempotencyKey = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Replace a template&#39;s document with an uploaded file
@@ -2041,10 +2044,11 @@ namespace DocSpring.Client.Api
         /// <param name="document">The new PDF, or the new Word document (.docx or .odt) of a Word template.</param>
         /// <param name="wait">Wait until the PDF has been processed, a &#x60;document_url&#x60;&#39;s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts. (optional)</param>
         /// <param name="reimportFields">Replace all of the template&#39;s fields with the fillable fields in the new PDF, once DocSpring has processed it (&#x60;document.field_reimport_state&#x60;). As on a first upload, the default typeface, font size, bold and color are taken from the PDF&#39;s fields; the template&#39;s other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can&#39;t re-import its fields. Only for PDF templates: a Word template adds a field for each new tag. (optional)</param>
+        /// <param name="syncFields">Add a field for each value the template&#39;s code, Word document or layout reads for the first time, with a type worked out from how it&#39;s used. Existing fields keep their settings, and a field you deleted while the code still read the value stays deleted. Default true. Set it to false to manage the fields yourself with the fields endpoints: a form field whose field isn&#39;t on the template then fails its submissions and previews. Only for HTML templates, Word templates and page designs. (optional)</param>
         /// <param name="idempotencyKey">A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request&#39;s response (and an &#x60;Idempotent-Replayed: true&#x60; header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 &#x60;idempotency_key_reused&#x60;. A 409 &#x60;idempotency_key_in_use&#x60; with a &#x60;Retry-After&#x60; header means the first request is still being processed: send the request again then. A repeated response is the first one as it was, so its &#x60;download_url&#x60; links may have expired: use &#x60;permanent_url&#x60;, or get the record again for new links. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IUploadTemplateDocumentApiResponse"/>&gt;</returns>
-        Task<IUploadTemplateDocumentApiResponse> UploadTemplateDocumentOrDefaultAsync(string templateId, DocSpring.Client.Client.FileParameter document, Option<bool> wait = default, Option<bool> reimportFields = default, Option<string> idempotencyKey = default, System.Threading.CancellationToken cancellationToken = default);
+        Task<IUploadTemplateDocumentApiResponse> UploadTemplateDocumentOrDefaultAsync(string templateId, DocSpring.Client.Client.FileParameter document, Option<bool> wait = default, Option<bool> reimportFields = default, Option<bool> syncFields = default, Option<string> idempotencyKey = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Check a submission without creating it
@@ -17556,7 +17560,7 @@ namespace DocSpring.Client.Api
         partial void OnErrorDeleteTemplate(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, Option<string> version, Option<string> idempotencyKey);
 
         /// <summary>
-        /// Delete a template Deletes a template&#39;s draft and all of its published versions, or one published version (&#x60;version&#x60;). Returns the template as it was before it was deleted. 
+        /// Delete a template Deletes a template&#39;s draft and all of its published versions, or one published version (&#x60;version&#x60;). Returns the template as it was before it was deleted. A deleted template can be restored from Trash in the dashboard for a limited time; a single deleted version can&#39;t. 
         /// </summary>
         /// <param name="templateId">The template&#39;s ID.</param>
         /// <param name="version">Delete only this published version (&#x60;1.2.0&#x60;) or the draft (&#x60;draft&#x60;, when no version has been published). Without it, the draft and every published version are deleted. (optional)</param>
@@ -17576,7 +17580,7 @@ namespace DocSpring.Client.Api
         }
 
         /// <summary>
-        /// Delete a template Deletes a template&#39;s draft and all of its published versions, or one published version (&#x60;version&#x60;). Returns the template as it was before it was deleted. 
+        /// Delete a template Deletes a template&#39;s draft and all of its published versions, or one published version (&#x60;version&#x60;). Returns the template as it was before it was deleted. A deleted template can be restored from Trash in the dashboard for a limited time; a single deleted version can&#39;t. 
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="templateId">The template&#39;s ID.</param>
@@ -19032,7 +19036,7 @@ namespace DocSpring.Client.Api
         partial void OnErrorExpireSubmission(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string submissionId, Option<string> idempotencyKey);
 
         /// <summary>
-        /// Expire a submission Deletes a submission&#39;s data and PDF now, and returns the expired submission.
+        /// Expire a submission Deletes a submission&#39;s data and files now, along with any signature requests and audit trail, and returns the expired submission. 
         /// </summary>
         /// <param name="submissionId">The submission&#39;s ID.</param>
         /// <param name="idempotencyKey">A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request&#39;s response (and an &#x60;Idempotent-Replayed: true&#x60; header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 &#x60;idempotency_key_reused&#x60;. A 409 &#x60;idempotency_key_in_use&#x60; with a &#x60;Retry-After&#x60; header means the first request is still being processed: send the request again then. A repeated response is the first one as it was, so its &#x60;download_url&#x60; links may have expired: use &#x60;permanent_url&#x60;, or get the record again for new links. (optional)</param>
@@ -19051,7 +19055,7 @@ namespace DocSpring.Client.Api
         }
 
         /// <summary>
-        /// Expire a submission Deletes a submission&#39;s data and PDF now, and returns the expired submission.
+        /// Expire a submission Deletes a submission&#39;s data and files now, along with any signature requests and audit trail, and returns the expired submission. 
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="submissionId">The submission&#39;s ID.</param>
@@ -42156,7 +42160,7 @@ namespace DocSpring.Client.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
-        partial void FormatUploadTemplate(ref DocSpring.Client.Client.FileParameter document, ref Option<bool> wait, ref Option<string> name, ref Option<string> description, ref Option<string> parentFolderId, ref Option<AiFieldNamingLanguage> aiFieldNamingLanguage, ref Option<bool> detectFields, ref Option<FieldSetupSource> fieldSource, ref Option<FieldSetupNaming> fieldNaming, ref Option<FieldSetupLogic> fieldLogic, ref Option<OutputFormat> outputFormat, ref Option<bool> includeOfficeUseFields, ref Option<string> idempotencyKey);
+        partial void FormatUploadTemplate(ref DocSpring.Client.Client.FileParameter document, ref Option<bool> wait, ref Option<string> name, ref Option<string> description, ref Option<string> parentFolderId, ref Option<AiFieldNamingLanguage> aiFieldNamingLanguage, ref Option<bool> detectFields, ref Option<FieldSetupSource> fieldSource, ref Option<FieldSetupNaming> fieldNaming, ref Option<FieldSetupLogic> fieldLogic, ref Option<OutputFormat> outputFormat, ref Option<bool> includeOfficeUseFields, ref Option<bool> syncFields, ref Option<string> idempotencyKey);
 
         /// <summary>
         /// Validates the request parameters
@@ -42201,11 +42205,12 @@ namespace DocSpring.Client.Api
         /// <param name="fieldLogic"></param>
         /// <param name="outputFormat"></param>
         /// <param name="includeOfficeUseFields"></param>
+        /// <param name="syncFields"></param>
         /// <param name="idempotencyKey"></param>
-        private void AfterUploadTemplateDefaultImplementation(IUploadTemplateApiResponse apiResponseLocalVar, DocSpring.Client.Client.FileParameter document, Option<bool> wait, Option<string> name, Option<string> description, Option<string> parentFolderId, Option<AiFieldNamingLanguage> aiFieldNamingLanguage, Option<bool> detectFields, Option<FieldSetupSource> fieldSource, Option<FieldSetupNaming> fieldNaming, Option<FieldSetupLogic> fieldLogic, Option<OutputFormat> outputFormat, Option<bool> includeOfficeUseFields, Option<string> idempotencyKey)
+        private void AfterUploadTemplateDefaultImplementation(IUploadTemplateApiResponse apiResponseLocalVar, DocSpring.Client.Client.FileParameter document, Option<bool> wait, Option<string> name, Option<string> description, Option<string> parentFolderId, Option<AiFieldNamingLanguage> aiFieldNamingLanguage, Option<bool> detectFields, Option<FieldSetupSource> fieldSource, Option<FieldSetupNaming> fieldNaming, Option<FieldSetupLogic> fieldLogic, Option<OutputFormat> outputFormat, Option<bool> includeOfficeUseFields, Option<bool> syncFields, Option<string> idempotencyKey)
         {
             bool suppressDefaultLog = false;
-            AfterUploadTemplate(ref suppressDefaultLog, apiResponseLocalVar, document, wait, name, description, parentFolderId, aiFieldNamingLanguage, detectFields, fieldSource, fieldNaming, fieldLogic, outputFormat, includeOfficeUseFields, idempotencyKey);
+            AfterUploadTemplate(ref suppressDefaultLog, apiResponseLocalVar, document, wait, name, description, parentFolderId, aiFieldNamingLanguage, detectFields, fieldSource, fieldNaming, fieldLogic, outputFormat, includeOfficeUseFields, syncFields, idempotencyKey);
             if (!suppressDefaultLog)
                 Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -42227,8 +42232,9 @@ namespace DocSpring.Client.Api
         /// <param name="fieldLogic"></param>
         /// <param name="outputFormat"></param>
         /// <param name="includeOfficeUseFields"></param>
+        /// <param name="syncFields"></param>
         /// <param name="idempotencyKey"></param>
-        partial void AfterUploadTemplate(ref bool suppressDefaultLog, IUploadTemplateApiResponse apiResponseLocalVar, DocSpring.Client.Client.FileParameter document, Option<bool> wait, Option<string> name, Option<string> description, Option<string> parentFolderId, Option<AiFieldNamingLanguage> aiFieldNamingLanguage, Option<bool> detectFields, Option<FieldSetupSource> fieldSource, Option<FieldSetupNaming> fieldNaming, Option<FieldSetupLogic> fieldLogic, Option<OutputFormat> outputFormat, Option<bool> includeOfficeUseFields, Option<string> idempotencyKey);
+        partial void AfterUploadTemplate(ref bool suppressDefaultLog, IUploadTemplateApiResponse apiResponseLocalVar, DocSpring.Client.Client.FileParameter document, Option<bool> wait, Option<string> name, Option<string> description, Option<string> parentFolderId, Option<AiFieldNamingLanguage> aiFieldNamingLanguage, Option<bool> detectFields, Option<FieldSetupSource> fieldSource, Option<FieldSetupNaming> fieldNaming, Option<FieldSetupLogic> fieldLogic, Option<OutputFormat> outputFormat, Option<bool> includeOfficeUseFields, Option<bool> syncFields, Option<string> idempotencyKey);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -42248,11 +42254,12 @@ namespace DocSpring.Client.Api
         /// <param name="fieldLogic"></param>
         /// <param name="outputFormat"></param>
         /// <param name="includeOfficeUseFields"></param>
+        /// <param name="syncFields"></param>
         /// <param name="idempotencyKey"></param>
-        private void OnErrorUploadTemplateDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, DocSpring.Client.Client.FileParameter document, Option<bool> wait, Option<string> name, Option<string> description, Option<string> parentFolderId, Option<AiFieldNamingLanguage> aiFieldNamingLanguage, Option<bool> detectFields, Option<FieldSetupSource> fieldSource, Option<FieldSetupNaming> fieldNaming, Option<FieldSetupLogic> fieldLogic, Option<OutputFormat> outputFormat, Option<bool> includeOfficeUseFields, Option<string> idempotencyKey)
+        private void OnErrorUploadTemplateDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, DocSpring.Client.Client.FileParameter document, Option<bool> wait, Option<string> name, Option<string> description, Option<string> parentFolderId, Option<AiFieldNamingLanguage> aiFieldNamingLanguage, Option<bool> detectFields, Option<FieldSetupSource> fieldSource, Option<FieldSetupNaming> fieldNaming, Option<FieldSetupLogic> fieldLogic, Option<OutputFormat> outputFormat, Option<bool> includeOfficeUseFields, Option<bool> syncFields, Option<string> idempotencyKey)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorUploadTemplate(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, document, wait, name, description, parentFolderId, aiFieldNamingLanguage, detectFields, fieldSource, fieldNaming, fieldLogic, outputFormat, includeOfficeUseFields, idempotencyKey);
+            OnErrorUploadTemplate(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, document, wait, name, description, parentFolderId, aiFieldNamingLanguage, detectFields, fieldSource, fieldNaming, fieldLogic, outputFormat, includeOfficeUseFields, syncFields, idempotencyKey);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -42276,8 +42283,9 @@ namespace DocSpring.Client.Api
         /// <param name="fieldLogic"></param>
         /// <param name="outputFormat"></param>
         /// <param name="includeOfficeUseFields"></param>
+        /// <param name="syncFields"></param>
         /// <param name="idempotencyKey"></param>
-        partial void OnErrorUploadTemplate(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, DocSpring.Client.Client.FileParameter document, Option<bool> wait, Option<string> name, Option<string> description, Option<string> parentFolderId, Option<AiFieldNamingLanguage> aiFieldNamingLanguage, Option<bool> detectFields, Option<FieldSetupSource> fieldSource, Option<FieldSetupNaming> fieldNaming, Option<FieldSetupLogic> fieldLogic, Option<OutputFormat> outputFormat, Option<bool> includeOfficeUseFields, Option<string> idempotencyKey);
+        partial void OnErrorUploadTemplate(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, DocSpring.Client.Client.FileParameter document, Option<bool> wait, Option<string> name, Option<string> description, Option<string> parentFolderId, Option<AiFieldNamingLanguage> aiFieldNamingLanguage, Option<bool> detectFields, Option<FieldSetupSource> fieldSource, Option<FieldSetupNaming> fieldNaming, Option<FieldSetupLogic> fieldLogic, Option<OutputFormat> outputFormat, Option<bool> includeOfficeUseFields, Option<bool> syncFields, Option<string> idempotencyKey);
 
         /// <summary>
         /// Create a template from an uploaded PDF or Word document Creates a PDF template from a PDF, or a Word template from a Word document (.docx) or an OpenDocument text file (.odt), sent with the request (&#x60;multipart/form-data&#x60;). A Word template needs its &#x60;output_format&#x60;. For large files, upload the file with the presigned upload (GET /uploads/presign) and create the template with POST /templates. 
@@ -42294,14 +42302,15 @@ namespace DocSpring.Client.Api
         /// <param name="fieldLogic">With &#x60;detect_fields&#x60;, whether AI reads the whole form once the fields are named and sets up conditional logic and required fields (&#x60;ai&#x60;) or not (&#x60;none&#x60;). Default: your account&#39;s template settings. (optional)</param>
         /// <param name="outputFormat">What each submission of a Word template makes unless its request sets &#x60;output_formats&#x60;: &#x60;docx&#x60; (a Word document), &#x60;odt&#x60; (an OpenDocument file, converted from the Word document) or &#x60;pdf&#x60;. Required when &#x60;document&#x60; is a Word document. (optional)</param>
         /// <param name="includeOfficeUseFields">With &#x60;detect_fields&#x60;, whether AI field setup keeps the fields that only the office receiving the form fills in, such as a \\\&quot;For office use only\\\&quot; box (&#x60;true&#x60;), or leaves them out (&#x60;false&#x60;). Default: your account&#39;s template settings. (optional)</param>
+        /// <param name="syncFields">Add a field for each value the template&#39;s code, Word document or layout reads for the first time, with a type worked out from how it&#39;s used. Existing fields keep their settings, and a field you deleted while the code still read the value stays deleted. Default true. Set it to false to manage the fields yourself with the fields endpoints: a form field whose field isn&#39;t on the template then fails its submissions and previews. Only for HTML templates, Word templates and page designs. (optional)</param>
         /// <param name="idempotencyKey">A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request&#39;s response (and an &#x60;Idempotent-Replayed: true&#x60; header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 &#x60;idempotency_key_reused&#x60;. A 409 &#x60;idempotency_key_in_use&#x60; with a &#x60;Retry-After&#x60; header means the first request is still being processed: send the request again then. A repeated response is the first one as it was, so its &#x60;download_url&#x60; links may have expired: use &#x60;permanent_url&#x60;, or get the record again for new links. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IUploadTemplateApiResponse"/>&gt;</returns>
-        public async Task<IUploadTemplateApiResponse> UploadTemplateOrDefaultAsync(DocSpring.Client.Client.FileParameter document, Option<bool> wait = default, Option<string> name = default, Option<string> description = default, Option<string> parentFolderId = default, Option<AiFieldNamingLanguage> aiFieldNamingLanguage = default, Option<bool> detectFields = default, Option<FieldSetupSource> fieldSource = default, Option<FieldSetupNaming> fieldNaming = default, Option<FieldSetupLogic> fieldLogic = default, Option<OutputFormat> outputFormat = default, Option<bool> includeOfficeUseFields = default, Option<string> idempotencyKey = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<IUploadTemplateApiResponse> UploadTemplateOrDefaultAsync(DocSpring.Client.Client.FileParameter document, Option<bool> wait = default, Option<string> name = default, Option<string> description = default, Option<string> parentFolderId = default, Option<AiFieldNamingLanguage> aiFieldNamingLanguage = default, Option<bool> detectFields = default, Option<FieldSetupSource> fieldSource = default, Option<FieldSetupNaming> fieldNaming = default, Option<FieldSetupLogic> fieldLogic = default, Option<OutputFormat> outputFormat = default, Option<bool> includeOfficeUseFields = default, Option<bool> syncFields = default, Option<string> idempotencyKey = default, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await UploadTemplateAsync(document, wait, name, description, parentFolderId, aiFieldNamingLanguage, detectFields, fieldSource, fieldNaming, fieldLogic, outputFormat, includeOfficeUseFields, idempotencyKey, cancellationToken).ConfigureAwait(false);
+                return await UploadTemplateAsync(document, wait, name, description, parentFolderId, aiFieldNamingLanguage, detectFields, fieldSource, fieldNaming, fieldLogic, outputFormat, includeOfficeUseFields, syncFields, idempotencyKey, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -42325,10 +42334,11 @@ namespace DocSpring.Client.Api
         /// <param name="fieldLogic">With &#x60;detect_fields&#x60;, whether AI reads the whole form once the fields are named and sets up conditional logic and required fields (&#x60;ai&#x60;) or not (&#x60;none&#x60;). Default: your account&#39;s template settings. (optional)</param>
         /// <param name="outputFormat">What each submission of a Word template makes unless its request sets &#x60;output_formats&#x60;: &#x60;docx&#x60; (a Word document), &#x60;odt&#x60; (an OpenDocument file, converted from the Word document) or &#x60;pdf&#x60;. Required when &#x60;document&#x60; is a Word document. (optional)</param>
         /// <param name="includeOfficeUseFields">With &#x60;detect_fields&#x60;, whether AI field setup keeps the fields that only the office receiving the form fills in, such as a \\\&quot;For office use only\\\&quot; box (&#x60;true&#x60;), or leaves them out (&#x60;false&#x60;). Default: your account&#39;s template settings. (optional)</param>
+        /// <param name="syncFields">Add a field for each value the template&#39;s code, Word document or layout reads for the first time, with a type worked out from how it&#39;s used. Existing fields keep their settings, and a field you deleted while the code still read the value stays deleted. Default true. Set it to false to manage the fields yourself with the fields endpoints: a form field whose field isn&#39;t on the template then fails its submissions and previews. Only for HTML templates, Word templates and page designs. (optional)</param>
         /// <param name="idempotencyKey">A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request&#39;s response (and an &#x60;Idempotent-Replayed: true&#x60; header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 &#x60;idempotency_key_reused&#x60;. A 409 &#x60;idempotency_key_in_use&#x60; with a &#x60;Retry-After&#x60; header means the first request is still being processed: send the request again then. A repeated response is the first one as it was, so its &#x60;download_url&#x60; links may have expired: use &#x60;permanent_url&#x60;, or get the record again for new links. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IUploadTemplateApiResponse"/>&gt;</returns>
-        public async Task<IUploadTemplateApiResponse> UploadTemplateAsync(DocSpring.Client.Client.FileParameter document, Option<bool> wait = default, Option<string> name = default, Option<string> description = default, Option<string> parentFolderId = default, Option<AiFieldNamingLanguage> aiFieldNamingLanguage = default, Option<bool> detectFields = default, Option<FieldSetupSource> fieldSource = default, Option<FieldSetupNaming> fieldNaming = default, Option<FieldSetupLogic> fieldLogic = default, Option<OutputFormat> outputFormat = default, Option<bool> includeOfficeUseFields = default, Option<string> idempotencyKey = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<IUploadTemplateApiResponse> UploadTemplateAsync(DocSpring.Client.Client.FileParameter document, Option<bool> wait = default, Option<string> name = default, Option<string> description = default, Option<string> parentFolderId = default, Option<AiFieldNamingLanguage> aiFieldNamingLanguage = default, Option<bool> detectFields = default, Option<FieldSetupSource> fieldSource = default, Option<FieldSetupNaming> fieldNaming = default, Option<FieldSetupLogic> fieldLogic = default, Option<OutputFormat> outputFormat = default, Option<bool> includeOfficeUseFields = default, Option<bool> syncFields = default, Option<string> idempotencyKey = default, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
@@ -42336,7 +42346,7 @@ namespace DocSpring.Client.Api
             {
                 ValidateUploadTemplate(document, name, description, parentFolderId, idempotencyKey);
 
-                FormatUploadTemplate(ref document, ref wait, ref name, ref description, ref parentFolderId, ref aiFieldNamingLanguage, ref detectFields, ref fieldSource, ref fieldNaming, ref fieldLogic, ref outputFormat, ref includeOfficeUseFields, ref idempotencyKey);
+                FormatUploadTemplate(ref document, ref wait, ref name, ref description, ref parentFolderId, ref aiFieldNamingLanguage, ref detectFields, ref fieldSource, ref fieldNaming, ref fieldLogic, ref outputFormat, ref includeOfficeUseFields, ref syncFields, ref idempotencyKey);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -42396,6 +42406,9 @@ namespace DocSpring.Client.Api
                     if (includeOfficeUseFields.IsSet)
                         formParameterLocalVars.Add(new KeyValuePair<string, string>("include_office_use_fields", ClientUtils.ParameterToString(includeOfficeUseFields.Value)));
 
+                    if (syncFields.IsSet)
+                        formParameterLocalVars.Add(new KeyValuePair<string, string>("sync_fields", ClientUtils.ParameterToString(syncFields.Value)));
+
                     foreach (var formParamLocalVar in formParameterLocalVars)
                         multipartContentLocalVar.Add(new StringContent(formParamLocalVar.Value ?? string.Empty), formParamLocalVar.Key);
 
@@ -42453,7 +42466,7 @@ namespace DocSpring.Client.Api
                             }
                         }
 
-                        AfterUploadTemplateDefaultImplementation(apiResponseLocalVar, document, wait, name, description, parentFolderId, aiFieldNamingLanguage, detectFields, fieldSource, fieldNaming, fieldLogic, outputFormat, includeOfficeUseFields, idempotencyKey);
+                        AfterUploadTemplateDefaultImplementation(apiResponseLocalVar, document, wait, name, description, parentFolderId, aiFieldNamingLanguage, detectFields, fieldSource, fieldNaming, fieldLogic, outputFormat, includeOfficeUseFields, syncFields, idempotencyKey);
 
                         Events.ExecuteOnUploadTemplate(apiResponseLocalVar);
 
@@ -42467,7 +42480,7 @@ namespace DocSpring.Client.Api
             }
             catch(Exception e)
             {
-                OnErrorUploadTemplateDefaultImplementation(e, "/templates/upload", uriBuilderLocalVar.Path, document, wait, name, description, parentFolderId, aiFieldNamingLanguage, detectFields, fieldSource, fieldNaming, fieldLogic, outputFormat, includeOfficeUseFields, idempotencyKey);
+                OnErrorUploadTemplateDefaultImplementation(e, "/templates/upload", uriBuilderLocalVar.Path, document, wait, name, description, parentFolderId, aiFieldNamingLanguage, detectFields, fieldSource, fieldNaming, fieldLogic, outputFormat, includeOfficeUseFields, syncFields, idempotencyKey);
                 Events.ExecuteOnErrorUploadTemplate(e);
                 throw;
             }
@@ -42828,7 +42841,7 @@ namespace DocSpring.Client.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
-        partial void FormatUploadTemplateDocument(ref string templateId, ref DocSpring.Client.Client.FileParameter document, ref Option<bool> wait, ref Option<bool> reimportFields, ref Option<string> idempotencyKey);
+        partial void FormatUploadTemplateDocument(ref string templateId, ref DocSpring.Client.Client.FileParameter document, ref Option<bool> wait, ref Option<bool> reimportFields, ref Option<bool> syncFields, ref Option<string> idempotencyKey);
 
         /// <summary>
         /// Validates the request parameters
@@ -42857,11 +42870,12 @@ namespace DocSpring.Client.Api
         /// <param name="document"></param>
         /// <param name="wait"></param>
         /// <param name="reimportFields"></param>
+        /// <param name="syncFields"></param>
         /// <param name="idempotencyKey"></param>
-        private void AfterUploadTemplateDocumentDefaultImplementation(IUploadTemplateDocumentApiResponse apiResponseLocalVar, string templateId, DocSpring.Client.Client.FileParameter document, Option<bool> wait, Option<bool> reimportFields, Option<string> idempotencyKey)
+        private void AfterUploadTemplateDocumentDefaultImplementation(IUploadTemplateDocumentApiResponse apiResponseLocalVar, string templateId, DocSpring.Client.Client.FileParameter document, Option<bool> wait, Option<bool> reimportFields, Option<bool> syncFields, Option<string> idempotencyKey)
         {
             bool suppressDefaultLog = false;
-            AfterUploadTemplateDocument(ref suppressDefaultLog, apiResponseLocalVar, templateId, document, wait, reimportFields, idempotencyKey);
+            AfterUploadTemplateDocument(ref suppressDefaultLog, apiResponseLocalVar, templateId, document, wait, reimportFields, syncFields, idempotencyKey);
             if (!suppressDefaultLog)
                 Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -42875,8 +42889,9 @@ namespace DocSpring.Client.Api
         /// <param name="document"></param>
         /// <param name="wait"></param>
         /// <param name="reimportFields"></param>
+        /// <param name="syncFields"></param>
         /// <param name="idempotencyKey"></param>
-        partial void AfterUploadTemplateDocument(ref bool suppressDefaultLog, IUploadTemplateDocumentApiResponse apiResponseLocalVar, string templateId, DocSpring.Client.Client.FileParameter document, Option<bool> wait, Option<bool> reimportFields, Option<string> idempotencyKey);
+        partial void AfterUploadTemplateDocument(ref bool suppressDefaultLog, IUploadTemplateDocumentApiResponse apiResponseLocalVar, string templateId, DocSpring.Client.Client.FileParameter document, Option<bool> wait, Option<bool> reimportFields, Option<bool> syncFields, Option<string> idempotencyKey);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -42888,11 +42903,12 @@ namespace DocSpring.Client.Api
         /// <param name="document"></param>
         /// <param name="wait"></param>
         /// <param name="reimportFields"></param>
+        /// <param name="syncFields"></param>
         /// <param name="idempotencyKey"></param>
-        private void OnErrorUploadTemplateDocumentDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, DocSpring.Client.Client.FileParameter document, Option<bool> wait, Option<bool> reimportFields, Option<string> idempotencyKey)
+        private void OnErrorUploadTemplateDocumentDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, DocSpring.Client.Client.FileParameter document, Option<bool> wait, Option<bool> reimportFields, Option<bool> syncFields, Option<string> idempotencyKey)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorUploadTemplateDocument(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, templateId, document, wait, reimportFields, idempotencyKey);
+            OnErrorUploadTemplateDocument(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, templateId, document, wait, reimportFields, syncFields, idempotencyKey);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -42908,8 +42924,9 @@ namespace DocSpring.Client.Api
         /// <param name="document"></param>
         /// <param name="wait"></param>
         /// <param name="reimportFields"></param>
+        /// <param name="syncFields"></param>
         /// <param name="idempotencyKey"></param>
-        partial void OnErrorUploadTemplateDocument(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, DocSpring.Client.Client.FileParameter document, Option<bool> wait, Option<bool> reimportFields, Option<string> idempotencyKey);
+        partial void OnErrorUploadTemplateDocument(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string templateId, DocSpring.Client.Client.FileParameter document, Option<bool> wait, Option<bool> reimportFields, Option<bool> syncFields, Option<string> idempotencyKey);
 
         /// <summary>
         /// Replace a template&#39;s document with an uploaded file Replaces a PDF template&#39;s PDF, or a Word template&#39;s Word document, with one sent with the request (&#x60;multipart/form-data&#x60;). A PDF template&#39;s fields stay where they are, unless &#x60;reimport_fields&#x60; replaces them with the new PDF&#39;s fillable fields, and a Word template gets a field for each new tag. 
@@ -42918,14 +42935,15 @@ namespace DocSpring.Client.Api
         /// <param name="document">The new PDF, or the new Word document (.docx or .odt) of a Word template.</param>
         /// <param name="wait">Wait until the PDF has been processed, a &#x60;document_url&#x60;&#39;s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts. (optional)</param>
         /// <param name="reimportFields">Replace all of the template&#39;s fields with the fillable fields in the new PDF, once DocSpring has processed it (&#x60;document.field_reimport_state&#x60;). As on a first upload, the default typeface, font size, bold and color are taken from the PDF&#39;s fields; the template&#39;s other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can&#39;t re-import its fields. Only for PDF templates: a Word template adds a field for each new tag. (optional)</param>
+        /// <param name="syncFields">Add a field for each value the template&#39;s code, Word document or layout reads for the first time, with a type worked out from how it&#39;s used. Existing fields keep their settings, and a field you deleted while the code still read the value stays deleted. Default true. Set it to false to manage the fields yourself with the fields endpoints: a form field whose field isn&#39;t on the template then fails its submissions and previews. Only for HTML templates, Word templates and page designs. (optional)</param>
         /// <param name="idempotencyKey">A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request&#39;s response (and an &#x60;Idempotent-Replayed: true&#x60; header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 &#x60;idempotency_key_reused&#x60;. A 409 &#x60;idempotency_key_in_use&#x60; with a &#x60;Retry-After&#x60; header means the first request is still being processed: send the request again then. A repeated response is the first one as it was, so its &#x60;download_url&#x60; links may have expired: use &#x60;permanent_url&#x60;, or get the record again for new links. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IUploadTemplateDocumentApiResponse"/>&gt;</returns>
-        public async Task<IUploadTemplateDocumentApiResponse> UploadTemplateDocumentOrDefaultAsync(string templateId, DocSpring.Client.Client.FileParameter document, Option<bool> wait = default, Option<bool> reimportFields = default, Option<string> idempotencyKey = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<IUploadTemplateDocumentApiResponse> UploadTemplateDocumentOrDefaultAsync(string templateId, DocSpring.Client.Client.FileParameter document, Option<bool> wait = default, Option<bool> reimportFields = default, Option<bool> syncFields = default, Option<string> idempotencyKey = default, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await UploadTemplateDocumentAsync(templateId, document, wait, reimportFields, idempotencyKey, cancellationToken).ConfigureAwait(false);
+                return await UploadTemplateDocumentAsync(templateId, document, wait, reimportFields, syncFields, idempotencyKey, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -42941,10 +42959,11 @@ namespace DocSpring.Client.Api
         /// <param name="document">The new PDF, or the new Word document (.docx or .odt) of a Word template.</param>
         /// <param name="wait">Wait until the PDF has been processed, a &#x60;document_url&#x60;&#39;s PDF or Word document downloaded, and an OpenDocument file converted, before responding. Default true on sync.api hosts. (optional)</param>
         /// <param name="reimportFields">Replace all of the template&#39;s fields with the fillable fields in the new PDF, once DocSpring has processed it (&#x60;document.field_reimport_state&#x60;). As on a first upload, the default typeface, font size, bold and color are taken from the PDF&#39;s fields; the template&#39;s other settings are kept. If the PDF has no fillable fields, the template keeps its fields. A locked template can&#39;t re-import its fields. Only for PDF templates: a Word template adds a field for each new tag. (optional)</param>
+        /// <param name="syncFields">Add a field for each value the template&#39;s code, Word document or layout reads for the first time, with a type worked out from how it&#39;s used. Existing fields keep their settings, and a field you deleted while the code still read the value stays deleted. Default true. Set it to false to manage the fields yourself with the fields endpoints: a form field whose field isn&#39;t on the template then fails its submissions and previews. Only for HTML templates, Word templates and page designs. (optional)</param>
         /// <param name="idempotencyKey">A key of your own, such as a UUID, that makes it safe to send this request again: for 24 hours, DocSpring answers a request with the same key from the same API token with the first request&#39;s response (and an &#x60;Idempotent-Replayed: true&#x60; header) instead of processing it again. Send a new key with each new request, and the same key each time you send the same request again, such as after a timeout, a network error or a 5xx. The same key with a different request is a 422 &#x60;idempotency_key_reused&#x60;. A 409 &#x60;idempotency_key_in_use&#x60; with a &#x60;Retry-After&#x60; header means the first request is still being processed: send the request again then. A repeated response is the first one as it was, so its &#x60;download_url&#x60; links may have expired: use &#x60;permanent_url&#x60;, or get the record again for new links. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IUploadTemplateDocumentApiResponse"/>&gt;</returns>
-        public async Task<IUploadTemplateDocumentApiResponse> UploadTemplateDocumentAsync(string templateId, DocSpring.Client.Client.FileParameter document, Option<bool> wait = default, Option<bool> reimportFields = default, Option<string> idempotencyKey = default, System.Threading.CancellationToken cancellationToken = default)
+        public async Task<IUploadTemplateDocumentApiResponse> UploadTemplateDocumentAsync(string templateId, DocSpring.Client.Client.FileParameter document, Option<bool> wait = default, Option<bool> reimportFields = default, Option<bool> syncFields = default, Option<string> idempotencyKey = default, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
@@ -42952,7 +42971,7 @@ namespace DocSpring.Client.Api
             {
                 ValidateUploadTemplateDocument(templateId, document, idempotencyKey);
 
-                FormatUploadTemplateDocument(ref templateId, ref document, ref wait, ref reimportFields, ref idempotencyKey);
+                FormatUploadTemplateDocument(ref templateId, ref document, ref wait, ref reimportFields, ref syncFields, ref idempotencyKey);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -42985,6 +43004,9 @@ namespace DocSpring.Client.Api
 
                     if (reimportFields.IsSet)
                         formParameterLocalVars.Add(new KeyValuePair<string, string>("reimport_fields", ClientUtils.ParameterToString(reimportFields.Value)));
+
+                    if (syncFields.IsSet)
+                        formParameterLocalVars.Add(new KeyValuePair<string, string>("sync_fields", ClientUtils.ParameterToString(syncFields.Value)));
 
                     foreach (var formParamLocalVar in formParameterLocalVars)
                         multipartContentLocalVar.Add(new StringContent(formParamLocalVar.Value ?? string.Empty), formParamLocalVar.Key);
@@ -43043,7 +43065,7 @@ namespace DocSpring.Client.Api
                             }
                         }
 
-                        AfterUploadTemplateDocumentDefaultImplementation(apiResponseLocalVar, templateId, document, wait, reimportFields, idempotencyKey);
+                        AfterUploadTemplateDocumentDefaultImplementation(apiResponseLocalVar, templateId, document, wait, reimportFields, syncFields, idempotencyKey);
 
                         Events.ExecuteOnUploadTemplateDocument(apiResponseLocalVar);
 
@@ -43057,7 +43079,7 @@ namespace DocSpring.Client.Api
             }
             catch(Exception e)
             {
-                OnErrorUploadTemplateDocumentDefaultImplementation(e, "/templates/{template_id}/document/upload", uriBuilderLocalVar.Path, templateId, document, wait, reimportFields, idempotencyKey);
+                OnErrorUploadTemplateDocumentDefaultImplementation(e, "/templates/{template_id}/document/upload", uriBuilderLocalVar.Path, templateId, document, wait, reimportFields, syncFields, idempotencyKey);
                 Events.ExecuteOnErrorUploadTemplateDocument(e);
                 throw;
             }

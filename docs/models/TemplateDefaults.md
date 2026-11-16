@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 **Alignment** | **TextAlignment** | How text is aligned in its field. `justify` lines up both edges of every line of multiline text except the last of each paragraph. | [optional] 
 **Opacity** | **decimal** | The opacity of the field's content, from 0 (invisible) to 1. | [optional] 
 **DateFormat** | **string** | How date fields are printed, as a strftime format such as `%m/%d/%Y`. | [optional] 
-**DateTimeFormat** | **string** | How date-time fields are printed, as a strftime format such as `%m/%d/%Y %H:%M:%S`. | [optional] 
+**DateTimeFormat** | **string** | How date-time fields are printed, as a strftime format such as `%m/%d/%Y %H:%M`. | [optional] 
 **CheckColor** | **string** | The color of check marks, as 6 hex digits. | [optional] 
 **CheckCharacter** | **CheckCharacter** | The character that a ticked check box prints. | [optional] 
 **CheckBackgroundColor** | **string** | The check box's background color, as 6 hex digits. | [optional] 

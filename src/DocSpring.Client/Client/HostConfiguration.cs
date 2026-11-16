@@ -159,6 +159,8 @@ namespace DocSpring.Client.Client
             _jsonOptions.Converters.Add(new MoveTemplateRequestJsonConverter());
             _jsonOptions.Converters.Add(new NumberConditionTypeJsonConverter());
             _jsonOptions.Converters.Add(new NumberConditionTypeNullableJsonConverter());
+            _jsonOptions.Converters.Add(new NumberPartJsonConverter());
+            _jsonOptions.Converters.Add(new NumberPartNullableJsonConverter());
             _jsonOptions.Converters.Add(new OutputFormatJsonConverter());
             _jsonOptions.Converters.Add(new OutputFormatNullableJsonConverter());
             _jsonOptions.Converters.Add(new PageFormatJsonConverter());
@@ -265,6 +267,8 @@ namespace DocSpring.Client.Client
             _jsonOptions.Converters.Add(new TemplatePreviewJsonConverter());
             _jsonOptions.Converters.Add(new TemplatePreviewStateJsonConverter());
             _jsonOptions.Converters.Add(new TemplatePreviewStateNullableJsonConverter());
+            _jsonOptions.Converters.Add(new TemplateSignerRoleJsonConverter());
+            _jsonOptions.Converters.Add(new TemplateSignerRoleInputJsonConverter());
             _jsonOptions.Converters.Add(new TemplateSourcePdfJsonConverter());
             _jsonOptions.Converters.Add(new TemplateSummaryJsonConverter());
             _jsonOptions.Converters.Add(new TemplateSummaryListJsonConverter());
@@ -350,7 +354,7 @@ namespace DocSpring.Client.Client
 
             List<IHttpClientBuilder> builders = new List<IHttpClientBuilder>();
 
-            builders.Add(_services.AddHttpClient<DocSpring.Client.Api.IClient, DocSpring.Client.Api.Client>("DocSpring.Client.Api.IClient", (serviceProvider, c) => { c.DefaultRequestHeaders.UserAgent.ParseAdd("docspring-csharp-4.5.0"); client(serviceProvider, c); }));
+            builders.Add(_services.AddHttpClient<DocSpring.Client.Api.IClient, DocSpring.Client.Api.Client>("DocSpring.Client.Api.IClient", (serviceProvider, c) => { c.DefaultRequestHeaders.UserAgent.ParseAdd("docspring-csharp-4.6.0"); client(serviceProvider, c); }));
 
             foreach (IHttpClientBuilder instance in builders)
             {

@@ -41,7 +41,7 @@ namespace DocSpring.Client.Model
         /// <param name="alignment">How text is aligned in its field. &#x60;justify&#x60; lines up both edges of every line of multiline text except the last of each paragraph.</param>
         /// <param name="opacity">The opacity of the field&#39;s content, from 0 (invisible) to 1.</param>
         /// <param name="dateFormat">How date fields are printed, as a strftime format such as &#x60;%m/%d/%Y&#x60;.</param>
-        /// <param name="dateTimeFormat">How date-time fields are printed, as a strftime format such as &#x60;%m/%d/%Y %H:%M:%S&#x60;.</param>
+        /// <param name="dateTimeFormat">How date-time fields are printed, as a strftime format such as &#x60;%m/%d/%Y %H:%M&#x60;.</param>
         /// <param name="checkColor">The color of check marks, as 6 hex digits.</param>
         /// <param name="checkCharacter">The character that a ticked check box prints.</param>
         /// <param name="checkBackgroundColor">The check box&#39;s background color, as 6 hex digits.</param>
@@ -241,9 +241,9 @@ namespace DocSpring.Client.Model
         public Option<string> DateTimeFormatOption { get; private set; }
 
         /// <summary>
-        /// How date-time fields are printed, as a strftime format such as &#x60;%m/%d/%Y %H:%M:%S&#x60;.
+        /// How date-time fields are printed, as a strftime format such as &#x60;%m/%d/%Y %H:%M&#x60;.
         /// </summary>
-        /// <value>How date-time fields are printed, as a strftime format such as &#x60;%m/%d/%Y %H:%M:%S&#x60;.</value>
+        /// <value>How date-time fields are printed, as a strftime format such as &#x60;%m/%d/%Y %H:%M&#x60;.</value>
         [JsonPropertyName("date_time_format")]
         public string DateTimeFormat { get { return this.DateTimeFormatOption.Value; } set { this.DateTimeFormatOption = new Option<string>(value); } }
 
