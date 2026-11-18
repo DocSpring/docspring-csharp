@@ -117,6 +117,15 @@ namespace DocSpring.Client.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'SupportHelpId'
+        /// </summary>
+        [Fact]
+        public void SupportHelpIdTest()
+        {
+            // TODO unit test for the property 'SupportHelpId'
+        }
+
+        /// <summary>
         /// Test the property 'TemplateId'
         /// </summary>
         [Fact]

@@ -13,7 +13,7 @@ pull requests are welcome.
 Outside C# code, the [DocSpring CLI](https://docspring.com/docs/cli/) calls the same API from a terminal or a
 shell script, and the [MCP server](https://docspring.com/docs/mcp/) connects AI assistants to your account.
 
-Version 4.6.0. Requires .NET Standard 2.0 (.NET 6 or later, or .NET Framework 4.6.2 or later).
+Version 4.7.0. Requires .NET Standard 2.0 (.NET 6 or later, or .NET Framework 4.6.2 or later).
 
 ## Install and configure
 
@@ -100,6 +100,7 @@ C# code for every method.
 | Method | Description |
 | ------ | ----------- |
 | [`AddTemplateFields`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#addtemplatefields) | Add fields to a template |
+| [`AskSupportHelp`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#asksupporthelp) | Ask for help |
 | [`CopyTemplate`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#copytemplate) | Copy a template |
 | [`CreateAccountEmailAction`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#createaccountemailaction) | Create an account email action |
 | [`CreateCombinedPdf`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#createcombinedpdf) | Combine PDFs |
@@ -136,6 +137,8 @@ C# code for every method.
 | [`GetSignatureRequest`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#getsignaturerequest) | Get a signature request |
 | [`GetSubmission`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#getsubmission) | Get a submission |
 | [`GetSubmissionBatch`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#getsubmissionbatch) | Get a batch |
+| [`GetSupportHelp`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#getsupporthelp) | Get a help request |
+| [`GetSupportTicket`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#getsupportticket) | Get a support ticket |
 | [`GetTemplate`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#gettemplate) | Get a template |
 | [`GetTemplateDiff`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#gettemplatediff) | Compare a version of a template with the one before it |
 | [`GetTemplateModelCode`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#gettemplatemodelcode) | Generate typed code for a template's submission data |
@@ -150,19 +153,23 @@ C# code for every method.
 | [`ListEmailDomains`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#listemaildomains) | List email domains |
 | [`ListFolders`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#listfolders) | List folders |
 | [`ListSubmissions`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#listsubmissions) | List submissions |
+| [`ListSupportTickets`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#listsupporttickets) | List support tickets |
 | [`ListTemplateFields`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#listtemplatefields) | List a template's fields |
 | [`ListTemplates`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#listtemplates) | List templates |
 | [`ListTemplateSubmissions`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#listtemplatesubmissions) | List a template's submissions |
 | [`ListWebhooks`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#listwebhooks) | List webhooks |
 | [`MoveFolder`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#movefolder) | Move a folder |
 | [`MoveTemplate`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#movetemplate) | Move a template to a folder |
+| [`OpenSupportTicket`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#opensupportticket) | Open a support ticket |
 | [`PublishTemplateVersion`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#publishtemplateversion) | Publish a template version |
 | [`RemoveTemplateFields`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#removetemplatefields) | Remove fields from a template |
 | [`RenameFolder`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#renamefolder) | Rename a folder |
 | [`ReorderTemplateFields`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#reordertemplatefields) | Reorder a template's fields |
+| [`ReplyToSupportTicket`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#replytosupportticket) | Reply to a support ticket |
 | [`RestoreTemplateVersion`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#restoretemplateversion) | Restore a template version |
 | [`SendAccountEmailActionTestEmail`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#sendaccountemailactiontestemail) | Send a test email for an account email action |
 | [`SendEmailActionTestEmail`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#sendemailactiontestemail) | Send a test email |
+| [`SendSupportFeedback`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#sendsupportfeedback) | Send feedback |
 | [`TestAuthentication`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#testauthentication) | Test authentication |
 | [`UpdateAccountEmailAction`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#updateaccountemailaction) | Update an account email action |
 | [`UpdateEmailAction`](https://github.com/DocSpring/docspring-csharp/blob/main/docs/apis/Client.md#updateemailaction) | Update an email action |

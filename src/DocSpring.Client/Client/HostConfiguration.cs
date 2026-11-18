@@ -41,6 +41,7 @@ namespace DocSpring.Client.Client
             _jsonOptions.Converters.Add(new AddTemplateFieldsRequestJsonConverter());
             _jsonOptions.Converters.Add(new AiFieldNamingLanguageJsonConverter());
             _jsonOptions.Converters.Add(new AiFieldNamingLanguageNullableJsonConverter());
+            _jsonOptions.Converters.Add(new AskSupportHelpRequestJsonConverter());
             _jsonOptions.Converters.Add(new AuthenticationCheckJsonConverter());
             _jsonOptions.Converters.Add(new BarcodeSymbologyJsonConverter());
             _jsonOptions.Converters.Add(new BarcodeSymbologyNullableJsonConverter());
@@ -161,6 +162,7 @@ namespace DocSpring.Client.Client
             _jsonOptions.Converters.Add(new NumberConditionTypeNullableJsonConverter());
             _jsonOptions.Converters.Add(new NumberPartJsonConverter());
             _jsonOptions.Converters.Add(new NumberPartNullableJsonConverter());
+            _jsonOptions.Converters.Add(new OpenSupportTicketRequestJsonConverter());
             _jsonOptions.Converters.Add(new OutputFormatJsonConverter());
             _jsonOptions.Converters.Add(new OutputFormatNullableJsonConverter());
             _jsonOptions.Converters.Add(new PageFormatJsonConverter());
@@ -173,8 +175,10 @@ namespace DocSpring.Client.Client
             _jsonOptions.Converters.Add(new RemoveTemplateFieldsRequestJsonConverter());
             _jsonOptions.Converters.Add(new RenameFolderRequestJsonConverter());
             _jsonOptions.Converters.Add(new ReorderTemplateFieldsRequestJsonConverter());
+            _jsonOptions.Converters.Add(new ReplyToSupportTicketRequestJsonConverter());
             _jsonOptions.Converters.Add(new RestoreTemplateVersionRequestJsonConverter());
             _jsonOptions.Converters.Add(new SendAccountEmailActionTestEmailRequestJsonConverter());
+            _jsonOptions.Converters.Add(new SendSupportFeedbackRequestJsonConverter());
             _jsonOptions.Converters.Add(new ShapeTypeJsonConverter());
             _jsonOptions.Converters.Add(new ShapeTypeNullableJsonConverter());
             _jsonOptions.Converters.Add(new SignatureRequestJsonConverter());
@@ -221,6 +225,39 @@ namespace DocSpring.Client.Client
             _jsonOptions.Converters.Add(new SubmissionStateNullableJsonConverter());
             _jsonOptions.Converters.Add(new SubmissionSummaryJsonConverter());
             _jsonOptions.Converters.Add(new SubmissionValidationJsonConverter());
+            _jsonOptions.Converters.Add(new SupportFeedbackJsonConverter());
+            _jsonOptions.Converters.Add(new SupportHelpJsonConverter());
+            _jsonOptions.Converters.Add(new SupportHelpSourceJsonConverter());
+            _jsonOptions.Converters.Add(new SupportHelpStateJsonConverter());
+            _jsonOptions.Converters.Add(new SupportHelpStateNullableJsonConverter());
+            _jsonOptions.Converters.Add(new SupportHelpTurnJsonConverter());
+            _jsonOptions.Converters.Add(new SupportHelpTurnRoleJsonConverter());
+            _jsonOptions.Converters.Add(new SupportHelpTurnRoleNullableJsonConverter());
+            _jsonOptions.Converters.Add(new SupportMessageJsonConverter());
+            _jsonOptions.Converters.Add(new SupportMessageAuthorJsonConverter());
+            _jsonOptions.Converters.Add(new SupportMessageAuthorNullableJsonConverter());
+            _jsonOptions.Converters.Add(new SupportReportAgentJsonConverter());
+            _jsonOptions.Converters.Add(new SupportReportCategoryJsonConverter());
+            _jsonOptions.Converters.Add(new SupportReportCategoryNullableJsonConverter());
+            _jsonOptions.Converters.Add(new SupportReportImpactJsonConverter());
+            _jsonOptions.Converters.Add(new SupportReportImpactNullableJsonConverter());
+            _jsonOptions.Converters.Add(new SupportReportKindJsonConverter());
+            _jsonOptions.Converters.Add(new SupportReportKindNullableJsonConverter());
+            _jsonOptions.Converters.Add(new SupportReportSourceJsonConverter());
+            _jsonOptions.Converters.Add(new SupportReportSourceNullableJsonConverter());
+            _jsonOptions.Converters.Add(new SupportTicketJsonConverter());
+            _jsonOptions.Converters.Add(new SupportTicketListJsonConverter());
+            _jsonOptions.Converters.Add(new SupportTicketListStatusJsonConverter());
+            _jsonOptions.Converters.Add(new SupportTicketListStatusNullableJsonConverter());
+            _jsonOptions.Converters.Add(new SupportTicketNotificationsJsonConverter());
+            _jsonOptions.Converters.Add(new SupportTicketReplyJsonConverter());
+            _jsonOptions.Converters.Add(new SupportTicketReplyOutcomeJsonConverter());
+            _jsonOptions.Converters.Add(new SupportTicketReplyOutcomeNullableJsonConverter());
+            _jsonOptions.Converters.Add(new SupportTicketResolutionJsonConverter());
+            _jsonOptions.Converters.Add(new SupportTicketResolutionNullableJsonConverter());
+            _jsonOptions.Converters.Add(new SupportTicketStatusJsonConverter());
+            _jsonOptions.Converters.Add(new SupportTicketStatusNullableJsonConverter());
+            _jsonOptions.Converters.Add(new SupportTicketWatchJsonConverter());
             _jsonOptions.Converters.Add(new TemplateJsonConverter());
             _jsonOptions.Converters.Add(new TemplateActorJsonConverter());
             _jsonOptions.Converters.Add(new TemplateActorTypeJsonConverter());
@@ -354,7 +391,7 @@ namespace DocSpring.Client.Client
 
             List<IHttpClientBuilder> builders = new List<IHttpClientBuilder>();
 
-            builders.Add(_services.AddHttpClient<DocSpring.Client.Api.IClient, DocSpring.Client.Api.Client>("DocSpring.Client.Api.IClient", (serviceProvider, c) => { c.DefaultRequestHeaders.UserAgent.ParseAdd("docspring-csharp-4.6.0"); client(serviceProvider, c); }));
+            builders.Add(_services.AddHttpClient<DocSpring.Client.Api.IClient, DocSpring.Client.Api.Client>("DocSpring.Client.Api.IClient", (serviceProvider, c) => { c.DefaultRequestHeaders.UserAgent.ParseAdd("docspring-csharp-4.7.0"); client(serviceProvider, c); }));
 
             foreach (IHttpClientBuilder instance in builders)
             {

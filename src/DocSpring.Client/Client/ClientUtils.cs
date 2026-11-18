@@ -210,6 +210,28 @@ namespace DocSpring.Client.Client
                 return SubmissionSourceValueConverter.ToJsonValue(submissionSource);
             if (obj is SubmissionState submissionState)
                 return SubmissionStateValueConverter.ToJsonValue(submissionState);
+            if (obj is SupportHelpState supportHelpState)
+                return SupportHelpStateValueConverter.ToJsonValue(supportHelpState);
+            if (obj is SupportHelpTurnRole supportHelpTurnRole)
+                return SupportHelpTurnRoleValueConverter.ToJsonValue(supportHelpTurnRole);
+            if (obj is SupportMessageAuthor supportMessageAuthor)
+                return SupportMessageAuthorValueConverter.ToJsonValue(supportMessageAuthor);
+            if (obj is SupportReportCategory supportReportCategory)
+                return SupportReportCategoryValueConverter.ToJsonValue(supportReportCategory);
+            if (obj is SupportReportImpact supportReportImpact)
+                return SupportReportImpactValueConverter.ToJsonValue(supportReportImpact);
+            if (obj is SupportReportKind supportReportKind)
+                return SupportReportKindValueConverter.ToJsonValue(supportReportKind);
+            if (obj is SupportReportSource supportReportSource)
+                return SupportReportSourceValueConverter.ToJsonValue(supportReportSource);
+            if (obj is SupportTicketListStatus supportTicketListStatus)
+                return SupportTicketListStatusValueConverter.ToJsonValue(supportTicketListStatus);
+            if (obj is SupportTicketReplyOutcome supportTicketReplyOutcome)
+                return SupportTicketReplyOutcomeValueConverter.ToJsonValue(supportTicketReplyOutcome);
+            if (obj is SupportTicketResolution supportTicketResolution)
+                return SupportTicketResolutionValueConverter.ToJsonValue(supportTicketResolution);
+            if (obj is SupportTicketStatus supportTicketStatus)
+                return SupportTicketStatusValueConverter.ToJsonValue(supportTicketStatus);
             if (obj is TemplateActorType templateActorType)
                 return TemplateActorTypeValueConverter.ToJsonValue(templateActorType);
             if (obj is TemplateDocumentState templateDocumentState)

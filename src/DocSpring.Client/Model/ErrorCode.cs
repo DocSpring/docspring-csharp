@@ -134,6 +134,21 @@ namespace DocSpring.Client.Model
         public static ErrorCode DailyEmailLimitReached { get; } = new ErrorCode("daily_email_limit_reached");
 
         /// <summary>
+        /// support_feedback_limit_reached
+        /// </summary>
+        public static ErrorCode SupportFeedbackLimitReached { get; } = new ErrorCode("support_feedback_limit_reached");
+
+        /// <summary>
+        /// support_help_limit_reached
+        /// </summary>
+        public static ErrorCode SupportHelpLimitReached { get; } = new ErrorCode("support_help_limit_reached");
+
+        /// <summary>
+        /// support_ticket_limit_reached
+        /// </summary>
+        public static ErrorCode SupportTicketLimitReached { get; } = new ErrorCode("support_ticket_limit_reached");
+
+        /// <summary>
         /// internal_error
         /// </summary>
         public static ErrorCode InternalError { get; } = new ErrorCode("internal_error");
@@ -171,7 +186,7 @@ namespace DocSpring.Client.Model
         /// <summary>
         /// The values this client knows
         /// </summary>
-        public static IReadOnlyList<ErrorCode> Values { get; } = new[] { InvalidRequest, Unauthorized, PaymentRequired, InsufficientCredits, InsufficientCreditsToSend, Forbidden, UpgradeRequired, AccountSuspended, NotFound, MethodNotAllowed, Conflict, Gone, RequestTooLarge, UnsupportedMediaType, ValidationFailed, InvalidData, RateLimited, DailyEmailLimitReached, InternalError, BadGateway, ServiceUnavailable, UpstreamTimeout, PollingTimeout, IdempotencyKeyInUse, IdempotencyKeyReused };
+        public static IReadOnlyList<ErrorCode> Values { get; } = new[] { InvalidRequest, Unauthorized, PaymentRequired, InsufficientCredits, InsufficientCreditsToSend, Forbidden, UpgradeRequired, AccountSuspended, NotFound, MethodNotAllowed, Conflict, Gone, RequestTooLarge, UnsupportedMediaType, ValidationFailed, InvalidData, RateLimited, DailyEmailLimitReached, SupportFeedbackLimitReached, SupportHelpLimitReached, SupportTicketLimitReached, InternalError, BadGateway, ServiceUnavailable, UpstreamTimeout, PollingTimeout, IdempotencyKeyInUse, IdempotencyKeyReused };
 
         /// <summary>
         /// Whether the value is one this client knows: a newer API can return values added after it was released

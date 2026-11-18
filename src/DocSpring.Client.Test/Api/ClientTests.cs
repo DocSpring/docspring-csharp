@@ -65,6 +65,20 @@ namespace DocSpring.Client.Test.Api
         }
 
         /// <summary>
+        /// Test AskSupportHelp
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task AskSupportHelpAsyncTest()
+        {
+            AskSupportHelpRequest body = default;
+            Client.Option<bool> wait = default;
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.AskSupportHelpAsync(body, wait, idempotencyKey);
+            var model = response.Created();
+            Assert.IsType<DocSpring.Client.Model.SupportHelp>(model);
+        }
+
+        /// <summary>
         /// Test CopyTemplate
         /// </summary>
         [Fact (Skip = "not implemented")]
@@ -541,6 +555,31 @@ namespace DocSpring.Client.Test.Api
         }
 
         /// <summary>
+        /// Test GetSupportHelp
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task GetSupportHelpAsyncTest()
+        {
+            string supportHelpId = default;
+            var response = await _instance.GetSupportHelpAsync(supportHelpId);
+            var model = response.Ok();
+            Assert.IsType<DocSpring.Client.Model.SupportHelp>(model);
+        }
+
+        /// <summary>
+        /// Test GetSupportTicket
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task GetSupportTicketAsyncTest()
+        {
+            string ticketId = default;
+            Client.Option<string> afterMessageId = default;
+            var response = await _instance.GetSupportTicketAsync(ticketId, afterMessageId);
+            var model = response.Ok();
+            Assert.IsType<DocSpring.Client.Model.SupportTicket>(model);
+        }
+
+        /// <summary>
         /// Test GetTemplate
         /// </summary>
         [Fact (Skip = "not implemented")]
@@ -733,6 +772,22 @@ namespace DocSpring.Client.Test.Api
         }
 
         /// <summary>
+        /// Test ListSupportTickets
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task ListSupportTicketsAsyncTest()
+        {
+            Client.Option<SupportTicketListStatus> status = default;
+            Client.Option<string> session = default;
+            Client.Option<DateTime> updatedSince = default;
+            Client.Option<int> limit = default;
+            Client.Option<string> cursor = default;
+            var response = await _instance.ListSupportTicketsAsync(status, session, updatedSince, limit, cursor);
+            var model = response.Ok();
+            Assert.IsType<DocSpring.Client.Model.SupportTicketList>(model);
+        }
+
+        /// <summary>
         /// Test ListTemplateFields
         /// </summary>
         [Fact (Skip = "not implemented")]
@@ -827,6 +882,19 @@ namespace DocSpring.Client.Test.Api
         }
 
         /// <summary>
+        /// Test OpenSupportTicket
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task OpenSupportTicketAsyncTest()
+        {
+            OpenSupportTicketRequest body = default;
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.OpenSupportTicketAsync(body, idempotencyKey);
+            var model = response.Created();
+            Assert.IsType<DocSpring.Client.Model.SupportTicket>(model);
+        }
+
+        /// <summary>
         /// Test PublishTemplateVersion
         /// </summary>
         [Fact (Skip = "not implemented")]
@@ -883,6 +951,20 @@ namespace DocSpring.Client.Test.Api
         }
 
         /// <summary>
+        /// Test ReplyToSupportTicket
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task ReplyToSupportTicketAsyncTest()
+        {
+            string ticketId = default;
+            ReplyToSupportTicketRequest body = default;
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.ReplyToSupportTicketAsync(ticketId, body, idempotencyKey);
+            var model = response.Created();
+            Assert.IsType<DocSpring.Client.Model.SupportTicketReply>(model);
+        }
+
+        /// <summary>
         /// Test RestoreTemplateVersion
         /// </summary>
         [Fact (Skip = "not implemented")]
@@ -922,6 +1004,19 @@ namespace DocSpring.Client.Test.Api
             var response = await _instance.SendEmailActionTestEmailAsync(templateId, emailActionId, idempotencyKey);
             var model = response.Ok();
             Assert.IsType<DocSpring.Client.Model.EmailActionTestEmail>(model);
+        }
+
+        /// <summary>
+        /// Test SendSupportFeedback
+        /// </summary>
+        [Fact (Skip = "not implemented")]
+        public async Task SendSupportFeedbackAsyncTest()
+        {
+            SendSupportFeedbackRequest body = default;
+            Client.Option<string> idempotencyKey = default;
+            var response = await _instance.SendSupportFeedbackAsync(body, idempotencyKey);
+            var model = response.Created();
+            Assert.IsType<DocSpring.Client.Model.SupportFeedback>(model);
         }
 
         /// <summary>
